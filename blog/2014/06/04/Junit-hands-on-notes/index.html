@@ -1,0 +1,343 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Question] Junit Hand-on Notes - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="First Word Junit is open source testing framework developed for unit testing java code. It is now the default framework for testing Java development &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/06/04/Junit-hands-on-notes/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Question] Junit Hand-on Notes</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-04T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>First Word</h2>
+
+<p>Junit is open source testing framework developed for unit testing java code. It is now the default framework for testing Java development.</p>
+
+<h4>Is it popular?</h4>
+
+<p><a href="http://www.takipiblog.com/2013/11/20/we-analyzed-30000-github-projects-here-are-the-top-100-libraries-in-java-js-and-ruby/">A very interesting survey</a> shows that JUnit is THE MOST POPULAR LIBRARY FOR JAVA used by 30.7% of projects (it tied with slf4j-api).</p>
+
+<p>BTW, <a href="http://en.wikipedia.org/wiki/Apache_Commons">Apache Commons</a> and <a href="http://en.wikipedia.org/wiki/Google_Guava">Google Guava</a> are the most important common libraries for Java.</p>
+
+<h2>Unit Test</h2>
+
+<p>A unit test is a piece of code that executes a specific functionality in the code. Tests should be written for critical and complex parts of your application (not every single statement). The percentage of code which is tested by unit tests is typically called test coverage.</p>
+
+<p>Unit test is really a coding process, not a testing process.</p>
+
+<p>In contrast, there is &ldquo;Manual testing&rdquo;.</p>
+
+<h4>Why should we use it?</h4>
+
+<ol>
+<li><p>Test early and often automated testing.</p></li>
+<li><p>Junit tests can be integrated with the build so regression testing can be done at unit level.</p></li>
+<li><p>Test code reusage.</p></li>
+</ol>
+
+
+<h4>Other kinds of tests?</h4>
+
+<p>Integration Test (also called Functional Test) test the behavior of a component or the integration between a set of components.</p>
+
+<p>Performance tests are used to benchmark software components in a repeatable way</p>
+
+<h2>TDD</h2>
+
+<p>TDD (Test-Driven Development) write unit test before writing the code. It is commonly believed that tests should be written before the code during development cycle.</p>
+
+<p><a href="http://stackoverflow.com/questions/247086/should-unit-tests-be-written-before-the-code-is-written">Some believes</a> that TDD results in less time in the debugger, and more time thinking about outside-in design. <a href="http://sqa.fyicenter.com/FAQ/JUnit/When_Should_Unit_Tests_Should_Be_Written_In_Deve.html">Some also believes</a> that TDD is more fun than writing tests after the code seems to be working.</p>
+
+<h2>Junit</h2>
+
+<p>In Java, &lsquo;assert&rsquo; is a keyword. So, JUnit 3.7 deprecated assert() and replaced it with assertTrue(). JUnit 4 is compatible with the assert keyword.</p>
+
+<h4>Test Class/Suite</h4>
+
+<p>Test methods are contained in a class called Test class. JUnit assumes that all test methods can be executed in an arbitrary order (thus no dependency).</p>
+
+<p>Several test classes can be combined into a test suite. Running a test suite will execute all test classes in the specified order.</p>
+
+<h4>Test fixtures</h4>
+
+<p>Fixtures is a fixed state of a set of objects used as a baseline for running tests. It includes:</p>
+
+<ol>
+<li><p>setUp() method which runs before every test invocation.</p></li>
+<li><p>tearDown() method which runs after every test method.</p></li>
+</ol>
+
+
+<h4>&ldquo;extends TestCase&rdquo; or @annotation?</h4>
+
+<p>JUnit 3-style: create a class that &ldquo;extends TestCase&rdquo;, and start test methods with the word test. In Eclipse, all methods named &ldquo;testSomething&rdquo; are automatically run.</p>
+
+<p>JUnit 4-style: create a &lsquo;normal&rsquo; class and prepend a @Test annotation to the method (name do not have to be &ldquo;testSomething&rdquo;). This is <a href="http://stackoverflow.com/questions/2635839/junit-confusion-use-extend-testcase-or-test">recommended way</a>.</p>
+
+<h4>Other than normal test</h4>
+
+<p>There are:</p>
+
+<ol>
+<li><p>Expected Exception Test: @Test(expected = ArithmeticException.class)</p></li>
+<li><p>Ignore Test: @Ignore(&ldquo;Not Ready to Run&rdquo;)</p></li>
+<li><p>Time Test: @Test(timeout = 1000)</p></li>
+<li><p>Suite Test: @Suite.SuiteClasses({ JunitTest1.class, JunitTest2.class })</p></li>
+<li><p>Parameterized Test: read below</p></li>
+</ol>
+
+
+<p>Junit 4 has introduced a new feature Parameterized tests. Parameterized tests allow developer to run the same test many times using different values (passed in as a collecetion). One <a href="http://www.mkyong.com/unittest/junit-4-tutorial-6-parameterized-test/">good example</a>.</p>
+
+<h2>Miscellaneous</h2>
+
+<p>Q: What happens if a JUnit Test Method is Declared as &ldquo;private&rdquo;?</p>
+
+<p>A: If a JUnit test method is declared as &ldquo;private&rdquo;, it compiles successfully. But the execution will fail. This is because JUnit requires that all test methods must be declared as &ldquo;public&rdquo;.</p>
+
+<p>Q: How do you test a &ldquo;protected&rdquo; method?</p>
+
+<table border="1" summary="This table defines levels of access conferred by a modifier">
+<caption style="font-weight: bold" id="accesscontrol-levels">Access Levels</caption>
+<tbody><tr>
+<th id="h1" class="bg-color bg-img font-color">Modifier</th>
+<th id="h2" class="bg-color bg-img font-color">Class</th>
+<th id="h3" class="bg-color bg-img font-color">Package</th>
+<th id="h4" class="bg-color bg-img font-color">Subclass</th>
+<th id="h5" class="bg-color bg-img font-color">World</th>
+</tr>
+<tr>
+<td headers="h1" class="bg-color bg-img font-color"><code>public</code></td>
+<td headers="h2" class="bg-color bg-img font-color">Y</td>
+<td headers="h3" class="bg-color bg-img font-color">Y</td>
+<td headers="h4" class="bg-color bg-img font-color">Y</td>
+<td headers="h5" class="bg-color bg-img font-color">Y</td>
+</tr>
+<tr>
+<td headers="h1" class="bg-color bg-img font-color"><code>protected</code></td>
+<td headers="h2" class="bg-color bg-img font-color">Y</td>
+<td headers="h3" class="bg-color bg-img font-color">Y</td>
+<td headers="h4" class="bg-color bg-img font-color">Y</td>
+<td headers="h5" class="bg-color bg-img font-color">N</td>
+</tr>
+<tr>
+<td headers="h1" style="font-style: italic" class="bg-color bg-img font-color">no modifier</td>
+<td headers="h2" class="bg-color bg-img font-color">Y</td>
+<td headers="h3" class="bg-color bg-img font-color">Y</td>
+<td headers="h4" class="bg-color bg-img font-color">N</td>
+<td headers="h5" class="bg-color bg-img font-color">N</td>
+</tr>
+<tr>
+<td headers="h1" class="bg-color bg-img font-color"><code>private</code></td>
+<td headers="h2" class="bg-color bg-img font-color">Y</td>
+<td headers="h3" class="bg-color bg-img font-color">N</td>
+<td headers="h4" class="bg-color bg-img font-color">N</td>
+<td headers="h5" class="bg-color bg-img font-color">N</td>
+</tr>
+</tbody></table>
+
+
+<p>A: When a method is declared as &ldquo;protected&rdquo;, it can only be accessed within the same package where the class is defined. Hence to test a &ldquo;protected&rdquo; method, define test class in the same package.</p>
+
+<h2>Things that I don&rsquo;t understand</h2>
+
+<p>Q: <a href="http://www.tutorialspoint.com/junit/junit_interview_questions.htm">How do I test things that must be run in a J2EE container</a> (e.g. servlets, EJBs)?</p>
+
+<p>A: Refactoring J2EE components to delegate functionality to other objects that don&rsquo;t have to be run in a J2EE container will improve the design and testability of the software. Cactus is an open source JUnit extension that can be used for unit testing server-side java code.</p>
+
+<p>Q: What are Parameterized tests in JUnit?</p>
+
+<p>A: Parameterized tests allow developer to run the same test over and over again using different values.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-06-04T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/question/'>question</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/06/04/Junit-hands-on-notes/" data-via="" data-counturl="http://okc1.github.io/blog/2014/06/04/Junit-hands-on-notes/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/06/03/Reverse-Words-in-a-String/" title="Previous Post: [LeetCode 151] Reverse Words in a String">&laquo; [LeetCode 151] Reverse Words in a String</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/06/04/Unicode-Utf8/" title="Next Post: [Question] ASCII, Utf-8, Utf-16 and Unicode">[Question] ASCII, Utf-8, Utf-16 and Unicode &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

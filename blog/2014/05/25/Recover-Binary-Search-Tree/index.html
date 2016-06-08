@@ -1,0 +1,384 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[LeetCode 99] Recover Binary Search Tree - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Question link Two elements of a binary search tree (BST) are swapped by mistake. Recover the tree without changing its structure. Note:
+A solution &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/05/25/Recover-Binary-Search-Tree/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[LeetCode 99] Recover Binary Search Tree</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-25T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/recover-binary-search-tree/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>
+Two elements of a binary search tree (BST) are swapped by mistake.</p>
+
+<p>Recover the tree without changing its structure.
+</p>
+
+<b>Note:</b><br>
+A solution using O(<i>n</i>) space is pretty straight forward. Could you devise a constant space solution?
+<p></p>
+
+<p></p>
+</div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="lime">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is one of the most difficult questions that I have solved</strong>.</p>
+
+<p>The question can be solved using 2 pointers to point to the 2 misplaced nodes, and swap them. I solved the problem with this approach, and I found a good explanation <a href="http://chaoren.is-programmer.com/posts/42931.html">here</a>.</p>
+
+<blockquote><p>Only two variables (first, second) are enough to record nodes to be exchanged.</p>
+
+<p>If there&rsquo;s only one descending order pair (e.g. 20, 10, 30, 40, 50), use first &amp; second to record it.</p>
+
+<p>If there are two descending order pairs (e.g. 10, 40, 30, 20, 50 or 50, 20, 30, 40, 10), use the smaller number in second pair to update variable &lsquo;second&rsquo;.</p>
+
+<p>In the end, swap first and second.</p></blockquote>
+
+<p>This is a popular solution on the Internet, which <strong>uses O(1) space, plus average case O(lgn) stack space</strong> (because recursion always incur stack usage). So this solution is actually not fulfilling the requirements.</p>
+
+<blockquote><p>中序遍历二叉树的空间复杂度是O(logN) on average case</p></blockquote>
+
+<p><strong>So finally I found a solution with constent space, and it&rsquo;s using Treaded Binary Tree again</strong>! Look below for details.</p>
+
+<h3>Solution</h3>
+
+<p><a href="http://www.geeksforgeeks.org/inorder-tree-traversal-without-recursion-and-without-stack/">This</a> is a systematic analysis of <strong>Morris Traversal</strong> based on <strong>Threaded Binary Tree</strong>.</p>
+
+<p><strong>A solution of using Morris Traversal is explained <a href="http://www.cnblogs.com/TenosDoIt/p/3445682.html">here</a></strong>. Don&rsquo;t worry about the tree structure being changed, because it&rsquo;s reverted back after the traversal.</p>
+
+<blockquote><p>算法2：为了满足O(1)空间复杂度，我们就要使用非递归且不使用栈的中序遍历算法，在leetcode另一个题目Binary Tree Inorder Traversal中，我们提到了Morris Traversal中序遍历算法，它既没有递归，也没有使用栈，而是用了线索二叉树的思想，用闲置的右节点指向中序序列中该节点的后缀，遍历后再恢复树的原始指针。其主要算法步骤如下：</p>
+
+<p>重复以下1、2直到当前节点为空。</p></blockquote>
+
+<p><strong><a href="http://fisherlei.blogspot.sg/2012/12/leetcode-recover-binary-search-tree.html">Another person</a></strong> have a very good (maybe better) English version of analysis and code:</p>
+
+<pre><code>1. Initialize current as root 
+2. While current is not NULL
+   If current does not have left child
+      a) Print current’s data
+      b) Go to the right, i.e., current = current-&amp;gt;right
+   Else
+      a) Make current as right child of the rightmost node in current's left subtree
+      b) Go to this left child, i.e., current = current-&amp;gt;left
+</code></pre>
+
+<h3>Code</h3>
+
+<p><strong>First, my code (2 pointer solution)</strong></p>
+
+<pre><code>TreeNode first = null, second = null;
+TreeNode pre = new TreeNode(Integer.MIN_VALUE);
+
+public void recoverTree(TreeNode root) {
+    helper(root);
+    // now first and second are both found
+    int temp = first.val;
+    first.val = second.val;
+    second.val = temp;
+}
+
+private void helper(TreeNode root) {
+    if (root == null) return;
+    helper(root.left);
+    if (pre.val &gt; root.val) {
+        if (first == null) {
+            first = pre;
+            second = root;
+        }
+        else second = root;
+    }
+    pre = root;
+    helper(root.right);
+}
+</code></pre>
+
+<p><strong>Second, real O(1) space solution</strong> using Threaded Binary Tree (i.e. Morris Traversal) in C++. I could not memorize this code.</p>
+
+<pre><code>void recoverTree(TreeNode *root) {
+       TreeNode *f1=NULL, *f2=NULL;
+       TreeNode  *current,*pre, *parent=NULL;
+
+       if(root == NULL)
+             return;
+       bool found = false;
+       current = root;
+       while(current != NULL)
+       {                
+             if(current-&gt;left == NULL)
+             {
+                    if(parent &amp;&amp; parent-&gt;val &gt; current-&gt;val)
+                    {
+                           if(!found)
+                           {
+                                 f1 = parent;
+                                 found = true;
+                           }
+                           f2 = current;
+                    }
+                    parent = current;
+                    current = current-&gt;right;     
+             }   
+             else
+             {
+                    /* Find the inorder predecessor of current */
+                    pre = current-&gt;left;
+                    while(pre-&gt;right != NULL &amp;&amp; pre-&gt;right != current)
+                           pre = pre-&gt;right;
+
+                    /* Make current as right child of its inorder predecessor */
+                    if(pre-&gt;right == NULL)
+                    {
+                           pre-&gt;right = current;
+                           current = current-&gt;left;
+                    }
+
+                    /* Revert the changes made in if part to restore the original
+                    tree i.e., fix the right child of predecssor */  
+                    else
+                    {
+                           pre-&gt;right = NULL;
+                           if(parent-&gt;val &gt; current-&gt;val)
+                           {
+                                 if(!found)
+                                 {
+                                        f1 = parent;       
+                                        found = true;
+                                 }
+                                 f2 = current;
+                           }
+                           parent = current;
+                           current = current-&gt;right;     
+                    } /* End of if condition pre-&gt;right == NULL */
+             } /* End of if condition current-&gt;left == NULL*/
+       } /* End of while */
+
+       if(f1 &amp;&amp; f2)
+             swap(f1-&gt;val, f2-&gt;val);
+}
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-05-25T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/leetcode/'>leetcode</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/05/25/Recover-Binary-Search-Tree/" data-via="" data-counturl="http://okc1.github.io/blog/2014/05/25/Recover-Binary-Search-Tree/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/05/25/Minimum-Depth-of-Binary-Tree/" title="Previous Post: [LeetCode 111] Minimum Depth of Binary Tree">&laquo; [LeetCode 111] Minimum Depth of Binary Tree</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/05/25/Same-Tree/" title="Next Post: [LeetCode 100] Same Tree">[LeetCode 100] Same Tree &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

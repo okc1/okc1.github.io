@@ -1,0 +1,329 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[LeetCode 90] Subsets II - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Question link Given a collection of integers that might contain duplicates, S, return all possible subsets. Note: Elements in a subset must be in non &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/05/22/Subsets-II/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[LeetCode 90] Subsets II</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-22T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/subsets-ii/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>
+Given a collection of integers that might contain duplicates, <i>S</i>, return all possible subsets.
+</p>
+<p><b>Note:</b><br>
+</p><ul>
+<li>Elements in a subset must be in non-descending order.</li>
+<li>The solution set must not contain duplicate subsets.</li>
+</ul>
+<p></p>
+<p>
+For example,<br>
+If <b><i>S</i></b> = <code>[1,2,2]</code>, a solution is:
+</p>
+
+<pre>[
+  [2],
+  [1],
+  [1,2,2],
+  [2,2],
+  [1,2],
+  []
+]
+</pre><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is a question based on &ldquo;Subsets&rdquo; question</strong>.</p>
+
+<p>Solution is similar, only need to add features to avoid duplication.</p>
+
+<h3>Solution</h3>
+
+<p>Based on the solution of previous question, I only add 1 variable called <strong>nonDupSize</strong>, which is the size that I need to merge new element with. For example, <strong>input = {1, 2, 3, 3}</strong></p>
+
+<blockquote><p>Initialize the subset:  {}</p>
+
+<p>Added element &ldquo;1&rdquo;: {}, <strong>{&ldquo;1&rdquo;}</strong> (1 more elements)</p>
+
+<p>Added element &ldquo;2&rdquo;: {}, {&ldquo;1&rdquo;}, <strong>{&ldquo;2&rdquo;}, {&ldquo;1&rdquo;, &ldquo;2&rdquo;}</strong> (2 more elements)</p>
+
+<p>Added element &ldquo;3&rdquo;: {}, {&ldquo;1&rdquo;}, {&ldquo;2&rdquo;}, {&ldquo;1&rdquo;, &ldquo;2&rdquo;}, <strong>{&ldquo;3&rdquo;}, {&ldquo;1&rdquo;,&ldquo;3&rdquo;}, {&ldquo;2&rdquo;,&ldquo;3&rdquo;}, {&ldquo;1&rdquo;, &ldquo;2&rdquo;,&ldquo;3&rdquo;}</strong> (4 more elements)</p>
+
+<p>Added element &ldquo;3&rdquo;: {}, {&ldquo;1&rdquo;}, {&ldquo;2&rdquo;}, {&ldquo;1&rdquo;, &ldquo;2&rdquo;}, {&ldquo;3&rdquo;}, {&ldquo;1&rdquo;,&ldquo;3&rdquo;}, {&ldquo;2&rdquo;,&ldquo;3&rdquo;}, {&ldquo;1&rdquo;,&ldquo;2&rdquo;,&ldquo;3&rdquo;}, <strong>{&ldquo;3&rdquo;,&ldquo;3&rdquo;}, {&ldquo;1&rdquo;,&ldquo;3&rdquo;,&ldquo;3&rdquo;}, {&ldquo;2&rdquo;,&ldquo;3&rdquo;,&ldquo;3&rdquo;}, {&ldquo;1&rdquo;,&ldquo;2&rdquo;,&ldquo;3&rdquo;,&ldquo;3&rdquo;}</strong> (4 more elements)</p></blockquote>
+
+<p>So instead of getting every list and merge with new element, I only get the lists of pre-calculated size (from bottom), and merge. Someone is having <a href="http://blog.csdn.net/perfect8886/article/details/22922785">similar solution</a> using a start-pointer.</p>
+
+<h3>Code</h3>
+
+<p><strong>my code</strong></p>
+
+<pre><code>public ArrayList&lt;ArrayList&lt;Integer&gt;&gt; subsetsWithDup(int[] num) {
+    ArrayList&lt;ArrayList&lt;Integer&gt;&gt; ans = new ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();
+    ans.add(new ArrayList&lt;Integer&gt;());
+    Arrays.sort(num);
+    // In this solution I introduce a new variable: nonDupSize
+    int curSize = 1, nonDupSize = 1;
+    for (int i = 0; i &lt; num.length; i ++) {
+        curSize = ans.size();
+        if (i &gt; 0 &amp;&amp; num[i] != num[i - 1]) nonDupSize = curSize;
+        for (int j = curSize - nonDupSize; j &lt; curSize; j ++) {
+            ArrayList&lt;Integer&gt; cur = new ArrayList&lt;Integer&gt;(ans.get(j));
+            cur.add(num[i]);
+            ans.add(cur);
+        }
+    }
+    return ans;
+}
+</code></pre>
+
+<p><strong>Updated on June 12th</strong> - solution using the &lsquo;Permutation Model&rsquo;.</p>
+
+<pre><code>public List&lt;List&lt;Integer&gt;&gt; subsetsWithDup(int[] num) {
+    List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;List&lt;Integer&gt;&gt;();
+    if(num == null || num.length == 0) {
+        return result;
+    }
+    Arrays.sort(num);
+    helper(result, new LinkedList&lt;Integer&gt;(), num, 0);
+    return result;
+}
+
+private void helper(List&lt;List&lt;Integer&gt;&gt; ans, List&lt;Integer&gt; path, int[] num, int position) {
+    ans.add(new LinkedList&lt;Integer&gt;(path));
+    for (int i = position; i &lt; num.length; i ++) {
+        if (i &gt; position &amp;&amp; num[i - 1] == num[i]) {
+            // if duplicate, only append num[position]
+            continue;
+        }
+        path.add(num[i]);
+        helper(ans, path, num, i + 1);
+        path.remove(path.size() - 1);
+    }
+}
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-05-22T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/leetcode/'>leetcode</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/05/22/Subsets-II/" data-via="" data-counturl="http://okc1.github.io/blog/2014/05/22/Subsets-II/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/05/22/Subsets/" title="Previous Post: [LeetCode 78] Subsets">&laquo; [LeetCode 78] Subsets</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/05/23/Decode-Ways/" title="Next Post: [LeetCode 91] Decode Ways">[LeetCode 91] Decode Ways &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

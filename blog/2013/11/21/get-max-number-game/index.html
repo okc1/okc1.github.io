@@ -1,0 +1,308 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Question] Get Max Number Game (Minmax + Dp) - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Question link 两个人（A，B）参与一个游戏，规则如下： 1）一个随机的整数数列有偶数个数,a1,a2,&hellip;a2n 2）A 先从数列取数，但只能从两头取,a1 or a2n 3)然后Ｂ取数，也是只能从剩下的两头取，依此类推，两个人轮流，都只能从两头取 Output the &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2013/11/21/get-max-number-game/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Question] Get Max Number Game (Minmax + Dp)</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-11-21T00:00:00-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2013</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1>Question</h1>
+
+<p><a href="http://www.weiming.info/zhuti/JobHunting/31725587/">link</a></p>
+
+<blockquote><p>两个人（A，B）参与一个游戏，规则如下：</p>
+
+<p>1）一个随机的整数数列有偶数个数,a1,a2,&hellip;a2n</p>
+
+<p>2）A 先从数列取数，但只能从两头取,a1 or a2n</p>
+
+<p>3)然后Ｂ取数，也是只能从剩下的两头取，依此类推，两个人轮流，都只能从两头取</p>
+
+<p>Output <strong>the max sum of numbers</strong> that player 1 is going to get.</p></blockquote>
+
+<h1>Solution</h1>
+
+<p>This question can be solved with DP by using the following 3 equations:</p>
+
+<ol>
+<li>sum[i][j] sum of number from i to j</li>
+<li>val[i][j]: the max value that can be obtained if only the range [i,j] is left and you take the move first</li>
+<li>pos[][] is related to val[][], as it denotes whether we take i or j</li>
+</ol>
+
+
+<p>After we got sum[][] array fully filled up, the transition equation of val[][] looks like:</p>
+
+<pre><code>val[x][y] = sum[x][y] - MIN( val[x+1][y], val[x][y-1] )
+</code></pre>
+
+<p>As for pos[][]:</p>
+
+<pre><code>pos[x][y] = x  if val[x+1][y] &lt; val[x][y-1]
+            y  otherwise
+</code></pre>
+
+<h1>Code</h1>
+
+<pre><code>public int getMaxSumPlayerOne(int[] input) {
+    int len = input.length;
+    // sum[i][j] sum of number from i to j
+    int[][] sum = new int[len][len];
+    // val[i][j]: the max value that can be obtained if only
+    // the range [i,j] is left and you take the move first
+    int[][] val = new int[len][len];
+    // pos is related to val, as it denotes whether we take i or j
+    int[][] pos = new int[len][len];
+
+    // 1. fill in sum[][]
+    for (int x = 0; x &lt; len; x++) {
+        for (int y = x; y &lt; len; y++) {
+            if (x == y) {
+                sum[x][y] = input[x];
+            } else if (x == 0) {
+                // fill up the first row in the sum[][] dp array
+                sum[x][y] = sum[x][y - 1] + input[y];
+            } else {
+                // starting from the 2nd row, it's gonna make use of 1st row
+                // x &gt;= 1
+                sum[x][y] = sum[0][y] - sum[0][x - 1];
+            }
+        }
+    }
+
+    // 2. fill in val[][] and pos[][]
+    for (int x = len - 1; x &gt;= 0; x--) {
+        for (int y = x; y &lt; len; y++) {
+            if (x == y) {
+                val[x][y] = input[x];
+                pos[x][y] = x;
+            } else {
+                // when I choose either x or y, I look at what the opponent
+                // is gonna get after my move, then chose the smaller
+                // v[][] for the remaining part
+                val[x][y] = sum[x][y] - Math.min(val[x + 1][y], val[x][y - 1]);
+                pos[x][y] = val[x + 1][y] &lt; val[x][y - 1] ? x : y;
+            }
+        }
+    }
+    this.printSteps(pos, len);
+    return val[0][len - 1];
+}
+</code></pre>
+
+<h1>Testing</h1>
+
+<pre><code>Input {1, 4, 3, 2}
+Player 1 take position 3
+Player 2 take position 2
+Player 1 take position 1
+Player 2 take position 0
+max sum for player 1 is 6
+
+Input {7, 5, 2, 6, 9, 8, 3, 4}
+Player 1 take position 0
+Player 2 take position 1
+Player 1 take position 7
+Player 2 take position 6
+Player 1 take position 5
+Player 2 take position 4
+Player 1 take position 3
+Player 2 take position 2
+max sum for player 1 is 25
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2013-11-21T00:00:00-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2013</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/question/'>question</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2013/11/21/get-max-number-game/" data-via="" data-counturl="http://okc1.github.io/blog/2013/11/21/get-max-number-game/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/11/20/infix-to-postfix/" title="Previous Post: [Amazon] Infix to Postfix conversion ">&laquo; [Amazon] Infix to Postfix conversion </a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/11/21/insert-plus-and-minus/" title="Next Post: [Question] Insert Plus and Minus to Complete Expression ">[Question] Insert Plus and Minus to Complete Expression  &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

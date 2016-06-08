@@ -1,0 +1,338 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[LeetCode 3] Longest Substring Without Repeating Characters - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Question link Given a string, find the length of the longest substring without repeating characters. For example, the longest substring without &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/04/27/longest-substring-without-repeating/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[LeetCode 3] Longest Substring Without Repeating Characters</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-04-27T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/longest-substring-without-repeating-characters/">link</a></p>
+
+<div class="question-content">
+<p></p><p>Given a string, find the length of the longest substring without repeating characters. For example, the longest substring without repeating letters for "abcabcbb" is "abc", which the length is 3. For "bbbbb" the longest substring is "b", with the length of 1.</p>
+<p></p></div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Diffficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="red">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p>This question looks easy (well, isn&rsquo;t it?), but it <strong>really is not easy</strong>!.</p>
+
+<p><strong>The main idea is</strong>: an array of int(128) is used to keep track of the last occurance position of each character. So we iterate thru the characters while constently checking the last occurrence of the letter. Meanwhile, keep updating the longest distance.</p>
+
+<p><strong>There is 1 place where it&rsquo;s extremely easy to make mistake</strong>, that is the condition of update left points:</p>
+
+<pre><code>if (previousPos != -1&amp;&amp; previousPos &gt;= left) {
+    left = previousPos + 1;
+}
+</code></pre>
+
+<p>If you have an idea of using array int(128) to <strong>store last occurrence</strong>, and you got the above <strong>if condition</strong> correct, then you nailed it!</p>
+
+<p>Again, this is a tough question. There&rsquo;s a seemingly more intuitive solution using the sliding window method. It&rsquo;s very similar to [LeetCode 76] Minimum Window Substring.</p>
+
+<h3>Solution</h3>
+
+<p>Note what happens when a repeating char is found (2 different conditions).</p>
+
+<p><img class="middle" src="/assets/images/longest-without-repeat.png"></p>
+
+<h3>My code</h3>
+
+<p>The proper way:</p>
+
+<pre><code>public class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+
+        int[] flag = new int[128];
+        for (int i = 0; i &lt; flag.length; i++) {
+            flag[i] = -1;
+        }
+        // left and right pointer defines the valid range
+        int left = 0;
+        int right = 0;
+        int longest = 0;
+        int len = s.length();
+
+        while (right &lt; len) {
+            char letter = s.charAt(right);
+            int previousPos = flag[letter];
+            if (previousPos != -1&amp;&amp; previousPos &gt;= left) {
+                // if right pointer points to an old letter, and is within current range
+                // then we need to update our left pointer: 
+                // to bypass the previous occurrence of that letter
+                left = previousPos + 1;
+            }
+            flag[letter] = right;
+            // advance right pointer to the next letter, and calculate longest distance
+            right++;
+            longest = Math.max(longest, right - left);
+        }
+        return longest;
+    }
+}
+</code></pre>
+
+<p>The sliding window way:</p>
+
+<pre><code>public class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        int len = s.length();
+        int left = 0;
+        int right = 1;
+        HashSet&lt;Character&gt; set = new HashSet&lt;Character&gt;();
+        set.add(s.charAt(0));
+        int longest = 1;
+        while (right &lt; len) {
+            // right pointer proceeds until boundary or duplicate char found
+            while (right &lt; len &amp;&amp; !set.contains(s.charAt(right))) {
+                set.add(s.charAt(right));
+                right++;
+                longest = Math.max(longest, right - left);
+            }
+            if (right == len) {
+                return longest;
+            } else {
+                // right pointer has reached a duplicate char.
+                // now move left pointer until that dup char is found
+                while (s.charAt(left) != s.charAt(right)) {
+                    set.remove(s.charAt(left));
+                    left++;
+                }
+                // left pointer advance by one to bypass the dup char
+                left++;
+                // right pointer advance by one to include the dup char
+                right++;
+            }
+        }
+        return Math.max(longest, right - left);
+    }
+}
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-04-27T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/leetcode/'>leetcode</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/04/27/longest-substring-without-repeating/" data-via="" data-counturl="http://okc1.github.io/blog/2014/04/27/longest-substring-without-repeating/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/04/27/add-two-numbers/" title="Previous Post: [LeetCode 2] Add Two Numbers">&laquo; [LeetCode 2] Add Two Numbers</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/04/28/longest-palindrome-substr/" title="Next Post: [LeetCode 5] Longest Palindromic Substring ">[LeetCode 5] Longest Palindromic Substring  &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

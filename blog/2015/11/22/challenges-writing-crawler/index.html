@@ -1,0 +1,342 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Design] Technical Challenges of Writing a Web Crawler - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="1. Choose a framework Assuming we use Python to do this. plain python? We can write a simple Python crawler with the code below: import re, urllib &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2015/11/22/challenges-writing-crawler/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Design] Technical Challenges of Writing a Web Crawler</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-11-22T00:00:00-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1>1. Choose a framework</h1>
+
+<p>Assuming we use Python to do this.</p>
+
+<h2>plain python?</h2>
+
+<p>We can write a simple Python crawler with the code below:</p>
+
+<pre><code>import re, urllib
+
+textfile = file('depth_1.txt','wt')
+print "Enter the URL you wish to crawl.."
+print 'Usage  - "http://phocks.org/stumble/creepy/" &lt;-- With the double quotes'
+myurl = input("@&gt; ")
+for i in re.findall('''href=["'](.[^"']+)["']''', urllib.urlopen(myurl).read(), re.I):
+    print i  
+    for ee in re.findall('''href=["'](.[^"']+)["']''', urllib.urlopen(i).read(), re.I):
+        print ee
+        textfile.write(ee+'\n')
+textfile.close()
+</code></pre>
+
+<h2>Scrapy?</h2>
+
+<ol>
+<li>You only define the rules, Scrapy do the rest</li>
+<li>easily plugin extensions</li>
+<li>portable + python runtime.</li>
+</ol>
+
+
+<h3>Why Scrapy</h3>
+
+<blockquote><p><a href="https://www.quora.com/What-are-the-advantages-of-Scrapy-compared-to-Beautiful-Soup">scrapy has the tools to manage every stage of a web crawl</a>, just to name a few:</p>
+
+<ol>
+<li><p>Requests manager - in charge of downloading pages all concurrently behind the scenes! You won&rsquo;t need to invest a lot of time in concurrent architecture.</p></li>
+<li><p>Selectors -  parse the html document (eg. XPath)</p></li>
+<li><p>Pipelines - after you retrieve the data, there&rsquo;s a bunch of functions to modify the data.</p></li>
+</ol>
+</blockquote>
+
+<p>Following the spirit of other don’t repeat yourself frameworks, such as Django:</p>
+
+<blockquote><p><a href="https://en.wikipedia.org/wiki/Scrapy">it makes it easier to build and scale large crawling projects</a> by allowing developers to re-use their code.</p></blockquote>
+
+<p>For more, read <a href="http://doc.scrapy.org/en/latest/topics/architecture.html">Scrapy Architecture </a>.</p>
+
+<p><img class="middle" src="/assets/images/scrapy_architecture.png"></p>
+
+<ol>
+<li><p>Scrapy Engine</p>
+
+<p> control data flow</p></li>
+<li><p>Scheduler</p>
+
+<p> receives requests from the engine and enqueues them for feeding them later</p></li>
+<li><p>Downloader</p></li>
+<li><p>Spiders</p></li>
+<li><p>Item Pipeline</p></li>
+<li><p>Downloader middlewares</p>
+
+<p> specific hooks that sit between the Engine and the Downloader and process requests</p></li>
+<li><p>Spider middlewares</p>
+
+<p> specific hooks that sit between the Engine and the Spiders and are able to process spider input (responses) and output (items and requests).</p></li>
+</ol>
+
+
+<h1>2. Schedule a Scrapy job</h1>
+
+<p>APScheduler? (todo)</p>
+
+<p>add/remove jobs</p>
+
+<h1>3. Choose a DB</h1>
+
+<p>I chose NoSQL/MongoDB. <a href="http://stackoverflow.com/a/11980154">But why</a>?</p>
+
+<ol>
+<li><p>there&rsquo;s only a few tables with few columns</p></li>
+<li><p>no overly complex associations between nodes</p></li>
+<li><p>huge amount of time-based data</p></li>
+<li><p>scaling requirements: MongoDB better horizontal scaling</p></li>
+<li><p>different field names: dynamical storage</p></li>
+</ol>
+
+
+<h1>4. Technical Difficulty?</h1>
+
+<h2>4.1 differrent way to crawl.</h2>
+
+<p>We need to check AJAX response sometime and study each website&rsquo;s API.</p>
+
+<p>Some site would <strong>close certain APIs</strong> if they found out too many queries requests.</p>
+
+<h2>4.2 Difficulty navigating pages</h2>
+
+<p>Study their URL structure.</p>
+
+<p>eg.</p>
+
+<pre><code>www.abc.com/index.html?page=milk&amp;start_index=0
+</code></pre>
+
+<p>Just play with the url params!</p>
+
+<h2>4.3 What is key?</h2>
+
+<p>I defined extra column only to store keys (combine a few key columns, and convert to lower-case).</p>
+
+<p>We can search using <strong>regex</strong> though, but:</p>
+
+<blockquote><p><a href="http://stackoverflow.com/a/7880894">Mongo (current version 2.0.0) doesn&rsquo;t allow</a> case-insensitive searches against indexed fields. For non-indexed fields, the regex search should be fine.</p></blockquote>
+
+<p>How to go about it:</p>
+
+<blockquote><p><a href="http://stackoverflow.com/a/4441412">searching with regex&rsquo;s case insensitive</a> means that mongodb cannot search by index, so queries against <strong>large datasets can take a long time</strong>.</p>
+
+<p>Even with small datasets, it&rsquo;s not very efficient&hellip; which could become an issue if you are trying to achieve scale.</p>
+
+<p>As an alternative, you can store an uppercase copy and search against that&hellip;</p>
+
+<p>If your field is large, such as a message body, duplicating data is probably not a good option. I believe using <strong>an extraneous indexer like Apache Lucene</strong> is the best option in that case.</p></blockquote>
+
+<h2>4.4 A lot bad data</h2>
+
+<ol>
+<li><p>write a sophisticated pipeline()</p></li>
+<li><p>try not let bad data reach pipeline() - <strong>better</strong></p></li>
+</ol>
+
+
+<p>Make your spider better!</p>
+
+<h2>4.5 NLP: brand names</h2>
+
+<p>how? (todo)</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-11-22T00:00:00-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/design/'>design</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2015/11/22/challenges-writing-crawler/" data-via="" data-counturl="http://okc1.github.io/blog/2015/11/22/challenges-writing-crawler/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/11/21/swizzle-sort/" title="Previous Post: [Question] Swizzle Sort ">&laquo; [Question] Swizzle Sort </a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2016/05/08/user-registry-table-design/" title="Next Post: [Design] User Registry Table Design ">[Design] User Registry Table Design  &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

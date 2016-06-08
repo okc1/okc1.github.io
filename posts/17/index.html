@@ -1,0 +1,967 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Question link Reverse a stack using recursion. You are not allowed to use loops or data structure, and you can only use the following functions: &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/17/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/10/reverse-a-stack/">[Google] Reverse a Stack Without DS</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-10T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.geeksforgeeks.org/reverse-a-stack-using-recursion/">link</a></p>
+
+<blockquote><p>Reverse a stack using recursion. You are not allowed to use loops or data structure, and you can only use the following functions:</p></blockquote>
+
+<pre><code>isEmpty(S)
+push(S)
+pop(S)
+</code></pre>
+
+<h3>Solution</h3>
+
+<p>Well since we are not allowed to use additional DS or loop, we have to use system stack to help us!</p>
+
+<p>We add a new method: <strong>insert at stack bottom</strong>. Then we can solve this question recursively. Nice question, and tricky answer!</p>
+
+<h3>Code</h3>
+
+<pre><code>public void reverse(Stack&lt;Integer&gt; stack) {
+    if (stack.isEmpty() || stack.size() == 1) {
+        return;
+    }
+    int top = stack.pop();
+    this.reverse(stack);
+    this.insertAtBottom(stack, top);
+}
+
+private void insertAtBottom(Stack&lt;Integer&gt; stack, int val) {
+    if (stack.isEmpty()) {
+        stack.push(val);
+        return;
+    }
+    int temp = stack.pop();
+    this.insertAtBottom(stack, val);
+    stack.push(temp);
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/10/minimum-range-inclueds-at-least-1/">[Amazon] Mininum Range That Includes at Least One</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-10T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=5103437989543936">link</a></p>
+
+<blockquote><p>There are many sorted arrays. Find a minimum range, so that in each array there&rsquo;s at least one integer within this range.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>Min-heap</strong>. <a href="http://www.careercup.com/question?id=16759664">source</a></p>
+
+<blockquote><p>There are k lists of sorted integers. Make a min heap of size k containing 1 element from each list. Keep track of min and max element and calculate the range.</p>
+
+<p>In min heap, minimum element is at top. Delete the minimum element and another element instead of that from the same list to which minimum element belong. Repeat the process till any one of the k list gets empty.</p></blockquote>
+
+<h3>Code</h3>
+
+<pre><code>public void printMinRange(int[][] input) {
+    Comparator&lt;Pointer&gt; compr = new HeapComparator(input);
+    // Note that we pass in 'input' arrays to the comparator
+    PriorityQueue&lt;Pointer&gt; heap = new PriorityQueue&lt;Pointer&gt;(SIZE, compr);
+
+    int maxVal = Integer.MIN_VALUE;
+    for (int i = 0; i &lt; SIZE; i++) {
+        heap.add(new Pointer(i, 0));
+        // insert the head of each array into the heap
+        maxVal = Math.max(maxVal, input[i][0]);
+        // keep additional value to keep track of the max value in heap
+    }
+
+    int left = 0;
+    int right = Integer.MAX_VALUE;
+    while (heap.size() == SIZE) {
+        Pointer p = heap.remove();
+        // first, update the range
+        if (maxVal - input[p.index][p.position] &lt; right - left) {
+            right = maxVal;
+            left = input[p.index][p.position];
+        }
+        // then, push the next element after 'p' to the heap
+        // meanwhile, update 'maxVal'
+        if (p.position + 1 &lt; input[p.index].length) {
+            Pointer nextP = new Pointer(p.index, p.position + 1);
+            heap.add(nextP);
+            maxVal = Math.max(maxVal, input[nextP.index][nextP.position]);
+        }
+        // when 'p' is the last element in the row, terminate loop
+    }
+    System.out.println("Left boundary: " + left);
+    System.out.println("Right boundary: " + right);
+}
+
+class HeapComparator implements Comparator&lt;Pointer&gt; {
+
+    int[][] arrays = null;
+
+    public HeapComparator(int[][] input) {
+        arrays = input;
+    }
+
+    public int compare(Pointer p1, Pointer p2) {
+        return arrays[p1.index][p1.position]
+                - arrays[p2.index][p2.position];
+    }
+}
+
+class Pointer {
+    int index, position;
+
+    public Pointer(int x, int y) {
+        index = x;
+        position = y;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/10/max-count-array-in-queue/">[Google] Maximum Count Array in a Queue</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-10T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.mitbbs.com/article_t1/JobHunting/32856675_0_1.html#top">link1</a></p>
+
+<blockquote><p>给一个数组a[n]，令s[i]为a[i+1..n-1]中比a[i]大的数的数量。</p>
+
+<p>求最大的s[i]。要求O(nlogn)</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>This is very similar question to <strong>[Google] Form a Queue Given Heights</strong>. The idea is to insert elements into BST and count number of larger elements.</p>
+
+<p>Naitive solution can be reached with a list.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/10/form-queue-given-heights/">[Google] Form a Queue Given Heights</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-10T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.geeksforgeeks.org/reverse-a-stack-using-recursion/">link1</a>, <a href="http://www.weiming.info/zhuti/JobHunting/31903469/">link2</a>, <a href="http://www.mitbbs.com/article_t1/JobHunting/32856675_0_1.html#top">link3</a>.</p>
+
+<blockquote><p>There is an array of integers which represent heights of persons.</p>
+
+<p>Given another array&hellip; Let&rsquo;s call it count-array. It contain how many persons in front of him are greater than him in height.</p>
+
+<p>求原数组。(原数组中元素是从1到n。)</p>
+
+<p>Example:</p></blockquote>
+
+<pre><code>Input(Count array): 0, 0, 2, 0
+Output(原数组): 2, 3, 1, 4
+</code></pre>
+
+<blockquote><p>求nlogn的算法。</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>This is naive solution from floor 29 of <a href="http://www.weiming.info/zhuti/JobHunting/31903469/">this thread</a>:</p>
+
+<blockquote><p>总结一下，用一个List存放1&hellip;n。</p>
+
+<p>从头到尾扫描给定的数组，每得到一个值，从List里删掉。</p>
+
+<p>因为List里数据是有序的，因此remove操作可以使用二分法，复杂度为O(logn).</p>
+
+<p>这样本算法复杂度为O(nlogn).</p></blockquote>
+
+<p>Example:</p>
+
+<pre><code>count array 
+i C[0,0,2,0]   N[4, 3, 2, 1]
+3 C[3] = 0     在N里面删除N[0]=4, N=[3, 2, 1],   Ans=[4]
+2 C[2] = 2     在N里面删除N[2]=1, N=[3, 2],   Ans=[1, 4]
+1 C[1] = 0     在N里面删除N[0]=3, N=[2],   Ans=[3, 1, 4]
+0 C[0] = 0     在N里面删除N[0]=2, N=[], Ans=[2, 3, 1, 4]
+</code></pre>
+
+<p>But there is a problm here, since removing item from list requires O(n), we will achieve O(n<sup>2</sup>) time. How do we optimize this?</p>
+
+<p><strong>The answer is BST</strong> with each node keeping track of how many nodes is on the left branch, and how many on right branch. For details of this type of TreeNode, refer to <strong>[CC150v5] 11.8 Get Rank in Stream of Integers</strong>.</p>
+
+<p>The conclusion:</p>
+
+<blockquote><p>可以化归为这样一道题：</p>
+
+<p>设计一个有序的数据结构，最初里头有自然数1到n这n个元素，</p>
+
+<p>随后这些元素可以被删除，但剩下元素仍然保持有序。</p>
+
+<p>要求实现方法GetKthElement(int k)和RemoveKthElemenet(int k)，</p>
+
+<p>使得它们在任意时刻都不超过O(lgN), N为当前的元素个数</p>
+
+<p>感觉要结合BST之类</p></blockquote>
+
+<h3>Code</h3>
+
+<p>Naive approach, O(n<sup>2</sup>):</p>
+
+<pre><code>public int[] form(int peopleCount, int[] countArray) {
+    int len = peopleCount;
+    int[] heightQueue = new int[len];
+    List&lt;Integer&gt; list = new ArrayList&lt;Integer&gt;();
+    for (int i = peopleCount; i &gt; 0; i--) {
+        list.add(i);
+    }
+    for (int i = len - 1; i &gt;= 0; i--) {
+        heightQueue[i] = list.remove(countArray[i]);
+    }
+    return heightQueue;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/09/terminology-ngram/">[Design] Terminology: N-gram</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-09T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>n-gram</h3>
+
+<p>In the fields of computational linguistics and probability, an <strong><a href="http://en.wikipedia.org/wiki/N-gram">n-gram</a></strong> is a contiguous sequence of n items from a given sequence of text or speech.</p>
+
+<p>The items can be phonemes, syllables, letters, words or base pairs according to the application. The n-grams typically are collected from a text or speech corpus.</p>
+
+<h4>Example</h4>
+
+<table border="1" width="100%" id="table5" cellpadding="3" style="border-collapse: collapse" bordercolor="#89B0D8" cellspacing="0">
+                <tbody><tr>
+                    <td bgcolor="#D9ECFF">
+                    <p align="center">frequency</p></td>
+                    <td bgcolor="#D9ECFF">
+                    <p align="center">word1</p></td>
+                    <td bgcolor="#D9ECFF">
+                    <p align="center">word2</p></td>
+                    <td bgcolor="#D9ECFF">
+                    <p align="center">word3</p></td>
+                </tr>
+                <tr>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">1419</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">much</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">the</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">same</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">461</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">much</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">more</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">likely</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">432</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">much</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">better</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">than</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">266</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">much</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">more</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">difficult</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">235</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">much</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">of</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">the</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">226</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">much</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">more</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">than</p>
+                    </td>
+                </tr>
+</tbody></table>
+
+
+<h4>Downloadable n-grams sets for English</h4>
+
+<ol>
+<li><strong><a href="https://catalog.ldc.upenn.edu/LDC2006T13">Google n-grams</a></strong>, based on the web as of 2006.</li>
+<li><strong><a href="http://www.ngrams.info/intro.asp">COCA n-grams</a></strong>, based on Corpus of Contemporary American English [COCA]. 450 million words from 1990 to 2012.</li>
+</ol>
+
+
+<p>With n-grams data (2, 3, 4, 5-word sequences, with their frequency), we can carry out powerful queries offline.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/09/most-frequent-word-from-book/">[Question] Most Frequent Word From a Book</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-09T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=5715664853532672">link</a></p>
+
+<blockquote><p>Let&rsquo;s say I gave you a long String and I wanted you to tell me the most common word in that String. How would you do that?</p>
+
+<p>Follow-up: how about if I gave you the entire works of Alexandre Dumas, one of the most prolific authors in history. How would your solution work? How could you change it to solve this more specific problem?</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>There are 2 solutions. Either <strong>HashMap</strong> or <strong>Trie</strong>. It&rsquo;s easy to think of first, but remember that Trie is designed to do this kind of job.</p>
+
+<blockquote><p>A trie will be more useful in the second situation where you will have millions of words. You can have a counter at every node to see its frequency</p></blockquote>
+
+<p><strong>Now the follow up</strong>. For big data problems, we can always do <strong>divide and conquer</strong> by hash value.</p>
+
+<p>Alternatively, the comment by <a href="http://www.careercup.com/question?id=5715664853532672">Prince</a> mentioned how to solve with <strong>Map Reduce</strong>:</p>
+
+<blockquote><p>Instead of loading it as a string first I would stream data so that I avoid memory spike. Further our map size might increases as new words are added to it. Also, we can use map reduce type job were we create map&lt;word, frequency> of each play in parallel and later join/collapse them this will reduce the time it will take to get result.</p>
+
+<p>Common phrase should be no different then above algorithm. However we need to rebuild our index with &lt;phase, frequency></p></blockquote>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/09/match-triplet-with-reverse-order/">[Amazon] Match Triplet With Reverse Order</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-09T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=11655778">link</a></p>
+
+<blockquote><p>Find the substring of length 3 which is present in the reverse order from the string.</p>
+
+<p>Ex: if the string is abcdcba (cba is the reverse of abc) so we should return cba.</p></blockquote>
+
+<h3>Solution</h3>
+
+<ol>
+<li><p><strong>HashMap (recommended)</strong>. Hash all substrings of length 3. O(n). Look up all reverse substrings of length 3 in this hash set. O(n) time and O(n) space.</p></li>
+<li><p><strong>KMP Algo</strong>. Take every substring of length 3. Reverse it and find it in the input using KMP. O(n<sup>2</sup>) time and O(1) space.</p></li>
+<li><p><strong>Build suffix tree</strong> of height 3. Then in reverse order, check triplets.</p></li>
+</ol>
+
+
+<p>The 3 solutions above all work well. Pick the one you love.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/09/big-data-top-k-frequency-3/">[Design] Big Data - Top K Frequency (Hands-on)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-09T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://stackoverflow.com/a/3262855">link</a></p>
+
+<blockquote><p>The input is an endless stream of English words or phrases (we refer them as tokens).</p>
+
+<p>Output top N tokens we have seen so far (from all the tokens we have seen!)</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>We will discuss the following details of implementation and optimization.</p>
+
+<ol>
+<li>String into Integer</li>
+<li>Data Storage</li>
+<li>Process Incoming Streams</li>
+<li>Save result</li>
+</ol>
+
+
+<h4>1. String into Integer</h4>
+
+<p>This is a nice trick that improves eficiency a lot.</p>
+
+<blockquote><p>Though there is almost infinite possible words on the Internet, but after accumulating a large set of words, the possibility of finding new words becomes lower and lower.</p>
+
+<p>We have already found 4 million different words, and assigned a unique ID for each. This is important, because sorting and comparisons on integers is <strong>much much faster</strong> than on strings.</p></blockquote>
+
+<h4>2. Data Storage</h4>
+
+<blockquote><p>The system keeps archive data for every token. Basically it&rsquo;s pairs of (Token, Frequency).</p>
+
+<p>However, the table that stores the data would be so huge such that we have to partition the table physically. One partition scheme is <strong>based on ngrams</strong> of the token. If the token is a single word, it is 1gram. If the token is two-word phrase, it is 2gram.</p></blockquote>
+
+<p>Of course we can also divide the data by the hash value. For information on <strong>ngrams</strong>, read <strong>[Design] Terminology: n-gram</strong>.</p>
+
+<h4>3. Process Incoming Streams</h4>
+
+<blockquote><p>The system will absorbs incoming sentences until memory becomes fully utilized (Ya, we need a MemoryManager). After taking N sentences and storing in memory, the system pauses, and starts tokenize each sentence into words and phrases. Each token (word or phrase) is counted.</p></blockquote>
+
+<p>This data processing logic runs as a process under Memory-Manager. The next part is another processing running concurrently.</p>
+
+<h4>4. Save result</h4>
+
+<blockquote><p>Meanwhile, there will be another process that is activated once it finds any disk file generated by the system, then start merging it. Since the disk file is sorted, merging would take <strong>a similar process like merge sort</strong>.</p></blockquote>
+
+<p>There is <a href="http://stackoverflow.com/a/3262855">some more steps</a> afterwards, but they&rsquo;re trivial. I have listed out the basic steps for processing large stream of incoming data (as string), and how to find out the Top K keywords.</p>
+
+<p>I suggest you read previous <strong>[Design] Big Data - Top k Frequency</strong> posts before reading this.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/09/big-data-real-time-top-k/">[Design] Real Time Top K</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-09T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://stackoverflow.com/questions/10189685/realtime-tracking-of-top-100-twitter-words-per-min-hour-day">link</a></p>
+
+<blockquote><p>Given a continuous twitter feed, design an algorithm to return the 100 most
+frequent words used at this minute, this hour and this day.</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>This is a frequent and useful problem for companies like Google and Twitter.</p>
+
+<p>The first solution below is <strong>an approximation method</strong> which select keywords that occur more than a certain threshold.</p>
+
+<p>The second solution is <strong>more accurate</strong> but RAM-intensive.</p>
+
+<h3>Lossy Count (used to get an inaccurate trend)</h3>
+
+<p><strong>Solution 1 is a modified version of <a href="http://stackoverflow.com/a/8033083">Lossy Count</a></strong>. The detailed steps are explained <a href="http://stackoverflow.com/a/3260905">here</a>:</p>
+
+<blockquote><p>Start with an empty map (red-black tree). The keys will be search terms, and the values will be a counter for the term.</p>
+
+<ol>
+<li><p>Look at each item in the stream.</p></li>
+<li><p>If the term exists in the map, increment the associated counter.</p></li>
+<li><p>Otherwise, if the map has fewer candidates than you&rsquo;re looking for, add it to the map with a count of one.</p></li>
+<li><p>However, if the map is &ldquo;full&rdquo;, decrement the counter in each entry. If any counter reaches zero during this process, remove it from the map.</p></li>
+</ol>
+</blockquote>
+
+<p><a href="http://www.cse.ust.hk/vldb2002/VLDB2002-proceedings/slides/S10P03slides.pdf">This slide show</a> explains <strong>Lossy Count</strong>, which is to divide input data into chunks. Then count elements and decrease counter by 1 after each chunk.</p>
+
+<p><strong>Note that the result is NOT the top frequency items</strong>. Instead, the final results are <strong>order-dependent</strong>, giving heavier weight to the counts processed last. It maybe helpful in some cases, cuz we want to check the latest trend. However, if we want more accurate top keywords for all data, we will <strong>do a second pass over the log data</strong>.</p>
+
+<p>Now let&rsquo;s discuss the threshold. Use &ldquo;aaabcd&rdquo; and map size = 2 as example. &lsquo;a&rsquo; will be inserted into map with occurance = 3. Then &lsquo;b&rsquo; is inserted, and removed. &lsquo;c&rsquo; is inserted, and removed. &rsquo;d' is inserted. Since we always decrease 1 at each step, &lsquo;a&rsquo; should only have occurance of 1 at the end. As explained <a href="http://stackoverflow.com/a/3260905">here</a>:</p>
+
+<blockquote><p>If we limit the map to 99 entries, we are guaranteed to find any term that occurs more than 1/(1 + 99) (1%) of the time.</p></blockquote>
+
+<p>We change the size of the map to change the threshold. The occurance of in the final result does not matter.</p>
+
+<h3>Solution 2</h3>
+
+<p>The lossy count does not actually produce the hourly, daily and monthly result accurately. Solution 2 will discuss how we deal with retiring old data in an accurate way.</p>
+
+<p>Suggested by <a href="http://stackoverflow.com/a/3260768">this answer</a>, <strong>we keep a 30-day list for each keyword</strong>, that counts the daily occurance. This list is FIFO. When we remove and insert a new counter value, we update monthly total.</p>
+
+<p>Alaternatively, <a href="http://stackoverflow.com/a/10190836">this answer</a> suggests keeping 1440 (24 * 60) HashMaps, each storing the information for one minute. <strong>And another 2 HashMap for the rolling total for the past hour, and past day</strong>.</p>
+
+<blockquote><p>You need an array of 1440 (24*60) word+count hash maps organized the way that you describe; these are your minute-by-minute counts. You need two additional hash maps - for the rolling total of the hour and the day.</p>
+
+<p>Define two operations on hash maps - add and subtract, with the semantic of merging counts of identical words, and removing words when their count drops to zero.</p>
+
+<p>Each minute you start a new hash map, and update counts from the feed. At the end of the minute, you place that hash map into the array for the current minute, add it to the rolling total for the hour and for the day, and then subtract the hash map of an hour ago from the hourly running total, and subtract the hash map of 24 hours ago from the daily running total.</p></blockquote>
+
+<p>This is a very good solution, which I would recommend as the standard solution to this &ldquo;Real Time Top k&rdquo; problem.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/08/number-of-distinct-substrings/">[Google] Number of Distinct Substrings</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-08T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.quora.com/Given-a-string-how-do-I-find-the-number-of-distinct-substrings-of-the-string">link</a></p>
+
+<blockquote><p>Given a string, find the number of distinct substrings of the string. Example:</p>
+
+<p>input = &ldquo;aaaa&rdquo;,</p>
+
+<p>output = 4 (the 4 substrings are &ldquo;a&rdquo;, &ldquo;aa&rdquo;, &ldquo;aaa&rdquo;, &ldquo;aaaa&rdquo;)</p>
+
+<p>input = &ldquo;abcd&rdquo;,</p>
+
+<p>output = 10 (&ldquo;a&rdquo;, &ldquo;b&rdquo;, &ldquo;c&rdquo;, &ldquo;d&rdquo;, &ldquo;ab&rdquo;, &ldquo;bc&rdquo;, &ldquo;cd&rdquo;, &ldquo;abc&rdquo;, &ldquo;bcd&rdquo;, &ldquo;abcd&rdquo;)</p>
+
+<p>input = &ldquo;banana&rdquo;,</p>
+
+<p>output = 15 (&ldquo;a&rdquo;, &ldquo;an&rdquo;, &ldquo;ana&rdquo;, &ldquo;anan&rdquo;, &ldquo;anana&rdquo;, &ldquo;b&rdquo;, &ldquo;ba&rdquo;, &ldquo;ban&rdquo;, &ldquo;bana&rdquo;, &ldquo;banan&rdquo;, &ldquo;banana&rdquo;, &ldquo;n&rdquo;, &ldquo;na&rdquo;, &ldquo;nan&rdquo;, &ldquo;nana&rdquo;)</p></blockquote>
+
+<p>This is also a question on <a href="http://www.spoj.com/problems/DISUBSTR/">SPOJ</a>.</p>
+
+<h3>Solution</h3>
+
+<p>This is a very good question, which tests Suffix tree, LCP and string manipulation knowledges.</p>
+
+<p><strong>The solution is to build a suffix tree</strong>. This is because:</p>
+
+<blockquote><p>If you look through the <strong><a href="http://qr.ae/6o6Nk">prefixes of each suffix</a></strong> of a string, you have covered all substrings of that string.</p></blockquote>
+
+<p>There are 2 implementations. First one is slightly simpler.</p>
+
+<h4>Implementation 1</h4>
+
+<p><strong>Suffix array + LCP</strong> (longest common prefix). Take &ldquo;Banana&rdquo; as input, then the suffixes:</p>
+
+<pre><code>0) BANANA
+1) ANANA
+2) NANA
+3) ANA
+4) NA
+5) A
+</code></pre>
+
+<p>Sort it:</p>
+
+<pre><code>5) A
+3) ANA
+1) ANANA
+0) BANANA
+4) NA
+2) NANA
+</code></pre>
+
+<p>Then we start calculate number of substring (that is prefixes of suffix). After removing duplicated prefix, the count is:</p>
+
+<pre><code>5) A - 1
+3) ANA - 2
+1) ANANA - 2
+0) BANANA - 6
+4) NA - 2
+2) NANA - 2
+</code></pre>
+
+<p>Total number is:</p>
+
+<pre><code>1 + 2 + 2 + 6 + 2 + 2 = 15
+</code></pre>
+
+<p>But wait, realize something? &ldquo;A&rdquo; is simply duplicate substring in &ldquo;ANA&rdquo;, which appers in &ldquo;ANANA&rdquo;. Keep this in mind, cuz we need to observe this in the 2nd implementation, too.</p>
+
+<p>Finally, the total number is calculated like this:</p>
+
+<pre><code>for each suffix
+    ans += length(suffix) - LCP(suffix, previous suffix)
+</code></pre>
+
+<p>For more details, read <a href="http://qr.ae/6o6Nk">here</a>.</p>
+
+<h4>Implementation 2</h4>
+
+<p>Build a suffix tree, like this:</p>
+
+<p><img class="middle" src="/assets/images/suffix-tree-banana.png"></p>
+
+<p>Number of substrings is simply the <strong>sum of levels of each leaf</strong>. For the 3 branches of the suffix tree, number of levels are: 6, 5 and 4 respectively. Total = 15.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/18">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/16">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

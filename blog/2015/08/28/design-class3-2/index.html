@@ -1,0 +1,376 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[NineChap System Design] Class 3.2: Web Service - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Question 4 fix MP3 problem The process of fetching a MP3 (from CDN): aquire MP3 link, and send request
+send request to CDN
+CDN receive request, find &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2015/08/28/design-class3-2/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[NineChap System Design] Class 3.2: Web Service</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-08-28T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1>Question 4</h1>
+
+<p><strong>fix MP3 problem</strong></p>
+
+<p>The process of fetching a MP3 (from CDN):</p>
+
+<p><img class="middle" src="/assets/images/design-class3-client-request-mp3.png"></p>
+
+<ol>
+<li>aquire MP3 link, and send request</li>
+<li>send request to CDN</li>
+<li>CDN receive request, find MP3</li>
+<li>response to client</li>
+<li>play the music</li>
+</ol>
+
+
+<p><img class="middle" src="/assets/images/design-class3-client-request-mp3-errors.png"></p>
+
+<p>Question: in step 2, there&rsquo;s more Network error, but in step 4, there&rsquo;s no Network error, but Timeout. Why?</p>
+
+<h2>Fix step 2, Network error</h2>
+
+<p>Problem is: MP3 url invalid. It actually comes from a failed CDN sever.</p>
+
+<p>Solution: fix the server.</p>
+
+<h2>Fix step 3, CDN can&rsquo;t find MP3</h2>
+
+<p>Problem associated with <strong>Anti-Leech</strong>.</p>
+
+<blockquote><p><strong><a href="https://en.wikipedia.org/wiki/Leech_(computing">a leech</a>)</strong> is one who benefits, usually deliberately, from others' information or effort but does not offer anything in return.</p>
+
+<p>Example: Wi-Fi leeches, Direct linking (or hot-linking) and In most P2P-networks, leeching is whose who download too much.</p>
+
+<p><strong><a href="https://answers.yahoo.com/question/index?qid=1006042926419">Anti-Leech</a></strong> specializes in protecting file downloads and stopping bandwidth leeching.</p></blockquote>
+
+<p>See that some P2P and leeching software will steal your url links, so the MP3 url expiration time is 5 minutes.</p>
+
+<p>So when CDN server&rsquo;s clock and web server&rsquo;s clock are not synchronized well, MP3 url can expire.</p>
+
+<p>Solution: every 10 minutes sync CDN clock with web server clock.</p>
+
+<h2>Fix step 4, Timeout error</h2>
+
+<p>Some MP3 are relatively large. Thus timeout.</p>
+
+<blockquote><p>MP3 performs better at higher bps, and aac(Advanced Audio Coding) works better at lower bps.</p></blockquote>
+
+<p>Solution:</p>
+
+<ol>
+<li><p>compress MP3 to 48bps, or use aac format. So, play lower-rate music first, then switch automatically.</p></li>
+<li><p>pre-load a music while previous is playing.</p></li>
+<li><p>optimize CDN</p></li>
+</ol>
+
+
+<blockquote><p><strong><a href="https://en.wikipedia.org/wiki/Content_delivery_network">CDN</a></strong> content delivery network is a large <strong>distributed system of servers</strong> deployed in <strong>multiple data centers</strong> across the Internet.</p>
+
+<p>The goal of a CDN is to serve content to end-users with high availability and high performance.</p></blockquote>
+
+<p><img class="middle" src="/assets/images/design-class3-CDN.png"></p>
+
+<p>Which CDN should client choose?</p>
+
+<blockquote><p>Not DNS, but web server calculates which to choose. It can be calculated using IP distance, or ISP provider, but not accurate.</p>
+
+<p>We can also use local desktop apps (in different locations) to ping CDN servers. This may violate user privacy, though.</p></blockquote>
+
+<h2>Fix step 5, Fail to play</h2>
+
+<p>Problem: some files got wrong decoding.</p>
+
+<h2>Fix step 6, unkown error</h2>
+
+<p>Problem: some users close the page while MP3 loading.</p>
+
+<h1>Question 5</h1>
+
+<p><strong>fix player problem</strong></p>
+
+<p>Problem: iOS device can never play Flash.</p>
+
+<p>Solution: develop HTML5 player.</p>
+
+<h2>5.2 how to evaluate that you solved the problem</h2>
+
+<ol>
+<li><p>user complains</p></li>
+<li><p><strong>important</strong>: daily retention rate!</p></li>
+</ol>
+
+
+<p>We can&rsquo;t use daily active user, cuz it depends on marketing, competitors, and infrastructure changes.</p>
+
+<p><strong>One day retention rate</strong>:</p>
+
+<p><img class="middle" src="/assets/images/design-class3-user-retention.png"></p>
+
+<blockquote><p>Today’s visitor = {U1, U3, U7, U9, U10}</p>
+
+<p>Tomorrow&rsquo;s visitor = {U2, U3, U9,}</p>
+
+<p>Today’s one day retention rate = 2/5</p></blockquote>
+
+<h1>Question 6 秒杀</h1>
+
+<h2>Design</h2>
+
+<p>Queue A and Queue B</p>
+
+<p><img class="middle" src="/assets/images/design-class3-miao-sha.png"></p>
+
+<h3>Queue A</h3>
+
+<p>Many queues, each one locates on a individual web server or reverse proxy. It is mainly used to accept large amount of requests coming from the clients.</p>
+
+<p>Each machine may takes 10,000 or more requests per second.</p>
+
+<p>Queue A will redirect most requests to a static page (cached).</p>
+
+<h3>Queue B</h3>
+
+<p>Queue B is a single machine, to aviod distributed problems. It takes in small amount of requests and decides results (eg. redirect to payment page).</p>
+
+<blockquote><p>Now, why do we need 2 queues, not 1?</p>
+
+<p>Think about a hospital. Queue A is the hospital lobby and security guard, and Queue B is the queue of patience.</p></blockquote>
+
+<h2>How to reduce traffic</h2>
+
+<ol>
+<li>no image</li>
+<li>cache more static pages</li>
+<li>reverse proxy: batch sending the requests</li>
+</ol>
+
+
+<p>Also, can use front-end javascript to prevent clicking. There are method to bypass, so we need to check IP or do some filtering.</p>
+
+<h2>How to keep it simple?</h2>
+
+<ol>
+<li>no DB: basic logic. But rmb to use a log file</li>
+<li>no lock</li>
+</ol>
+
+
+<h2>How to improve stability</h2>
+
+<ol>
+<li>use new server to do <strong>Miao Sha</strong>, in case of crash</li>
+<li>asyc prcessing everything! Don&rsquo;t let other people wait, in case of crash.</li>
+</ol>
+
+
+<h3>How to defend hackers</h3>
+
+<ol>
+<li>IP address (to defent auto softwares), but it&rsquo;s easy for hackers to fake IP address</li>
+<li>CAPTCHA</li>
+</ol>
+
+
+<blockquote><p><strong><a href="https://en.wikipedia.org/wiki/CAPTCHA">CAPTCHA</a></strong> (an acronym for &ldquo;Completely Automated Public Turing test to tell Computers and Humans Apart&rdquo;) is a type of challenge-response test used in computing to determine whether or not the user is human.</p></blockquote>
+
+<h2>follow-up</h2>
+
+<p>How to design 12306 (support several million QPS)</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-08-28T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ninechap/'>ninechap</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2015/08/28/design-class3-2/" data-via="" data-counturl="http://okc1.github.io/blog/2015/08/28/design-class3-2/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/08/28/design-class3-1/" title="Previous Post: [NineChap System Design] Class 3.1: Web Service ">&laquo; [NineChap System Design] Class 3.1: Web Service </a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/08/30/design-class4-1/" title="Next Post: [NineChap System Design] Class 4.1: Crawler ">[NineChap System Design] Class 4.1: Crawler  &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Lintcode | My Octopress Blog]]></title>
+  <link href="http://okc1.github.io/blog/categories/lintcode/atom.xml" rel="self"/>
+  <link href="http://okc1.github.io/"/>
+  <updated>2016-06-08T10:52:14-07:00</updated>
+  <id>http://okc1.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[[LintCode] Segment Tree Query II]]></title>
+    <link href="http://okc1.github.io/blog/2015/10/13/Segment-Tree-Query-II/"/>
+    <updated>2015-10-13T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2015/10/13/Segment-Tree-Query-II</id>
+    <content type="html"><![CDATA[### Question 
+
+[link](http://www.lintcode.com/en/problem/segment-tree-query-ii/)
+
+> For an array, we can build a SegmentTree for it, each node stores an extra attribute count to denote the number of elements in the the array which value is between interval start and end. (The array may not fully filled by elements)
+
+> Design a query method with three parameters root, start and end, find the number of elements in the in array's interval [start, end] by the given root of value SegmentTree.
+
+### Solution
+
+Similar.
+
+### Code
+
+    /**
+     * Definition of SegmentTreeNode:
+     * public class SegmentTreeNode {
+     *     public int start, end, count;
+     *     public SegmentTreeNode left, right;
+     *     public SegmentTreeNode(int start, int end, int count) {
+     *         this.start = start;
+     *         this.end = end;
+     *         this.count = count;
+     *         this.left = this.right = null;
+     *     }
+     * }
+     */
+    public class Solution {
+        /**
+         *@param root, start, end: The root of segment tree and 
+         *                         an segment / interval
+         *@return: The count number in the interval [start, end]
+         */
+        public int query(SegmentTreeNode root, int start, int end) {
+            if (root == null || start > end) {
+                return 0;
+            } else if (root.start > end || root.end < start) {
+                return 0;
+            } else if (start <= root.start && root.end <= end) {
+                return root.count;
+            }
+            int mid = (root.start + root.end) / 2;
+            return query(root.left, start, Math.min(mid, end)) + 
+                    query(root.right, Math.max(mid + 1, start), end);
+        }
+    }
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[LintCode] Segment Tree Query]]></title>
+    <link href="http://okc1.github.io/blog/2015/10/13/Segment-Tree-Query/"/>
+    <updated>2015-10-13T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2015/10/13/Segment-Tree-Query</id>
+    <content type="html"><![CDATA[### Question 
+
+[link](http://www.lintcode.com/en/problem/segment-tree-query/)
+
+> For an integer array (index from 0 to n-1, where n is the size of this array), in the corresponding SegmentTree, each node stores an extra attribute max to denote the maximum number in the interval of the array (index from start to end).
+
+> Design a query method with three parameters root, start and end, find the maximum number in the interval [start, end] by the given root of segment tree.
+
+### Solution
+
+Slightly difficult as we need to keep in mind the following: 
+
+1. what's the return condition? (start and end is large enough to cover the entire range)
+
+1. how to handle overlapping case? (find min-point first and then analyse case by case)
+
+### Code
+
+    /**
+     * Definition of SegmentTreeNode:
+     * public class SegmentTreeNode {
+     *     public int start, end, max;
+     *     public SegmentTreeNode left, right;
+     *     public SegmentTreeNode(int start, int end, int max) {
+     *         this.start = start;
+     *         this.end = end;
+     *         this.max = max
+     *         this.left = this.right = null;
+     *     }
+     * }
+     */
+    public class Solution {
+        /**
+         *@param root, start, end: The root of segment tree and 
+         *                         an segment / interval
+         *@return: The maximum number in the interval [start, end]
+         */
+        public int query(SegmentTreeNode root, int start, int end) {
+            // write your code here
+            if (root == null || start > end) {
+                return -1;
+            } else if (root.start > end || root.end < start) {
+                return -1;
+            } else if (root.start >= start && root.end <= end) {
+                return root.max;
+            }
+            int mid = (root.start + root.end) / 2;
+            return Math.max(query(root.left, start, Math.min(mid, end)), 
+                            query(root.right, Math.max(mid + 1, start), end));
+        }
+    }
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[LintCode] Segment Tree Modify]]></title>
+    <link href="http://okc1.github.io/blog/2015/10/13/Segment-Tree-Modify/"/>
+    <updated>2015-10-13T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2015/10/13/Segment-Tree-Modify</id>
+    <content type="html"><![CDATA[### Question 
+
+[link](http://www.lintcode.com/en/problem/segment-tree-modify/#)
+
+> For a Maximum Segment Tree, which each node has an extra value max to store the maximum value in this node's interval.
+
+> Implement a modify function with three parameter root, index and value to change the node's value with [start, end] = [index, index] to the new given value. Make sure after this change, every node in segment tree still has the max attribute with the correct value.
+
+### Solution
+
+It's very similar to __Segment Tree Modify/search__. 
+
+### Code
+
+    /**
+     * Definition of SegmentTreeNode:
+     * public class SegmentTreeNode {
+     *     public int start, end, max;
+     *     public SegmentTreeNode left, right;
+     *     public SegmentTreeNode(int start, int end, int max) {
+     *         this.start = start;
+     *         this.end = end;
+     *         this.max = max
+     *         this.left = this.right = null;
+     *     }
+     * }
+     */
+    public class Solution {
+        /**
+         *@param root, index, value: The root of segment tree and 
+         *@ change the node's value with [index, index] to the new given value
+         *@return: void
+         */
+        public void modify(SegmentTreeNode root, int index, int value) {
+            helper(root, index, value);
+        }
+
+        private int helper(SegmentTreeNode node, int target, int val) {
+            if (node.start > target || node.end < target) {
+                // no update, then just return max as normal
+                return node.max;
+            } else if (node.start == node.end && node.start == target) {
+                node.max = val;
+                return val;
+            } else {
+                // check left and right, and update max value accordingly
+                node.max = Math.max(helper(node.left, target, val), 
+                                    helper(node.right, target, val));
+                return node.max;
+            }
+        }
+    }
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[LintCode] Segment Tree Build II]]></title>
+    <link href="http://okc1.github.io/blog/2015/10/13/Segment-Tree-Build-II/"/>
+    <updated>2015-10-13T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2015/10/13/Segment-Tree-Build-II</id>
+    <content type="html"><![CDATA[### Question 
+
+[link](http://www.lintcode.com/en/problem/segmemt-tree-build-ii/)
+
+> The structure of Segment Tree is a binary tree which each node has two attributes start and end denote an segment / interval.
+
+> start and end are both integers, they should be assigned in following rules:
+
+> The root's start and end is given by build method.
+The left child of node A has start=A.left, end=(A.left + A.right) / 2.
+The right child of node A has start=(A.left + A.right) / 2 + 1, end=A.right.
+if start equals to end, there will be no children for this node.
+
+> Implement a build method with a given array, so that we can create a corresponding segment tree with every node value represent the corresponding interval max value in the array, return the root of this segment tree.
+
+### Solution
+
+Similar.
+
+### Code
+
+    /**
+     * Definition of SegmentTreeNode:
+     * public class SegmentTreeNode {
+     *     public int start, end, max;
+     *     public SegmentTreeNode left, right;
+     *     public SegmentTreeNode(int start, int end, int max) {
+     *         this.start = start;
+     *         this.end = end;
+     *         this.max = max
+     *         this.left = this.right = null;
+     *     }
+     * }
+     */
+    public class Solution {
+        /**
+         *@param A: a list of integer
+         *@return: The root of Segment Tree
+         */
+        public SegmentTreeNode build(int[] A) {
+            if (A == null || A.length == 0) {
+                return null;
+            }
+            return helper(A, 0, A.length - 1);
+        }
+
+        private SegmentTreeNode helper(int[] A, int start, int end) {
+            if (start > end) {
+                return null;
+            }
+            SegmentTreeNode node = new SegmentTreeNode(start, end);
+            if (start == end) {
+                node.max = A[start];
+                return node;
+            } else {
+                node.left = helper(A, start, (start + end) / 2);
+                node.right = helper(A, (start + end) / 2 + 1, end);
+                if (node.right != null) {
+                    node.max = Math.max(node.left.max, node.right.max);
+                } else {
+                    node.max = node.left.max;
+                }
+            }
+            return node;
+        }
+    }
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[LintCode] Segment Tree Build]]></title>
+    <link href="http://okc1.github.io/blog/2015/10/13/Segment-Tree-Build/"/>
+    <updated>2015-10-13T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2015/10/13/Segment-Tree-Build</id>
+    <content type="html"><![CDATA[### Question 
+
+[link](http://www.lintcode.com/en/problem/segment-tree-build/)
+
+> The structure of Segment Tree is a binary tree which each node has two attributes start and end denote an segment / interval.
+
+> start and end are both integers, they should be assigned in following rules:
+
+> The root's start and end is given by build method.
+The left child of node A has start=A.left, end=(A.left + A.right) / 2.
+The right child of node A has start=(A.left + A.right) / 2 + 1, end=A.right.
+if start equals to end, there will be no children for this node.
+
+> Implement a build method with two parameters start and end, so that we can create a corresponding segment tree with every node has the correct start and end value, return the root of this segment tree.
+
+### Solution
+
+A simple top-down run through. 
+
+### Code
+
+    /**
+     * Definition of SegmentTreeNode:
+     * public class SegmentTreeNode {
+     *     public int start, end;
+     *     public SegmentTreeNode left, right;
+     *     public SegmentTreeNode(int start, int end) {
+     *         this.start = start, this.end = end;
+     *         this.left = this.right = null;
+     *     }
+     * }
+     */
+    public class Solution {
+        /**
+         *@param start, end: Denote an segment / interval
+         *@return: The root of Segment Tree
+         */
+        public SegmentTreeNode build(int start, int end) {
+            // write your code here
+            if (start > end) {
+                return null;
+            }
+            SegmentTreeNode node = new SegmentTreeNode(start, end);
+            if (start < end) {
+                node.left = build(start, (start + end) / 2);
+                node.right = build((start + end) / 2 + 1, end);
+            }
+            return node;
+        }
+    }
+]]></content>
+  </entry>
+  
+</feed>

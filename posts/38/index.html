@@ -1,0 +1,840 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Question link Given preorder, construct the BST. Solution We can get Inorder traversal by sorting the given Preorder traversal. So we have the &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/38/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/29/Construct-BST-from-preorder/">[Question] Construct a BST From Preorder Traversal</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-29T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>29</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.geeksforgeeks.org/g-fact-17/">link</a></p>
+
+<blockquote><p>Given preorder, construct the BST.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>We can get <strong>Inorder traversal</strong> by sorting the given Preorder traversal. So we have the required two traversals to construct the Binary Search Tree.</p>
+
+<p>A very similar approach would be <strong>always spliting the array</strong> by the head value. Time complexity is O(nlgn) for a balanced BST, or O(n<sup>2</sup>) for a screwed tree.</p>
+
+<p><strong>Howver, there&rsquo;s <a href="http://www.geeksforgeeks.org/construct-bst-from-given-preorder-traversa/">O(n) solutions</a></strong>.</p>
+
+<blockquote><p>The trick is to set a range {min .. max} for every node. Initialize the range as {INT_MIN .. INT_MAX}. The first node will definitely be in range, so create root node. To construct the left subtree, set the range as {INT_MIN …root->data}. If a values is in the range {INT_MIN .. root->data}, the values is part part of left subtree. To construct the right subtree, set the range as {root->data..max .. INT_MAX}.</p></blockquote>
+
+<p><strong>The key</strong> is the we need <strong>a public variable</strong> as a pointer (to traverse thru the array).</p>
+
+<p>There&rsquo;s another <a href="http://www.geeksforgeeks.org/construct-bst-from-given-preorder-traversal-set-2/">O(n) solution</a> using stack. I wont' cover for now.</p>
+
+<h3>Code</h3>
+
+<p><strong>written by me</strong></p>
+
+<p>It&rsquo;s not an easy question, to be frank.</p>
+
+<pre><code>int p;
+
+public TreeNode solution(int[] preorder) {
+    p = 0;
+    return helper(preorder, Integer.MIN_VALUE, Integer.MAX_VALUE);
+}
+
+private TreeNode helper(int[] A, int min, int max) {
+    int len = A.length;
+    if (p &gt;= len) {
+        return null;
+    } else if (A[p] &lt; min || A[p] &gt; max) {
+        return null;
+    }
+    TreeNode root = new TreeNode(A[p]);
+    p++;
+    root.left = helper(A, min, root.val);
+    root.right = helper(A, root.val, max);
+    return root;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/28/Matching-Nuts-And-Bolts/">[Question] Matching Nuts and Bolts</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-28T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://tech-queries.blogspot.sg/2011/01/nuts-and-bolts-algorithm.html">link</a></p>
+
+<blockquote><p>You are given a collection of nuts of different size and corresponding bolts. You can choose any nut &amp; any bolt together, from which you can determine whether the nut is larger than bolt, smaller than bolt or matches the bolt exactly. However there is no way to compare two nuts together or two bolts together. Suggest an algorithm to match each bolt to its matching nut.</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>Use the idea of quicksort. Find pivot and divide.</p>
+
+<h3>Solution</h3>
+
+<ol>
+<li>Take a nut from the nuts pile</li>
+<li>Divide bolts around it in 2 parts, which are smaller and larger than this.</li>
+<li>Find a matching bolt to this nut.</li>
+<li>Divide nuts in 2 parts, which are smaller and larger than matching bolt.</li>
+</ol>
+
+
+<p>Now we have 2 subsets of Nuts and Bolts.</p>
+
+<p>At every step, we will be able to divide these piles in 2 halves and reduce complexity by a factor of 2.</p>
+
+<p><strong>Average case time complexity will be O(nlogn)</strong>, but O(n<sup>2</sup>) when pivot is selection poor.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/28/Check-Number-Exists/">[Question] Check if Number Exists</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-28T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://tech-queries.blogspot.sg/2011/02/check-if-number-exist.html">link</a></p>
+
+<blockquote><p>There is long list of natural numbers. Remove every 2nd no from list in 1st pass. Remove every 3rd no from list in 2nd pass. Find whether Nth natural no will exist after P passes. N and P are inputs.</p></blockquote>
+
+<pre><code>Example: N is 15 and p is 3.
+Initial: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
+After 1st pass: 1 3 5 7 9 11 13 15 17 19
+After 2nd pass: 1 3 7 9 13 15 19
+After 3rd pass: 1 3 7 13 15 19
+After 4th pass: 1 3 7 13 19
+</code></pre>
+
+<blockquote><p>So we see that 15 exists after 3 passes but vanishes after 4th pass.</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>We see that in any of the pass <strong>new position will be decreased by no of elements deleted</strong> between 1 and current position.</p>
+
+<p>Example: originally number is 15. After 1st pass, it becomes 8th element. After 2nd pass, it becomes 8 - (8 / 3) = 6th element.</p>
+
+<p>We stop when either P(i-1)/(i+1) is an integer, or when number is smaller than pass.</p>
+
+<h3>Code</h3>
+
+<p><strong>not written by me</strong></p>
+
+<pre><code>bool check_posiiton(int n, int p)  
+{  
+ int cur = n;  
+ int i = 0;  
+ while (i &lt;= p)  
+ {  
+     i++;  
+     if (cur%(i+1) == 0)  
+     {  
+         //Vanishes in this pass  
+         return false;  
+     }  
+     else if (cur &lt; (i+1))  
+     {  
+         //Number exist denominator is greater than numerator  
+         return true;  
+     }  
+     cur = cur - cur/(i+1);  
+ }  
+ return true;  
+}  
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/28/Breaking-Chocolate-Bars/">[Question] Breaking Chocolate Bars</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-28T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Game #1</h3>
+
+<p><a href="http://www.cut-the-knot.org/proofs/chocolad.shtml">link</a></p>
+
+<blockquote><p>Two players take turns breaking a chacolate bar (rectangle-shaped consist of squares). The last to break a piece wins the game.</p>
+
+<p>Design the strategy.</p></blockquote>
+
+<h4>Solution</h4>
+
+<p>Each time the bar is broken, <strong>total number of pieces increase by 1</strong>. Suppose there&rsquo;re even number of squares, 1st player wins regardless of breaking strategy. And vice versa.</p>
+
+<h3>Problem #2</h3>
+
+<p><a href="http://www.cut-the-knot.org/proofs/chocolad.shtml">link</a></p>
+
+<blockquote><p>75 teams took part in a competition where teams met 1-on-1. Each time the defeated team drops out.</p>
+
+<p>How many meets are needed to before one team is declared a winner?</p></blockquote>
+
+<h4>Solution</h4>
+
+<p>Each game will eliminate 1 game, so it needs 74 games.</p>
+
+<h3>Splitting Piles</h3>
+
+<p><a href="http://www.cut-the-knot.org/arithmetic/rapid/piles.shtml">link</a></p>
+
+<blockquote><p>Given a random number of items in a pile. Ask an audience to split a pile into two piles, multiply the numbers of items in the two new piles and keep adding the results. The process stops when there is no pile with more than 1 chip.</p>
+
+<p>For example, let start with 9 chips:</p></blockquote>
+
+<table cellpadding="10">
+<tbody><tr><td align="center">Piles</td><td align="center">Which is broken</td><td align="center">What's added</td><td align="center">Total</td></tr>
+<tr><td colspan="4"><hr></td></tr>
+<tr><td align="center">9</td><td align="center">9</td><td align="center">3*6</td><td align="center">18</td></tr>
+<tr><td align="center">3,6</td><td align="center">3</td><td align="center">1*2</td><td align="center">20</td></tr>
+<tr><td align="center">1,2,6</td><td align="center">6</td><td align="center">3*3</td><td align="center">29</td></tr>
+<tr><td align="center">1,2,3,3</td><td align="center">3</td><td align="center">1*2</td><td align="center">31</td></tr>
+<tr><td align="center">1,2,1,2,3</td><td align="center">2</td><td align="center">1*1</td><td align="center">32</td></tr>
+<tr><td align="center">1,1,1,1,2,3</td><td align="center">2</td><td align="center">1*1</td><td align="center">33</td></tr>
+<tr><td align="center">1,1,1,1,1,1,3</td><td align="center">3</td><td align="center">1*2</td><td align="center">35</td></tr>
+<tr><td align="center">1,1,1,1,1,1,1,2</td><td align="center">2</td><td align="center">1*1</td><td align="center"><b>36</b></td></tr>
+<tr><td align="center">1,1,1,1,1,1,1,1,1</td><td align="center">-</td><td align="center">-</td><td align="center">-</td></tr>
+</tbody></table>
+
+
+<blockquote><p>Before the audience told the final number, you immediately guess it&rsquo;s 36. How did you do it?</p></blockquote>
+
+<h4>Solution</h4>
+
+<p>The result does not depend on how the piles are split; but only on the initial size of the very first pile. <strong>Answer is always N(N - 1)/2</strong>.</p>
+
+<p>This can be proved by <a href="http://www.cut-the-knot.org/arithmetic/rapid/piles.shtml">mathematical induction</a>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/27/Sliding-Window-Maximum/">[LeetCode Plus] Sliding Window Maximum</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-27T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://leetcode.com/2011/01/sliding-window-maximum.html">link</a></p>
+
+<blockquote><p>A long array A[] is given to you. There is a sliding window of size w which is moving from the very left of the array to the very right. You can only see the w numbers in the window. Each time the sliding window moves rightwards by one position. Following is an example:
+The array is [1, 3, -1, -3, 5, 3, 6, 7], and w is 3.</p></blockquote>
+
+<pre><code>Window position                Max
+---------------               -----
+[1  3  -1] -3  5  3  6  7       3
+ 1 [3  -1  -3] 5  3  6  7       3
+ 1  3 [-1  -3  5] 3  6  7       5
+ 1  3  -1 [-3  5  3] 6  7       5
+ 1  3  -1  -3 [5  3  6] 7       6
+ 1  3  -1  -3  5 [3  6  7]      7
+</code></pre>
+
+<blockquote><p>Input: A long array A[], and a window width w</p>
+
+<p>Output: An array B[], B[i] is the maximum value of from A[i] to A[i+w-1]</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p><strong>The  naive approach is using a Heap</strong>. This time complexity is O(n*logn). However, there is a better way using a (double-ended) queue.</p>
+
+<p><strong>We do not need to <a href="http://n00tc0d3r.blogspot.sg/2013/04/sliding-window-maximum.html">keep all numbers</a></strong>. For example, suppose numbers in a window of size 4 are (1, 3, -1, 2). Obviously, no matter what next numbers are, 1 and -1 are never going to be a maximal as the window moving. The queue should look like (3, 2) in this case.</p>
+
+<h3>Solution</h3>
+
+<ol>
+<li>When moves to a new number, iterate through back of the queue, removes all numbers that are not greater than the new one, and then insert the new one to the back.</li>
+<li>FindMax only need to take the first one of the queue.</li>
+<li>To remove a number outside the window, only compare whether the current index is greater than the front of queue. If so, remove it.</li>
+</ol>
+
+
+<p><a href="http://leetcode.com/2011/01/sliding-window-maximum.html">A natural way</a> most people would think is to try to maintain the queue size the same as the window’s size. Try to break away from this thought and think out of the box.</p>
+
+<h3>Code</h3>
+
+<p>written by me</p>
+
+<pre><code>public int[] slidingWindowMax(int[] array, int w) {
+    int[] ans = new int[array.length - w + 1];
+    List&lt;Integer&gt; q = new LinkedList&lt;Integer&gt;();
+    // Queue stores indices of array, and values are in decreasing order.
+    // In this way, the top element in queue is the max in window
+    for (int i = 0; i &lt; array.length; i++) {
+        // 1. remove element from head until first number within window
+        if (!q.isEmpty() &amp;&amp; q.get(0) + w &lt;= i) {
+            // it's OK to change 'while' to 'if' in the line above
+            // cuz we actually remove 1 element at most
+            q.remove(0);
+        }
+        // 2. before inserting i into queue, remove from the tail of the
+        // queue indices with smaller value they array[i]
+        while (!q.isEmpty() &amp;&amp; array[q.get(q.size() - 1)] &lt;= array[i]) {
+            q.remove(q.size() - 1);
+        }
+        q.add(i);
+        // 3. set the max value in the window (always the top number in
+        // queue)
+        if (i + 1 &gt;= w) {
+            ans[i + 1 - w] = array[q.get(0)];
+        }
+    }
+    return ans;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/27/Reconstruct-Tree-From-PreOrder-Traversal/">[Question] Reconstruct Tree From Pre-Order Traversal</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-27T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://tech-queries.blogspot.sg/2011/06/reconstruct-tree-from-pre-order.html">link</a></p>
+
+<blockquote><p>A tree has a special property where leaves are represented with ‘2’ and non-leaf with ‘1’. Each node has either 0 or 2 children. If given preorder traversal of this tree, construct the tree.</p>
+
+<p>Example: Given Pre Order string => 12122, output:</p></blockquote>
+
+<pre><code>       1
+      / \
+     2   1
+        / \
+       2   2
+</code></pre>
+
+<h3>Analysis</h3>
+
+<blockquote><p><a href="http://tech-queries.blogspot.sg/2011/06/reconstruct-tree-from-pre-order.html">In normal scenario</a>, it’s not possible to detect where left subtree ends and right subtree starts using only pre-order traversal. But here, we are given a special property. Since every node has either 2 children or no child, we can surely say that if a node exists then its sibling also exists.</p></blockquote>
+
+<p>Keep a public variable and build the tree recursively until the list finishes.</p>
+
+<h3>Code</h3>
+
+<pre><code>ListNode list = null; // this is the input list public variable
+
+public TreeNode main(ListNode input) {
+    list = input;
+    return constructTree();
+}
+
+private TreeNode constructTree() {
+    if (list == null) {
+        return null;
+    }
+    TreeNode root = new TreeNode(list.val);
+    list = list.next;
+
+    if (root.val == 1) {
+        root.left = constructTree();
+        root.right = constructTree();
+    }
+    return root;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/27/Fit-dominos-in-strip/">[Question] Fit 1*2 Dominos in 2*N Strip</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-27T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://tech-queries.blogspot.sg/2011/07/fit-12-dominos-in-2n-strip.html">link</a></p>
+
+<blockquote><p>In how many ways can one tile a 2 X N strip of square cells with 1 X 2 dominos?</p></blockquote>
+
+<p><img class="middle" src="/assets/images/Dominos.png"></p>
+
+<h3>Solution</h3>
+
+<p><strong>X(n+1) = X(n) + X(n-1)</strong></p>
+
+<p>It&rsquo;s a Fibonacci Series with X(1) = 1 and X(2) = 2.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/27/Elephant-And-Bananas/">[Question] Elephant and Bananas</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-27T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://tech-queries.blogspot.sg/2011/04/elephant-and-banana.html">link</a></p>
+
+<blockquote><p>There&rsquo;s a elephant, which can carry max 1000 bananas. The elephant eats a banana every 1 Km (both forward and back).</p>
+
+<p>Now we want to transfer 3000 bananas to a place 1000 Km away. How many bananas can be left?</p>
+
+<p>Also solved to generalized problem (write code for solution).</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p><strong>If we subdivide distances for each kilometer</strong>. Notice if elephant wants to shift all the bananas 1 km, <strong>you will loose 5 bananas every km</strong>.</p>
+
+<p>So we transferred 2995 (998+998+999) to one km distance. This process continues until after 200 km, we have only 2000 bananas left with remaining distance of 800 km.</p>
+
+<p><strong>Start from here, we only loose 3 bananas every km</strong>. This goes on for another 334 km, we will have 998 bananas left, and the rest of the bananas can be transfered in a single journey.</p>
+
+<h3>Solution</h3>
+
+<p><strong>532 bananas</strong>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/27/Coins-in-Line/">[LeetCode Plus] Coins in a Line</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-27T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://leetcode.com/2011/02/coins-in-line.html">link</a></p>
+
+<blockquote><p>There are n coins in a line. Two players take turns to take a coin from one of the ends of the line until there are no more coins left. The player with the larger amount of money wins. Assume that you go first, describe an algorithm to compute the maximum amount of money you can win.</p>
+
+<p>There might be even or odd number of coins.</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p><strong>There&rsquo;s a guaranteed &lsquo;win strategy&rsquo;</strong>, if the input array is even size. Find the sum of coins at even and odd positions respectively. Then, make sure you always take coin from even (or odd, whichever sum is bigger) position.</p>
+
+<p>This strategy is clever and simple, but <strong>DOES NOT maximize your total sum</strong>, and coins must be even number.</p>
+
+<h3>Solution</h3>
+
+<p><strong>The optimized solution is to use <a href="http://tech-queries.blogspot.sg/2011/06/get-maximum-sum-from-coins-in-line.html">2D DP</a></strong>. Now we have array A and C(i, j) which is the maximum sum possible when remaining coins are from i to j.</p>
+
+<p>You can take either i or j. Since the opponent is as smart as you, he would have chosen the choice that yields the minimum amount to you.</p>
+
+<p>So, the final equation is:</p>
+
+<blockquote><p>C(i, j) = MAX {</p>
+
+<pre><code>      Ai + MIN{C(i+2, j), C(i+1, j-1)}, 
+
+      Aj + MIN{C(i+1, j-1), C(i, j-2)} 
+</code></pre>
+
+<p>}</p></blockquote>
+
+<p>If interested, read <strong>[Fundamental] Min-Max Algorithm</strong> for more.</p>
+
+<h3>Code</h3>
+
+<pre><code>public int maxMoney(int[] coins) {
+    int len = coins.length;
+    int[][] dp = new int[len][len];
+    for (int i = len - 1; i &gt;= 0; i--) {
+        for (int j = i; j &lt; len; j++) {
+            if (i == j) {
+                dp[i][j] = coins[i];
+            } else if (i + 1 == j) {
+                dp[i][j] = Math.max(coins[i], coins[j]);
+            } else {
+                int chooseHead = coins[i]
+                        + Math.min(dp[i + 2][j], dp[i + 1][j - 1]);
+                int chooseTail = coins[j]
+                        + Math.min(dp[i][j - 2], dp[i + 1][j - 1]);
+                dp[i][j] = Math.max(chooseHead, chooseTail);
+            }
+        }
+    }
+    return dp[0][len - 1];
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/26/True-tell-brain-teaser/">[Question] Truth Tell Brain Teaser</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-26T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://tech-queries.blogspot.sg/2011/07/truth-or-lie.html">link</a></p>
+
+<blockquote><p>There are 100 people in a room. A person always speaks either lie or truth.</p>
+
+<p>When asked:</p></blockquote>
+
+<pre><code>1st person says =&gt; all are liars
+2nd person says =&gt; at most 1 speaks truth
+3rd person says =&gt; at most 2 speak truth
+4th person says =&gt; at most 3 speak truth
+.
+.
+.
+100th person says =&gt; at most 99 speak truth
+</code></pre>
+
+<blockquote><p>&ldquo;At most N&rdquo; means &ldquo;there&rsquo;re N or less than N&rdquo;.</p>
+
+<p>How many people speak only truth?</p></blockquote>
+
+<h3>Solution</h3>
+
+<ol>
+<li></li>
+<li><p>Assume 1st person speaks truth, then all including him should be liar. It means he doesn’t speak truth.</p></li>
+<li><p>Assume 2nd person speaks truth, then he is the only person who speaks truth. But if this statement is true then statements by all others are also true. I.e. if “at most 1 person speaks truth” is true then “at most N speak truth” is also true. So person 2 is also a liar.</p></li>
+<li><p>Assume 3rd person is speaking truth. But then the statements of person 4-100 are also true, which contradicts his own statement. It means that person 3 is also a liar.</p></li>
+<li><p>This process will continue since 50th person. So 1-50 people are liars.</p></li>
+<li><p>51st person says “at most 50 speak truth”. Lets say he is speaking truth. “at most 50” means any number from 0-50. It means that statements like “at most 51 speak truth” and “at most 70 speak truth” are also true. It means that people from 51 to 100 are speaking truth.</p></li>
+</ol>
+
+
+<p><strong>Hence, 50 people speak truth</strong>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/39">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/37">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
