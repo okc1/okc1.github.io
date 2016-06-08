@@ -1,0 +1,1303 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Question link Say you have an array for which the ith element is the price of a given stock on day i. Design an algorithm to find the maximum profit &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/51/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/28/Best-Time-to-Buy-and-Sell-Stock-III/">[LeetCode 123] Best Time to Buy and Sell Stock III</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-28T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Say you have an array for which the <i>i</i><sup>th</sup> element is the price of a given stock on day <i>i</i>.</p>
+
+<p>Design an algorithm to find the maximum profit. You may complete at most <i>two</i> transactions.</p>
+
+<p><b>Note:</b><br>
+You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="white">1</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="red">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is much harder to solve then previous 2 question combined</strong>.</p>
+
+<h3>Solution</h3>
+
+<p>The best solution is explained in <a href="http://rleetcode.blogspot.sg/2014/02/best-time-to-buy-and-sell-stock-iii-java.html">this blog</a>.</p>
+
+<blockquote><p>we can just dived the whole prices array at every point, try to calculate max profit from left and from right respectively&hellip;</p>
+
+<p>However, there are many repeat calculations. So we can apply DP to record max profits for each left side and right side. then add them together at each point.</p></blockquote>
+
+<p>A detailed illustration with examples can be found <a href="http://yucoding.blogspot.sg/2012/12/leetcode-question-10-best-time-to-buy.html">here</a>.</p>
+
+<p>However, the coding part is slightly difficult at least for me. <strong>I made a terrible mistake with the variable &lsquo;leftMin&rsquo; and &lsquo;rightMax&rsquo;</strong>. I declared it as <strong>&lsquo;rightMin&rsquo;</strong> instead, and then the program logic is wrong. We should avoid this kind of mistakes.</p>
+
+<h3>Code</h3>
+
+<pre><code>public int maxProfit(int[] prices) {
+    int len = prices.length;
+    if (len == 0) return 0;
+    int leftMin = Integer.MAX_VALUE, rightMax = Integer.MIN_VALUE;
+    int leftPro[] = new int[len], rightPro[] = new int[len];
+    for (int j = 0; j &lt;= len - 1; j ++) {
+        leftMin = Math.min(leftMin, prices[j]);
+        if (j == 0) leftPro[0] = 0;
+        else leftPro[j] = Math.max(leftPro[j-1], prices[j] - leftMin);
+    }
+    for (int k = len - 1; k &gt;= 0; k --) {
+        rightMax = Math.max(rightMax, prices[k]);
+        if (k == len - 1) rightPro[len-1] = 0;
+        else rightPro[k] = Math.max(rightPro[k+1], rightMax - prices[k]);
+    }
+    int totalPro = 0;
+    for (int i = 0; i &lt; len; i ++) {
+        totalPro = Math.max(totalPro, leftPro[i] + rightPro[i]);
+    }
+    return totalPro;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/28/Best-Time-to-Buy-and-Sell-Stock-II/">[LeetCode 122] Best Time to Buy and Sell Stock II</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-28T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Say you have an array for which the <i>i</i><sup>th</sup> element is the price of a given stock on day <i>i</i>.</p>
+
+<p>Design an algorithm to find the maximum profit. You may complete as many transactions as you like (ie, buy one and sell one share of the stock multiple times). However, you may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="white">1</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="white">1</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="white">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Solution</h3>
+
+<p><strong>This solution is best explained <a href="http://jane4532.blogspot.sg/2013/07/best-time-to-buy-and-sell-stock.html">here</a></strong>.</p>
+
+<blockquote><p>就从左到右轮一遍，遇到递增的都给加起来呗。</p></blockquote>
+
+<h3>Code</h3>
+
+<pre><code>public int maxProfit(int[] prices) {
+    int len = prices.length;
+    if (len &lt;= 1) return 0;
+    int profit = 0;
+    for (int i = 1; i &lt; len; i ++) 
+        profit += Math.max(0, prices[i] - prices[i-1]);
+    return profit;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/28/Best-Time-to-Buy-and-Sell-Stock/">[LeetCode 121] Best Time to Buy and Sell Stock</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-28T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/best-time-to-buy-and-sell-stock/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Say you have an array for which the <i>i</i><sup>th</sup> element is the price of a given stock on day <i>i</i>.</p>
+
+<p>If you were only permitted to complete at most one transaction (ie, buy one and sell one share of the stock), design an algorithm to find the maximum profit.</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="white">1</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="lime">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is a question from a MIT course</strong>, <a href="http://courses.csail.mit.edu/iap/interview/materials.php">Hacking a Google Interview</a>.</p>
+
+<p>I did not solve it, but it&rsquo;s actually very simple to do.</p>
+
+<h3>Solution</h3>
+
+<p>The solution is explained <a href="http://leetcode.com/2010/11/best-time-to-buy-and-sell-stock.html">here</a>:</p>
+
+<blockquote><p>To solve this problem efficiently, you would need to track the minimum value’s index. As you traverse, update the minimum value’s index when a new minimum is met. Then, compare the difference of the current element with the minimum value. Save the buy and sell time when the difference exceeds our maximum difference (also update the maximum difference).</p>
+
+<p>Time is O(N)</p></blockquote>
+
+<h3>Code</h3>
+
+<pre><code>public int maxProfit(int[] prices) {
+    int len = prices.length;
+    if (len &lt;= 1) return 0;
+    int min = prices[0];
+    int max = Integer.MIN_VALUE;
+    for (int i = 1; i &lt; len; i ++) {
+        max = Math.max(max, prices[i] - min);
+        min = Math.min(min, prices[i]);
+    }
+    return Math.max(max, 0);
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/27/Triangle/">[LeetCode 120] Triangle</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-27T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/triangle/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.</p>
+
+<p>
+For example, given the following triangle<br>
+</p><pre>[
+     [<font color="red">2</font>],
+    [<font color="red">3</font>,4],
+   [6,<font color="red">5</font>,7],
+  [4,<font color="red">1</font>,8,3]
+]
+</pre>
+<p></p>
+<p>
+The minimum path sum from top to bottom is <code>11</code> (i.e., <font color="red">2</font> + <font color="red">3</font> + <font color="red">5</font> + <font color="red">1</font> = 11).
+</p>
+
+<p>
+<b>Note:</b><br>
+Bonus point if you are able to do this using only <i>O</i>(<i>n</i>) extra space, where <i>n</i> is the total number of rows in the triangle.
+</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="white">1</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="white">1</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="lime">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is a math question</strong>.</p>
+
+<h3>Solution</h3>
+
+<p>It&rsquo;s an easy question. Instead of normal DP transition function, this one is <strong>so-called bottom-up approach</strong>.</p>
+
+<h3>Code</h3>
+
+<pre><code>public int minimumTotal(ArrayList&lt;ArrayList&lt;Integer&gt;&gt; triangle) {
+    int len = triangle.size();
+    if (len == 0) return 0;
+    int[] m = new int[len];
+    m[0] = triangle.get(0).get(0);
+    for (int i = 1; i &lt; len; i ++) {
+        ArrayList&lt;Integer&gt; cur = triangle.get(i);
+        for (int j = i; j &gt;= 0; j --) {
+            if (j == i) m[j] = m[j-1] + cur.get(j);
+            else if (j == 0) m[j] = m[0] + cur.get(0);
+            else m[j] = Math.min(m[j-1], m[j]) + cur.get(j);
+        }
+    }
+    int min = Integer.MAX_VALUE;
+    for (Integer k: m)
+        min = Math.min(min, k);
+    return min;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/27/Populating-Next-Right-Pointers-in-Each-Node-II/">[LeetCode 117] Populating Next Right Pointers in Each Node II</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-27T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Follow up for problem "<i>Populating Next Right Pointers in Each Node</i>".</p>
+<p>What if the given tree could be any binary tree? Would your previous solution still work?</p>
+<p>
+<b>Note:</b>
+</p><ul><li>You may only use constant extra space.</li></ul>
+<p></p>
+<p>
+For example,<br>
+Given the following binary tree,<br>
+</p><pre>         1
+       /  \
+      2    3
+     / \    \
+    4   5    7
+</pre>
+<p></p>
+<p>
+After calling your function, the tree should look like:<br>
+</p><pre>         1 -&gt; NULL
+       /  \
+      2 -&gt; 3 -&gt; NULL
+     / \    \
+    4-&gt; 5 -&gt; 7 -&gt; NULL
+</pre>
+<p></p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="red">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is a difficult question</strong>.</p>
+
+<p>We can of course do a BFS, but that&rsquo;s too simple, and it&rsquo;s not related to previous question, thus <strong>Queue</strong> is not the answer we&rsquo;re looking for.</p>
+
+<p><strong>There are 2 ways to solve this problem, recursively and iteratively</strong>. The 2 solutions are quite different, I will explain them.</p>
+
+<h3>Solution</h3>
+
+<p><strong>First solution is non-recursion, which is from <a href="http://rleetcode.blogspot.sg/2014/03/follow-up-for-problem-populating-next.html">this blog</a></strong>. First we declare a pointer &lsquo;cur&rsquo; that points to a node. We assume the &lsquo;next-links&rsquo; are already built in current level, and our job is to generate the &lsquo;next-links&rsquo; for the next level.</p>
+
+<p>In order to do that, we need another 2 pointers in the next level (one head and one tail) to keep track of the position till where we have finished building the links. So &lsquo;cur&rsquo; keep traversing thru current level, until it reaches the end. Then, we move &lsquo;cur&rsquo; to the head of next level, and continue the process.</p>
+
+<p>The coding part is not difficult, <strong>which is not the case for next solution</strong>.</p>
+
+<p><strong>Second solution is recursive, and it is written in <a href="http://fisherlei.blogspot.sg/2012/12/leetcode-populating-next-right-pointers_29.html">this blog</a></strong>. Same as previous solution, we assume that current level have all &lsquo;next-links&rsquo; ready, and we will build these links for next level.</p>
+
+<p>The way of getting next link for child nodes is a bit different, but I guess that&rsquo;s fine. The difficult part is <strong>during recursive call, I NEED TO CALL THE RECURSION METHOD FOR RIGHT CHILD FIRST, THEN LEFT CHILD</strong>. The reason is, the links from left child to right child is going to be used in the recursion call. If we do left first, we will have problem getting <strong>current.left.next</strong> (which in this case, will be null). I spent a terribly long time debugging this error, until I found a great explanation <a href="https://oj.leetcode.com/discuss/1942/anyone-helps-to-find-bug-for-my-code">here</a>.</p>
+
+<blockquote><p>in your code: connect(root->left); connect(root->right);</p>
+
+<p>which means you first recurs left sub-tree, then right subtree. The problem is the right subtree&rsquo;s next pointers are not processed. So in your example, 9->next should be 1, however, when you traverse the left sub tree, 9&rsquo;s next pointer is still NULL. Your code will think 9 is the end of the third level, so the fourth level&rsquo;s 0 will have its next to be NULL.</p></blockquote>
+
+<h3>Code</h3>
+
+<p><strong>First, my initial solution making use of queue</strong>. It is around 50ms slower than the other solutions.</p>
+
+<pre><code>public void connect(TreeLinkNode root) {
+    if (root == null) return;
+    LinkedList&lt;TreeLinkNode&gt; list = new LinkedList&lt;TreeLinkNode&gt;();
+    list.add(root);
+    while (! list.isEmpty()) {
+        LinkedList&lt;TreeLinkNode&gt; newList = new LinkedList&lt;TreeLinkNode&gt;();
+        while (! list.isEmpty()) {
+            TreeLinkNode node = list.remove();
+            if (! list.isEmpty()) node.next = list.get(0);
+            if (node.left != null) newList.add(node.left);
+            if (node.right != null) newList.add(node.right);
+        }
+        list = newList;
+    }
+}
+</code></pre>
+
+<p><strong>Second, non-recursion solution</strong></p>
+
+<pre><code>public void connect(TreeLinkNode root) {
+    TreeLinkNode nextLevelHead = null;
+    TreeLinkNode nextLevelTail = null;
+    TreeLinkNode cur = root;
+    while (cur != null) {
+        if (cur.left != null) {
+            if (nextLevelHead == null) {
+                nextLevelHead = cur.left;
+                nextLevelTail = cur.left;
+            }
+            else {
+                nextLevelTail.next = cur.left;
+                nextLevelTail = cur.left;
+            }
+        }
+        if (cur.right != null) {
+            if (nextLevelHead == null) {
+                nextLevelHead = cur.right;
+                nextLevelTail = cur.right;
+            }
+            else {
+                nextLevelTail.next = cur.right;
+                nextLevelTail = cur.right;
+            }
+        }
+        cur = cur.next;
+        if (cur == null) {
+            cur = nextLevelHead;
+            nextLevelHead = null;
+            nextLevelTail = null;
+        }
+    }
+}
+</code></pre>
+
+<p><strong>Third, recursive solution</strong></p>
+
+<pre><code>public void connect(TreeLinkNode root) {
+    if (root == null) return;
+    // now find root.next's valid child
+    TreeLinkNode n = root.next, nextLevelNext = null;
+    while (n != null &amp;&amp; nextLevelNext == null) {
+        if (n.left != null) {
+            nextLevelNext = n.left;
+            break;
+        }
+        if (n.right != null) {
+            nextLevelNext = n.right;
+            break;
+        }
+        n = n.next;
+    }
+    // now nextLevelNext is fetched
+    if (root.right != null) 
+        root.right.next = nextLevelNext;
+    if (root.left != null) 
+        root.left.next = root.right == null ? nextLevelNext : root.right;
+    // recursion call
+    connect(root.right);
+    connect(root.left);
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/27/Populating-Next-Right-Pointers-in-Each-Node/">[LeetCode 116] Populating Next Right Pointers in Each Node</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-27T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/populating-next-right-pointers-in-each-node/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>
+Given a binary tree
+</p><pre>    struct TreeLinkNode {
+      TreeLinkNode *left;
+      TreeLinkNode *right;
+      TreeLinkNode *next;
+    }
+</pre>
+<p></p>
+
+<p>Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to <code>NULL</code>.</p>
+
+<p>Initially, all next pointers are set to <code>NULL</code>.</p>
+
+<p>
+<b>Note:</b>
+</p><ul>
+<li>You may only use constant extra space.</li>
+<li>You may assume that it is a perfect binary tree (ie, all leaves are at the same level, and every parent has two children).</li>
+</ul>
+<p></p>
+
+<p>
+For example,<br>
+Given the following perfect binary tree,<br>
+</p><pre>         1
+       /  \
+      2    3
+     / \  / \
+    4  5  6  7
+</pre>
+<p></p>
+<p>
+After calling your function, the tree should look like:<br>
+</p><pre>         1 -&gt; NULL
+       /  \
+      2 -&gt; 3 -&gt; NULL
+     / \  / \
+    4-&gt;5-&gt;6-&gt;7 -&gt; NULL
+</pre>
+<p></p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>Although this question is not hard, it needs a bit thinking</strong>.</p>
+
+<p>The important point is, how to effectively make use of the &lsquo;next link&rsquo; generated before, to help us solve this problem.</p>
+
+<h3>Solution</h3>
+
+<p><strong>My solution is actually very good</strong>. It pass current node and next node into a method, and then generate links for current node&rsquo;s children.</p>
+
+<p><strong>There is a even <a href="http://leetcode.com/2010/03/first-on-site-technical-interview.html">better solution</a></strong>, which directly make use of the &lsquo;next link&rsquo; generated already. In fact, it&rsquo;s same as my solution, except it uses one less variable. Great idea it is!</p>
+
+<h3>Code</h3>
+
+<p><strong>First, my solution</strong></p>
+
+<pre><code>public void connect(TreeLinkNode root) {
+    link(root, null);
+}
+
+private void link(TreeLinkNode node, TreeLinkNode rr){
+    if (node == null || node.left == null) return;
+    node.left.next = node.right;
+    if (rr == null) node.right.next = null;
+    else node.right.next = rr.left;
+
+    link(node.left, node.left.next);
+    link(node.right, node.right.next);
+}
+</code></pre>
+
+<p><strong>Second, better solution</strong></p>
+
+<pre><code>public void connect(TreeLinkNode root) {
+    if (root == null || root.left == null || root.right == null) 
+        return;
+    root.left.next = root.right;
+    root.right.next = root.next == null ? null : root.next.left;
+    connect(root.left);
+    connect(root.right);
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/27/Path-Sum-II/">[LeetCode 113] Path Sum II</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-27T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/path-sum-ii/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>
+Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
+</p>
+
+For example:<br>
+Given the below binary tree and <code>sum = 22</code>,
+<pre>              5
+             / \
+            4   8
+           /   / \
+          11  13  4
+         /  \    / \
+        7    2  5   1
+</pre>
+
+<p>
+return<br>
+</p><pre>[
+   [5,4,11,2],
+   [5,8,4,5]
+]
+</pre>
+<p></p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="lime">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is a standard question</strong></p>
+
+<h3>Solution</h3>
+
+<p>My code is simple DFS. However, the coding part is not easy. Note that value can be negative, and think about when to add result into list.</p>
+
+<p>Just write it by hand and get an idea of it.</p>
+
+<h3>Code</h3>
+
+<pre><code>public ArrayList&lt;ArrayList&lt;Integer&gt;&gt; pathSum(TreeNode root, int sum) {
+    ArrayList&lt;ArrayList&lt;Integer&gt;&gt; ans = new ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();
+    helper(root, sum, new ArrayList&lt;Integer&gt;(), ans);
+    return ans;
+}
+
+private void helper(TreeNode node, int total, ArrayList&lt;Integer&gt; list, 
+                    ArrayList&lt;ArrayList&lt;Integer&gt;&gt; ans) {
+    if (node == null) return;
+    list.add(node.val);
+    if (node.val == total &amp;&amp; node.left == null &amp;&amp; node.right == null)
+        ans.add(new ArrayList(list));
+    helper(node.left, total - node.val, list, ans);
+    helper(node.right, total - node.val, list, ans);
+    list.remove(list.size() - 1);
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/27/Path-Sum/">[LeetCode 112] Path Sum</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-27T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/path-sum/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>
+Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.
+</p>
+
+For example:<br>
+Given the below binary tree and <code>sum = 22</code>,
+<pre>              5
+             / \
+            4   8
+           /   / \
+          11  13  4
+         /  \      \
+        7    2      1
+</pre>
+
+<p>
+return true, as there exist a root-to-leaf path <code>5-&gt;4-&gt;11-&gt;2</code> which sum is 22.</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="white">1</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="white">1</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="white">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This question can be solved with either DFS or BFS</strong>.</p>
+
+<h3>Solution</h3>
+
+<p>My code is <strong>DFS recursion</strong>.</p>
+
+<p>I found another BFS non-recursive solution <a href="http://www.programcreek.com/2013/01/leetcode-path-sum/">here</a>, but I did not post this code, because this question is too simple.</p>
+
+<p><strong>One more thing, the last line of code has a || operation</strong>. Isn&rsquo;t it duplicate execution? I mean if answer is found in root.left, no need to check root.right.</p>
+
+<p>Actually it&rsquo;s not duplication. The <a href="http://docs.oracle.com/javase/tutorial/java/nutsandbolts/op2.html">official doc</a> explains it:</p>
+
+<blockquote><p>The &amp;&amp; and || operators perform Conditional-AND and Conditional-OR operations on two boolean expressions. These operators exhibit &ldquo;short-circuiting&rdquo; behavior, which means that the second operand is evaluated only if needed.</p></blockquote>
+
+<h3>Code</h3>
+
+<pre><code>public boolean hasPathSum(TreeNode root, int sum) {
+    if (root == null) return false;
+    if (root.left == null &amp;&amp; root.right == null) 
+        return (sum == root.val);
+    return hasPathSum(root.left, sum - root.val) 
+        || hasPathSum(root.right, sum - root.val);
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/27/Pascal-Triangle-II/">[LeetCode 119] Pascal's Triangle II</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-27T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/pascals-triangle-ii/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Given an index <i>k</i>, return the <i>k</i><sup>th</sup> row of the Pascal's triangle.</p>
+
+<p>
+For example, given <i>k</i> = 3,<br>
+Return <code>[1,3,3,1]</code>.
+</p>
+
+<p>
+<b>Note:</b><br>
+Could you optimize your algorithm to use only <i>O</i>(<i>k</i>) extra space?
+</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="white">1</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="lime"></td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="lime">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is a math question</strong>.</p>
+
+<p>First code below is my code.</p>
+
+<p>Second code is a very concise solution from <a href="http://xiaotong-blog.herokuapp.com/posts/16">this blog</a>.</p>
+
+<h3>Code</h3>
+
+<p><strong>First, my code</strong></p>
+
+<pre><code>public ArrayList&lt;Integer&gt; getRow(int rowIndex) {
+    ArrayList&lt;Integer&gt; ans = new ArrayList&lt;Integer&gt;();
+    if (rowIndex == 0) {
+        ans.add(1);
+        return ans;
+    }
+    int[] nodes = new int[rowIndex + 1];
+    nodes[0] = 1;
+    for (int k = 1; k &lt;= rowIndex; k++) {
+        for (int i = k / 2; i &gt;= 1; i--) {
+            if (k % 2 == 0 &amp;&amp; i == k / 2)
+                nodes[i] = 2 * nodes[i - 1];
+            else
+                nodes[i] = nodes[i - 1] + nodes[i];
+        }
+        for (int j = k / 2 + 1; j &lt;= k; j++) {
+            nodes[j] = nodes[k - j];
+        }
+    }
+    for (Integer a: nodes) ans.add(a);
+    return ans;
+}
+</code></pre>
+
+<p><strong>Second, a better version</strong></p>
+
+<pre><code>public ArrayList&lt;Integer&gt; getRow(int rowIndex) {
+    ArrayList&lt;Integer&gt; ans = new ArrayList&lt;Integer&gt;();
+    for (int j = 0; j &lt;= rowIndex; j ++){
+        for (int i = 1; i &lt; ans.size(); i ++)
+            ans.set(i-1, ans.get(i-1)+ans.get(i));
+        ans.add(0,1);
+    }
+    return ans;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/27/Pascal-Triangle/">[LeetCode 118] Pascal's Triangle</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-27T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/pascals-triangle/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Given <i>numRows</i>, generate the first <i>numRows</i> of Pascal's triangle.</p>
+
+<p>
+For example, given <i>numRows</i> = 5,<br>
+Return
+</p><pre>[
+     [1],
+    [1,1],
+   [1,2,1],
+  [1,3,3,1],
+ [1,4,6,4,1]
+]
+</pre>
+<p></p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="white">1</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="lime"></td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="lime">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is a math question</strong>.</p>
+
+<p>Below is my code.</p>
+
+<h3>Code</h3>
+
+<pre><code>public ArrayList&lt;ArrayList&lt;Integer&gt;&gt; generate(int numRows) {
+    ArrayList&lt;ArrayList&lt;Integer&gt;&gt; ans = new ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();
+    if (numRows == 0)
+        return ans;
+    for (int i = 0; i &lt; numRows; i++){
+        ArrayList&lt;Integer&gt; list = new ArrayList&lt;Integer&gt;();
+        for (int j = 0; j &lt;= i; j++){
+            if (j == 0 || j == i){
+                list.add(1);
+            } else {
+                list.add(ans.get(i-1).get(j-1) + ans.get(i-1).get(j));
+            }
+        }
+        ans.add(list);
+    }
+    return ans;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/52">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/50">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

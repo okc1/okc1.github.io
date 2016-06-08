@@ -1,0 +1,247 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Java OOP] Java Global Variable - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Global variable? There is no such thing as a &lsquo;global variable&rsquo; in Java. In computer programming, a global variable is a variable that is &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/06/15/Java-Global-Variable/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Java OOP] Java Global Variable</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-15T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Global variable?</h3>
+
+<p>There is no such thing as a &lsquo;global variable&rsquo; in Java.</p>
+
+<blockquote><p>In computer programming, a global variable is a variable that is accessible in every scope (the global environment). Some languages, like Java, don&rsquo;t have global variables. <a href="https://sg.answers.yahoo.com/question/index?qid=20110811104130AA5JrbR">reference</a></p></blockquote>
+
+<p>But static variable can be seen as one, although every static variable must belong to some class (like Math.MIN_VALUE).</p>
+
+<p>Global variables are generally only used for declaring constants. In this case, declare it as &lsquo;final static&rsquo;. <a href="http://stackoverflow.com/questions/4646577/global-variables-in-java">reference</a></p>
+
+<h3>Four types of variable in Java</h3>
+
+<h4>Local variables</h4>
+
+<p>Created when the method, constructor or block is entered and will be destroyed once it exits the method, constructor or block.</p>
+
+<h4>Instance variables</h4>
+
+<p>Outside a method or constructor.</p>
+
+<p>When a space is allocated for an object in the heap, a slot for each instance variable value is created. It is destroyed when the object is destroyed.</p>
+
+<h4>Class/static variables</h4>
+
+<p>Static variable is class variable.</p>
+
+<p>Declared with &lsquo;static&rsquo; keyword in a class.</p>
+
+<h4>Constants</h4>
+
+<p>Most common usage of static variable - constant.</p>
+
+<p>Declared with &lsquo;static final&rsquo; keyword in a class.</p>
+
+<h3>One more thing</h3>
+
+<p>About <a href="http://programmers.stackexchange.com/a/65289">stack and heap in Java</a>:</p>
+
+<blockquote><p>In Java, primitives are created on the stack.</p>
+
+<p>Objects are created on the heap, and only references (which in turn are primitives) are passed around on the stack.</p>
+
+<p>If you create an object, it is put on the heap, with all the variables that belong to it, so that it can persist after the function call returns.</p></blockquote>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-06-15T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/java-oop/'>java oop</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/06/15/Java-Global-Variable/" data-via="" data-counturl="http://okc1.github.io/blog/2014/06/15/Java-Global-Variable/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/06/15/BST-find-upper-lower-bound/" title="Previous Post: [Question] Binary Search Tree find upper/lower bound">&laquo; [Question] Binary Search Tree find upper/lower bound</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/06/15/NineChap-Binary-Tree-additional/" title="Next Post: [NineChap 3.4] Binary Tree Additional">[NineChap 3.4] Binary Tree Additional &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,285 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Amazon] Longest Repeating Substring - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Question link Finding the longest repeated substring. Example: &ldquo;banana&rdquo; ==> &ldquo;ana&rdquo; Solution There are 2 solutions: Suffix &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2015/01/11/longest-repeating-substring/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Amazon] Longest Repeating Substring</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-11T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=9182781">link</a></p>
+
+<blockquote><p>Finding the longest repeated substring.</p>
+
+<p>Example: &ldquo;banana&rdquo; ==> &ldquo;ana&rdquo;</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>There are 2 solutions: Suffix array, and Suffix tree.</p>
+
+<p><strong>1. Suffix array</strong>. Simple code, explained <a href="http://www.careercup.com/question?id=9182781">here</a>.</p>
+
+<blockquote><p>Bentley&rsquo;s programming pearl book has the simplest implementation (less than 15 lines code) which sort all suffix, and then check common prefix length among adjacent suffix. The time complexity is O(n<sup>2logn</sup>) for sorting the suffix (which has avg length of O(n)).</p></blockquote>
+
+<p>A detailed step-by-step <a href="http://nriverwang.blogspot.com/2013/04/longest-repeated-substring.html">explanation</a>:</p>
+
+<pre><code>str = banana, its suffixes are:
+banana
+anana
+nana
+ana
+na
+a
+</code></pre>
+
+<p>after sort, the suffix array looks like:</p>
+
+<pre><code>a
+ana
+anana
+banana
+na
+nana
+</code></pre>
+
+<p>Then for each two adjacent suffixes, check the length of the common prefix.</p>
+
+<p>The answer is &ldquo;ana&rdquo; (if overlapping is allowed, otherwise, should be &ldquo;an&rdquo;).</p>
+
+<p><strong>2. Suffix tree</strong>. Suggest by <a href="http://qr.ae/6W9yJ">this post</a>, Or <a href="http://www.careercup.com/question?id=9182781">this</a>:</p>
+
+<blockquote><p>a good solution is to create a suffix tree for the given word and then find the deepest internal node in that tree (node with at least 2 descendants under it)&hellip;</p></blockquote>
+
+<p>For a nice PPT presentation about suffix tree, look <a href="https://www.cs.cmu.edu/~ckingsf/bioinfo-lectures/suffixtrees.pdf">here</a>.</p>
+
+<h3>Code</h3>
+
+<p>Suffix array approach.</p>
+
+<pre><code>public String longestRepeat(String input) {
+    int len = input.length();
+    String[] suffixArray = new String[len];
+    for (int i = 0; i &lt; len; i++) {
+        suffixArray[i] = input.substring(i);
+    }
+    // now sort the suffix array
+    Arrays.sort(suffixArray);
+    String longest = "";
+    // start to compare neighborhood suffixes, and check LCP
+    for (int i = 0; i &lt; suffixArray.length - 1; i++) {
+        String lcp = longestCommonPrefix(suffixArray[i], suffixArray[i + 1]);
+        if (lcp.length() &gt; longest.length()) {
+            longest = lcp;
+        }
+    }
+    return longest;
+}
+
+private String longestCommonPrefix(String s1, String s2) {
+    int p = 0;
+    while (p &lt; s1.length() &amp;&amp; p &lt; s2.length()) {
+        if (s1.charAt(p) != s2.charAt(p)) {
+            break;
+        }
+        p++;
+    }
+    return s1.substring(0, p);
+}
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-01-11T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/question/'>question</a>, <a class='category' href='/blog/categories/z-string-search/'>z-string-search</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2015/01/11/longest-repeating-substring/" data-via="" data-counturl="http://okc1.github.io/blog/2015/01/11/longest-repeating-substring/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/01/11/crazy-distance-string/" title="Previous Post: [Google] Crazy Distance Between Strings ">&laquo; [Google] Crazy Distance Between Strings </a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/01/11/numer-of-distinct-subsequence/" title="Next Post: [Question] Number of distinct sub-sequence ">[Question] Number of distinct sub-sequence  &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

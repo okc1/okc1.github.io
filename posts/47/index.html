@@ -1,0 +1,1744 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Question link Given a binary search tree (BST), find the lowest common ancestor of two given nodes in the BST. _______6______ / \ ___2__ ___8__ &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/47/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/10/Lowest-Common-Ancestor-BST/">[LeetCode Plus] Lowest Common Ancestor of BST</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-10T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://leetcode.com/2011/07/lowest-common-ancestor-of-a-binary-search-tree.html">link</a></p>
+
+<div class="entry bg-color bg-img font-color">
+    <blockquote class="bg-color bg-img font-color">
+        <p class="font-color bg-color bg-img">Given a binary search tree (BST), find the lowest common ancestor of two given nodes in the BST.</p>
+    </blockquote>
+    <p class="font-color bg-color bg-img"><span id="more-782" class="font-color"></span>
+        <br>
+    </p><pre class="bg-color bg-img font-color">        _______<span style="color: #990000;" class="font-color">6</span>______
+       /              \
+    ___<span style="color: #990000;" class="font-color">2</span>__          ___<span style="color: #990000;" class="font-color">8</span>__
+   /      \        /      \
+   <span style="color: #990000;" class="font-color">0</span>      _<span style="color: #990000;" class="font-color">4       7       9</span>
+         /  \
+         <span style="color: #990000;" class="font-color">3   5</span></pre>
+    <p class="font-color bg-color bg-img">Using the above tree as an example, the lowest common ancestor (LCA) of nodes <span style="color: #990000;" class="font-color">2</span> and <span style="color: #990000;" class="font-color bg-color bg-img">8</span> is <span style="color: #990000;" class="font-color">6</span>. But how about LCA of nodes <span style="color: #990000;" class="font-color">2</span> and <span style="color: #990000;" class="font-color">4</span>? Should it be <span style="color: #990000;" class="font-color">6</span> or <span style="color: #990000;" class="font-color">2</span>?</p>
+    <p class="font-color bg-color bg-img">According to the <a href="http://en.wikipedia.org/wiki/Least_common_ancestor" class="font-color">definition of LCA on  Wikipedia</a>: "The lowest common ancestor is defined between two nodes <em>v</em> and <em>w</em> as the lowest node in T that has both <em>v</em> and <em>w</em> as descendants (where we allow a node to be a descendant of itself)." Since a node can be a descendant of itself, the LCA of <span style="color: #990000;" class="font-color">2</span> and <span style="color: #990000;" class="font-color">4</span> should be <span style="color: #990000;" class="font-color">2</span>, according to this definition.</p>
+    <p class="font-color bg-color bg-img"><strong>Hint:</strong>
+        <br>A top-down walk from the root of the tree is enough.</p>
+</div>
+
+
+<h3>Analysis</h3>
+
+<p><strong>This question is the easiest of this series of questions</strong>. I will quote the solution analysis.</p>
+
+<blockquote><p>There’s only three cases you need to consider.</p></blockquote>
+
+<pre><code>1. Both nodes are to the left of the tree.
+2. Both nodes are to the right of the tree.
+3. One node is on the left while the other is on the right. This node must be LCA. 
+4. Current node equals to one of the two nodes, this node must be the LCA. 
+</code></pre>
+
+<blockquote><p>The run time complexity is O(h), where h is the height of the BST.</p></blockquote>
+
+<h3>Code</h3>
+
+<p>The code is not written by me.</p>
+
+<pre><code>Node *LCA(Node *root, Node *p, Node *q) {
+  if (!root || !p || !q) return NULL;
+  if (max(p-&gt;data, q-&gt;data) &lt; root-&gt;data)
+    return LCA(root-&gt;left, p, q);
+  else if (min(p-&gt;data, q-&gt;data) &gt; root-&gt;data)
+    return LCA(root-&gt;right, p, q);
+  else
+    return root;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/10/First-Character-Appearing-Once/">[Question] First Character Appearing Only Once</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-10T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://codercareer.blogspot.sg/2011/10/no-13-first-character-appearing-only.html">link</a></p>
+
+<blockquote><p>Problem: Implement a function to find the first character in a string which only appears once.
+    For example: It returns ‘b’ when the input is “abaccdeff”.</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>Great solution from <a href="http://stackoverflow.com/a/2285561">Ryan</a>:</p>
+
+<blockquote><p>You can&rsquo;t know that the character is un-repeated until you&rsquo;ve processed the whole string, so my suggestion would be&hellip;</p></blockquote>
+
+<p>Keep 2 lists.</p>
+
+<p>One stores chars that appear once, the other list stores repeated chars.</p>
+
+<p>Code is shown below.</p>
+
+<pre><code>def first_non_repeated_character(string):
+  chars = []
+  repeated = []
+  for character in string:
+    if character in chars:
+      chars.remove(character)
+      repeated.append(character)
+    else:
+      if not character in repeated:
+        chars.append(character)
+  if len(chars):
+    return chars[0]
+  else:
+    return False
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/09/NineChap-Sorted-array/">[NineChap 2.2] Sorted Array</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-09T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Sorted Array</h2>
+
+<h4>Template</h4>
+
+<p>There is no template.</p>
+
+<h4>Question list</h4>
+
+<ol>
+<li><p><strong><a href="/blog/2014/05/09/Remove-Duplicates-from-Sorted-Array/">Remove Duplicates from Sorted Array</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/22/Remove-Duplicates-from-Sorted-Array-II/">Remove Duplicates from Sorted Array II</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/23/Merge-Sorted-Array/">Merge Sorted Array</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/04/26/Median-of-Two-Sorted-Arrays/">Median of Two Sorted Arrays</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/06/08/Recover-Rotated-Sorted-Array/">Recover Rotated Sorted Array</a></strong></p></li>
+</ol>
+
+
+<h4>Additional</h4>
+
+<ol>
+<li><p><strong><a href="/blog/2014/06/03/Reverse-Words-in-a-String/">Reverse Words in a String</a></strong></p></li>
+<li><p><strong>Rotate String</strong></p>
+
+<p> Given string &ldquo;abcdefg&rdquo; and offset = 3, the rotated string is &ldquo;efgabcd&rdquo;.</p></li>
+</ol>
+
+
+<h2>Code</h2>
+
+<p><strong>Remove Duplicates from Sorted Array</strong></p>
+
+<pre><code>public int removeDuplicates(int[] A) {
+    if (A == null || A.length == 0) {
+        return 0;
+    }
+    int left = 1;
+    int right = 1;
+    while (right &lt; A.length) {
+        if (A[right - 1] != A[right]) {
+            A[left] = A[right];
+            left++;
+        }
+        right++;
+    }
+    return left;
+}
+</code></pre>
+
+<p><strong>Remove Duplicates from Sorted Array II</strong> - slightly difficult in coding</p>
+
+<pre><code>public int removeDuplicates(int[] A) {
+    if (A == null || A.length == 0) {
+        return 0;
+    }
+    int left = 1;
+    int right = 1;
+    boolean twice = false;
+    while (right &lt; A.length) {
+        if (A[right - 1] != A[right]) {
+            A[left++] = A[right++];
+            twice = false;
+        } else if (!twice){
+            A[left++] = A[right++];
+            twice = true;
+        } else {
+            right++;
+        }
+    }
+    return left;
+}
+</code></pre>
+
+<p><strong>Merge Sorted Array</strong></p>
+
+<p>Easy question, tail to head merge.</p>
+
+<p><strong>Median of Two Sorted Arrays</strong></p>
+
+<p>This question is Find kth largest from A&amp;B. Refer to original post.</p>
+
+<p><strong>Recover Rotated Sorted Array</strong></p>
+
+<p>I wrote a new post.</p>
+
+<p><strong>Reverse Words in a String</strong></p>
+
+<pre><code>public String reverseWords(String s) {
+    if (s == null || s.length() == 0) {
+        return s;
+    }
+    String[] words = s.split(" ");
+    String firstReversed = "";
+    for (int i = 0; i &lt; words.length; i ++) {
+        if (words[i].equals("")) continue;
+        firstReversed += inPlaceReverse(words[i]) + " ";
+    }
+    return inPlaceReverse(firstReversed);
+}
+
+private String inPlaceReverse(String str) {
+    if (str == null || str.length() == 0) return str;
+    char[] chars = str.trim().toCharArray();
+    int left = 0;
+    int right = chars.length - 1;
+    while (left &lt; right) {
+        char temp = chars[left];
+        chars[left] = chars[right];
+        chars[right] = temp;
+        left ++;
+        right --;
+    }
+    return String.valueOf(chars);
+}
+</code></pre>
+
+<p><strong>Rotate String</strong></p>
+
+<p>Same strategy.</p>
+
+<h2>Conclusion</h2>
+
+<ol>
+<li>If array is sorted, try binary search</li>
+<li>If array is not sorted, try sort it first</li>
+<li>When you see &lsquo;rotated array&rsquo;, think of &lsquo;list reverse&rsquo;.</li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/08/Recover-Rotated-Sorted-Array/">[LintCode] Recover Rotated Sorted Array</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-08T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.lintcode.com/en/problem/recover-rotated-sorted-array/">link</a></p>
+
+<div style="min-height:100px" class="bg-color bg-img font-color">
+
+    <p class="font-color">
+        Given a <strong>rotated</strong> sorted array, recover it to sorted array in-place.
+    </p>
+    <div class="m-t-lg m-b-lg bg-color bg-img font-color">
+        <b>Example</b>
+        <div class="bg-color bg-img font-color">
+            <p class="font-color"><span style="color:#B22222;" class="font-color"><strong>[4, 5, 1, 2, 3]</strong></span> -&gt; <span style="color:#B22222;" class="font-color"><strong>[1, 2, 3, 4, 5]</strong></span>
+            </p>
+        </div>
+    </div>
+
+    <div>
+        <b>Challenge</b>
+        <div>
+            <p class="font-color">
+                In-place, O(1) extra space and O(n) time.
+            </p>
+        </div>
+    </div>
+
+    <div class="m-t-lg m-b-lg bg-color bg-img font-color">
+        <b>Clarification</b>
+        <div id="clarification" class=" bg-color bg-img font-color">
+            <p class="font-color">What is rotated array:</p>
+
+            <p class="font-color">&nbsp; &nbsp; - For example, the orginal array is [1,2,3,4], The rotated array of it can be [1,2,3,4], [2,3,4,1], [3,4,1,2], [4,1,2,3]</p>
+
+        </div>
+    </div>
+</div>
+
+
+<h3>Analysis</h3>
+
+<p>O(n) time and O(a) space is required.</p>
+
+<p>Find the rotate position and rotate each half. After this:</p>
+
+<p class="font-color"><span style="color:#B22222;" class="font-color"><strong>[4, 5, 1, 2, 3]</strong></span> -&gt; <span style="color:#B22222;" class="font-color"><strong>[5, 4, 3, 2, 1]</strong></span>
+</p>
+
+
+<p>Then reverse it again. This solution is called &ldquo;三步翻转法&rdquo;, an extremely common interview algorithm. Similar questions are <a href="/blog/2014/06/03/Reverse-Words-in-a-String/">[LeetCode 151] Reverse Words in a String</a>.</p>
+
+<p><strong>Updated on Apr 11th, 2015</strong>:</p>
+
+<p>Thanks to the <strong>nice little help from <a href="https://disqus.com/by/disqus_QOTDaDZFgi/">Shawn</a></strong>, I found out that using <strong>binary search</strong> to find the rotation point is impossible, because of duplication. I wasn&rsquo;t able to point this out previously, thus apologize to all!</p>
+
+<h3>My code</h3>
+
+<pre><code>public void recoverRotatedSortedArray(ArrayList&lt;Integer&gt; nums) {
+    // write your code
+    if (nums == null || nums.size() &lt;= 1) {
+        return;
+    }
+    int p = 1;
+    while (p &lt; nums.size()) {
+        if (nums.get(p - 1) &gt; nums.get(p)) {
+            break;
+        }
+        p++;
+    }
+    inPlaceRotate(nums, 0, p - 1);
+    inPlaceRotate(nums, p, nums.size() - 1);
+    inPlaceRotate(nums, 0, nums.size() - 1);
+}
+
+private void inPlaceRotate(ArrayList&lt;Integer&gt; nums, int left, int right) {
+    while (left &lt; right) {
+        int temp = nums.get(left);
+        nums.set(left, nums.get(right));
+        nums.set(right, temp);
+        left++;
+        right--;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/08/NineChap-Binary-Search/">[NineChap 2.1] Binary Search</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-08T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Binary Search</h2>
+
+<h4>Recursion or While-Loop?</h4>
+
+<p>In general, it&rsquo;s never a good idea to do binary search with recursion, because that&rsquo;ll make the interview too boring.</p>
+
+<h4>Template</h4>
+
+<p><a href="http://answer.ninechapter.com/solutions/binary-search/">link</a></p>
+
+<p>This template is able to locate the first (or last) occurance of an element <strong>when array contains duplications</strong>.</p>
+
+<p>If item too small/large, left/right boundary is returned.</p>
+
+<p>Read Question &ldquo;Search for a Range&rdquo; for more details.</p>
+
+<pre><code>int binarySearch(vector&lt;int&gt; &amp;A, int target) {
+    if (A.size() == 0) {
+        return -1;
+    }
+
+    int start = 0;
+    int end = A.size() - 1;
+    int mid;
+
+    while (start + 1 &lt; end) {
+        mid = start + (end - start) / 2;
+        if (A[mid] &lt; target) {
+            start = mid;
+        } else {
+            end = mid;
+        }
+    }
+
+    if (A[start] == target) {
+        return start;
+    }
+    if (A[end] == target) {
+        return end;
+    }
+
+    return -1;
+}
+</code></pre>
+
+<h4>Keypoints</h4>
+
+<ol>
+<li>start + 1 &lt; end</li>
+<li>start + (end-start)/2</li>
+<li>A[mid] ==, &lt;, ></li>
+<li>A[start/end] == target</li>
+</ol>
+
+
+<h2>Question list</h2>
+
+<p><strong>Binary search</strong></p>
+
+<ol>
+<li><p><strong><a href="/blog/2014/05/12/Search-Insert-Position/">Search Insert Position</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/12/Search-for-a-Range/">Search for a Range</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/12/Search-in-Rotated-Sorted-Array/">Search in Rotated Sorted Array</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/22/Search-in-Rotated-Sorted-Array-II/">Search in Rotated Sorted Array II</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/21/Search-a-2D-Matrix/">Search a 2D Matrix</a></strong></p></li>
+</ol>
+
+
+<p><strong>Additional</strong></p>
+
+<ol>
+<li><p><strong><a href="/blog/2014/06/10/Searching-a-2D-Sorted-Matrix/">Search a 2D Matrix II</a></strong> - A tricky question</p></li>
+<li><p><strong>Find the First Bad Version</strong></p>
+
+<p> The code base version is an integer and start from 0 to n. One day, someone commit a bad version in the code case, so it caused itself and the following versions are all failed in the unittests. You can determine whether a version is bad by the following interface:</p>
+
+<blockquote><p>boolean isBadVersion(int version);</p></blockquote>
+
+<p> Find the first bad version.</p></li>
+<li><p><strong>Find a peek</strong></p>
+
+<p> There is an array which we can assume the numbers in adjcent positions are different. and A[0] &lt; A[1] &amp;&amp; A[A.length - 2] > A[A.length - 1]. We consider a position P is a peek if A[P] > A[P-1] &amp;&amp; A[P] > A[P+1]. Find a peek in this array.</p></li>
+</ol>
+
+
+<h2>Code</h2>
+
+<p>All following code are written with the template provided above.</p>
+
+<p><strong>Search Insert Position</strong></p>
+
+<pre><code>public int searchInsert(int[] A, int target) {
+    // 6 minutes
+    if (A == null || A.length == 0) {
+        return 0;
+    }
+    int left = 0, right = A.length - 1;
+    int mid;
+    while (left + 1 &lt; right) {
+        mid = left + (right - left) / 2;
+        if (A[mid] &lt; target) {
+            left = mid;
+        }
+        else {
+            right = mid;
+        }
+    }
+    if (target &lt;= A[left]) {
+        // equal or less than first element
+        return left;
+    }
+    else if (A[left] &lt; target &amp;&amp; target &lt;= A[right]) {
+        return right;
+    }
+    else {
+        // bigger than largest element
+        return right + 1;
+    }
+}
+</code></pre>
+
+<p><strong>Search for a Range</strong></p>
+
+<pre><code>public int[] searchRange(int[] A, int target) {
+    // 6 minutes
+    int[] result = new int[2];
+    result[0] = -1;
+    result[1] = -1;
+    if (A == null || A.length == 0) {
+        return result;
+    }
+    // find the start point of target
+    int left = 0, right = A.length - 1, mid;
+    while (left + 1 &lt; right) {
+        mid = left + (right - left) / 2;
+        if (A[mid] &lt; target) {
+            left = mid;
+        }
+        else {
+            right = mid;
+        }
+    }
+    if (A[left] == target) {
+        result[0] = left;
+    }
+    else if (A[right] == target) {
+        result[0] = right;
+    }
+    else {
+        return result;
+    }
+    // find the end point of target
+    left = 0;
+    right = A.length - 1;
+    while (left + 1 &lt; right) {
+        mid = left + (right - left) / 2;
+        if (A[mid] &lt;= target) {
+            left = mid;
+        }
+        else {
+            right = mid;
+        }
+    }
+    if (A[right] == target) {
+        result[1] = right;
+    }
+    else if (A[left] == target) {
+        result[1] = left;
+    }
+    return result;
+}
+</code></pre>
+
+<p><strong>Search in Rotated Sorted Array</strong></p>
+
+<p>Note: this is an high-freq qeustion. Every company will ask this question.</p>
+
+<p>The solution is using 4 if-conditions. It takes long time first, because I compare A[mid] with target. It become complex.</p>
+
+<p>We should compared A[left] and A[mid] first, then it&rsquo;ll be much easier for coding.</p>
+
+<pre><code>public int search(int[] A, int target) {
+    // this is the 4th time that I do this question
+    // 7 minutes
+    if (A == null || A.length == 0) {
+        return -1;
+    }
+    int left = 0;
+    int right = A.length - 1;
+    int mid;
+    while (left + 1 &lt; right) {
+        mid = left + (right - left) / 2;
+        if (A[mid] == target) {
+            return mid;
+        } else if (A[left] &lt; A[mid]) {
+            if (A[left] &lt;= target &amp;&amp; target &lt; A[mid]) {
+                right = mid;
+            } else {
+                left = mid;
+            }
+        } else {
+            if (A[mid] &lt; target &amp;&amp; target &lt;= A[right]) {
+                left = mid;
+            } else {
+                right = mid;
+            }
+        }
+    }
+    if (A[left] == target) {
+        return left;
+    } else if (A[right] == target) {
+        return right;
+    } 
+    return -1;
+}
+</code></pre>
+
+<p><strong>Search in Rotated Sorted Array II</strong></p>
+
+<p>There are multiple ways to remove duplications. My previous solution is removing duplicate before entering the while-loop, which is a very good idea.</p>
+
+<p>Binary can&rsquo;t be used, because there might be: value of start = mid = end. In this case, the entire list needs to be search. Impossible!</p>
+
+<p>The worse case will anyway take O(n) time. To indicate the time complexity is regardless of binary search, Mr. Huang suggests the following code:</p>
+
+<pre><code>public boolean search(int[] A, int target) {
+    for (int i = 0; i &lt; A.length; i ++) {
+        if (A[i] == target) {
+            return true;
+        }
+    }
+    return false;
+}
+</code></pre>
+
+<p><strong>Search a 2D Matrix</strong></p>
+
+<p>my code (2D search):</p>
+
+<pre><code>public boolean searchMatrix(int[][] matrix, int target) {
+    // 13 miniutes
+    if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+        return false;
+    }
+    int m = matrix.length;
+    int n = matrix[0].length;
+    // find target vertically from matrix[0] to matrix[m-1]
+    int top = 0, bottom = m - 1;
+    int mid;
+    while (top + 1 &lt; bottom) {
+        mid = top + (bottom - top) / 2;
+        if (matrix[mid][0] &lt; target) {
+            top = mid;
+        }
+        else {
+            bottom = mid;
+        }
+    }
+    // locate the row number
+    int row = -1;
+    if (matrix[top][0] &lt;= target &amp;&amp; target &lt;= matrix[top][n-1]) {
+        row = top;
+    }
+    else if (matrix[bottom][0]&lt;=target &amp;&amp; target &lt;= matrix[bottom][n-1]) {
+        row = bottom;
+    }
+    else {
+        return false;
+    }
+    // now find target from matrix[row]
+    int left = 0, right = n - 1;
+    while (left + 1 &lt; right) {
+        mid = left + (right - left) / 2;
+        if (matrix[row][mid] &lt; target) {
+            left = mid;
+        }
+        else {
+            right = mid;
+        }
+    }
+    return (matrix[row][left] == target || matrix[row][right] == target);
+}
+</code></pre>
+
+<p>better code (1D search):</p>
+
+<pre><code>public boolean searchMatrix(int[][] matrix, int target) {
+    int rows = matrix.length;
+    int cols = matrix[0].length;
+    int start = 0;
+    int end = rows * cols - 1;
+    while (start &lt;= end) {
+        int mid = (start + end) / 2;
+        // Tricks to treat it as a 1-D array
+        int digit = matrix[mid / cols][mid % cols];
+        if (target == digit) {
+            return true;
+        } else if (target &gt; digit) {
+            start = mid + 1;
+        } else {
+            end = mid - 1;
+        }
+    }
+    return false;
+}
+</code></pre>
+
+<p><strong>Search a 2D Matrix II</strong></p>
+
+<p>Read my new post for details.</p>
+
+<p><strong>Find the First Bad Version</strong></p>
+
+<p>A simple binary search.</p>
+
+<p><strong>Find a peek</strong></p>
+
+<p>A binary search, and for each &lsquo;mid&rsquo; point, judge weather it&rsquo;s a peek, or it&rsquo;s upward sloping, or downward sloping.</p>
+
+<p>Code skipped.</p>
+
+<h2>Conclusion</h2>
+
+<h4>Always try to exclude a half.</h4>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/05/Software-testing/">[Testing] Software Testing</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-05T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>First Word</h2>
+
+<p>There are generally four levels of tests: unit testing, integration testing, system testing, and acceptance testing.</p>
+
+<p>Software testing methods are traditionally divided into white-box and black-box testing.</p>
+
+<p>One of the testing methodologies is &ldquo;V-model&rdquo;.</p>
+
+<p><img class="middle" src="/assets/images/Testing-V-Model.jpg"></p>
+
+<h2>Testing Types and process</h2>
+
+<h4>Regression testing</h4>
+
+<p>There&rsquo;re a lot of types, one of them is called &ldquo;Regression testing&rdquo;.</p>
+
+<p>Regression testing focuses on finding defects <strong>after a major code change has occurred</strong>. In other words, it encsures that changes does not introduce new faults.</p>
+
+<h4>Testing process</h4>
+
+<p>Traditional: <strong>waterfall</strong>. Testing is done by independent group of testers after development. This practice often results in the testing phase being used as a project buffer to compensate for project delays.</p>
+
+<p>New trend: <strong>Agile or Extreme</strong>, which adhere to <strong>TDD Model</strong>. In this process, unit tests are written first. This methodology increases the testing effort done by development.</p>
+
+<p><strong>Bottom Up Testing</strong>: lowest level components are tested first, then integrated and used to facilitate the testing of higher level components.</p>
+
+<p><strong>Top Down Testing</strong>: top integrated modules are tested and the branch of the module is tested step by step until the end.</p>
+
+<h2>Testing Methods</h2>
+
+<h4>Black-box</h4>
+
+<p><a href="http://en.wikipedia.org/wiki/Black-box_testing">Black-box</a> testing is a method of software testing that examines the functionality of an application without peering into its internal structures or workings. This can be applied to every level of software testing: unit, integration, system and acceptance.</p>
+
+<h4>White-box</h4>
+
+<p><a href="http://en.wikipedia.org/wiki/White-box_testing">White-box</a> testing (also known as structural testing) is a method of testing software that tests internal structures or workings of an application, as opposed to its functionality. In white-box testing, an internal perspective of the system and programming skills are used to design test cases. The tester chooses inputs to exercise paths through the code and determine the appropriate outputs.</p>
+
+<h4>Other-box</h4>
+
+<p>A black-box tester is unaware of the internal structure of the application to be tested, while a white-box tester has access to the internal structure of the application.</p>
+
+<p><a href="http://en.wikipedia.org/wiki/Grey_box_testing">Gray-box</a> testing is a combination of both. Testers require both highlevel and detailed knowledge of the application.</p>
+
+<h2>Whitebox in detail</h2>
+
+<p>Whitebox testing is based on program code. The extent to which source code is executed (covered).</p>
+
+<ol>
+<li>statement coverage</li>
+<li>path coverage</li>
+<li>(multiple-) condition coverage</li>
+<li>decision / branch coverage</li>
+<li>loop coverage</li>
+<li>definition-use coverage</li>
+</ol>
+
+
+<p>Use of &ldquo;flow graphs&rdquo; to test the coverage. <a href="http://people.cs.aau.dk/~bnielsen/TOV07/lektioner/whitebox-07.pdf">source</a></p>
+
+<h2>Blackbox in detail</h2>
+
+<ol>
+<li>Equivalence partitioning</li>
+<li>Boundary value analysis</li>
+<li>Behavioural testing (interaction with w/ an environment)</li>
+<li>Random testing (random walk thru the system/mouse click)</li>
+<li>Stress testing (huge data, DoS attack, power off)</li>
+<li>Error guessing (Ad hoc, not really a technique)</li>
+</ol>
+
+
+<h4>Equivalence partitioning</h4>
+
+<p>This is related to &ldquo;validate&rdquo; input. First identify input equivalence classes, then make the test case by changing each valid cases into invalid.</p>
+
+<p>The <a href="http://en.wikipedia.org/wiki/Equivalence_partitioning">testing theory</a> related to equivalence partitioning says that only one test case of each partition is needed. In other words it is sufficient to select one test case out of each partition to test the program. To use more cases will not find new faults.</p>
+
+<p>The values within one partition are considered to be &ldquo;equivalent&rdquo;. Thus the number of test cases can be reduced considerably.</p>
+
+<blockquote><p>Example:</p>
+
+<p>There are 12 months per year</p>
+
+<p>Valid partition is from january to december</p>
+
+<p>Invalid partition is from &lt;=0 and >=13</p></blockquote>
+
+<p>A longer but better <a href="http://users.csc.calpoly.edu/~jdalbey/205/Resources/grocerystore.html">example</a></p>
+
+<h4>Boundary Value Analysis</h4>
+
+<ol>
+<li>Testing boundary conditions (directly on, above, and beneath the edges)</li>
+<li>Choose input boundary values</li>
+<li>Choose input boundary values that reaches output boundary (given the input value, choose expected output +/- 1)</li>
+</ol>
+
+
+<blockquote><p>Example:</p>
+
+<p>Suppose an integer boundary is 1 to 50, Then test for 0,2 values &amp; 49, 51 vales.</p>
+
+<p>Suppose input = 5, output = 100, then test input = 5, output = 99, 100, 101</p></blockquote>
+
+<p>Don’t start with designing white-box test cases! Start with black-box test cases, then check white-box coverage.</p>
+
+<p><a href="http://people.cs.aau.dk/~bnielsen/TOV07/lektioner/blackbox-07.pdf">source</a></p>
+
+<h4>More examples</h4>
+
+<p><strong>Q: how to test a log-in window</strong>?</p>
+
+<p>A: Eq. class: username empty, exits, don&rsquo;t exist and exceed length limit. Same for password field. Boundary: input length equals, less than or larger than length limit. <a href="http://www.geekinterview.com/question_details/23184">source</a></p>
+
+<p><strong>Q: how to test a vendor machine</strong>?</p>
+
+<ol>
+<li><p>Functional: put in $$ and get a coke</p></li>
+<li><p>Edge condition: put in Chinese RMB?</p></li>
+<li><p>Stress: keep putting $$ and popping goods</p></li>
+<li><p>Security: can you break the machine?</p></li>
+</ol>
+
+
+<h2>Last Word</h2>
+
+<p>Sometime it is not feasible to test everything. Instead, prioritize your testing so that you only focus on areas that present the greatest risk or have the greatest probability of occurring.</p>
+
+<p>For example, you might choose to test the slowest client computer, the busiest server, or the least reliable network link.</p>
+
+<p><a href="http://technet.microsoft.com/en-us/library/cc782852(v=ws.10">source</a>.aspx)</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/04/Unicode-Utf8/">[Question] ASCII, Utf-8, Utf-16 and Unicode</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-04T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>First Word</h2>
+
+<p><strong>ASCII, UTF-? are encoding schemes. Unicode is character set</strong>.</p>
+
+<p>Or in other words, UTF-8 is an encoding used to translate binary data into numbers. Unicode is a character set used to translate numbers into characters.</p>
+
+<h2>ASCII</h2>
+
+<p><strong><a href="http://en.wikipedia.org/wiki/ASCII">ASCII</a></strong> is a character-encoding scheme based on the English alphabet. It encodes 128 characters into 7-bit integers.</p>
+
+<p>ASCII was the most commonly used character encoding on the World Wide Web until December 2007, when it was surpassed by UTF-8, which includes ASCII as a subset.</p>
+
+<h2>UTF-8</h2>
+
+<p>UCS Transformation Format—8-bit</p>
+
+<p><strong><a href="http://en.wikipedia.org/wiki/Utf_8">UTF-8</a></strong> is a variable-width encoding that can represent every character in the Unicode character set. It uses 1 byte for ASCII characters, and up to 4 bytes for others.</p>
+
+<p><strong>UTF-8 is the dominant character encoding for the World Wide Web</strong>, accounting for more than half of all Web pages.</p>
+
+<p>Utf-8 is good because:</p>
+
+<ol>
+<li><p>backward compatibility with ASCII</p></li>
+<li><p>avoid the complications of endianness and byte order marks in UTF-16 and UTF-32</p></li>
+</ol>
+
+
+<p>UTF-8 has become the dominant character encoding for the World Wide Web, accounting for more than half of all Web pages</p>
+
+<h2>UTF-16 and UTF-32</h2>
+
+<p><strong>UTF-16 is used for text in the OS API in Microsoft Windows 2000/XP/2003/Vista/7/8/CE</strong>. The word &ldquo;Unicode&rdquo; means something else according to <a href="http://stackoverflow.com/a/3951826">this person</a>:</p>
+
+<blockquote><p>Windows uses UTF-16LE encoding internally as the memory storage format for Unicode strings, it considers this to be the natural encoding of Unicode text. In the Windows world, there are ANSI strings and there are Unicode strings (stored internally as UTF-16LE).</p>
+
+<p>This was all devised in the early days of Unicode, before UTF-8 was invented. This is why Windows&rsquo;s support for UTF-8 is all-round poor.</p></blockquote>
+
+<h4>UTF-8: &ldquo;size optimize&rdquo;:</h4>
+
+<p>Best suited for Latin character based data (or ASCII), it takes only 1 byte.</p>
+
+<h4>UTF-16: &ldquo;balance&rdquo;</h4>
+
+<p>It takes minimum 2 bytes per character which is enough for existing set of the mainstream languages with having fixed size on it to ease character handling, but size is still variable and can grow up to 4 bytes per character.</p>
+
+<h4>UTF-32: &ldquo;performance&rdquo;</h4>
+
+<p>Allows using of simple algorithms as result of fixed size characters (4 bytes) but with memory disadvantage</p>
+
+<h2>Unicode</h2>
+
+<p><a href="http://en.wikipedia.org/wiki/Unicode">Unicode</a> is a computing industry standard for the consistent encoding. It expresses most of world&rsquo;s writing systems with more than 110,000 characters covering 100 scripts and symbols.</p>
+
+<p>Unicode can be implemented by Utf-8, Utf-16 and now-obsolete Ucs-2. When unicode is encoded with UTF-8, its code value is same as ASCII.</p>
+
+<h2>Table of the scheme</h2>
+
+<table class="wikitable">
+<tbody><tr>
+<th class="bg-color bg-img font-color">Bits of<br>
+code point</th>
+<th class="bg-color bg-img font-color">First<br>
+code point</th>
+<th class="bg-color bg-img font-color">Last<br>
+code point</th>
+<th class="bg-color bg-img font-color">Bytes in<br>
+sequence</th>
+<th class="bg-color bg-img font-color">Byte 1</th>
+<th class="bg-color bg-img font-color">Byte 2</th>
+<th class="bg-color bg-img font-color">Byte 3</th>
+<th class="bg-color bg-img font-color">Byte 4</th>
+<th class="bg-color bg-img font-color">Byte 5</th>
+<th class="bg-color bg-img font-color">Byte 6</th>
+</tr>
+<tr>
+<th class="bg-color bg-img font-color">&nbsp;&nbsp;7</th>
+<td class="bg-color bg-img font-color">U+0000</td>
+<td class="bg-color bg-img font-color">U+007F</td>
+<td style="text-align: center;" class="bg-color bg-img font-color">1</td>
+<td class="bg-color bg-img font-color"><code>0xxxxxxx</code></td>
+</tr>
+<tr>
+<th class="bg-color bg-img font-color">11</th>
+<td class="bg-color bg-img font-color">U+0080</td>
+<td class="bg-color bg-img font-color">U+07FF</td>
+<td style="text-align: center;" class="bg-color bg-img font-color">2</td>
+<td class="bg-color bg-img font-color"><code>110xxxxx</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+</tr>
+<tr class="bg-color bg-img font-color">
+<th class="bg-color bg-img font-color">16</th>
+<td class="bg-color bg-img font-color">U+0800</td>
+<td class="bg-color bg-img font-color">U+FFFF</td>
+<td style="text-align: center;" class="bg-color bg-img font-color">3</td>
+<td class="bg-color bg-img font-color"><code class="bg-color bg-img font-color">1110xxxx</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+</tr>
+<tr>
+<th class="bg-color bg-img font-color">21</th>
+<td class="bg-color bg-img font-color">U+10000</td>
+<td class="bg-color bg-img font-color">U+1FFFFF</td>
+<td style="text-align: center;" class="bg-color bg-img font-color">4</td>
+<td class="bg-color bg-img font-color"><code>11110xxx</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+</tr>
+<tr>
+<th class="bg-color bg-img font-color">26</th>
+<td class="bg-color bg-img font-color">U+200000</td>
+<td class="bg-color bg-img font-color">U+3FFFFFF</td>
+<td style="text-align: center;" class="bg-color bg-img font-color">5</td>
+<td class="bg-color bg-img font-color"><code>111110xx</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+</tr>
+<tr>
+<th class="bg-color bg-img font-color">31</th>
+<td class="bg-color bg-img font-color">U+4000000</td>
+<td class="bg-color bg-img font-color">U+7FFFFFFF</td>
+<td style="text-align: center;" class="bg-color bg-img font-color">6</td>
+<td class="bg-color bg-img font-color"><code>1111110x</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+</tr>
+</tbody></table>
+
+
+<h2>Example</h2>
+
+<p>Translate &lsquo;€&rsquo; into binary Utf-8.</p>
+
+<ol>
+<li><p>The Unicode code point for &ldquo;€&rdquo; is U+20AC.</p></li>
+<li><p>According to the scheme table above, this will take 3 bytes (16 bits).</p></li>
+<li><p>Convert hexadecimal 20AC into a 16-bit binary 0010000010101100.</p></li>
+<li><p>Fill in the 16 bits into: 1110xxxx   10xxxxxx    10xxxxxx, we got 11100010 10000010 10101100</p></li>
+<li><p>Almost done. The result can be concisely written in hexadecimal, as E2 82 AC.</p></li>
+</ol>
+
+
+<p>Note that the last byte of any encoding starts with &lsquo;0&rsquo;, in this way computer can easily identify the encoding length of every character. Also <strong>note that ASCII code is natively supported by Utf-8</strong>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/04/Junit-hands-on-notes/">[Question] Junit Hand-on Notes</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-04T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>First Word</h2>
+
+<p>Junit is open source testing framework developed for unit testing java code. It is now the default framework for testing Java development.</p>
+
+<h4>Is it popular?</h4>
+
+<p><a href="http://www.takipiblog.com/2013/11/20/we-analyzed-30000-github-projects-here-are-the-top-100-libraries-in-java-js-and-ruby/">A very interesting survey</a> shows that JUnit is THE MOST POPULAR LIBRARY FOR JAVA used by 30.7% of projects (it tied with slf4j-api).</p>
+
+<p>BTW, <a href="http://en.wikipedia.org/wiki/Apache_Commons">Apache Commons</a> and <a href="http://en.wikipedia.org/wiki/Google_Guava">Google Guava</a> are the most important common libraries for Java.</p>
+
+<h2>Unit Test</h2>
+
+<p>A unit test is a piece of code that executes a specific functionality in the code. Tests should be written for critical and complex parts of your application (not every single statement). The percentage of code which is tested by unit tests is typically called test coverage.</p>
+
+<p>Unit test is really a coding process, not a testing process.</p>
+
+<p>In contrast, there is &ldquo;Manual testing&rdquo;.</p>
+
+<h4>Why should we use it?</h4>
+
+<ol>
+<li><p>Test early and often automated testing.</p></li>
+<li><p>Junit tests can be integrated with the build so regression testing can be done at unit level.</p></li>
+<li><p>Test code reusage.</p></li>
+</ol>
+
+
+<h4>Other kinds of tests?</h4>
+
+<p>Integration Test (also called Functional Test) test the behavior of a component or the integration between a set of components.</p>
+
+<p>Performance tests are used to benchmark software components in a repeatable way</p>
+
+<h2>TDD</h2>
+
+<p>TDD (Test-Driven Development) write unit test before writing the code. It is commonly believed that tests should be written before the code during development cycle.</p>
+
+<p><a href="http://stackoverflow.com/questions/247086/should-unit-tests-be-written-before-the-code-is-written">Some believes</a> that TDD results in less time in the debugger, and more time thinking about outside-in design. <a href="http://sqa.fyicenter.com/FAQ/JUnit/When_Should_Unit_Tests_Should_Be_Written_In_Deve.html">Some also believes</a> that TDD is more fun than writing tests after the code seems to be working.</p>
+
+<h2>Junit</h2>
+
+<p>In Java, &lsquo;assert&rsquo; is a keyword. So, JUnit 3.7 deprecated assert() and replaced it with assertTrue(). JUnit 4 is compatible with the assert keyword.</p>
+
+<h4>Test Class/Suite</h4>
+
+<p>Test methods are contained in a class called Test class. JUnit assumes that all test methods can be executed in an arbitrary order (thus no dependency).</p>
+
+<p>Several test classes can be combined into a test suite. Running a test suite will execute all test classes in the specified order.</p>
+
+<h4>Test fixtures</h4>
+
+<p>Fixtures is a fixed state of a set of objects used as a baseline for running tests. It includes:</p>
+
+<ol>
+<li><p>setUp() method which runs before every test invocation.</p></li>
+<li><p>tearDown() method which runs after every test method.</p></li>
+</ol>
+
+
+<h4>&ldquo;extends TestCase&rdquo; or @annotation?</h4>
+
+<p>JUnit 3-style: create a class that &ldquo;extends TestCase&rdquo;, and start test methods with the word test. In Eclipse, all methods named &ldquo;testSomething&rdquo; are automatically run.</p>
+
+<p>JUnit 4-style: create a &lsquo;normal&rsquo; class and prepend a @Test annotation to the method (name do not have to be &ldquo;testSomething&rdquo;). This is <a href="http://stackoverflow.com/questions/2635839/junit-confusion-use-extend-testcase-or-test">recommended way</a>.</p>
+
+<h4>Other than normal test</h4>
+
+<p>There are:</p>
+
+<ol>
+<li><p>Expected Exception Test: @Test(expected = ArithmeticException.class)</p></li>
+<li><p>Ignore Test: @Ignore(&ldquo;Not Ready to Run&rdquo;)</p></li>
+<li><p>Time Test: @Test(timeout = 1000)</p></li>
+<li><p>Suite Test: @Suite.SuiteClasses({ JunitTest1.class, JunitTest2.class })</p></li>
+<li><p>Parameterized Test: read below</p></li>
+</ol>
+
+
+<p>Junit 4 has introduced a new feature Parameterized tests. Parameterized tests allow developer to run the same test many times using different values (passed in as a collecetion). One <a href="http://www.mkyong.com/unittest/junit-4-tutorial-6-parameterized-test/">good example</a>.</p>
+
+<h2>Miscellaneous</h2>
+
+<p>Q: What happens if a JUnit Test Method is Declared as &ldquo;private&rdquo;?</p>
+
+<p>A: If a JUnit test method is declared as &ldquo;private&rdquo;, it compiles successfully. But the execution will fail. This is because JUnit requires that all test methods must be declared as &ldquo;public&rdquo;.</p>
+
+<p>Q: How do you test a &ldquo;protected&rdquo; method?</p>
+
+<table border="1" summary="This table defines levels of access conferred by a modifier">
+<caption style="font-weight: bold" id="accesscontrol-levels">Access Levels</caption>
+<tbody><tr>
+<th id="h1" class="bg-color bg-img font-color">Modifier</th>
+<th id="h2" class="bg-color bg-img font-color">Class</th>
+<th id="h3" class="bg-color bg-img font-color">Package</th>
+<th id="h4" class="bg-color bg-img font-color">Subclass</th>
+<th id="h5" class="bg-color bg-img font-color">World</th>
+</tr>
+<tr>
+<td headers="h1" class="bg-color bg-img font-color"><code>public</code></td>
+<td headers="h2" class="bg-color bg-img font-color">Y</td>
+<td headers="h3" class="bg-color bg-img font-color">Y</td>
+<td headers="h4" class="bg-color bg-img font-color">Y</td>
+<td headers="h5" class="bg-color bg-img font-color">Y</td>
+</tr>
+<tr>
+<td headers="h1" class="bg-color bg-img font-color"><code>protected</code></td>
+<td headers="h2" class="bg-color bg-img font-color">Y</td>
+<td headers="h3" class="bg-color bg-img font-color">Y</td>
+<td headers="h4" class="bg-color bg-img font-color">Y</td>
+<td headers="h5" class="bg-color bg-img font-color">N</td>
+</tr>
+<tr>
+<td headers="h1" style="font-style: italic" class="bg-color bg-img font-color">no modifier</td>
+<td headers="h2" class="bg-color bg-img font-color">Y</td>
+<td headers="h3" class="bg-color bg-img font-color">Y</td>
+<td headers="h4" class="bg-color bg-img font-color">N</td>
+<td headers="h5" class="bg-color bg-img font-color">N</td>
+</tr>
+<tr>
+<td headers="h1" class="bg-color bg-img font-color"><code>private</code></td>
+<td headers="h2" class="bg-color bg-img font-color">Y</td>
+<td headers="h3" class="bg-color bg-img font-color">N</td>
+<td headers="h4" class="bg-color bg-img font-color">N</td>
+<td headers="h5" class="bg-color bg-img font-color">N</td>
+</tr>
+</tbody></table>
+
+
+<p>A: When a method is declared as &ldquo;protected&rdquo;, it can only be accessed within the same package where the class is defined. Hence to test a &ldquo;protected&rdquo; method, define test class in the same package.</p>
+
+<h2>Things that I don&rsquo;t understand</h2>
+
+<p>Q: <a href="http://www.tutorialspoint.com/junit/junit_interview_questions.htm">How do I test things that must be run in a J2EE container</a> (e.g. servlets, EJBs)?</p>
+
+<p>A: Refactoring J2EE components to delegate functionality to other objects that don&rsquo;t have to be run in a J2EE container will improve the design and testability of the software. Cactus is an open source JUnit extension that can be used for unit testing server-side java code.</p>
+
+<p>Q: What are Parameterized tests in JUnit?</p>
+
+<p>A: Parameterized tests allow developer to run the same test over and over again using different values.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/03/Reverse-Words-in-a-String/">[LeetCode 151] Reverse Words in a String</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-03T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/reverse-words-in-a-string/">link</a></p>
+
+<div class="question-content bg-color bg-img font-color">
+<p class="font-color"></p><p class="font-color">
+Given an input string, reverse the string word by word.
+</p>
+
+<p class="font-color">
+For example,<br>
+Given s = "<code>the sky is blue</code>",<br>
+return "<code>blue is sky the</code>".
+</p>
+
+<div>
+<b>Clarification:</b>
+
+<p class="font-color">
+</p><ul class="bg-color bg-img font-color">
+<li>What constitutes a word?<br>
+A sequence of non-space characters constitutes a word.</li>
+<li>Could the input string contain leading or trailing spaces?<br>
+Yes. However, your reversed string should not contain leading or trailing spaces.</li>
+<li>How about multiple spaces between two words?<br>
+Reduce them to a single space in the reversed string.</li>
+</ul>
+<p class="font-color"></p>
+</div><p class="font-color"></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is an very classic question</strong>, and there is a very nice solution.</p>
+
+<h3>Solution</h3>
+
+<p><strong>First solution is read each character from the back, and insert each word into answer String</strong>. I used this method, and passed in 2 attempts. I have always been afriad of string question, and this time it gave me an easy time.</p>
+
+<p>I post my code below. Altough it can be better if I use StringBuilder. Most blog/forum would give this solution including <a href="https://oj.leetcode.com/discuss/3378/is-my-solution-good-enough">this one</a>.</p>
+
+<p>However, previous solution uses extra space. <strong>We can do it in-place suggested by <a href="http://stackoverflow.com/a/1009174">this post</a></strong>.</p>
+
+<blockquote cite="http://stackoverflow.com/a/1009174">
+    <p class="font-color">Reverse the entire string, then reverse the letters of each individual word.</p>
+
+    <p class="font-color">After the first pass the string will be</p>
+
+    <pre><code>s1 = "Z Y X si eman yM"
+    </code></pre>
+
+    <p class="font-color">and after the second pass it will be</p>
+
+    <pre><code>s1 = "Z Y X is name My"
+    </code></pre>
+</blockquote>
+
+
+<p>There are 2 things to note.</p>
+
+<p><strong>One, the edge cases</strong> are easily omitted, like all-space input, double-space in between, and a lot more.</p>
+
+<p><strong>Two, The Clarification part is extremely helpful</strong> for writing a bug-free solution. It&rsquo;s always better to clarify further about what the question is ask. For example, can we use <strong>String.split()</strong> and <strong>String.substring()</strong>? (normally we would better not to) Can we use any extra space? That decides weather we copy by substring or by character.</p>
+
+<p>In conclusion, <strong>this is an easy question that&rsquo;s not easy to get correct answer</strong>. Practise more! And since this is the last post of Leetcode questions, my focus from tomorrow onwards will be shifted to &ldquo;CC150&rdquo;. Thanks for reading!</p>
+
+<h3>Code</h3>
+
+<p><strong>My code</strong>. pointer solution.</p>
+
+<pre><code>public String reverseWords(String s) {
+    if (s.length() == 0) return "";
+    int p = s.length() - 1;
+    // p points to the last non-space character
+    String ans = "";
+    while (p &gt;= 0) {
+        int j = p;
+        while (j &gt;= 0 &amp;&amp; s.charAt(j) != ' ') {
+            j --;
+        }
+        ans += s.substring(j + 1, p + 1) + " ";
+        p = j;
+        while (p &gt;= 0 &amp;&amp; s.charAt(p) == ' ') {
+            p--;
+        }
+    }
+    return ans.trim();
+}
+</code></pre>
+
+<p><strong>Updated on Sep 12th</strong>: updated with 3-step-reverse method.</p>
+
+<pre><code>public String reverseWords(String s) {
+    if (s == null || s.length() == 0) {
+        return s;
+    }
+    StringBuilder ans = new StringBuilder();
+    int len = s.length();
+    int p = len - 1;
+    while (p &gt;= 0) {
+        while (p &gt;= 0 &amp;&amp; s.charAt(p) == ' ') {
+            p--;
+        }
+        if (p == -1) {
+            break;
+        }
+        StringBuilder word = new StringBuilder();
+        while (p &gt;= 0 &amp;&amp; s.charAt(p) != ' ') {
+            word.append(s.charAt(p));
+            p--;
+        }
+        if (ans.length() == 0) {
+            ans.append(word.reverse().toString());
+        } else {
+            ans.append(" " + word.reverse().toString());
+        }
+    }
+    return ans.toString();
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/03/Reorder-List/">[LeetCode 143] Reorder List</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-03T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/reorder-list/">link</a></p>
+
+<div class="question-content bg-color bg-img font-color">
+            <p class="font-color"></p><p class="font-color">
+Given a singly linked list <i>L</i>: <i>L</i><sub>0</sub>→<i>L</i><sub>1</sub>→…→<i>L</i><sub><i>n</i>-1</sub>→<i>L</i><sub>n</sub>,<br>
+reorder it to: <i>L</i><sub>0</sub>→<i>L</i><sub><i>n</i></sub>→<i>L</i><sub>1</sub>→<i>L</i><sub><i>n</i>-1</sub>→<i>L</i><sub>2</sub>→<i>L</i><sub><i>n</i>-2</sub>→…
+</p>
+
+<p class="font-color">You must do this in-place without altering the nodes' values.</p>
+
+<p class="font-color">
+For example,<br>
+Given <code>{1,2,3,4}</code>, reorder it to <code>{1,4,2,3}</code>.
+</p><p class="font-color"></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="red">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is a difficult question to think</strong>.</p>
+
+<p>I first solved it with an stack which stores the second half nodes. It works. However, IT IS NOT A IN-PLACE SOLUTION, thus it&rsquo;s wrong.</p>
+
+<p>Eventually I did not solve it.</p>
+
+<p><strong>There is only one standard solution from the Internet</strong>. <a href="http://www.programcreek.com/2013/12/in-place-reorder-a-singly-linked-list-in-java/">This blog</a> explains it.</p>
+
+<blockquote><ol>
+<li>Break list in the middle to two lists (use fast &amp; slow pointers)</li>
+<li>Reverse the order of the second list</li>
+<li>Merge two list back together</li>
+</ol>
+</blockquote>
+
+<p>Simple, right? <strong>Because of the nature of linked list, a lot of things can be done in-place</strong>, so we need not use any other data strucutres.</p>
+
+<h3>Solution</h3>
+
+<p>The code is a bit lengthy and difficult to write. It took me a while, but passed in 1 go.</p>
+
+<h3>Code</h3>
+
+<p><strong>First, code written by me</strong></p>
+
+<pre><code>public void reorderList(ListNode head) {
+    if (head == null || head.next == null) {
+        return;
+    }
+    ListNode slow = head, fast = head;
+    while (fast != null) {
+        if (fast.next != null &amp;&amp; fast.next.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        else {
+            fast = null;
+        }
+    }
+    // if length = 2, slow point to 1st
+    // if length = 3, slow point to 2nd
+    // if length = 4, slow point to 2nd
+    ListNode secondHalf = slow.next;
+    slow.next = null;
+    // now reverse secondHalf
+    ListNode p = secondHalf;
+    while (p.next != null) {
+        ListNode tail = p.next.next;
+        p.next.next = secondHalf;
+        secondHalf = p.next;
+        p.next = tail;
+    }
+    // now merge 2 list: head and secondHalf
+    ListNode a = head, b = secondHalf;
+    while (a != null &amp;&amp; b != null) {
+        ListNode temp1 = a.next;
+        ListNode temp2 = b.next;
+        a.next = b;
+        b.next = temp1;
+        a = temp1;
+        b = temp2;
+    }
+}
+</code></pre>
+
+<p><strong>Second, code written by <a href="https://oj.leetcode.com/discuss/236/does-this-problem-solution-time-complexity-space-comlexity">someone</a></strong></p>
+
+<pre><code>public void reorderList(ListNode head) {
+    // IMPORTANT: Please reset any member data you declared, as
+    // the same Solution instance will be reused for each test case.
+    if (head == null || head.next == null) return;
+    ListNode fast = head;
+    ListNode slow = head;
+    while(fast != null &amp;&amp; fast.next != null) {
+        fast = fast.next.next;
+        slow = slow.next;
+    }
+    ListNode reverseHead = slow.next;           // find the second half of list
+    slow.next = null;                           // make first half end point to null
+    reverseHead = reverse(reverseHead);         // reverse second half     
+    ListNode cur = head;        
+    while(reverseHead != null) {                // link together
+        ListNode tmp = reverseHead.next;
+        reverseHead.next = cur.next;
+        cur.next = reverseHead;
+        cur = cur.next.next;
+        reverseHead = tmp;
+    }
+}
+private ListNode reverse(ListNode head) {
+    if (head == null || head.next == null) return head;
+    ListNode prev = new ListNode(0);
+    prev.next = head;
+    head = prev;
+    ListNode cur = prev.next;
+    while(cur.next != null) {
+        ListNode tmp = cur.next;
+        cur.next = tmp.next;
+        tmp.next = prev.next;
+        prev.next = tmp;
+    }
+    return prev.next;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/48">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/46">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

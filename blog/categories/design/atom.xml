@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Design | My Octopress Blog]]></title>
+  <link href="http://okc1.github.io/blog/categories/design/atom.xml" rel="self"/>
+  <link href="http://okc1.github.io/"/>
+  <updated>2016-06-08T10:52:14-07:00</updated>
+  <id>http://okc1.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[[Design] User Registry Table Design]]></title>
+    <link href="http://okc1.github.io/blog/2016/05/08/user-registry-table-design/"/>
+    <updated>2016-05-08T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2016/05/08/user-registry-table-design</id>
+    <content type="html"><![CDATA[# First word 
+
+Designing a system like twitter, facebook or airbnb, first step is often __User Registry__.
+
+The tables, __we must use RDBMS__, as it's more reliable. 
+
+## Table design
+
+__Friendship table__ is important:
+
+<img class="middle" src="/assets/images/design-user-registry-tables.png">
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Design] Technical Challenges of Writing a Web Crawler]]></title>
+    <link href="http://okc1.github.io/blog/2015/11/22/challenges-writing-crawler/"/>
+    <updated>2015-11-22T00:00:00-08:00</updated>
+    <id>http://okc1.github.io/blog/2015/11/22/challenges-writing-crawler</id>
+    <content type="html"><![CDATA[# 1. Choose a framework
+
+Assuming we use Python to do this.
+
+## plain python?
+
+We can write a simple Python crawler with the code below:
+
+    import re, urllib
+
+    textfile = file('depth_1.txt','wt')
+    print "Enter the URL you wish to crawl.."
+    print 'Usage  - "http://phocks.org/stumble/creepy/" <-- With the double quotes'
+    myurl = input("@> ")
+    for i in re.findall('''href=["'](.[^"']+)["']''', urllib.urlopen(myurl).read(), re.I):
+        print i  
+        for ee in re.findall('''href=["'](.[^"']+)["']''', urllib.urlopen(i).read(), re.I):
+            print ee
+            textfile.write(ee+'\n')
+    textfile.close()
+
+## Scrapy?
+
+1. You only define the rules, Scrapy do the rest
+1. easily plugin extensions
+1. portable + python runtime.
+
+### Why Scrapy
+
+> [scrapy has the tools to manage every stage of a web crawl](https://www.quora.com/What-are-the-advantages-of-Scrapy-compared-to-Beautiful-Soup), just to name a few:
+
+> 1. Requests manager - in charge of downloading pages all concurrently behind the scenes! You won't need to invest a lot of time in concurrent architecture.
+>
+> 2. Selectors -  parse the html document (eg. XPath) 
+>
+> 3. Pipelines - after you retrieve the data, there's a bunch of functions to modify the data.
+
+Following the spirit of other don’t repeat yourself frameworks, such as Django:
+
+> [it makes it easier to build and scale large crawling projects](https://en.wikipedia.org/wiki/Scrapy) by allowing developers to re-use their code. 
+
+For more, read [Scrapy Architecture ](http://doc.scrapy.org/en/latest/topics/architecture.html).
+
+<img class="middle" src="/assets/images/scrapy_architecture.png">
+
+1. Scrapy Engine 
+
+    control data flow
+
+1. Scheduler 
+
+    receives requests from the engine and enqueues them for feeding them later
+
+1. Downloader
+
+1. Spiders
+
+1. Item Pipeline
+
+1. Downloader middlewares
+
+    specific hooks that sit between the Engine and the Downloader and process requests
+
+1. Spider middlewares
+
+    specific hooks that sit between the Engine and the Spiders and are able to process spider input (responses) and output (items and requests).
+
+# 2. Schedule a Scrapy job
+
+APScheduler? (todo)
+
+add/remove jobs
+
+# 3. Choose a DB
+
+I chose NoSQL/MongoDB. [But why](http://stackoverflow.com/a/11980154)?
+
+1. there's only a few tables with few columns
+
+1. no overly complex associations between nodes
+
+1. huge amount of time-based data
+
+1. scaling requirements: MongoDB better horizontal scaling
+
+1. different field names: dynamical storage
+
+# 4. Technical Difficulty?
+
+## 4.1 differrent way to crawl. 
+
+We need to check AJAX response sometime and study each website's API. 
+
+Some site would __close certain APIs__ if they found out too many queries requests. 
+
+## 4.2 Difficulty navigating pages
+
+Study their URL structure.
+
+eg. 
+
+    www.abc.com/index.html?page=milk&start_index=0
+    
+Just play with the url params!
+
+## 4.3 What is key?
+
+I defined extra column only to store keys (combine a few key columns, and convert to lower-case). 
+
+We can search using __regex__ though, but:
+
+> [Mongo (current version 2.0.0) doesn't allow](http://stackoverflow.com/a/7880894) case-insensitive searches against indexed fields. For non-indexed fields, the regex search should be fine.
+
+How to go about it: 
+
+> [searching with regex's case insensitive](http://stackoverflow.com/a/4441412) means that mongodb cannot search by index, so queries against __large datasets can take a long time__.
+
+> Even with small datasets, it's not very efficient... which could become an issue if you are trying to achieve scale.
+
+> As an alternative, you can store an uppercase copy and search against that... 
+
+> If your field is large, such as a message body, duplicating data is probably not a good option. I believe using __an extraneous indexer like Apache Lucene__ is the best option in that case.
+
+## 4.4 A lot bad data
+
+1. write a sophisticated pipeline()
+
+1. try not let bad data reach pipeline() - __better__
+
+Make your spider better!
+
+## 4.5 NLP: brand names
+
+how? (todo)
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Design] How to Generate Maze]]></title>
+    <link href="http://okc1.github.io/blog/2015/11/21/generate-maze/"/>
+    <updated>2015-11-21T00:00:00-08:00</updated>
+    <id>http://okc1.github.io/blog/2015/11/21/generate-maze</id>
+    <content type="html"><![CDATA[# Question
+
+[link](http://www.glassdoor.com/Interview/Design-a-2D-dungeon-crawling-game-It-must-allow-for-various-items-in-the-maze-walls-objects-and-computer-controlled-c-QTN_57.htm)
+
+> Design a 2D dungeon crawling game. It must allow for   various items in the maze - walls, objects, and computer-controlled characters.
+
+# Part 1: API design
+
+Serialize:
+
+> [if a certain cell has a wall](http://qr.ae/RbRhHv) to the North and West but not to the South or East, it would be represented as 1001, or 9... (e.g., "9,6,11,12\n3,10,10,4\n13,9,12,5\n3,6,1,6" in a 4x4 maze)
+
+Design API~
+
+# Part 2: Algorithm
+
+## Depth-first search 
+
+This is most common and [one of the simplest ways to generate a maze using a computer](https://en.wikipedia.org/wiki/Maze_generation_algorithm#Depth-first_search). It's commonly implemented using __[Recursive backtrack](https://en.wikipedia.org/wiki/Maze_generation_algorithm#Recursive_backtracker)__. 
+
+1. from a random cell, select a random neighbour that hasn't been visited. 
+
+1. removes the 'wall' and adds the new cell to a stack. 
+
+1. a cell with no unvisited neighbours is considered __dead-end__. 
+
+1. When at a dead-end it backtracks through the path until it reaches a cell with unvisited neighbours, continuing from there. 
+
+1. until every cell has been visited, the computer would backtrack all the way to the beginning cell. 
+
+1. Entire maze space is guaranted a complete visit.
+
+### side note
+
+> To add difficulty and a fun factor to the DFS, you can __influence the likelihood of which neighbor you should visit__, instead of completely random. 
+
+> By making it more likely to visit neighbors to your sides, you can have a more horizontal maze generation.  
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Design] Strategy Design Pattern]]></title>
+    <link href="http://okc1.github.io/blog/2015/11/18/strategy-pattern/"/>
+    <updated>2015-11-18T00:00:00-08:00</updated>
+    <id>http://okc1.github.io/blog/2015/11/18/strategy-pattern</id>
+    <content type="html"><![CDATA[# Overview
+
+__[Strategy pattern](https://en.wikipedia.org/wiki/Strategy_pattern)__ (also known as the policy pattern) is a design pattern that __enables an algorithm's behavior to be selected__ at runtime.
+
+For instance, a class that performs __validation on incoming data__ may use a strategy pattern to select a validation algorithm __based on the type of data__, the source of the data, user choice... These factors are not known __until run-time__... 
+
+## A car example
+
+Since accelerate and brake behaviors change frequently between models, __a common approach is to implement these behaviors in subclasses__. This approach has significant drawbacks: accelerate and brake behaviors __must be declared in each new Car model__. 
+
+<img class="middle" src="/assets/images/600px-StrategyPattern_IBrakeBehavior.png">
+
+The strategy pattern uses __composition__ instead of inheritance. This allows: 
+
+1. better __decoupling between the behavior__ and the class that uses it. (i.e. behavior can be changed without breaking the classes that use it)
+
+1. classes can switch between behaviors by changing the specific implementation used without requiring any significant code changes. 
+
+Code:
+
+    /* Encapsulated family of Algorithms 
+     * Interface and its implementations
+     */
+    public interface IBrakeBehavior {
+        public void brake(); 
+    }
+
+    public class BrakeWithABS implements IBrakeBehavior {
+        public void brake() {
+            System.out.println("Brake with ABS applied");
+        }
+    }
+
+    public class Brake implements IBrakeBehavior {
+        public void brake() {
+            System.out.println("Simple Brake applied");
+        }
+    }
+
+
+    /* Client which can use the algorithms above interchangeably */
+    public abstract class Car {
+        protected IBrakeBehavior brakeBehavior;
+
+        public void applyBrake() {
+            brakeBehavior.brake();
+        }
+
+        public void setBrakeBehavior(IBrakeBehavior brakeType) {
+            this.brakeBehavior = brakeType;
+        }
+    }
+
+    /* Client 1 uses one algorithm (Brake) in the constructor */
+    public class Sedan extends Car {
+        public Sedan() {
+            this.brakeBehavior = new Brake();
+        }
+    }
+
+    /* Client 2 uses another algorithm (BrakeWithABS) in the constructor */
+    public class SUV extends Car {
+        public SUV() {
+            this.brakeBehavior = new BrakeWithABS();
+        }
+    }
+
+
+    /* Using the Car Example */
+    public class CarExample {
+        public static void main(String[] args) {
+            Car sedanCar = new Sedan();
+            sedanCar.applyBrake();  // This will invoke class "Brake"
+
+            Car suvCar = new SUV(); 
+            suvCar.applyBrake();    // This will invoke class "BrakeWithABS"
+
+            // set brake behavior dynamically
+            suvCar.setBrakeBehavior( new Brake() ); 
+            suvCar.applyBrake();    // This will invoke class "Brake" 
+        }
+    }
+
+This gives greater flexibility in design and is in harmony with the __[Open/closed principle](https://en.wikipedia.org/wiki/Open/closed_principle)__ (OCP) that states that __classes should be open for extension but closed for modification__.
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Design] Facebook Photo Storage]]></title>
+    <link href="http://okc1.github.io/blog/2015/09/02/Facebook-photo-storage/"/>
+    <updated>2015-09-02T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2015/09/02/Facebook-photo-storage</id>
+    <content type="html"><![CDATA[# Stats
+
+Facebook has 1.5 billion monthly active users, 970 million daily active users [as of June 2015](http://newsroom.fb.com/company-info/). 
+
+<img class="middle" src="/assets/images/facebook-user-count.png">
+
+image from [statista.com](http://www.statista.com/statistics/264810/number-of-monthly-active-facebook-users-worldwide/). 
+
+In 2009, Facebook stores 15 billion photos for the user, which grows at 220 million per week, and 550,000 per second at peak. 
+    
+It's 2015 now, you might want to mulitply these numbers by 3~6. 
+
+I have roughly estimated the statistics of Facebook users, Facebook photos and growth rate, just to give you an idea of the size of data Facebook has got: 
+
+> Total user: 1.5b
+>
+> Total photoes: 150b, which is 100 photo/user
+>
+> Each photo got 4 different sizes, so 600b photos are stored. 
+>
+> New photo per day: 500m
+>
+> New photo per second: 6,000
+>
+> Peak incoming photo per second: 3m
+
+# Old architecture
+
+3 tiers design:
+
+1. __Upload tier__ receives users’ photo uploads, scales the original images and saves them on the NFS storage tier.
+
+1. __Photo serving tier__ receives HTTP requests for photo images and serves them from the NFS storage tier.
+
+1. __NFS storage tier__ built on top of commercial storage appliances.
+
+> __[Network File System](https://en.wikipedia.org/wiki/Network_File_System)__ (NFS) is a distributed file system protocol originally developed by Sun Microsystems in 1984, allowing a user on a client computer to access files over a network much like local storage is accessed. 
+
+## Problem
+
+1. there is an __enormous amount of metadata__ 
+
+    ... so much that is [exceeds the caching abilities of the NFS storage tier](https://code.facebook.com/posts/685565858139515/needle-in-a-haystack-efficient-storage-of-billions-of-photos/), __ resulting in multiple I/O operations__ per photo upload or read request
+
+## Solution
+
+1. relies heavily on CDNs to serve photos. 
+
+1. Cachr: a caching server tier caching Facebook "profile" images.
+
+1. NFS file handle cache - deployed on the photo serving tier eliminates some of the NFS storage tier metadata overhead
+
+# Haystack Photo Infrastructure 
+
+The new photo infrastructure merges the __photo serving__ and __storage tier__ into one physical tier. It implements __a HTTP based photo server__ which stores photos in a generic object store called Haystack. 
+
+Goal: eliminate any unnecessary metadata overhead for photo read operations, so that each read I/O operation was only reading actual photo data
+
+5 main functional layers:
+
+1. HTTP server
+
+1. Photo Store
+
+1. Haystack Object Store
+
+1. Filesystem
+
+1. Storage
+
+## Storage 
+
+The commodity machine HW typically is 2x quadcore CPU + 32GB RAM + 512MB NV-RAM cache + 12TB SATA drives. 
+
+> [Non-volatile random-access memory](https://en.wikipedia.org/wiki/Non-volatile_random-access_memory) (NVRAM) is random-access memory that retains its information when power is turned off (non-volatile).  
+>
+> This is in contrast to dynamic random-access memory (DRAM) and static random-access memory (SRAM) 
+
+So each __storage blade__ is around 10TB. Configured as __RAID-6__ partition. 
+
+> [RAID 6](http://searchstorage.techtarget.com/definition/RAID-6-redundant-array-of-independent-disks), also known as double-parity RAID, uses two parity stripes on each disk. It allows for two disk failures within the RAID set before any data is lost.
+
+Pros:
+
+1. adequate redundancy 
+1. excellent read performance 
+1. low storage cost down 
+
+Cons:
+
+__The poor write performance__ is partially mitigated by the __RAID controller NVRAM write-back cache__. Since the reads are mostly random, the NVRAM cache is fully reserved for writes. 
+
+__The disk caches are disabled__ in order to guarantee data consistency in the event of a crash or a power loss.
+
+## Filesystem 
+
+### How does filesystem read pictures?
+
+Photo read requests result in __read() system calls__ at known offsets in these files.
+
+Each file in the filesystem is represented by a structure called an inode which contains a block map that maps the logical file offset to the physical block offset on the physical volume. 
+
+For large files, the block map can be quite large.
+
+### Problem
+
+__Block based filesystems__ maintain mappings for __each logical block__, and for large files, this information will not typically fit into the cached inode and is stored in indirect address blocks instead, which must be traversed in order to read the data for a file. 
+
+There can be several layers of indirection, so a single read could result in __several I/Os__ (if not cached).
+
+### Solution
+
+__Extent based filesystems__ maintain mappings only for contiguous ranges of blocks (extents). A block map for a contiguous large file could consist of only one extent which would fit in the inode itself. 
+
+> [An extent](https://goo.gl/uQA35V) is a contiguous area of storage reserved for a file in a file system, represented as a range. A file can consist of zero or more extents; __one file fragment requires one extent__. The direct benefit is in storing each range compactly as two numbers, instead of canonically storing every block number in the range.
+>
+> Extent-based file systems can also __eliminate most of the metadata overhead of large files__ that would traditionally be taken up by the block allocation tree... saving on storage space is pretty slight, but... __the reduction in metadata is significant and reduces exposure to file system corruption__ as one bad sector in the _block allocation tree_ causes much greater data loss than one bad sector in stored data.
+
+### Problem of Extent-based file systems
+
+However, if the file is severely fragmented and its blocks are not contiguous on the underlying volume, its block map can grow large as well. 
+
+### The solution
+
+Fragmentation can be mitigated by __aggressively allocating a large chunk of space__ whenever growing the physical file. 
+
+Currently, the filesystem of choice is XFS, an extent based filesystem providing efficient file preallocation. 
+
+> __[XFS](https://en.wikipedia.org/wiki/XFS)__ is a high-performance 64-bit journaling file system created by Silicon Graphics, Inc (SGI) in 1993.
+>
+> ...was ported to the Linux kernel in 2001. As of June 2014, XFS is supported by most Linux distributions, some of which use it as the default file system.
+>
+> XFS enables __extreme scalability of I/O threads__, file system bandwidth, and size of files and of the file system itself when spanning multiple physical storage devices. 
+>
+> Space allocation is performed via extents with __data structures stored in B+ trees__, improving the overall performance of the file system, especially when handling large files.
+>
+> __Delayed allocation__ assists in the prevention of file system fragmentation; __online defragmentation__ is also supported. A feature unique to XFS is the __pre-allocation of I/O bandwidth__ at a pre-determined rate, which is suitable for many real-time applications.
+
+## Haystack
+
+Haystack is a simple __log structured (append-only) object store__. Many images store in one Haystack. Typically, [Haystack Store is 100GB size](http://jishu.zol.com.cn/17742.html). 
+
+A Haystack consists of two files:
+
+1. __haystack store file__ (containing the needles)
+    1. superblock
+    1. needles (1 needle is 1 image)
+1. __an index file__
+
+### 1. haystack store file 
+
+<img class="middle" src="/assets/images/851582_1409519009260319_311676661_n.jpg">
+
+1. The first 8KB of the haystack store is occupied by the __superblock__. 
+
+1. following the superblock are __needles__
+
+    __Needles represents the stored objects__. Needle consisting of a header, the data, and a footer: 
+
+    <img class="middle" src="/assets/images/851578_319395058204993_541487263_n.jpg">
+
+    A needle is uniquely identified by its \<Offset, Key, Alternate Key, Cookie\> tuple. 
+
+    Haystack doesn’t put any restriction on the values of the keys, and there can be needles with duplicate keys. 
+
+### 2. Index File
+
+__Needle__ consisting of a header, the data, and a footer: 
+
+<img class="middle" src="/assets/images/851582_1374324519464800_699636937_n.jpg">
+
+The index file provides the minimal metadata required to locate a particular needle in the haystack store file. 
+
+<img class="middle" src="/assets/images/851582_314454922033518_1196942525_n.jpg">
+
+The index file is not critical, as it can be rebuilt from the haystack store file if required. 
+
+The main purpose of the index: quick loading of the needle metadata into memory without traversing the larger Haystack store file, since the index is usually less than 1% the size of the store file. 
+
+### Summary
+
+All needles are stored in Haystack store file, and their location information is stored in Index File. 
+
+What is Needle? Needles represents the stored objects (1 needle - 1 image). 
+
+## Haystack Operations
+
+1. __write__
+
+    append new needle to haystack store file.
+    
+    later, corresponding index records are __updated async__. 
+    
+    In case of failure, any partial needles are discarded, and fix index from the end of the haystack.
+    
+    You can't overwrite any needle, but you can insert using same key. Later, the needle __with dup keys but largest offset__ became the most recent one. 
+
+1. __read__
+
+    __parameters passed in__: offset, key, alt key, cookie, data size
+    
+    if key, alt key and cookie matches, and checksum correct and needle is not marked as deleted, return. 
+
+1. __delete__
+
+    marks needle as deleted (set 1 bit), but index is not modified. 
+    
+    the deleted space is not reclaimed unless __compact the haystack__
+
+## Photo Store Server 
+
+Photo Store Server is responsible for accepting HTTP requests and translating them to the corresponding Haystack store operations. 
+
+In order to minimize the number of I/Os required to retrieve photos, the server keeps an __in-memory index of all photo offsets__. 
+
+At startup, __the (photo) server reads the haystack index file and populates the in-memory index__. The in-memory index is different from the index file in Haystack, as it stores lesser information, like this: 
+
+<img class="middle" src="/assets/images/851584_503528913060377_1268325854_n.jpg">
+
+1. __Photo Store Write/Modify Operation__
+
+    1. writes photos to the haystack 
+    1. updates the in-memory index 
+    
+    if there are duplicate images, the one stored at a larger offset is valid.
+
+1. __Photo Store Read Operation__
+
+    passed in:
+    
+    1. haystack id 
+    1. a photo key, 
+    1. size 
+    1. cookie 
+    
+    The server performs a lookup in the in-memory index based on the photo key and retrieves the offset of the needle containing the requested image.
+    
+    Since haystack delete operation doesn’t update the haystack index file record. Therefore a freshly populated in-memory index can contain stale entries for the previously deleted photos. Read such photo will fail and the in-memory index is updated to 0.
+
+1. __Photo Store Delete Operation__
+
+    After calling the haystack delete operation, the in-memory index is updated to 'offset = zero' 
+
+1. __Compaction__
+
+    Compaction is an online operation which reclaims the space used by the deleted and duplicate needles.
+    
+    creates a new haystack 
+
+1. __HTTP Server__
+
+    evhttp server 
+
+    multiple threads, with each serving a single HTTP request. Workload is mostly I/O bound, thus the performance of the HTTP server is not critical.
+
+# Summary 
+
+Storing photos as needles in the haystack __eliminates the metadata overhead__ by aggregating hundreds of thousands of images in a single haystack store file. 
+
+This keeps the metadata overhead very small and allows us to __store each needle’s location in the store file in an in-memory index__. 
+
+This allows retrieval of an image’s data in __a minimal number of I/O operations__, eliminating all unnecessary metadata overhead. 
+
+Ref: https://code.facebook.com/posts/685565858139515/needle-in-a-haystack-efficient-storage-of-billions-of-photos/
+]]></content>
+  </entry>
+  
+</feed>

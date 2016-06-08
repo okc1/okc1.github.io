@@ -1,0 +1,727 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[NineChap 5.1] Dynamic Programming - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Dynamic Programming The fundamental of DP is &lsquo;merorized search&rsquo;. It&rsquo;s easy to implement but bad for memory. And it&rsquo;s &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/06/24/NineChap-Dynamic-Programming/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[NineChap 5.1] Dynamic Programming</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-24T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Dynamic Programming</h2>
+
+<p>The fundamental of DP is &lsquo;merorized search&rsquo;. It&rsquo;s easy to implement but bad for memory. And it&rsquo;s generally useless in the industry.</p>
+
+<h3>When to use DP?</h3>
+
+<ol>
+<li>Input cannot sort</li>
+<li>Find minimum/maximum result</li>
+<li>Check the feasibility</li>
+<li>Count all possible solutions</li>
+</ol>
+
+
+<p>If question asks you to find all possible solutions, it&rsquo;s gonna be DFS, not DP.</p>
+
+<h3>5 Types of DP</h3>
+
+<ol>
+<li>Matrix DP (10%)</li>
+<li>Sequence/Two Sequences DP (80%)</li>
+<li>Interval DP (5%)</li>
+<li>Tree DP (5%)</li>
+<li>States Compressing DP (0%)</li>
+</ol>
+
+
+<p>Type 3 to 5 are less important.</p>
+
+<h3>Question List</h3>
+
+<p><strong>Type 1: Matrix DP</strong></p>
+
+<ol>
+<li><p><strong><a href="/blog/2014/05/27/Triangle/">Triangle</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/20/Unique-Paths/">Unique Paths </a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/20/Unique-Paths-II/">Unique Paths II  </a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/20/Minimum-Path-Sum/">Minimum Path Sum </a></strong></p></li>
+</ol>
+
+
+<p><strong>Type 2.1: Sequence Dp</strong></p>
+
+<ol>
+<li><p><strong><a href="/blog/2014/05/21/Climbing-Stairs/">Climbing Stairs </a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/16/Jump-Game/">Jump Game </a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/14/Jump-Game-II/">Jump Game II</a></strong> - tricky, index handling</p></li>
+<li><p><strong><a href="/blog/2014/05/30/Palindrome-Partitioning-II/">Palindrome Partitioning II </a></strong></p></li>
+<li><p><strong><a href="/blog/2014/06/02/Word-Break/">Word Break </a></strong></p></li>
+<li><p><strong><a href="/blog/2014/06/02/Word-Break-II/">Word Break II</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/23/Decode-Ways/">Decode Ways </a></strong> - tricky, initial state</p></li>
+<li><p><strong><a href="/blog/2014/06/24/Longest-Increasing-Subsequence/">Longest Increasing Subsequence</a></strong></p></li>
+</ol>
+
+
+<p><strong>Type 2.2: Two Sequences Dp</strong></p>
+
+<ol>
+<li><p><strong><a href="/blog/2014/05/27/Distinct-Subsequences/">Distinct Subsequences </a></strong> - difficult, state transition formula</p></li>
+<li><p><strong><a href="/blog/2014/05/21/Edit-Distance/">Edit Distance </a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/24/Interleaving-String/">Interleaving String </a></strong></p></li>
+<li><p><strong><a href="/blog/2014/06/24/Longest-Common-Subsequence/">Longest Common Subsequence</a></strong></p></li>
+</ol>
+
+
+<p><strong>Type 3: Interval Dp</strong></p>
+
+<p><a href="http://wikioi.com/problem/1048/">Merge Stone</a></p>
+
+<p><strong>Type 4: Tree Dp</strong></p>
+
+<ol>
+<li><strong><a href="/blog/2014/05/28/Binary-Tree-Maximum-Path-Sum/">Binary Tree Maximum Path Sum</a></strong></li>
+</ol>
+
+
+<p><strong>Type 5: States Compressing DP</strong></p>
+
+<p>Ignore.</p>
+
+<p>Additional questions</p>
+
+<ol>
+<li><p><strong><a href="/blog/2014/05/20/Maximum-Subarray/">Maximum Subarray </a></strong></p></li>
+<li><p><strong><a href="/blog/2014/06/30/Coin-Changing-Problem/">Coin Change Problem</a></strong></p></li>
+</ol>
+
+
+<h2>Code</h2>
+
+<h4>Type 1: Matrix DP</h4>
+
+<p><strong>Triangle</strong></p>
+
+<pre><code>public int minimumTotal(List&lt;List&lt;Integer&gt;&gt; triangle) {
+    if (triangle == null || triangle.size() == 0) {
+        return 0;
+    }
+    int len = triangle.size();
+    int[][] dp = new int[len][len];
+    for (int i = len - 1; i &gt;= 0; i--) {
+        // bottom-up approach (row by row)
+        for (int j = 0; j &lt;= i; j++) {
+            if (i == len - 1) {
+                dp[i][j] = triangle.get(i).get(j);
+            } else {
+                dp[i][j] = triangle.get(i).get(j)
+                        + Math.min(dp[i+1][j], dp[i+1][j+1]);
+            }
+        }
+    }
+    return dp[0][0];
+}
+</code></pre>
+
+<p><strong>Unique Paths</strong></p>
+
+<pre><code>public int uniquePaths(int m, int n) {
+    if (m == 0 &amp;&amp; n == 0) {
+        return 0;
+    }
+    int[][] dp = new int[m][n];
+    for (int i = 0; i &lt; m; i++) {
+        for (int j = 0; j &lt; n; j++) {
+            if (i == 0 || j == 0) {
+                dp[i][j] = 1;
+            } else {
+                dp[i][j] = dp[i-1][j] + dp[i][j-1];
+            }
+        }
+    }
+    return dp[m-1][n-1];
+}
+</code></pre>
+
+<p><strong>Unique Paths II</strong></p>
+
+<pre><code>public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+    if (obstacleGrid == null) {
+        return 0;
+    }
+    int m = obstacleGrid.length;
+    int n = obstacleGrid[0].length;
+    int[][] dp = new int[m][n];
+    for (int i = 0; i &lt; m; i++) {
+        for (int j = 0; j &lt; n; j++) {
+            if (obstacleGrid[i][j] != 0) {
+                dp[i][j] = 0;
+            } else if (i == 0 &amp;&amp; j == 0) {
+                dp[i][j] = 1;
+            } else if (i == 0) {
+                dp[i][j] = dp[i][j-1];
+            } else if (j == 0) {
+                dp[i][j] = dp[i-1][j];
+            } else {
+                dp[i][j] = dp[i-1][j] + dp[i][j-1];
+            }
+        }
+    }
+    return dp[m-1][n-1];
+}
+</code></pre>
+
+<p><strong>Minimum Path Sum</strong></p>
+
+<pre><code>public int minPathSum(int[][] grid) {
+    if (grid == null) {
+        return 0;
+    }
+    int m = grid.length;
+    int n = grid[0].length;
+    int[][] dp = new int[m][n];
+    for (int i = 0; i &lt; m; i++) {
+        for (int j = 0; j &lt; n; j++) {
+            if (i == 0 &amp;&amp; j == 0) {
+                dp[i][j] = grid[i][j];
+            } else if (i == 0) {
+                dp[i][j] = dp[i][j-1] + grid[i][j];
+            } else if (j == 0) {
+                dp[i][j] = dp[i-1][j] + grid[i][j];
+            } else {
+                dp[i][j] = grid[i][j] + Math.min(dp[i-1][j], dp[i][j-1]);
+            }
+        }
+    }
+    return dp[m-1][n-1];
+}
+</code></pre>
+
+<h4>Type 2.1: Sequence Dp</h4>
+
+<p><strong>Climbing Stairs</strong></p>
+
+<pre><code>public int climbStairs(int n) {
+    if (n &lt;= 2) {
+        return n;
+    }
+    int[] dp = new int[n];
+    dp[0] = 1;
+    dp[1] = 2;
+    for (int i = 2; i &lt; n; i++) {
+        dp[i] = dp[i - 2] + dp[i - 1];
+    }
+    return dp[n - 1];
+}
+</code></pre>
+
+<p><strong>Jump Game</strong></p>
+
+<pre><code>public boolean canJump(int[] A) {
+    if (A == null || A.length == 0) 
+        return false;
+    int reach = 0;
+    int len = A.length;
+    for (int i = 0; i &lt; len; i++) {
+        if (i &gt; reach) 
+            break;
+        reach = Math.max(reach, i + A[i]);
+        if (reach &gt;= len - 1)   
+            return true;
+    }
+    return false;
+}
+</code></pre>
+
+<p><strong>Jump Game II</strong></p>
+
+<pre><code>public int jump(int[] A) {
+    if (A == null || A.length &lt;= 1) 
+        return 0;
+    int[] dp = new int[A.length];
+    int cur = 1;
+    for (int i = 0; i &lt; A.length - 1; i++) {
+        while (cur &lt;= i + A[i] &amp;&amp; cur &lt; dp.length) {
+            dp[cur] = dp[i] + 1;
+            cur++;
+        }
+        if (cur == dp.length) {
+            break;
+        }
+    }
+    return dp[A.length - 1];
+}
+</code></pre>
+
+<p><strong>Palindrome Partitioning II</strong></p>
+
+<pre><code>public int minCut(String s) {
+    if (s == null || s.length() &lt;= 1) {
+        return 0;
+    }
+    boolean[][] map = palindromeMap(s);
+    int len = s.length();
+    int[] dp = new int[len + 1];
+    dp[0] = -1;
+    for (int i = 1; i &lt;= len; i++) {
+        dp[i] = Integer.MAX_VALUE;
+        for (int j = 1; j &lt;= i; j++) {
+            if (map[i-1][j-1]) {
+                dp[i] = Math.min(dp[i], dp[j-1] + 1);
+            }
+        }
+    }
+    return dp[len];
+}
+
+private boolean[][] palindromeMap(String s) {
+    int len = s.length();
+    boolean[][] map = new boolean[len][len];
+    char[] ss = s.toCharArray();
+    for (int i = 0; i &lt; len; i++) {
+        for (int j = i; j &gt;= 0; j--) {
+            if (i == j) {
+                map[i][j] = true;
+            } else if (i - j == 1) {
+                map[i][j] = ss[i] == ss[j];
+            } else {
+                map[i][j] = (ss[i] == ss[j]) &amp; map[i - 1][j + 1];
+            }
+        }
+    }
+    return map;
+}
+</code></pre>
+
+<p><strong>Word Break</strong></p>
+
+<pre><code>public boolean wordBreak(String s, Set&lt;String&gt; dict) {
+    if (s == null || s.length() == 0) {
+        return true;
+    }
+    int len = s.length();
+    boolean[] dp = new boolean[len + 1];
+    dp[0] = true;
+    for (int i = 1; i &lt;= len; i++) {
+        for (int j = 0; j &lt; i; j++) {
+            if (!dp[j]) {
+                continue;
+            }
+            if (dict.contains(s.substring(j, i))) {
+                dp[i] = true;
+                break;
+            }
+        }
+    }
+    return dp[len];
+}
+</code></pre>
+
+<p><strong>Word Break II</strong></p>
+
+<p>My code is definitely correct, although it got TLE.</p>
+
+<p>See original post for more.</p>
+
+<p><strong>Decode Ways</strong></p>
+
+<pre><code>public int numDecodings(String s) {
+    if (s == null || s.length() == 0) {
+        return 0;
+    }
+    int len = s.length();
+    int[] dp = new int[len + 1];
+    dp[0] = 1;
+    dp[1] = 1; // pay attention to the initial state
+    if (!isValidNumber(s.substring(0, 1))) {
+        return 0;
+    }
+    for (int i = 2; i &lt;= len; i++) {
+        if (isValidNumber(s.substring(i - 1, i))) {
+            dp[i] += dp[i - 1];
+        }
+        if (isValidNumber(s.substring(i - 2, i))) {
+            dp[i] += dp[i - 2];
+        }
+    }
+    return dp[len];
+}
+
+private boolean isValidNumber(String input) {
+    if (input.length() == 0 || input.length() &gt; 2 || input.charAt(0) == '0') {
+        return false;
+    }
+    int num = Integer.parseInt(input);
+    return (1 &lt;= num &amp;&amp; num &lt;= 26);
+}
+</code></pre>
+
+<p><strong>Longest Increasing Subsequence</strong></p>
+
+<p>There&rsquo;s a new post in &lsquo;Lintcode&rsquo; category.</p>
+
+<h4>Type 2.2: Two Sequences Dp</h4>
+
+<p><strong>Distinct Subsequences</strong></p>
+
+<pre><code>public int numDistinct(String S, String T) {
+    int m = S.length(), n = T.length();
+    int[][] dp = new int[m + 1][n + 1];
+    for (int i = 0; i &lt;= m; i++) {
+        for (int j = 0; j &lt;= n; j++) {
+            if (j == 0) {
+                dp[i][j] = 1;
+            } else if (i == 0) {
+                dp[i][j] = 0;
+            } else {
+                dp[i][j] = dp[i - 1][j];
+                if (S.charAt(i - 1) == T.charAt(j - 1)) {
+                    dp[i][j] += dp[i - 1][j - 1];
+                }
+            }
+        }
+    }
+    return dp[m][n];
+}
+</code></pre>
+
+<p><strong>Edit Distance</strong></p>
+
+<pre><code>public int minDistance(String A, String B) {
+    if (A == null || B == null)
+        return 0;
+    int m = A.length(), n = B.length();
+    int[][] dp = new int[m + 1][n + 1];
+    for (int i = 0; i &lt;= m; i++) {
+        for (int j = 0; j &lt;= n; j++) {
+            if (i == 0) {
+                dp[i][j] = j;
+            } else if (j == 0) {
+                dp[i][j] = i;
+            } else {
+                if (A.charAt(i - 1) == B.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = Math.min(dp[i - 1][j - 1], dp[i - 1][j]);
+                    dp[i][j] = Math.min(dp[i][j], dp[i][j - 1]);
+                    dp[i][j]++;
+                }
+            }
+        }
+    }
+    return dp[m][n];
+}
+</code></pre>
+
+<p><strong>Interleaving String</strong></p>
+
+<pre><code>public boolean isInterleave(String s1, String s2, String s3) {
+    if (s1 == null || s2 == null) {
+        return false;
+    }
+    int m = s1.length(), n = s2.length();
+    if (m + n != s3.length()) {
+        return false;
+    }
+    boolean[][] dp = new boolean[m + 1][n + 1];
+    for (int i = 0; i &lt;= m; i++) {
+        for (int j = 0; j &lt;= n; j++) {
+            if (i == 0) {
+                dp[i][j] = s2.substring(0, j).equals(s3.substring(0, j));
+                continue;
+            } else if (j == 0) {
+                dp[i][j] = s1.substring(0, i).equals(s3.substring(0, i));
+                continue;
+            }
+            if (i &gt; 0 &amp;&amp; dp[i - 1][j]
+                    &amp;&amp; s1.charAt(i - 1) == s3.charAt(i + j - 1)) {
+                dp[i][j] = true;
+            }
+            if (j &gt; 0 &amp;&amp; dp[i][j - 1]
+                    &amp;&amp; s2.charAt(j - 1) == s3.charAt(i + j - 1)) {
+                dp[i][j] = true;
+            }
+        }
+    }
+    return dp[m][n];
+}
+</code></pre>
+
+<p><strong>Longest Common Subsequence</strong></p>
+
+<p>There&rsquo;s a new post in &lsquo;Lintcode&rsquo; category.</p>
+
+<h3>Type 3: Interval Dp</h3>
+
+<p><strong>Merge Stone</strong></p>
+
+<blockquote><p>有n堆石子排成一列，每堆石子有一个重量w[i], 每次合并可以合并相邻的两堆石子，一次合并的代价为两堆石子的重量和w[i]+w[i+1]。问安排怎样的合并顺序，能够使得总合并代价达到最小。</p></blockquote>
+
+<p><a href="http://wikioi.com/problem/1048/">link</a></p>
+
+<p>Solution explained:</p>
+
+<blockquote><p>sum[i[用于记录从第1堆到第i堆（包含i）石子的总重量。</p>
+
+<p>dp[i][j]表示从第i堆（包含i）到第j堆（包含j）石子的合并的最小代价。</p>
+
+<p>状态转移方程为：dp[i][j] = minimize{dp[i][k] + dp[k+1][j] + sum[j] - sum[i-1]}, k从i到j（不包含j）。</p>
+
+<p>len=2表示第一次合并的情况，此时合并的石子为2堆。此时，i从1到n-len+1，j=i+len-1。</p></blockquote>
+
+<p>Quoted from <a href="http://blog.csdn.net/kingzone_2008/article/details/12361327">this blog</a> and the solution is well explained on <a href="http://wikioi.com/solution/list/1048/">wikiio</a>.</p>
+
+<h3>Type 4: Tree Dp</h3>
+
+<p><strong>Binary Tree Maximum Path Sum</strong></p>
+
+<p>This is a difficult question, but I solved it. I feel happy.</p>
+
+<pre><code>private class ResultType {
+    int maxPath;
+    int depth;
+
+    ResultType(int a, int b) {
+        this.maxPath = a;
+        this.depth = b;
+    }
+}
+
+public int maxPathSum(TreeNode root) {
+    if (root == null) {
+        return 0;
+    }
+    return helper(root).maxPath;
+}
+
+private ResultType helper(TreeNode node) {
+    if (node == null) {
+        return new ResultType(Integer.MIN_VALUE, 0);
+    }
+    ResultType ll = helper(node.left);
+    ResultType rr = helper(node.right);
+    int maxPath = node.val + ll.depth + rr.depth;
+    maxPath = Math.max(maxPath, ll.maxPath);
+    maxPath = Math.max(maxPath, rr.maxPath);
+    int depth = 0;
+    depth = Math.max(depth, node.val + Math.max(ll.depth, rr.depth));
+    return new ResultType(maxPath, depth);
+}
+</code></pre>
+
+<h3>Additional questions</h3>
+
+<p><strong>Maximum Subarray</strong></p>
+
+<pre><code>public int maxSubArray(int[] A) {
+    if (A == null || A.length == 0) {
+        return 0;
+    }
+    int len = A.length;
+    int[] dp = new int[len];
+    dp[0] = A[0];
+    for (int i = 1; i &lt; len; i++) {
+        dp[i] = A[i];
+        if (dp[i - 1] &gt; 0)
+            dp[i] += dp[i - 1];
+    }
+    int max = Integer.MIN_VALUE;
+    for (Integer i : dp)
+        max = Math.max(max, i);
+    return max;
+}
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-06-24T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ninechap/'>ninechap</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/06/24/NineChap-Dynamic-Programming/" data-via="" data-counturl="http://okc1.github.io/blog/2014/06/24/NineChap-Dynamic-Programming/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/06/24/Longest-Increasing-Subsequence/" title="Previous Post: [LintCode] Longest Increasing Subsequence">&laquo; [LintCode] Longest Increasing Subsequence</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/06/26/Khan-academy-8-brain-teasers/" title="Next Post: [Brain teaser] Khan Academy 8 brain teasers">[Brain teaser] Khan Academy 8 brain teasers &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

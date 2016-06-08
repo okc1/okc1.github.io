@@ -1,0 +1,284 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Octopress] Clone Octopress Blog From a Different Computer - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Ruby/gem/bundler setup (on a new machine) has always been a hassle to me. Not only that, I&rsquo;ve had some confusions about developing Octopress &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/07/21/Clone-octopress-blog-from-a-different-computer/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Octopress] Clone Octopress Blog From a Different Computer</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-21T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><strong>Ruby/gem/bundler setup (on a new machine) has always been a hassle to me</strong>. Not only that, I&rsquo;ve had some confusions about developing Octopress blog on 2 different computers.</p>
+
+<p>Now that I&rsquo;ve had enough failures and success, I would like write a long post to summarize it.</p>
+
+<h3>Install Ruby</h3>
+
+<p>Well first of all, we must install <strong>Ruby</strong> and <strong>Development Kit</strong>. Simply go this <a href="http://rubyinstaller.org/downloads/">this page</a> and download:</p>
+
+<ol>
+<li>Ruby 1.9.3</li>
+<li>DevKit for Ruby 1.9.3</li>
+</ol>
+
+
+<p><strong>Installing Ruby</strong> is straight-forward, only remember to check &ldquo;Add Ruby to your PATH&rdquo;. Otherwise you need to manually set the <strong>Ruby directory</strong> (eg. C:\Ruby193\bin) in <strong>System Variables Settings</strong>.</p>
+
+<p><img class="middle" src="/assets/images/install-ruby-193.png"></p>
+
+<p><strong>Ruby DevKit is a self-extracting archive</strong>. After extracting the files, we should <a href="http://jekyll-windows.juthilo.com/1-ruby-and-devkit/">initialize the DevKit</a> like this:</p>
+
+<pre><code>cd C:/RubyDevKit
+ruby dk.rb init
+ruby dk.rb install
+</code></pre>
+
+<h3>Clone octopress</h3>
+
+<p><strong>clone the source branch to the local octopress folder</strong></p>
+
+<blockquote><p>using HTTPS</p>
+
+<p>git clone -b source <a href="https://github.com/okckd/okckd.github.io.git">https://github.com/okckd/okckd.github.io.git</a> octopress</p>
+
+<p>or using SSH</p>
+
+<p>git clone -b source git@github.com:okckd/okckd.github.io.git octopress</p></blockquote>
+
+<p>I would recommend using SSH over HTTPS, because <strong>using HTTPS, you will need to type your username and password everytime you push</strong>.</p>
+
+<p>To correct &lsquo;HTTPS&rsquo; to &lsquo;SSH&rsquo;, follow <a href="http://stackoverflow.com/a/6565661">this instruction</a>:</p>
+
+<blockquote><p>git remote set-url origin git@github.com:username/repo.git</p></blockquote>
+
+<p>More info about HTTPS and SSH is <a href="https://help.github.com/articles/which-remote-url-should-i-use/">available</a>.</p>
+
+<h3>Install dependencies</h3>
+
+<p>Follow <a href="http://www.techelex.org/setup-octopress-windows7/">this instruction</a> and install bundler and dependencies.</p>
+
+<pre><code>cd c:/github/octopress
+gem install bundler
+rbenv rehash    # optional, unless you are using rbenv
+bundle install
+</code></pre>
+
+<p>If you see endless dependency errors here, please refer to my other post: <strong><a href="/blog/2014/12/23/Endless-error-gem-dependencies/">[Ruby] Endless error with gem dependencies</a></strong>.</p>
+
+<p>If you are confused with some concepts in Ruby, read <strong><a href="/blog/2014/12/22/RubyGems-gem-other/">[Ruby] RubyGems, gem, Gemfile and Bundler</a></strong>.</p>
+
+<h3>Now, start octopress</h3>
+
+<p>You can use either of the commands below to start octopress. I can&rsquo;t remember clearly but you can simply follow <a href="http://octopress.org/docs/setup/">this guide</a>.</p>
+
+<blockquote><p>rake setup_github_pages</p>
+
+<p>when prompted, enter this url: git@github.com:okckd/okckd.github.io.git</p>
+
+<p>rake install</p></blockquote>
+
+<h3>Commit your changes</h3>
+
+<p>You can do &lsquo;rake gen_deploy&rsquo; to deploy to master branch. Do &lsquo;git commit", &ldquo;git push origin source&rsquo; to update blog source. <a href="http://blog.zerosharp.com/clone-your-octopress-to-blog-from-two-places/">reference</a></p>
+
+<p>At this step, congratulations you are all set!</p>
+
+<h3>Last word</h3>
+
+<p>Setting &lsquo;rake&rsquo; up is found to be a great hassle for many, for example, <a href="http://hamaluik.com/posts/switching-to-octopress/">someone spent 7 hours on it</a>.</p>
+
+<p>Wish this post can help!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-07-21T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/experience/'>experience</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/07/21/Clone-octopress-blog-from-a-different-computer/" data-via="" data-counturl="http://okc1.github.io/blog/2014/07/21/Clone-octopress-blog-from-a-different-computer/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/07/13/Twos-complement/" title="Previous Post: [Design] Two's complement (2's complement) ">&laquo; [Design] Two's complement (2's complement) </a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/07/21/Largest-window-2-Unique-Chars/" title="Next Post: [Question] Longest Substring with At Most Two Distinct Characters ">[Question] Longest Substring with At Most Two Distinct Characters  &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
