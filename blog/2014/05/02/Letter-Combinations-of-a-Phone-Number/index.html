@@ -1,0 +1,339 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[LeetCode 17] Letter Combinations of a Phone Number - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Question link Given a digit string, return all possible letter combinations that the number could represent. A mapping of digit to letters (just like &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/05/02/Letter-Combinations-of-a-Phone-Number/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[LeetCode 17] Letter Combinations of a Phone Number</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-02T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/letter-combinations-of-a-phone-number/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Given a digit string, return all possible letter combinations that the number could represent.
+</p>
+
+<p>
+A mapping of digit to letters (just like on the telephone buttons) is given below.</p>
+<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Telephone-keypad2.svg/200px-Telephone-keypad2.svg.png"></p>
+
+<pre><b>Input:</b>Digit string "23"
+<b>Output:</b> ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+</pre>
+
+<p>
+<b>Note:</b><br>
+Although the above answer is in lexicographical order, your answer could be in any order you want.
+</p><p></p>
+</div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Diffficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="lime">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p>There are 2 considerations associated with this question:</p>
+
+<ol>
+<li><p>How to convert an number into a String (i.e. 2->&lsquo;abc&rsquo; etc.)</p></li>
+<li><p>How the search works.</p></li>
+</ol>
+
+
+<h4>Convert number to string</h4>
+
+<p>There are 2 way: <strong>math way</strong>, or the <strong>hashmap way</strong>.</p>
+
+<p>My initial idea is to calculate it mathematically:</p>
+
+<pre><code>private String getLetters(int key) {
+    if (key &lt;= 1 || key &gt;= 10) return "";
+    // key must be in the range of [2,9]
+    char first = (char) ('a' + (key - 2) * 3);
+    if (key &gt;= 8) first++;
+    String letters = "";
+    for (int i = 0; i &lt; 4; i++) {
+        if (i == 3 &amp;&amp; !(key == 7 || key == 9)) {
+            break;
+        }
+        letters += first++;
+    }
+    return letters;
+}
+String letters = getLetters('3' - '0');
+</code></pre>
+
+<p>However, most people would use HashMap. It&rsquo;s not the main issue anyway, so using HashMap is fine.</p>
+
+<h3>Solution</h3>
+
+<p>This is very typical &ldquo;Permutation&rdquo; question. Need to memorize clearly.</p>
+
+<p>Refer to <a href="http://www.ninechapter.com//solutions/letter-combinations-of-a-phone-number/">ninechap</a> for the solution and a piece of very standard code.</p>
+
+<h3>My code</h3>
+
+<pre><code>public class Solution {
+    public List&lt;String&gt; letterCombinations(String digits) {
+        List&lt;String&gt; ans = new ArrayList&lt;String&gt;();
+        if (digits == null || digits.length() == 0) {
+            ans.add("");
+            return ans;
+        }
+        int len = digits.length();
+        // this type of DFS question is very standardized
+        helper(ans, "", digits, 0, len);
+        return ans;
+    }
+
+    private void helper(List&lt;String&gt; ans, String path, String digits, int pos, int len) {
+        if (pos == len) {
+            ans.add(path);
+            return;
+        }
+        // check the char at position 'pos', and find all possible letters to insert
+        String possibleLetters = getLetters(digits.charAt(pos));
+        for (char letter: possibleLetters.toCharArray()) {
+            helper(ans, path + letter, digits, pos + 1, len);
+        }
+    }
+
+    private String getLetters(char digit) {
+        // first convert char to integer
+        int index = digit - '0';
+        String[] map = new String[] {
+            " ",
+            "",
+            "abc",
+            "def",
+            "ghi",
+            "jkl",
+            "mno",
+            "pqrs",
+            "tuv",
+            "wxyz"
+        };
+        // second, find corresponding string from map
+        return map[index];
+    }
+}
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-05-02T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/leetcode/'>leetcode</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/05/02/Letter-Combinations-of-a-Phone-Number/" data-via="" data-counturl="http://okc1.github.io/blog/2014/05/02/Letter-Combinations-of-a-Phone-Number/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/05/02/3Sum-Closest/" title="Previous Post: [LeetCode 16] 3Sum Closest">&laquo; [LeetCode 16] 3Sum Closest</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/05/02/Remove-Nth-Node-From-End-of-List/" title="Next Post: [LeetCode 19] Remove Nth Node From End of List">[LeetCode 19] Remove Nth Node From End of List &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

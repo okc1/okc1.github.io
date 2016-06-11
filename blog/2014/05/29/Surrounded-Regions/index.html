@@ -1,0 +1,330 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[LeetCode 130] Surrounded Regions - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Question link Given a 2D board containing 'X' and 'O', capture all regions surrounded by 'X'. A region is captured by flipping all 'O's into 'X's in &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/05/29/Surrounded-Regions/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[LeetCode 130] Surrounded Regions</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-29T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>29</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/surrounded-regions/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>
+Given a 2D board containing <code>'X'</code> and <code>'O'</code>, capture all regions surrounded by <code>'X'</code>.</p>
+
+<p>A region is captured by flipping all <code>'O'</code>s into <code>'X'</code>s in that surrounded region.
+</p>
+
+<p>
+For example,<br>
+</p><pre>X X X X
+X O O X
+X X O X
+X O X X
+</pre>
+<p></p>
+
+<p>
+After running your function, the board should be:
+</p><pre>X X X X
+X X X X
+X X X X
+X O X X
+</pre>
+<p></p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This question can be solved by DFS or BFS search</strong>.</p>
+
+<p><strong>The idea is simple</strong>. For each edge nodes, if it is an &lsquo;O&rsquo;, search for all connected &lsquo;O&rsquo;s and mark it. My first attemps used another array to store result. It works, but it&rsquo;s actually bad, because space usage is huge. We can actually mark the connected nodes using some special character, for example in my case, 'R&rsquo;. Then the solution can work in-place.</p>
+
+<p>So this is the standard solution.</p>
+
+<h3>Solution</h3>
+
+<p>However, there is <strong>one big problem</strong> with my DFS solution.</p>
+
+<p><strong>For super-large test cases, it gets &lsquo;java.lang.StackOverflowError&rsquo; exception</strong>. It&rsquo;s very werid to me, until I read <a href="https://oj.leetcode.com/discuss/1723/my-code-can-not-pass-this-longest-case">this blog</a>.</p>
+
+<blockquote><p>If you use DFS Recursive, you will get Runtime Error. But if you implement DFS by stack, just like doing BFS by Queue, your code will get accepted.</p>
+
+<p>Recursive dfs would take too much resource (too many calls which require space to store the calling state) than bfs for long long case. Considering one of test case with 200x200 matrix, in worst case the longest path (number of calls) might take 200x200 = 40,000 long. While with bfs, the maximal calls are about less than 400.</p></blockquote>
+
+<p>One more thing, so <strong>DFS with stack, or BFS with queue, which one would consume less space</strong>? I think BFS. The difference is DFS space usage is max depth, while BFS is the max width. However in this question, each node have 4 adjacent nodes, so the DFS space usage would be increased to 3 x (max depth). More details on this topic, please refer to <strong>DFS, BFS and space efficiency</strong>.</p>
+
+<p>If any reader have an idea on this, please comment!</p>
+
+<h3>Code</h3>
+
+<p><strong>bfs code realized with a queue</strong></p>
+
+<pre><code>public void solve(char[][] board) {
+    if (board.length == 0) return;
+    int m = board.length, n = board[0].length;
+    for (int i = 0; i &lt; m; i ++) {
+        dfs(board, i, 0);
+        dfs(board, i, n-1);
+    }
+    for (int j = 0; j &lt; n; j ++) {
+        dfs(board, 0, j);
+        dfs(board, m-1, j);
+    }
+    for (int i = 0; i &lt; m; i ++) 
+        for (int j = 0; j &lt; n; j ++) 
+            if (board[i][j] == 'R') 
+                board[i][j] = 'O';
+            else if (board[i][j] == 'O') 
+                board[i][j] = 'X';
+}
+
+private void dfs(char[][] board, int x, int y) {
+    int m = board.length, n = board[0].length;
+    Queue&lt;Integer&gt; aa = new LinkedList&lt;Integer&gt;();
+    Queue&lt;Integer&gt; bb = new LinkedList&lt;Integer&gt;();
+    aa.add(x);
+    bb.add(y);
+    while (!aa.isEmpty()) {
+        int a = aa.remove();
+        int b = bb.remove();
+        if (a &lt; 0 || a &gt;= m || b &lt; 0 || b &gt;= n) 
+            continue;
+        if (board[a][b] == 'X' || board[a][b] == 'R') 
+            continue;
+        board[a][b] = 'R';
+
+        aa.add(a - 1);
+        bb.add(b);
+        aa.add(a + 1);
+        bb.add(b);
+        aa.add(a);
+        bb.add(b - 1);
+        aa.add(a);
+        bb.add(b + 1);
+    }
+}
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-05-29T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>29</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/leetcode/'>leetcode</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/05/29/Surrounded-Regions/" data-via="" data-counturl="http://okc1.github.io/blog/2014/05/29/Surrounded-Regions/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/05/29/Sum-Root-to-Leaf-Numbers/" title="Previous Post: [LeetCode 129] Sum Root to Leaf Numbers">&laquo; [LeetCode 129] Sum Root to Leaf Numbers</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/05/29/Word-Ladder/" title="Next Post: [LeetCode 127] Word Ladder">[LeetCode 127] Word Ladder &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

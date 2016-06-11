@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Question] Find the First Non-repeating Character - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Question link Question One: Given a string, find the first non-repeating character in it link Question Two: Given a stream of characters, find the &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/07/24/First-non-repeating-character/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Question] Find the First Non-repeating Character</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-24T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.geeksforgeeks.org/given-a-string-find-its-first-non-repeating-character/">link</a></p>
+
+<blockquote><p>Question One: Given a string, find the first non-repeating character in it</p></blockquote>
+
+<p><a href="http://www.geeksforgeeks.org/find-first-non-repeating-character-stream-characters/">link</a></p>
+
+<blockquote><p>Question Two: Given a stream of characters, find the first non-repeating character from stream. You need to tell the first non-repeating character in O(1) time at any moment.</p></blockquote>
+
+<h3>From a string</h3>
+
+<ol>
+<li><p>Scan the string from left to right and construct the count array.</p></li>
+<li><p>Again, scan the string from left to right and check for count of each
+character, if you find an element who&rsquo;s count is 1, return it.</p></li>
+</ol>
+
+
+<p><strong>O(n) time</strong>.</p>
+
+<p>The array is size of 128 if it&rsquo;s ASCII encoding. It can also be replaced with a HashMap if the length of the string is small.</p>
+
+<h3>From a stream of chars</h3>
+
+<p><strong>Use a DLL (doubly linked list), 1 count array and 1 DLL-node array</strong>. Alternatively, the 2 arrays can be replaced with 2 HashMaps.</p>
+
+<p>In totally, one DLL and 2 array are used. <strong>The DLL</strong> is used to get the sequence of non-repeating chars. <strong>The 1st array</strong> is for char count, and <strong>the 2nd array</strong> is for fast loop-up in the DLL.</p>
+
+<p>The detailed precedure:</p>
+
+<ol>
+<li><p>Create an empty DLL and 2 arrays: repeated[] and dllMap[].</p></li>
+<li><p>To get the first non-repeating character, return the head of DLL.</p></li>
+<li><p>Following are steps to process a new character &lsquo;x&rsquo; in stream.</p>
+
+<ol>
+<li><p>If repeated[x] is false and dllMap[x] is NULL, append x to DLL and store it in dllMap[x].</p></li>
+<li><p>If repeated[x] is false and dllMap[x] is not NULL, get DLL node of x using dllMap[x] and remove the node. Set repeated[x] as true and optionally clear dllMap[x].</p></li>
+<li><p>If repeated[x] is true, ignore it.</p></li>
+</ol>
+</li>
+</ol>
+
+
+<p>I didn&rsquo;t write code for this question.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-07-24T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/question/'>question</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/07/24/First-non-repeating-character/" data-via="" data-counturl="http://okc1.github.io/blog/2014/07/24/First-non-repeating-character/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/07/24/Convert-BST-To-Circular-DLL/" title="Previous Post: [LeetCode Plus] Convert BST to Circular DLL ">&laquo; [LeetCode Plus] Convert BST to Circular DLL </a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/07/24/Multithreading-basics/" title="Next Post: [Design] Multithreading Basics">[Design] Multithreading Basics &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

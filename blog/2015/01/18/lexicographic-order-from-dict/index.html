@@ -1,0 +1,340 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Google] Lexicographic Order (Letter Replacement) of Dictionary - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Question link Given set of words that are lexicographically sorted, return lexicographic order. E.g: abc
+acd
+bcc
+bed
+bdc
+dab The order of letters for &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2015/01/18/lexicographic-order-from-dict/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Google] Lexicographic Order (Letter Replacement) of Dictionary</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-18T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=13394663">link</a></p>
+
+<blockquote><p>Given set of words that are lexicographically sorted, return lexicographic order. E.g:</p></blockquote>
+
+<pre><code>abc
+acd
+bcc
+bed
+bdc
+dab
+</code></pre>
+
+<blockquote><p>The order of letters for the given example would be</p></blockquote>
+
+<pre><code>a-&gt;b-&gt;c-&gt;e-&gt;d
+</code></pre>
+
+<h3>Solution</h3>
+
+<blockquote><p>Just form a graph(DAG) and do a topological sort.</p></blockquote>
+
+<p>Start from the first pair in the dictionary. Compare two strings in this pair <strong>till first mismatch</strong>.</p>
+
+<p>Eg: <strong>aad &amp; aab</strong>, in this case create an edge <strong>d -> b</strong>.</p>
+
+<p>More details is available <a href="http://codereview.stackexchange.com/questions/48292/return-the-lexicographic-order">here</a>.</p>
+
+<h4>Variant, and a different solution</h4>
+
+<p>Another way of asking this question, is:</p>
+
+<blockquote><p>有一个字典因为某种原因每个字符都被替换成一个别的字符了（但还是一一对应)，
+但是单词的顺序没有改变，比如</p></blockquote>
+
+<pre><code>cat
+coffee
+common
+
+--&gt; 
+
+dkc
+dbhhzz
+dbllbq
+</code></pre>
+
+<blockquote><p>让找出的这个替换的规则（guaranteed to have a unique one)</p></blockquote>
+
+<p><strong>Alternative solution</strong> is to check according to frequencies.</p>
+
+<h3>Code</h3>
+
+<pre><code>public String lexicoOrder(String[] dict) {
+    String ans = "";
+
+    // for each pair, maintain 2 HashMap
+    HashMap&lt;Character, Integer&gt; incount = new HashMap&lt;Character, Integer&gt;();
+    HashMap&lt;Character, List&lt;Character&gt;&gt; connection = new HashMap&lt;Character, List&lt;Character&gt;&gt;();
+    for (String str : dict) {
+        for (char c : str.toCharArray()) {
+            incount.put(c, 0);
+            connection.put(c, new ArrayList&lt;Character&gt;());
+        }
+    }
+    buildGraph(dict, incount, connection);
+
+    // start topology sorting
+    Queue&lt;Character&gt; temp = new LinkedList&lt;Character&gt;();
+    for (char c : incount.keySet()) {
+        if (incount.get(c) == 0) {
+            temp.offer(c);
+            incount.remove(c);
+            // remove any node whose incount is 0
+        }
+    }
+    while (!temp.isEmpty()) {
+        char top = temp.poll();
+        ans += top;
+        // 'top' is next char in line. remove it and delete connections
+        List&lt;Character&gt; inNodes = connection.get(top);
+        for (char c : inNodes) {
+            // remove incount for all nodes from inNodes
+            incount.put(c, incount.get(c) - 1);
+            if (incount.get(c) == 0) {
+                incount.remove(c);
+                temp.offer(c);
+            }
+        }
+    }
+    if (incount.size() == 0)
+        return ans;
+    else
+        return "unable to find a valid char sequence.";
+}
+
+public void buildGraph(String[] dict, HashMap&lt;Character, Integer&gt; incount,
+        HashMap&lt;Character, List&lt;Character&gt;&gt; connection) {
+    // build the graph map
+    // abc
+    // acd
+    // bcc
+    // bed
+    // bdc
+    // dab
+    for (int i = 0; i &lt; dict.length - 1; i++) {
+        // compare dict[i] and dict[i+1]
+        String str1 = dict[i];
+        String str2 = dict[i + 1];
+        int p = 0;
+        while (p &lt; str1.length() &amp;&amp; p &lt; str2.length()) {
+            if (str1.charAt(p) == str2.charAt(p)) {
+                p++;
+            } else {
+                break;
+            }
+        }
+        if (p == str1.length()) {
+            // this is special case eg. "ab" &amp; "abc"
+            // this will not give up any information about lexico order
+            continue;
+        }
+        char from = str1.charAt(p);
+        char to = str2.charAt(p);
+        // update incount
+        incount.put(to, incount.get(to) + 1);
+        // update connection
+        connection.get(from).add(to);
+    }
+}
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-01-18T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/q-google/'>q-google</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2015/01/18/lexicographic-order-from-dict/" data-via="" data-counturl="http://okc1.github.io/blog/2015/01/18/lexicographic-order-from-dict/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/01/18/Lexicographic-rank-of-string/" title="Previous Post: [Amazon] Lexicographic rank of a string ">&laquo; [Amazon] Lexicographic rank of a string </a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/01/18/max-squre-with-all-1/" title="Next Post: [Question] Maximum square sub-matrix with all 1s ">[Question] Maximum square sub-matrix with all 1s  &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

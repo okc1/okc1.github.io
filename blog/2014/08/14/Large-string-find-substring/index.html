@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Facebook] Query Search (HashMap, Suffix Array) - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Question link 有一个长度为n的字符串str，有非常多的关键字query（长度不超过10），需要判断每个关键字是否是str的子串。 注意：query是动态的输入进行查询的，预先并不知道所有的query。 Solution Best idea of the solution is to &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/08/14/Large-string-find-substring/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Facebook] Query Search (HashMap, Suffix Array)</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-14T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.itint5.com/oj/#15">link</a></p>
+
+<blockquote><p>有一个长度为n的字符串str，有非常多的关键字query（长度不超过10），需要判断每个关键字是否是str的子串。</p>
+
+<p>注意：query是动态的输入进行查询的，预先并不知道所有的query。</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>Best idea of the solution is to use Suffix Tree</strong> and similar alternatives.</p>
+
+<p><strong>Solution 1</strong> is <a href="http://www.itint5.com/discuss/27/%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E9%A2%84%E5%A4%84%E7%90%86">an nice idea using HashMap</a>.</p>
+
+<blockquote><p>我是把所有长度&lt; =10的子串，哈希一下存放到10个哈希表中。</p>
+
+<p>至于哈希函数的选取，随便选一个应该都不会超时。</p></blockquote>
+
+<p><strong>Solution 2</strong> is using &lsquo;<strong>suffix array</strong>&rsquo;. The most important point of this idea is to only make a substring instance <strong>for every 10 characters</strong>.</p>
+
+<blockquote><p>只用=10的子串。然后二分查找</p>
+
+<p>用=10的字串排序即可，如包含更短的串会使得预处理变成O(10nlg(10n))。 查找的复杂度可能没什么变化，使用&lt;=10会是O(lg(10n))，而只使用=10子串初始化的话，因为可能还要进行短query跟长子串间的前缀比较，复杂度会是O(10lgn)，稍微有点提高。</p></blockquote>
+
+<p>Which is to say, using substring length == 10, we comsume <strong>less time for pre-processing</strong>, and a little <strong>more time when querying</strong>.</p>
+
+<h3>Code</h3>
+
+<p><strong>Suffix tree solution from <a href="http://www.itint5.com/discuss/203/%E8%B6%85%E7%AE%80%E5%8D%95%E7%9A%84prefix-array-java-code">here</a></strong>, note written by me</p>
+
+<pre><code>private List&lt;String&gt; prefixList;
+
+// pre-process the large string
+public void initWithString(String str) {
+    Set&lt;String&gt; strs = new HashSet&lt;String&gt;();
+
+    for(int i = 0; i &lt; str.length(); ++i) {
+        strs.add(str.substring(i, Math.min(str.length(), i + 10)));
+    }
+    prefixList = new ArrayList&lt;String&gt;(strs);
+    Collections.sort(prefixList);
+}
+
+// find the query substring
+public boolean existSubString(String query) {
+    int low = 0;
+    int high = prefixList.size() - 1;
+    while(low &lt;= high) {
+        int mid = (low + high) / 2;
+        int comp = prefixList.get(mid).compareTo(query);
+        if(comp == 0)  {
+            return true;
+        }
+        if(prefixList.get(mid).startsWith(query)) {
+            return true;
+        }
+        if(comp &gt; 0) //mid &gt; query
+        {
+            high = mid - 1;
+        }else{
+            low = mid + 1;
+        }
+    }
+    return false;
+}
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-08-14T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/q-facebook/'>q-facebook</a>, <a class='category' href='/blog/categories/z-string-search/'>z-string-search</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/08/14/Large-string-find-substring/" data-via="" data-counturl="http://okc1.github.io/blog/2014/08/14/Large-string-find-substring/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/08/12/circus-man-ordering/" title="Previous Post: [CC150v4] 9.7 Circus Tower Routine">&laquo; [CC150v4] 9.7 Circus Tower Routine</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/08/15/Alphabet-table/" title="Next Post: [Google] Alphabet Table (`)">[Google] Alphabet Table (`) &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,266 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[LeetCode Plus] Lowest Common Ancestor of Binary Tree (I) - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Question link Given a binary tree, find the lowest common ancestor of two given nodes in the tree. _______3______ / \ ___5__ ___1__ / \ / \ 6 _2 0 8 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/06/10/Lowest-Common-Ancestor-Tree/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[LeetCode Plus] Lowest Common Ancestor of Binary Tree (I)</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-10T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://leetcode.com/2011/07/lowest-common-ancestor-of-a-binary-tree-part-i.html">link</a></p>
+
+<div class="entry bg-color bg-img font-color">
+    <blockquote>
+        <p class="font-color bg-color bg-img">Given a binary tree, find the lowest common ancestor of two given nodes in the tree.</p>
+    </blockquote>
+    <p class="font-color bg-color bg-img"><span id="more-790" class="font-color"></span>
+        <br>
+    </p><pre class="bg-color bg-img font-color">        _______<span style="color: #990000;" class="font-color">3</span>______
+       /              \
+    ___<span style="color: #990000;" class="font-color">5</span>__          ___<span style="color: #990000;" class="font-color">1</span>__
+   /      \        /      \
+   <span style="color: #990000;" class="font-color">6</span>      _<span style="color: #990000;" class="font-color">2       0       8</span>
+         /  \
+         <span style="color: #990000;" class="font-color">7   4</span></pre>
+    <p class="font-color">If you are not so sure about the definition of lowest common ancestor (LCA), please refer to my previous post: <a href="http://www.leetcode.com/2011/07/lowest-common-ancestor-of-a-binary-search-tree.html" class="font-color bg-color bg-img">Lowest Common Ancestor of a Binary Search Tree (BST)</a> or the definition of LCA <a href="http://en.wikipedia.org/wiki/Lowest_common_ancestor" class="font-color">here</a>. Using the tree above as an example, the LCA of nodes <strong><span style="color: #990000;" class="font-color">5</span></strong> and <strong><span style="color: #990000;" class="font-color">1</span></strong> is <strong><span style="color: #990000;" class="font-color">3</span></strong>. Please note that LCA for nodes <strong><span style="color: #990000;" class="font-color">5</span> </strong>and <strong><span style="color: #990000;" class="font-color">4</span> </strong>is <strong><span style="color: #990000;" class="font-color">5</span></strong>.</p>
+    <p class="font-color bg-color bg-img"><strong>Hint:</strong>
+        <br>Top-down or bottom-up? Consider both approaches and see which one is more efficient.</p>
+</div>
+
+
+<p><strong>This question appears on CC150v5 Q4.7</strong>.</p>
+
+<h3>Analysis</h3>
+
+<p>This tree is not BST, so it&rsquo;s more difficult then previous. Top-down approach would take O(n<sup>2</sup>) time due to duplicate traverse.</p>
+
+<p><strong>However, there is a very good bottom-up approach with O(n) time</strong>. This solution, though very tricky, is the most standard and common interview question that can be asked about Binary Tree.</p>
+
+<blockquote><p>We traverse from the bottom, and once we reach a node which matches one of the two nodes, we pass it up to its parent. The parent would then test its left and right subtree if each contain one of the two nodes. If yes, then the parent must be the LCA and we pass its parent up to the root. If not, we pass the lower node which contains either one of the two nodes (if the left or right subtree contains either p or q), or NULL (if both the left and right subtree does not contain either p or q) up.</p></blockquote>
+
+<p>The coding is very concise.</p>
+
+<blockquote cite="http://leetcode.com/2011/07/lowest-common-ancestor-of-a-binary-tree-part-i.html">
+<p class="font-color"><strong>Notes:<br> </strong>The LCA problem had been studied extensively by many computer scientists. There exists efficient algorithms for finding LCA in constant time after initial processing of the tree in linear time. For the adventurous reader, please read this article for more details: <a href="http://www.topcoder.com/tc?module=Static&amp;d1=tutorials&amp;d2=lowestCommonAncestor" class="font-color">Range Minimum Query and Lowest Common Ancestor in Topcoder</a>.
+</p>
+</blockquote>
+
+
+<h3>Code</h3>
+
+<p><strong>updated on Sep 15th, 2014</strong>: code from CC150v5 Q4.7</p>
+
+<pre><code>public static TreeNode commonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+    if (root == null) {
+        return null;
+    } else if (root == p) {
+        return p;
+    } else if (root == q) {
+        return q;
+    }
+    if (commonAncestor(root.left, p, q) == null) {
+        return commonAncestor(root.right, p, q);
+    } else if (commonAncestor(root.right, p, q) == null) {
+        return commonAncestor(root.left, p, q);
+    } else {
+        return root;
+    }
+}
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-06-10T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/leetcode-plus/'>leetcode_plus</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/06/10/Lowest-Common-Ancestor-Tree/" data-via="" data-counturl="http://okc1.github.io/blog/2014/06/10/Lowest-Common-Ancestor-Tree/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/06/10/Lowest-Common-Ancestor-BST/" title="Previous Post: [LeetCode Plus] Lowest Common Ancestor of BST ">&laquo; [LeetCode Plus] Lowest Common Ancestor of BST </a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/06/10/Lowest-Common-Ancestor-Tree-II/" title="Next Post: [LeetCode Plus] Lowest Common Ancestor of Binary Tree (II)">[LeetCode Plus] Lowest Common Ancestor of Binary Tree (II) &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

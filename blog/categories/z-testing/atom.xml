@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Z-testing | My Octopress Blog]]></title>
+  <link href="http://okc1.github.io/blog/categories/z-testing/atom.xml" rel="self"/>
+  <link href="http://okc1.github.io/"/>
+  <updated>2016-06-08T10:52:14-07:00</updated>
+  <id>http://okc1.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[[CC150v5] 12.0 Example - Troubleshoot Google Chrome]]></title>
+    <link href="http://okc1.github.io/blog/2014/09/24/troubleshoot-google-chrome/"/>
+    <updated>2014-09-24T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2014/09/24/troubleshoot-google-chrome</id>
+    <content type="html"><![CDATA[### Question
+
+> You'reworking on the Google Chrome team when you receivea bug report: Chrome crashes on launch. What would you do? 
+
+### Step 1: Understand the Scenario
+
+1. How long has user seen this issue?
+1. version of browser and OS?
+1. Does this happen consistently? How often, and when?
+
+### Step 2: Break Down the Problem
+
+Flow of situation:
+
+1. start menu
+1. click chrome
+1. browser starts
+1. browser load settings
+1. browser issues HTTP response
+1. browser get HTTP response
+1. browser parses webpage
+1. browser displays content
+
+__At some points in this process, something fails__. A good tester would iterate thru the elements of this scenario and diagnose the problem. 
+
+### Step 3: Create Specific, Manageable Tests
+
+Come up with realistic instructions. 
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[CC150v4] 11.2 Random Error Debugging 2]]></title>
+    <link href="http://okc1.github.io/blog/2014/09/08/random-error-debugging-2/"/>
+    <updated>2014-09-08T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2014/09/08/random-error-debugging-2</id>
+    <content type="html"><![CDATA[### Question
+
+> You are given the source to an application which crashes when it is run After running it ten times in a debugger, you find it never crashes in the same place The application is single threaded, and uses only the C standard library What programming errors could be causing this crash? How would you test each one? 
+
+### Solution
+
+The solution is from __both CC150v4 and CC150v5__. My previous post __[Testing] Random error debugging 1__ already covered this question. 
+
+Again, the answer is very similar: 
+
+1. Depends on random variable
+	1. RNG
+	1. depends on user input
+	1. depends on system date/time
+1. Uninitialized variable
+    1. can take on arbitrary value
+    1. can execute in different path
+1. Memory Leak
+	1. out of RAM
+	1. heap overflow
+	1. stack data corruption
+1. System Dependency
+	1. depends on external module
+	1. depends on some system attributed that's being modified by another application (this is especially for hardware-facing applications)
+
+In general, __Web server is more prone to Memory Leak__, and program that runs __close to system level__ is more prone to system dependency errors. 
+
+Additionally, we may be able to use tools to check for specific situations. For example, to investigate issue #2, we can __utilize runtime tools which check for uninitialized variables__. 
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Design] Cloud, Grid and Cluster - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="ref Cluster VS. Grid Cluster differs from Cloud and Grid in that a cluster is a group of computers connected by a local area network (LAN)
+cloud and &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2015/01/06/cloud-grid-cluster/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Design] Cloud, Grid and Cluster</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-06T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a href="http://stackoverflow.com/questions/9723040/what-is-the-difference-between-cloud-grid-and-cluster">ref</a></p>
+
+<h3>Cluster VS. Grid</h3>
+
+<p><strong><a href="http://stackoverflow.com/a/9753568">Cluster differs</a> from Cloud and Grid in that</strong></p>
+
+<ol>
+<li>a cluster is a group of computers connected by a local area network (LAN)</li>
+<li>cloud and grid are more wide scale and can be geographically distributed.</li>
+</ol>
+
+
+<p>Another way to put it is to say that</p>
+
+<ol>
+<li>a cluster is tightly coupled</li>
+<li>a Grid or a cloud is loosely coupled.</li>
+</ol>
+
+
+<p>Also, <strong>the hardware</strong>:</p>
+
+<ol>
+<li>clusters are made up of machines with similar hardware</li>
+<li>clouds and grids are made up of machines with possibly very different hardware configurations.</li>
+</ol>
+
+
+<h3>Computer cluster</h3>
+
+<p><strong><a href="http://en.wikipedia.org/wiki/Computer_cluster">A computer cluster</a></strong> consists of a set of tightly connected computers that work together as a single system.</p>
+
+<p>Unlike grid computers, computer clusters have each node set to <strong>perform the same task</strong>, controlled and scheduled by software.</p>
+
+<p>In most circumstances, all of the nodes use the <strong>same hardware and OS</strong>. They are connected in <strong>LAN</strong> with each node running its <strong>own piece</strong> of OS.</p>
+
+<p>They are used to improve <strong>performance</strong> and <strong>availability</strong> over that of a single computer, while being more <strong>cost effective</strong>.</p>
+
+<p>Computer clusters emerged as a result of:</p>
+
+<ol>
+<li>low-cost microprocessors,</li>
+<li>high-speed networks,</li>
+<li>software for high-performance distributed computing</li>
+</ol>
+
+
+<h3>Grid computing</h3>
+
+<p><strong><a href="http://en.wikipedia.org/wiki/Grid_computing">Grid computing</a></strong> is the collection of computer resources from multiple locations to reach a common goal. Each computer have <strong>non-interactive workloads</strong>. It&rsquo;s like a <strong>&ldquo;super virtual computer”</strong> composed of many networked loosely coupled computers acting together to perform large tasks.</p>
+
+<p>Unlike conventional high performance computing systems such as <strong>cluster computing</strong>, grid computers have each node set to <strong>perform a different task</strong>.</p>
+
+<p>Grid computers also tend to be more <strong>geographically dispersed</strong> than cluster computers. Grids are often constructed with general-purpose grid middleware software libraries.</p>
+
+<p>Major disadvantage with Grid Computing is, <strong>if one piece of software on a node fails</strong>, other pieces of the software on the other nodes may fail.</p>
+
+<h3>Cloud computing</h3>
+
+<p><strong><a href="http://en.wikipedia.org/wiki/Cloud_computing">Cloud computing</a></strong> is terminology based on utility and <strong>consumption of computing resources</strong>.</p>
+
+<h4>SaaS</h4>
+
+<p>An application doesn&rsquo;t access resources it requires directly, rather it accesses them through <strong>something <a href="http://stackoverflow.com/a/1068133">like a service</a></strong>. Instead of talking to a specific hard drive for storage, and a specific CPU for computation, etc, it talks to some <strong>service that provides these resources</strong>. The service then maps any requests for resources to its physical resources.</p>
+
+<p>The services themselves <a href="http://stackoverflow.com/a/9753568">have long been referred to</a> as <strong>Software as a Service (SaaS)</strong>. The datacenter hardware and software is what we call <strong>a Cloud</strong>. When a Cloud is made available in a pay-as-you-go manner to the general public, we call it a <strong>Public Cloud</strong>; the service being sold is <strong>Utility Computing</strong>.</p>
+
+<h4>Sharing of Resources</h4>
+
+<p>Usually the service <strong>dynamically allocate resources</strong> to maximize the effectiveness of the shared resources(per users and per demand).</p>
+
+<p>For example, a cloud computer facility that serves European users during European business hours with a specific application (e.g., email) may reallocate the same resources to serve North American users during North America&rsquo;s business hours with a different application (e.g., a web server).</p>
+
+<p>With cloud computing, multiple users can access a single server to retrieve and update their data <strong>without purchasing licenses for different applications</strong>.</p>
+
+<h4>Scalability</h4>
+
+<ol>
+<li><p>If an application requires only <strong>a small amount of some resource</strong>, say computation, then the service only allocates a small amount, say a small share on a single physical CPU.</p></li>
+<li><p>If the application requires <strong>a large amount of some resource</strong>, then the service allocates that large amount, say a grid of CPUs.</p></li>
+</ol>
+
+
+<p>All the complex handling and coordination is performed <strong>by the service, not the application</strong>. In this way the application can scale well.</p>
+
+<p><a href="http://stackoverflow.com/a/1068133">For example</a> a web site written &ldquo;on the cloud&rdquo; may share a server with many other web sites while it has a low amount of traffic. If it ever has massive amounts of traffic, it may be moved to its own dedicated server, or <strong>grid of servers</strong>. This is all handled <strong>by the cloud service (provider)</strong>, so the application shouldn&rsquo;t have to be modified drastically to cope.</p>
+
+<h4>Other Advantages</h4>
+
+<p>Using Cloud Computing, companies can <a href="http://www.ibeehosting.com/blog/what-is-the-difference-between-cloud-computing-and-grid-computing.html">scale upto High capacities</a> immediately without investing in new infrastructure, training the people or new software licensing. It is more useful for small and medium scale businesses who wants to outsource their Data Center infrastructure, or some larger companies also prefer if they want to cut down the costs of building data-centers internally in order to get peak load capacity. In short, consumers use what they need and pay accordingly.</p>
+
+<h3>Grid Computing VS. Cloud Computing</h3>
+
+<ol>
+<li><p>Grid Computing is the parent of Cloud computing, cloud actually evolves from Grid Computing.</p></li>
+<li><p>A cloud would usually use a grid. A grid is not necessarily a cloud.</p></li>
+<li><p>Resource distribution: Cloud computing is a centralized model whereas grid computing is a decentralized model where the computation could occur over many administrative domains.</p></li>
+<li><p>Ownership: A grid is a collection of computers which is owned by multiple parties in multiple locations and connected together so that users can share the combined power of resources. Whereas a cloud is a collection of computers usually owned by a single party.</p></li>
+</ol>
+
+
+<h4>Examples</h4>
+
+<p>Examples of Clouds: Amazon Web Services (AWS), Google App Engine, Dropbox, Gmail, Facebook, Youtube, Rapidshare</p>
+
+<p>Examples of Grids: FutureGrid</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-01-06T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/design/'>design</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2015/01/06/cloud-grid-cluster/" data-via="" data-counturl="http://okc1.github.io/blog/2015/01/06/cloud-grid-cluster/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/01/06/big-data-storage/" title="Previous Post: [Design] Big Data Storage ">&laquo; [Design] Big Data Storage </a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/01/06/distributed-hash-table/" title="Next Post: [Design] Distributed hash table ">[Design] Distributed hash table  &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
