@@ -1,0 +1,1206 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Overview In Unix-like OS, a pipeline is a set of processes chained by their standard streams, so that the output of each process (stdout) feeds &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/5/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/07/23/how-is-pipe-implemented-unix/">[Design] How Is Pipe Implemented in Unix/Linux</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-07-23T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Overview</h1>
+
+<p>In Unix-like OS, <strong><a href="https://goo.gl/0NAqd9">a pipeline is a set of processes</a> chained by their standard streams</strong>, so that the output of each process (stdout) feeds directly as input (stdin) to the next one.</p>
+
+<p><a href="http://stackoverflow.com/a/17503877">Pipes are unidirectional byte streams which connect the standard output</a> from one process into the standard input of another process. <strong>Neither process is aware of this redirection</strong> and behaves just as it would normally. It is the shell which sets up these temporary pipes between the processes.</p>
+
+<h1>Process</h1>
+
+<ol>
+<li><p>Linux has a VFS called <strong>pipefs</strong> that is mounted in the kernel (not in user space)</p>
+
+<blockquote><p><strong><a href="http://www.linux.org/threads/pipefs-sockfs-debugfs-and-securityfs.5383/">PipeFS</a></strong> is a unique virtual filesystem. <strong>This filesystem is mounted inside the kernel</strong> rather than in the userspace. While most filesystems are mounted under &ldquo;/&rdquo;, PipeFS is mounted on &ldquo;pipe:&rdquo;, <strong>making PipeFS its own root</strong> (yes, a second root filesystem).</p>
+
+<p>This filesystem is one superblock and cannot exceed that amount system-wide. The entry point of this filesystem/second-root is the system-call &ldquo;pipe()&rdquo;. Unlike the other virtual/pseudo filesystems, this one cannot be viewed.</p>
+
+<p>Many of you may be wondering what purpose this PipeFS filesystem serves. Unix pipes use this filesystem. When a pipe is used (eg. ls | less), <strong>the pipe() system-call makes a new pipe object on this filesystem</strong>. Without this filesystem, pipes cannot be made.</p>
+
+<p>Also, threads and forks communicate together via pipes. Without PipeFS, processes could not fork and threads could not communicate.</p>
+
+<p>Network pipes also rely on this virtual/pseudo filesystem.</p></blockquote></li>
+<li><p>pipefs has a single super block and is mounted at it&rsquo;s own root (pipe:), alongside /</p></li>
+<li><p>pipefs cannot be viewed directly unlike most file systems</p></li>
+<li><p>The entry to pipefs is via the pipe(2) syscall</p></li>
+<li><p>The pipe(2) syscall used by shells for piping with the | operator (or manually from any other process) creates a new file in pipefs which behaves pretty much like a normal file</p></li>
+<li><p>The file on the left hand side of the pipe operator has its stdout redirected to the temporary file created in pipefs</p></li>
+<li><p>The file on the right hand side of the pipe operator has its stdin set to the file on pipefs</p></li>
+<li><p>pipefs is stored in memory and through some kernel magic</p></li>
+</ol>
+
+
+<p>Ref: <a href="http://unix.stackexchange.com/q/148401">http://unix.stackexchange.com/q/148401</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/06/09/Cryptographic-standards-AES-RSA/">[Design] Cryptographic Standard, AES and RSA</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-06-09T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Overview</h1>
+
+<h2>3 areas of cryptographic standard:</h2>
+
+<ol>
+<li><p>encryption standard</p>
+
+<ol>
+<li>Data Encryption Standard (obsolete)</li>
+<li>Triple DES</li>
+<li><strong>Advanced Encryption Standard (AES)</strong></li>
+<li><strong>RSA</strong></li>
+<li>OpenPGP</li>
+<li>CipherSaber</li>
+</ol>
+</li>
+<li><p>hash standard</p>
+
+<ol>
+<li><strong>MD5</strong></li>
+<li><strong>SHA-1</strong></li>
+<li>SHA-2</li>
+<li>HMAC</li>
+<li>PBKDF2</li>
+</ol>
+</li>
+<li><p>digital signature standard</p>
+
+<ol>
+<li>Digital Signature Algorithm (DSA)</li>
+<li>RSA</li>
+<li>Elliptic</li>
+</ol>
+</li>
+</ol>
+
+
+<h2>Symmetric-key algorithm</h2>
+
+<p><a href="http://en.wikipedia.org/wiki/Symmetric-key_algorithm">Use the same cryptographic keys</a> for both encryption and decryption.</p>
+
+<p>The keys represent a shared secret between two parties, and maintain a private information link.</p>
+
+<p>This requirement that both parties have access to the secret key is one of the main drawbacks.</p>
+
+<h2>Public-key cryptography</h2>
+
+<p>The public key is used:</p>
+
+<ol>
+<li>encrypt plaintext</li>
+<li>verify a digital signature</li>
+</ol>
+
+
+<p>private key is used:</p>
+
+<ol>
+<li>decrypt ciphertext</li>
+<li>create a digital signature.</li>
+</ol>
+
+
+<h1>Encryption standard</h1>
+
+<h2>RSA Vs. AES</h2>
+
+<p><strong>RSA is very computationally expensive</strong> by comparison with AES. It involves mathematics with very large numbers, whilst AES can be implemented with relatively simple bit operations.</p>
+
+<p><a href="http://security.stackexchange.com/questions/10949/encryption-should-i-be-using-rsa-or-aes">RSA is a public-key encryption algorithm</a> (asymmetric), while AES is a symmetric key algorithm. Often a cryptosystem will use both algorithms.</p>
+
+<p><a href="http://stackoverflow.com/questions/13238674/aes-vs-rsa-to-encrypt-large-size-of-data">A good compromise is to</a> use RSA to encrypt the symmetric key that is then used in AES encryption of the larger data.</p>
+
+<h2>GitHub</h2>
+
+<p>uses RSA encryption.</p>
+
+<h1>hash standard</h1>
+
+<h2>MD5</h2>
+
+<p>The MD5 message-digest algorithm is a widely used cryptographic hash function producing a 128-bit (16-byte) hash value, or 32 digit Hex.</p>
+
+<blockquote><p>d -> 8277e0910d750195b448797616e091ad</p>
+
+<p>good morning -> 2b849500e4585dab4196ec9a415edf8f</p></blockquote>
+
+<h2>SHA-1</h2>
+
+<p>SHA-1 produces a 160-bit (20-byte) hash value, or 40 digit Hex.</p>
+
+<h2>For more</h2>
+
+<p>About MD5, SHA-1 and other, refer to <strong>[Design] Cryptographic Hash, MD5 and Digital Signature</strong></p>
+
+<h1>digital signature standard</h1>
+
+<p>A valid digital signature gives a recipient confidence that the message was created by a known sender.</p>
+
+<p>commonly used for software distribution, financial transactions</p>
+
+<p><img class="middle" src="/assets/images/digital_signature.png"></p>
+
+<p><a href="http://searchsecurity.techtarget.com/definition/digital-signature">To create a digital signature</a>, signing software (such as an email program) creates a one-way hash of the data to be signed. The private key is then used to encrypt the hash.</p>
+
+<blockquote><p>The reason for encrypting the hash instead of entire message is that a hash function can convert an arbitrary input into a fixed length value, which is usually much shorter.</p></blockquote>
+
+<p>Other party validate the integrity of the data by using the signer&rsquo;s public key to decrypt the hash.</p>
+
+<blockquote><p>Note: you can choose to &lsquo;<strong> Add digital signature to this message </strong>&rsquo; in Microsoft Office.</p></blockquote>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/06/08/linux-and-tcp-ports/">[Design] Linux and TCP Ports</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-06-08T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Overview</h1>
+
+<p><a href="http://en.wikipedia.org/wiki/Port_%28computer_networking%29">a port</a> is <strong>a software construct serving as a communications endpoint</strong> in a computer&rsquo;s host operating system.</p>
+
+<p>purpose of ports is to uniquely identify different applications or processes running on a single computer and thereby <strong>enable them to share a single physical connection to a packet-switched network</strong> like the Internet.</p>
+
+<p>The protocols that <strong>primarily use ports</strong> are the Transport Layer protocols, such as TCP and UDP.</p>
+
+<p><strong>Port info can be viewed on Linux /etc/services files</strong>.</p>
+
+<h2>there&rsquo;re only 65536 ports</h2>
+
+<p>In TCP/IP stack, port number field is just 16bit size unsigned integer. Port number thus ranging from 0 to 65535.</p>
+
+<h2>well-known ports</h2>
+
+<p><strong>Well-known ports</strong> (or Privileged Ports) are those from 0 through 1023.</p>
+
+<ul>
+<li>20 &amp; 21: File Transfer Protocol (FTP)</li>
+<li>22: Secure Shell (SSH)</li>
+<li>23: Telnet remote login service</li>
+<li>25: Simple Mail Transfer Protocol (SMTP)</li>
+<li>53: Domain Name System (DNS) service</li>
+<li>80: Hypertext Transfer Protocol (HTTP) used in the World Wide Web</li>
+<li>110: Post Office Protocol (POP3)</li>
+<li>119: Network News Transfer Protocol (NNTP)</li>
+<li>143: Internet Message Access Protocol (IMAP)</li>
+<li>161: Simple Network Management Protocol (SNMP)</li>
+<li>194: Internet Relay Chat (IRC)</li>
+<li>443: HTTP Secure (HTTPS)</li>
+<li>465: SMTP Secure (SMTPS)</li>
+</ul>
+
+
+<h2>Socket</h2>
+
+<p><a href="http://www.linuxnix.com/2011/05/important-port-numbers-linux-system-administrator.html">Socket is combination of</a> software Port and IP address.</p>
+
+<h2>Protocol number</h2>
+
+<p>In an IP header, <a href="https://technet.microsoft.com/en-us/library/cc959827.aspx">the Protocol field identifies the service</a> in the next higher level in the protocol stack to which data is passed. <strong>Do not confuse this with port number, which is used for communication by TCP/UDP</strong>.</p>
+
+<table>
+<tbody><tr><th>
+<p>
+Service</p>
+</th><th>
+<p>
+Protocol Number</p>
+</th></tr>
+<tr><td>
+<p>
+Internet Control Message Protocol (ICMP)</p>
+</td><td>
+<p>
+1</p>
+</td></tr>
+<tr><td>
+<p>
+Transmission Control Protocol (TCP)</p>
+</td><td>
+<p>
+6</p>
+</td></tr>
+<tr><td>
+<p>
+User Datagram Protocol (UDP)</p>
+</td><td>
+<p>
+17</p>
+</td></tr>
+<tr><td>
+<p>
+General Routing Encapsulation (PPTP data over GRE)</p>
+</td><td>
+<p>
+47</p>
+</td></tr>
+<tr><td>
+<p>
+Authentication Header (AH) IPSec</p>
+</td><td>
+<p>
+51</p>
+</td></tr>
+<tr><td>
+<p>
+Encapsulation Security Payload (ESP) IPSec</p>
+</td><td>
+<p>
+50</p>
+</td></tr>
+<tr><td>
+<p>
+Exterior Gateway Protocol (EGP)</p>
+</td><td>
+<p>
+8</p>
+</td></tr>
+<tr><td>
+<p>
+Gateway-Gateway Protocol (GGP)</p>
+</td><td>
+<p>
+3</p>
+</td></tr>
+<tr><td>
+<p>
+Host Monitoring Protocol (HMP)</p>
+</td><td>
+<p>
+20</p>
+</td></tr>
+<tr><td>
+<p>
+Internet Group Management Protocol (IGMP)</p>
+</td><td>
+<p>
+88</p>
+</td></tr>
+<tr><td>
+<p>
+MIT Remote Virtual Disk (RVD)</p>
+</td><td>
+<p>
+66</p>
+</td></tr>
+<tr><td>
+<p>
+OSPF Open Shortest Path First</p>
+</td><td>
+<p>
+89</p>
+</td></tr>
+<tr><td>
+<p>
+PARC Universal Packet Protocol (PUP)</p>
+</td><td>
+<p>
+12</p>
+</td></tr>
+<tr><td>
+<p>
+Reliable Datagram Protocol (RDP)</p>
+</td><td>
+<p>
+27</p>
+</td></tr>
+<tr><td>
+<p>
+Reservation Protocol (RSVP) QoS</p>
+</td><td>
+<p>
+46</p>
+</td></tr>
+</tbody></table>
+
+
+<blockquote><p><a href="https://learningnetwork.cisco.com/thread/61029">When the IP packet contain TCP data</a> the protocol number field will have the value 6 in it, so the payload will be sent to the TCP stack, TCP would then use the port numbers to send the data to the correct application. The same is for UDP with protocol number 17.</p>
+
+<p>Another way to look at the IP protocol number field is, if we didn&rsquo;t have this field in the IP packet header, IP would only be capable of carrying one type of data, while adding this field allowed the IP to carry multiple types of data differentiated by the protocol number, the same goes for TCP/UDP using TCP/UDP ports to serve multiple applications and Ethernet using the Ethertype, and so on.</p></blockquote>
+
+<h2>can multiple app bind to (or listen to) the same port?</h2>
+
+<p>Can&rsquo;t. <a href="http://stackoverflow.com/questions/1694144/can-two-applications-listen-to-the-same-port">Because You can only have one application</a> listening on a single port at one time.</p>
+
+<blockquote><p>the app opens a port, gets a handle to it, and the OS notifies it (via that handle) when a client connection (or a packet in UDP case) arrives.</p>
+
+<p>If the OS allowed two apps to open the same port, how would it know which one to notify?</p></blockquote>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/05/24/overload-override-compile-runtime/">[Java OOP] Overload, Override, Compile, Runtime (Static/Dynamic Polymph)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-05-24T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>The master statement</h1>
+
+<p>Overloading is Compile Time and Overriding is Runtime.</p>
+
+<h1>Examples</h1>
+
+<h2>Overloading</h2>
+
+<pre><code>public static class test
+{
+    static void Main(string[] args)
+    {
+        Foo();
+        Foo("test");
+    }
+
+    public static void Foo()
+    {
+        Console.WriteLine("No message supplied");
+    }
+
+    public static void Foo(string message)
+    {
+        Console.WriteLine(message);
+    }
+}
+</code></pre>
+
+<p>This is called <strong>static (compile-time) polymorphism</strong> because the compiler is aware of exactly which method you are calling.</p>
+
+<h2>Overriding</h2>
+
+<p>When the PrintMessage() function is call, it determines which version of GetMessage() to use at runtime, <strong>based on the type of IMessage</strong> that is passed in.</p>
+
+<pre><code>public static class MessagePrinter
+{
+    public static void PrintMessage(IMessage message)
+    {
+        Console.WriteLine(message.GetMessage());
+    }
+}
+
+public interface IMessage
+{
+    public string GetMessage();
+}
+
+public class XMLMessage : IMessage
+{
+    public string GetMessage()
+    {
+        return "This is an XML Message";
+    }
+}
+
+public class SOAPMessage : IMessage
+{
+    public string GetMessage()
+    {
+        return "This is a SOAP Message";
+    }
+}
+</code></pre>
+
+<p>This is <strong>dynamic (runtime) polymorphism</strong>. This is due to the fact that the compiler doesn&rsquo;t necessarily know what type of object is being passed in at compile-time.</p>
+
+<h1>Conclusion</h1>
+
+<h2>Overloading</h2>
+
+<p>Compile time Polymorphism = Static Polymorphism = Early binding</p>
+
+<h2>Overriding</h2>
+
+<p>Runtime Polymorphism = Dynamic Polymorphism = Late binding =</p>
+
+<p>Reference: <a href="http://stackoverflow.com/questions/10915828/how-overloading-is-compile-time-and-overriding-is-runtime">How Overloading is Compile Time and Overriding is Runtime from stackoverflow.com</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/05/21/sort-letters-given-lexicographic-order/">[Palantir] Sort Letters Given Lexicographic Order</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-05-21T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://quant365.com/viewtopic.php?t=11">link</a></p>
+
+<blockquote><p>Sort the letters in one word by the order they occur in another in linear time.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>This</p>
+
+<p>text</p>
+
+<p>is</p>
+
+<p>used</p>
+
+<p>to</p>
+
+<p>stop</p>
+
+<p>you</p>
+
+<p>from</p>
+
+<p>looking</p>
+
+<p>at</p>
+
+<p>the</p>
+
+<p>answer</p>
+
+<p>immediately</p>
+
+<p>The answer is <strong>counting sort</strong>.</p>
+
+<h3>Code</h3>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/05/10/Rotate-Array/">[LeetCode 189] Rotate Array</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-05-10T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/rotate-array/">link</a></p>
+
+<div class="question-content">
+              <p></p><p>Rotate an array of <i>n</i> elements to the right by <i>k</i> steps.</p>
+<p>For example, with <i>n</i> = 7 and <i>k</i> = 3, the array <code>[1,2,3,4,5,6,7]</code> is rotated to <code>[5,6,7,1,2,3,4]</code>. </p>
+
+<p><b>Note:</b><br>
+Try to come up as many solutions as you can, there are at least 3 different ways to solve this problem.
+</p>
+
+<p class="showspoilers"><a href="#" onclick="showSpoilers(this); return false;">[show hint]</a></p>
+<div class="spoilers" style="display: none;"><b>Hint:</b><br>
+Could you do it in-place with O(1) extra space?
+</div>
+
+<p>Related problem: <a href="/problems/reverse-words-in-a-string-ii/">Reverse Words in a String II</a></p>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/Freezen">@Freezen</a> for adding this problem and creating all test cases.</p><p></p>
+              
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/array/">Array</a>
+                  
+                </span>
+              
+            </div>
+
+
+<h3>Solution</h3>
+
+<p>This question is very standard &ldquo;rotate 3 times&rdquo; solution.</p>
+
+<h3>Code</h3>
+
+<pre><code>public class Solution {
+    public void rotate(int[] nums, int k) {
+        if (nums == null || nums.length == 0) {
+            return;
+        }
+        int len = nums.length;
+        k = k % len;
+
+        reverse(nums, 0, len - k - 1);
+        reverse(nums, len - k, len - 1);
+        reverse(nums, 0, len - 1);
+    }
+
+    void reverse(int[] nums, int start, int end) {
+        while (start &lt; end) {
+            int temp = nums[start];
+            nums[start] = nums[end];
+            nums[end] = temp;
+            start++;
+            end--;
+        }
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/05/10/Reverse-Bits/">[LeetCode 190] Reverse Bits</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-05-10T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/reverse-bits/">link</a></p>
+
+<div class="question-content">
+              <p></p><p>Reverse bits of a given 32 bits unsigned integer.</p>
+
+<p>For example, given input 43261596 (represented in binary as <b>00000010100101000001111010011100</b>), return 964176192 (represented in binary as <b>00111001011110000010100101000000</b>).</p>
+
+<p>
+<b>Follow up</b>:<br>
+If this function is called many times, how would you optimize it?
+</p>
+
+<p>Related problem: <a href="/problems/reverse-integer/">Reverse Integer</a></p>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/ts">@ts</a> for adding this problem and creating all test cases.</p><p></p>
+              
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/bit-manipulation/">Bit Manipulation</a>
+                  
+                </span>
+              
+            </div>
+
+
+<h3>Analysis</h3>
+
+<p>This question is standard bit manipulation. We essentially get bits one by one from n, and append it to the result.</p>
+
+<p>However, the question ask how to optimize it, to improve its performance. Em, that&rsquo;s interesting.</p>
+
+<h3>Solution</h3>
+
+<p>First code is the standard solution.</p>
+
+<p>I found another interesting solution from <a href="http://www.programcreek.com/2014/03/leetcode-reverse-bits-java/">programcreek</a>, which uses &ldquo;swap bits&rdquo; method. I&rsquo;ve never seen this before, so I posted his solution below.</p>
+
+<p>But is it really a faster solution?</p>
+
+<p>Finally, I found something in <a href="http://bookshadow.com/weblog/2015/03/08/leetcode-reverse-bits/">书影 博客</a>, quoted as below:</p>
+
+<blockquote><p>以4位为单位执行反转，将0x0至0xF的反转结果预存在一个长度为16的数组中，反转时直接查询即可。</p></blockquote>
+
+<p>Thus this is the best solution for performance.</p>
+
+<h3>Code</h3>
+
+<p>My code</p>
+
+<pre><code>public class Solution {
+    // you need treat n as an unsigned value
+    public int reverseBits(int n) {
+        int result = 0;
+        for (int i = 0; i &lt; 32; i++) {
+            int last = n &amp; 1;
+            n &gt;&gt;= 1;
+            result &lt;&lt;= 1;
+            result = result | last;
+        }
+        return result;
+    }
+}
+</code></pre>
+
+<p>&ldquo;swap bits&rdquo;</p>
+
+<pre><code>public int reverseBits(int n) {
+    for (int i = 0; i &lt; 16; i++) {
+        n = swapBits(n, i, 32 - i - 1);
+    }
+
+    return n;
+}
+
+public int swapBits(int n, int i, int j) {
+    int a = (n &gt;&gt; i) &amp; 1;
+    int b = (n &gt;&gt; j) &amp; 1;
+
+    if ((a ^ b) != 0) {
+        return n ^= (1 &lt;&lt; i) | (1 &lt;&lt; j);
+    }
+
+    return n;
+}
+</code></pre>
+
+<p>Best solution:</p>
+
+<pre><code>char tb[16] = {0,8,4,12,2,10,6,14,1,9,5,13,3,11,7,15};
+
+uint32_t reverseBits(uint32_t n) {
+        int curr = 0;
+        uint32_t ret = 0;
+        uint32_t msk = 0xF;
+        for(int i = 0; i &lt; 8; i++) {
+            ret = ret &lt;&lt; 4;
+            curr = msk&amp;n;
+            ret |= tb[curr];
+            n = n &gt;&gt; 4;
+        }
+        return ret;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/05/10/Number-of-Islands/">[LeetCode 200] Number of Islands</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-05-10T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/number-of-islands/">link</a></p>
+
+<div class="question-content">
+              <p></p><p>Given a 2d grid map of <code>'1'</code>s (land) and <code>'0'</code>s (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.</p>
+
+<p><i><b>Example 1:</b></i></p>
+<pre>11110<br>11010<br>11000<br>00000</pre>
+<p>Answer: 1</p>
+<p><i><b>Example 2:</b></i></p>
+<pre>11000<br>11000<br>00100<br>00011</pre>
+<p>Answer: 3</p>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://leetcode.com/discuss/user/mithmatt">@mithmatt</a> for adding this problem and creating all test cases.</p><p></p>
+              
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/depth-first-search/">Depth-first Search</a>
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/breadth-first-search/">Breadth-first Search</a>
+                  
+                </span>
+              
+            </div>
+
+
+<h3>Analysis</h3>
+
+<p>At every &lsquo;1&rsquo; position, do DFS.</p>
+
+<h3>Solution</h3>
+
+<p>I post my code below. Note that we do not actually have to have the method &ldquo;findLand&rdquo; -  we can simply read through the grid and mark all &lsquo;1&rsquo;s in one run.</p>
+
+<p>You might want to come up with your own code. Mine is just for reference. This is not an very interesting question, I assume.</p>
+
+<h3>Code</h3>
+
+<pre><code>public class Solution {
+    public int numIslands(char[][] grid) {
+        if (grid == null || grid.length == 0 || grid[0].length == 0) {
+            return 0;
+        }
+        int m = grid.length;
+        int n = grid[0].length;
+        int count = 0;
+
+        Pair firstPiece = findLand(grid, m, n);
+        while (firstPiece != null) {
+            // mark all neighbors, and count increment
+            mark(grid, m, n, firstPiece);
+            firstPiece = findLand(grid, m, n);
+            count++;
+        }
+
+        return count;
+    }
+
+    void mark(char[][] grid, int m, int n, Pair p) {
+        if (p.x &lt; 0 || p.x == m || p.y &lt; 0 || p.y == n) {
+            return;
+        } else if (grid[p.x][p.y] != '1') {
+            return;
+        }
+        // mark current and then dfs
+        grid[p.x][p.y] = '2';
+        mark(grid, m, n, new Pair(p.x - 1, p.y));
+        mark(grid, m, n, new Pair(p.x + 1, p.y));
+        mark(grid, m, n, new Pair(p.x, p.y - 1));
+        mark(grid, m, n, new Pair(p.x, p.y + 1));
+    }
+
+    Pair findLand(char[][] grid, int m, int n) {
+        for (int i = 0; i &lt; m; i++) {
+            for (int j = 0; j &lt; n; j++) {
+                if (grid[i][j] == '1') {
+                    return new Pair(i, j);
+                }
+            }
+        }
+        return null;
+    }
+
+    class Pair {
+        int x;
+        int y;
+
+        public Pair(int a, int b) {
+            x = a;
+            y = b;
+        }
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/05/10/Number-of-1-Bits/">[LeetCode 191] Number of 1 Bits</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-05-10T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/number-of-1-bits/">link</a></p>
+
+<div class="question-content">
+              <p></p><p>Write a function that takes an unsigned integer and returns the number of ’1' bits it has (also known as the <a href="http://en.wikipedia.org/wiki/Hamming_weight">Hamming weight</a>).</p>
+
+<p>For example, the 32-bit integer ’11' has binary representation <code>00000000000000000000000000001011</code>, so the function should return 3.</p>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/ts">@ts</a> for adding this problem and creating all test cases.</p><p></p>
+              
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/bit-manipulation/">Bit Manipulation</a>
+                  
+                </span>
+              
+            </div>
+
+
+<h3>Analysis</h3>
+
+<p>In order to remove the last &lsquo;1&rsquo; bit, we use this operation:</p>
+
+<pre><code>n = n &amp; (n - 1);
+</code></pre>
+
+<h3>Solution</h3>
+
+<p>Just remove all the &lsquo;1&rsquo; bits.</p>
+
+<h3>Code</h3>
+
+<pre><code>public class Solution {
+    public int hammingWeight(int n) {
+        int count = 0;
+        while (n != 0) {
+            n = n &amp; (n - 1);
+            count++;
+        }
+        return count;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/05/10/House-Robber/">[LeetCode 198] House Robber</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-05-10T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/house-robber/">link</a></p>
+
+<div class="question-content">
+              <p></p><p>You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security system connected and <b>it will automatically contact the police if two adjacent houses were broken into on the same night</b>.</p>
+
+<p>Given a list of non-negative integers representing the amount of money of each house, determine the maximum amount of money you can rob tonight <b>without alerting the police</b>.</p>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/ifanchu">@ifanchu</a> for adding this problem and creating all test cases. Also thanks to <a href="https://oj.leetcode.com/discuss/user/ts">@ts</a> for adding additional test cases.</p><p></p>
+              
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/dynamic-programming/">Dynamic Programming</a>
+                  
+                </span>
+              
+</div>
+
+
+<h3>Solution</h3>
+
+<p>DP question. Be careful what the initial values of dp(1) is. You should work this out without a problem!</p>
+
+<h3>Code</h3>
+
+<pre><code>public class Solution {
+    public int rob(int[] num) {
+        if (num == null || num.length == 0) {
+            return 0;
+        } else if (num.length == 1) {
+            return num[0];
+        }
+        int len = num.length;
+        int[] dp = new int[len];
+        dp[0] = num[0];
+        dp[1] = Math.max(num[0], num[1]);
+        int max = Math.max(num[0], num[1]);
+        for (int i = 2; i &lt; len; i++) {
+            dp[i] = Math.max(dp[i - 1], dp[i - 2] + num[i]);
+            max = Math.max(max, dp[i]);
+        }
+        return max;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/6">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/4">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

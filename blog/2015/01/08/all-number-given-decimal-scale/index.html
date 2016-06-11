@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Google] Check All Numbers Given the Decimal Scale - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Question link 检查一个字符串是否包含k位a进制数的所有表示形式。 保证原字符串的所有字串都是合法的k位a进制数。 &ldquo;00110, a=2, k=2&rdquo; => true （包括了00，01，10，11） Solution First find all &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2015/01/08/all-number-given-decimal-scale/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Google] Check All Numbers Given the Decimal Scale</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-08T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.mitbbs.com/article_t/JobHunting/32859887.html">link</a></p>
+
+<blockquote><p>检查一个字符串是否包含k位a进制数的所有表示形式。</p>
+
+<p>保证原字符串的所有字串都是合法的k位a进制数。</p>
+
+<p>&ldquo;00110, a=2, k=2&rdquo; => true （包括了00，01，10，11）</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>First find all substrings with length == k, then generate all numbers in a scale. This is not a difficult question.</p>
+
+<p>We may want to score the substrings in a HashMap/HashSet. <strong>The hashing procedure is preferrably using <a href="http://en.wikipedia.org/wiki/Rolling_hash">Rolling hash</a></strong>.</p>
+
+<blockquote><p>Rolling Hash</p>
+
+<p>A rolling hash is a hash function where the input is hashed in a window that moves through the input.</p>
+
+<p>A few hash functions allow a rolling hash to be computed very quickly—the new hash value is rapidly calculated given only the old hash value, the old value removed from the window, and the new value added to the window—similar to the way a moving average function can be computed much more quickly than other low-pass filters.</p></blockquote>
+
+<p>Rolling Hash is commonly used in <strong><a href="http://www.geeksforgeeks.org/searching-for-patterns-set-3-rabin-karp-algorithm/">Rabin-Karp Algorithm</a></strong> to speed up strStr() string pattern matching.</p>
+
+<p>People in the origin post - they discuss about &ldquo;<strong>slide window check</strong>&rdquo; algorithm. I do not understand what&rsquo;s the benefit of this. If you read this and would like to help me, please leave a comment. Thanks!</p>
+
+<h3>A similar question</h3>
+
+<p><a href="http://www.mitbbs.com/article_t/JobHunting/32860321.html">This</a> is simply the reverse of the question above:</p>
+
+<blockquote><p>给出最短的字符串, which is used to 表示k位a进制数的所有表示形式.</p></blockquote>
+
+<p>This question is solved using <strong><a href="http://en.wikipedia.org/wiki/De_Bruijn_sequence">De Bruijn sequence</a></strong>.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-01-08T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/q-google/'>q-google</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2015/01/08/all-number-given-decimal-scale/" data-via="" data-counturl="http://okc1.github.io/blog/2015/01/08/all-number-given-decimal-scale/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/01/07/scheduling-jobs-with-max-cost/" title="Previous Post: [Facebook] Scheduling Jobs with Max Cost ">&laquo; [Facebook] Scheduling Jobs with Max Cost </a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/01/08/number-of-distinct-substrings/" title="Next Post: [Google] Number of distinct substrings ">[Google] Number of distinct substrings  &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

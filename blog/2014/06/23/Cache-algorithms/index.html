@@ -1,0 +1,299 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Design] Cache and Page Replacement Algorithms - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Cache Algorithms This post is originally written for Cache Algo only, before I found out this 2 topics are very similar, so I changed the title to & &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/06/23/Cache-algorithms/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Design] Cache and Page Replacement Algorithms</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-23T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Cache Algorithms</h3>
+
+<p>This post is originally written for <strong>Cache Algo</strong> only, before I found out this 2 topics are very similar, so I changed the title to &ldquo;Cache and Page Replacement Algorithms&rdquo;.</p>
+
+<h4>Equation</h4>
+
+<p>of memory reference time is:</p>
+
+<p>T = m * T(m) + T(h) + E</p>
+
+<blockquote><p>m: miss ratio = 1 - hit ratio</p>
+
+<p>T(m): time for main memory access</p>
+
+<p>T(h): latency (when there&rsquo;s a hit)</p>
+
+<p>E: secondary effects liek queuing effects etc.</p></blockquote>
+
+<h4>hit ratio</h4>
+
+<p>how often a searched-for item is actually found in the cache</p>
+
+<h4>latency</h4>
+
+<p>how long after requesting a desired item the cache can return that item (when there is a hit).</p>
+
+<h3>Replacement policy</h3>
+
+<h4>Bélády&rsquo;s Algorithm (Optimal Algorithm)</h4>
+
+<p>The optimal algorithm, not implementable in practise.</p>
+
+<h4>LFU</h4>
+
+<p>Least Frequently Used, slow and not very adaptive.</p>
+
+<h4>LRU</h4>
+
+<p>Fast and adaptive, but hard to implement.</p>
+
+<p>It can be implemented with either a counter or a stack/doubleLinkedList.</p>
+
+<p>Web browser use this.</p>
+
+<h4>LRU2 and 2Qs</h4>
+
+<p><strong>LRU2</strong> - Only add entries to the cache the second time they are accessed.</p>
+
+<p><strong>Two Queues</strong> - Add entries to an normal LRU cache. If accessed again, move it to second, larger, LRU cache.</p>
+
+<h4>MRU (most recent used)</h4>
+
+<p>Some claim that MRU cache algorithms have more hits than LRU due to their tendency to retain older data.</p>
+
+<h4>FIFO</h4>
+
+<p>Low-overhead, fast but not adaptive.</p>
+
+<h4>Second-chance</h4>
+
+<p>Modified version of FIFO. Relatively better than FIFO at little cost.</p>
+
+<p>Initially, a reference bit is set. Instead of removing old entries, it clears reference bit first, and insert that entry at the back of the queue. An entry is only cleared if the reference bit is not set. This is like a circular queue.</p>
+
+<p>If all the pages have been referenced, second chance degenerates into pure FIFO. Why? Let&rsquo;s say all entries reference are set, the pointer will go around the entire list and clear all references, and in the end come back to the starting point. Then, it&rsquo;s like a FIFO. For more, see the <a href="http://javalandscape.blogspot.sg/2009/01/cachingcaching-algorithms-and-caching.html">link</a>.</p>
+
+<h4>Clock</h4>
+
+<p>Modified version of second-hand. Better than second hand. Instead of pushing to the back, it keep a &ldquo;hand&rdquo; pointer in the circular list. <a href="http://javalandscape.blogspot.sg/2009/01/cachingcaching-algorithms-and-caching.html">link</a></p>
+
+<p>When cache miss occurs and no empty place exists, then I consult the R (referenced) bit at the hand&rsquo;s location to know what I should do. If R is 0, then I will place the new entry at the &ldquo;hand&rdquo; position, otherwise I will clear the R bit. Then, I will increment the hand (iterator) and repeat the process until an entry is replaced.</p>
+
+<h4>Simple time-based</h4>
+
+<p>Fast, but not adaptive. Entries remain in cache for a specific amount of time.</p>
+
+<h4>Extended time-based expiration</h4>
+
+<p>Only clear cache at certain points in time (say every 5 minutes).</p>
+
+<h3>Conclusion</h3>
+
+<p>Each replacement strategy is a <strong>compromise between hit rate and latency</strong>.</p>
+
+<h4>One more thing</h4>
+
+<p>What is Distributed cache?</p>
+
+<p><a href="http://en.wikipedia.org/wiki/Distributed_cache">Distributed cache</a> is an extension of the traditional concept of cache used in a single locale.</p>
+
+<p>A distributed cache may <strong>span multiple servers</strong> so that it can grow in size and in transactional capacity. It is mainly used to store <strong>application data residing in database and web session data</strong>.</p>
+
+<p>The idea of distributed caching has become feasible now because main memory has become very cheap and network cards have become very fast (speed of 1 Gbit is now standard, and 10 Gbit is gaining traction).</p>
+
+<p>Also, a distributed cache works well on <strong>lower cost machines usually employed for web servers</strong> as opposed to <strong>database servers</strong> which require expensive hardware.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-06-23T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/design/'>design</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/06/23/Cache-algorithms/" data-via="" data-counturl="http://okc1.github.io/blog/2014/06/23/Cache-algorithms/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/06/18/Two-egg-100-floor-question/" title="Previous Post: [Brain teaser] 2 Eggs 100 Floors Puzzle ">&laquo; [Brain teaser] 2 Eggs 100 Floors Puzzle </a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/06/24/Longest-Common-Subsequence/" title="Next Post: [LintCode] Longest Common Subsequence">[LintCode] Longest Common Subsequence &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

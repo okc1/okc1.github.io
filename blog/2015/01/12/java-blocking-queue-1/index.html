@@ -1,0 +1,427 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Java OOP] Java BlockingQueue (1) - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Overview A blocking queue is a queue that blocks when you try to dequeue from a empty queue, or if you try to enqueue items into a full queue. &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2015/01/12/java-blocking-queue-1/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Java OOP] Java BlockingQueue (1)</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-12T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Overview</h3>
+
+<p><strong><a href="http://tutorials.jenkov.com/java-concurrency/blocking-queues.html">A blocking queue</a></strong> is a queue that blocks when you try to <strong>dequeue from a empty queue</strong>, or if you try to <strong>enqueue items into a full queue</strong>.</p>
+
+<p><img class="middle" src="/assets/images/blocking-queue.png"></p>
+
+<h4>Details</h4>
+
+<ol>
+<li><p>BlockingQueue <strong>doesn’t accept null values</strong>. Otherwise throw NullPointerException.</p></li>
+<li><p>BlockingQueue implementations are <strong>thread-safe</strong>. All queuing methods are atomic in nature and use internal locks or other forms of concurrency control.</p></li>
+<li><p>BlockingQueue interface is part of java collections framework and it’s primarily used for implementing <strong>producer consumer problem</strong>.</p></li>
+</ol>
+
+
+<p>Two important methods:</p>
+
+<ol>
+<li><p>put(E e): This method is used to insert elements to the queue, if the queue is full it waits for the space to be available.</p></li>
+<li><p>E take(): This method retrieves and remove the element from the head of the queue, if queue is empty it waits for the element to be available.</p></li>
+</ol>
+
+
+<h4>Usage</h4>
+
+<p><a href="http://tutorials.jenkov.com/java-util-concurrent/blockingqueue.html">BlockingQueue is typically used</a> to have one thread produce objects, with another thread consumes (producer consumer problem). Refer to <strong>[Design] Producer Consumer Problem</strong>.</p>
+
+<h3>Example 1</h3>
+
+<p>This example shows <strong>how changing the speed of consuming and producing</strong> results in different sequence of outputs, using a BlockingQueue. The size of the BlockingQueue is initialized at 5.</p>
+
+<pre><code>public class Main {
+
+    // original post from:
+    // http://www.journaldev.com/1034/java-blockingqueue-example-implementing-producer-consumer-problem
+
+    private static final Setting testFullQueue = new Setting(3, 10, 0);
+    private static final Setting testEmptyQueue = new Setting(10, 3, 100);
+
+    public static void main(String[] args) {
+
+        // Creating BlockingQueue of size 5
+        BlockingQueue&lt;Message&gt; queue = new ArrayBlockingQueue&lt;&gt;(5);
+
+        Setting variableSetting = testFullQueue;
+        Producer producer = new Producer(queue, variableSetting.produceSpeed);
+        Consumer consumer = new Consumer(queue, variableSetting.consumeSpeed,
+                variableSetting.consumerDelay);
+
+        // starting producer to produce messages in queue
+        new Thread(producer).start();
+
+        // starting consumer to consume messages from queue
+        new Thread(consumer).start();
+
+        System.out.println("Producer and Consumer has been started");
+    }
+
+    static class Setting {
+        int produceSpeed;
+        int consumeSpeed;
+        int consumerDelay;
+
+        public Setting(int a, int b, int c) {
+            this.produceSpeed = a;
+            this.consumeSpeed = b;
+            this.consumerDelay = c;
+        }
+    }
+}
+</code></pre>
+
+<p>Producer</p>
+
+<pre><code>public class Producer implements Runnable {
+
+    private BlockingQueue&lt;Message&gt; queue;
+    int produceSpeed;
+
+    public Producer(BlockingQueue&lt;Message&gt; q, int a) {
+        this.queue = q;
+        this.produceSpeed = a;
+    }
+
+    @Override
+    public void run() {
+        // produce messages
+        for (int i = 0; i &lt; 13; i++) {
+            Message msg = new Message("" + i);
+            try {
+                Thread.sleep(produceSpeed);
+                queue.put(msg);
+                System.out.println("Produced " + msg.getMsg() + "           ("
+                        + queue.size() + " items)");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        // adding exit message
+        Message msg = new Message("exit");
+        try {
+            queue.put(msg);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+}
+</code></pre>
+
+<p>Consumer</p>
+
+<pre><code>public class Consumer implements Runnable {
+
+    private BlockingQueue&lt;Message&gt; queue;
+    int consumeSpeed;
+    int consumerDelay;
+
+    public Consumer(BlockingQueue&lt;Message&gt; q, int a, int b) {
+        this.queue = q;
+        this.consumeSpeed = a;
+        this.consumerDelay = b;
+    }
+
+    @Override
+    public void run() {
+        try {
+            // initial delay: used to wait for producer to
+            // fill up the queue
+            Thread.sleep(consumerDelay);
+            Message msg;
+            // consuming messages until exit message is received
+            while ((msg = queue.take()).getMsg() != "exit") {
+            System.out.println("         " + msg.getMsg() + " Consumed"+ "  ("
+                    + queue.size() + " items)");
+                Thread.sleep(consumeSpeed);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Consumer finished working. Exit. ");
+    }
+}
+</code></pre>
+
+<p>Message Class</p>
+
+<pre><code>public class Message {
+    private String msg;
+
+    public Message(String str){
+        this.msg=str;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+}
+</code></pre>
+
+<p>Output (testFullQueue):</p>
+
+<pre><code>Producer and Consumer has been started
+Produced 0           (0 items)
+         0 Consumed  (0 items)
+Produced 1           (1 items)
+Produced 2           (2 items)
+         1 Consumed  (1 items)
+Produced 3           (2 items)
+Produced 4           (3 items)
+Produced 5           (4 items)
+         2 Consumed  (3 items)
+Produced 6           (4 items)
+Produced 7           (5 items)
+         3 Consumed  (5 items)
+Produced 8           (5 items)
+         4 Consumed  (4 items)
+Produced 9           (5 items)
+         5 Consumed  (4 items)
+Produced 10           (5 items)
+         6 Consumed  (4 items)
+Produced 11           (5 items)
+         7 Consumed  (4 items)
+Produced 12           (5 items)
+         8 Consumed  (4 items)
+         9 Consumed  (4 items)
+         10 Consumed  (3 items)
+         11 Consumed  (2 items)
+         12 Consumed  (1 items)
+Consumer finished working. Exit. 
+</code></pre>
+
+<p>Output (testEmptyQueue):</p>
+
+<pre><code>Producer and Consumer has been started
+Produced 0           (1 items)
+Produced 1           (2 items)
+Produced 2           (3 items)
+Produced 3           (4 items)
+Produced 4           (5 items)
+Produced 5           (5 items)
+         0 Consumed  (5 items)
+         1 Consumed  (4 items)
+         2 Consumed  (3 items)
+Produced 6           (4 items)
+         3 Consumed  (3 items)
+         4 Consumed  (2 items)
+Produced 7           (3 items)
+         5 Consumed  (2 items)
+         6 Consumed  (1 items)
+         7 Consumed  (0 items)
+Produced 8           (1 items)
+         8 Consumed  (0 items)
+Produced 9           (1 items)
+         9 Consumed  (0 items)
+Produced 10           (1 items)
+         10 Consumed  (0 items)
+Produced 11           (0 items)
+         11 Consumed  (0 items)
+Produced 12           (1 items)
+         12 Consumed  (0 items)
+Consumer finished working. Exit. 
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-01-12T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/java-oop/'>java oop</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2015/01/12/java-blocking-queue-1/" data-via="" data-counturl="http://okc1.github.io/blog/2015/01/12/java-blocking-queue-1/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/01/12/blocking-queue-and-thread-pool/" title="Previous Post: [Java OOP] BlockingQueue and Thread Pool ">&laquo; [Java OOP] BlockingQueue and Thread Pool </a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/01/12/java-blocking-queue-2/" title="Next Post: [Java OOP] Java BlockingQueue (2) ">[Java OOP] Java BlockingQueue (2)  &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

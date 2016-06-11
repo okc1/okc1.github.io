@@ -1,0 +1,1593 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Question link Given a list, rotate the list to the right by k places, where k is non-negative. For example:
+Given 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/57/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/19/Rotate-List/">[LeetCode 61] Rotate List</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-19T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/rotate-list/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Given a list, rotate the list to the right by <i>k</i> places, where <i>k</i> is non-negative.</p>
+
+<p>For example:<br>
+Given <code>1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL</code> and <i>k</i> = <code>2</code>,<br>
+return <code>4-&gt;5-&gt;1-&gt;2-&gt;3-&gt;NULL</code>.</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Solution</h3>
+
+<p><strong>This is a very basic question, but not very easy</strong>.</p>
+
+<p>The implementation is a lot of node operations. The rest of things is straight-forward.</p>
+
+<p>Read <a href="http://rleetcode.blogspot.sg/2014/01/rotate-list-java.html">this blog</a> for more.</p>
+
+<h3>My code</h3>
+
+<pre><code>/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode rotateRight(ListNode head, int n) {
+        if (head == null) {
+            return null;
+        }
+        ListNode p = head;
+        for (int i = 0; i &lt; n; i++) {
+            if (p.next != null) {
+                p = p.next;
+            } else {
+                p = head;
+            }
+        }
+        ListNode q = head;
+        while (p.next != null) {
+            p = p.next;
+            q = q.next;
+        }
+        if (q.next == null) {
+            return head;
+        }
+        ListNode newHead = q.next;
+        q.next = null;
+        p.next = head;
+        return newHead;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/19/Permutation-Sequence/">[LeetCode 60] Permutation Sequence</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-19T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/permutation-sequence/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>The set <code>[1,2,3,…,<i>n</i>]</code> contains a total of <i>n</i>! unique permutations.</p>
+
+<p>By listing and labeling all of the permutations in order,<br>
+We get the following sequence (ie, for <i>n</i> = 3):
+</p><ol>
+<li><code>"123"</code></li>
+<li><code>"132"</code></li>
+<li><code>"213"</code></li>
+<li><code>"231"</code></li>
+<li><code>"312"</code></li>
+<li><code>"321"</code></li>
+</ol>
+<p></p>
+
+<p>Given <i>n</i> and <i>k</i>, return the <i>k</i><sup>th</sup> permutation sequence.</p>
+
+<p><b>Note:</b> Given <i>n</i> will be between 1 and 9 inclusive.</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="white">1</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="red">5</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="red">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is a math problem</strong>. Trying to solve it using <strong>DFS</strong> like in &ldquo;Permutation&rdquo; or &ldquo;N queen&rdquo; will get time limit exceed exception.</p>
+
+<p><a href="http://fisherlei.blogspot.sg/2013/04/leetcode-permutation-sequence-solution.html">This blog</a> have a very good explanation of the math solution.</p>
+
+<blockquote cite="http://fisherlei.blogspot.sg/2013/04/leetcode-permutation-sequence-solution.html">
+    <div>
+        <br>[Thoughts]
+        <br>两个解法。
+        <br>第一，DFS
+        <br>递归遍历所有可能，然后累加计算，直至到K为止。
+        <br>
+        <br>第二，数学解法。
+        <br>
+        <br>假设有n个元素，第K个permutation是
+        <br>a1, a2, a3, ..... &nbsp; ..., an
+        <br>那么a1是哪一个数字呢？
+        <br>
+        <br>那么这里，我们把a1去掉，那么剩下的permutation为
+        <br>a2, a3, .... .... an, 共计n-1个元素。 n-1个元素共有(n-1)!组排列，那么这里就可以知道
+        <br>
+        <br>设变量K1 = K
+        <br>a1 = K1 / (n-1)!
+        <br>
+        <br>同理，a2的值可以推导为
+        <br>a2 = K2 / (n-2)!
+        <br>K2 = K1 % (n-1)!
+        <br>&nbsp;.......
+        <br>a(n-1) = K(n-1) / 1!
+        <br>K(n-1) = K(n-2) /2!
+        <br>
+        <br>an = K(n-1)
+    </div>
+</blockquote>
+
+
+<h3>Solution</h3>
+
+<p><strong>I have written a math recursive solution</strong> and code is below. It&rsquo;s very straight-forward.</p>
+
+<p>There is also <strong>direct math solution</strong>. However, how to handle the removal of elements from the unmatched list is a tough problem. <strong>I saw a lot of people using swap to do it</strong>, but I don&rsquo;t like this idea because of the bad readability of code.</p>
+
+<p><strong>Finally I found a readable code from <a href="http://xiaochongzhang.me/blog/?p=693">this blog</a></strong>. It&rsquo;s a very good solution.</p>
+
+<h3>My code</h3>
+
+<p><strong>updated on my birthday this year</strong></p>
+
+<pre><code>public String getPermutation(int n, int k) {
+    int index = k - 1;
+    List&lt;Integer&gt; nums = new ArrayList&lt;Integer&gt;();
+    for (int i = 1; i &lt;= n; i++) {
+        nums.add(i);
+    }
+    String ans = "";
+    for (int i = n - 1; i &gt;= 1; i--) {
+        int fact = factorial(i);
+        int nextIndex = index / fact;
+        index = index % fact;
+        ans += nums.remove(nextIndex);
+    }
+    ans += nums.get(0);
+    return ans;
+}
+
+private int factorial(int x) {
+    if (x == 0) return 0;
+    int ans = 1;
+    for (int i = 2; i &lt;= x; i++) {
+        ans *= i;
+    }
+    return ans;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/18/Valid-Number/">[LeetCode 65] Valid Number (Unsolvable)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-18T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/valid-number/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Validate if a given string is numeric.</p>
+
+<p>
+Some examples:<br>
+<code>"0"</code> =&gt; <code>true</code><br>
+<code>"   0.1  "</code> =&gt; <code>true</code><br>
+<code>"abc"</code> =&gt; <code>false</code><br>
+<code>"1 a"</code> =&gt; <code>false</code><br>
+<code>"2e10"</code> =&gt; <code>true</code><br>
+</p>
+
+<p><b>Note:</b> It is intended for the problem statement to be ambiguous. You should gather all requirements up front before implementing one.
+</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="red">5</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">unsolvable</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="red">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Solution</h3>
+
+<p>I am unable to solve this problem, but I found a <a href="http://leetcodenotes.wordpress.com/2013/11/23/leetcode-valid-number/">quite good solution</a>. I post the code below.</p>
+
+<h3>My code</h3>
+
+<pre><code>public boolean isNumber(String s) {
+    s = s.trim(); 
+    if (s.length() &gt; 0 &amp;&amp; s.charAt(s.length() - 1) == 'e')
+        return false; //avoid "3e" which is false
+    String[] t = s.split("e");
+    if (t.length == 0 || t.length &gt; 2) return false;
+    boolean res = valid(t[0], false);
+    if (t.length &gt; 1) res = res &amp;&amp; valid(t[1], true);
+    return res;
+}
+
+private boolean valid(String s, boolean hasDot) {
+    if (s.length() &gt; 0 &amp;&amp; (s.charAt(0) == '+' || s.charAt(0) == '-')) 
+        s = s.substring(1); //avoid "1+", "+", "+."
+    char[] arr = s.toCharArray();
+    if (arr.length == 0 || s.equals(".")) return false;
+    for (int i = 0; i &lt; arr.length; i++) {
+        if (arr[i] == '.') {
+            if (hasDot) return false;
+            hasDot = true;
+        } else if (!('0' &lt;= arr[i] &amp;&amp; arr[i] &lt;= '9'))
+            return false;
+    }
+    return true;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/18/Text-Justification/">[LeetCode 68] Text Justification (Unsolvable)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-18T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/text-justification/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>
+Given an array of words and a length <i>L</i>, format the text such that each line has exactly <i>L</i> characters and is fully (left and right) justified.
+</p> 
+
+<p>
+You should pack your words in a greedy approach; that is, pack as many words as you can in each line. Pad extra spaces <code>' '</code> when necessary so that each line has exactly <i>L</i> characters.
+</p>
+
+<p>
+Extra spaces between words should be distributed as evenly as possible. If the number of spaces on a line do not divide evenly between words, the empty slots on the left will be assigned more spaces than the slots on the right.
+</p>
+
+<p>
+For the last line of text, it should be left justified and no extra space is inserted between words.
+</p>
+
+<p>
+For example,<br>
+<b>words</b>: <code>["This", "is", "an", "example", "of", "text", "justification."]</code><br>
+<b>L</b>: <code>16</code>.
+</p>
+
+<p>
+Return the formatted lines as:<br>
+</p><pre>[
+   "This    is    an",
+   "example  of text",
+   "justification.  "
+]
+</pre>
+<p></p>
+
+<p>
+<b>Note:</b> Each word is guaranteed not to exceed <i>L</i> in length.
+</p>
+
+
+<p class="showspoilers"><a href="#" onclick="showSpoilers(this); return false;">click to show corner cases.</a></p>
+
+<div class="spoilers" style="display: none;"><b>Corner Cases:</b>
+<p>
+</p><ul>
+<li>A line other than the last line might contain only one word. What should you do in this case?<br>
+In this case, that line should be left-justified.</li>
+<p></p>
+</ul></div><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">unsolvable</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="red">unsolvable</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Solution</h3>
+
+<p>I was not able to come up with a solution.</p>
+
+<p>I found solution in <a href="https://github.com/rffffffff007/leetcode/blob/master/Text%20Justification.java">here</a>, <a href="http://blog.csdn.net/linhuanmars/article/details/24063271">here</a> and <a href="http://gongxuns.blogspot.sg/2012/12/leetcodetext-justification.html">here</a>. I will post the code from first link.</p>
+
+<h3>My code</h3>
+
+<pre><code>public ArrayList &lt; String &gt; fullJustify(String[] words, int L) {
+    int wordsCount = words.length;
+    ArrayList &lt; String &gt; result = new ArrayList &lt; String &gt; ();
+    int curLen = 0;
+    int lastI = 0;
+    for (int i = 0; i &lt;= wordsCount; i++) {
+        if (i == wordsCount || curLen + words[i].length() + i - lastI &gt; L) {
+            StringBuffer buf = new StringBuffer();
+            int spaceCount = L - curLen;
+            int spaceSlots = i - lastI - 1;
+            if (spaceSlots == 0 || i == wordsCount) {
+                for (int j = lastI; j &lt; i; j++) {
+                    buf.append(words[j]);
+                    if (j != i - 1)
+                        appendSpace(buf, 1);
+                }
+                appendSpace(buf, L - buf.length());
+            } else {
+                int spaceEach = spaceCount / spaceSlots;
+                int spaceExtra = spaceCount % spaceSlots;
+                for (int j = lastI; j &lt; i; j++) {
+                    buf.append(words[j]);
+                    if (j != i - 1)
+                        appendSpace(buf, spaceEach + (j - lastI &lt; spaceExtra ? 1 : 0));
+                }
+            }
+            result.add(buf.toString());
+            lastI = i;
+            curLen = 0;
+        }
+        if (i &lt; wordsCount)
+            curLen += words[i].length();
+    }
+    return result;
+}
+
+private void appendSpace(StringBuffer sb, int count) {
+    for (int i = 0; i &lt; count; i++)
+        sb.append(' ');
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/18/Insert-Interval/">[LeetCode 57] Insert Interval</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-18T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/insert-interval/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Given a set of <i>non-overlapping</i> intervals, insert a new interval into the intervals (merge if necessary).</p>
+
+<p>You may assume that the intervals were initially sorted according to their start times.</p>
+
+<p>
+<b>Example 1:</b><br>
+Given intervals <code>[1,3],[6,9]</code>, insert and merge <code>[2,5]</code> in as <code>[1,5],[6,9]</code>.
+</p>
+
+<p>
+<b>Example 2:</b><br>
+Given <code>[1,2],[3,5],[6,7],[8,10],[12,16]</code>, insert and merge <code>[4,9]</code> in as <code>[1,2],[3,10],[12,16]</code>.
+</p>
+
+<p>
+This is because the new interval <code>[4,9]</code> overlaps with <code>[3,5],[6,7],[8,10]</code>.
+</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="red">5</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Solution</h3>
+
+<p><strong>This is not an easy question, though it&rsquo;s similar to the question &ldquo;Merge Intervals&rdquo;</strong>.</p>
+
+<p>First code is my solution.</p>
+
+<p><strong>Second code is from <a href="https://github.com/yuanx/leetcode/blob/master/InsertInterval.java">this repo</a></strong>. This is only 1 iteration, but in 3 stages. First, add all intervals ahead of newInterval into ans. Second, merge anything that can be merged with newInterval, and add to ans. Third, add the rest of intervals into ans.</p>
+
+<p><strong>Third code is from <a href="http://www.programcreek.com/2012/12/leetcode-insert-interval/">this blog</a></strong>. It&rsquo;s a very tricky solution.</p>
+
+<h3>My code</h3>
+
+<p><strong>My code</strong></p>
+
+<pre><code>/**
+ * Definition for an interval.
+ * public class Interval {
+ *     int start;
+ *     int end;
+ *     Interval() { start = 0; end = 0; }
+ *     Interval(int s, int e) { start = s; end = e; }
+ * }
+ */
+public class Solution {
+    public List&lt;Interval&gt; insert(List&lt;Interval&gt; intervals, Interval newInterval) {
+        if (intervals == null) {
+            return null;
+        }
+        int p = 0;
+        while (p &lt; intervals.size() &amp;&amp; intervals.get(p).start &lt; newInterval.start) {
+            p++;
+        }
+        intervals.add(p, newInterval);
+        if (p &gt; 0) {
+            p--;
+        }
+        // start merging from (p)th element
+        while (p &lt; intervals.size() - 1) {
+            if (intervals.get(p).end &gt;= intervals.get(p + 1).start) {
+                intervals.get(p).end = Math.max(intervals.get(p).end, intervals.get(p + 1).end);
+                intervals.remove(p + 1);
+            } else {
+                p++;
+            }
+        }
+        return intervals;
+    }
+}
+</code></pre>
+
+<p><strong>Second code</strong>.</p>
+
+<pre><code>public ArrayList&lt;Interval&gt; insert(ArrayList&lt;Interval&gt; intervals, Interval newInterval) {
+    ArrayList&lt;Interval&gt; re = new ArrayList&lt;Interval&gt;();
+    int len = intervals.size();
+    int i = 0;
+    while (i &lt; len) {
+        Interval temp = intervals.get(i);
+        if (temp.end &lt; newInterval.start)
+            re.add(temp);
+        else if (temp.start &gt; newInterval.end)
+            break;
+        else {
+            newInterval.start = Math.min(temp.start, newInterval.start);
+            newInterval.end = Math.max(temp.end, newInterval.end);
+        }
+        i++;
+    }
+    re.add(newInterval);
+    while (i &lt; len) {
+        re.add(intervals.get(i));
+        i++;
+    }
+    return re;
+}
+</code></pre>
+
+<p><strong>Third code, a popular solution</strong>. Very tricky and concise.</p>
+
+<pre><code>public ArrayList&lt;Interval&gt; insert(ArrayList&lt;Interval&gt; intervals, Interval newInterval) {
+    ArrayList&lt;Interval&gt; result = new ArrayList&lt;Interval&gt;();
+    for(Interval interval: intervals){
+        if(interval.end &lt; newInterval.start){
+            result.add(interval);
+        }else if(interval.start &gt; newInterval.end){
+            result.add(newInterval);
+            newInterval = interval;        
+        }else if(interval.end &gt;= newInterval.start 
+                || interval.start &lt;= newInterval.end){
+            newInterval = new Interval(
+                Math.min(interval.start, newInterval.start), 
+                Math.max(newInterval.end, interval.end));
+        }
+    }
+    result.add(newInterval); 
+    return result;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/17/Merge-Intervals/">[LeetCode 56] Merge Intervals</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-17T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/merge-intervals/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Given a collection of intervals, merge all overlapping intervals.</p>
+
+<p>
+For example,<br>
+Given <code>[1,3],[2,6],[8,10],[15,18]</code>,<br>
+return <code>[1,6],[8,10],[15,18]</code>.
+</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="red">5</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Solution</h3>
+
+<p><strong>The idea of the solution is not difficult</strong>. First, sort the entire collection list by start time. Secondly, merge it.</p>
+
+<p><strong>The real difficult part is how to sort the collection</strong>.</p>
+
+<p><strong>We can of course do insertion sort</strong>, or <strong>binary insertion sort</strong>. However, from <a href="http://www.brpreiss.com/books/opus5/html/page487.html">this article</a>:</p>
+
+<blockquote><p>The straight insertion algorithm presented in the preceding section does a linear search to find the position in which to do the insertion. However, since the element is inserted into a sequence that is already sorted, we can use a binary search instead of a linear search. Whereas a linear search requires O(n) comparisons in the worst case, a binary search only requires O(logn) comparisons. Therefore, if the cost of a comparison is significant, the binary search may be preferred.</p></blockquote>
+
+<p><img class="middle" src="/assets/images/merge_interval_binary_insertion_sort_algo.png"></p>
+
+<p><strong>And from</strong> <a href="http://en.wikipedia.org/wiki/Insertion_sort#Variants">wikipedia</a>:</p>
+
+<blockquote><p>If the cost of comparisons exceeds the cost of swaps, as is the case for example with string keys stored by reference or with human interaction (such as choosing one of a pair displayed side-by-side), then using binary insertion sort may yield better performance. Binary insertion sort employs a binary search to determine the correct location to insert new elements, and therefore performs ⌈log2(n)⌉ comparisons in the worst case, which is O(n log n). The algorithm as a whole still has a running time of O(n<sup>2</sup>) on average because of the series of swaps required for each insertion.</p></blockquote>
+
+<p>So insertion sort algorithm may not be the best choice for us!</p>
+
+<p><strong>A more popular solution is using Collection.sort function</strong>.</p>
+
+<blockquote><p>java.util.Collections</p>
+
+<p>public static <T> void sort(List<T> list, Comparator&lt;? super T> c)</p>
+
+<p>Parameters: c</p>
+
+<p>The comparator to determine the order of the list. A null value indicates that the elements' natural ordering should be used.</p></blockquote>
+
+<p>A new class that implements the Comparator interface is created, and inside there is compare(Interval, Interval) method. <a href="http://www.cnblogs.com/lautsie/p/3254191.html">Here</a> is one example of such solution.</p>
+
+<p><strong>The third solution is same as the second, but only different</strong> in implementing the comparator object. Note the following code from <a href="http://rleetcode.blogspot.sg/2014/01/merge-intervals-java.html">this blog</a>:</p>
+
+<p>Comparator<Interval> intervalComperator = new Comparator<Interval>(){
+        public int compare(Interval i1, Interval i2){
+                Integer i1St=i1.start;
+                Integer i2St=i2.start;
+                return i1St.compareTo(i2St);
+        }
+};</p>
+
+<p>Read 3 pieces of code below.</p>
+
+<h3>My code</h3>
+
+<p>insertion sort, then merge:</p>
+
+<pre><code>public ArrayList&lt;Interval&gt; merge(ArrayList&lt;Interval&gt; intervals) {
+    ArrayList&lt;Interval&gt; ans = new ArrayList&lt;Interval&gt;();
+    int len = intervals.size();
+    if (len == 0) return ans;
+    ans.add(intervals.get(0));
+    if (len == 1) return ans;
+    // now intervals length is &gt;= then 2
+    if (intervals.get(0).start &lt; intervals.get(1).start)
+        ans.add(intervals.get(1));
+    else ans.add(0, intervals.get(1));
+    for (int i = 2; i &lt; len; i++) {
+        int cur = intervals.get(i).start;
+        // now find number cur from ans&lt;list&gt;
+        int left = 0, right = ans.size() - 1;
+        while (right - left &gt; 1) {
+            int mid = (left + right) / 2;
+            if (ans.get(mid).start &lt; cur) left = mid;
+            else right = mid;
+        }
+        // insert cur between left and right, unless:
+        if (left == 0 &amp;&amp; cur &lt; ans.get(0).start)
+            ans.add(0, intervals.get(i));
+        else if (right == ans.size() - 1
+                &amp;&amp; cur &gt; ans.get(ans.size() - 1).start)
+            ans.add(intervals.get(i));
+        else
+            ans.add(right, intervals.get(i));
+    }
+    // now merge ans
+    int k = 0;
+    while (k &lt; ans.size() - 1) {
+        while (k &lt; ans.size() - 1 &amp;&amp; ans.get(k).end &gt;= ans.get(k + 1).start) {
+            ans.get(k).end = Math.max(ans.get(k).end, ans.get(k + 1).end);
+            ans.remove(k + 1);
+        }
+        k++;
+    }
+    return ans;
+}
+</code></pre>
+
+<p><strong>Recommended solution</strong>. Creating a new Comparator class</p>
+
+<pre><code>/**
+ * Definition for an interval.
+ * public class Interval {
+ *     int start;
+ *     int end;
+ *     Interval() { start = 0; end = 0; }
+ *     Interval(int s, int e) { start = s; end = e; }
+ * }
+ */
+public class Solution {
+    public List&lt;Interval&gt; merge(List&lt;Interval&gt; intervals) {
+        if (intervals == null || intervals.size() == 0) {
+            return intervals;
+        }
+        Collections.sort(intervals, new IntervalComparator());
+        int p = 0;
+        // if p is the last element of the list, we should stop merging
+        while (p &lt; intervals.size() - 1) {
+            // merge p with the next interval, if possible
+            if (intervals.get(p).end &gt;= intervals.get(p + 1).start) {
+                intervals.get(p).end = Math.max(intervals.get(p).end, intervals.get(p + 1).end);
+                intervals.remove(p + 1);
+            } else {
+                p++;
+            }
+        }
+        return intervals;
+    }
+
+    class IntervalComparator implements Comparator&lt;Interval&gt; {
+        public int compare(Interval a, Interval b) {
+            return a.start - b.start;
+        }
+    }
+}
+</code></pre>
+
+<p><strong>Third solution</strong>, different way of writing Comparator.</p>
+
+<pre><code>public ArrayList&lt;Interval&gt; merge(ArrayList&lt;Interval&gt; intervals) {
+    if (intervals == null || intervals.size() &lt; 2)
+        return intervals;
+    ArrayList&lt;Interval&gt; result = new ArrayList&lt;Interval&gt;();
+
+    Comparator&lt;Interval&gt; intervalComperator = new Comparator&lt;Interval&gt;() {
+        public int compare(Interval i1, Interval i2) {
+            Integer i1St = i1.start;
+            Integer i2St = i2.start;
+            return i1St.compareTo(i2St);
+
+        }
+    };
+    Collections.sort(intervals, intervalComperator);
+
+    Interval current = intervals.get(0);
+    int i = 1;
+    while (i &lt; intervals.size()) {
+        Interval currentToCompare = intervals.get(i);
+        if (current.end &lt; currentToCompare.start) {
+            result.add(current);
+            current = currentToCompare;
+        } else
+            current.end = Math.max(current.end, currentToCompare.end);
+        i++;
+    }
+    result.add(current);
+    return result;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/16/Spiral-Matrix-II/">[LeetCode 59] Spiral Matrix II</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-16T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>16</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/spiral-matrix-ii/">link</a></p>
+
+<div class="question-content">
+<p></p><p>Given an integer <i>n</i>, generate a square matrix filled with elements from 1 to <i>n</i><sup>2</sup> in spiral order.</p>
+<p>
+For example,<br>
+Given <i>n</i> = <code>3</code>,
+</p>
+You should return the following matrix:
+<pre>[
+ [ 1, 2, 3 ],
+ [ 8, 9, 4 ],
+ [ 7, 6, 5 ]
+]
+</pre><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This question is basic mathematics</strong>. There is another similar question <strong>[LeetCode 54] Spiral Matrix</strong>.</p>
+
+<p>The difficult part is writing the code.</p>
+
+<h3>My code</h3>
+
+<p><strong>Updated on Oct 9th, 2014</strong>:</p>
+
+<pre><code>public int[][] generateMatrix(int n) {
+    int small = 0;
+    int large = n - 1;
+    int num = 1;
+
+    int[][] ans = new int[n][n];
+    while (small &lt; large) {
+        for (int i = small; i &lt; large; i++) {
+            ans[small][i] = num++;
+        }
+        for (int i = small; i &lt; large; i++) {
+            ans[i][large] = num++;
+        }
+        for (int i = large; i &gt; small; i--) {
+            ans[large][i] = num++;
+        }
+        for (int i = large; i &gt; small; i--) {
+            ans[i][small] = num++;
+        }
+        small++;
+        large--;
+    }
+    if (small == large) {
+        ans[small][small] = num;
+    }
+    return ans;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/16/Spiral-Matrix/">[LeetCode 54] Spiral Matrix</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-16T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>16</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/spiral-matrix/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Given a matrix of <i>m</i> x <i>n</i> elements (<i>m</i> rows, <i>n</i> columns), return all elements of the matrix in spiral order.
+</p>
+
+<p>
+For example,<br>
+Given the following matrix:
+</p>
+<pre>[
+ [ 1, 2, 3 ],
+ [ 4, 5, 6 ],
+ [ 7, 8, 9 ]
+]
+</pre>
+<p>
+You should return <code>[1,2,3,6,9,8,7,4,5]</code>.
+</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This question is basic mathematics</strong>. The difficulty is the coding part.</p>
+
+<h3>My code</h3>
+
+<pre><code>public class Solution {
+    public List&lt;Integer&gt; spiralOrder(int[][] matrix) {
+        List&lt;Integer&gt; ans = new ArrayList&lt;Integer&gt;();
+        if (matrix == null || matrix.length == 0 
+            || matrix[0] == null || matrix[0].length == 0) {
+            return ans;
+        }
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int a = 0;
+        int b = 0;
+        while (a &lt; (m + 1) / 2 &amp;&amp; b &lt; (n + 1) / 2) {
+            // special cases
+            if (2 * a + 1 == m &amp;&amp; 2 * b + 1 == n) {
+                ans.add(matrix[a][b]);
+                break;
+            } else if (2 * a + 1 == m) {
+                for (int j = b; j &lt;= n - 1 - b; j++) {
+                    ans.add(matrix[a][j]);
+                }
+                break;
+            } else if (2 * b + 1 == n) {
+                for (int i = a; i &lt;= m - 1 - a; i++) {
+                    ans.add(matrix[i][b]);
+                }
+                break;
+            }
+            // now is the general case
+            // first horizontal row without last element
+            for (int j = b; j &lt; n - 1 - b; j++) {
+                ans.add(matrix[a][j]);
+            }
+            // vertical column on right-hand side
+            for (int i = a; i &lt; m - 1 - a; i++) {
+                ans.add(matrix[i][n - 1 - b]);
+            }
+            for (int j = n - 1 - b; j &gt; b; j--) {
+                ans.add(matrix[m - 1 - a][j]);
+            }
+            for (int i = m - 1 - a; i &gt; a; i--) {
+                ans.add(matrix[i][b]);
+            }
+            a++;
+            b++;
+        }
+        return ans;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/16/N-Queens-II/">[LeetCode 52] N-Queens II</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-16T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>16</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/n-queens-ii/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Follow up for N-Queens problem.</p>
+
+<p>Now, instead outputting board configurations, return the total number of distinct solutions.</p>
+
+<p><img src="http://www.leetcode.com/wp-content/uploads/2012/03/8-queens.png"></p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="lime">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Solution</h3>
+
+<p>I posted 2 solution by me. Second code is same as <a href="https://github.com/rffffffff007/leetcode/blob/master/N-Queens%20II.java">this guy&rsquo;s code</a>.</p>
+
+<h3>My code</h3>
+
+<p><strong>Using global variable</strong> (similar to [LeetCode 51] N-Queens)</p>
+
+<pre><code>public class Solution {
+
+    int total = 0;
+
+    public int totalNQueens(int n) {
+        if (n &lt;= 0) {
+            return 0;
+        }
+        int[] map = new int[n];
+        helper(map, 0, n);
+        return total;
+    }
+
+    private void helper(int[] map, int row, int n) {
+        if (row == n) {
+            total++;
+            return;
+        }
+        for (int i = 0; i &lt; n; i++) {
+            map[row] = i;
+            // check if map[row] conflicts with any row above
+            boolean valid = true;
+            for (int k = 0; k &lt; row; k++) {
+                if (Math.abs(map[k] - map[row]) == row - k || map[k] == map[row]) {
+                    // not valid!
+                    valid = false;
+                    break;
+                }
+            }
+            if (valid) {
+                helper(map, row + 1, n);
+            }
+        }
+    }
+}
+</code></pre>
+
+<p><strong>Without using global variable</strong></p>
+
+<pre><code>public class Solution {
+    public int totalNQueens(int n) {
+        return solve(0, n, new int[n]);
+    }
+
+    private int solve(int cur, int n, int[] list) {
+        if (cur == n) return 1;
+        int ans = 0;
+        for (int i = 0; i &lt; n; i++) {
+            boolean conflict = false;
+            for (int j = 0; j &lt; cur; j++)
+                if (i == list[j] || cur - j == Math.abs(i - list[j]))
+                    conflict = true;
+            if (conflict) continue;
+            list[cur] = i;
+            ans += solve(cur + 1, n, list);
+        }
+        return ans;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/16/N-Queens/">[LeetCode 51] N-Queens</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-16T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>16</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/n-queens/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>The <i>n</i>-queens puzzle is the problem of placing <i>n</i> queens on an <i>n</i>×<i>n</i> chessboard such that no two queens attack each other.</p>
+
+<p><img src="http://www.leetcode.com/wp-content/uploads/2012/03/8-queens.png"></p>
+
+<p>Given an integer <i>n</i>, return all distinct solutions to the <i>n</i>-queens puzzle.</p>
+
+<p>Each solution contains a distinct board configuration of the <i>n</i>-queens' placement, where <code>'Q'</code> and <code>'.'</code> both indicate a queen and an empty space respectively.</p>
+
+<p>For example,<br>
+There exist two distinct solutions to the 4-queens puzzle:</p>
+<pre>[
+ [".Q..",  // Solution 1
+  "...Q",
+  "Q...",
+  "..Q."],
+
+ ["..Q.",  // Solution 2
+  "Q...",
+  "...Q",
+  ".Q.."]
+]
+</pre><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is one of the most classic problems of NP</strong> (to be precise, NP-hard).</p>
+
+<p>A lot of NP problems are be solved using similar approach, for example: <strong>Sudoku, Combinations, Combination Sum, Permutation, Work Break II, Palindrome Partitioning</strong>&hellip;</p>
+
+<p>I posted my code below. It is very standard solution.</p>
+
+<h3>Solution</h3>
+
+<p>My solution is similar to the one written in <a href="http://blog.csdn.net/linhuanmars/article/details/20667175">this post</a>.</p>
+
+<h3>My code</h3>
+
+<pre><code>public class Solution {
+    public List&lt;String[]&gt; solveNQueens(int n) {
+        List&lt;String[]&gt; ans = new ArrayList&lt;String[]&gt;();
+        if (n &lt;= 0) {
+            return ans;
+        }
+        int[] map = new int[n];
+        helper(ans, map, 0, n);
+        return ans;
+    }
+
+    private void helper(List&lt;String[]&gt; ans, int[] map, int row, int n) {
+        if (row == n) {
+            ans.add(convert(map, n));
+            return;
+        }
+        for (int i = 0; i &lt; n; i++) {
+            map[row] = i;
+            // check if map[row] conflicts with any row above
+            boolean valid = true;
+            for (int k = 0; k &lt; row; k++) {
+                if (Math.abs(map[k] - map[row]) == row - k || map[k] == map[row]) {
+                    // not valid!
+                    valid = false;
+                    break;
+                }
+            }
+            if (valid) {
+                helper(ans, map, row + 1, n);
+            }
+        }
+    }
+
+    private String[] convert(int[] map, int n) {
+        String[] strs = new String[n];
+        for (int i = 0; i &lt; n; i++) {
+            StringBuilder str = new StringBuilder();
+            for (int a = 0; a &lt; map[i]; a++) {
+                str.append('.');
+            }
+            str.append('Q');
+            for (int a = map[i] + 1; a &lt; n; a++) {
+                str.append('.');
+            }
+            strs[i] = str.toString();
+        }
+        return strs;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/58">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/56">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

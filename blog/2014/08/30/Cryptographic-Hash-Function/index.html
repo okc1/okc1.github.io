@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Design] Cryptographic Hash, MD5 and Digital Signature - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Overview Cryptographic hash function is a hash function which is considered practically impossible to invert. The input is arbitrary length, and &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/08/30/Cryptographic-Hash-Function/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Design] Cryptographic Hash, MD5 and Digital Signature</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-30T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Overview</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Cryptographic_hash_function">Cryptographic hash function</a> is a hash function which is considered practically impossible to invert.</p>
+
+<p>The input is arbitrary length, and output is fixed length.</p>
+
+<p>The input is called &lsquo;message&rsquo; and output (the hash value) is called &lsquo;<strong>digest</strong>&rsquo;.</p>
+
+<p>Common examples are:</p>
+
+<ol>
+<li>MD5
+
+<ol>
+<li>128-bit (16-byte) hash value, typically expressed with 32 digit hex number</li>
+<li>have colllision attack risks</li>
+</ol>
+</li>
+<li>SHA-1 (said to be <a href="http://security.stackexchange.com/questions/19705/is-sha1-better-than-md5-only-because-it-generates-a-hash-of-160-bits">better than MD5</a>)
+
+<ol>
+<li>160-bit (20-byte) hash value, typically expressed with 40 digit hex number</li>
+<li>No known collision found so far</li>
+</ol>
+</li>
+</ol>
+
+
+<h4>Properties</h4>
+
+<ol>
+<li>Computationally efficient</li>
+<li>Collision resistant</li>
+<li>Hide information</li>
+<li>Look random</li>
+</ol>
+
+
+<h4>Examples</h4>
+
+<blockquote><p>I generated checksum values on an important file I backed up to ensure that everything went OK. <a href="http://pcsupport.about.com/od/termsm/g/md5.htm">source</a></p>
+
+<p>To verify that the latest version of Firefox I was downloading is correct, I ran a cryptographic hash function, SHA-1 to be exact, on the download and compared that checksum with the one published on Mozilla&rsquo;s site. <a href="http://pcsupport.about.com/od/termsc/g/cryptographic-hash-function.htm">source</a></p></blockquote>
+
+<h3>Digital signature</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Digital_signature">Digital signature</a> is a mathematical scheme for demonstrating the authenticity of a digital message. It uses public/private keys.</p>
+
+<p>In practice, the signature is not used directly on the file, but rather on the <a href="http://en.wikipedia.org/wiki/Digital_signature#How_they_work">digest of the file</a>.</p>
+
+<p><img class="middle" src="/assets/images/Digital-Signature-diagram.png"></p>
+
+<p><a href="https://www.khanacademy.org/economics-finance-domain/core-finance/money-and-banking/bitcoin/v/bitcoin-digital-signatures">Video</a> on digital signature.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-08-30T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/design/'>design</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/08/30/Cryptographic-Hash-Function/" data-via="" data-counturl="http://okc1.github.io/blog/2014/08/30/Cryptographic-Hash-Function/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/08/30/A-start-search/" title="Previous Post: [Fundamental] A-Star Search ">&laquo; [Fundamental] A-Star Search </a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/08/30/Min-max-algorithm/" title="Next Post: [Fundamental] Min-Max Algorithm (minmax) ">[Fundamental] Min-Max Algorithm (minmax)  &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

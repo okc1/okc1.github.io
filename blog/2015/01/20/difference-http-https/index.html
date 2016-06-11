@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Design] Difference Between HTTP and HTTPS - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="ref 1: What are benefits of using HTTPS over HTTP? HTTPS means that you tunnel the HTTP protocol over TLS/SSL which encrypts the HTTP payload. So the &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2015/01/20/difference-http-https/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Design] Difference Between HTTP and HTTPS</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-20T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a href="http://stackoverflow.com/a/8375247">ref</a></p>
+
+<h4>1: What are benefits of using HTTPS over HTTP?</h4>
+
+<p>HTTPS means that you <strong>tunnel the HTTP protocol over TLS/SSL</strong> which encrypts the HTTP payload.</p>
+
+<p>So the benefit is that HTTP requests and responses are transmitted securely over the wire, e.g. your Internet Service Provider does not know what you&rsquo;re doing.</p>
+
+<p><a href="http://stackoverflow.com/a/548042">When Google switched Gmail to use HTTPS</a>, no additional resources were required; no network hardware, no new hosts. It only increased CPU load by about 1%.</p>
+
+<h4>2: How to use HTTPS?</h4>
+
+<p>Enable it at your endpoint, in general <strong>a web server in front of your application server</strong>. Most web servers (e.g. IIS, Apache) support this by configuration. Depending on your confidentiality requirements this may not be enough.</p>
+
+<h4>3: Can we use HTTPS for only login purpose and then onwords HTTP?</h4>
+
+<p>Technically this is possible, but it introduces some security risks. Example: After a secured login you transmit session IDs identifying the user. If you transmit those session IDs unsecurely (no SSL), session hijacking becomes a risk (&lsquo;man-in-the-middle&rsquo;)</p>
+
+<h4>4: What settings needs to be done for making website HTTPS?</h4>
+
+<p>See #2. In public internet scenarios you should request (buy) a certificate from a certain Certificate Authority (CA), so that end user clients can verify whether they should trust your certificate.</p>
+
+<h4>5: Is there any threat present in HTTPS?</h4>
+
+<p>In the protocol itself there is a slight risk of <strong>man-in-the-middle attacks</strong>. E.g. a proxy between the client and server could pretend to be the server itself (this requires a successful attack to network infrastructure, e.g. DNS). There are several other &lsquo;more obscure&rsquo; risks that do not relate to the protocol itself, e.g.:</p>
+
+<ol>
+<li>usage of an outdated encryption key length (e.g. 256 bit)</li>
+<li>loss of private keys or unappropriate key management procedures (e.g. send via unencrypted email)</li>
+<li>certificate authority failure</li>
+</ol>
+
+
+<h4>6: Is processing time required for HTTPS is greater than HTTP?</h4>
+
+<p>Yes, key negotiation (handshaking) <strong>requires a lot CPU capacity</strong>.</p>
+
+<p><img class="middle" src="/assets/images/http-vs-https.png"></p>
+
+<h3>Port Number</h3>
+
+<p>HTTP uses <strong>port 80 or 8080</strong>, while HTTPS uses <strong>TCP port 443</strong>.</p>
+
+<p><a href="http://www.coderanch.com/t/168608/java-Web-Component-SCWCD/certification/Diff">The reason</a> that some applications use 8080 (7080, 9080) instead of 80 is that on UNIX, <strong>port numbers below 1024</strong> are reserved for <strong>super-user</strong> processes.</p>
+
+<p>That&rsquo;s why for OS compatibility reasons, some servers use other ports (greater than 1024). But they still have &ldquo;80&rdquo; inside the numner, eg. 7080, 8080, 9080.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-01-20T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/design/'>design</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2015/01/20/difference-http-https/" data-via="" data-counturl="http://okc1.github.io/blog/2015/01/20/difference-http-https/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/01/20/basin-size-in-matrix/" title="Previous Post: [Palantir] Largest basin size in matrix">&laquo; [Palantir] Largest basin size in matrix</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/01/20/java-abstract-class-interface/" title="Next Post: [Java OOP] Interface and Abstract classes ">[Java OOP] Interface and Abstract classes  &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

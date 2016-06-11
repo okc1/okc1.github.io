@@ -1,0 +1,267 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Design] Big Data - Top K Frequency (Case Analysis) - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Question link 在海量数据中找出出现频率最高的前K个数，或者从海量数据中找出最大的前K个数，这类问题通常称为“top K”问题， top K value
+top K frequency Analysis Standard solution is 【分治+trie树/hash+小顶堆/ &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/08/10/big-data-Top-k-freq-case-analysis/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Design] Big Data - Top K Frequency (Case Analysis)</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-10T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://dongxicheng.org/big-data/select-ten-from-billions/">link</a></p>
+
+<blockquote><p>在海量数据中找出出现频率最高的前K个数，或者从海量数据中找出最大的前K个数，这类问题通常称为“top K”问题，</p>
+
+<ol>
+<li>top K value</li>
+<li>top K frequency</li>
+</ol>
+</blockquote>
+
+<h3>Analysis</h3>
+
+<p><strong>Standard solution</strong> is 【分治+trie树/hash+小顶堆/quickselect】, which I covered in another post <a href="/blog/2014/07/25/big-data-Top-k-frequency/">Big Data - Top k Frequency</a>. Briefly it is 3 steps:</p>
+
+<ol>
+<li>先将数据集按照hash方法分解成多个小数据集，</li>
+<li>使用trie树或者hash统计每个小数据集中的query词频，</li>
+<li>用小顶堆/quickselect求出每个数据集中出频率最高的前K个数</li>
+</ol>
+
+
+<p>But, there&rsquo;re other senarios where different solutions may apply. Consider:</p>
+
+<ol>
+<li><p>Single core vs. multiple core</p></li>
+<li><p>Single PC vs. multiple PC</p></li>
+<li><p>Large RAM vs. limited RAM</p></li>
+<li><p>Distributed system</p></li>
+</ol>
+
+
+<h3>1. 单机+单核+足够大内存</h3>
+
+<p>设每个查询词平均占8Byte，则10亿个查询词所需的内存大约是10<sup>9</sup>*8=8G内存。如果你有这么大的内存，直接在内存中对查询词进行排序，顺序遍历找出10个出现频率最大的10个即可。这种方法简单快速，更加实用。当然，也可以先用HashMap求出每个词出现的频率，然后求出出现频率最大的10个词。</p>
+
+<h3>2. 单机+单核+受限内存</h3>
+
+<p>这种情况下，需要将原数据文件切割成一个一个小文件，如，采用hash(x)%M，将原文件中的数据切割成M小文件，如果小文件仍大于内存大小，继续采用hash的方法对数据文件进行切割，直到每个小文件小于内存大小，这样，每个文件可放到内存中处理。采用3.1节的方法依次处理每个小文件。</p>
+
+<h3>3. 单机+多核+足够大内存</h3>
+
+<p>这时可以直接在内存中实用hash方法将数据划分成n个partition，每个partition交给一个线程处理，线程的处理逻辑是同[1]节类似，最后一个线程将结果归并。</p>
+
+<p>该方法存在一个瓶颈会明显影响效率，即数据倾斜，每个线程的处理速度可能不同，快的线程需要等待慢的线程，最终的处理速度取决于慢的线程。解决方法是，<strong>将数据划分成 (c x n)个partition（c>1），每个线程处理完当前partition后主动取下一个partition继续处理</strong>，直到所有数据处理完毕，最后由一个线程进行归并。</p>
+
+<h3>4. 多机+受限内存</h3>
+
+<p>这种情况下，为了合理利用多台机器的资源，可将数据分发到多台机器上，每台机器采用[3]节中的策略解决本地的数据。可采用<strong>hash + socket</strong>方法进行数据分发。</p>
+
+<h3>5. Distributed</h3>
+
+<p>Top k问题很适合采用<strong>MapReduce框架</strong>解决，用户只需编写一个map函数和两个reduce 函数，然后提交到Hadoop（采用mapchain和reducechain）上即可解决该问题。</p>
+
+<p>A map function. 对于map函数，采用hash算法，将hash值相同的数据交给同一个reduce task.</p>
+
+<p>2 reduce functions. 对于<strong>第一个reduce函数</strong>，采用HashMap统计出每个词出现的频率，对于<strong>第二个reduce函数</strong>，统计所有reduce task输出数据中的top k即可。</p>
+
+<h3>6. Other</h3>
+
+<p>公司一般不会自己写个程序进行计算，而是提交到自己核心的数据处理平台上计算，该平台的计算效率可能不如直接写程序高，但它具有<strong>良好的扩展性和容错性</strong>，而这才是企业最看重的。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-08-10T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/design/'>design</a>, <a class='category' href='/blog/categories/z-top-k/'>z-top-k</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/08/10/big-data-Top-k-freq-case-analysis/" data-via="" data-counturl="http://okc1.github.io/blog/2014/08/10/big-data-Top-k-freq-case-analysis/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/08/10/big-data-Remove-Duplicate-Numbers/" title="Previous Post: [Design] Big Data - Remove Duplicate Numbers">&laquo; [Design] Big Data - Remove Duplicate Numbers</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/08/10/big-data-find-existence-of-number/" title="Next Post: [Design] Big Data - Find Existence of a Number">[Design] Big Data - Find Existence of a Number &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
