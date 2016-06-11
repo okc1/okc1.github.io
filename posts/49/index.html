@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>My Octopress Blog</title>
-  <meta name="author" content="Your Name">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given a linked list, determine if it has a cycle in it. Follow up:
-Can you solve it without using extra space? Stats Adjusted &hellip;">
+  <meta name="description" content="Question link Given a linked list, return the node where the cycle begins. If there is no cycle, return null. Follow up:
+Can you solve it without &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -22,7 +22,7 @@ Can you solve it without using extra space? Stats Adjusted &hellip;">
   <link rel="canonical" href="http://okc1.github.io/posts/49/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
@@ -37,9 +37,9 @@ Can you solve it without using extra space? Stats Adjusted &hellip;">
 
 <body   >
   <header role="banner"><hgroup>
-  <h1><a href="/">My Octopress Blog</a></h1>
+  <h1><a href="/">Woodstock Blog</a></h1>
   
-    <h2>A blogging framework for hackers.</h2>
+    <h2>a tech blog for general algorithmic interview questions</h2>
   
 </hgroup>
 
@@ -66,6 +66,113 @@ Can you solve it without using extra space? Stats Adjusted &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/02/Linked-List-Cycle-II/">[LeetCode 142] Linked List Cycle II</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-02T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/linked-list-cycle-ii/">link</a></p>
+
+<div class="question-content bg-color bg-img font-color">
+            <p class="font-color"></p><p class="font-color">
+Given a linked list, return the node where the cycle begins. If there is no cycle, return <code>null</code>.
+</p>
+
+<p class="font-color">
+Follow up:<br>
+Can you solve it without using extra space?
+</p><p class="font-color"></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">5</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="red">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is an famous question, historically know as the <a href="http://en.wikipedia.org/wiki/Cycle_detection#Tortoise_and_hare">Tortoise and hare</a></strong>.</p>
+
+<h3>Solution</h3>
+
+<p><a href="http://fisherlei.blogspot.sg/2013/11/leetcode-linked-list-cycle-ii-solution.html">This blog</a> has a great solution.</p>
+
+<blockquote cite="">
+    <p class="font-color">现在有两个指针，第一个指针，每走一次走一步，第二个指针每走一次走两步，如果他们走了t次之后相遇在K点</p>
+    <p class="font-color">那么&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 指针一&nbsp; 走的路是&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; t = X + nY + K&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ①</p>
+    <p class="font-color">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 指针二&nbsp; 走的路是&nbsp;&nbsp;&nbsp;&nbsp; 2t = X + mY+ K&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ②&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; m,n为未知数</p>
+    <p class="font-color">把等式一代入到等式二中, 有</p>
+    <p class="font-color">2X + 2nY + 2K = X + mY + K</p>
+    <p class="font-color">=&gt;&nbsp;&nbsp; X+K&nbsp; =&nbsp; (m-2n)Y&nbsp;&nbsp;&nbsp; ③</p>
+    <p class="font-color">这就清晰了，X和K的关系是基于Y互补的。等于说，两个指针相遇以后，再往下走X步就回到Cycle的起点了。这就可以有O(n)的实现了。</p>
+</blockquote>
+
+
+<p><img class="middle" src="/assets/images/Linked-List-Cycle-II.png"></p>
+
+<h3>Code</h3>
+
+<pre><code>public ListNode detectCycle(ListNode head) {
+    if (head == null || head.next == null) 
+        return null;
+    ListNode first = head.next, second = first.next;
+    ListNode found = null;
+    while (first != null &amp;&amp; second != null) {
+        if (first == second) {
+            found = first;
+            break;
+        }
+        first = first.next;
+        second = second.next;
+        if (second == null) break;
+        second = second.next;
+    }
+    if (found == null) return null;
+    first = head;
+    while (first != second) {
+        first = first.next;
+        second = second.next;
+    }
+    return first;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1315,116 +1422,6 @@ private boolean[][] getMap(String s) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/30/Insertion-Sort-List/">[LeetCode 147] Insertion Sort List</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-05-30T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://oj.leetcode.com/problems/insertion-sort-list/">link</a></p>
-
-<div class="question-content">
-            <p></p><p>Sort a linked list using insertion sort.</p><p></p>
-          </div>
-
-
-<h3>Stats</h3>
-
-<table border="2">
-    <tr>
-        <td>Adjusted Difficulty</td>
-        <td bgcolor="yellow">3</td>
-    </tr>
-    <tr>
-        <td>Time to use</td>
-        <td bgcolor="yellow">--------</td>
-    </tr>
-</table>
-
-
-<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
-
-<h3>Analysis</h3>
-
-<p><strong>This question is a little tricky, but not difficult</strong>. First important thing is to konw what is <a href="http://en.wikipedia.org/wiki/Insertion_sort">insertion sort</a>. It is always keeping a sorted list, and then get next unsorted element and insert into correct position of the sorted list.</p>
-
-<h3>Solution</h3>
-
-<p><strong>Almost all solutions on internet is same, so I will just explain my code</strong>. My code can be optimized a little bit by studying <a href="http://blog.csdn.net/linhuanmars/article/details/21144553">this blog</a>, but I guess it&rsquo;s just refactoring 1 or 2 variables and execution time would not be affected.</p>
-
-<p>My solution is dividing the list into 2 parts: sorted part and unsorted part. <strong>I keep getting next node from unsorted and insert into sorted</strong>.</p>
-
-<h3>My code</h3>
-
-<p>Recursion:</p>
-
-<pre><code>public ListNode insertionSortList(ListNode head) {
-    if (head == null || head.next == null) return head;
-    ListNode sorted = new ListNode(Integer.MIN_VALUE);
-    sorted.next = head;
-    ListNode unsort = head.next;
-    head.next = null;
-    // the sorted and unsort both are not null at this point
-    while (unsort != null) {
-        ListNode pos = sorted;
-        ListNode cur = unsort;
-        unsort = unsort.next;
-        while (pos.next != null &amp;&amp; pos.val &lt; cur.val 
-            &amp;&amp; pos.next.val &lt; cur.val) pos = pos.next;
-        // now insert (cur) to (pos.next)
-        cur.next = pos.next;
-        pos.next = cur;
-    }
-    return sorted.next;
-}
-</code></pre>
-
-<p><strong>Updated on June 17th, rewrote the code with dummy head</strong>. This is different solution, with better readability.</p>
-
-<pre><code>public ListNode insertionSortList(ListNode head) {
-    if (head == null) {
-        return null;
-    }
-    ListNode dummy = new ListNode(0);
-    ListNode cur = head;
-    while (cur != null) {
-        // insert cur into correct pos
-        ListNode pos = dummy;
-        while (pos.next != null &amp;&amp; pos.next.val &lt; cur.val) {
-            pos = pos.next;
-        }
-        ListNode temp = cur.next;
-        cur.next = pos.next;
-        pos.next = cur;
-        cur = temp;
-    }
-    return dummy.next;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/50">&larr; Older</a>
@@ -1437,9 +1434,36 @@ private boolean[][] getMap(String s) {
 </div>
 <aside class="sidebar">
   
-    <section>
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
@@ -1457,10 +1481,6 @@ private boolean[][] getMap(String s) {
         <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1474,7 +1494,7 @@ private boolean[][] getMap(String s) {
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2016 - Your Name -
+  Copyright &copy; 2016 - Kevin Durant -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>My Octopress Blog</title>
-  <meta name="author" content="Your Name">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Clone an undirected graph. Each node in the graph contains a label and a list of its neighbors. OJ's undirected graph serialization: &hellip;">
+  <meta name="description" content="Question link Sort a linked list using insertion sort. Stats Adjusted Difficulty 3 Time to use -------- Ratings/Color = 1(white) 2(lime) 3(yellow) 4/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +21,7 @@
   <link rel="canonical" href="http://okc1.github.io/posts/50/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
@@ -36,9 +36,9 @@
 
 <body   >
   <header role="banner"><hgroup>
-  <h1><a href="/">My Octopress Blog</a></h1>
+  <h1><a href="/">Woodstock Blog</a></h1>
   
-    <h2>A blogging framework for hackers.</h2>
+    <h2>a tech blog for general algorithmic interview questions</h2>
   
 </hgroup>
 
@@ -65,6 +65,116 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/30/Insertion-Sort-List/">[LeetCode 147] Insertion Sort List</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-30T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/insertion-sort-list/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Sort a linked list using insertion sort.</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This question is a little tricky, but not difficult</strong>. First important thing is to konw what is <a href="http://en.wikipedia.org/wiki/Insertion_sort">insertion sort</a>. It is always keeping a sorted list, and then get next unsorted element and insert into correct position of the sorted list.</p>
+
+<h3>Solution</h3>
+
+<p><strong>Almost all solutions on internet is same, so I will just explain my code</strong>. My code can be optimized a little bit by studying <a href="http://blog.csdn.net/linhuanmars/article/details/21144553">this blog</a>, but I guess it&rsquo;s just refactoring 1 or 2 variables and execution time would not be affected.</p>
+
+<p>My solution is dividing the list into 2 parts: sorted part and unsorted part. <strong>I keep getting next node from unsorted and insert into sorted</strong>.</p>
+
+<h3>My code</h3>
+
+<p>Recursion:</p>
+
+<pre><code>public ListNode insertionSortList(ListNode head) {
+    if (head == null || head.next == null) return head;
+    ListNode sorted = new ListNode(Integer.MIN_VALUE);
+    sorted.next = head;
+    ListNode unsort = head.next;
+    head.next = null;
+    // the sorted and unsort both are not null at this point
+    while (unsort != null) {
+        ListNode pos = sorted;
+        ListNode cur = unsort;
+        unsort = unsort.next;
+        while (pos.next != null &amp;&amp; pos.val &lt; cur.val 
+            &amp;&amp; pos.next.val &lt; cur.val) pos = pos.next;
+        // now insert (cur) to (pos.next)
+        cur.next = pos.next;
+        pos.next = cur;
+    }
+    return sorted.next;
+}
+</code></pre>
+
+<p><strong>Updated on June 17th, rewrote the code with dummy head</strong>. This is different solution, with better readability.</p>
+
+<pre><code>public ListNode insertionSortList(ListNode head) {
+    if (head == null) {
+        return null;
+    }
+    ListNode dummy = new ListNode(0);
+    ListNode cur = head;
+    while (cur != null) {
+        // insert cur into correct pos
+        ListNode pos = dummy;
+        while (pos.next != null &amp;&amp; pos.next.val &lt; cur.val) {
+            pos = pos.next;
+        }
+        ListNode temp = cur.next;
+        cur.next = pos.next;
+        pos.next = cur;
+        cur = temp;
+    }
+    return dummy.next;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1359,183 +1469,6 @@ private TreeNode helper(TreeNode root) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/28/Binary-Tree-Maximum-Path-Sum/">[LeetCode 124] Binary Tree Maximum Path Sum</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-05-28T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="https://oj.leetcode.com/problems/binary-tree-maximum-path-sum/">link</a></p>
-
-<div class="question-content">
-            <p></p><p>
-Given a binary tree, find the maximum path sum.
-</p>
-
-<p>
-The path may start and end at any node in the tree.
-</p>
-
-<p>
-For example:<br>
-Given the below binary tree,
-</p><pre>       1
-      / \
-     2   3
-</pre>
-<p></p>
-<p>
-Return <code>6</code>.
-</p><p></p>
-          </div>
-
-
-<h3>Stats</h3>
-
-<table border="2">
-    <tr>
-        <td>Frequency</td>
-        <td bgcolor="lime">2</td>
-    </tr>
-    <tr>
-        <td>Difficulty</td>
-        <td bgcolor="red">4</td>
-    </tr>
-    <tr>
-        <td>Adjusted Difficulty</td>
-        <td bgcolor="red">4</td>
-    </tr>
-    <tr>
-        <td>Time to use</td>
-        <td bgcolor="red">--------</td>
-    </tr>
-</table>
-
-
-<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
-
-<h3>Analysis</h3>
-
-<p><strong>This is a difficult DFS question</strong>.</p>
-
-<p>The basic idea is:</p>
-
-<blockquote><p>When we are in a root node, how we decided to include current node in the maximum path sum? We need to calculate the depth in both subtree. In the meantime, we need to set a variable &ldquo;max&rdquo; to store the max path sum we found during the recursion.</p>
-
-<p>Pay attention that when a subtree sum to negative value, we discard this subtree.</p>
-
-<p>Otherwise, max path sum including current node is <strong>leftSum + cur.val + rightSum</strong></p>
-
-<p>Max depth of current node is <strong>(maximum value of leftSum and rightSum) + cur.val</strong></p></blockquote>
-
-<h3>Solution</h3>
-
-<p>There are 2 points that may incur problems during coding, they are:</p>
-
-<ol>
-<li><p>The recursive solution is calculating the &lsquo;max height&rsquo; while checking &lsquo;its own max path sum&rsquo;. It&rsquo;s a bit hard to explain. Basic idea is doing 2 things at same time, while traversing (are one result is returned, another is stored in a public variable, at least for code 1 below).</p></li>
-<li><p>Note that &lsquo;max height&rsquo; of a child branch can be nagative. In this case, WE MUST SET IT TO 0.</p></li>
-</ol>
-
-
-<p>The first point is a concept seen in previous questions, but I forgot which. The second point is important, because I missed this and got failed a few times without any clue.</p>
-
-<h3>Code</h3>
-
-<p><strong>First, recursive solution</strong></p>
-
-<pre><code>int max = Integer.MIN_VALUE;
-
-public int maxPathSum(TreeNode root) {
-    maxHeight(root);
-    return max;
-}
-
-private int maxHeight(TreeNode node) {
-    if (node == null) return 0;
-    int l = Math.max(0, maxHeight(node.left));
-    int r = Math.max(0, maxHeight(node.right));
-    max = Math.max(max, l + r + node.val);
-    return node.val + Math.max(l, r);
-}
-</code></pre>
-
-<p><strong>Second, previous code refactored</strong>.</p>
-
-<p>I removed the global variable, and instead pass an array as reference in the recursion. In this way the &lsquo;shared&rsquo; array achieve same functionality as a global variable.</p>
-
-<pre><code>public int maxPathSum(TreeNode root) {
-    int[] shared = {Integer.MIN_VALUE};
-    maxHeight(root, shared);
-    return shared[0];
-}
-
-private int maxHeight(TreeNode node, int[] shared) {
-    if (node == null) return 0;
-    int l = Math.max(0, maxHeight(node.left, shared));
-    int r = Math.max(0, maxHeight(node.right, shared));
-    shared[0] = Math.max(shared[0], l + r + node.val);
-    return node.val + Math.max(l, r);
-}
-</code></pre>
-
-<p><strong>Updated on June 10th, it&rsquo;s a terrible practise to use global variable</strong>. The <a href="http://answer.ninechapter.com/solutions/binary-tree-maximum-path-sum/">new solution</a> suggested by Mr. Huang uses a new ResultType Class to solve the problem.</p>
-
-<pre><code>private class ResultType {
-    int singlePath, maxPath;
-    ResultType(int singlePath, int maxPath) {
-        this.singlePath = singlePath;
-        this.maxPath = maxPath;
-    }
-}
-
-public int maxPathSum(TreeNode root) {
-    ResultType result = helper(root);
-    return result.maxPath;
-}
-
-private ResultType helper(TreeNode node) {
-    // null case
-    if (node == null) {
-        return new ResultType(0, Integer.MIN_VALUE);
-    }
-    // divide
-    ResultType ll = helper(node.left);
-    ResultType rr = helper(node.right);
-    // conquer
-    int curSinglePath = Math.max(0, node.val + 
-            Math.max(ll.singlePath, rr.singlePath));
-    int childMaxPath = Math.max(ll.maxPath, rr.maxPath);
-    int curMaxPath = Math.max(childMaxPath, node.val + 
-            ll.singlePath + rr.singlePath);
-    // done
-    return new ResultType(curSinglePath, curMaxPath);
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/51">&larr; Older</a>
@@ -1548,9 +1481,36 @@ private ResultType helper(TreeNode node) {
 </div>
 <aside class="sidebar">
   
-    <section>
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
@@ -1568,10 +1528,6 @@ private ResultType helper(TreeNode node) {
         <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1585,7 +1541,7 @@ private ResultType helper(TreeNode node) {
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2016 - Your Name -
+  Copyright &copy; 2016 - Kevin Durant -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

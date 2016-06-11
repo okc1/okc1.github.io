@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>My Octopress Blog</title>
-  <meta name="author" content="Your Name">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question Write a method to count the number of 2s between 0 and n. Solution This is a difficult question, especially hard to come up with the correct &hellip;">
+  <meta name="description" content="Question Imagine you have a square matrix, where each cell is filled with either black or white. Design an algorithm to find the maximum subsquare &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +21,7 @@
   <link rel="canonical" href="http://okc1.github.io/posts/24/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
@@ -36,9 +36,9 @@
 
 <body   >
   <header role="banner"><hgroup>
-  <h1><a href="/">My Octopress Blog</a></h1>
+  <h1><a href="/">Woodstock Blog</a></h1>
   
-    <h2>A blogging framework for hackers.</h2>
+    <h2>a tech blog for general algorithmic interview questions</h2>
   
 </hgroup>
 
@@ -65,6 +65,102 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/10/find-subsquare-with-black-border/">[CC150v4] 20.11 Find Subsquare With Black Border</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-10T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Imagine you have a square matrix, where each cell is filled with either black or white.</p>
+
+<p>Design an algorithm to find the maximum subsquare such that all four borders are filled with black pixels.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>There is no better way to solve this except Brute Force. First find a point (as the top-left corner), and then test square size from large to small.</p>
+
+<p>The code below is from the book.</p>
+
+<h3>Code</h3>
+
+<pre><code>public static Subsquare findMaxSquareInMatrix(int[][] matrix) {
+    assert (matrix.length &gt; 0);
+    for (int row = 0; row &lt; matrix.length; row++) {
+        assert (matrix[row].length == matrix.length);
+    }
+
+    int N = matrix.length;
+    int currentMaxSize = 0;
+    Subsquare sq = null;
+    int col = 0;
+
+    // Iterate through each column from left to right
+    while (N - col &gt; currentMaxSize) { // See step 4 above
+        for (int row = 0; row &lt; matrix.length; row++) {
+            // starting from the biggest
+            int size = N - Math.max(row, col);
+            while (size &gt; currentMaxSize) {
+                if (checkSquareBorders(matrix, row, col, size)) {
+                    currentMaxSize = size;
+                    sq = new Subsquare(row, col, size);
+                    break; // go to next (full) column
+                }
+                size--;
+            }
+        }
+        col++;
+    }
+    return sq;
+}
+
+private static boolean checkSquareBorders(int[][] matrix, int row, int col,
+        int size) {
+    // Check top and bottom border.
+    for (int j = 0; j &lt; size; j++) {
+        if (matrix[row][col + j] == 1) {
+            return false;
+        }
+        if (matrix[row + size - 1][col + j] == 1) {
+            return false;
+        }
+    }
+
+    // Check left and right border.
+    for (int i = 1; i &lt; size - 1; i++) {
+        if (matrix[row + i][col] == 1) {
+            return false;
+        }
+        if (matrix[row + i][col + size - 1] == 1) {
+            return false;
+        }
+    }
+    return true;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -734,61 +830,6 @@ method.invoke(foo, null);
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/08/java-private-constructor/">[CC150v4] 14.1 Java Private Constructor</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-09-08T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<blockquote><p>In terms of inheritance, what is the effect of keeping a constructor private?</p></blockquote>
-
-<h3>Solution</h3>
-
-<p><a href="http://www.javapractices.com/topic/TopicAction.do?Id=40">If the programmer</a> does not provide a constructor for a class, <strong>the system will always provide a default, public no-argument constructor</strong>.</p>
-
-<p>To disable this default constructor, simply add a private no-argument constructor to the class.</p>
-
-<p>Two categories of usage:</p>
-
-<ol>
-<li>Object construction is entirely forbidden
-
-<ol>
-<li>class offers only static members (sometimes called <strong><a href="http://stackoverflow.com/a/17342889">utility class</a></strong>)</li>
-</ol>
-</li>
-<li>Object construction is private only
-
-<ol>
-<li>a class needs to prevent the caller from creating objects, like Singleton</li>
-</ol>
-</li>
-</ol>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/25">&larr; Older</a>
@@ -801,9 +842,36 @@ method.invoke(foo, null);
 </div>
 <aside class="sidebar">
   
-    <section>
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
@@ -821,10 +889,6 @@ method.invoke(foo, null);
         <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -838,7 +902,7 @@ method.invoke(foo, null);
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2016 - Your Name -
+  Copyright &copy; 2016 - Kevin Durant -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>My Octopress Blog</title>
-  <meta name="author" content="Your Name">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Implement the reversal of a singly linked list iteratively and recursively. Iteratively First, the iterative solution is very common, &hellip;">
+  <meta name="description" content="Master theorem In the analysis of algorithms, the master theorem provides a cookbook solution in asymptotic terms (using Big O notation) for &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +21,7 @@
   <link rel="canonical" href="http://okc1.github.io/posts/45/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
@@ -36,9 +36,9 @@
 
 <body   >
   <header role="banner"><hgroup>
-  <h1><a href="/">My Octopress Blog</a></h1>
+  <h1><a href="/">Woodstock Blog</a></h1>
   
-    <h2>A blogging framework for hackers.</h2>
+    <h2>a tech blog for general algorithmic interview questions</h2>
   
 </hgroup>
 
@@ -65,6 +65,67 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/17/Time-complexity-calculation/">[Design] Time Complexity Calculation (Master Theorem)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-17T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Master theorem</h3>
+
+<p>In the analysis of algorithms, the <a href="http://en.wikipedia.org/wiki/Master_theorem">master theorem</a> provides a cookbook solution in asymptotic terms (using Big O notation) for recurrence relations that occur in many divide and conquer algorithms. It was introduced and popularized by <strong>Introduction to Algorithms</strong>.</p>
+
+<h3>Examples with common algorithms</h3>
+
+
+
+<table class="tg">
+  <tr>
+    <th class="tg-031e">Algorithm</th>
+    <th class="tg-031e">Recurrence</th>
+    <th class="tg-031e">Big-Oh Solution</th>
+  </tr>
+  <tr>
+    <td class="tg-031e">Binary Search</td>
+    <td class="tg-031e">T(n) = T(n/2) + O(1)</td>
+    <td class="tg-031e">O(log n)</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">tree traversal</td>
+    <td class="tg-031e">T(n) = 2 T(n/2) + O(1)</td>
+    <td class="tg-031e">O(n)</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">Mergesort</td>
+    <td class="tg-031e">T(n) = 2 T(n/2) + O(n)</td>
+    <td class="tg-031e">O(n log n)</td>
+  </tr>
+</table>
+
+
+<p><a href="http://www.cs.duke.edu/~ola/ap/recurrence.html">source</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1364,92 +1425,6 @@ while (e.hasNext()) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/13/Search-range-BST-trim-BST/">[Question] Search Range in BST (Trim a BST)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-06-13T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.ardendertat.com/2012/01/17/programming-interview-questions-26-trim-binary-search-tree/">link</a></p>
-
-<blockquote><p>Given the root of a binary search tree and 2 numbers min and max, trim the tree such that all the numbers in the new tree are between min and max (inclusive). The resulting tree should still be a valid binary search tree.</p></blockquote>
-
-<p>Input:</p>
-
-<p><img class="middle" src="/assets/images/search-range-input.png"></p>
-
-<p>With min value as 5 and max value as 13, the output is:</p>
-
-<p><img class="middle" src="/assets/images/search-range-output.png"></p>
-
-<h3>Analysis</h3>
-
-<p>There is a good analysis from <a href="http://www.geeksforgeeks.org/print-bst-keys-in-the-given-range/">geeksforgeeks</a>:</p>
-
-<blockquote><ol>
-<li>If value of root’s key is greater than k1, then recursively call in left subtree.</li>
-<li>If value of root’s key is in range, then print the root’s key.</li>
-<li>If value of root’s key is smaller than k2, then recursively call in right subtree.</li>
-</ol>
-</blockquote>
-
-<p>Another great solution is from <a href="http://www.ardendertat.com/2012/01/17/programming-interview-questions-26-trim-binary-search-tree/">Arden Dertat</a>.</p>
-
-<h3>Code</h3>
-
-<p>First code, from geeksforgeeks - print the result instead of return.</p>
-
-<pre><code>void Print(struct node *root, int k1, int k2)
-{
-   if ( NULL == root )
-      return;
-   if ( k1 &lt; root-&gt;data )
-     Print(root-&gt;left, k1, k2);
-   if ( k1 &lt;= root-&gt;data &amp;&amp; k2 &gt;= root-&gt;data )
-     printf("%d ", root-&gt;data );
-   if ( k2 &gt; root-&gt;data )
-     Print(root-&gt;right, k1, k2);
-}
-</code></pre>
-
-<p>Second code from Arden:</p>
-
-<pre><code>def trimBST(tree, minVal, maxVal): 
-    if not tree: 
-        return 
-    tree.left=trimBST(tree.left, minVal, maxVal) 
-    tree.right=trimBST(tree.right, minVal, maxVal) 
-    if minVal&lt;=tree.val&lt;=maxVal: 
-        return tree 
-    if tree.val&lt;minVal: 
-        return tree.right 
-    if tree.val&gt;maxVal: 
-        return tree.left
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/46">&larr; Older</a>
@@ -1462,9 +1437,36 @@ while (e.hasNext()) {
 </div>
 <aside class="sidebar">
   
-    <section>
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
@@ -1482,10 +1484,6 @@ while (e.hasNext()) {
         <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1499,7 +1497,7 @@ while (e.hasNext()) {
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2016 - Your Name -
+  Copyright &copy; 2016 - Kevin Durant -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

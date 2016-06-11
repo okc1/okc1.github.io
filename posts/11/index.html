@@ -5,13 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>My Octopress Blog</title>
-  <meta name="author" content="Your Name">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Traditional solution 2 pointers
-Hash Big Data Bloom filter, refer to [Design] Big Data - Fuzzy Search url (Bloom Filter).
-">
+  <meta name="description" content="Question link A binary search tree is given. Find the ceiling of given key. Eg. 8 3 12 2 6 10 15 4 Ceiling is defined as: Ceil Value Node: Node with &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -23,7 +21,7 @@ Hash Big Data Bloom filter, refer to [Design] Big Data - Fuzzy Search url (Bloom
   <link rel="canonical" href="http://okc1.github.io/posts/11/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
@@ -38,9 +36,9 @@ Hash Big Data Bloom filter, refer to [Design] Big Data - Fuzzy Search url (Bloom
 
 <body   >
   <header role="banner"><hgroup>
-  <h1><a href="/">My Octopress Blog</a></h1>
+  <h1><a href="/">Woodstock Blog</a></h1>
   
-    <h2>A blogging framework for hackers.</h2>
+    <h2>a tech blog for general algorithmic interview questions</h2>
   
 </hgroup>
 
@@ -67,6 +65,185 @@ Hash Big Data Bloom filter, refer to [Design] Big Data - Fuzzy Search url (Bloom
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/08/bst-find-ceiling/">[Google] BST Find Ceiling</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-08T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=20229674">link</a></p>
+
+<blockquote><p>A binary search tree is given. Find the ceiling of given key. Eg.</p></blockquote>
+
+<pre><code>                    8
+               3          12
+           2      6    10    15
+                4
+</code></pre>
+
+<blockquote><p>Ceiling is <a href="http://www.geeksforgeeks.org/floor-and-ceil-from-a-bst/">defined</a> as:</p>
+
+<p>Ceil Value Node: Node with smallest data larger than the key value.</p>
+
+<p>Testing:</p></blockquote>
+
+<pre><code>key - 13 =&gt; 15 
+key - 4 =&gt;6 
+key - 8 =&gt;10
+</code></pre>
+
+<h3>Solution</h3>
+
+<p><strong>A really interesting idea</strong> is to go top-to-bottom, and update value in every <strong>left turn only</strong>. Suggested by the <a href="http://www.careercup.com/question?id=20229674">top answer</a>.</p>
+
+<p>It&rsquo;s a very very tricky solution. I&rsquo;ve never seen this b4.</p>
+
+<h3>Code</h3>
+
+<p>Not my code.</p>
+
+<pre><code>public int findCeil(TreeNode node, int num, int found) {
+    if (node != null) {
+        if (num &gt;= node.val)
+            return findCeil(node.right, num, found);
+        else
+            return findCeil(node.left, num, node.val);
+    } else
+        return found;
+}
+</code></pre>
+
+<p>Now input:</p>
+
+<blockquote><p>TreeNode tree = Common.constructBstFromPreorder(new int[] { 40, 20, 10, 30, 60, 50, 70 });</p></blockquote>
+
+<p>Output:</p>
+
+<pre><code>The ceiling of 0 is  10
+The ceiling of 1 is  10
+The ceiling of 2 is  10
+The ceiling of 3 is  10
+The ceiling of 4 is  10
+The ceiling of 5 is  10
+The ceiling of 6 is  10
+The ceiling of 7 is  10
+The ceiling of 8 is  10
+The ceiling of 9 is  10
+The ceiling of 10 is  20
+The ceiling of 11 is  20
+The ceiling of 12 is  20
+The ceiling of 13 is  20
+The ceiling of 14 is  20
+The ceiling of 15 is  20
+The ceiling of 16 is  20
+The ceiling of 17 is  20
+The ceiling of 18 is  20
+The ceiling of 19 is  20
+The ceiling of 20 is  30
+The ceiling of 21 is  30
+The ceiling of 22 is  30
+The ceiling of 23 is  30
+The ceiling of 24 is  30
+The ceiling of 25 is  30
+The ceiling of 26 is  30
+The ceiling of 27 is  30
+The ceiling of 28 is  30
+The ceiling of 29 is  30
+The ceiling of 30 is  40
+The ceiling of 31 is  40
+The ceiling of 32 is  40
+The ceiling of 33 is  40
+The ceiling of 34 is  40
+The ceiling of 35 is  40
+The ceiling of 36 is  40
+The ceiling of 37 is  40
+The ceiling of 38 is  40
+The ceiling of 39 is  40
+The ceiling of 40 is  50
+The ceiling of 41 is  50
+The ceiling of 42 is  50
+The ceiling of 43 is  50
+The ceiling of 44 is  50
+The ceiling of 45 is  50
+The ceiling of 46 is  50
+The ceiling of 47 is  50
+The ceiling of 48 is  50
+The ceiling of 49 is  50
+The ceiling of 50 is  60
+The ceiling of 51 is  60
+The ceiling of 52 is  60
+The ceiling of 53 is  60
+The ceiling of 54 is  60
+The ceiling of 55 is  60
+The ceiling of 56 is  60
+The ceiling of 57 is  60
+The ceiling of 58 is  60
+The ceiling of 59 is  60
+The ceiling of 60 is  70
+The ceiling of 61 is  70
+The ceiling of 62 is  70
+The ceiling of 63 is  70
+The ceiling of 64 is  70
+The ceiling of 65 is  70
+The ceiling of 66 is  70
+The ceiling of 67 is  70
+The ceiling of 68 is  70
+The ceiling of 69 is  70
+The ceiling of 70 is  2147483647
+The ceiling of 71 is  2147483647
+The ceiling of 72 is  2147483647
+The ceiling of 73 is  2147483647
+The ceiling of 74 is  2147483647
+The ceiling of 75 is  2147483647
+The ceiling of 76 is  2147483647
+The ceiling of 77 is  2147483647
+The ceiling of 78 is  2147483647
+The ceiling of 79 is  2147483647
+The ceiling of 80 is  2147483647
+The ceiling of 81 is  2147483647
+The ceiling of 82 is  2147483647
+The ceiling of 83 is  2147483647
+The ceiling of 84 is  2147483647
+The ceiling of 85 is  2147483647
+The ceiling of 86 is  2147483647
+The ceiling of 87 is  2147483647
+The ceiling of 88 is  2147483647
+The ceiling of 89 is  2147483647
+The ceiling of 90 is  2147483647
+The ceiling of 91 is  2147483647
+The ceiling of 92 is  2147483647
+The ceiling of 93 is  2147483647
+The ceiling of 94 is  2147483647
+The ceiling of 95 is  2147483647
+The ceiling of 96 is  2147483647
+The ceiling of 97 is  2147483647
+The ceiling of 98 is  2147483647
+The ceiling of 99 is  2147483647
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -649,60 +826,6 @@ cover all the characters in all the documents.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/02/05/pubsub-pattern/">[Java OOP] PubSub (Publish–subscribe) Pattern</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-02-05T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Publish–subscribe pattern</h3>
-
-<p><strong><a href="http://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern">The publish–subscribe pattern</a> is a messaging pattern</strong> where senders of messages, called publishers, do not send messages directly to specific subscribers. Instead, published messages are characterized into classes without knowledge of subscribers.</p>
-
-<p>Similarly, subscribers express interest in one or more classes, without knowledge of what publishers there are.</p>
-
-<ol>
-<li>greater network scalability</li>
-<li>a more dynamic network topology</li>
-<li>decreased flexibility to modify the Publisher and its structure of the data published.</li>
-</ol>
-
-
-<p>Pub/sub is typically a part of a larger <strong>message-oriented middleware system</strong>. e.g. Java Message Service (JMS).</p>
-
-<h3>Difference w/ observer pattern</h3>
-
-<p>Refer to <strong>[Java OOP] Observer pattern</strong> or <a href="http://stackoverflow.com/questions/15594905/difference-between-observer-pub-sub-and-data-binding">this link</a>:</p>
-
-<h4>Observer, or Observable/Observer:</h4>
-
-<blockquote><p>A design pattern by which an object is imbued with the ability to notify others of specific events - typically done using actual events, which are kind of like slots in the object with the shape of a specific function/method. The observable is the one who provides notifications, and the observer receives those notifications. In .net, the observable can expose an event and the observer subscribes to that event with an &ldquo;event handler"shaped hook. No assumptions are made about the specific mechanism which notifications occur, nor about the number of observers one observable can notify.</p></blockquote>
-
-<h4>Pub/Sub:</h4>
-
-<blockquote><p>Another name (perhaps with more &ldquo;broadcast&rdquo; semantics) of the Observable/Observer pattern, which usually implies a more &ldquo;dynamic&rdquo; flavor - observers can subscribe or unsubscribe to notifications and one observable can &ldquo;shout out&rdquo; to multiple observers. In .net, one can use the standard events for this, since events are a form of MulticastDelegate, and so can support delivery of events to multiple subscribers, and also support unsubscription. Pub/sub has a slightly different meaning in certain contexts, usually involving more &ldquo;anonymity&rdquo; between event and eventer, which can be facilitated by any number of abstractions, usually involving some &ldquo;middle man&rdquo; (such as a message queue) who knows all parties, but the individual parties don&rsquo;t know about each other.</p></blockquote>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/12">&larr; Older</a>
@@ -715,9 +838,36 @@ cover all the characters in all the documents.</p>
 </div>
 <aside class="sidebar">
   
-    <section>
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
@@ -735,10 +885,6 @@ cover all the characters in all the documents.</p>
         <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -752,7 +898,7 @@ cover all the characters in all the documents.</p>
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2016 - Your Name -
+  Copyright &copy; 2016 - Kevin Durant -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

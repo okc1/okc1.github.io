@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>My Octopress Blog</title>
-  <meta name="author" content="Your Name">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Overview In Unix-like OS, a pipeline is a set of processes chained by their standard streams, so that the output of each process (stdout) feeds &hellip;">
+  <meta name="description" content="Overview defination the process of defining the architecture, components, modules, interfaces and data to satisfy specified requirements. conceptual &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +21,7 @@
   <link rel="canonical" href="http://okc1.github.io/posts/5/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
@@ -36,9 +36,9 @@
 
 <body   >
   <header role="banner"><hgroup>
-  <h1><a href="/">My Octopress Blog</a></h1>
+  <h1><a href="/">Woodstock Blog</a></h1>
   
-    <h2>A blogging framework for hackers.</h2>
+    <h2>a tech blog for general algorithmic interview questions</h2>
   
 </hgroup>
 
@@ -65,6 +65,189 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/08/23/design-class1-1/">[NineChap System Design] Class 1.1: Overview</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-08-23T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Overview</h1>
+
+<h2>defination</h2>
+
+<p>the process of defining the <strong>architecture, components, modules, interfaces and data</strong> to satisfy specified <strong>requirements</strong>.</p>
+
+<ol>
+<li>conceptual design (macro)</li>
+<li>logical design</li>
+<li>physical design (micro)</li>
+</ol>
+
+
+<h3>Top-down design</h3>
+
+<p>Eg. MS Office, Huawei Security System</p>
+
+<h3>Bottom-up design</h3>
+
+<p>Most start-up use, MVP first using Medetor + MongoDb.</p>
+
+<h2>5 steps (SNAKE Principle):</h2>
+
+<ol>
+<li><strong>Scenario</strong>: case/interface - input</li>
+<li><strong>Necessary</strong>: constrain/hypothesis - input</li>
+<li><strong>Application</strong>: service/algorithm - output</li>
+<li><strong>Kilobit</strong>: data - output</li>
+<li><strong>Evolve</strong> - solution</li>
+</ol>
+
+
+<h1>A top-down example</h1>
+
+<p>Example one: <strong>design a radio</strong></p>
+
+<h2>Step One, Scenario</h2>
+
+<ol>
+<li><p>brain storm</p>
+
+<ol>
+<li>register/log in</li>
+<li>play music</li>
+<li>recommendation</li>
+</ol>
+</li>
+<li><p>prioritize</p>
+
+<ol>
+<li>play music
+
+<ol>
+<li>Get channel</li>
+<li>select a channel</li>
+<li>play</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+
+
+<h2>Step Two, Necessary</h2>
+
+<ol>
+<li><p>ask</p>
+
+<ol>
+<li>total user - 100,000,000</li>
+<li><strong>daily users - 1,000,000</strong></li>
+</ol>
+</li>
+<li><p>predict</p>
+
+<ol>
+<li>user analysis</li>
+<li>Traffic analysis</li>
+<li>Memory analysis</li>
+<li>QPS</li>
+</ol>
+</li>
+</ol>
+
+
+<p>Details:</p>
+
+<ol>
+<li><p>user analysis</p>
+
+<blockquote><p>Avg Concurrent users = daily users <strong>/ 5</strong> = 200,000</p>
+
+<p>Peak Concurrent users = concurrent user <strong>* 3</strong> = 600,000</p></blockquote>
+
+<p> considering your product may grow in the next 3 month:</p>
+
+<blockquote><p>Max Peak users in 3 month = Peak users <strong>* 10</strong> = 6,000,000</p></blockquote></li>
+<li><p>Traffic analysis</p>
+
+<blockquote><p>Request of new music per user: 1 music/min</p>
+
+<p>Music size = 3MB</p>
+
+<p>Max peak traffic (in 3 months) = 6,000,000 * 3MB / 60 = 300GB/s</p></blockquote></li>
+<li><p>Memory analysis</p>
+
+<blockquote><p>Memory per user (metadata) = 10KB</p>
+
+<p>Max daily memory = 1,000,000 * 10 * 10 = 100 million KB = 100GB</p>
+
+<p>(10 times of avg daily user)</p></blockquote></li>
+</ol>
+
+
+<h2>Step Three, Application</h2>
+
+<ol>
+<li>Replay the case, one service for each</li>
+<li>Merge the services</li>
+</ol>
+
+
+<p><img class="middle" src="/assets/images/design-class1-basic-receptionist.png"></p>
+
+<h2>Step Four, Kilobit: data</h2>
+
+<ol>
+<li><p>Append 1 dataset for each service</p>
+
+<p> Eg. User service: stability, more addition, less modify and deletion.</p>
+
+<p> Eg. Channel Service: high concurrency, MongoDB</p>
+
+<p> Eg. Music Service: MP3 File Systems</p></li>
+</ol>
+
+
+<p><img class="middle" src="/assets/images/design-class1-reco-5.png"></p>
+
+<h2>Last Step, Evolve</h2>
+
+<ol>
+<li><p>Better: constrains</p>
+
+<p> eg. able to handle 300GB/s traffic?</p></li>
+<li><p>Broader: new cases</p>
+
+<p> share music? delete user account?</p></li>
+<li><p>Deeper: details design</p></li>
+</ol>
+
+
+<p>From views of <strong>Performance, Scalability and Robustness</strong>.</p>
+
+<p><img class="middle" src="/assets/images/design-class1-snake.jpg"></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1051,81 +1234,6 @@ uint32_t reverseBits(uint32_t n) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/05/10/House-Robber/">[LeetCode 198] House Robber</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-05-10T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="https://leetcode.com/problems/house-robber/">link</a></p>
-
-<div class="question-content">
-              <p></p><p>You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security system connected and <b>it will automatically contact the police if two adjacent houses were broken into on the same night</b>.</p>
-
-<p>Given a list of non-negative integers representing the amount of money of each house, determine the maximum amount of money you can rob tonight <b>without alerting the police</b>.</p>
-
-<p><b>Credits:</b><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/ifanchu">@ifanchu</a> for adding this problem and creating all test cases. Also thanks to <a href="https://oj.leetcode.com/discuss/user/ts">@ts</a> for adding additional test cases.</p><p></p>
-              
-                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
-                <span class="hide">
-                  
-                  <a class="btn btn-xs btn-primary" href="/tag/dynamic-programming/">Dynamic Programming</a>
-                  
-                </span>
-              
-</div>
-
-
-<h3>Solution</h3>
-
-<p>DP question. Be careful what the initial values of dp(1) is. You should work this out without a problem!</p>
-
-<h3>Code</h3>
-
-<pre><code>public class Solution {
-    public int rob(int[] num) {
-        if (num == null || num.length == 0) {
-            return 0;
-        } else if (num.length == 1) {
-            return num[0];
-        }
-        int len = num.length;
-        int[] dp = new int[len];
-        dp[0] = num[0];
-        dp[1] = Math.max(num[0], num[1]);
-        int max = Math.max(num[0], num[1]);
-        for (int i = 2; i &lt; len; i++) {
-            dp[i] = Math.max(dp[i - 1], dp[i - 2] + num[i]);
-            max = Math.max(max, dp[i]);
-        }
-        return max;
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/6">&larr; Older</a>
@@ -1138,9 +1246,36 @@ uint32_t reverseBits(uint32_t n) {
 </div>
 <aside class="sidebar">
   
-    <section>
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
@@ -1158,10 +1293,6 @@ uint32_t reverseBits(uint32_t n) {
         <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1175,7 +1306,7 @@ uint32_t reverseBits(uint32_t n) {
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2016 - Your Name -
+  Copyright &copy; 2016 - Kevin Durant -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>My Octopress Blog</title>
-  <meta name="author" content="Your Name">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given a string s consists of upper/lower-case alphabets and empty space characters ' ', return the length of last word in the string. &hellip;">
+  <meta name="description" content="Question link The n-queens puzzle is the problem of placing n queens on an n×n chessboard such that no two queens attack each other. Given an integer &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +21,7 @@
   <link rel="canonical" href="http://okc1.github.io/posts/58/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
@@ -36,9 +36,9 @@
 
 <body   >
   <header role="banner"><hgroup>
-  <h1><a href="/">My Octopress Blog</a></h1>
+  <h1><a href="/">Woodstock Blog</a></h1>
   
-    <h2>A blogging framework for hackers.</h2>
+    <h2>a tech blog for general algorithmic interview questions</h2>
   
 </hgroup>
 
@@ -65,6 +65,152 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/16/N-Queens/">[LeetCode 51] N-Queens</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-16T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>16</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/n-queens/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>The <i>n</i>-queens puzzle is the problem of placing <i>n</i> queens on an <i>n</i>×<i>n</i> chessboard such that no two queens attack each other.</p>
+
+<p><img src="http://www.leetcode.com/wp-content/uploads/2012/03/8-queens.png"></p>
+
+<p>Given an integer <i>n</i>, return all distinct solutions to the <i>n</i>-queens puzzle.</p>
+
+<p>Each solution contains a distinct board configuration of the <i>n</i>-queens' placement, where <code>'Q'</code> and <code>'.'</code> both indicate a queen and an empty space respectively.</p>
+
+<p>For example,<br>
+There exist two distinct solutions to the 4-queens puzzle:</p>
+<pre>[
+ [".Q..",  // Solution 1
+  "...Q",
+  "Q...",
+  "..Q."],
+
+ ["..Q.",  // Solution 2
+  "Q...",
+  "...Q",
+  ".Q.."]
+]
+</pre><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is one of the most classic problems of NP</strong> (to be precise, NP-hard).</p>
+
+<p>A lot of NP problems are be solved using similar approach, for example: <strong>Sudoku, Combinations, Combination Sum, Permutation, Work Break II, Palindrome Partitioning</strong>&hellip;</p>
+
+<p>I posted my code below. It is very standard solution.</p>
+
+<h3>Solution</h3>
+
+<p>My solution is similar to the one written in <a href="http://blog.csdn.net/linhuanmars/article/details/20667175">this post</a>.</p>
+
+<h3>My code</h3>
+
+<pre><code>public class Solution {
+    public List&lt;String[]&gt; solveNQueens(int n) {
+        List&lt;String[]&gt; ans = new ArrayList&lt;String[]&gt;();
+        if (n &lt;= 0) {
+            return ans;
+        }
+        int[] map = new int[n];
+        helper(ans, map, 0, n);
+        return ans;
+    }
+
+    private void helper(List&lt;String[]&gt; ans, int[] map, int row, int n) {
+        if (row == n) {
+            ans.add(convert(map, n));
+            return;
+        }
+        for (int i = 0; i &lt; n; i++) {
+            map[row] = i;
+            // check if map[row] conflicts with any row above
+            boolean valid = true;
+            for (int k = 0; k &lt; row; k++) {
+                if (Math.abs(map[k] - map[row]) == row - k || map[k] == map[row]) {
+                    // not valid!
+                    valid = false;
+                    break;
+                }
+            }
+            if (valid) {
+                helper(ans, map, row + 1, n);
+            }
+        }
+    }
+
+    private String[] convert(int[] map, int n) {
+        String[] strs = new String[n];
+        for (int i = 0; i &lt; n; i++) {
+            StringBuilder str = new StringBuilder();
+            for (int a = 0; a &lt; map[i]; a++) {
+                str.append('.');
+            }
+            str.append('Q');
+            for (int a = map[i] + 1; a &lt; n; a++) {
+                str.append('.');
+            }
+            strs[i] = str.toString();
+        }
+        return strs;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1190,193 +1336,6 @@ For example,<br>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/14/Permutations/">[LeetCode 46] Permutations</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-05-14T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://oj.leetcode.com/problems/permutations/">link</a></p>
-
-<div class="question-content">
-            <p></p><p>
-Given a collection of numbers, return all possible permutations.
-</p>
-
-<p>
-For example,<br>
-<code>[1,2,3]</code> have the following permutations:<br>
-<code>[1,2,3]</code>, <code>[1,3,2]</code>, <code>[2,1,3]</code>, <code>[2,3,1]</code>, <code>[3,1,2]</code>, and <code>[3,2,1]</code>.
-</p><p></p>
-          </div>
-
-
-<h3>Stats</h3>
-
-<table border="2">
-    <tr>
-        <td>Frequency</td>
-        <td bgcolor="red">4</td>
-    </tr>
-    <tr>
-        <td>Difficulty</td>
-        <td bgcolor="yellow">3</td>
-    </tr>
-    <tr>
-        <td>Adjusted Difficulty</td>
-        <td bgcolor="red">4</td>
-    </tr>
-    <tr>
-        <td>Time to use</td>
-        <td bgcolor="yellow">--------</td>
-    </tr>
-</table>
-
-
-<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
-
-<h3>Solution</h3>
-
-<p><strong>This is a very classic question</strong>.</p>
-
-<p><strong>One solution</strong> is to recursively push elements into a list, until all elements are pushed. Make use of a &lsquo;visited&rsquo; array.</p>
-
-<p><strong>Another solution</strong> is using 2 nested for-loops to keep adding next elements. Read <a href="http://www.programcreek.com/2013/02/leetcode-permutations-java/">this post</a>:</p>
-
-<blockquote><p>Loop through the array, in each iteration, a new number is added to different locations of results of previous iteration. Start from an empty List.</p></blockquote>
-
-<p>Keep in mind: this type of permutation questions always requires insert/delete before/after a recursion.</p>
-
-<p>In case you are interested, there is a <strong>third solution, swap element method</strong>. It is also explained in <a href="http://www.programcreek.com/2013/02/leetcode-permutations-java/">the same post</a>:</p>
-
-<blockquote><p>Swap each element with each element after it.</p></blockquote>
-
-<h3>My code</h3>
-
-<p><strong>Adding elements one by one</strong> (recommended)</p>
-
-<pre><code>public class Solution {
-    public List&lt;List&lt;Integer&gt;&gt; permute(int[] num) {
-        List&lt;List&lt;Integer&gt;&gt; ans = new ArrayList&lt;List&lt;Integer&gt;&gt;();
-        if (num == null || num.length == 0) {
-            return ans;
-        }
-        int len = num.length;
-        Arrays.sort(num);
-        helper(ans, new ArrayList&lt;Integer&gt;(), num, len, new boolean[len]);
-        return ans;
-    }
-
-    private void helper(List&lt;List&lt;Integer&gt;&gt; ans, List&lt;Integer&gt; path, int[] num, int len, boolean[] visited) {
-        if (path.size() == len) {
-            ans.add(new ArrayList&lt;Integer&gt;(path));
-            return;
-        }
-        for (int i = 0; i &lt; len; i++) {
-            if (!visited[i]) {
-                path.add(num[i]);
-                visited[i] = true;
-                helper(ans, path, num, len, visited);
-                path.remove(path.size() - 1);
-                visited[i] = false;
-            }
-        }
-    }
-}
-</code></pre>
-
-<p><strong>The double nested for-loop method</strong></p>
-
-<pre><code>public class Solution {
-    public ArrayList&lt;ArrayList&lt;Integer&gt;&gt; permute(int[] num) {
-        ArrayList&lt;ArrayList&lt;Integer&gt;&gt; result = new ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();
-
-        //start from an empty list
-        result.add(new ArrayList&lt;Integer&gt;());
-
-        for (int i = 0; i &lt; num.length; i++) {
-            //list of list in current iteration of the array num
-            ArrayList&lt;ArrayList&lt;Integer&gt;&gt; current = new ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();
-
-            for (ArrayList&lt;Integer&gt; l : result) {
-                // # of locations to insert is largest index + 1
-                for (int j = 0; j &lt; l.size()+1; j++) {
-                    // + add num[i] to different locations
-                    l.add(j, num[i]);
-                    ArrayList&lt;Integer&gt; temp = new ArrayList&lt;Integer&gt;(l);
-                    current.add(temp);
-                    l.remove(j);
-                }
-            }
-            result = new ArrayList&lt;ArrayList&lt;Integer&gt;&gt;(current);
-        }
-        return result;
-    }
-}
-</code></pre>
-
-<p><strong>The swap element method</strong></p>
-
-<pre><code>public class Solution {
-    public ArrayList&lt;ArrayList&lt;Integer&gt;&gt; permute(int[] num) {
-        ArrayList&lt;ArrayList&lt;Integer&gt;&gt; result = new ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();
-        permute(num, 0, result);
-        return result;
-    }
-
-    void permute(int[] num, int start, ArrayList&lt;ArrayList&lt;Integer&gt;&gt; result) {
-
-        if (start &gt;= num.length) {
-            ArrayList&lt;Integer&gt; item = convertArrayToList(num);
-            result.add(item);
-        }
-
-        for (int j = start; j &lt;= num.length - 1; j++) {
-            swap(num, start, j);
-            permute(num, start + 1, result);
-            swap(num, start, j);
-        }
-    }
-
-    private ArrayList&lt;Integer&gt; convertArrayToList(int[] num) {
-        ArrayList&lt;Integer&gt; item = new ArrayList&lt;Integer&gt;();
-        for (int h = 0; h &lt; num.length; h++) {
-            item.add(num[h]);
-        }
-        return item;
-    }
-
-    private void swap(int[] a, int i, int j) {
-        int temp = a[i];
-        a[i] = a[j];
-        a[j] = temp;
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/59">&larr; Older</a>
@@ -1389,9 +1348,36 @@ For example,<br>
 </div>
 <aside class="sidebar">
   
-    <section>
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
@@ -1409,10 +1395,6 @@ For example,<br>
         <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1426,7 +1408,7 @@ For example,<br>
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2016 - Your Name -
+  Copyright &copy; 2016 - Kevin Durant -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

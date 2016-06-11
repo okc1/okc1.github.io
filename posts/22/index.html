@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>My Octopress Blog</title>
-  <meta name="author" content="Your Name">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question Write a program to swap odd and even bits in an integer with as few instructions as possible (e.g., bit 0 and bit 1 are swapped, bit 2 and &hellip;">
+  <meta name="description" content="Question 1 A magic index in an array A[l.. .n-l] is defined to be an index such that A[i] = i. Given a sorted array of distinct integers, write a &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +21,7 @@
   <link rel="canonical" href="http://okc1.github.io/posts/22/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
@@ -36,9 +36,9 @@
 
 <body   >
   <header role="banner"><hgroup>
-  <h1><a href="/">My Octopress Blog</a></h1>
+  <h1><a href="/">Woodstock Blog</a></h1>
   
-    <h2>A blogging framework for hackers.</h2>
+    <h2>a tech blog for general algorithmic interview questions</h2>
   
 </hgroup>
 
@@ -65,6 +65,135 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/17/find-magic-index/">[CC150v5] 9.3 Find Magic Index</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-17T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question 1</h3>
+
+<blockquote><p>A magic index in an array A[l.. .n-l] is defined to be an index such that A[i] = i.</p>
+
+<p>Given a sorted array of distinct integers, write a method to find a magic index, if one exists, in array A.</p></blockquote>
+
+<h3>Question 2</h3>
+
+<blockquote><p>FOLLOW UP: What if the values are not distinct?</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>This is a difficult binary search question</strong>!</p>
+
+<p><strong>Question 1 is slightly easier</strong>: we simplyl use binary search, and we are able to discard half of the array each time.</p>
+
+<ol>
+<li>if (array[mid] > mid), then we discard the right half.</li>
+<li>if (array[mid] &lt; mid), then we discard the left half.</li>
+</ol>
+
+
+<p><strong>Question 2 is difficult</strong>. We cannot discard half of the input any more. Instead, we discard a range between (mid) and (array[mid]). Then check left and right part seperately.</p>
+
+<p>So, I wrote the following code:</p>
+
+<pre><code>int mid = left + (right - left) / 2;
+if (array[mid] == mid) {
+    return mid;
+} else {
+    int smaller = Math.min(array[mid], mid);
+    int larger = Math.max(array[mid], mid);
+    int leftResult = helper(array, left, smaller);
+    if (leftResult != -1) {
+        return leftResult;
+    } else {
+        return helper(array, larger, right);
+    }
+}
+</code></pre>
+
+<p>This becomes an endless loop. We did not discard point &lsquo;mid&rsquo; in the code above. The correct code is posted below.</p>
+
+<h3>Code</h3>
+
+<p><strong>code for non-duplicate input</strong></p>
+
+<pre><code>public static int myAnswerNonDup(int[] array) {
+    int len = array.length;
+    return helper(array, 0, len - 1);
+}
+
+public static int helper(int[] array, int left, int right) {
+    if (right &lt; left) {
+        return -1;
+    }
+    int mid = left + (right - left) / 2;
+    if (array[mid] == mid) {
+        return mid;
+    } else if (array[mid] &lt; mid) {
+        // discard all element to the left of array[mid]
+        return helper(array, mid + 1, right);
+    } else {
+        return helper(array, left, mid - 1);
+    }
+}
+</code></pre>
+
+<p><strong>code for have-duplicate input</strong></p>
+
+<pre><code>public static int myAnswerWithDup(int[] array) {
+    int len = array.length;
+    return helper(array, 0, len - 1);
+}
+
+public static int helper(int[] array, int left, int right) {
+    if (right &lt; left) {
+        return -1;
+    }
+    int mid = left + (right - left) / 2;
+    if (array[mid] == mid) {
+        return mid;
+    } else {
+        int smaller = 0;
+        int larger = 0;
+        if (array[mid] &lt; mid) {
+            smaller = array[mid];
+            larger = mid + 1;
+        } else if (array[mid] &gt; mid) {
+            smaller = mid - 1;
+            larger = array[mid];
+        }
+        int leftResult = helper(array, left, smaller);
+        if (leftResult != -1) {
+            return leftResult;
+        } else {
+            return helper(array, larger, right);
+        }
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -738,57 +867,6 @@ public static boolean recursiveHelper(int from, int to) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/14/kth-last-element-recursive/">[CC150v5] 2.2 Kth Last Element (Recursive)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-09-14T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<blockquote><p>Implement an algorithm to find the kth to last element of a singly linked list.</p>
-
-<p>Do it recursively.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>Iterative solution is easy, <strong>recursive is not</strong>.</p>
-
-<h3>Code</h3>
-
-<pre><code>public static int nthToLastRecursive(LinkedListNode head, int n) {
-    if (n == 0 || head == null) {
-        return 0;
-    }
-    int k = nthToLastRecursive(head.next, n) + 1;
-    if (k == n) {
-        System.out.println(n + "th to last node is " + head.data);
-    }
-    return k;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/23">&larr; Older</a>
@@ -801,9 +879,36 @@ public static boolean recursiveHelper(int from, int to) {
 </div>
 <aside class="sidebar">
   
-    <section>
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
@@ -821,10 +926,6 @@ public static boolean recursiveHelper(int from, int to) {
         <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -838,7 +939,7 @@ public static boolean recursiveHelper(int from, int to) {
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2016 - Your Name -
+  Copyright &copy; 2016 - Kevin Durant -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

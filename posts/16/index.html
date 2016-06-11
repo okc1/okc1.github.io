@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>My Octopress Blog</title>
-  <meta name="author" content="Your Name">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Overview A blocking queue is a queue that blocks when you try to dequeue from a empty queue, or if you try to enqueue items into a full queue. &hellip;">
+  <meta name="description" content="Blocking Queue Implementation source A blocking queue is a queue, so we init a queue with a pre-defined size.
+BlockingQueue Class comes with Java 5, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +22,7 @@
   <link rel="canonical" href="http://okc1.github.io/posts/16/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
@@ -36,9 +37,9 @@
 
 <body   >
   <header role="banner"><hgroup>
-  <h1><a href="/">My Octopress Blog</a></h1>
+  <h1><a href="/">Woodstock Blog</a></h1>
   
-    <h2>A blogging framework for hackers.</h2>
+    <h2>a tech blog for general algorithmic interview questions</h2>
   
 </hgroup>
 
@@ -65,6 +66,164 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/12/java-blocking-queue-2/">[Java OOP] Java BlockingQueue (2)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-12T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Blocking Queue Implementation</h3>
+
+<p><img class="middle" src="/assets/images/blocking-queue.png"></p>
+
+<p><a href="http://tutorials.jenkov.com/java-concurrency/blocking-queues.html">source</a></p>
+
+<ol>
+<li><p>A blocking queue is a queue, so we init a queue with a pre-defined size.</p></li>
+<li><p>BlockingQueue Class comes with Java 5, in java.util.concurrent.BlockingQueue. This example is only used to help you understand what&rsquo;s happening behind the scene.</p></li>
+<li><p>Both <strong>enqueue(Object o){}</strong> and <strong>dequeue(){}</strong> are <strong>synchronized</strong> method.</p></li>
+<li><p>Both methods do <strong>while { wait(); }</strong> and then <strong>notifyAll()</strong>.</p></li>
+</ol>
+
+
+<h3>Code</h3>
+
+<pre><code>public class MyBlockingQueue {
+
+    private List&lt;Object&gt; queue = new LinkedList&lt;Object&gt;();
+    private int size = 10;
+
+    public MyBlockingQueue(int size) {
+        this.size = size;
+    }
+
+    public synchronized void enqueue(Object item) throws InterruptedException {
+        while (this.queue.size() == this.size) {
+            wait();
+        }
+        if (this.queue.size() == 0) {
+            notifyAll();
+        }
+        this.queue.add(item);
+    }
+
+    public synchronized Object dequeue() throws InterruptedException {
+        while (this.queue.size() == 0) {
+            wait();
+        }
+        if (this.queue.size() == this.size) {
+            notifyAll();
+        }
+
+        return this.queue.remove(0);
+    }
+
+    public boolean isEmpty() {
+        return this.queue.isEmpty();
+    }
+}
+</code></pre>
+
+<h3>Another example</h3>
+
+<p>This BlockingQueue example makes use MyBlockingQueue that we defined above.</p>
+
+<pre><code>public class Main {
+
+    public static void main(String[] args) throws Exception {
+
+        MyBlockingQueue queue = new MyBlockingQueue(1024);
+
+        Producer producer = new Producer(queue);
+        Consumer consumer = new Consumer(queue);
+
+        new Thread(producer).start();
+        new Thread(consumer).start();
+
+        Thread.sleep(4000);
+    }
+}
+</code></pre>
+
+<p>Producer</p>
+
+<pre><code>public class Producer implements Runnable {
+
+    protected MyBlockingQueue queue = null;
+
+    public Producer(MyBlockingQueue queue) {
+        this.queue = queue;
+    }
+
+    public void run() {
+        System.out.println("Producer starting... ");
+        try {
+            for (int i = 1; i &lt;= 5; i++) {
+                queue.enqueue("" + i);
+                Thread.sleep(500);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+
+<p>Consumer</p>
+
+<pre><code>public class Consumer implements Runnable {
+
+    protected MyBlockingQueue queue = null;
+
+    public Consumer(MyBlockingQueue queue) {
+        this.queue = queue;
+    }
+
+    public void run() {
+        try {
+            for (int i = 1; i &lt;= 5; i++) {
+                System.out.println(queue.dequeue());
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Consumer finished. ");
+    }
+}
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>Producer starting... 
+1
+2
+3
+4
+5
+Consumer finished. 
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1018,64 +1177,6 @@ private int choose(String input, int start, int numChar) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/11/Diameter-of-Binary-Tree/">[Google] Diameter of a Binary Tree</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-11T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.geeksforgeeks.org/diameter-of-a-binary-tree/">link</a></p>
-
-<blockquote><p>The diameter of a tree (sometimes called the width) is the number of nodes on the longest path between two leaves in the tree.</p></blockquote>
-
-<p><img class="middle" src="/assets/images/tree-diameter-1.gif"></p>
-
-<h3>Solution</h3>
-
-<p>This is a similar question to <strong>[LeetCode 124] Binary Tree Maximum Path Sum</strong>. <strong>However there&rsquo;s a significant difference</strong> which might be overlooked while coding.</p>
-
-<p>Look at this example:</p>
-
-<pre><code>     0
-       1
-        1
-       0  1
-           1
-</code></pre>
-
-<p>If we only want to find the max path, that would return result of 5, which is root-to-rightmost-leaf. However, the diameter should be 4, which is the distance between 2 leaf nodes.</p>
-
-<p>A solution is available for reading <a href="http://stackoverflow.com/a/3124575">here</a>.</p>
-
-<p>For <strong>[Google] Crazy Distance Between Strings</strong>, there is another special case: {&ldquo;1&rdquo;, &ldquo;11&rdquo;, &ldquo;10&rdquo;}. The program will not output correct result (1), because this is not really the diameter of a tree, but instead, a max path from a non-leaf to a leaf. I leave this part for you to finish.</p>
-
-<h3>Code</h3>
-
-<p>Refer to <strong>[Google] Crazy Distance Between Strings</strong> for complete code.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/17">&larr; Older</a>
@@ -1088,9 +1189,36 @@ private int choose(String input, int start, int numChar) {
 </div>
 <aside class="sidebar">
   
-    <section>
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
@@ -1108,10 +1236,6 @@ private int choose(String input, int start, int numChar) {
         <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1125,7 +1249,7 @@ private int choose(String input, int start, int numChar) {
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2016 - Your Name -
+  Copyright &copy; 2016 - Kevin Durant -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

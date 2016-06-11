@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>My Octopress Blog</title>
-  <meta name="author" content="Your Name">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link 数组nums中有n个非负整数（整数用字符串表示），将它们以一定的顺序拼接，得到最大的整数。 样例： nums: [&ldquo;54&rdquo;, &ldquo;546&rdquo;, &ldquo;548&rdquo;, &ldquo;60&rdquo;] &hellip;">
+  <meta name="description" content="Question link A perfect binary tree, i.e. each node in the tree is either a leaf node, or has two children, and all leaf nodes are on the same level &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +21,7 @@
   <link rel="canonical" href="http://okc1.github.io/posts/31/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
@@ -36,9 +36,9 @@
 
 <body   >
   <header role="banner"><hgroup>
-  <h1><a href="/">My Octopress Blog</a></h1>
+  <h1><a href="/">Woodstock Blog</a></h1>
   
-    <h2>A blogging framework for hackers.</h2>
+    <h2>a tech blog for general algorithmic interview questions</h2>
   
 </hgroup>
 
@@ -65,6 +65,70 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/19/Count-level-in-perfect-BT/">[Question] Count Level in Perfect Binary Tree</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-19T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://stackoverflow.com/questions/10721583/how-can-i-calculate-the-level-of-a-node-in-a-perfect-binary-tree-from-its-depth">link</a></p>
+
+<blockquote><p>A perfect binary tree, i.e. each node in the tree is either a leaf node, or has two children, and all leaf nodes are on the same level. Each node has an index in depth-first order.</p></blockquote>
+
+<pre><code>      0
+    /   \
+  1      4
+ / \    / \
+2   3  5   6
+</code></pre>
+
+<blockquote><p>Given the index (k) of a particular node, calculate its level.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>This is a <a href="http://stackoverflow.com/a/10721897">magical solution</a></strong>.  It divides the tree in the middle with number k decrease by 1 each time.</p>
+
+<p>Beautiful, and hard to understand.</p>
+
+<h3>Code</h3>
+
+<p><strong>not written by me</strong>.</p>
+
+<pre><code>public int countLevel(TreeNode root, int k, int n) {
+    int level = 0;
+    while (k != 0) {
+        k--;
+        n = (n - 1) / 2;
+        k = k % n;
+        level++;
+    }
+    return level + 1;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -817,124 +881,6 @@ bool canJump(int p, int q, int x, int y, int x2, int y2) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/15/Alphabet-table/">[Google] Alphabet Table (`)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-08-15T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://blog.sina.com.cn/s/blog_979956cc0101i67x.html">link</a></p>
-
-<blockquote><p>每一种语言，都有自己的字母表，类似英文的a-z，但是顺序不相同。例如，有的语言可能是z是第一个之类的。现在给定这个语言的字典，请分析这个字典，得到这个语言的字母表的顺序。</p>
-
-<p>例如：有如下的字母：C CAC CB BCC BA。 经过分析，得到字母表为C->A->B。</p></blockquote>
-
-<h3>Solution</h3>
-
-<p><a href="http://page.renren.com/601882592/channel-noteshow-927705419">http://page.renren.com/601882592/channel-noteshow-927705419</a></p>
-
-<ol>
-<li>C 2. CAC 3. CB 4. BCC 5. BA 经过分析，得到字母表为C->A->B。</li>
-</ol>
-
-
-<p>分析 字典序相邻的位置的字符串，只会有如下两种情况：</p>
-
-<p>（1）排在前面的字符串是下一个串的子串，如C与CAC</p>
-
-<p>（2）两个字符串具有第一对不相同的字符对，如CAC和CBB，第一个不相同的字符对为（A，B），这是就要求A在字母表中的顺序在B前面。对于后面字符并没有要求，如并不要求第二个不相同的字符对（C，B）中的C在字母表中的顺序在B前面。</p>
-
-<p>所以按照第（2）种情况建图，然后对该有向无环图求拓扑排序即可。</p>
-
-<p>So this becomes a Topology Sorting question.</p>
-
-<h3>Code</h3>
-
-<p><strong>not written by me</strong></p>
-
-<pre><code>pair&lt;char,char&gt;  constructEdge(const string &amp; src1, const string &amp; src2)
-{
-     int min_len = min(src1.length(), src2.length());
-     int i = 0;
-     while(i &lt; min_len &amp;&amp; src1[i] == src2[i]){
-           i++;
-     }
-     if(i &lt; min_len){
-           return  make_pair(src1[i], src2[i]);
-     }else{
-           return  make_pair('\0','\0');
-     }
-}
-//-1, 0, 1
-int  alphaTable(const vector&lt;string&gt; &amp;  dict, vector&lt;char&gt; &amp; alpha_table)
-{
-     unordered_map&lt;char,set&lt;char&gt; &gt;  edges;
-     set&lt;char&gt; nodes;
-     for(const string &amp; word : dict){
-          for(char c : word){
-              nodes.insert(c);
-          }
-     }
-     unordered_map&lt;char,int&gt;  in_degree;
-     for(int i = 1; i &lt; dict.length(); i++){
-          pair edge = constructEdge(dict[i-1],dict[i]);
-          if(edge.first != '\0'){
-              edges[edge.first].insert(edge.second);
-              in_degree[edge.second]++;
-          }
-     }
-     queue&lt;char&gt;  q;
-     for(char node : nodes){
-         if(in_degree[node] == 0){
-              q.push(node);
-         }
-     }
-     alpha_table.clear();
-     int result = 0;
-     while(!q.empty()){
-        if(q.size() &gt; 1){
-            result = 1;
-        }
-        char  c = q.front();
-        q.pop();
-        alpha_table.push_back(c);
-        for(char node : edges[c]){
-             in_degree[node] --;
-             if(in_degree[node] == 0){
-                  q.push(node);
-             }
-         }
-     }//while
-     if(alpha_table.size() &lt; nodes.size()){
-         result = -1;
-     }
-     return result;    
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/32">&larr; Older</a>
@@ -947,9 +893,36 @@ int  alphaTable(const vector&lt;string&gt; &amp;  dict, vector&lt;char&gt; &amp;
 </div>
 <aside class="sidebar">
   
-    <section>
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
@@ -967,10 +940,6 @@ int  alphaTable(const vector&lt;string&gt; &amp;  dict, vector&lt;char&gt; &amp;
         <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -984,7 +953,7 @@ int  alphaTable(const vector&lt;string&gt; &amp;  dict, vector&lt;char&gt; &amp;
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2016 - Your Name -
+  Copyright &copy; 2016 - Kevin Durant -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

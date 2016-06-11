@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>My Octopress Blog</title>
-  <meta name="author" content="Your Name">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given a range [m, n] where 0 &lt;= m &lt;= n &lt;= 2147483647, return the bitwise AND of all numbers in this range, inclusive. For &hellip;">
+  <meta name="description" content="Question link You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +21,7 @@
   <link rel="canonical" href="http://okc1.github.io/posts/6/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
@@ -36,9 +36,9 @@
 
 <body   >
   <header role="banner"><hgroup>
-  <h1><a href="/">My Octopress Blog</a></h1>
+  <h1><a href="/">Woodstock Blog</a></h1>
   
-    <h2>A blogging framework for hackers.</h2>
+    <h2>a tech blog for general algorithmic interview questions</h2>
   
 </hgroup>
 
@@ -65,6 +65,81 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/05/10/House-Robber/">[LeetCode 198] House Robber</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-05-10T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/house-robber/">link</a></p>
+
+<div class="question-content">
+              <p></p><p>You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security system connected and <b>it will automatically contact the police if two adjacent houses were broken into on the same night</b>.</p>
+
+<p>Given a list of non-negative integers representing the amount of money of each house, determine the maximum amount of money you can rob tonight <b>without alerting the police</b>.</p>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/ifanchu">@ifanchu</a> for adding this problem and creating all test cases. Also thanks to <a href="https://oj.leetcode.com/discuss/user/ts">@ts</a> for adding additional test cases.</p><p></p>
+              
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/dynamic-programming/">Dynamic Programming</a>
+                  
+                </span>
+              
+</div>
+
+
+<h3>Solution</h3>
+
+<p>DP question. Be careful what the initial values of dp(1) is. You should work this out without a problem!</p>
+
+<h3>Code</h3>
+
+<pre><code>public class Solution {
+    public int rob(int[] num) {
+        if (num == null || num.length == 0) {
+            return 0;
+        } else if (num.length == 1) {
+            return num[0];
+        }
+        int len = num.length;
+        int[] dp = new int[len];
+        dp[0] = num[0];
+        dp[1] = Math.max(num[0], num[1]);
+        int max = Math.max(num[0], num[1]);
+        for (int i = 2; i &lt; len; i++) {
+            dp[i] = Math.max(dp[i - 1], dp[i - 2] + num[i]);
+            max = Math.max(max, dp[i]);
+        }
+        return max;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1073,82 +1148,6 @@ class PointComparator implements Comparator&lt;Pair&gt; {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/04/14/Excel-Sheet-Column-Title/">[LeetCode 168] Excel Sheet Column Title</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-04-14T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="https://leetcode.com/problems/excel-sheet-column-title/">link</a></p>
-
-<div class="question-content">
-              <pExcel Sheet Column Number></p><p>Given a positive integer, return its corresponding column title as appear in an Excel sheet.</p>
-
-<p>For example:</p>
-<pre>    1 -&gt; A
-    2 -&gt; B
-    3 -&gt; C
-    ...
-    26 -&gt; Z
-    27 -&gt; AA
-    28 -&gt; AB </pre>
-
-<p><b>Credits:</b><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/ifanchu">@ifanchu</a> for adding this problem and creating all test cases.</p><p></p>
-              
-                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
-                <span class="hide">
-                  
-                  <a class="btn btn-xs btn-primary" href="/tag/math/">Math</a>
-                  
-                </span>
-              
-            </div>
-
-
-<h3>Analysis</h3>
-
-<p>This is pretty much a similar question. It&rsquo;s pretty easy.</p>
-
-<h3>Code</h3>
-
-<pre><code>public class Solution {
-    public int titleToNumber(String s) {
-        if (s == null || s.length() == 0) {
-            return 0;
-        }
-        int sum = 0;
-        for (char ch: s.toCharArray()) {
-            sum *= 26;
-            sum += (int) (ch - 'A' + 1);
-        }
-        return sum;
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/7">&larr; Older</a>
@@ -1161,9 +1160,36 @@ class PointComparator implements Comparator&lt;Pair&gt; {
 </div>
 <aside class="sidebar">
   
-    <section>
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
@@ -1181,10 +1207,6 @@ class PointComparator implements Comparator&lt;Pair&gt; {
         <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1198,7 +1220,7 @@ class PointComparator implements Comparator&lt;Pair&gt; {
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2016 - Your Name -
+  Copyright &copy; 2016 - Kevin Durant -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

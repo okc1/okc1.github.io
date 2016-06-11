@@ -1,17 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[My Octopress Blog]]></title>
+  <title><![CDATA[Woodstock Blog]]></title>
   <link href="http://okc1.github.io/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-06-08T15:05:25-07:00</updated>
+  <updated>2016-06-11T09:33:06-07:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[Kevin Durant]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[[Octopress] Add Aside Content to Octopress]]></title>
+    <link href="http://okc1.github.io/blog/2016/06/11/add-aside-content-octopress/"/>
+    <updated>2016-06-11T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2016/06/11/add-aside-content-octopress</id>
+    <content type="html"><![CDATA[<h1>Aside</h1>
+
+<p>Example of this is the &lsquo;categories&rsquo; list on the right hand side of the blog page. It&rsquo;s always pin on RHS regardless of page content.</p>
+
+<h1>Instruction</h1>
+
+<ol>
+<li><p>Add to source/_includes/asides/category_list.html with the following content. (remember to delete [delete-this-tag])</p>
+
+<pre><code> &lt;section class="well"&gt;
+   &lt;h1&gt;Categories&lt;/h1&gt;
+   &lt;ul id="categories" class="nav nav-list"&gt;
+     {[delete-this-tag]% category_list %[delete-this-tag]}
+   &lt;/ul&gt;
+ &lt;/section&gt;
+</code></pre></li>
+<li><p>Go to _config.yml and modify default_asides.</p>
+
+<pre><code> default_asides: [asides/category_list.html, asides/recent_posts.html, asides/github.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html, asides/advertise.html]
+</code></pre></li>
+<li><p>Since the &lsquo;category_list&rsquo; tag is not natively supported. Add plugins/category_list_tag.rb with the <a href="https://kaworu.ch/blog/2013/09/23/categories-page-with-octopress/">followin content</a>.</p>
+
+<pre><code> module Jekyll
+   class CategoryListTag &lt; Liquid::Tag
+     def render(context)
+       html = ""
+       categories = context.registers[:site].categories.keys
+       categories.sort.each do |category|
+         posts_in_category = context.registers[:site].categories[category].size
+         category_dir = context.registers[:site].config['category_dir']
+         category_url = File.join(category_dir, category.gsub(/_|\P{Word}/, '-').gsub(/-{2,}/, '-').downcase)
+         html &lt;&lt; "&lt;li class='category'&gt;&lt;a href='http://okc1.github.io/#{category_url}/'&gt;#{category} (#{posts_in_category})&lt;/a&gt;&lt;/li&gt;\n"
+       end
+       html
+     end
+   end
+ end
+
+ Liquid::Template.register_tag('category_list', Jekyll::CategoryListTag)
+</code></pre></li>
+<li><p>rake generate &amp;&amp; rake preview</p></li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[[Design] User Registry Table Design]]></title>
@@ -1033,67 +1084,6 @@ public class Solution {
         int mid = (root.start + root.end) / 2;
         return Math.max(query(root.left, start, Math.min(mid, end)), 
                         query(root.right, Math.max(mid + 1, start), end));
-    }
-}
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[[LintCode] Segment Tree Modify]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/13/Segment-Tree-Modify/"/>
-    <updated>2015-10-13T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/13/Segment-Tree-Modify</id>
-    <content type="html"><![CDATA[<h3>Question</h3>
-
-<p><a href="http://www.lintcode.com/en/problem/segment-tree-modify/#">link</a></p>
-
-<blockquote><p>For a Maximum Segment Tree, which each node has an extra value max to store the maximum value in this node&rsquo;s interval.</p>
-
-<p>Implement a modify function with three parameter root, index and value to change the node&rsquo;s value with [start, end] = [index, index] to the new given value. Make sure after this change, every node in segment tree still has the max attribute with the correct value.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>It&rsquo;s very similar to <strong>Segment Tree Modify/search</strong>.</p>
-
-<h3>Code</h3>
-
-<pre><code>/**
- * Definition of SegmentTreeNode:
- * public class SegmentTreeNode {
- *     public int start, end, max;
- *     public SegmentTreeNode left, right;
- *     public SegmentTreeNode(int start, int end, int max) {
- *         this.start = start;
- *         this.end = end;
- *         this.max = max
- *         this.left = this.right = null;
- *     }
- * }
- */
-public class Solution {
-    /**
-     *@param root, index, value: The root of segment tree and 
-     *@ change the node's value with [index, index] to the new given value
-     *@return: void
-     */
-    public void modify(SegmentTreeNode root, int index, int value) {
-        helper(root, index, value);
-    }
-
-    private int helper(SegmentTreeNode node, int target, int val) {
-        if (node.start &gt; target || node.end &lt; target) {
-            // no update, then just return max as normal
-            return node.max;
-        } else if (node.start == node.end &amp;&amp; node.start == target) {
-            node.max = val;
-            return val;
-        } else {
-            // check left and right, and update max value accordingly
-            node.max = Math.max(helper(node.left, target, val), 
-                                helper(node.right, target, val));
-            return node.max;
-        }
     }
 }
 </code></pre>

@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>My Octopress Blog</title>
-  <meta name="author" content="Your Name">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find all unique triplets in the array which &hellip;">
+  <meta name="description" content="Question link Given an array S of n integers, find three integers in S such that the sum is closest to a given number, target. Return the sum of the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +21,7 @@
   <link rel="canonical" href="http://okc1.github.io/posts/62/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
@@ -36,9 +36,9 @@
 
 <body   >
   <header role="banner"><hgroup>
-  <h1><a href="/">My Octopress Blog</a></h1>
+  <h1><a href="/">Woodstock Blog</a></h1>
   
-    <h2>A blogging framework for hackers.</h2>
+    <h2>a tech blog for general algorithmic interview questions</h2>
   
 </hgroup>
 
@@ -65,6 +65,121 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/02/3Sum-Closest/">[LeetCode 16] 3Sum Closest</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-02T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/3sum-closest/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Given an array <i>S</i> of <i>n</i> integers, find three integers in <i>S</i> such that the sum is closest to a given number, target. Return the sum of the three integers. You may assume that each input would have exactly one solution.</p>
+
+<pre>    For example, given array S = {-1 2 1 -4}, and target = 1.
+
+    The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
+</pre><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="white">1</td>
+    </tr>
+    <tr>
+        <td>Diffficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p>This question is a simplified version of <strong>[LeetCode 15] 3Sum</strong>. The required return is an integer instead of a list.</p>
+
+<p>This makes life easier because <strong>we do not need to consider duplications</strong> (think about it, why?).</p>
+
+<h3>Solution</h3>
+
+<p>The code is 3Sum solution without duplication avoidance.</p>
+
+<h3>My code</h3>
+
+<pre><code>public class Solution {
+    public int threeSumClosest(int[] num, int target) {
+        if (num == null || num.length &lt; 3) {
+            return 0;
+        }
+        Arrays.sort(num);
+        int len = num.length;
+        int ans = num[0] + num[1] + num[2];
+        for (int i = 0; i &lt; len; i++) {
+            // if (i != 0 &amp;&amp; num[i - 1] == num[i]) {
+            //     continue;
+            // }
+            // similar to 3sum question, but without dup avoidance
+            int left = i + 1;
+            int right = len - 1;
+            while (left &lt; right) {
+                int sum = num[i] + num[left] + num[right];
+                // if found triplet that sums to target, return!
+                if (sum == target) {
+                    return target;
+                }
+                // then update ans variable - if it's closer to target
+                if (Math.abs(sum - target) &lt; Math.abs(ans - target)) {
+                    ans = sum;
+                }
+                // now move either left or right pointer
+                if (sum &gt;  target) {
+                    right--;
+                } else {
+                    left++;
+                }
+            }
+        }
+        return ans;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1498,163 +1613,6 @@ isMatch("aab", "c*a*b") → true
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/04/28/reverse-integer/">[LeetCode 7] Reverse Integer</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-04-28T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://oj.leetcode.com/problems/reverse-integer/">link</a></p>
-
-<div class="question-content">
-<p></p><p>Reverse digits of an integer.</p>
-
-<p style="font-family:monospace">
-<b>Example1:</b> x =  123, return  321<br>
-<b>Example2:</b> x = -123, return -321
-</p>
-
-<div class="spoilers"><b>Have you thought about this?</b>
-<p>Here are some good questions to ask before coding. Bonus points for you if you have already thought through this!</p>
-<p>If the integer's last digit is 0, what should the output be? ie, cases such as 10, 100.</p>
-<p>Did you notice that the reversed integer might overflow? Assume the input is a 32-bit integer, then the reverse of 1000000003 overflows. How should you handle such cases?</p>
-<p>Throw an exception? Good, but what if throwing an exception is not an option? You would then have to re-design the function (ie, add an extra parameter).</p>
-</div><p></p>
-</div>
-
-
-<h3>Stats</h3>
-
-<table border="2">
-    <tr>
-        <td>Frequency</td>
-        <td bgcolor="yellow">3</td>
-    </tr>
-    <tr>
-        <td>Diffficulty</td>
-        <td bgcolor="lime">2</td>
-    </tr>
-    <tr>
-        <td>Adjusted Difficulty</td>
-        <td bgcolor="lime">2</td>
-    </tr>
-    <tr>
-        <td>Time to use</td>
-        <td bgcolor="yellow">----------</td>
-    </tr>
-</table>
-
-
-<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
-
-<h3>Analysis</h3>
-
-<p><strong>There&rsquo;re 2 points that are tricky.</strong></p>
-
-<p><strong>First, overflow issue</strong>. Look at the following overflow case for Java int:</p>
-
-<pre><code>+300,000,000 * 10 returns -1294967296
-+600,000,000 * 10 returns +1705032704
--300,000,000 * 10 returns +1294967296
--600,000,000 * 10 returns -1705032704
-note that max integer is 2,147,483,647
-</code></pre>
-
-<p>We can observe that if overflow happens, <strong>the result is definitely wrong</strong>. The result can be either positive or negative.</p>
-
-<p>So, from just +/- sign of the result, we can&rsquo;t identify an overflow (then how to solve this problem??).</p>
-
-<p><strong>Another interesting thing to note: we actually do not need to handle negative sign</strong>. The sign can be preserved during the conversion. Read <a href="http://fisherlei.blogspot.sg/2012/12/leetcode-reverse-integer.html">this post</a> for more.</p>
-
-<p>Without considering overflow, the following code can (almost) work fine:</p>
-
-<pre><code>public int reverse2(int x) {
-    int reverse = 0;
-    while (x != 0) {
-        reverse = reverse * 10 + x % 10;
-        x /= 10;
-    }
-    return reverse;
-}
-</code></pre>
-
-<h3>Solution</h3>
-
-<p><strong>Two solutions</strong>: 1. use long data type. 2. check if ret > 214748364 or ret &lt; –214748364 before multiplying by 10.</p>
-
-<h3>My code</h3>
-
-<p>First, using long type to avoid overflow.</p>
-
-<pre><code>public class Solution {
-    public int reverse(int x) {
-        int sign = 1;
-        long abs = x;
-        long rev = 0;
-        if (x &lt; 0) {
-            sign = -1;
-            abs = 0 - abs;
-        }
-        // now remove numbers from abs one by one
-        // and put these numbers into rev
-        while (abs != 0) {
-            rev *= 10;
-            rev += abs % 10;
-            abs /= 10;
-        }
-        if (rev &gt; Integer.MAX_VALUE) {
-            return 0;
-        } else {
-            return sign * (int) rev;
-        }
-    }
-}
-</code></pre>
-
-<p>Second, do boundary check in every step. Suggested by Leetcode official book.</p>
-
-<p>Note that max integer is 2,147,483,647</p>
-
-<pre><code>public class Solution {
-
-    public int reverse(int x) {
-        int ret = 0;
-        while (x != 0) {
-            // handle overflow/underflow
-            if (Math.abs(ret) &gt; 214748364) {
-                return 0;
-            }
-            ret = ret * 10 + x % 10;
-            x /= 10;
-        }
-        return ret;
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/63">&larr; Older</a>
@@ -1667,9 +1625,36 @@ note that max integer is 2,147,483,647
 </div>
 <aside class="sidebar">
   
-    <section>
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
@@ -1687,10 +1672,6 @@ note that max integer is 2,147,483,647
         <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1704,7 +1685,7 @@ note that max integer is 2,147,483,647
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2016 - Your Name -
+  Copyright &copy; 2016 - Kevin Durant -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

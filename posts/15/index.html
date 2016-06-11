@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>My Octopress Blog</title>
-  <meta name="author" content="Your Name">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="ref 1: What are benefits of using HTTPS over HTTP? HTTPS means that you tunnel the HTTP protocol over TLS/SSL which encrypts the HTTP payload. So the &hellip;">
+  <meta name="description" content="Definition source A abstract class is declared when it has one or more abstract methods. An interface differs from an abstract class because an &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +21,7 @@
   <link rel="canonical" href="http://okc1.github.io/posts/15/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
@@ -36,9 +36,9 @@
 
 <body   >
   <header role="banner"><hgroup>
-  <h1><a href="/">My Octopress Blog</a></h1>
+  <h1><a href="/">Woodstock Blog</a></h1>
   
-    <h2>A blogging framework for hackers.</h2>
+    <h2>a tech blog for general algorithmic interview questions</h2>
   
 </hgroup>
 
@@ -65,6 +65,114 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/20/java-abstract-class-interface/">[Java OOP] Interface and Abstract Classes</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-20T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Definition</h1>
+
+<p><a href="http://www.programmerinterview.com/index.php/java-questions/interface-vs-abstract-class/">source</a></p>
+
+<p><strong>A abstract class</strong> is declared when it has one or more <strong>abstract methods</strong>.</p>
+
+<p><strong>An interface</strong> differs from an abstract class because an interface is not a class. An interface is essentially a type that <strong>can be satisfied by any class</strong> that implements the interface.</p>
+
+<h1>The short answer</h1>
+
+<ol>
+<li><p>Abstract class is REAL parent.</p></li>
+<li><p>Abstr can have data members and non-abstract methods
+while interface only got constant variable and abstract methods (read below)</p></li>
+<li>class can implement multiple interface
+but only extend from 1 abstract class</li>
+</ol>
+
+
+<h3>does interface got &lsquo;abstract&rsquo; methods?</h3>
+
+<p>An interface is &ldquo;purely&rdquo; abstract class: every method is an abstract method. We do not use &lsquo;abstract&rsquo; keyword. eg.</p>
+
+<pre><code>interface Bicycle {
+    void changeCadence(int newValue);
+    void changeGear(int newValue);
+    void speedUp(int increment);
+    void applyBrakes(int decrement);
+}
+</code></pre>
+
+<blockquote><p><a href="http://stackoverflow.com/a/641549">According to the Java Language Specification</a>, the abstract keyword for interfaces is obsolete and should no longer be used. (Section 9.1.1.1)</p></blockquote>
+
+<h1>The long answer</h1>
+
+<h3>Abstract classes: strong relationship</h3>
+
+<p><strong>Abstract classes</strong> are meant to be inherited from, and often <strong>indicates a strong relationship</strong>.</p>
+
+<p>For instance, if we have an abstract base class called &ldquo;Canine&rdquo;, any deriving class should be an animal that belongs to the Canine family (like a Dog or a Wolf).</p>
+
+<p><strong>With an interface on the other hand</strong>, the relationship is <strong>not necessarily strong</strong>.</p>
+
+<p>For example, if we have a class called &ldquo;House&rdquo;, that class could also implement an interface called &ldquo;AirConditioning&rdquo;. Having air conditioning not an essential part of a House.</p>
+
+<p><strong>A TownHouse</strong> is a type of House, that relationship is very strong, and would be more appropriately defined <strong>through inheritance</strong> instead of interfaces.</p>
+
+<h3>What&rsquo;s more</h3>
+
+<ol>
+<li><p>Multiple inheritance</p>
+
+<p> Java class can inherit from only one abstract class, but can implement multiple interfaces.</p></li>
+<li><p>Abstract method</p>
+
+<p> Abstract class can have non-abstract methods with actual implementation details.</p></li>
+</ol>
+
+
+<h3>When to use which</h3>
+
+<p><strong>Use abstract class when</strong>:</p>
+
+<ol>
+<li><p>You want to <strong><a href="http://docs.oracle.com/javase/tutorial/java/IandI/abstract.html">share code</a></strong> among several closely related classes.</p></li>
+<li><p>you want to be able to declare <strong>non-public members</strong>. In an interface, all methods must be public.</p></li>
+<li><p>you think you will need to <strong>add methods</strong> in the future.</p>
+
+<p> Because if you add new method headings to an interface, then all of the classes that already implement that interface will have to be changed to implement the new methods. That can be quite a hassle.</p></li>
+</ol>
+
+
+<p><strong>Use interface when</strong>:</p>
+
+<ol>
+<li><p>You expect that <strong>unrelated classes</strong> would implement your interface. For example, the interfaces <strong>Comparable and Cloneable</strong> are implemented by many unrelated classes.</p></li>
+<li><p>you think that the API will not change for a while.</p></li>
+<li><p>you want to have something similar to multiple inheritance.</p></li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1059,164 +1167,6 @@ public int helper(String input) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/12/java-blocking-queue-2/">[Java OOP] Java BlockingQueue (2)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-12T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Blocking Queue Implementation</h3>
-
-<p><img class="middle" src="/assets/images/blocking-queue.png"></p>
-
-<p><a href="http://tutorials.jenkov.com/java-concurrency/blocking-queues.html">source</a></p>
-
-<ol>
-<li><p>A blocking queue is a queue, so we init a queue with a pre-defined size.</p></li>
-<li><p>BlockingQueue Class comes with Java 5, in java.util.concurrent.BlockingQueue. This example is only used to help you understand what&rsquo;s happening behind the scene.</p></li>
-<li><p>Both <strong>enqueue(Object o){}</strong> and <strong>dequeue(){}</strong> are <strong>synchronized</strong> method.</p></li>
-<li><p>Both methods do <strong>while { wait(); }</strong> and then <strong>notifyAll()</strong>.</p></li>
-</ol>
-
-
-<h3>Code</h3>
-
-<pre><code>public class MyBlockingQueue {
-
-    private List&lt;Object&gt; queue = new LinkedList&lt;Object&gt;();
-    private int size = 10;
-
-    public MyBlockingQueue(int size) {
-        this.size = size;
-    }
-
-    public synchronized void enqueue(Object item) throws InterruptedException {
-        while (this.queue.size() == this.size) {
-            wait();
-        }
-        if (this.queue.size() == 0) {
-            notifyAll();
-        }
-        this.queue.add(item);
-    }
-
-    public synchronized Object dequeue() throws InterruptedException {
-        while (this.queue.size() == 0) {
-            wait();
-        }
-        if (this.queue.size() == this.size) {
-            notifyAll();
-        }
-
-        return this.queue.remove(0);
-    }
-
-    public boolean isEmpty() {
-        return this.queue.isEmpty();
-    }
-}
-</code></pre>
-
-<h3>Another example</h3>
-
-<p>This BlockingQueue example makes use MyBlockingQueue that we defined above.</p>
-
-<pre><code>public class Main {
-
-    public static void main(String[] args) throws Exception {
-
-        MyBlockingQueue queue = new MyBlockingQueue(1024);
-
-        Producer producer = new Producer(queue);
-        Consumer consumer = new Consumer(queue);
-
-        new Thread(producer).start();
-        new Thread(consumer).start();
-
-        Thread.sleep(4000);
-    }
-}
-</code></pre>
-
-<p>Producer</p>
-
-<pre><code>public class Producer implements Runnable {
-
-    protected MyBlockingQueue queue = null;
-
-    public Producer(MyBlockingQueue queue) {
-        this.queue = queue;
-    }
-
-    public void run() {
-        System.out.println("Producer starting... ");
-        try {
-            for (int i = 1; i &lt;= 5; i++) {
-                queue.enqueue("" + i);
-                Thread.sleep(500);
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-}
-</code></pre>
-
-<p>Consumer</p>
-
-<pre><code>public class Consumer implements Runnable {
-
-    protected MyBlockingQueue queue = null;
-
-    public Consumer(MyBlockingQueue queue) {
-        this.queue = queue;
-    }
-
-    public void run() {
-        try {
-            for (int i = 1; i &lt;= 5; i++) {
-                System.out.println(queue.dequeue());
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Consumer finished. ");
-    }
-}
-</code></pre>
-
-<p>Output:</p>
-
-<pre><code>Producer starting... 
-1
-2
-3
-4
-5
-Consumer finished. 
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/16">&larr; Older</a>
@@ -1229,9 +1179,36 @@ Consumer finished.
 </div>
 <aside class="sidebar">
   
-    <section>
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
@@ -1249,10 +1226,6 @@ Consumer finished.
         <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1266,7 +1239,7 @@ Consumer finished.
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2016 - Your Name -
+  Copyright &copy; 2016 - Kevin Durant -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

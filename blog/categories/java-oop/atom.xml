@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Java Oop | My Octopress Blog]]></title>
+  <title><![CDATA[Category: Java Oop | Woodstock Blog]]></title>
   <link href="http://okc1.github.io/blog/categories/java-oop/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-06-08T15:05:25-07:00</updated>
+  <updated>2016-06-11T09:33:06-07:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[Kevin Durant]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>

@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>My Octopress Blog</title>
-  <meta name="author" content="Your Name">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given preorder, construct the BST. Solution We can get Inorder traversal by sorting the given Preorder traversal. So we have the &hellip;">
+  <meta name="description" content="Question link Given an array of integers find the maximum and minimum elements by using minimum comparisons. Solution Compare in Pairs. If n is odd &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +21,7 @@
   <link rel="canonical" href="http://okc1.github.io/posts/38/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
@@ -36,9 +36,9 @@
 
 <body   >
   <header role="banner"><hgroup>
-  <h1><a href="/">My Octopress Blog</a></h1>
+  <h1><a href="/">Woodstock Blog</a></h1>
   
-    <h2>A blogging framework for hackers.</h2>
+    <h2>a tech blog for general algorithmic interview questions</h2>
   
 </hgroup>
 
@@ -65,6 +65,101 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/29/Find-Min-Max-in-Array/">[Question] Find Min & Max in an Array Using Minimum Comparisons</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-29T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>29</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.programcreek.com/2014/02/find-min-max-in-an-array-using-minimum-comparisons/">link</a></p>
+
+<blockquote><p>Given an array of integers find the maximum and minimum elements by using minimum comparisons.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong><a href="http://www.geeksforgeeks.org/maximum-and-minimum-in-an-array/">Compare in Pairs</a></strong>.</p>
+
+<ol>
+<li>If n is odd then initialize min and max as first element.</li>
+<li>If n is even then initialize min and max as minimum and maximum of the first two elements respectively.</li>
+<li>For rest of the elements, pick them in pairs and compare their maximum and minimum with max and min respectively.</li>
+</ol>
+
+
+<p>Number of comparison is 1.5*n.</p>
+
+<p>There&rsquo;s also a <strong>Tournament Method</strong> from G4G, but the implementation is a bit difficult.</p>
+
+<h3>Code</h3>
+
+<p><strong>not written by me</strong></p>
+
+<pre><code>public static void minmax2(int[] a) {
+    if (a == null || a.length &lt; 1)
+        return;
+
+    int min, max;
+
+    // if only one element
+    if (a.length == 1) {
+        max = a[0];
+        min = a[0];
+        System.out.println("min: " + min + "\nmax: " + max);
+        return;
+    }
+
+    if (a[0] &gt; a[1]) {
+        max = a[0];
+        min = a[1];
+    } else {
+        max = a[1];
+        min = a[0];
+    }
+
+    for (int i = 2; i &lt;= a.length - 2;) {
+        if (a[i] &gt; a[i + 1]) {
+            min = Math.min(min, a[i + 1]);
+            max = Math.max(max, a[i]);
+        } else {
+            min = Math.min(min, a[i]);
+            max = Math.max(max, a[i + 1]);
+        }
+
+        i = i + 2;
+    }
+
+    if (a.length % 2 == 1) {
+        min = Math.min(min, a[a.length - 1]);
+        max = Math.max(max, a[a.length - 1]);
+    }
+
+    System.out.println("min: " + min + "\nmax: " + max);
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -697,69 +792,6 @@ private TreeNode constructTree() {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/26/True-tell-brain-teaser/">[Question] Truth Tell Brain Teaser</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-07-26T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://tech-queries.blogspot.sg/2011/07/truth-or-lie.html">link</a></p>
-
-<blockquote><p>There are 100 people in a room. A person always speaks either lie or truth.</p>
-
-<p>When asked:</p></blockquote>
-
-<pre><code>1st person says =&gt; all are liars
-2nd person says =&gt; at most 1 speaks truth
-3rd person says =&gt; at most 2 speak truth
-4th person says =&gt; at most 3 speak truth
-.
-.
-.
-100th person says =&gt; at most 99 speak truth
-</code></pre>
-
-<blockquote><p>&ldquo;At most N&rdquo; means &ldquo;there&rsquo;re N or less than N&rdquo;.</p>
-
-<p>How many people speak only truth?</p></blockquote>
-
-<h3>Solution</h3>
-
-<ol>
-<li></li>
-<li><p>Assume 1st person speaks truth, then all including him should be liar. It means he doesn’t speak truth.</p></li>
-<li><p>Assume 2nd person speaks truth, then he is the only person who speaks truth. But if this statement is true then statements by all others are also true. I.e. if “at most 1 person speaks truth” is true then “at most N speak truth” is also true. So person 2 is also a liar.</p></li>
-<li><p>Assume 3rd person is speaking truth. But then the statements of person 4-100 are also true, which contradicts his own statement. It means that person 3 is also a liar.</p></li>
-<li><p>This process will continue since 50th person. So 1-50 people are liars.</p></li>
-<li><p>51st person says “at most 50 speak truth”. Lets say he is speaking truth. “at most 50” means any number from 0-50. It means that statements like “at most 51 speak truth” and “at most 70 speak truth” are also true. It means that people from 51 to 100 are speaking truth.</p></li>
-</ol>
-
-
-<p><strong>Hence, 50 people speak truth</strong>.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/39">&larr; Older</a>
@@ -772,9 +804,36 @@ private TreeNode constructTree() {
 </div>
 <aside class="sidebar">
   
-    <section>
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
@@ -792,10 +851,6 @@ private TreeNode constructTree() {
         <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -809,7 +864,7 @@ private TreeNode constructTree() {
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2016 - Your Name -
+  Copyright &copy; 2016 - Kevin Durant -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
