@@ -1,0 +1,397 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Design] Linux and TCP Ports - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Overview a port is a software construct serving as a communications endpoint in a computer&rsquo;s host operating system. purpose of ports is to &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2015/06/08/linux-and-tcp-ports/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Design] Linux and TCP Ports</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-06-08T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1>Overview</h1>
+
+<p><a href="http://en.wikipedia.org/wiki/Port_%28computer_networking%29">a port</a> is <strong>a software construct serving as a communications endpoint</strong> in a computer&rsquo;s host operating system.</p>
+
+<p>purpose of ports is to uniquely identify different applications or processes running on a single computer and thereby <strong>enable them to share a single physical connection to a packet-switched network</strong> like the Internet.</p>
+
+<p>The protocols that <strong>primarily use ports</strong> are the Transport Layer protocols, such as TCP and UDP.</p>
+
+<p><strong>Port info can be viewed on Linux /etc/services files</strong>.</p>
+
+<h2>there&rsquo;re only 65536 ports</h2>
+
+<p>In TCP/IP stack, port number field is just 16bit size unsigned integer. Port number thus ranging from 0 to 65535.</p>
+
+<h2>well-known ports</h2>
+
+<p><strong>Well-known ports</strong> (or Privileged Ports) are those from 0 through 1023.</p>
+
+<ul>
+<li>20 &amp; 21: File Transfer Protocol (FTP)</li>
+<li>22: Secure Shell (SSH)</li>
+<li>23: Telnet remote login service</li>
+<li>25: Simple Mail Transfer Protocol (SMTP)</li>
+<li>53: Domain Name System (DNS) service</li>
+<li>80: Hypertext Transfer Protocol (HTTP) used in the World Wide Web</li>
+<li>110: Post Office Protocol (POP3)</li>
+<li>119: Network News Transfer Protocol (NNTP)</li>
+<li>143: Internet Message Access Protocol (IMAP)</li>
+<li>161: Simple Network Management Protocol (SNMP)</li>
+<li>194: Internet Relay Chat (IRC)</li>
+<li>443: HTTP Secure (HTTPS)</li>
+<li>465: SMTP Secure (SMTPS)</li>
+</ul>
+
+
+<h2>Socket</h2>
+
+<p><a href="http://www.linuxnix.com/2011/05/important-port-numbers-linux-system-administrator.html">Socket is combination of</a> software Port and IP address.</p>
+
+<h2>Protocol number</h2>
+
+<p>In an IP header, <a href="https://technet.microsoft.com/en-us/library/cc959827.aspx">the Protocol field identifies the service</a> in the next higher level in the protocol stack to which data is passed. <strong>Do not confuse this with port number, which is used for communication by TCP/UDP</strong>.</p>
+
+<table>
+<tbody><tr><th>
+<p>
+Service</p>
+</th><th>
+<p>
+Protocol Number</p>
+</th></tr>
+<tr><td>
+<p>
+Internet Control Message Protocol (ICMP)</p>
+</td><td>
+<p>
+1</p>
+</td></tr>
+<tr><td>
+<p>
+Transmission Control Protocol (TCP)</p>
+</td><td>
+<p>
+6</p>
+</td></tr>
+<tr><td>
+<p>
+User Datagram Protocol (UDP)</p>
+</td><td>
+<p>
+17</p>
+</td></tr>
+<tr><td>
+<p>
+General Routing Encapsulation (PPTP data over GRE)</p>
+</td><td>
+<p>
+47</p>
+</td></tr>
+<tr><td>
+<p>
+Authentication Header (AH) IPSec</p>
+</td><td>
+<p>
+51</p>
+</td></tr>
+<tr><td>
+<p>
+Encapsulation Security Payload (ESP) IPSec</p>
+</td><td>
+<p>
+50</p>
+</td></tr>
+<tr><td>
+<p>
+Exterior Gateway Protocol (EGP)</p>
+</td><td>
+<p>
+8</p>
+</td></tr>
+<tr><td>
+<p>
+Gateway-Gateway Protocol (GGP)</p>
+</td><td>
+<p>
+3</p>
+</td></tr>
+<tr><td>
+<p>
+Host Monitoring Protocol (HMP)</p>
+</td><td>
+<p>
+20</p>
+</td></tr>
+<tr><td>
+<p>
+Internet Group Management Protocol (IGMP)</p>
+</td><td>
+<p>
+88</p>
+</td></tr>
+<tr><td>
+<p>
+MIT Remote Virtual Disk (RVD)</p>
+</td><td>
+<p>
+66</p>
+</td></tr>
+<tr><td>
+<p>
+OSPF Open Shortest Path First</p>
+</td><td>
+<p>
+89</p>
+</td></tr>
+<tr><td>
+<p>
+PARC Universal Packet Protocol (PUP)</p>
+</td><td>
+<p>
+12</p>
+</td></tr>
+<tr><td>
+<p>
+Reliable Datagram Protocol (RDP)</p>
+</td><td>
+<p>
+27</p>
+</td></tr>
+<tr><td>
+<p>
+Reservation Protocol (RSVP) QoS</p>
+</td><td>
+<p>
+46</p>
+</td></tr>
+</tbody></table>
+
+
+<blockquote><p><a href="https://learningnetwork.cisco.com/thread/61029">When the IP packet contain TCP data</a> the protocol number field will have the value 6 in it, so the payload will be sent to the TCP stack, TCP would then use the port numbers to send the data to the correct application. The same is for UDP with protocol number 17.</p>
+
+<p>Another way to look at the IP protocol number field is, if we didn&rsquo;t have this field in the IP packet header, IP would only be capable of carrying one type of data, while adding this field allowed the IP to carry multiple types of data differentiated by the protocol number, the same goes for TCP/UDP using TCP/UDP ports to serve multiple applications and Ethernet using the Ethertype, and so on.</p></blockquote>
+
+<h2>can multiple app bind to (or listen to) the same port?</h2>
+
+<p>Can&rsquo;t. <a href="http://stackoverflow.com/questions/1694144/can-two-applications-listen-to-the-same-port">Because You can only have one application</a> listening on a single port at one time.</p>
+
+<blockquote><p>the app opens a port, gets a handle to it, and the OS notifies it (via that handle) when a client connection (or a packet in UDP case) arrives.</p>
+
+<p>If the OS allowed two apps to open the same port, how would it know which one to notify?</p></blockquote>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-06-08T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/design/'>design</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2015/06/08/linux-and-tcp-ports/" data-via="" data-counturl="http://okc1.github.io/blog/2015/06/08/linux-and-tcp-ports/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/05/24/overload-override-compile-runtime/" title="Previous Post: [Java OOP] Overload, Override, Compile, Runtime (Static/Dynamic Polymph) ">&laquo; [Java OOP] Overload, Override, Compile, Runtime (Static/Dynamic Polymph) </a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/06/09/Cryptographic-standards-AES-RSA/" title="Next Post: [Design] Cryptographic standard, AES and RSA ">[Design] Cryptographic standard, AES and RSA  &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

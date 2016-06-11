@@ -1,0 +1,308 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Google] Find Anagrams in Dictionary - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link Imagine you had a dictionary. How would you print all anagrams of a word? What if you had to do this repeatedly? Could you optimize it &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/09/02/Find-anagrams-in-dictionary/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Google] Find Anagrams in Dictionary</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-02T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=3088">link</a></p>
+
+<blockquote><p>Imagine you had a dictionary. How would you print all anagrams of a word? What if you had to do this repeatedly? Could you optimize it?</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>A very <a href="http://stackoverflow.com/a/12477976">nice solution</a>:</p>
+
+<ol>
+<li><p>Open dictionary</p></li>
+<li><p>Create empty hashmap H</p></li>
+<li><p>For each word in dictionary:</p>
+
+<ol>
+<li><p>Create a key that is the word&rsquo;s letters sorted alphabetically (and forced to one case)</p></li>
+<li><p>Add the word to the list of words accessed by the hash key in H</p></li>
+</ol>
+</li>
+</ol>
+
+
+<p>There&rsquo;s another <a href="http://karmaandcoding.blogspot.sg/2012/02/print-all-anagrams-for-word-from.html">very interesting idea</a>, if the length of the word is not too long.</p>
+
+<blockquote><p>Another approach could be we can assign each letters from a..z a prime numbers (2, 3, 5, 7, 11, 13, 17, 19, 23, 29, .. so on)</p>
+
+<p>and then for any word, we can calculate its key as the multiples of all the prime number corresponding to characters in the word.</p>
+
+<p>The char -> int assignment may look like:</p></blockquote>
+
+<pre><code>a=2, b=3, c=5, d=7, e=11, f=13, g=17, h=19, i=23, j=29, 
+k=31, l=37, m=41, n=43, o=47, p=53, q=59, r=61, s=67, t=71, 
+u=73, v=79, w=83, x=89, y=97, z=101
+</code></pre>
+
+<h3>Code</h3>
+
+<p><strong>not written by me</strong>, <a href="http://karmaandcoding.blogspot.sg/2012/02/print-all-anagrams-for-word-from.html">link</a></p>
+
+<pre><code>private static HashMap&lt;String, ArrayList&lt;String&gt;&gt; anagramMap = new HashMap&lt;String, ArrayList&lt;String&gt;&gt;();
+
+public static void findAnagrams(String[] dictionary) {
+    int len = dictionary.length;
+
+    for (int i = 0; i &lt; len; i++) {
+        String sortedWord = sortWordLexicographically(dictionary[i]);
+        ArrayList&lt;String&gt; wordList = anagramMap.get(sortedWord);
+        if (wordList == null) {
+            wordList = new ArrayList&lt;String&gt;();
+        }
+        wordList.add(dictionary[i]);
+        anagramMap.put(sortedWord, wordList);
+    }
+}
+
+public ArrayList&lt;String&gt; getAnagrams(String word) {
+    if (word == null) {
+        return null;
+    }
+
+    String sortedWord = sortWordLexicographically(word);
+    return anagramMap.get(sortedWord);
+}
+
+public void printAnagrams(String word) {
+    if (word == null) {
+        System.out.println("Input word is null!");
+    } else {
+        ArrayList&lt;String&gt; wordList = getAnagrams(word);
+        if (wordList == null) {
+            System.out.println("No anagrams exists for : " + word);
+        } else {
+            Iterator&lt;String&gt; iter = wordList.iterator();
+            while (iter.hasNext()) {
+                System.out.print(iter.next());
+            }
+        }
+    }
+}
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-09-02T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/q-google/'>q-google</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/09/02/Find-anagrams-in-dictionary/" data-via="" data-counturl="http://okc1.github.io/blog/2014/09/02/Find-anagrams-in-dictionary/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/09/02/Array-distance-A(i)+A(j)+(j-i)/" title="Previous Post: [Google] Array Distance A(i)+A(j)+(j-i) ">&laquo; [Google] Array Distance A(i)+A(j)+(j-i) </a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/09/02/Observer-pattern/" title="Next Post: [Java OOP] Observer pattern ">[Java OOP] Observer pattern  &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

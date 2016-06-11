@@ -1,0 +1,886 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link Given an unsorted array arr[0..n-1] of size n, find the minimum length subarray arr[s..e] such that sorting this subarray makes the &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/9/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/13/sort-part-and-make-whole-array-sorted/">[LinkedIn] Sort Part to Make Entire Array Sorted</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-13T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.geeksforgeeks.org/minimum-length-unsorted-subarray-sorting-which-makes-the-complete-array-sorted/">link</a></p>
+
+<blockquote><p>Given an unsorted array arr[0..n-1] of size n, find the minimum length subarray arr[s..e] such that sorting this subarray makes the whole array sorted.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>The solution from <a href="http://www.geeksforgeeks.org/minimum-length-unsorted-subarray-sorting-which-makes-the-complete-array-sorted/">gfg</a> is definitely good, but I find <a href="http://stackoverflow.com/a/15855670">this graphic explanation</a> a really great resource.</p>
+
+<p>The idea is, find min and max in the unsorted proportion, and trim the original array.</p>
+
+<h3>Code</h3>
+
+<p>not written.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/13/minimum-adjustments/">[Google] Minimum Adjustments</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-13T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=6212066786410496">link</a></p>
+
+<blockquote><p>Given an integer array, adjust each integers so that the difference of every adjacent integers are not greater than a given number target.</p>
+
+<p>If the array before adjustment is A, the array after adjustment is B, you should minimize the sum of |A[i]-B[i]|</p>
+
+<p>Given [1,4,2,3] and target=1, one of the solutions is [2,3,2,3], the minimal adjustment cost is 2.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>This is a difficult DP. Now we define 2D array like this:</p>
+
+<blockquote><p>dp[i][j]: the minimal adjust cost on changing A[i] to j</p></blockquote>
+
+<p>And the equation:</p>
+
+<blockquote><p>dp[i][j] = min{dp[i-1][k] + |j-A[i]|} s.t. |k-j| &lt;= target</p></blockquote>
+
+<p>Refer to the post by <a href="http://www.careercup.com/question?id=6212066786410496">simon.zhangsm</a></p>
+
+<h3>Code</h3>
+
+<p>Not written.</p>
+
+<p>Available at <a href="http://lintcode.com/en/problem/minimum-adjustment-cost/#">OJ</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/13/combination-of-factors/">[LinkedIn] Unique Combination of Factors (因式分解)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-13T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.mitbbs.com/article_t1/JobHunting/32803907_0_1.html">link</a></p>
+
+<blockquote><p>A question by dongfeiwww:</p>
+
+<p>打印一个数的所有乘数组合，从大到小，不要有重复</p>
+
+<p>Print all unique combinations of factors of a positive integer. For example given 24:</p></blockquote>
+
+<pre><code>24*1
+12*2
+8*3
+6*4
+6*2*2
+4*3*2
+3*2*2*2
+</code></pre>
+
+<h3>Solution</h3>
+
+<p>Simple DFS.</p>
+
+<h3>Code</h3>
+
+<pre><code>public List&lt;List&lt;Integer&gt;&gt; factorCombinations(int n) {
+    List&lt;List&lt;Integer&gt;&gt; ans = new ArrayList&lt;List&lt;Integer&gt;&gt;();
+    helper(ans, n, n / 2, new ArrayList&lt;Integer&gt;());
+    return ans;
+}
+
+private void helper(List&lt;List&lt;Integer&gt;&gt; ans, int num, int largestFactor,
+        List&lt;Integer&gt; path) {
+    if (num == 1) {
+        ans.add(new ArrayList&lt;Integer&gt;(path));
+        return;
+    }
+    for (int i = largestFactor; i &gt; 1; i--) {
+        if (num % i == 0) {
+            path.add(i);
+            helper(ans, num / i, i, path);
+            path.remove(path.size() - 1);
+        }
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/13/Sum-integer-weighted-by-depth/">[LinkedIn] Sum of Integer Weighted by Depth</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-13T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=5139875124740096">link</a></p>
+
+<pre><code>/** 
+* Given a nested list of integers, returns the sum of all integers in the list weighted by their depth 
+* For example, given the list {(1,1),2,(1,10)} the function should return 10 (four 1's at depth 2, one 2 at depth 1) 
+* Given the list {1,{4,{6}}} the function should return 27 (one 1 at depth 1, one 4 at depth 2, and one 6 at depth 3) 
+*/ 
+public int depthSum (List&lt;NestedInteger&gt; input) 
+{ // ur implementation here} 
+
+
+** 
+* This is the interface that represents nested lists. 
+* You should not implement it, or speculate about its implementation. 
+*/ 
+public interface NestedInteger 
+{ 
+/** @return true if this NestedInteger holds a single integer, rather than a nested list */ 
+boolean isInteger(); 
+
+/** @return the single integer that this NestedInteger holds, if it holds a single integer 
+* Return null if this NestedInteger holds a nested list */ 
+Integer getInteger(); 
+
+/** @return the nested list that this NestedInteger holds, if it holds a nested list 
+* Return null if this NestedInteger holds a single integer */ 
+List&lt;NestedInteger&gt; getList(); 
+}
+</code></pre>
+
+<h3>Solution</h3>
+
+<p>DFS recurse.</p>
+
+<h3>Code</h3>
+
+<p>The algo:</p>
+
+<pre><code>public int depthSum(List&lt;NestedInteger&gt; input, int weight) {
+    // ur implementation here
+    int sum = 0;
+    for (NestedInteger ni : input) {
+        if (ni.isInteger()) {
+            sum += ni.getInteger() * weight;
+        } else {
+            sum += depthSum(ni.getList(), weight + 1);
+        }
+    }
+    return sum;
+}
+</code></pre>
+
+<p>Interface and Impl:</p>
+
+<pre><code>/*
+ * This is the interface that represents nested lists. You should not implement
+ * it, or speculate about its implementation.
+ */
+interface NestedInteger {
+    /**
+     * @return true if this NestedInteger holds a single integer, rather than a
+     *         nested list
+     */
+    boolean isInteger();
+
+    /**
+     * @return the single integer that this NestedInteger holds, if it holds a
+     *         single integer Return null if this NestedInteger holds a nested
+     *         list
+     */
+    Integer getInteger();
+
+    /**
+     * @return the nested list that this NestedInteger holds, if it holds a
+     *         nested list Return null if this NestedInteger holds a single
+     *         integer
+     */
+    List&lt;NestedInteger&gt; getList();
+}
+
+class NestedIntegerImpl implements NestedInteger {
+
+    int num;
+    List&lt;NestedInteger&gt; list = new ArrayList&lt;NestedInteger&gt;();
+
+    public NestedIntegerImpl(int number) {
+        num = number;
+        list = null;
+    }
+
+    public NestedIntegerImpl(List&lt;NestedInteger&gt; inputList) {
+        num = -1;
+        list = inputList;
+    }
+
+    @Override
+    public boolean isInteger() {
+        return list == null;
+    }
+
+    @Override
+    public Integer getInteger() {
+        if (isInteger()) {
+            return num;
+        }
+        return -1;
+    }
+
+    @Override
+    public List&lt;NestedInteger&gt; getList() {
+        return list;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/12/executives-schedule/">[LinkedIn] Executive's Schedule</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-12T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.mitbbs.com/article_t/JobHunting/32884889.html">link</a></p>
+
+<blockquote><p>Develop an algorithm to schedule an executive&rsquo;s day, given a list of people
+the executive has to meet with, the amount of time they request to see the
+executive, and the priority of the meeting.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Refer to <strong>[Question] 0-1 Knapsack Problem</strong>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/11/isomorphic-strings/">[LinkedIn] Isomorphic Strings</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-11T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=5389627422670848">link</a></p>
+
+<blockquote><p>Given two (dictionary) words as Strings, determine if they are isomorphic.</p>
+
+<p>Two words are called isomorphic if the letters in one word can be remapped to get the second word. Remapping a letter means replacing all occurrences of it with another letter while the ordering of the letters remains unchanged. No two letters may map to the same letter, but a letter may map to itself.</p>
+
+<p>Example:</p></blockquote>
+
+<pre><code>given "foo", "app"; returns true 
+we can map 'f' -&gt; 'a' and 'o' -&gt; 'p' 
+
+given "bar", "foo"; returns false 
+we can't map both 'a' and 'r' to 'o' 
+
+given "turtle", "tletur"; returns true 
+we can map 't' -&gt; 't', 'u' -&gt; 'l', 'r' -&gt; 'e', 'l' -&gt; 'u', 'e' -'r' 
+
+given "ab", "ca"; returns true 
+we can map 'a' -&gt; 'c', 'b'
+</code></pre>
+
+<h3>Solution</h3>
+
+<p>My first thought was: map char to char, then check in the hashmap. However, <strong>this will not work</strong>!</p>
+
+<pre><code>input: abc, pzz
+check a -&gt; p
+check b -&gt; z
+check c -&gt; z
+</code></pre>
+
+<p>Using a hashmap <strong> does not show us </strong>whether 2 chars match to the same char__. In above example, b and c both match to z.</p>
+
+<p><strong>Best Solution</strong>, suggested by <a href="http://www.careercup.com/question?id=5389627422670848">urik</a>:</p>
+
+<blockquote><p>HashMap (char, firstSeenIndice) for each string. The encoding of firstSeenIndices shud match.</p>
+
+<p>E.g. Foo and app both encode to 011</p>
+
+<p>Abcd and hole both encode to 0123</p></blockquote>
+
+<h3>Code</h3>
+
+<pre><code>public boolean isomorphic(String s, String t) {
+    if (s.length() != t.length()) {
+        return false;
+    }
+    return (sequence(s).equals(sequence(t)));
+}
+
+private String sequence(String s) {
+    HashMap&lt;Character, Integer&gt; map = new HashMap&lt;Character, Integer&gt;();
+    StringBuilder sb = new StringBuilder();
+
+    for (int i = 0; i &lt; s.length(); i++) {
+        if (map.containsKey(s.charAt(i))) {
+            sb.append(map.get(s.charAt(i)));
+        } else {
+            map.put(s.charAt(i), i);
+        }
+    }
+    return sb.toString();
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/11/Web-server-application-server/">[Design] Application Server vs. Web Server</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-11T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Overview</h2>
+
+<p>A Web server <strong>exclusively handles HTTP requests</strong>, whereas an application server <strong>serves business logic</strong> to application programs through any number of protocols (including HTTP).</p>
+
+<h4>Example: Apache Tomcat</h4>
+
+<p>web server + servlet container</p>
+
+<h4>Example: Glassfish</h4>
+
+<p><strong>application server</strong> (that supports EJB, JSF, JSP and servlets)</p>
+
+<h3>Apache Tomcat</h3>
+
+<p>Apache Tomcat is <a href="http://stackoverflow.com/a/2469984">a web server and</a> a Web container/Servlet container/JSP container (having all these names). It is used for strictly web-based applications but does not include the entire suite of capabilities of Java EE, thus not application server.</p>
+
+<p>Note: <strong>Tomcat is <a href="http://okckd.github.io/blog/2014/08/05/Web-server-application-server/">web container</a></strong> where as Apache is web server.</p>
+
+<h3>Servlet</h3>
+
+<p><a href="https://tomcat.apache.org/tomcat-5.5-doc/servletapi/javax/servlet/Servlet.html">A servlet</a> is <strong>a small Java program that runs within a Web server</strong>. Servlets receive and respond to requests from Web clients, usually across HTTP.</p>
+
+<h3>Glassfish</h3>
+
+<p>Tomcat is not Java EE container, but only a servlet container. <a href="http://stackoverflow.com/a/23563455">If you plan to</a> use full Java EE (which includes security and many other things), you have to switch from Tomcat to some of <strong>full Java EE application servers</strong>. Glassfish is one of them, others are TomEE, WildFly, IBM Websphere, Oracle Weblogic etc.</p>
+
+<h3>Web application</h3>
+
+<p><a href="http://www.service-architecture.com/articles/application-servers/j2ee_web_server_or_container.html">A Web application</a> runs within a <strong>Web container</strong> of a <strong>Web server</strong>. The Web container provides the runtime environment through components that provide naming context and life cycle management. A Web server <strong>may</strong> work with an EJB server to provide some of those services.</p>
+
+<p>Web applications are composed of web components and other data such as HTML pages. Web components can be <strong>servlets, JSP pages</strong> created with the JavaServer Pages™ technology, web filters, and web event listeners. These components execute in a web server and may respond to HTTP requests from web clients.</p>
+
+<h3>Application server VS. Web server, in short</h3>
+
+<p><strong>Web server</strong> just serves the web pages and it cannot enforce any application logic.</p>
+
+<p><strong>Application server</strong> maintains the application logic and serves the web pages in response to user request.</p>
+
+<p>That means application server can do both application logic maintanence and web page serving.</p>
+
+<p><strong>Final conclusion</strong>: Application server also contains the web server.</p>
+
+<blockquote><p>Application server = Web Server + EJB container.</p></blockquote>
+
+<h3>Web server Detail</h3>
+
+<p>A <a href="http://www.javaworld.com/article/2077354/learn-java/app-server-web-server-what-s-the-difference.html">Web server</a> <strong>handles the HTTP protocol</strong>. When the Web server receives an HTTP request, it responds with an HTTP response, such as sending back an HTML page.</p>
+
+<p>To process a request, a Web server may <strong>respond with a static HTML page</strong>, or delegate the <strong>dynamic response</strong> such as CGI scripts, JSPs (JavaServer Pages), servlets, ASPs (Active Server Pages), server-side JavaScripts, or some other server-side technology.</p>
+
+<p>Web server is used only for Jsp and Servlets and static functionality. It doesn’t support EJB and JMS and JAAS.</p>
+
+<h3>Application server Detail</h3>
+
+<p>An <a href="http://www.javaworld.com/article/2077354/learn-java/app-server-web-server-what-s-the-difference.html">Application server</a> <strong>exposes business logic to client applications</strong> through various protocols, possibly including HTTP. The clients can include GUIs (graphical user interface) running on a PC, a Web server, or even other application servers.</p>
+
+<p>In most cases, the server exposes this business logic through a component API, such as the EJB (Enterprise JavaBean) component model found on J2EE (Java 2 Platform, Enterprise Edition) application servers.</p>
+
+<h3>Example</h3>
+
+<p>There&rsquo;s <a href="http://www.javaworld.com/article/2077354/learn-java/app-server-web-server-what-s-the-difference.html">a nice example</a>: online store that provides real-time pricing.</p>
+
+<h4>Scenario 1: Web server</h4>
+
+<p>The Web server takes your request, then passes it to a server-side program able to handle the request. The server-side program looks up the pricing information from a database or a flat file. Once retrieved, the server-side program uses the information to formulate the HTML response, then the Web server sends it back to your Web browser.</p>
+
+<p>To summarize, a Web server simply processes HTTP requests <strong>by responding with HTML pages</strong>.</p>
+
+<h4>Scenario 2: Web server with an application server</h4>
+
+<p>Scenario 2 resembles Scenario 1 in that the Web server still delegates the response generation to a script. However, you can now put the business logic for the pricing lookup onto an application server.</p>
+
+<p>With that change, instead of the script knowing how to look up the data and formulate a response, the script can simply call the application server&rsquo;s lookup service. The script can then use the service&rsquo;s result when the script generates its HTML response.</p>
+
+<p>In this scenario, the application server serves the business logic for looking up a product&rsquo;s pricing information. That functionality doesn&rsquo;t say anything about display or how the client must use the information. Instead, the client and application server send data back and forth. When a client calls the application server&rsquo;s lookup service, the service simply looks up the information and returns it to the client.</p>
+
+<p>By separating the pricing logic from the HTML response-generating code, the pricing logic becomes far more reusable between applications. A second client, such as a cash register, could also call the same service as a clerk checks out a customer. In contrast, in Scenario 1 the pricing lookup service is not reusable because the information is embedded within the HTML page. To summarize, in Scenario 2&rsquo;s model, the Web server handles HTTP requests by replying with an HTML page while the application server serves application logic by processing pricing and availability requests.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/10/design-cache-system/">[Design] Design Cache System (`)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-10T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Easy version</h3>
+
+<p>[Q] Design a layer <strong>in front of a system</strong> which cache the last n requests and the responses to them from the system.</p>
+
+<p><strong><a href="http://blog.csdn.net/hexinuaa/article/details/6630384">Solution</a></strong>:</p>
+
+<p>[a] When a request comes look it up in the cache and if it hits then return the response from here and do not pass the request to the system</p>
+
+<p>[b] If the request is not found in the cache then pass it on to the system</p>
+
+<p>[c] Since cache can only store the last n requests, Insert the n+1th request in the cache and delete one of the older requests from the cache</p>
+
+<p>[d]Design one cache such that all operations can be done in O(1) – lookup, delete and insert.</p>
+
+<h3>Distributed Cache</h3>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/09/number-of-slices/">[Google] Number of Slices</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-09T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=5090693043191808">link</a></p>
+
+<blockquote><p>Calculate the number of slices. Slice means that the difference between the maximum and minimum in the slice &lt;= 2.</p>
+
+<p>eg. Given array 3 5 7 6 3.</p>
+
+<p>There&rsquo;re 10: (0,0) (1,1) (2,2) (3,3) (4,4) (5,5) (0,1) (1,2) (1,3) (2,3).</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>If only asked to output the total number of such slices, we can do it in <strong>O(n) using sliding-window-like algorithm</strong>, with the help of addtional queue-like data structure.</p>
+
+<p>This is <strong>a very difficult question</strong>! Quoted from the <a href="http://www.careercup.com/question?id=5090693043191808">top answer</a>:</p>
+
+<blockquote><p>The basic idea is that you can start with arr[0] and then see <strong>how many more elements you can include before you violate the max -min &lt;= K constraint</strong>. When you reach some index j you can no longer include, you know the maximum subarray starting at index 0 is arr[0&hellip;j-1], and you can count j different subarrays there.</p>
+
+<p>&hellip; you then start with a[1]. Now [1&hellip;j-1] has to be valid, so you try to advance the right boundary again (try arr[1&hellip;j], then arr[1&hellip;j+1]) and so on until again you reach a point past which you can&rsquo;t advance. Then you&rsquo;ll try string at a[2], and so on. This is what they mean when they talk about <strong>&ldquo;crawling&rdquo; over the array</strong>.</p>
+
+<p>The key issue here is how you will check whether a particular subarray is valid efficiently&hellip;</p></blockquote>
+
+<p>Sliding window is explained above. Now, <strong>the minMaxQueue</strong> explain in <a href="https://codility.com/media/train/solution-count-bounded-slices.pdf">this pdf</a>:</p>
+
+<blockquote><p>The PDF &hellip; have <strong>1 queue each</strong> (i.e. 2 queues in total) for min and max (the min is treated analogous to the max case).</p>
+
+<p>For maxQueue, whenever a new value comes in the max queue, they remove all values less than the value, since those <strong>can never be the max</strong>. For that reason the queue&rsquo;s values are in descending order. And the max at any given time is the first element.</p></blockquote>
+
+<p>In this way, getting min/max is O(1), thus entire solution is O(n). Nice question!</p>
+
+<h3>Code</h3>
+
+<p>Not written.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/09/intro-google-spanner/">[Design] Intro to Google Spanner</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-09T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Spanner</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Spanner_%28database%29">Spanner</a> is Google&rsquo;s globally <strong>distributed NewSQL database, the successor to BigTable</strong>. Google describes Spanner as not a pure relational system because each table must have a primary-key column.</p>
+
+<p>Currently, <strong>F1, Google&rsquo;s advertisement platform</strong>, uses Spanner. Gmail and Google Search will also use it soon.</p>
+
+<h3>NewSQL VS. NoSQL</h3>
+
+<p><strong>NewSQL</strong>, a wholly different database architecture, differentiated from NoSQL, is beginning to emerge.</p>
+
+<h4>NoSQL</h4>
+
+<p>There are many reasons why NoSQL products have been popular. As there are a variety of NoSQL products. As you can see in Hadoop or Cassandra, main advantages of NoSQL is its horizontal scalability.</p>
+
+<p>As these NoSQL products <strong>don&rsquo;t provide Strong Consistency</strong>, they cannot be used where <strong>high-level data consistency</strong> is required.</p>
+
+<h4>NewSQL</h4>
+
+<p>NewSQL has as <strong>excellent scalability</strong> as NoSQL, and at the same time it <strong>guarantees ACID like RDBMS</strong> which is performed in a single node.</p>
+
+<h3>What is Spanner?</h3>
+
+<p>Spanner is <a href="http://www.cubrid.org/blog/dev-platform/spanner-globally-distributed-database-by-google/">a NewSQL created by Google</a>. It is a distributed relational database that can distribute and store data in Google&rsquo;s BigTable storage system in multiple data centers. Spanner meets ACID (of course, it supports transaction) and supports SQL.</p>
+
+<p><strong>Data R/W eff</strong>: When you read data, Spanner connects you to the data center that is geographically closest to you, and when you write data, it distributes and stores it to multiple data centers.</p>
+
+<p><strong>Failure</strong>: If the data center you try to access has a failure, of course, you can read the data from another data center that has a replica of the data (in US, <strong>5 replica</strong>).</p>
+
+<p>The Spanner client automatically <strong>performs a failover between replicas</strong>. When the number of servers storing data is changed or a failure occurs in equipment, Spanner automatically <strong>re-distributes data</strong> through data transfer among the equipments.</p>
+
+<p>More details of Spanner: will come later.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/10">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/8">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Java Oop | Woodstock Blog]]></title>
+  <link href="http://okc1.github.io/blog/categories/java-oop/atom.xml" rel="self"/>
+  <link href="http://okc1.github.io/"/>
+  <updated>2016-06-11T09:44:47-07:00</updated>
+  <id>http://okc1.github.io/</id>
+  <author>
+    <name><![CDATA[Kevin Durant]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[[Java OOP] Java ArrayList Implementation]]></title>
+    <link href="http://okc1.github.io/blog/2015/10/28/arraylist-implementation/"/>
+    <updated>2015-10-28T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2015/10/28/arraylist-implementation</id>
+    <content type="html"><![CDATA[# Overview
+
+__[Resizable-array](http://docs.oracle.com/javase/7/docs/api/java/util/ArrayList.html)__ implementation of the List interface. (it's actually an [array of Object](http://stackoverflow.com/a/7382507))
+
+It's not synced. 
+
+## Underlying design
+
+1. __Random access__ – no need to traverse thru all nodes.
+
+1. __Circular array__ - Array size is pre-defined. Use head and tail to keep track of list position. 
+
+1. __Insertion and deletion__ - Implement __shiftRight()__ and shiftLeft() methods.
+
+Actual code will come later...
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Java OOP] Static Class and Inner Class]]></title>
+    <link href="http://okc1.github.io/blog/2015/10/23/static-class-inner-class/"/>
+    <updated>2015-10-23T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2015/10/23/static-class-inner-class</id>
+    <content type="html"><![CDATA[# Nested classes 
+
+Both Static class and Inner class are called __nested class__. 
+
+[The purpose of a nested class](http://tutorials.jenkov.com/java/nested-classes.html) is to __clearly group the nested class with its surrounding class__, signaling that these two classes are to be used together. 
+
+Now the 2 types:
+
+1. Static nested classes (also: Static Classes )
+1. Non-static nested classes (also: Inner Class)
+
+## Static Classes 
+
+Declare:
+
+    public class Outer {
+        public static class Nested {
+
+        }
+    }
+
+Instantiate (just like a normal class):
+
+    Outer.Nested instance = new Outer.Nested();
+
+## Inner Classes 
+
+    public class Outer {
+        public class Inner {
+        
+        }
+    }
+
+Instantiate (you MUST have an instance of enclosing class, and look weird the 'new' keyword looks):
+
+    Outer outer = new Outer();
+    Outer.Inner inner = outer.new Inner();
+
+# access level
+
+__Inner class__ can access private members in enclosing class (static or non-static).
+
+    public class Outer {
+
+        private String text = "I am private!";
+
+        public class Inner {
+
+            public void printText() {
+                System.out.println(text);
+            }
+        }
+    }
+
+__Static class__ [cannot access non-static members](http://www.geeksforgeeks.org/static-class-in-java/). 
+
+# top-level static class?
+
+Java has __[no way of making a top-level class static](http://stackoverflow.com/a/7486111)__ but you can simulate a static class like this:
+
+1. Declare your class final
+
+1. Make the constructor private
+
+1. Make all the members and functions of the class static
+
+(this basically is a Singleton)
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Java OOP] What Is Java Exception]]></title>
+    <link href="http://okc1.github.io/blog/2015/10/23/java-what-is-exception/"/>
+    <updated>2015-10-23T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2015/10/23/java-what-is-exception</id>
+    <content type="html"><![CDATA[# The class
+
+__[The class Exception](http://docs.oracle.com/javase/7/docs/api/java/lang/Exception.html)__ and its subclasses are a form of __Throwable__ that indicates conditions that a reasonable application might want to catch.
+
+# The object
+
+__[An exception is an event](https://docs.oracle.com/javase/tutorial/essential/exceptions/definition.html)__, which occurs during the execution of a program, that disrupts the normal flow of the program's instructions.
+
+__When an error occurs__ within a method, the method __creates an object and hands it off to the runtime system__. The object, called an __exception object__, contains information about the error(eg. type, state etc). 
+
+## throw this object out!
+
+Creating an exception object and handing it to the runtime system is called __throwing an exception__.
+
+After a method throws an exception, the runtime system (i.e. __JVM__) attempts to find something to handle it. This is __exception handler__.
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Java OOP] Java Vector and ArrayList]]></title>
+    <link href="http://okc1.github.io/blog/2015/10/23/java-vector-arraylist/"/>
+    <updated>2015-10-23T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2015/10/23/java-vector-arraylist</id>
+    <content type="html"><![CDATA[# Vector in Java
+
+Vector class implements a __growable array__ of objects. 
+
+It's an array, __not a list__. 
+
+# Vector VS ArrayList
+
+1. Vectors are synchronized, ArrayLists are not.
+1. Data Growth Methods (ArrayList grow by 1/2 of its size, while Vector doubles)
+
+Usage: [ALWAYS use ArrayLists](http://stackoverflow.com/a/2986307)
+
+> The vector was not the part of collection framework, it has been included in collections later. __It can be considered as Legacy code__. 
+>
+> There is nothing about Vector which List collection cannot do. Therefore Vector __[should be avoided](http://beginnersbook.com/2013/12/difference-between-arraylist-and-vector-in-java/)__.
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Java OOP] Template Method Pattern (Abstract Class)]]></title>
+    <link href="http://okc1.github.io/blog/2015/10/23/Template-method-pattern/"/>
+    <updated>2015-10-23T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2015/10/23/Template-method-pattern</id>
+    <content type="html"><![CDATA[# Overview
+
+__[Template method pattern](https://en.wikipedia.org/wiki/Template_method_pattern) is a behavioral design pattern__ that defines the program skeleton of an algorithm in a method, called template method, which __defers some steps to subclasses__. 
+
+It lets one __redefine__ certain steps of an algorithm without changing the algorithm's structure.
+
+## Usage 
+
+The template method is used in frameworks, where each implements the invariant parts of a domain's architecture.
+
+## Example in Java
+
+Refer to [code from WIKI](https://en.wikipedia.org/wiki/Template_method_pattern#Example_in_Java): 
+
+    /**
+     * An abstract class that is common to several games in
+     * which players play against the others, but only one is
+     * playing at a given time.
+     */
+
+    abstract class Game {
+     /* Hook methods. Concrete implementation may differ in each subclass*/
+        protected int playersCount;
+        abstract void initializeGame();
+        abstract void makePlay(int player);
+        abstract boolean endOfGame();
+        abstract void printWinner();
+
+        /* A template method : */
+        public final void playOneGame(int playersCount) {
+            this.playersCount = playersCount;
+            initializeGame();
+            int j = 0;
+            while (!endOfGame()) {
+                makePlay(j);
+                j = (j + 1) % playersCount;
+            }
+            printWinner();
+        }
+    }
+
+    //Now we can extend this class in order 
+    //to implement actual games:
+
+    class Monopoly extends Game {
+
+        /* Implementation of necessary concrete methods */
+        void initializeGame() {
+            // Initialize players
+            // Initialize money
+        }
+        void makePlay(int player) {
+            // Process one turn of player
+        }
+        boolean endOfGame() {
+            // Return true if game is over 
+            // according to Monopoly rules
+        }
+        void printWinner() {
+            // Display who won
+        }
+        /* Specific declarations for the Monopoly game. */
+
+        // ...
+    }
+
+    class Chess extends Game {
+
+        /* Implementation of necessary concrete methods */
+        void initializeGame() {
+            // Initialize players
+            // Put the pieces on the board
+        }
+        void makePlay(int player) {
+            // Process a turn for the player
+        }
+        boolean endOfGame() {
+            // Return true if in Checkmate or 
+            // Stalemate has been reached
+        }
+        void printWinner() {
+            // Display the winning player
+        }
+        /* Specific declarations for the chess game. */
+
+        // ...
+    }
+]]></content>
+  </entry>
+  
+</feed>

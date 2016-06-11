@@ -1,0 +1,359 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Question] Implement a HashMap - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question Implement a HashMap Hint: An instance of HashMap has two parameters that affect its performance: initial capacity and load factor. The &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/07/01/Implement-Hashmap/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Question] Implement a HashMap</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-01T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<p>Implement a HashMap</p>
+
+<p><strong>Hint</strong>:</p>
+
+<blockquote><p>An instance of HashMap has two parameters that affect its performance: initial capacity and load factor. The capacity is the number of buckets in the hash table, and the initial capacity is simply the capacity at the time the hash table is created. The load factor is a measure of how full the hash table is allowed to get before its capacity is automatically increased. When the number of entries in the hash table exceeds the product of the load factor and the current capacity, the hash table is rehashed (that is, internal data structures are rebuilt) so that the hash table has approximately twice the number of buckets. <a href="http://stackoverflow.com/a/10901821">source</a></p>
+
+<p>Load factor = n/k where n is the number of entries and k is the number of buckets.</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>Some points to take note:</p>
+
+<ol>
+<li><p>So first of all, we would need 2 important parameters in a Hashmap: <strong>initial capacity and load factor</strong>. In Java, it&rsquo;s default 0.75.</p>
+
+<p> For example the product of capacity and load factor = 16 * 0.75 = 12. This represents that after storing the 12th key – value pair into the HashMap , its capacity will become 32.</p></li>
+<li><p>Then we would need an Entry&lt;Obj, Obj> Class to store <strong>key-value pairs</strong>. Important to note the Entry would have a &lsquo;next&rsquo; pointer, in order to mimic a LinkedList.</p></li>
+<li><p>Except key, value and next pointer, Entry class <strong>also need to store the &lsquo;hash&rsquo; value</strong>, because it will be used during comparison.</p></li>
+<li><p>The main bucket is an array of Entry objects. It should resize when it has to, and this is <strong>done in the addEntry() method</strong>. I skipped this part of code.</p></li>
+<li><p>The code for put() and get() method are similar, because it&rsquo;s bascially <strong>calculate hash</strong>, then <strong>get array index</strong>, using that index to <strong>locate the head Entry object</strong>, and then do a linear search for key. If found, put() will replace it, and get() will return it. Note than after replaced, the old value is returned (Java designed in this way, I personally wouldn&rsquo;t do this).</p></li>
+<li><p>Last important thing is the <strong>indexFor() method</strong>. It looks useless to me at first, then I realize that this method is mapping my hash value into the index in the array. Fine, but this bit operation still looks odd. Look at next section for more.</p></li>
+</ol>
+
+
+<h3>The Niubility Operation: h &amp; (length - 1)</h3>
+
+<p>This actually equals to the value of (h % length). It converts the hash value into array index.</p>
+
+<blockquote><p>这个方法非常巧妙，它通过 h &amp; (length - 1) 来得到该对象的保存位，而HashMap底层数组的长度总是 2 的 n 次方，这是HashMap在速度上的优化。</p>
+
+<p>当length总是 2 的n次方时，h &amp; (length - 1)运算等价于对length取模，也就是h % length，但是 &amp; 比 % 具有更高的效率。<a href="http://www.cnblogs.com/-clq/archive/2012/01/11/2318870.html">source</a></p></blockquote>
+
+<p>That&rsquo;s all about implementing a HashMap. It&rsquo;s difficult, but having a general idea definitely helps.</p>
+
+<p>What&rsquo;s more, know the mod operation &ldquo;h &amp; (length - 1)&rdquo; would definitely help you grab some attentions!</p>
+
+<h3>Code</h3>
+
+<pre><code>public class MyHashMap {
+
+    Pair[] table;
+    float loadFactor;
+    int size;
+
+    public MyHashMap(int initialCapacity, float loadFactor) {
+        if (initialCapacity &lt; 0 || loadFactor &lt;= 0) {
+            return;
+        }
+        table = new Pair[initialCapacity];
+        this.size = 0;
+        this.loadFactor = loadFactor;
+    }
+
+    public String get(int key) {
+        int hash = hash(key);
+        int i = indexFor(hash, table.length);
+        Pair e = table[i];
+        for (; e != null; e = e.next) {
+            if (e.hash == hash &amp;&amp; key == e.key) {
+                return e.value;
+            }
+        }
+        return null;
+    }
+
+    public String put(int key, String value) {
+        int hash = hash(key);
+        int i = indexFor(hash, table.length);
+        Pair e = table[i];
+        for (; e != null; e = e.next) {
+            if (e.hash == hash &amp;&amp; key == e.key) {
+                String oldValue = e.value;
+                e.value = value;
+                return oldValue;
+            }
+        }
+        addEntry(hash, key, value, i);
+        return null;
+    }
+
+    void addEntry(int hash, int key, String value, int i) {
+        // in charge of resizing here (check the load factor)
+        // resizing code is not written here
+        Pair e = table[i];
+        table[i] = new Pair(hash, key, value, e);
+    }
+
+    int indexFor(int h, int length) {
+        return h &amp; (length - 1);
+    }
+
+    final int hash(int code) {
+        // this is the hash function from java 6 source code
+        code ^= (code &gt;&gt;&gt; 20) ^ (code &gt;&gt;&gt; 12);
+        return code ^ (code &gt;&gt;&gt; 7) ^ (code &gt;&gt;&gt; 4);
+    }
+
+    public static void main(String[] args) {
+        MyHashMap map = new MyHashMap(16, 0.5f);
+        map.put(1, "a");
+        map.put(2, "b");
+        map.put(3, "c");
+        System.out.println(map.get(1));
+        System.out.println(map.get(2));
+        System.out.println(map.get(3));
+        map.put(1, "Spider Man");
+        map.put(4, "d");
+        map.put(3, "Peter Parker");
+        System.out.println(map.get(1));
+        System.out.println(map.get(2));
+        System.out.println(map.get(3));
+        System.out.println(map.get(4));
+        System.out.println(map.get(5));
+    }
+
+    class Pair {
+        int hash;
+        int key;
+        String value;
+        Pair next;
+
+        Pair(int h, int k, String v, Pair n) {
+            hash = h;
+            key = k;
+            value = v;
+            next = n;
+        }
+    }
+}
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-07-01T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/question/'>question</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/07/01/Implement-Hashmap/" data-via="" data-counturl="http://okc1.github.io/blog/2014/07/01/Implement-Hashmap/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/07/01/Hashmap-Hashtable-Hashset/" title="Previous Post: [Design] HashMap vs Hashtable vs HashSet">&laquo; [Design] HashMap vs Hashtable vs HashSet</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/07/01/Implement-queue-with-stack/" title="Next Post: [Question] Implement Queue using Stacks">[Question] Implement Queue using Stacks &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

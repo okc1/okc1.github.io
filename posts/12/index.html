@@ -1,0 +1,1121 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Publish–subscribe pattern The publish–subscribe pattern is a messaging pattern where senders of messages, called publishers, do not send messages &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/12/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/05/pubsub-pattern/">[Java OOP] PubSub (Publish–subscribe) Pattern</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-05T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Publish–subscribe pattern</h3>
+
+<p><strong><a href="http://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern">The publish–subscribe pattern</a> is a messaging pattern</strong> where senders of messages, called publishers, do not send messages directly to specific subscribers. Instead, published messages are characterized into classes without knowledge of subscribers.</p>
+
+<p>Similarly, subscribers express interest in one or more classes, without knowledge of what publishers there are.</p>
+
+<ol>
+<li>greater network scalability</li>
+<li>a more dynamic network topology</li>
+<li>decreased flexibility to modify the Publisher and its structure of the data published.</li>
+</ol>
+
+
+<p>Pub/sub is typically a part of a larger <strong>message-oriented middleware system</strong>. e.g. Java Message Service (JMS).</p>
+
+<h3>Difference w/ observer pattern</h3>
+
+<p>Refer to <strong>[Java OOP] Observer pattern</strong> or <a href="http://stackoverflow.com/questions/15594905/difference-between-observer-pub-sub-and-data-binding">this link</a>:</p>
+
+<h4>Observer, or Observable/Observer:</h4>
+
+<blockquote><p>A design pattern by which an object is imbued with the ability to notify others of specific events - typically done using actual events, which are kind of like slots in the object with the shape of a specific function/method. The observable is the one who provides notifications, and the observer receives those notifications. In .net, the observable can expose an event and the observer subscribes to that event with an &ldquo;event handler"shaped hook. No assumptions are made about the specific mechanism which notifications occur, nor about the number of observers one observable can notify.</p></blockquote>
+
+<h4>Pub/Sub:</h4>
+
+<blockquote><p>Another name (perhaps with more &ldquo;broadcast&rdquo; semantics) of the Observable/Observer pattern, which usually implies a more &ldquo;dynamic&rdquo; flavor - observers can subscribe or unsubscribe to notifications and one observable can &ldquo;shout out&rdquo; to multiple observers. In .net, one can use the standard events for this, since events are a form of MulticastDelegate, and so can support delivery of events to multiple subscribers, and also support unsubscription. Pub/sub has a slightly different meaning in certain contexts, usually involving more &ldquo;anonymity&rdquo; between event and eventer, which can be facilitated by any number of abstractions, usually involving some &ldquo;middle man&rdquo; (such as a message queue) who knows all parties, but the individual parties don&rsquo;t know about each other.</p></blockquote>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/05/multi-server-messaging-system/">[Google] Multi-server Messaging System</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-05T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.mitbbs.com/article_t/JobHunting/32547841.html">link</a></p>
+
+<blockquote><p>Multiple threads can publish and receive each other&rsquo;s message:</p></blockquote>
+
+<ol>
+<li><p>whenever a thread publishes a message, all the other threads can receive and print out that message;</p></li>
+<li><p>if multiple message get published, the messages should be queued or whatever recorded and other threads can print out the message one by one;</p></li>
+<li><p>no published message should be missed by any other threads.</p></li>
+</ol>
+
+
+<h3>Solution</h3>
+
+<p>Suggested by <a href="http://www.mitbbs.com/article_t/JobHunting/32547841.html">level 13</a>:</p>
+
+<blockquote><p>给每个thread分一个blocking queue就完了。这题延伸开来是个很好的设计题, pubsub, messaging framework etc.</p></blockquote>
+
+<p>Using a blocking queue to store messages for each server. It&rsquo;s pretty much like consumer-producer. But here, the server takes on both roles. Read my code below, or <strong>[Java OOP] PubSub (Publish–subscribe) pattern</strong> to learn about <strong>PubSub</strong>.</p>
+
+<h3>Code</h3>
+
+<p>Below is my code, it may not be the correct solution. If you would like to discuss, please leave me a comment!</p>
+
+<pre><code>public class MessagingServer implements Runnable {
+
+    String serverId;
+    List&lt;MessagingServer&gt; servers;
+    BlockingQueue&lt;String&gt; messages;
+    boolean isFinished;
+
+    public MessagingServer(String id, List&lt;MessagingServer&gt; list, int qSize) {
+        this.serverId = id;
+        this.servers = list;
+        messages = new ArrayBlockingQueue&lt;String&gt;(qSize);
+        isFinished = false;
+    }
+
+    public void run() {
+        // this would be the consumer
+        // everything that is added to BlockingQueue&lt;String&gt; messages is printed
+        while (!isFinished) {
+            String msg;
+            try {
+                msg = messages.take();
+                System.out.println(serverId + " says: " + msg);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void sendMessage(String msg) {
+        // this is the producer
+
+        // insert this msg in the blockingQ of all other servers
+        for (MessagingServer server : servers) {
+            server.messages.add(msg + " (received from " + this.serverId + ")");
+        }
+    }
+
+    public void terminate() {
+        this.isFinished = true;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/05/implement-blocking-q/">[Google] Implement a Blocking Queue</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-05T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=14622668">link</a></p>
+
+<blockquote><p>Implement a Blocking queue.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>First thing first, the most important characteristic of a BlockingQueue is:</p>
+
+<blockquote><p><strong>thread-safe</strong> BlockingQueue</p></blockquote>
+
+<p>Second, we need to make sure to handle the following 2 methods:</p>
+
+<blockquote><p><strong>notifyAll();</strong></p>
+
+<p><strong>wait();</strong></p></blockquote>
+
+<p>Last, remember that <strong>wait()</strong> has got a <strong>checked exception</strong>(InterruptedException). We end up with the code:</p>
+
+<pre><code>public synchronized void enqueue(Object item) throws InterruptedException {
+    while (this.queue.size() == this.size) {
+        wait();
+    }
+    if (this.queue.size() == 0) {
+        notifyAll();
+    }
+    this.queue.add(item);
+}
+</code></pre>
+
+<h3>Code</h3>
+
+<p>The entire class, refer to <strong>[Java OOP] Java BlockingQueue (2)</strong>:</p>
+
+<pre><code>public class MyBlockingQueue {
+
+    private List&lt;Object&gt; queue = new LinkedList&lt;Object&gt;();
+    private int size = 10;
+
+    public MyBlockingQueue(int size) {
+        this.size = size;
+    }
+
+    public synchronized void enqueue(Object item) throws InterruptedException {
+        while (this.queue.size() == this.size) {
+            wait();
+        }
+        if (this.queue.size() == 0) {
+            notifyAll();
+        }
+        this.queue.add(item);
+    }
+
+    public synchronized Object dequeue() throws InterruptedException {
+        while (this.queue.size() == 0) {
+            wait();
+        }
+        if (this.queue.size() == this.size) {
+            notifyAll();
+        }
+
+        return this.queue.remove(0);
+    }
+
+    public boolean isEmpty() {
+        return this.queue.isEmpty();
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/04/snakes-and-ladders/">[Google] Snakes and Ladders</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-04T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=14955106">link</a></p>
+
+<blockquote><p>Given a board of snakes and ladders game, provide an algorithm to find the minimum number of dice rolls required to reach 100 from 1.</p></blockquote>
+
+<h3>Solution 1</h3>
+
+<p>Recommended: <strong>Graph (shortest path)</strong>. <a href="http://www.careercup.com/question?id=14955106">ref</a>:</p>
+
+<ol>
+<li><p>k is linked to k + 1 k + 2, k + 3, k + 4, k + 5, k +6.</p></li>
+<li><p>If has a ladder, connect it too.</p></li>
+<li><p>Find shortest path.</p></li>
+</ol>
+
+
+<p>Solution 2 is <strong>DP</strong>.</p>
+
+<h3>Variant</h3>
+
+<p>If the question asks: find the way to climb as many ladder as possible. Then this question would be solved differently.</p>
+
+<p>Any ideas?</p>
+
+<p>Solution below.</p>
+
+<p>&hellip;</p>
+
+<p>&hellip;</p>
+
+<p>&hellip;</p>
+
+<p>Read <strong>[Greedy] Activity Selection Problem</strong>.</p>
+
+<h3>Code</h3>
+
+<p>not written</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/04/number-of-subtree-with-even-nodes/">[Google] Number of Subtrees With Even Nodes</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-04T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.mitbbs.com/article_t0/JobHunting/32348573.html">link</a></p>
+
+<blockquote><p>an arbitrary tree. split it into as many subtrees as you can. the
+number of nodes of the subtree must be even.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>This is a difficult question</strong>. The idea is recursive solution, but be cautious deadling with NULL.</p>
+
+<p><strong>NULL can be regarded as a child branch of even node (0)</strong>, but NULL could not be seen as a subtreee.</p>
+
+<ol>
+<li>traverse each and every node in the tree</li>
+<li>for each node, take it as root, and find left and right branch with total sum of odd count of nodes.</li>
+<li>we do above step recursively</li>
+<li>include NULL as a subtree of EVEN number of nodes.</li>
+</ol>
+
+
+<p>The code below is my code and I haven&rsquo;t seen any reference to this question. If you read this, please comment and discuss with me!</p>
+
+<h3>Code</h3>
+
+<pre><code>public void traverseAndFindEvenSubstrees(List&lt;TreeNode&gt; ans, TreeNode node) {
+    if (node == null) {
+        return;
+    }
+    List&lt;TreeNode&gt; evenSubtrees = this.getSubtrees(node, true);
+    evenSubtrees.remove(null);
+    ans.addAll(evenSubtrees);
+
+    traverseAndFindEvenSubstrees(ans, node.left);
+    traverseAndFindEvenSubstrees(ans, node.right);
+}
+
+private List&lt;TreeNode&gt; getSubtrees(TreeNode root, boolean isEven) {
+    List&lt;TreeNode&gt; ans = new ArrayList&lt;TreeNode&gt;();
+    if (root == null) {
+        if (isEven) {
+            // NULL is considered as a subtree with even number (0) of nodes
+            ans.add(null);
+        }
+        return ans;
+    }
+    if (isEven) {
+        // we need 2 subtrees to have a combined nodes of odd numbers
+        for (int i = 0; i &lt;= 1; i++) {
+            List&lt;TreeNode&gt; leftGroup = getSubtrees(root.left, i == 0);
+            List&lt;TreeNode&gt; rightGroup = getSubtrees(root.right, i != 0);
+            // what we do here, is to make leftGroup and rightGroup have
+            // different boolean parameter, thus a total of odd count
+            for (TreeNode ln : leftGroup) {
+                for (TreeNode rn : rightGroup) {
+                    // note that NULL is included in either leftGroup or
+                    // rightGroup. we'll use that
+                    TreeNode newSubtree = new TreeNode(root.val);
+                    newSubtree.left = ln;
+                    newSubtree.right = rn;
+                    ans.add(newSubtree);
+                }
+            }
+        }
+        // now we've added all subtrees into ans, whose head is the root
+        // this means we does not inlcude NULL
+    } else {
+        for (int i = 0; i &lt;= 1; i++) {
+            List&lt;TreeNode&gt; leftGroup = getSubtrees(root.left, i == 0);
+            List&lt;TreeNode&gt; rightGroup = getSubtrees(root.right, i == 0);
+            for (TreeNode ln : leftGroup) {
+                for (TreeNode rn : rightGroup) {
+                    TreeNode newSubtree = new TreeNode(root.val);
+                    newSubtree.left = ln;
+                    newSubtree.right = rn;
+                    ans.add(newSubtree);
+                }
+            }
+        }
+    }
+    // now last step, add NULL (important)
+    if (isEven) {
+        ans.add(null);
+    }
+    return ans;
+}
+</code></pre>
+
+<p>Test data:</p>
+
+<pre><code>Test start
+Input is a BST with this structure: 
+4 
+2 6 
+1 3 5 7 
+
+Total subtree count = 16
+They are: 
+Tree 1:
+4 
+2 6 
+3 
+Tree 2:
+4 
+2 6 
+3 5 7 
+Tree 3:
+4 
+2 6 
+1 
+Tree 4:
+4 
+2 6 
+1 5 7 
+Tree 5:
+4 
+6 
+Tree 6:
+4 
+6 
+5 7 
+Tree 7:
+4 
+2 6 
+7 
+Tree 8:
+4 
+2 6 
+5 
+Tree 9:
+4 
+2 
+Tree 10:
+4 
+2 6 
+1 3 7 
+Tree 11:
+4 
+2 6 
+1 3 5 
+Tree 12:
+4 
+2 
+1 3 
+Tree 13:
+2 
+3 
+Tree 14:
+2 
+1 
+Tree 15:
+6 
+7 
+Tree 16:
+6 
+5 
+Total time = 0.006
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/04/grep-command-interview-question/">[Amazon] Grep Command Interview Question</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-04T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=1799">link</a></p>
+
+<blockquote><p>You have 50,000 html files, some of which contain phone numbers. How would you create a list of all the files which contain phone numbers?</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>This is a famous inteview question by former Amazon engineer <a href="https://sites.google.com/site/steveyegge2/five-essential-phone-screen-questions">Steve Yegge</a>:</p>
+
+<blockquote><p>About 25% to 35% of all software development engineer candidates, independent of experience level, cannot solve this problem, even given the entire interview hour and lots of hints.</p></blockquote>
+
+<p>This question tests your understanding of scripting languages.</p>
+
+<h3>Code</h3>
+
+<pre><code>grep -l -R --perl-regexp "\b(\(\d{3}\)\s*|\d{3}-)\d{3}-\d{4}\b" * &gt; output.txt
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/04/ds-insert-remove-getrandom/">[Google] Data Structure of Insert, Remove, GetRandom</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-04T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=11353907">link</a></p>
+
+<blockquote><p>Design a data structure where the following 3 functions at O(1):</p></blockquote>
+
+<pre><code>1. Insert(n) 
+2. GetRandomElement() 
+3. Remove(n) 
+</code></pre>
+
+<h3>Solution</h3>
+
+<p>Array is best for:</p>
+
+<ol>
+<li>random access</li>
+</ol>
+
+
+<p>HashMap is best for:</p>
+
+<ol>
+<li>Searching
+
+<ol>
+<li>insert</li>
+<li>remove</li>
+</ol>
+</li>
+</ol>
+
+
+<p><a href="http://stackoverflow.com/a/22083895">So the answer is</a> <strong>array + hashmap</strong>:</p>
+
+<ol>
+<li><p>Insertion can be done by appending to the array and adding to the hash-map.</p></li>
+<li><p>Deletion can be done by first looking up and removing the array index in the hash-map, then <strong>swapping the last element with that element in the array</strong>.</p></li>
+<li><p>Get random can be done by returning a random index from the array.</p></li>
+<li><p>All operations take O(1).</p></li>
+</ol>
+
+
+<p>Note <a href="http://stackoverflow.com/a/5684892">how hashmap is used</a>:</p>
+
+<blockquote><p>insert(value): append the value to array and let i be it&rsquo;s index in A. Set H[value]=i.</p></blockquote>
+
+<p>Hashmap stores value&rsquo;s index in the array - that is to say: <strong>this DS does not support inserting duplicating values</strong>.</p>
+
+<p>Finally, when we delete, we swap the last element to replace the gap. This is an nice idea!</p>
+
+<h4>follow-up</h4>
+
+<blockquote><p>what if we want to get the top x% number?</p></blockquote>
+
+<p>Well, heap of course. And note that <strong>Heap size is <a href="http://stackoverflow.com/a/9115884">auto-increasing</a></strong>:</p>
+
+<blockquote><p>PriorityQueue is unbounded, it can grow as big as your memory allows, and it will grow automatically when needed. The initialCapacity parameter is just a hint to reserve room for that many elements initially.</p></blockquote>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/04/Collatz-Conjecture-oneness/">[Google] Collatz Conjecture (Oneness Property)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-04T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Collatz Conjecture</h3>
+
+<p>The <a href="http://en.wikipedia.org/wiki/Collatz_conjecture">Collatz conjecture</a> is a conjecture in mathematics known as the 3n + 1 conjecture.</p>
+
+<p>Take any natural number n.</p>
+
+<ol>
+<li>If n is even, divide it by 2 to get n / 2.</li>
+<li>If n is odd, multiply it by 3 and add 1 to obtain 3n + 1.</li>
+</ol>
+
+
+<p>Repeat the process (which has been called &ldquo;Half Or Triple Plus One&rdquo;, or HOTPO) indefinitely. The conjecture is that no matter what number you start with, <strong>you will always eventually reach 1</strong>.</p>
+
+<p>The property has also been called <strong>oneness</strong>.</p>
+
+<h3>Question</h3>
+
+<p><a href="http://stackoverflow.com/questions/5437445/collatz-conjecture-related-interview">link</a></p>
+
+<blockquote><p>Collatz conjecture says that if you do the following</p></blockquote>
+
+<pre><code>If n is even, replace n by n/2.
+If n is odd, replace n by 3n+1.
+You ultimately end up with 1.
+</code></pre>
+
+<blockquote><p>For instance, 5 -> 16 -> 8 -> 4 -> 2 -> 1</p>
+
+<p>Chain length is the number of steps required to get to 1. (The chain length of 1 is 0).</p>
+
+<p>Now, the problem is given natural numbers n and k, find all numbers between 1 and n, such that the chain length is &lt;= k.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Generate all numbers in backwards fashion, suggest by <a href="http://stackoverflow.com/a/5437672">templatetypedef</a>:</p>
+
+<pre><code>                  1
+                  |
+                  2
+                  |
+                  4
+                  |
+                  8
+                  |
+                  16
+                  | \
+                  32 \
+                  |   5
+                  64  |
+                 /|   10
+                / 128 | \
+               21     20 3
+</code></pre>
+
+<p><strong>Implementation</strong>: using a queue and keep appending numbers.</p>
+
+<p><strong>Duplication handling</strong>?</p>
+
+<blockquote><p>Assuming that the Collatz conjecture holds true, we&rsquo;ll never get any duplicates this way.</p></blockquote>
+
+<p><strong>Time complexity</strong> is O(S) time, where S is the number of numbers we need to output.</p>
+
+<h3>Code</h3>
+
+<p>not written</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/03/monitor-request-per-second/">[Design] Monitor Rps for Past Sec/min/hr</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-03T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=6005446611566592">link</a></p>
+
+<blockquote><p>Given a server that has requests coming in.</p>
+
+<p>Design a data structure such that you can fetch the count of the number requests in the last second, minute and hour.</p></blockquote>
+
+<h3>Solution 1</h3>
+
+<p><strong>Keep a record of all request timestamps</strong>, suggested by the top answer by <a href="http://www.careercup.com/question?id=6005446611566592">whatevva</a>:</p>
+
+<ol>
+<li><p>Use a queue implemented as a resizable array to store the timestamps of all new requests</p></li>
+<li><p>maintain head/tail pointers as usual</p></li>
+<li><p>Also maintain three pointers, for past sec, past min and past hr.</p></li>
+</ol>
+
+
+<p>Whenever a request comes in, update 3 pointers. Then in the for-loop of the thread, remove old entries and also update 3 pointers.</p>
+
+<p>Print Rps in real time. I posted my code below (the code is without thread-safety consideration).</p>
+
+<h3>Solution 2</h3>
+
+<p>This solution does not store all timestamps, and it does not generate real-time Rps data. But it&rsquo;s good enough because result is only updated every 1 second, so its performance is better.</p>
+
+<p>Keep an array of int of size 60 * 60. Each second, use the <strong>number of request in the past second</strong> to update the array values <strong>in a rolling way</strong>.</p>
+
+<h3>Code</h3>
+
+<p>Solution 1. this is my code so please correct me!</p>
+
+<pre><code>public class SetRps {
+
+    AtomicInteger count = new AtomicInteger(0);
+    int limit = -1;
+    int printIndex = 1;
+    long startTimestamp = -1;
+
+    void setRPS(int num) {
+        limit = num;
+    }
+
+    boolean process(long timestamp) {
+        // suppose timestamp is ms
+        synchronized (this) {
+            if (count.get() &lt; limit) {
+                // can process
+                count.incrementAndGet();
+                System.out.println(printIndex++ + ". processing request "
+                        + timestamp % 100000 / 1000 + "," + timestamp % 1000);
+                return true;
+            }
+            if (timestamp - startTimestamp &gt;= 1000) {
+                // every 1 seconds, reset
+                count.set(0);
+                startTimestamp = timestamp;
+                System.out.println("clear!");
+                return true;
+            }
+        }
+        return false;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/01/stock-span-problem/">[Question] Stock Span Problem (Couting BST)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-01T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Given stock price of Amazon for some consecutive days. Need to find the maximum span of each day’s stock price.</p></blockquote>
+
+<p>Definition of &lsquo;span&rsquo; have got 2 variant:</p>
+
+<h3>Variant 1</h3>
+
+<p><a href="http://www.geeksforgeeks.org/the-stock-span-problem/">link</a></p>
+
+<blockquote><p>Span is the number of consecutive days right before that day, which have less or equal stock value.</p>
+
+<p>(Or in GFG language): The span Si of the stock’s price on a given day i is defined as the maximum number of consecutive days just before the given day, for which the price of the stock on the current day is less than or equal to its price on the given day.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><img class="middle" src="/assets/images/StockSpanProblem1.png"></p>
+
+<p>Use stack.</p>
+
+<h3>Variant 2</h3>
+
+<p><a href="http://www.careercup.com/question?id=4825417139617792">link</a></p>
+
+<blockquote><p>Span is the amount of days before the given day where the stock price is less than that of given day.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>The top answer in <a href="http://www.careercup.com/question?id=4825417139617792">here</a> is wrong. Eg. {1,3,2,4}, the count for 4 would be 2, instead of 3.</p>
+
+<p>Instead, the <strong>BST (AVL tree) solution is correct</strong>. It&rsquo;s commented by user zahidbuet106.</p>
+
+<blockquote><p>insert numbers in a AVL tree one by one from right to left. During each insert we will keep updating the <strong>size of left subtree</strong> at the node being inserted. This will give us our desired smaller element count.</p>
+
+<p>We also need to handle balancing the tree while insert.</p></blockquote>
+
+<p><strong>The key of this question is the special BST, where each node stores an additional counting number</strong>.</p>
+
+<p>This type of special BST is extremely frequntly used in Computer Science, especially when we want to dynamically insert elements and find out it&rsquo;s ranking within the past history.</p>
+
+<p>Read another very interesting post: <strong>[CC150v5] 11.8 Get Rank in Stream of Integers</strong>.</p>
+
+<h3>Code</h3>
+
+<pre><code>class TreeNodePlus extends TreeNode {
+    int leftCount;
+    int dupCount;
+
+    public TreeNodePlus(int v, int leftC) {
+        super(v);
+        this.leftCount = leftC;
+        this.dupCount = 1;
+    }
+
+    public int findRank(TreeNodePlus node) {
+        TreeNodePlus leftBranch = (TreeNodePlus) this.left;
+        TreeNodePlus rightBranch = (TreeNodePlus) this.right;
+
+        if (this == node) {
+            return 0;
+        } else if (node.val &lt; this.val) {
+            if (this.left == null) {
+                return 0;
+            } else {
+                return leftBranch.findRank(node);
+            }
+        } else {
+            if (this.right == null) {
+                return this.leftCount + this.dupCount;
+            } else {
+                return this.leftCount + this.dupCount
+                        + rightBranch.findRank(node);
+            }
+        }
+    }
+
+    public TreeNodePlus insertNum(int num) {
+        TreeNodePlus leftBranch = (TreeNodePlus) this.left;
+        TreeNodePlus rightBranch = (TreeNodePlus) this.right;
+
+        if (num == this.val) {
+            this.dupCount++;
+            return this;
+        } else if (num &lt; this.val) {
+            // insert num to the left branch
+            this.leftCount++;
+            if (this.left == null) {
+                this.left = new TreeNodePlus(num, 0);
+                return (TreeNodePlus) this.left;
+            } else {
+                return leftBranch.insertNum(num);
+            }
+        } else {
+            // insert num to the right branch
+            // this.leftCount does not change
+            if (this.right == null) {
+                this.right = new TreeNodePlus(num, 0);
+                return (TreeNodePlus) this.right;
+            } else {
+                return rightBranch.insertNum(num);
+            }
+        }
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/13">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/11">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

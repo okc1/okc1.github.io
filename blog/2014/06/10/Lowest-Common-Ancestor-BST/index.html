@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[LeetCode Plus] Lowest Common Ancestor of BST - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link Given a binary search tree (BST), find the lowest common ancestor of two given nodes in the BST. _______6______ / \ ___2__ ___8__ &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/06/10/Lowest-Common-Ancestor-BST/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[LeetCode Plus] Lowest Common Ancestor of BST</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-10T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://leetcode.com/2011/07/lowest-common-ancestor-of-a-binary-search-tree.html">link</a></p>
+
+<div class="entry bg-color bg-img font-color">
+    <blockquote class="bg-color bg-img font-color">
+        <p class="font-color bg-color bg-img">Given a binary search tree (BST), find the lowest common ancestor of two given nodes in the BST.</p>
+    </blockquote>
+    <p class="font-color bg-color bg-img"><span id="more-782" class="font-color"></span>
+        <br>
+    </p><pre class="bg-color bg-img font-color">        _______<span style="color: #990000;" class="font-color">6</span>______
+       /              \
+    ___<span style="color: #990000;" class="font-color">2</span>__          ___<span style="color: #990000;" class="font-color">8</span>__
+   /      \        /      \
+   <span style="color: #990000;" class="font-color">0</span>      _<span style="color: #990000;" class="font-color">4       7       9</span>
+         /  \
+         <span style="color: #990000;" class="font-color">3   5</span></pre>
+    <p class="font-color bg-color bg-img">Using the above tree as an example, the lowest common ancestor (LCA) of nodes <span style="color: #990000;" class="font-color">2</span> and <span style="color: #990000;" class="font-color bg-color bg-img">8</span> is <span style="color: #990000;" class="font-color">6</span>. But how about LCA of nodes <span style="color: #990000;" class="font-color">2</span> and <span style="color: #990000;" class="font-color">4</span>? Should it be <span style="color: #990000;" class="font-color">6</span> or <span style="color: #990000;" class="font-color">2</span>?</p>
+    <p class="font-color bg-color bg-img">According to the <a href="http://en.wikipedia.org/wiki/Least_common_ancestor" class="font-color">definition of LCA on  Wikipedia</a>: "The lowest common ancestor is defined between two nodes <em>v</em> and <em>w</em> as the lowest node in T that has both <em>v</em> and <em>w</em> as descendants (where we allow a node to be a descendant of itself)." Since a node can be a descendant of itself, the LCA of <span style="color: #990000;" class="font-color">2</span> and <span style="color: #990000;" class="font-color">4</span> should be <span style="color: #990000;" class="font-color">2</span>, according to this definition.</p>
+    <p class="font-color bg-color bg-img"><strong>Hint:</strong>
+        <br>A top-down walk from the root of the tree is enough.</p>
+</div>
+
+
+<h3>Analysis</h3>
+
+<p><strong>This question is the easiest of this series of questions</strong>. I will quote the solution analysis.</p>
+
+<blockquote><p>There’s only three cases you need to consider.</p></blockquote>
+
+<pre><code>1. Both nodes are to the left of the tree.
+2. Both nodes are to the right of the tree.
+3. One node is on the left while the other is on the right. This node must be LCA. 
+4. Current node equals to one of the two nodes, this node must be the LCA. 
+</code></pre>
+
+<blockquote><p>The run time complexity is O(h), where h is the height of the BST.</p></blockquote>
+
+<h3>Code</h3>
+
+<p>The code is not written by me.</p>
+
+<pre><code>Node *LCA(Node *root, Node *p, Node *q) {
+  if (!root || !p || !q) return NULL;
+  if (max(p-&gt;data, q-&gt;data) &lt; root-&gt;data)
+    return LCA(root-&gt;left, p, q);
+  else if (min(p-&gt;data, q-&gt;data) &gt; root-&gt;data)
+    return LCA(root-&gt;right, p, q);
+  else
+    return root;
+}
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-06-10T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/leetcode-plus/'>leetcode_plus</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/06/10/Lowest-Common-Ancestor-BST/" data-via="" data-counturl="http://okc1.github.io/blog/2014/06/10/Lowest-Common-Ancestor-BST/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/06/10/First-Character-Appearing-Once/" title="Previous Post: [Question] First Character Appearing Only Once">&laquo; [Question] First Character Appearing Only Once</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/06/10/Lowest-Common-Ancestor-Tree/" title="Next Post: [LeetCode Plus] Lowest Common Ancestor of Binary Tree (I)">[LeetCode Plus] Lowest Common Ancestor of Binary Tree (I) &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

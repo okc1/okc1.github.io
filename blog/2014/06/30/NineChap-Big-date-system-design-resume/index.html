@@ -1,0 +1,370 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[NineChap 9] Big Date, System Design and Resume (`) - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Resume Do not write anything unrelated to CS.
+Do not write too long - 1 or 2 pages are fine. Senior engineer 3 pages.
+Do not write low GPA
+Never ever &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/06/30/NineChap-Big-date-system-design-resume/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[NineChap 9] Big Date, System Design and Resume (`)</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-30T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Resume</h2>
+
+<ol>
+<li>Do not write anything unrelated to CS.</li>
+<li>Do not write too long - 1 or 2 pages are fine. Senior engineer 3 pages.</li>
+<li>Do not write low GPA</li>
+<li>Never ever write &ldquo;proficient in anything&rdquo;</li>
+</ol>
+
+
+<h2>Big Data</h2>
+
+<p>Most classic question is &ldquo;Frequent items&rdquo; (refer to July&rsquo;s blog).</p>
+
+<h3>Find top k hot queries in a daily access log of Google.</h3>
+
+<p>Variation:</p>
+
+<ol>
+<li>k = 1 vs k = 100000 - majority numbers</li>
+<li>low RAM vs sufficient RAM</li>
+<li>single machine vs multiple machines</li>
+<li>accurate vs inaccurate</li>
+</ol>
+
+
+<p>Sufficient RAM</p>
+
+<ol>
+<li>HashTable + Heap (min-heap)</li>
+<li>Time O(n * logk), Space O(n)</li>
+</ol>
+
+
+<p>Low RAM</p>
+
+<ol>
+<li>Split into 1000 (i.e. LOG/M) files by hash(query) % 1000</li>
+<li>Using HashTable + Heap to get top k for each files</li>
+<li>Collect 1000 top k queries and get global top k</li>
+<li>This method requires a lot of disk access and r/w, still slow.</li>
+</ol>
+
+
+<p>Inaccurate (reduce memory from O(n) to O(k))</p>
+
+<ol>
+<li>Hash Count (only need to know this one)
+ Limit the size of HashMap. The bigger the RAM, the more accurate is the result.</li>
+<li>Space Saving</li>
+<li>Lossy Counting</li>
+<li>Sticky Sampling</li>
+<li>Count Sketch</li>
+</ol>
+
+
+<p>Bloom Filter</p>
+
+<ol>
+<li>Regular bloom filter - use 4 线性无关 formula</li>
+<li>Counting bloom filter - support delete</li>
+<li>Better DS than HashMap, but can loose some accuracy</li>
+</ol>
+
+
+<p>Trie</p>
+
+<p>Bitmap</p>
+
+<p>Find all unique queries - use bigmap to store 3 types of states</p>
+
+<h2>System Design</h2>
+
+<h3>Design a short url system</h3>
+
+<ol>
+<li>Cache</li>
+</ol>
+
+
+<blockquote><p>to store hot urls</p></blockquote>
+
+<ol>
+<li>Load Balance</li>
+</ol>
+
+
+<blockquote><p>Too many click in short time</p></blockquote>
+
+<ol>
+<li>Storage balance</li>
+</ol>
+
+
+<blockquote><p>Hash value of an url and then store in
+individual machine</p>
+
+<p>Expansibility?</p></blockquote>
+
+<ol>
+<li>Consistent Hash</li>
+</ol>
+
+
+<blockquote><p>Node, can increase # of machines to store information</p>
+
+<p>Migration process</p></blockquote>
+
+<ol>
+<li>Router</li>
+</ol>
+
+
+<blockquote><p>check which machine response my query</p>
+
+<p>light-weight calculations</p>
+
+<p>what is router is down?</p></blockquote>
+
+<ol>
+<li>Locale</li>
+</ol>
+
+
+<blockquote><p>url frequently access by China, then put the url storage in Beijing</p></blockquote>
+
+<h3>Need-to-know Design patterns</h3>
+
+<ol>
+<li>Singleton</li>
+<li>Factory</li>
+<li>Master-slave (esp. for relational DB)</li>
+</ol>
+
+
+<p><a href="http://static.googleusercontent.com/media/research.google.com/en//archive/mapreduce-osdi04.pdf">MapReduce: Simplified Data Processing on Large Clusters</a></p>
+
+<p><a href="http://static.googleusercontent.com/media/research.google.com/en//archive/gfs-sosp2003.pdf">The Google File System</a></p>
+
+<p><a href="http://static.googleusercontent.com/media/research.google.com/en//archive/bigtable-osdi06.pdf">BigTable: A Distributed Storage System for Structured Data</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-06-30T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ninechap/'>ninechap</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/06/30/NineChap-Big-date-system-design-resume/" data-via="" data-counturl="http://okc1.github.io/blog/2014/06/30/NineChap-Big-date-system-design-resume/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/06/30/Knapsack-problem/" title="Previous Post: [Question] 0-1 Knapsack Problem">&laquo; [Question] 0-1 Knapsack Problem</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/07/01/Hashmap-Hashtable-Hashset/" title="Next Post: [Design] HashMap vs Hashtable vs HashSet">[Design] HashMap vs Hashtable vs HashSet &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

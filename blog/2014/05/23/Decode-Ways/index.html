@@ -1,0 +1,349 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[LeetCode 91] Decode Ways - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link A message containing letters from A-Z is being encoded to numbers using the following mapping: 'A' -&gt; 1
+'B' -&gt; 2
+...
+'Z' -&gt; 26 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/05/23/Decode-Ways/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[LeetCode 91] Decode Ways</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-23T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/decode-ways/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>
+A message containing letters from <code>A-Z</code> is being encoded to numbers using the following mapping:
+</p>
+
+<pre>'A' -&gt; 1
+'B' -&gt; 2
+...
+'Z' -&gt; 26
+</pre>
+
+<p>
+Given an encoded message containing digits, determine the total number of ways to decode it.
+</p>
+
+<p>
+For example,<br>
+Given encoded message <code>"12"</code>,
+it could be decoded as <code>"AB"</code> (1 2) or <code>"L"</code> (12).
+</p>
+
+<p>
+The number of ways decoding <code>"12"</code> is 2.
+</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="lime">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This question is easy to think, but hard to write.</strong></p>
+
+<p>Why? Because there are a lot of cases that the decode ways = 0. For example, input = &ldquo;02&rdquo; or &ldquo;50&rdquo;. We must handle those cases well. Also, boundary cases can cause some trouble.</p>
+
+<h3>Solution</h3>
+
+<p><strong>DP solution, the transformation function is:</strong></p>
+
+<blockquote><p>Count[i] = Count[i-1]  if only S[i-1] is valid</p>
+
+<p>Count[i] = Count[i-1] + Count[i-2] if S[i-1] and S[i-2] both valid</p></blockquote>
+
+<h3>Code</h3>
+
+<p><strong>First, my code.</strong></p>
+
+<pre><code>public int numDecodings(String s) {
+    int len = s.length();
+    if (len == 0) return 0;
+    // now len &gt;= 1
+    int[] dp = new int[len];
+    if (s.charAt(0) == '0') dp[0] = 0;
+    else dp[0] = 1;
+    if (len == 1) return dp[0];
+    // now len &gt;= 2
+    for (int i = 1; i &lt; len; i ++) {
+        if (s.charAt(i) != '0') dp[i] += dp[i-1];
+        int doubleDigit = Integer.parseInt(s.substring(i-1, i+1));
+        if (s.charAt(i-1) != '0' &amp;&amp; 1 &lt;= doubleDigit &amp;&amp; doubleDigit &lt;= 26)
+            if (i != 1) dp[i] += dp[i-2];
+            else dp[i] += 1;
+    }
+    return dp[len - 1];
+}
+</code></pre>
+
+<p><strong>Second, code from <a href="http://blog.csdn.net/u011095253/article/details/9248109">this blog</a>.</strong></p>
+
+<p>The only difference is an additional &lsquo;1&rsquo; at position 0 of the dp array. This helps simply the code a lot!</p>
+
+<pre><code>public int numDecodings(String s) {  
+    int n = s.length();  
+    if (n==0) return 0;  
+    int[] dp = new int[n+1];  
+    dp[0] = 1;  
+    if (isValid(s.substring(0,1))) dp[1] = 1;  
+    else dp[1] = 0;  
+    for(int i=2; i&lt;=n;i++){  
+        if (isValid(s.substring(i-1,i)))  
+            dp[i] = dp[i-1];  
+        if (isValid(s.substring(i-2,i)))  
+            dp[i] += dp[i-2];  
+    }  
+    return dp[n];  
+}  
+
+public boolean isValid(String s){  
+    if (s.charAt(0)=='0') return false;  
+    int code = Integer.parseInt(s);  
+    return code&gt;=1 &amp;&amp; code&lt;=26;  
+}
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-05-23T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/leetcode/'>leetcode</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/05/23/Decode-Ways/" data-via="" data-counturl="http://okc1.github.io/blog/2014/05/23/Decode-Ways/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/05/22/Subsets-II/" title="Previous Post: [LeetCode 90] Subsets II">&laquo; [LeetCode 90] Subsets II</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/05/23/Gray-Code/" title="Next Post: [LeetCode 89] Gray Code">[LeetCode 89] Gray Code &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

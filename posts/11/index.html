@@ -1,0 +1,929 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link A binary search tree is given. Find the ceiling of given key. Eg. 8 3 12 2 6 10 15 4 Ceiling is defined as: Ceil Value Node: Node with &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/11/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/08/bst-find-ceiling/">[Google] BST Find Ceiling</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-08T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=20229674">link</a></p>
+
+<blockquote><p>A binary search tree is given. Find the ceiling of given key. Eg.</p></blockquote>
+
+<pre><code>                    8
+               3          12
+           2      6    10    15
+                4
+</code></pre>
+
+<blockquote><p>Ceiling is <a href="http://www.geeksforgeeks.org/floor-and-ceil-from-a-bst/">defined</a> as:</p>
+
+<p>Ceil Value Node: Node with smallest data larger than the key value.</p>
+
+<p>Testing:</p></blockquote>
+
+<pre><code>key - 13 =&gt; 15 
+key - 4 =&gt;6 
+key - 8 =&gt;10
+</code></pre>
+
+<h3>Solution</h3>
+
+<p><strong>A really interesting idea</strong> is to go top-to-bottom, and update value in every <strong>left turn only</strong>. Suggested by the <a href="http://www.careercup.com/question?id=20229674">top answer</a>.</p>
+
+<p>It&rsquo;s a very very tricky solution. I&rsquo;ve never seen this b4.</p>
+
+<h3>Code</h3>
+
+<p>Not my code.</p>
+
+<pre><code>public int findCeil(TreeNode node, int num, int found) {
+    if (node != null) {
+        if (num &gt;= node.val)
+            return findCeil(node.right, num, found);
+        else
+            return findCeil(node.left, num, node.val);
+    } else
+        return found;
+}
+</code></pre>
+
+<p>Now input:</p>
+
+<blockquote><p>TreeNode tree = Common.constructBstFromPreorder(new int[] { 40, 20, 10, 30, 60, 50, 70 });</p></blockquote>
+
+<p>Output:</p>
+
+<pre><code>The ceiling of 0 is  10
+The ceiling of 1 is  10
+The ceiling of 2 is  10
+The ceiling of 3 is  10
+The ceiling of 4 is  10
+The ceiling of 5 is  10
+The ceiling of 6 is  10
+The ceiling of 7 is  10
+The ceiling of 8 is  10
+The ceiling of 9 is  10
+The ceiling of 10 is  20
+The ceiling of 11 is  20
+The ceiling of 12 is  20
+The ceiling of 13 is  20
+The ceiling of 14 is  20
+The ceiling of 15 is  20
+The ceiling of 16 is  20
+The ceiling of 17 is  20
+The ceiling of 18 is  20
+The ceiling of 19 is  20
+The ceiling of 20 is  30
+The ceiling of 21 is  30
+The ceiling of 22 is  30
+The ceiling of 23 is  30
+The ceiling of 24 is  30
+The ceiling of 25 is  30
+The ceiling of 26 is  30
+The ceiling of 27 is  30
+The ceiling of 28 is  30
+The ceiling of 29 is  30
+The ceiling of 30 is  40
+The ceiling of 31 is  40
+The ceiling of 32 is  40
+The ceiling of 33 is  40
+The ceiling of 34 is  40
+The ceiling of 35 is  40
+The ceiling of 36 is  40
+The ceiling of 37 is  40
+The ceiling of 38 is  40
+The ceiling of 39 is  40
+The ceiling of 40 is  50
+The ceiling of 41 is  50
+The ceiling of 42 is  50
+The ceiling of 43 is  50
+The ceiling of 44 is  50
+The ceiling of 45 is  50
+The ceiling of 46 is  50
+The ceiling of 47 is  50
+The ceiling of 48 is  50
+The ceiling of 49 is  50
+The ceiling of 50 is  60
+The ceiling of 51 is  60
+The ceiling of 52 is  60
+The ceiling of 53 is  60
+The ceiling of 54 is  60
+The ceiling of 55 is  60
+The ceiling of 56 is  60
+The ceiling of 57 is  60
+The ceiling of 58 is  60
+The ceiling of 59 is  60
+The ceiling of 60 is  70
+The ceiling of 61 is  70
+The ceiling of 62 is  70
+The ceiling of 63 is  70
+The ceiling of 64 is  70
+The ceiling of 65 is  70
+The ceiling of 66 is  70
+The ceiling of 67 is  70
+The ceiling of 68 is  70
+The ceiling of 69 is  70
+The ceiling of 70 is  2147483647
+The ceiling of 71 is  2147483647
+The ceiling of 72 is  2147483647
+The ceiling of 73 is  2147483647
+The ceiling of 74 is  2147483647
+The ceiling of 75 is  2147483647
+The ceiling of 76 is  2147483647
+The ceiling of 77 is  2147483647
+The ceiling of 78 is  2147483647
+The ceiling of 79 is  2147483647
+The ceiling of 80 is  2147483647
+The ceiling of 81 is  2147483647
+The ceiling of 82 is  2147483647
+The ceiling of 83 is  2147483647
+The ceiling of 84 is  2147483647
+The ceiling of 85 is  2147483647
+The ceiling of 86 is  2147483647
+The ceiling of 87 is  2147483647
+The ceiling of 88 is  2147483647
+The ceiling of 89 is  2147483647
+The ceiling of 90 is  2147483647
+The ceiling of 91 is  2147483647
+The ceiling of 92 is  2147483647
+The ceiling of 93 is  2147483647
+The ceiling of 94 is  2147483647
+The ceiling of 95 is  2147483647
+The ceiling of 96 is  2147483647
+The ceiling of 97 is  2147483647
+The ceiling of 98 is  2147483647
+The ceiling of 99 is  2147483647
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/08/bg-data-common-elements-lists/">[Design] Big Data - Find Common Elements in 2 Lists</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-08T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Traditional solution</h3>
+
+<ol>
+<li>2 pointers</li>
+<li>Hash</li>
+</ol>
+
+
+<h3>Big Data</h3>
+
+<p>Bloom filter, refer to <strong>[Design] Big Data - Fuzzy Search url (Bloom Filter)</strong>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/07/reservoir-sampling/">[Question] Reservoir Sampling</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-07T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://en.wikipedia.org/wiki/Reservoir_sampling">Reservoir sampling</a> is a family of randomized algorithms for randomly choosing k samples from a list of n items, where n is either <strong>a very large number</strong>. Typically n is large enough that the list <strong>doesn’t fit into main memory</strong>. For example, a list of search queries in Google and Facebook.</p>
+
+<h3>Question</h3>
+
+<p><a href="http://www.geeksforgeeks.org/reservoir-sampling/">link</a></p>
+
+<blockquote><p>given a big array (or stream) of numbers (to simplify), and we need to write an efficient function to randomly select k numbers where 1 &lt;= k &lt;= n. Let the input array be stream[].</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>O(n)</strong> time!</p>
+
+<ol>
+<li><p>Create an array sample[0..k-1] and copy first k items of stream[] to it.</p></li>
+<li><p>Now one by one consider all items from (k+1)th item to nth item.</p>
+
+<ol>
+<li><p>Generate a random number &lsquo;j&rsquo; from 0 to i where i is index of current item in stream[].</p></li>
+<li><p>If j is in range 0 to k-1, replace sample[j] with stream[i]</p></li>
+</ol>
+</li>
+</ol>
+
+
+<h3>Code</h3>
+
+<p>not written</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/07/multithreading-async-increment-problem/">[Design] Multithreading Async Increment Problem</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-07T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=18315663">link</a></p>
+
+<blockquote><p>If two threads are incrementing a variable 100 times each without synchronization, what would be the possible min and maximum value.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Well, max is init+200, and min is init+2. Suggested by the <a href="http://www.careercup.com/question?id=18315663">top answer</a>:</p>
+
+<ol>
+<li>P1 &amp; P2 copy var</li>
+<li>P1 increments 99 times. so var becomes var + 99</li>
+<li>P2 increments once. so var becomes var + 1</li>
+<li>P1 copies var (value is var + 1)</li>
+<li>P2 increments 99 times. so var becomes var + 100</li>
+<li>P1 increments once. so var becomes var + 2</li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/07/max-product-string-no-common-char/">[Google] Max Prodcut of Strings That Have No Common Char</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-07T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.mitbbs.com/article_t1/JobHunting/32868775_0_1.html">link</a></p>
+
+<blockquote><p>Given a dictionary of wrods,find the pair of word with following property:</p>
+
+<ol>
+<li><p>the two word don&rsquo;t have same letter.</p></li>
+<li><p>the multiple of the two word&rsquo;s length is maximum.</p></li>
+</ol>
+
+
+<p>I give a simple O(n<em>n</em>k)(k is the average length of word) method.but i think there will be better one.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><a href="http://www.careercup.com/question?id=4951409057333248">Best answer</a> suggest as top comment:</p>
+
+<blockquote><p>Assuming the word is A-Z/a-z only, use a bitmap to set which letters it contains.</p>
+
+<p>e.g. ca => 000&hellip;.101</p>
+
+<p>bb => 000&hellip;010</p></blockquote>
+
+<p>This is called <strong>Bitmask</strong> of string. Read <strong>[Question] Check string with no common letters (Bitmask)</strong>.</p>
+
+<p>Then:</p>
+
+<blockquote><p>Iterate over the words in decreasing order of length.</p>
+
+<p>for each pair of words, AND the bitmaps.</p>
+
+<p>Return the first pair that gives a 0 result.</p>
+
+<p>This should be n<em>k + n</em>n</p></blockquote>
+
+<h4>Be cautious</h4>
+
+<p>For the second part of the solution above, is this code going to work?</p>
+
+<pre><code>Arrays.sort(strs) in descending order;
+for (int i = 0; i &lt; strs.length; i++) {
+    for (int j = 0; j &lt; i; j++) {
+        if (strs[i].bitmask &amp; strs[j].bitmask == 0) {
+            // this pair do not have common char
+            // since strs in descending order, and i, j start from 0
+            // the product of length should be max
+            return i + ' ' + j;
+        }
+    }
+}
+</code></pre>
+
+<p>Well, this is wrong. For example: {&ldquo;ababa&rdquo;, &ldquo;aaa&rdquo;, &ldquo;bbb&rdquo;, &ldquo;cc&rdquo;}, if we do longest-string to shorest-string, we would return &ldquo;aaa&rdquo;, &ldquo;bbb&rdquo; immediately when we found it. <strong>However, 5 * 2 > 3 * 3</strong>.</p>
+
+<p>So, we have to find largest product using max-heap, like we did in <strong>[Google] Top N Values From Sum of 2 Arrays</strong>, &ldquo;pop 1 and push 2&rdquo;.</p>
+
+<h3>Another solution</h3>
+
+<p><strong>DP</strong>: for each string, find the reversed set of char, and then find the max string using the reversed set. This idea is great, too, but less intuitive.</p>
+
+<p>It is explained <a href="http://qr.ae/BYGHK">here</a>.</p>
+
+<h3>Code</h3>
+
+<p>not written</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/07/first-unique-url/">[Google] First Unique URL</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-07T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=11856466">link</a></p>
+
+<blockquote><p>Given a very long list of URLs, find the first URL which is unique ( occurred exactly once ).</p>
+
+<p>Must do it in one traversal.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Suggested by the <a href="http://www.careercup.com/question?id=11856466">top answer and second answer</a>, using <strong>a combination of trie and linked list</strong>.</p>
+
+<ol>
+<li><p>The leaf node of a trie maintains a flag to record duplicate urls and pointer to a node in a link list.</p></li>
+<li><p>Use a doubly linked list to link all the unique ones</p></li>
+<li>Remove the URL from the list if its count goes over 1</li>
+<li>So after one traversal, the first one of your linked list is the desired one.</li>
+</ol>
+
+
+<p>Alternatively, we can also use <strong>Hash</strong> instead of Trie.</p>
+
+<h3>Code</h3>
+
+<p>not written</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/07/continental-divider/">[Google] Continental Divider</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-07T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.mitbbs.com/article_t1/JobHunting/32882153_0_1.html">link</a></p>
+
+<blockquote><p>给一个矩阵，其中0代表海洋，其他数字代表高度，秉着水往低处流的原则，求出能够流向任意海洋的点。 比如说</p></blockquote>
+
+<pre><code>0 0 0 1 2 3 0
+0 1 2 2 4 3 2
+2 1 1 3 3 2 0
+0 3 3 3 2 3 3
+</code></pre>
+
+<blockquote><p>那么就要给出 第二行的4 （这有这点出发，能够找到连通道四个0的区域的一条<strong>非递增
+路线</strong>），当然也有可能找不到这样的点，或者找到多个点。</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>I read online and the best solution I come up with is Brute Force. I did not really understand the <a href="http://www.mitbbs.com/article_t1/JobHunting/32882153_0_1.html">online discussions</a>.</p>
+
+<p>So if you are reading this and want to discuss with me, kindly leave me a comment!</p>
+
+<h3>Code</h3>
+
+<p>brute force</p>
+
+<pre><code>public void findSuperPeak(int[][] map) {
+    int m = map.length;
+    int n = map[0].length;
+    for (int i = 0; i &lt; m; i++) {
+        for (int j = 0; j &lt; n; j++) {
+            if (check(map, new Pair(i, j), m, n)) {
+                System.out.println("Found point (" + i + ", " + j
+                        + ") with height of " + map[i][j]);
+            }
+        }
+    }
+}
+
+private boolean check(int[][] originalMap, Pair p, int m, int n) {
+    // check if point can flow to all oceans
+    if (originalMap[p.x][p.y] == 0) {
+        return false;
+    }
+
+    int[][] map = new int[m][n];
+    for (int i = 0; i &lt; m; i++) {
+        for (int j = 0; j &lt; n; j++) {
+            map[i][j] = originalMap[i][j];
+        }
+    }
+
+    Queue&lt;Pair&gt; q = new LinkedList&lt;Pair&gt;();
+    q.offer(p);
+
+    while (!q.isEmpty()) {
+        Pair top = q.poll();
+        int x = top.x;
+        int y = top.y;
+        if (map[x][y] == -1) {
+            continue;
+        }
+        // add neighbor nodes who are visitable from here
+        if (x - 1 &gt;= 0 &amp;&amp; map[x - 1][y] &lt;= map[x][y]) {
+            // water can flow from:
+            // 1. high altitude to lower
+            // 2. from ocean to ocean
+            q.offer(new Pair(x - 1, y));
+        }
+        if (x + 1 &lt; m &amp;&amp; map[x + 1][y] &lt;= map[x][y]) {
+            q.offer(new Pair(x + 1, y));
+        }
+        if (y - 1 &gt;= 0 &amp;&amp; map[x][y - 1] &lt;= map[x][y]) {
+            q.offer(new Pair(x, y - 1));
+        }
+        if (y + 1 &lt; n &amp;&amp; map[x][y + 1] &lt;= map[x][y]) {
+            q.offer(new Pair(x, y + 1));
+        }
+
+        // visit this point
+        map[x][y] = -1;
+    }
+
+    // now we finished BFS and the entire map with lower altitude is visited
+    // (including all ocean points). We now check if there exists a 0 in map
+    for (int[] arr : map)
+        for (int i : arr)
+            if (i == 0) // found an unvisited ocean point
+                return false;
+    return true;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/07/check-string-no-common-char/">[Question] Check String With No Common Letters (Bitmask)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-07T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p>RT. This is a very very common requirements in the area of string manipulation. We want it to be done very efficiently.</p>
+
+<h3>Solution</h3>
+
+<p>Normally, we would use a hashmap. However, we can also use <strong>bitmask</strong> or bitmap.</p>
+
+<p>Work for a-z only, we use 1 integer to represent each letter, and set an integer for each string.</p>
+
+<p>We do (mask1 &amp; mask2 == 0) to find no common letters. Read more at this question, <strong>[Google] Max prodcut of strings that have no common char</strong>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/05/winning-game-rank-pagerank/">[Design] Winning Games Rank (Pagerank)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-05T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>We have a history of match result of pingpong games, assume each match is &lt;player1, player2, result, timestamp>, player1 and player2 are long type, result is a bit value (1 means player1 win).</p>
+
+<p>design a algorithm to sort the players by their possibility to win future games.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>For each play,</p>
+
+<blockquote><p>winning score = score_diff * {delay factor<sup>current time - winning time</sup>};</p></blockquote>
+
+<h3>Pagerank</h3>
+
+<p><a href="http://google.about.com/od/searchengineoptimization/a/pagerankexplain.htm">PageRank</a> is what Google uses to <strong>determine the importance of a web page</strong>.</p>
+
+<p>It determines which pages appear in search results.</p>
+
+<p>Named after Larry Page.</p>
+
+<h4>Details</h4>
+
+<ol>
+<li><p>PageRank thinks of links as votes to another page.</p></li>
+<li><p>It also looks at the importance of the page that contains the link.</p>
+
+<ol>
+<li><p>Pages with <strong>higher PageRank</strong> have more weight in &ldquo;voting&rdquo;.</p></li>
+<li><p>Pages with <strong>smaller total number of links</strong> on the page have more weight.</p></li>
+</ol>
+</li>
+</ol>
+
+
+<h4>Increase your PageRank?</h4>
+
+<p>If you&rsquo;d like to increase your PageRank, you need to have &ldquo;back-links,&rdquo; or other people linking to your website. You can <strong>trade links</strong> with other people, but make sure you only trade relevant links, and make sure you&rsquo;re not trading links with a <strong>link farm</strong>.</p>
+
+<p>You can register your website with directories, such as the <strong>Open Directory Project</strong>, but use directories with high PageRank whenever possible.</p>
+
+<p>You can create some of <strong>your own back-links</strong> by linking to relevant pages <strong>within</strong> your own website. However, remember that the number of links you create counts into the equation. Don&rsquo;t overdo it.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/05/set-cover-problem/">[Google] Set Cover Problem</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-05T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.mitbbs.com/article_t/JobHunting/32547841.html">link</a></p>
+
+<blockquote><p>Give a list of documents, find the minimal document set that can
+cover all the characters in all the documents.</p>
+
+<p>eg.</p></blockquote>
+
+<pre><code>“a b c h j”,  
+"c d”, 
+“a b c” 
+“a f g” 
+“a h j”
+</code></pre>
+
+<blockquote><p>The result should be</p></blockquote>
+
+<pre><code>"a b c h j" 
+"c d" and 
+"a f g"
+</code></pre>
+
+<h3>Solution</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Set_cover_problem">Set cover problem</a> is NP.</p>
+
+<p><strong>DP solution is available</strong> <a href="http://www.mimuw.edu.pl/~malcin/dydaktyka/2012-13/fpt/fpt_04_FSC-kociumaka.pdf">here</a>, with O(2 ^ n) time complexity.</p>
+
+<blockquote><p>T[i][X] denotes the minimal number of sets out of {S1, S2, &hellip; , Si} that covers X.</p>
+
+<p>So we have:</p>
+
+<p>T[i][X] = min(1 + T[i − 1][X - Si], T[i − 1][X])</p></blockquote>
+
+<h3>Code</h3>
+
+<p>not written</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/12">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/10">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

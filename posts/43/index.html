@@ -1,0 +1,1625 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link Given an array &ldquo;nums&rdquo; of integers and an int &ldquo;k&rdquo;, Partition the array (i.e move the elements in &ldquo;nums& &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/43/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/28/Partition-array/">[LintCode] Partition Array</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-28T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.lintcode.com/en/problem/partition-array/">link</a></p>
+
+<blockquote><p>Given an array &ldquo;nums&rdquo; of integers and an int &ldquo;k&rdquo;, Partition the array (i.e move the elements in &ldquo;nums&rdquo;) such that,</p>
+
+<ol>
+<li>All elements &lt; k are moved to the left</li>
+<li>All elements >= k are moved to the right</li>
+</ol>
+
+
+<p>Return the partitioning Index, i.e the first index &ldquo;i&rdquo; nums[i] >= k.</p>
+
+<p>Example: If nums=[3,2,2,1] and k=2, a valid answer is 1.</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>The solution is to keep swapping elements. It confuses me for a while, until I realize the swapping mechanism is actually not difficult.</p>
+
+<p>There&rsquo;s another question on leetcode &ldquo;Sort Color&rdquo;, which is similar to this question (just partition twice).</p>
+
+<h3>Code</h3>
+
+<pre><code>public int partitionArray(ArrayList&lt;Integer&gt; nums, int k) {
+    //write your code here
+    ArrayList&lt;Integer&gt; ans = new ArrayList&lt;Integer&gt;();
+    if (nums == null || nums.size() == 0) {
+        return ans;
+    }
+    int len = nums.size();
+    int left = 0;
+    int right = len - 1;
+    while (left &lt; right) {
+        while (left &lt; len &amp;&amp; nums.get(left) &lt; k) {
+            left++;
+        }
+        while (right &gt;= 0 &amp;&amp; nums.get(right) &gt;= k) {
+            right--;
+        }
+        if (left &gt; right) {
+            break;
+        } else {
+            // swap 2 elements
+            int temp = nums.get(left);
+            nums.set(left, nums.get(right));
+            nums.set(right, temp);
+            left++;
+            right--;
+        }
+    }
+    // now return the correct value
+    if (left == len) {
+        return len;
+    } else {
+        return left;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/28/NineChap-High-frequency/">[NineChap 8] High Frequency Questions</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-28T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Number &amp; Bit questions</h2>
+
+<ol>
+<li><strong><a href="/blog/2014/06/01/Single-Number/">Single Number</a></strong></li>
+<li><strong><a href="/blog/2014/06/01/Single-Number-II/">Single Number II</a></strong></li>
+<li><strong><a href="/blog/2014/06/28/Single-Number-III/">Single Number III</a></strong></li>
+<li><strong><a href="/blog/2014/06/28/Single-Number-IV/">Single Number IV</a></strong></li>
+<li><strong><a href="/blog/2014/06/28/Majority-Number/">Majority Number</a></strong></li>
+<li><strong><a href="/blog/2014/06/28/Majority-Number-II/">Majority Number II</a></strong></li>
+<li><strong><a href="/blog/2014/06/28/Majority-Number-III/">Majority Number III</a></strong></li>
+</ol>
+
+
+<h2>Subarray questions</h2>
+
+<p>Always using the idea of 前缀和.</p>
+
+<ol>
+<li><strong><a href="/blog/2014/05/28/Best-Time-to-Buy-and-Sell-Stock/">Best Time to Buy and Sell Stock</a></strong> - 贪心法</li>
+<li><strong><a href="/blog/2014/05/28/Best-Time-to-Buy-and-Sell-Stock-II/">Best Time to Buy and Sell Stock II</a></strong></li>
+<li><strong><a href="/blog/2014/05/28/Best-Time-to-Buy-and-Sell-Stock-III/">Best Time to Buy and Sell Stock III</a></strong></li>
+<li><strong><a href="/blog/2014/05/20/Maximum-Subarray/">Maximum Subarray</a></strong></li>
+<li><strong><a href="/blog/2014/06/28/Minimum-subarray/">Minimum Subarray </a></strong></li>
+<li><strong><a href="/blog/2014/06/28/Maximum-subarray-II/">Maximum Subarray II</a></strong></li>
+<li><strong><a href="/blog/2014/07/04/Subarray-with-0-Sum/">Subarray with 0 Sum</a></strong></li>
+<li><strong><a href="/blog/2014/07/04/Subarray-with-Particular-Sum/">Subarray with Particular Sum</a></strong></li>
+<li><strong><a href="/blog/2014/07/04/Subarray-with-Sum-Closest/">Subarray with Sum Closest</a></strong></li>
+</ol>
+
+
+<h2>N Sum questions</h2>
+
+<ol>
+<li><strong><a href="/blog/2014/04/26/two-sum/">Two Sum</a></strong> - difficult</li>
+<li><strong><a href="/blog/2014/05/02/3Sum/">3 Sum</a></strong></li>
+<li><strong><a href="/blog/2014/05/02/3Sum-Closest/">3 Sum Closest</a></strong></li>
+<li><strong><a href="/blog/2014/05/03/4Sum/">4 Sum</a></strong> - doing a O(n<sup>3</sup>) solution is good enough.</li>
+<li><strong>k sum questions</strong> are basically solved with O(n<sup>k-1</sup>) time. Faster solution is available but too complex.</li>
+</ol>
+
+
+<h2>L 家最爱</h2>
+
+<ol>
+<li><strong><a href="/blog/2014/05/15/PowXN/">Pow(x,n)</a></strong></li>
+<li><strong><a href="/blog/2014/05/21/SqrtX/">Sqrt(x)</a></strong></li>
+<li><strong><a href="/blog/2014/07/02/Trailing-Zero-of-Factorial/">Trailing Zeros of Factorial</a></strong></li>
+<li><strong><a href="/blog/2014/07/04/Check-Power-of-2/">Check Power of 2</a></strong></li>
+</ol>
+
+
+<h2>Additional questions</h2>
+
+<ol>
+<li><strong><a href="/blog/2014/06/28/Partition-array/">Partition Array</a></strong></li>
+<li><strong><a href="/blog/2014/05/21/Sort-Colors/">Sort Color</a></strong></li>
+</ol>
+
+
+<h2>Code</h2>
+
+<h4>Number questions</h4>
+
+<p><strong>Single Number</strong></p>
+
+<pre><code>public int singleNumber(int[] A) {
+    int x = 0;
+    for (Integer a: A) {
+        x = x ^ a;
+    }
+    return x;
+}
+</code></pre>
+
+<p><strong>Single Number II</strong></p>
+
+<p>Last time, I used an array of size 32 to store count, but it&rsquo;s actually not necessary.</p>
+
+<pre><code>public int singleNumber(int[] A) {
+    int ans = 0;
+    for (int i = 0; i &lt; 32; i++) {
+        int count = 0;
+        for (Integer a: A) {
+            count += ((a &gt;&gt; i) &amp; 1);
+        }
+        ans |= (count % 3) &lt;&lt; i;
+    }
+    return ans;
+}
+</code></pre>
+
+<h4>Subarray questions</h4>
+
+<p><strong>Best Time to Buy and Sell Stock</strong></p>
+
+<pre><code>public int maxProfit(int[] prices) {
+    if (prices == null || prices.length == 0) {
+        return 0;
+    }
+    int min = prices[0];
+    int profit = 0;
+    for (Integer p: prices) {
+        min = Math.min(min, p);
+        profit = Math.max(profit, p - min);
+    }
+    return profit;
+}
+</code></pre>
+
+<p><strong>Best Time to Buy and Sell Stock II</strong></p>
+
+<pre><code>public int maxProfit(int[] prices) {
+    if (prices == null || prices.length == 0) {
+        return 0;
+    }
+    int pre = prices[0];
+    int profit = 0;
+    for (Integer p: prices) {
+        if (p &gt; pre) {
+            profit += p - pre;
+        }
+        pre = p;
+    }
+    return profit;
+}
+</code></pre>
+
+<p><strong>Best Time to Buy and Sell Stock III</strong></p>
+
+<p>It&rsquo;s important to note the 2nd last line of the code, where we consider the corner case of doing only 1 transaction.</p>
+
+<p>It&rsquo;s always best to list a simple test case and walk it thru before submitting the code.</p>
+
+<pre><code>public int maxProfit(int[] prices) {
+    if (prices == null || prices.length == 0) {
+        return 0;
+    }
+    int len = prices.length;
+    int[] dpLeft = new int[len];
+    int leftMin = prices[0];
+    for (int i = 1; i &lt; len; i++) {
+        dpLeft[i] = Math.max(dpLeft[i - 1], prices[i] - leftMin);
+        leftMin = Math.min(leftMin, prices[i]);
+    }
+    int[] dpRight = new int[len];
+    int rightMax = prices[len - 1];
+    for (int i = len - 2; i &gt;= 0; i--) {
+        dpRight[i] = Math.max(dpRight[i + 1], rightMax - prices[i]);
+        rightMax = Math.max(rightMax, prices[i]);
+    }
+    // now iterate the 2 DP array and find out the largest possible profit
+    int profit = 0;
+    for (int i = 0; i &lt; len - 1; i++) {
+        profit = Math.max(profit, dpLeft[i] + dpRight[i + 1]);
+    }
+    int oneTransaction = Math.max(dpLeft[len - 1], dpRight[0]);
+    return Math.max(profit, oneTransaction);
+}
+</code></pre>
+
+<p><strong>Maximum Subarray</strong></p>
+
+<pre><code>public int maxSubArray(int[] A) {
+    if (A == null || A.length == 0) {
+        return 0;
+    }
+    int max = Integer.MIN_VALUE;
+    int pre = 0;
+    // the largest sum ending at previous position in the array
+    for (Integer a: A) {
+        max = Math.max(max, pre + a);
+        pre = Math.max(0, pre + a);
+    }
+    return max;
+}
+</code></pre>
+
+<h4>3Sum questions</h4>
+
+<p><strong>Two Sum</strong></p>
+
+<p>This solution is O(nlgn) time.</p>
+
+<p>Alternatively, we can use HashMap to solve this problem with O(n) time.</p>
+
+<pre><code>public int[] twoSum(int[] numbers, int target) {
+    // write your code here
+    int[] ans = new int[2];
+    if (numbers == null || numbers.length == 0) {
+        return ans;
+    }
+    int len = numbers.length;
+    Pair[] pairs = new Pair[len];
+    for (int i = 0; i &lt; len; i++) {
+        pairs[i] = new Pair(numbers[i], i + 1);
+    }
+    Arrays.sort(pairs);
+    int left = 0;
+    int right = len - 1;
+    while (left &lt; right) {
+        if (pairs[left].num + pairs[right].num == target) {
+            ans[0] = pairs[left].index;
+            ans[1] = pairs[right].index;
+            Arrays.sort(ans);
+            break;
+        } else if (pairs[left].num + pairs[right].num &gt; target) {
+            right--;
+        } else {
+            left++;
+        }
+    }
+    return ans;
+}
+
+class Pair implements Comparable&lt;Pair&gt; {
+    int num;
+    int index;
+
+    public Pair(int a, int b) {
+        num = a;
+        index = b;
+    }
+
+    public int compareTo(Pair another) {
+        return this.num - another.num;
+    }
+}
+</code></pre>
+
+<p><strong>3 Sum</strong></p>
+
+<pre><code>public ArrayList&lt;ArrayList&lt;Integer&gt;&gt; threeSum(int[] numbers) {
+    ArrayList&lt;ArrayList&lt;Integer&gt;&gt; ans = new ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();
+    if (numbers == null || numbers.length == 0) {
+        return ans;
+    }
+    Arrays.sort(numbers);
+    int len = numbers.length;
+    for (int i = 0; i &lt; len; i++) {
+        if (i &gt; 0 &amp;&amp; numbers[i - 1] == numbers[i]) {
+            continue;
+        }
+        int left = i + 1;
+        int right = len - 1;
+        // find 2 numbers that sums to - number[i]
+        while (left &lt; right) {
+            int diff = numbers[left] + numbers[right] + numbers[i];
+            if (diff == 0) {
+                ArrayList&lt;Integer&gt; triplet = new ArrayList&lt;Integer&gt;();
+                triplet.add(numbers[i]);
+                triplet.add(numbers[left]);
+                triplet.add(numbers[right]);
+                ans.add(triplet);
+            }
+            if (diff &lt;= 0) {
+                left++;
+                while (left &lt; len &amp;&amp; numbers[left - 1] == numbers[left]) {
+                    left++;
+                }
+            }
+            if (diff &gt;= 0) {
+                right--;
+                while (right &gt;= 0 &amp;&amp; numbers[right + 1] == numbers[right]) {
+                    right--;
+                }
+            }
+        }
+    }
+    return ans;
+}
+</code></pre>
+
+<p><strong>3 Sum Closest</strong></p>
+
+<pre><code>public int threeSumClosest(int[] numbers, int target) {
+    if (numbers == null || numbers.length == 0) {
+        return 0;
+    }
+    Arrays.sort(numbers);
+    int sum = 0;
+    int diff = Integer.MAX_VALUE;
+    int len = numbers.length;
+    for (int i = 0; i &lt; len; i++) {
+        int left = i + 1;
+        int right = len - 1;
+        while (left &lt; right) {
+            int triple = numbers[left] + numbers[right] + numbers[i];
+            if (triple == target) {
+                return target;
+            } else if (triple &lt; target) {
+                left++;
+            } else {
+                right--;
+            }
+            if (Math.abs(target - triple) &lt; diff) {
+                diff = Math.abs(target - triple);
+                sum = triple;
+            }
+        }
+    }
+    return sum;
+}
+</code></pre>
+
+<p><strong>4 Sum</strong></p>
+
+<pre><code>public ArrayList&lt;ArrayList&lt;Integer&gt;&gt; fourSum(int[] numbers, int target) {
+    ArrayList&lt;ArrayList&lt;Integer&gt;&gt; ans = new ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();
+    if (numbers == null || numbers.length == 0) {
+        return ans;
+    }
+    Arrays.sort(numbers);
+    int len = numbers.length;
+    for (int i = 0; i &lt; len - 3; i++) {
+        if (i &gt; 0 &amp;&amp; numbers[i - 1] == numbers[i]) {
+            continue;
+        }
+        for (int j = i + 1; j &lt; len - 2; j++) {
+            if (j &gt; i + 1 &amp;&amp; numbers[j - 1] == numbers[j]) {
+                continue;
+            }
+            int left = j + 1;
+            int right = len - 1;
+            while (left &lt; right) {
+                int diff = numbers[left] + numbers[right] + numbers[i] + numbers[j] - target;
+                if (diff == 0) {
+                    ArrayList&lt;Integer&gt; triplet = new ArrayList&lt;Integer&gt;();
+                    triplet.add(numbers[i]);
+                    triplet.add(numbers[j]);
+                    triplet.add(numbers[left]);
+                    triplet.add(numbers[right]);
+                    ans.add(triplet);
+                }
+                if (diff &lt;= 0) {
+                    left++;
+                    while (left &lt; len &amp;&amp; numbers[left - 1] == numbers[left]) {
+                        left++;
+                    }
+                }
+                if (diff &gt;= 0) {
+                    right--;
+                    while (right &gt;= 0 &amp;&amp; numbers[right + 1] == numbers[right]) {
+                        right--;
+                    }
+                }
+            }
+        }
+    }
+    return ans;
+}
+</code></pre>
+
+<h4>L 家最爱</h4>
+
+<p><strong>Pow(x,n)</strong></p>
+
+<p>It&rsquo;s important to note that in Line 16, wrting &lsquo;while (pow * 2 &lt;= y)&rsquo; would not work (because of overflow). It took me a long time to find this bug.</p>
+
+<pre><code>public double pow(double x, int n) {
+    if (n &lt; 0) {
+        return 1.0 / helper (x, 0 - n);
+    } else {
+        return helper(x, n);
+    }
+}
+
+private double helper(double x, int y) {
+    if (y == 0) {
+        return 1.0;
+    }
+    int pow = 1;
+    double num = x;
+    while (pow &lt;= y / 2) {
+        num *= num;
+        pow &lt;&lt;= 1;
+    }
+    return num * helper(x, y - pow);
+}
+</code></pre>
+
+<p><strong>Sqrt(x)</strong></p>
+
+<p>Note that in Line 8, we must declare left and right as &lsquo;long&rsquo;, not &lsquo;int&rsquo;, otherwise there will be overflow problems. It took me a long time to find this bug.</p>
+
+<pre><code>public int sqrt(int x) {
+    if (x &lt; 0) {
+        return -1;
+    } else if (x &lt; 2) {
+        return x;
+    }
+    long left = 1;
+    long right = x;
+    while (left + 1 &lt; right) {
+        long mid = left + (right - left) / 2;
+        if (mid * mid &lt; x) {
+            left = mid;
+        } else if (mid * mid &gt; x) {
+            right = mid;
+        } else {
+            return (int) mid;
+        }
+    }
+    return (int) left;
+}
+</code></pre>
+
+<h4>Additional</h4>
+
+<p><strong>Sort Color</strong></p>
+
+<pre><code>public void sortColors(int[] A) {
+    if (A == null || A.length == 0) {
+        return;
+    }
+    int len = A.length;
+    partition(A, 0, len - 1, 0);
+    int p = 0;
+    while (p &lt; len &amp;&amp; A[p] == 0) {
+        p++;
+    }
+    partition(A, p, len - 1, 1);
+}
+
+private void partition(int[] A, int start, int end, int target) {
+    // find the target and put it on the left side of the array
+    while (start &lt; end) {
+        while (start &lt; A.length &amp;&amp; A[start] == target) {
+            start++;
+        }
+        while (end &gt;= 0 &amp;&amp; A[end] != target) {
+            end--;
+        }
+        if (start &gt; end) {
+            break;
+        } else {
+            int temp = A[start];
+            A[start] = A[end];
+            A[end] = temp;
+        }
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/28/NineChap-Data-structure/">[NineChap 7] Data Structure</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-28T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Data Structure</h2>
+
+<p>Data structure is a way to manage data. It provides some methods to handle data stream. For example, DB is a DS.</p>
+
+<h3>Stack and Queue</h3>
+
+<ol>
+<li><p><strong><a href="/blog/2014/07/01/Min-Stack/">Min-stack</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/07/01/Implement-queue-with-stack/">Implement a queue by two stacks</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/23/Largest-Rectangle-in-Histogram/">Largest Rectangle in histogram</a></strong></p></li>
+</ol>
+
+
+<h3>Hash</h3>
+
+<h4>Hash function</h4>
+
+<ol>
+<li>MD5</li>
+<li>Magic number 33 (<strong>PHP hash function <a href="http://events.ccc.de/congress/2011/Fahrplan/attachments/2007_28C3_Effective_DoS_on_web_application_platforms.pdf">DJBX33A</a></strong>)</li>
+</ol>
+
+
+<p>Magic Number:</p>
+
+<pre><code>int hashfunc(String key) {
+    int sum = 0;
+    for (int i = 0; i &lt; key.length(); i++) {
+        sum = sum * 33 + (int)(key.charAt(i));
+        sum = sum % HASH_TABLE_SIZE;
+    }
+    return sum
+}
+</code></pre>
+
+<h4>Collision</h4>
+
+<ol>
+<li><p><strong>Close hashing (also called Open addressing)</strong></p>
+
+<p> Resolves conflict by probing, or searching through alternate locations in the array</p>
+
+<p> Suck scheme may cause the lookup cost to skyrocket. Not good to use.</p></li>
+<li><p><strong>Open hashing</strong></p>
+
+<p> Keys stored in linked lists attached to cells of the hash table.</p>
+
+<p> Practically, hash size set around 10 times the size of data</p>
+
+<p> Used by Java and most other languages.</p></li>
+</ol>
+
+
+<h4>Rehashing</h4>
+
+<ol>
+<li><p>Memcached is a general-purpose distributed memory caching system. One of its bottleneck is rehashing, which locks down the entire hash.</p></li>
+<li><p>Dynamic resizing (normally size * 2) and copy all elements into the new hash.</p></li>
+<li><p>Extremely slow process, we should try to avoid it by setting a large enough initial size.</p></li>
+</ol>
+
+
+<h4>Hash questions:</h4>
+
+<ol>
+<li><p><strong><a href="/blog/2014/07/01/Implement-Hashmap/">Implement a hashmap</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/07/01/Hashmap-Hashtable-Hashset/">HashMap vs Hashtable vs HashSet</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/06/03/LRU-Cache/">LRU Cache</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/29/Longest-Consecutive-Sequence/">Longest consecutive sequence</a></strong></p></li>
+</ol>
+
+
+<h3>Heap</h3>
+
+<ol>
+<li>Child is always larger than parent</li>
+<li>Heap is not a sorted structure, but it&rsquo;s partially ordered</li>
+<li>Heap is always balanced</li>
+</ol>
+
+
+<p>Heap is better than array because average of 3 operations is O(logn), but array is O(n).</p>
+
+<blockquote><p>Add O(log N)</p>
+
+<p>Remove O(log N)</p>
+
+<p>Min/Max O(1)</p></blockquote>
+
+<h4>Heap implementation:</h4>
+
+<ol>
+<li><p>Low Level: dynamic array, not list</p></li>
+<li><p>Internal Method: Shiftup, Shiftdown operations</p></li>
+<li><p>A heap is a complete binary tree (最优二叉树) <strong>represented by an array</strong></p></li>
+<li><p>When removing element from heap, we actually uses HashMap to find that element.</p></li>
+</ol>
+
+
+<blockquote><p>Heaps are usually implemented in an array, and do not require pointers between elements.</p>
+
+<p>Full and almost full binary heaps may be represented in a very space-efficient way using an array alone. The first element will contain the root. The next two elements of the array contain its children. The next four contain the four children of the two child nodes, etc.</p>
+
+<p>Thus the children of the node at position n would be at positions 2n+1 and 2n+2.</p></blockquote>
+
+<p>So to summarize:</p>
+
+<ol>
+<li>elems[1] - root, also the minimum elem in elems.</li>
+<li>elems[i]: left child is elems[i<em>2], right child is elems[i</em>2+1]</li>
+</ol>
+
+
+<p>Implementation code:</p>
+
+<pre><code>Add:
+    Push back to elems; size ++; Siftup;
+Remove:
+    Replace the elem to be removed with the last elem; 
+    size --; 
+    Siftup and Siftdown.
+</code></pre>
+
+<h4>Heap questions:</h4>
+
+<ol>
+<li><p><strong><a href="/blog/2014/07/01/Median-in-stream-of-integers/">Median in a stream of integers</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/07/01/The-Skyline-Problem/">The Skyline Problem</a></strong></p></li>
+</ol>
+
+
+<h3>Interval Tree</h3>
+
+<p>Easily find the max/min value in an interval. 2 example questions are:</p>
+
+<ol>
+<li>Find min/max/sum in an interval</li>
+<li>最长的连续1</li>
+</ol>
+
+
+<h2>Code</h2>
+
+<p><strong>Largest Rectangle in histogram</strong></p>
+
+<pre><code>public int largestRectangleArea(int[] height) {
+    if (height == null || height.length == 0) {
+        return 0;
+    }
+    Stack&lt;Integer&gt; stack = new Stack&lt;Integer&gt;();
+    stack.add(0);
+    int len = height.length;
+    int area = 0;
+    for (int i = 1; i &lt;= len; i++) {
+        int h = i == len ? 0 : height[i];
+        // pop a element and calculate its max area
+        // pop until the top element is smaller than h, then push h
+        while (!stack.isEmpty() &amp;&amp; h &lt; height[stack.peek()]) {
+            int pos = stack.pop();
+            int width = stack.isEmpty() ? i : i - stack.peek() - 1;
+            area = Math.max(area, height[pos] * width);
+        }
+        stack.push(i);
+    }
+    return area;
+}
+</code></pre>
+
+<p><strong>LRU Cache</strong></p>
+
+<p>I posted code in the new post.</p>
+
+<p><strong>Longest consecutive sequence</strong></p>
+
+<pre><code>public int longestConsecutive(int[] num) {
+    if (num == null || num.length == 0) {
+        return 0;
+    }
+    HashSet&lt;Integer&gt; set = new HashSet&lt;Integer&gt;();
+    for (Integer i: num) {
+        set.add(i);
+    }
+    int longest = 0;
+    for (Integer i: num) {
+        if (!set.contains(i)) {
+            continue;
+        }
+        int left = i - 1;
+        while (set.contains(left)) {
+            set.remove(left--);
+        }
+        int right = i + 1;
+        while (set.contains(right)) {
+            set.remove(right++);
+        }
+        longest = Math.max(longest, right - left - 1);
+        set.remove(i);
+    }
+    return longest;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/28/Minimum-subarray/">[LintCode] Minimum Subarray</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-28T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.lintcode.com/en/problem/minimum-subarray/">link</a></p>
+
+<blockquote><p>Given an array of integers, find the subarray with smallest sum. Return the sum of the subarray.</p>
+
+<p>Note The subarray should contain at least one integer.</p>
+
+<p>Example For [1, -1, -2, 1], return -3</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>Same as &ldquo;Max subarray&rdquo;.</p>
+
+<h3>Code</h3>
+
+<pre><code>public int minSubArray(ArrayList&lt;Integer&gt; nums) {
+    // write your code
+    if (nums == null || nums.size() == 0) {
+        return 0;
+    }
+    int min = nums.get(0);
+    int pre = Math.min(0, nums.get(0));
+    for (int i = 1; i &lt; nums.size(); i++) {
+        pre += nums.get(i);
+        min = Math.min(min, pre);
+        pre = Math.min(0, pre);
+    }
+    return min;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/28/Maximum-subarray-II/">[LintCode] Maximum Subarray II</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-28T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.lintcode.com/en/problem/maximum-subarray-ii/">link</a></p>
+
+<blockquote><p>Given an array of integers, find two non-overlapping subarrays which have the largest sum. The number in each subarray should be contiguous. Return the largest sum.</p>
+
+<p>Note The subarray should contain at least one number</p>
+
+<p>Example For given [1, 3, -1, 2, -1, 2], the two subarrays are [1, 3] and [2, -1, -2] or [1, 3, -1, 2] and [2], they both have the largest sum 7.</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p><strong>This is not an easy question</strong>. I thought I have to use DP 2 times:</p>
+
+<ol>
+<li>first time, calculate max sum ending at each point.</li>
+<li>second time, calculate max sum to the left/right of a point (inclusive but not necessarily ending at current point).</li>
+</ol>
+
+
+<p>After a second thought, <strong>the first DP path can be denoted with a single variable</strong>. So there comes the solution below.</p>
+
+<h3>Code</h3>
+
+<pre><code>public int maxTwoSubArrays(ArrayList&lt;Integer&gt; nums) {
+    // write your code
+    int len = nums.size();
+    int[] dp1 = new int[len];
+    int[] dp2 = new int[len];
+    // dp1[k] denotes the max sum to the left of k (inclusive)
+    // dp2[k] denotes the max sum to the right of k (inclusive)
+    dp1[0] = nums.get(0);
+    int sumSoFar = Math.max(0, nums.get(0));
+    for (int i = 1; i &lt; len; i++) {
+        sumSoFar += nums.get(i);
+        dp1[i] = Math.max(dp1[i - 1], sumSoFar);
+        sumSoFar = Math.max(0, sumSoFar);
+    }
+    dp2[len - 1] = nums.get(len - 1);
+    sumSoFar = Math.max(0, nums.get(len - 1));
+    for (int i = len - 2; i &gt;= 0; i--) {
+        sumSoFar += nums.get(i);
+        dp2[i] = Math.max(dp2[i + 1], sumSoFar);
+        sumSoFar = Math.max(0, sumSoFar);
+    }
+    // now for every node, calculate leftMaxSum + rightMaxSum
+    int maxSum = Integer.MIN_VALUE;
+    for (int i = 0; i &lt; len - 1; i++) {
+        maxSum = Math.max(maxSum, dp1[i] + dp2[i + 1]);
+    }
+    return maxSum;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/28/Majority-Number-III/">[LintCode] Majority Number III</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-28T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.lintcode.com/en/problem/majority-number-iii/">link</a></p>
+
+<blockquote><p>Given an array of integers and a number k, the majority number is the number that occurs more than 1/k of the size of the array. Find it.</p>
+
+<p>Note: There is only one majority number in the array</p>
+
+<p>Example: For [3,1,2,3,2,3,3,4,4,4] and k = 3, return 3</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>Similar to &lsquo;Majority Number II&rsquo;, but a little more difficult.</p>
+
+<p><strong>Instead of keeping 2 value for checking, now keep k values</strong>. Since values are constantly checked for existance, using a HashMap looks like a great idea.</p>
+
+<p><strong>Another idea suggest by <a href="http://www.geeksforgeeks.org/given-an-array-of-of-size-n-finds-all-the-elements-that-appear-more-than-nk-times/">G4G</a> is a mechanism similar to the famous Tetris Game</strong>. The size of the buffer is k. The buffer is full, we remove all items by counter of 1. When counter reach 0, remove that item. In this way, the elements left in the buffer are the majority numbers.</p>
+
+<p>This method is also used in counting highly-frequent string keywrods. For example, another post <strong>[Design] Big Data - Real Time Top K</strong> discusses about it.</p>
+
+<h3>Code</h3>
+
+<p>I did not write code for this question. Shouldn&rsquo;t be difficult.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/28/Majority-Number-II/">[LintCode] Majority Number II</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-28T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.lintcode.com/en/problem/majority-number-ii/">link</a></p>
+
+<blockquote><p>Given an array of integers, the majority number is the number that occurs more than 1/3 of the size of the array. Find it.</p>
+
+<p>Note: There is only one majority number in the array</p>
+
+<p>Example: For [1, 2, 1, 2, 1, 3, 3] return 1</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>Similar to &lsquo;Majority Number&rsquo;, but a little more difficult.</p>
+
+<p><strong>Instead of keeping 1 value for checking, now keep 2 values</strong>. If the new number is same as any of the 2 values, decrease the count. If the new number is a totally new one, decrease both. The coding is a bit difficult and lengthy.</p>
+
+<p>Note that 2 values are found in the end, do another iteration thru the array, and find the correct result from these 2 values.</p>
+
+<h3>Code</h3>
+
+<pre><code>public int majorityNumber(ArrayList&lt;Integer&gt; nums) {
+    // write your code
+    if (nums == null || nums.size() &lt; 3) {
+        return -1;
+    }
+    int num1 = nums.get(0);
+    int p = 1;
+    int len = nums.size();
+    while (p &lt; len &amp;&amp; nums.get(p) == num1) {
+        p++;
+    }
+    int num2 = nums.get(p);
+    int count1 = p;
+    int count2 = 1;
+    for (int i = p + 1; i &lt; len; i++) {
+        if (nums.get(i) == num1) {
+            count1++;
+        } else if (nums.get(i) == num2) {
+            count2++;
+        } else {
+            // a totally different value
+            if (count1 == 0) {
+                num1 = nums.get(i);
+                count1++;
+            } else if (count2 == 0) {
+                num2 = nums.get(i);
+                count2++;
+            } else {
+                count1--;
+                count2--;
+            }
+        }
+    }
+    if (count1 == 0 &amp;&amp; count2 == 0) {
+        return -1;
+    } else if (count1 == 0) {
+        return num2;
+    } else if (count2 == 0) {
+        return num1;
+    } else {
+        // it's gotta be either num1 or num2
+        int count = 0;
+        for (Integer n: nums) {
+            if (n == num1) {
+                count ++;
+            }
+        }
+        if (count &gt;= len / 3 + 1) {
+            return num1;
+        } else {
+            return num2;
+        }
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/28/Majority-Number/">[LintCode] Majority Number</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-28T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.lintcode.com/en/problem/majority-number/">link</a></p>
+
+<blockquote><p>How to find the majority elelment in an array in O(n)?</p>
+
+<p>Note: The majority element is the element that occurs more than half of the size of the array</p>
+
+<p>Example: For [1, 1, 1, 1, 2, 2, 2], return 1</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>This question is called <strong><a href="http://www.cs.utexas.edu/~moore/best-ideas/mjrty/example.html">Moore’s Voting Algorithm</a></strong> (or Majority Vote Algorithm).</p>
+
+<p>Psudo-code from <a href="http://www.geeksforgeeks.org/majority-element/">GFG</a>:</p>
+
+<pre><code>findCandidate(a[], size)
+1.  Initialize index and count of majority element
+     maj_index = 0, count = 1
+2.  Loop for i = 1 to size – 1
+    (a)If a[maj_index] == a[i]
+        count++
+    (b)Else
+        count--;
+    (c)If count == 0
+        maj_index = i;
+        count = 1
+3.  Return a[maj_index]
+</code></pre>
+
+<p>Sometimess majority element does not exist, so you might want to do another iteration to double check.</p>
+
+<p>If the check shows invalid, then there&rsquo;s no majoirty element.</p>
+
+<h3>Code</h3>
+
+<pre><code>public int majorityNumber(ArrayList&lt;Integer&gt; nums) {
+    // write your code
+    if (nums == null || nums.size() == 0) {
+        return 0;
+    }
+    int num = nums.get(0);
+    int count = 1;
+    for (int i = 1; i &lt; nums.size(); i++) {
+        if (count == 0) {
+            num = nums.get(i);
+            count = 1;
+        } else if (nums.get(i) == num) {
+            count++;
+        } else {
+            count--;
+        }
+    }
+    return num;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/27/Topology-sorting/">[Question] Topology Sort</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-27T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Topological_sorting">link</a></p>
+
+<blockquote><p>Topological ordering of a directed graph is a linear ordering of its vertices such that <strong>for every directed edge uv from vertex u to vertex v, u comes before v in the ordering</strong>.</p>
+
+<p>A topological ordering is possible if and only if the graph has no directed cycles, that is, if it is a <strong>directed acyclic graph (DAG)</strong>.</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>Canonical application of toposort is to schedule tasks with dependency (project management etc.) It&rsquo;s also used for computing formulas, logic synthesis, order of compilation (&lsquo;make&rsquo; command) and data serialization.</p>
+
+<p><img class="middle" src="/assets/images/topology_sort_example.png"></p>
+
+<h3>Solution</h3>
+
+<p>The usual algorithms have <strong>linear run-time</strong>, i.e. O(V + E).</p>
+
+<blockquote><p>First step is to find a list of &ldquo;start nodes&rdquo; which have no incoming edges. Then insert them into a set S and delete it. At least one such node must exist in an <strong>directed acyclic graph</strong>. From a university <a href="https://courses.cs.washington.edu/courses/cse326/03wi/lectures/RaoLect20.pdf">lecture</a>.</p></blockquote>
+
+<p>From Wiki:</p>
+
+<pre><code>L ← Empty list that will contain the sorted elements
+S ← Set of all nodes with no incoming edges
+while S is non-empty do
+    remove a node n from S
+    add n to tail of L
+    for each node m with an edge e from n to m do
+        remove edge e from the graph
+        if m has no other incoming edges then
+            insert m into S
+if graph has edges then
+    return error (graph has at least one cycle)
+else 
+    return L (a topologically sorted order)
+</code></pre>
+
+<p>If the graph is a DAG, <strong>a solution will be contained in the list L</strong> (the solution is not necessarily unique). Otherwise, the graph must have at least one cycle and therefore <strong>a topological sorting is impossible</strong>.</p>
+
+<h3>Code</h3>
+
+<p>The solution comes from <a href="http://codereview.stackexchange.com/questions/44689/topological-sort-in-java">here</a>.</p>
+
+<p><img class="middle" src="/assets/images/topology_sort.png" width="250" height="250"></p>
+
+<pre><code>public class Graph {
+    private int vertices;
+    private Set&lt;Node&gt; nodes = new HashSet&lt;Node&gt;();
+
+    public Graph(int vertices) {
+        this.vertices = vertices;
+    }
+
+    public void addVertex(Node node) {
+        this.nodes.add(node);
+    }
+
+    public Set&lt;Node&gt; topologicalSort() {
+        Queue&lt;Node&gt; q = new LinkedList&lt;Node&gt;();
+        Set&lt;Node&gt; topoSort = new LinkedHashSet&lt;Node&gt;();
+        int vertexProcessesCtr = 0;
+        for (Node m : this.nodes) {
+            vertexProcessesCtr = addToQueue(m, topoSort, vertexProcessesCtr, q);
+        }
+        while (!q.isEmpty()) {
+            Node m = q.poll();
+            for (Node child : m.getAdjacenctNode()) {
+                int indeq = child.getInDegree() - 1;
+                child.setInDegree(indeq);
+                vertexProcessesCtr = addToQueue(child, topoSort,
+                        vertexProcessesCtr, q);
+            }
+        }
+        if (vertexProcessesCtr &gt; this.vertices) {
+            System.out.println();
+        }
+        return topoSort;
+    }
+
+    private int addToQueue(Node node, Set&lt;Node&gt; topoSort, int vertexProcess,
+            Queue&lt;Node&gt; q) {
+        if (node.getInDegree() == 0) {
+            q.add(node);
+            topoSort.add(node);
+            return vertexProcess + 1;
+        }
+        return vertexProcess;
+    }
+
+    public static void main(String[] args) {
+        Graph g = new Graph(8);
+
+        Node TEN = new Node("10");
+        Node ELEVEN = new Node("11");
+        Node TWO = new Node("2");
+        Node THREE = new Node("3");
+        Node FIVE = new Node("5");
+        Node SEVEN = new Node("7");
+        Node EIGHT = new Node("8");
+        Node NINE = new Node("9");
+
+        SEVEN.AdjacenctNode.add(ELEVEN);
+        ELEVEN.inDegree++;
+        SEVEN.AdjacenctNode.add(EIGHT);
+        EIGHT.inDegree++;
+        FIVE.AdjacenctNode.add(ELEVEN);
+        ELEVEN.inDegree++;
+        THREE.AdjacenctNode.add(EIGHT);
+        EIGHT.inDegree++;
+        THREE.AdjacenctNode.add(TEN);
+        TEN.inDegree++;
+        ELEVEN.AdjacenctNode.add(TEN);
+        TEN.inDegree++;
+        ELEVEN.AdjacenctNode.add(TWO);
+        TWO.inDegree++;
+        ELEVEN.AdjacenctNode.add(NINE);
+        NINE.inDegree++;
+        EIGHT.AdjacenctNode.add(NINE);
+        NINE.inDegree++;
+
+        g.nodes.add(TWO);
+        g.nodes.add(THREE);
+        g.nodes.add(FIVE);
+        g.nodes.add(SEVEN);
+        g.nodes.add(EIGHT);
+        g.nodes.add(NINE);
+
+        System.out.println("Now calling the topologial sorts");
+        Set&lt;Node&gt; result = g.topologicalSort();
+        for (Node node : result) {
+            System.out.println(node.data + " ");
+        }
+    }
+}
+
+class Node {
+    public String data;
+    public int dist;
+    public int inDegree;
+    LinkedList&lt;Node&gt; AdjacenctNode = new LinkedList&lt;Node&gt;();
+
+    public void addAdjNode(final Node Child) {
+        AdjacenctNode.add(Child);
+        Child.inDegree++;
+    }
+
+    public Node(String data) {
+        super();
+        this.data = data;
+    }
+
+    public int getInDegree() {
+        return inDegree;
+    }
+
+    public void setInDegree(int inDegree) {
+        this.inDegree = inDegree;
+    }
+
+    public LinkedList&lt;Node&gt; getAdjacenctNode() {
+        return AdjacenctNode;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/27/Previous-Permutation/">[LintCode] Previous Permutation</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-27T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.lintcode.com/en/problem/previous-permuation/">link</a></p>
+
+<div style="min-height:100px">
+<p>Given a list of integers, which denote a permutation.</p>
+
+<p>Find the previous permutation in ascending order.</p>
+    
+<div class="m-t-lg m-b-lg">
+      <b>Note</b>
+      <div><p>The list may contains duplicate integers.</p>
+      </div>
+</div>
+    
+<div class="m-t-lg m-b-lg">
+      <b>Example</b>
+      <div><p>For <strong><span style="color:#B22222;">[1,3,2,3]</span></strong>, the previous permutation is <span style="color:#B22222;"><strong>[1,2,3,3]</strong></span></p>
+
+<p>For <span style="color:#B22222;"><strong>[1,2,3,4]</strong></span>, the previous permutation is <span style="color:#B22222;"><strong>[4,3,2,1]</strong></span></p>
+    </div>
+</div>
+</div>
+
+
+<h3>Analysis</h3>
+
+<p>This is almost the same question as &ldquo;Next Permutation&rdquo;.</p>
+
+<ol>
+<li>Find</li>
+<li>Swap</li>
+<li>Replace</li>
+</ol>
+
+
+<h3>Code</h3>
+
+<pre><code>public ArrayList&lt;Integer&gt; previousPermuation(ArrayList&lt;Integer&gt; nums) {
+    // write your code
+    if (nums == null || nums.size() == 0) {
+        return null;
+    }
+    int len = nums.size();
+    int p = len - 2;
+    // 1. find 1st increasing position from the back
+    while (p &gt;= 0 &amp;&amp; nums.get(p) &lt;= nums.get(p + 1)) {
+        p--;
+    }
+    // 2. swap p with the first smaller value from the back
+    if (p != -1) {
+        int q = len - 1;
+        while (nums.get(q) &gt;= nums.get(p)) {
+            q--;
+        }
+        swap(nums, p, q);
+    }
+    // swap array in range of (p+1, end)
+    int left = p + 1;
+    int right = len - 1;
+    while (left &lt; right) {
+        swap(nums, left++, right--);
+    }
+    return nums;
+}
+
+private void swap(ArrayList&lt;Integer&gt; num, int p, int q) {
+    int temp = num.get(p);
+    num.set(p, num.get(q));
+    num.set(q, temp);
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/44">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/42">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

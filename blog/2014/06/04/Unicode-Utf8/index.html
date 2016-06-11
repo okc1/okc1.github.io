@@ -1,0 +1,376 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Question] ASCII, Utf-8, Utf-16 and Unicode - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="First Word ASCII, UTF-? are encoding schemes. Unicode is character set. Or in other words, UTF-8 is an encoding used to translate binary data into &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/06/04/Unicode-Utf8/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Question] ASCII, Utf-8, Utf-16 and Unicode</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-04T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>First Word</h2>
+
+<p><strong>ASCII, UTF-? are encoding schemes. Unicode is character set</strong>.</p>
+
+<p>Or in other words, UTF-8 is an encoding used to translate binary data into numbers. Unicode is a character set used to translate numbers into characters.</p>
+
+<h2>ASCII</h2>
+
+<p><strong><a href="http://en.wikipedia.org/wiki/ASCII">ASCII</a></strong> is a character-encoding scheme based on the English alphabet. It encodes 128 characters into 7-bit integers.</p>
+
+<p>ASCII was the most commonly used character encoding on the World Wide Web until December 2007, when it was surpassed by UTF-8, which includes ASCII as a subset.</p>
+
+<h2>UTF-8</h2>
+
+<p>UCS Transformation Format—8-bit</p>
+
+<p><strong><a href="http://en.wikipedia.org/wiki/Utf_8">UTF-8</a></strong> is a variable-width encoding that can represent every character in the Unicode character set. It uses 1 byte for ASCII characters, and up to 4 bytes for others.</p>
+
+<p><strong>UTF-8 is the dominant character encoding for the World Wide Web</strong>, accounting for more than half of all Web pages.</p>
+
+<p>Utf-8 is good because:</p>
+
+<ol>
+<li><p>backward compatibility with ASCII</p></li>
+<li><p>avoid the complications of endianness and byte order marks in UTF-16 and UTF-32</p></li>
+</ol>
+
+
+<p>UTF-8 has become the dominant character encoding for the World Wide Web, accounting for more than half of all Web pages</p>
+
+<h2>UTF-16 and UTF-32</h2>
+
+<p><strong>UTF-16 is used for text in the OS API in Microsoft Windows 2000/XP/2003/Vista/7/8/CE</strong>. The word &ldquo;Unicode&rdquo; means something else according to <a href="http://stackoverflow.com/a/3951826">this person</a>:</p>
+
+<blockquote><p>Windows uses UTF-16LE encoding internally as the memory storage format for Unicode strings, it considers this to be the natural encoding of Unicode text. In the Windows world, there are ANSI strings and there are Unicode strings (stored internally as UTF-16LE).</p>
+
+<p>This was all devised in the early days of Unicode, before UTF-8 was invented. This is why Windows&rsquo;s support for UTF-8 is all-round poor.</p></blockquote>
+
+<h4>UTF-8: &ldquo;size optimize&rdquo;:</h4>
+
+<p>Best suited for Latin character based data (or ASCII), it takes only 1 byte.</p>
+
+<h4>UTF-16: &ldquo;balance&rdquo;</h4>
+
+<p>It takes minimum 2 bytes per character which is enough for existing set of the mainstream languages with having fixed size on it to ease character handling, but size is still variable and can grow up to 4 bytes per character.</p>
+
+<h4>UTF-32: &ldquo;performance&rdquo;</h4>
+
+<p>Allows using of simple algorithms as result of fixed size characters (4 bytes) but with memory disadvantage</p>
+
+<h2>Unicode</h2>
+
+<p><a href="http://en.wikipedia.org/wiki/Unicode">Unicode</a> is a computing industry standard for the consistent encoding. It expresses most of world&rsquo;s writing systems with more than 110,000 characters covering 100 scripts and symbols.</p>
+
+<p>Unicode can be implemented by Utf-8, Utf-16 and now-obsolete Ucs-2. When unicode is encoded with UTF-8, its code value is same as ASCII.</p>
+
+<h2>Table of the scheme</h2>
+
+<table class="wikitable">
+<tbody><tr>
+<th class="bg-color bg-img font-color">Bits of<br>
+code point</th>
+<th class="bg-color bg-img font-color">First<br>
+code point</th>
+<th class="bg-color bg-img font-color">Last<br>
+code point</th>
+<th class="bg-color bg-img font-color">Bytes in<br>
+sequence</th>
+<th class="bg-color bg-img font-color">Byte 1</th>
+<th class="bg-color bg-img font-color">Byte 2</th>
+<th class="bg-color bg-img font-color">Byte 3</th>
+<th class="bg-color bg-img font-color">Byte 4</th>
+<th class="bg-color bg-img font-color">Byte 5</th>
+<th class="bg-color bg-img font-color">Byte 6</th>
+</tr>
+<tr>
+<th class="bg-color bg-img font-color">&nbsp;&nbsp;7</th>
+<td class="bg-color bg-img font-color">U+0000</td>
+<td class="bg-color bg-img font-color">U+007F</td>
+<td style="text-align: center;" class="bg-color bg-img font-color">1</td>
+<td class="bg-color bg-img font-color"><code>0xxxxxxx</code></td>
+</tr>
+<tr>
+<th class="bg-color bg-img font-color">11</th>
+<td class="bg-color bg-img font-color">U+0080</td>
+<td class="bg-color bg-img font-color">U+07FF</td>
+<td style="text-align: center;" class="bg-color bg-img font-color">2</td>
+<td class="bg-color bg-img font-color"><code>110xxxxx</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+</tr>
+<tr class="bg-color bg-img font-color">
+<th class="bg-color bg-img font-color">16</th>
+<td class="bg-color bg-img font-color">U+0800</td>
+<td class="bg-color bg-img font-color">U+FFFF</td>
+<td style="text-align: center;" class="bg-color bg-img font-color">3</td>
+<td class="bg-color bg-img font-color"><code class="bg-color bg-img font-color">1110xxxx</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+</tr>
+<tr>
+<th class="bg-color bg-img font-color">21</th>
+<td class="bg-color bg-img font-color">U+10000</td>
+<td class="bg-color bg-img font-color">U+1FFFFF</td>
+<td style="text-align: center;" class="bg-color bg-img font-color">4</td>
+<td class="bg-color bg-img font-color"><code>11110xxx</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+</tr>
+<tr>
+<th class="bg-color bg-img font-color">26</th>
+<td class="bg-color bg-img font-color">U+200000</td>
+<td class="bg-color bg-img font-color">U+3FFFFFF</td>
+<td style="text-align: center;" class="bg-color bg-img font-color">5</td>
+<td class="bg-color bg-img font-color"><code>111110xx</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+</tr>
+<tr>
+<th class="bg-color bg-img font-color">31</th>
+<td class="bg-color bg-img font-color">U+4000000</td>
+<td class="bg-color bg-img font-color">U+7FFFFFFF</td>
+<td style="text-align: center;" class="bg-color bg-img font-color">6</td>
+<td class="bg-color bg-img font-color"><code>1111110x</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
+</tr>
+</tbody></table>
+
+
+<h2>Example</h2>
+
+<p>Translate &lsquo;€&rsquo; into binary Utf-8.</p>
+
+<ol>
+<li><p>The Unicode code point for &ldquo;€&rdquo; is U+20AC.</p></li>
+<li><p>According to the scheme table above, this will take 3 bytes (16 bits).</p></li>
+<li><p>Convert hexadecimal 20AC into a 16-bit binary 0010000010101100.</p></li>
+<li><p>Fill in the 16 bits into: 1110xxxx   10xxxxxx    10xxxxxx, we got 11100010 10000010 10101100</p></li>
+<li><p>Almost done. The result can be concisely written in hexadecimal, as E2 82 AC.</p></li>
+</ol>
+
+
+<p>Note that the last byte of any encoding starts with &lsquo;0&rsquo;, in this way computer can easily identify the encoding length of every character. Also <strong>note that ASCII code is natively supported by Utf-8</strong>.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-06-04T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/question/'>question</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/06/04/Unicode-Utf8/" data-via="" data-counturl="http://okc1.github.io/blog/2014/06/04/Unicode-Utf8/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/06/04/Junit-hands-on-notes/" title="Previous Post: [Question] Junit Hand-on Notes">&laquo; [Question] Junit Hand-on Notes</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/06/05/Software-testing/" title="Next Post: [Testing] Software Testing">[Testing] Software Testing &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,1094 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link 在海量数据中找出出现频率最高的前K个数，或者从海量数据中找出最大的前K个数，这类问题通常称为“top K”问题， top K value
+top K frequency Analysis Standard solution is 【分治+trie树/hash+小顶堆/ &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/33/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/10/big-data-Top-k-freq-case-analysis/">[Design] Big Data - Top K Frequency (Case Analysis)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-10T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://dongxicheng.org/big-data/select-ten-from-billions/">link</a></p>
+
+<blockquote><p>在海量数据中找出出现频率最高的前K个数，或者从海量数据中找出最大的前K个数，这类问题通常称为“top K”问题，</p>
+
+<ol>
+<li>top K value</li>
+<li>top K frequency</li>
+</ol>
+</blockquote>
+
+<h3>Analysis</h3>
+
+<p><strong>Standard solution</strong> is 【分治+trie树/hash+小顶堆/quickselect】, which I covered in another post <a href="/blog/2014/07/25/big-data-Top-k-frequency/">Big Data - Top k Frequency</a>. Briefly it is 3 steps:</p>
+
+<ol>
+<li>先将数据集按照hash方法分解成多个小数据集，</li>
+<li>使用trie树或者hash统计每个小数据集中的query词频，</li>
+<li>用小顶堆/quickselect求出每个数据集中出频率最高的前K个数</li>
+</ol>
+
+
+<p>But, there&rsquo;re other senarios where different solutions may apply. Consider:</p>
+
+<ol>
+<li><p>Single core vs. multiple core</p></li>
+<li><p>Single PC vs. multiple PC</p></li>
+<li><p>Large RAM vs. limited RAM</p></li>
+<li><p>Distributed system</p></li>
+</ol>
+
+
+<h3>1. 单机+单核+足够大内存</h3>
+
+<p>设每个查询词平均占8Byte，则10亿个查询词所需的内存大约是10<sup>9</sup>*8=8G内存。如果你有这么大的内存，直接在内存中对查询词进行排序，顺序遍历找出10个出现频率最大的10个即可。这种方法简单快速，更加实用。当然，也可以先用HashMap求出每个词出现的频率，然后求出出现频率最大的10个词。</p>
+
+<h3>2. 单机+单核+受限内存</h3>
+
+<p>这种情况下，需要将原数据文件切割成一个一个小文件，如，采用hash(x)%M，将原文件中的数据切割成M小文件，如果小文件仍大于内存大小，继续采用hash的方法对数据文件进行切割，直到每个小文件小于内存大小，这样，每个文件可放到内存中处理。采用3.1节的方法依次处理每个小文件。</p>
+
+<h3>3. 单机+多核+足够大内存</h3>
+
+<p>这时可以直接在内存中实用hash方法将数据划分成n个partition，每个partition交给一个线程处理，线程的处理逻辑是同[1]节类似，最后一个线程将结果归并。</p>
+
+<p>该方法存在一个瓶颈会明显影响效率，即数据倾斜，每个线程的处理速度可能不同，快的线程需要等待慢的线程，最终的处理速度取决于慢的线程。解决方法是，<strong>将数据划分成 (c x n)个partition（c>1），每个线程处理完当前partition后主动取下一个partition继续处理</strong>，直到所有数据处理完毕，最后由一个线程进行归并。</p>
+
+<h3>4. 多机+受限内存</h3>
+
+<p>这种情况下，为了合理利用多台机器的资源，可将数据分发到多台机器上，每台机器采用[3]节中的策略解决本地的数据。可采用<strong>hash + socket</strong>方法进行数据分发。</p>
+
+<h3>5. Distributed</h3>
+
+<p>Top k问题很适合采用<strong>MapReduce框架</strong>解决，用户只需编写一个map函数和两个reduce 函数，然后提交到Hadoop（采用mapchain和reducechain）上即可解决该问题。</p>
+
+<p>A map function. 对于map函数，采用hash算法，将hash值相同的数据交给同一个reduce task.</p>
+
+<p>2 reduce functions. 对于<strong>第一个reduce函数</strong>，采用HashMap统计出每个词出现的频率，对于<strong>第二个reduce函数</strong>，统计所有reduce task输出数据中的top k即可。</p>
+
+<h3>6. Other</h3>
+
+<p>公司一般不会自己写个程序进行计算，而是提交到自己核心的数据处理平台上计算，该平台的计算效率可能不如直接写程序高，但它具有<strong>良好的扩展性和容错性</strong>，而这才是企业最看重的。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/10/big-data-Remove-Duplicate-Numbers/">[Design] Big Data - Remove Duplicate Numbers</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-10T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://blog.csdn.net/v_JULY_v/article/details/6279498">link</a></p>
+
+<blockquote><p>2.5亿个整数中找出不重复的整数的个数，内存空间不足以容纳这2.5亿个整数。</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>Categorized under <strong>双层桶划分</strong> or <strong>BitMap</strong>.</p>
+
+<p>整数个数为2<sup>32</sup>,也就是，我们可以将这2<sup>32</sup>个数，划分为2<sup>8</sup>个区域(比如用单个文件代表一个区域)，然后将数据分离到不同的区域，然后不同的区域在利用bitmap就可以直接解决了。</p>
+
+<p><strong>But how exactly to use BitMap</strong>? 将bit-map扩展一下，用2bit表示一个数即可，0表示未出现，1表示出现一次，2表示出现2次及以上。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/09/Test-command-line-copy/">[Testing] Test Command Line Copy</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-09T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://stackoverflow.com/questions/6591652/how-do-i-test-the-copy-command-in-the-windows-environment">link</a></p>
+
+<blockquote><p>testing the copy command in windows environment</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><a href="http://stackoverflow.com/a/6591999">The most important point</a> is to <strong>come up with different domains of inputs and scenarios</strong>.</p>
+
+<h3>Copying between:</h3>
+
+<ol>
+<li>network share</li>
+<li>A really slow network share across the Internet</li>
+<li>partitions</li>
+<li>disks</li>
+<li>disks of different types (flash, usb, external sata, SSD, etc&hellip;)</li>
+<li>directories</li>
+<li>within the same directory</li>
+</ol>
+
+
+<h3>Naming</h3>
+
+<ol>
+<li>Normal file name</li>
+<li>Filename that exceeds 8.3 (verylongfilename.whatever)</li>
+<li>Copying a very long file name, but referencing it by it&rsquo;s 8.3 name (copy verylo~1.wha d:)</li>
+<li>A full directory path that exeeds MAX_PATH (260) characters (e.g. c:\a\very\long\directory\name\that\goes\on\forever\in\length&hellip;&hellip;foo.txt)</li>
+<li>By absolute addressing (\?\c:\foo\foo.txt)</li>
+<li>wildcards (e.g. <em>.</em> *.txt foo?.txt )</li>
+<li>A filename with unicode characters</li>
+<li>A filename with illegal characters in it (there are creative ways to get these files on disk)</li>
+</ol>
+
+
+<h3>Attributes</h3>
+
+<ol>
+<li>Testing with different file attributes (read-only, hidden, system, archive, etc&hellip;)</li>
+<li>Validate timestamp is preserved across copies</li>
+<li>Validate timestamp is preserved across network file share copies when the destination machine is in another timezone</li>
+<li>NTFS ACLs are preserved</li>
+</ol>
+
+
+<h3>Addressing types</h3>
+
+<ol>
+<li>reference by absolute path (e.g. copy c:\some\directory\foo.txt c:\other\place\foo.txt)</li>
+<li>reference by relative path (e.g. copy ....\documents\whatever\foo.txt subdirectory/foo.txt)</li>
+<li>By absolute drive letter into current working directoroy of destination (with no path (e.g. copy foo.txt d:)</li>
+<li>Network share mounted to a drive letter</li>
+</ol>
+
+
+<h3>Failure cases, edge cases, and hack attacks</h3>
+
+<ol>
+<li>Try to copy a file onto itself (e.g copy c:\foo.txt c:\foo.txt)</li>
+<li>Copy when the network share is down.</li>
+<li>Unplug the network cable in the middle of a network file copy</li>
+<li>copy to a read only directory</li>
+<li>copy when the source file is locked.</li>
+<li>copy the when destination file exists but the destination file exists and is read only</li>
+<li>Detach the external disk right before the file copy starts</li>
+<li>disk is near full (But would be full before the entire copy finishes)</li>
+<li>disk is full</li>
+<li>Unplug the power cable in the middle of the copy!</li>
+<li>During a very long copy, start another copy with the same source file, but to another destination</li>
+<li>During a very long copy, start another copy with a different source file, but the the same destination</li>
+<li>During a very long copy, start another copy with the same source and destination files!</li>
+</ol>
+
+
+<h3>File types</h3>
+
+<ol>
+<li>ascii file</li>
+<li>unicode file</li>
+<li>binary file</li>
+</ol>
+
+
+<h3>Environments</h3>
+
+<ol>
+<li>RAID configurations</li>
+<li>FAT and NTFS</li>
+<li>Windows XP, Vista, 7, Server 2003, etc&hellip; (you can quantify this by asking the requirement of &ldquo;which OS&rdquo; up front)</li>
+<li>Virtual Machine (VMWare, virtual PC, hypervisor, etc&hellip;)</li>
+<li>Intel and AMD</li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/09/Process-and-thread/">[Design] Process vs. Thread</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-09T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>First difference: inclusion</h2>
+
+<p><strong><a href="http://www.programmerinterview.com/index.php/operating-systems/thread-vs-process/">A process</a> can contain multiple threads</strong>. When you open Microsoft Word, you start a process that runs Word. The OS creates a process and begins executing the <strong>primary thread</strong> of that process.</p>
+
+<h2>Second difference: address space</h2>
+
+<p><strong>Threads within the same process share the same address space</strong>, whereas different processes do not.</p>
+
+<p><strong>This facilitates communication between threads</strong>, allows threads to read from and write to the same data structures and variables.</p>
+
+<p>Communication between processes – also known as IPC, or <strong>inter-process communication</strong> – is quite difficult and resource-intensive.</p>
+
+<div class="post-text" itemprop="text">
+<p><strong>Interprocess Communication Mechanisms</strong></p>
+
+<p>Processes communicate with each other and with the kernel to coordinate their activities. Linux supports a number of Inter-Process Communication (IPC) mechanisms. Signals and pipes are two of them but Linux also supports the System V IPC mechanisms named after the Unix TM release in which they first appeared.</p>
+
+<p><strong>Signals</strong></p>
+
+<p>Signals are one of the oldest inter-process communication methods used by Unix TM systems. They are used to signal asynchronous events to one or more processes. A signal could be generated by a keyboard interrupt or an error condition such as the process attempting to access a non-existent location in its virtual memory. Signals are also used by the shells to signal job control commands to their child processes.
+There are a set of defined signals that the kernel can generate or that can be generated by other processes in the system, provided that they have the correct privileges. You can list a system's set of signals using the kill command (kill -l).</p>
+
+<p><strong>Pipes</strong></p>
+
+<p>The common Linux shells all allow redirection. For example</p>
+
+<blockquote>
+  <p>$ ls | pr | lpr</p>
+</blockquote>
+
+<p>pipes the output from the ls command listing the directory's files into the standard input of the pr command which paginates them. Finally the standard output from the pr command is piped into the standard input of the lpr command which prints the results on the default printer. Pipes then are unidirectional byte streams which connect the standard output from one process into the standard input of another process. Neither process is aware of this redirection and behaves just as it would normally. It is the shell which sets up these temporary pipes between the processes.</p>
+
+<p><img src="http://i.stack.imgur.com/2l1vO.gif" alt="enter image description here"></p>
+
+<p>In Linux, a pipe is implemented using two file data structures which both point at the same temporary VFS inode which itself points at a physical page within memory. Figure shows that each file data structure contains pointers to different file operation routine vectors; one for writing to the pipe, the other for reading from the pipe.</p>
+
+<p><strong>Sockets</strong></p>
+
+<ul>
+<li><strong>Message Queues</strong>: Message queues allow one or more processes to write messages, which will be read by one or more reading processes. Linux maintains a list of message queues, the msgque vector; each element of which points to a msqid_ds data structure that fully describes the message queue. When message queues are created a new msqid_ds data structure is allocated from system memory and inserted into the vector.
+<img src="http://i.stack.imgur.com/NKxwh.gif" alt="enter image description here"></li>
+<li><strong>System V IPC Mechanisms</strong>: Linux supports three types of interprocess communication mechanisms that first appeared in Unix TM System V (1983). These are message queues, semaphores and shared memory. These System V IPC mechanisms all share common authentication methods. Processes may access these resources only by passing a unique reference identifier to the kernel via system calls. Access to these System V IPC objects is checked using access permissions, much like accesses to files are checked. The access rights to the System V IPC object is set by the creator of the object via system calls. The object's reference identifier is used by each mechanism as an index into a table of resources. It is not a straight forward index but requires some manipulation to generate the index.</li>
+<li><strong>Semaphores</strong>: In its simplest form a semaphore is a location in memory whose value can be tested and set by more than one process. The test and set operation is, so far as each process is concerned, uninterruptible or atomic; once started nothing can stop it. The result of the test and set operation is the addition of the current value of the semaphore and the set value, which can be positive or negative. Depending on the result of the test and set operation one process may have to sleep until the semphore's value is changed by another process. Semaphores can be used to implement critical regions, areas of critical code that only one process at a time should be executing.</li>
+</ul>
+
+<p>Say you had many cooperating processes reading records from and writing records to a single data file. You would want that file access to be strictly coordinated. You could use a semaphore with an initial value of 1 and, around the file operating code, put two semaphore operations, the first to test and decrement the semaphore's value and the second to test and increment it. The first process to access the file would try to decrement the semaphore's value and it would succeed, the semaphore's value now being 0. This process can now go ahead and use the data file but if another process wishing to use it now tries to decrement the semaphore's value it would fail as the result would be -1. That process will be suspended until the first process has finished with the data file. When the first process has finished with the data file it will increment the semaphore's value, making it 1 again. Now the waiting process can be woken and this time its attempt to increment the semaphore will succeed.
+
+<img src="http://i.stack.imgur.com/m08T4.gif" alt="enter image description here"></p>
+
+<ul>
+<li><strong>Shared Memory</strong>: Shared memory allows one or more processes to communicate via memory that appears in all of their virtual address spaces. The pages of the virtual memory is referenced by page table entries in each of the sharing processes' page tables. It does not have to be at the same address in all of the processes' virtual memory. As with all System V IPC objects, access to shared memory areas is controlled via keys and access rights checking. Once the memory is being shared, there are no checks on how the processes are using it. They must rely on other mechanisms, for example System V semaphores, to synchronize access to the memory.
+<img src="http://i.stack.imgur.com/l5XWZ.gif" alt="enter image description here"></li>
+</ul>
+
+<p>Inspired by <a href="http://www.tldp.org/" rel="nofollow">tldp.org</a>.</p>
+    </div>
+
+
+<p>Ref: <a href="http://stackoverflow.com/a/17503877">http://stackoverflow.com/a/17503877</a></p>
+
+<h3>behind the scene: System stack and heap</h3>
+
+<p>Each thread gets <strong>its own Stack, while sharing the same Heap</strong>. Stack size is fixed. Stack is reclaimed when thread ends.</p>
+
+<p>Heap allocation is customized by <strong>heap allocator</strong>. There&rsquo;s no rules. Heap size can be expanded, if approved by the OS. As Heap holds global resources, it must be <strong>thread-safe</strong>, thus making it very complex to manage.</p>
+
+<p>For more, refer to <strong>[Design] Stack and Heap</strong>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/09/Median-in-distributed-computers/">[Design] Median of Array in Distributed Computers</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-09T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.quora.com/Distributed-Algorithms/What-is-the-distributed-algorithm-to-determine-the-median-of-arrays-of-integers-located-on-different-computers">link</a></p>
+
+<blockquote><p>What is the <strong>distributed algorithm</strong> to determine the median of arrays of 1 billion integers located on different computers?</p></blockquote>
+
+<h3>Solution</h3>
+
+<ol>
+<li><p>Suppose you have <strong>a master node</strong> (or are able to use a consensus protocol to elect a master from among your servers).</p></li>
+<li><p>The master queries all servers for the size of their sets of data, so that it knows to look for the k = n/2 largest element.</p></li>
+<li><p>The master then selects a random server and queries <strong>a random element</strong>.</p></li>
+<li><p>The master broadcasts this element to each server.</p></li>
+<li><p>Each server partitions its elements into those larger than or equal to the broadcasted element and those smaller than the broadcasted element.</p></li>
+<li><p>Each server returns to the master the <strong>size of the larger-than partition</strong>, call this m.</p>
+
+<ol>
+<li><p>If the sum of these sizes is greater than k, the master indicates to each server to disregard the &lsquo;less-than&rsquo; set.</p></li>
+<li><p>If it is less than k, the master indicates to disregard the larger-than sets and updates k = k - m.</p></li>
+<li><p>If it is exactly k, the algorithm terminates and the value returned is the pivot selected at the beginning of the iteration.</p></li>
+</ol>
+</li>
+<li><p>Recurse beginning with selecting a new random pivot from the remaining elements.</p></li>
+</ol>
+
+
+<p><a href="http://qr.ae/k2DcS">ref</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/09/Functional-programming/">[Design] Functional Programming</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-09T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Overview</h3>
+
+<p><strong><a href="http://stackoverflow.com/a/23290">A functional language</a> allows you to write a mathematical function</strong>, i.e. a function that takes n arguments and returns a value. If the program is executed, this function is evaluated.</p>
+
+<p>A purely functional program <strong>always yields the same value for an input</strong>, and the order of evaluation is not well-defined; which means that uncertain values like user input or random values are hard to model in purely functional languages.</p>
+
+<h3>One Sentence</h3>
+
+<p><strong>Functional programming is like describing your <a href="http://stackoverflow.com/a/23475">problem to a mathematician</a>. Imperative programming is like giving instructions to an idiot</strong>.</p>
+
+<h3>Pros and Cons</h3>
+
+<p>Functional Programming allows coding <a href="http://stackoverflow.com/a/24294">with fewer potentials for bugs</a> because each component is completely isolated. Also, using recursion and first-class functions allows for <strong>simple proofs of correctness</strong> which typically mirror the structure of the code.</p>
+
+<p>Functional programming languages are typically <a href="http://en.wikipedia.org/wiki/Functional_programming#Efficiency_issues">less efficient</a> in their use of CPU and memory than imperative languages such as C and Pascal.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/08/Thread-pool-pattern/">[Java OOP] Thread Pool Pattern</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-08T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Overview</h3>
+
+<p><a href="http://programmers.stackexchange.com/a/173580">Thread pool</a> is a collection of managed threads usually organized in a queue, which execute the tasks in the task queue.</p>
+
+<p>Thread pool is a group of pre-instantiated, idle threads which stand ready to be given work.</p>
+
+<p><img class="middle" src="/assets/images/thread-pool.png"></p>
+
+<p><a href="http://en.wikipedia.org/wiki/Thread_pool_pattern">A sample thread pool</a> (green boxes) with waiting tasks (blue) and completed tasks (yellow)</p>
+
+<h3>Why Thread Pool?</h3>
+
+<p><strong>Thread Pools are useful when you need to limit the number of threads</strong> running in your application at the same time.</p>
+
+<p>Thread pools are often used in multi threaded servers. Each connection <strong>arriving at the server via the network is wrapped as a task</strong> and passed on to a thread pool. The threads in the thread pool will process the requests on the connections concurrently.</p>
+
+<blockquote><p><a href="http://www.ibm.com/developerworks/library/j-jtp0730/">Many server applications</a>, such as <strong>Web servers (eg. Tomcat)</strong>, database servers, file servers, or mail servers must process a large number of tasks received from a network protocol. Often, the task is short-lived and the number of requests is large.</p>
+
+<p>Instead of starting a new thread for every task to execute concurrently, the <strong>task can be passed to a thread pool</strong>. As soon as the pool has any idle threads the task is assigned to one of them and executed.</p></blockquote>
+
+<h3>Implementation</h3>
+
+<p>This is a <a href="http://tutorials.jenkov.com/java-concurrency/thread-pools.html">simple thread pool implementation</a>. The pool is implemented using a list of tasks, and a list of threads. Theads will fetch tasks and run it. The list is implemented with a BlockingQueue - however, it&rsquo;s fine to use just a normal queue.</p>
+
+<p>Main Class:</p>
+
+<pre><code>public class Main {
+
+    public static void main(String[] args) {
+
+        // In this example, we create 3 thread to run 10 tasks
+        // set the BlockingQ size to be 5.
+
+        ThreadPool tp = new ThreadPool(3, 5);
+
+        List&lt;MyTask&gt; todoList = new ArrayList&lt;MyTask&gt;();
+        for (int i = 1; i &lt;= 10; i++) {
+            todoList.add(new MyTask("T" + i));
+        }
+
+        for (MyTask todo : todoList) {
+            tp.execute(todo);
+        }
+
+        while (!tp.noMoreTask()) {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        tp.stop();
+    }
+
+}
+</code></pre>
+
+<p>Pool Class:</p>
+
+<pre><code>public class ThreadPool {
+
+    // a list of tasks (BlockingQueue)
+    // a list of thread
+    private MyBlockingQueue taskQueue = null;
+    private List&lt;MyThread&gt; threads = new ArrayList&lt;MyThread&gt;();
+    private boolean isStopped = false;
+
+    public ThreadPool(int numThreads, int maxNumTasks) {
+        taskQueue = new MyBlockingQueue(maxNumTasks);
+
+        for (int i = 0; i &lt; numThreads; i++) {
+            threads.add(new MyThread(taskQueue));
+        }
+        System.out.println("Thread pool initiated. ");
+        for (MyThread thread : threads) {
+            thread.start();
+        }
+    }
+
+    public synchronized void execute(Runnable task) {
+        if (this.isStopped) {
+            throw new IllegalStateException("ThreadPool is stopped");
+        }
+
+        try {
+            this.taskQueue.enqueue(task);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean noMoreTask() {
+        return this.taskQueue.isEmpty();
+    }
+
+    public synchronized void stop() {
+        this.isStopped = true;
+        for (MyThread thread : threads) {
+//          thread.stop();
+            thread.interrupt();
+        }
+        System.out.println("Thread pool stopped. ");
+    }
+}
+</code></pre>
+
+<p>Thread Class:</p>
+
+<pre><code>public class MyThread extends Thread {
+
+    private MyBlockingQueue taskQueue = null;
+    private boolean isStopped = false;
+
+    public MyThread(MyBlockingQueue queue) {
+        taskQueue = queue;
+    }
+
+    public void run() {
+        while (!isStopped()) {
+            try {
+                Runnable runnable = (Runnable) taskQueue.dequeue();
+                runnable.run();
+            } catch (Exception e) {
+                // log or otherwise report exception,
+                // but keep pool thread alive.
+            }
+        }
+    }
+
+    // public synchronized void stop() {
+    // isStopped = true;
+    // this.interrupt(); // break pool thread out of dequeue() call.
+    // }
+
+    public synchronized boolean isStopped() {
+        return isStopped;
+    }
+}
+</code></pre>
+
+<p>Task Class:</p>
+
+<pre><code>public class MyTask implements Runnable {
+
+    String message;
+
+    public MyTask(String s) {
+        message = s;
+    }
+
+    @Override
+    public void run() {
+        // do some task here...
+        // finish the task ...
+        System.out.println("Task finished: " + message);
+    }
+}
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>Thread pool initiated. 
+Task finished: T1
+Task finished: T3
+Task finished: T4
+Task finished: T5
+Task finished: T6
+Task finished: T2
+Task finished: T7
+Task finished: T10
+Task finished: T9
+Task finished: T8
+Thread pool stopped. 
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/08/Producer-consumer-problem/">[Design] Producer Consumer Problem</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-08T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Overview</h3>
+
+<p>Producer-consumer problem illustrates the need for <strong>synchronization</strong> in systems where <strong>many processes share a resource</strong>.</p>
+
+<p><a href="http://cs.gmu.edu/cne/modules/ipc/aqua/producer.html">In the problem</a>, two processes share a fixed-size buffer. One process produces information and puts it in the buffer, while the other process consumes information from the buffer. These processes do not take turns accessing the buffer, they both work concurrently.</p>
+
+<h3>Inadequate Solution</h3>
+
+<p><img class="middle" src="/assets/images/producer-workflow.gif"></p>
+
+<p><img class="middle" src="/assets/images/consumer-workflow.gif"></p>
+
+<p><strong>The code might look like this</strong>:</p>
+
+<pre><code>BufferSize = 3;
+count = 0;
+
+Producer()
+{
+    int widget;
+    WHILE (true) {                     // loop forever
+       make_new(widget);               // create a new widget to put in the buffer
+       IF(count==BufferSize)
+           Sleep();                    // if the buffer is full, sleep
+       put_item(widget);               // put the item in the buffer
+       count = count + 1;              // increment count of items
+       IF (count==1)
+           Wakeup(Consumer);           // if the buffer was previously empty, wake
+    }                                  //  the consumer
+}
+
+Consumer()
+{
+    int widget;
+    WHILE(true) {                    // loop forever
+      IF(count==0)
+           Sleep();                  // if the buffer is empty, sleep
+      remove_item(widget);           // take an item from the buffer
+      count = count + 1;             // decrement count of items
+      IF(count==N-1)
+            Wakeup(Producer);        // if buffer was previously full, wake
+                                     //  the producer
+      Consume_item(widget);          // consume the item
+    }
+}
+</code></pre>
+
+<p>This <a href="http://en.wikipedia.org/wiki/Producer%E2%80%93consumer_problem#Inadequate_implementation">will cause problems</a>, because <strong>it contains a race condition</strong> that can lead to a deadlock. Or in simply words, it has the potential of <a href="http://cs.gmu.edu/cne/modules/ipc/purple/prodsem.html">losing wakeups</a>.</p>
+
+<p>An alternative analysis is that if the programming language does not define the semantics of <strong>concurrent accesses to shared variables (in this case itemCount)</strong> without use of synchronization, then the solution is unsatisfactory for that reason, without needing to explicitly demonstrate a race condition.</p>
+
+<p>Solutions are: <strong>semaphores or monitors</strong>.</p>
+
+<h3>Semaphore</h3>
+
+<pre><code>semaphore mutex = 1;
+semaphore fillCount = 0;
+semaphore emptyCount = BUFFER_SIZE;
+
+procedure producer() {
+    while (true) {
+        item = produceItem();
+        down(emptyCount);
+            down(mutex);
+                putItemIntoBuffer(item);
+            up(mutex);
+        up(fillCount);
+    }
+}
+
+procedure consumer() {
+    while (true) {
+        down(fillCount);
+            down(mutex);
+                item = removeItemFromBuffer();
+            up(mutex);
+        up(emptyCount);
+        consumeItem(item);
+    }
+}
+</code></pre>
+
+<h3>Monitor</h3>
+
+<pre><code>monitor ProducerConsumer {
+    int itemCount;
+    condition full;
+    condition empty;
+
+    procedure add(item) {
+        while (itemCount == BUFFER_SIZE) {
+            wait(full);
+        }
+
+        putItemIntoBuffer(item);
+        itemCount = itemCount + 1;
+
+        if (itemCount == BUFFER_SIZE -1) {
+            notify(full);
+        }
+    }
+    procedure remove() {
+        while (itemCount == 0) {
+            wait(empty);
+        }
+
+        item = removeItemFromBuffer();
+        itemCount = itemCount - 1;
+
+        if (itemCount == 1) {
+            notify(empty);
+        }
+
+
+        return item;
+    }
+}
+
+procedure producer() {
+    while (true) {
+        item = produceItem();
+        ProducerConsumer.add(item);
+    }
+}
+
+procedure consumer() {
+    while (true) {
+        item = ProducerConsumer.remove();
+        consumeItem(item);
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/08/Max-sum-non-consecutive/">[Question] Max Sum of Non-Consecutive Elements</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-08T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://tech-queries.blogspot.sg/2009/05/max-possible-sum-of-non-consecutive.html">link</a></p>
+
+<blockquote><p>There is an integer array consisting positive numbers only.</p>
+
+<p>Find maximum possible sum of elements such that there are no 2 consecutive elements present in the sum.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>It&rsquo;s a little tricky to write the equation. Always remember the <strong>basic principle of DP</strong> is to assume that solution is found for (i -1), and then we calculate solution for input (i).</p>
+
+<p><strong>Don&rsquo;t miss the (i-1) part</strong>.</p>
+
+<h3>Code</h3>
+
+<p><strong>written by me</strong></p>
+
+<pre><code>public int maxSumNonConsec(int[] input) {
+    int len = input.length;
+    int[] dp = new int[len];
+    dp[0] = input[0];
+    dp[1] = Math.max(input[0], input[1]);
+    for (int i = 2; i &lt; len; i++) {
+        dp[i] = Math.max(dp[i - 1], input[i] + dp[i - 2]);
+    }
+    return dp[len - 1];
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/08/Decimal-to-Hex/">[Question] Decimal to Hexadecimal</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-08T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://stackoverflow.com/questions/13465098/decimal-to-hexadecimal-converter-in-java">link</a></p>
+
+<blockquote><p>Decimal to Hexadecimal conversion.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Convert binary to hex as a group of 4 bits.</p>
+
+<p>Read code.</p>
+
+<h3>Code</h3>
+
+<p><strong>written by me</strong></p>
+
+<pre><code>private final char[] hexDigits = { '0', '1', '2', '3', '4', '5', '6', '7',
+        '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+private final int flag = 0x0F;
+
+public String decToHex(int dec) {
+    char[] hex = new char[8];
+    for (int i = 7; i &gt;= 0; i--) {
+        int oneDigit = flag &amp; dec;
+        dec &gt;&gt;= 4;
+        hex[i] = hexDigits[oneDigit];
+    }
+    return String.valueOf(hex);
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/34">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/32">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
