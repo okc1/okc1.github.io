@@ -1,0 +1,343 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[CC150v5] 17.13 Convert BST to DLL - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question Consider a simple node-like data structure called BiNode, which has pointers to two other nodes. public class BiNode { public BiNode node1, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/09/30/convert-bst-to-dll/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[CC150v5] 17.13 Convert BST to DLL</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-30T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Consider a simple node-like data structure called BiNode, which has pointers to two other nodes.</p></blockquote>
+
+<pre><code>public class BiNode {
+    public BiNode node1, node2;
+    public int data;
+}
+</code></pre>
+
+<blockquote><p>The data structure BiNode could be used to represent both a binary tree (where node1 is the left node and node2 is the right node) or a doubly linked list (where node1 is the previous node and node2 is the next node). Implement a method to convert a binary search tree (implemented with BiNode) into a doubly linked list. The values should be kept in order and the operation should be performed in place (that is, on the original data structure).</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>At another post <strong>[LeetCode Plus] Convert BST to Circular DLL</strong>, we already discussed 2 approaches:</p>
+
+<ol>
+<li>in-order traversal approach</li>
+<li>divide and conquer approach</li>
+</ol>
+
+
+<p>First approach isn&rsquo;t intuitive. We will further discuss D&amp;C approach here.</p>
+
+<p><strong>The key of the solution is how we return both HEAD and TAIL</strong>. The book suggests 3 ways:</p>
+
+<ol>
+<li>Build a <strong>data structure</strong> to store both head and tail</li>
+<li><strong>Just return head</strong>, and retrieve tail by traversing thru - bad time complexity O(n<sup>2</sup>)</li>
+<li><strong>Use circular linked-list</strong>! Time O(n).</li>
+</ol>
+
+
+<p>I wrote the code for 1st and 2nd approach. And 3rd is already covered in previous post.</p>
+
+<ul>
+<li>You need to understand why we need the list to be circular.</li>
+</ul>
+
+
+<h3>Code</h3>
+
+<p><strong>Approach 1</strong></p>
+
+<pre><code>public static BiNode convert(BiNode root) {
+    BiNodePair res = helper(root);
+    return res.leftMost;
+}
+
+private static BiNodePair helper(BiNode node) {
+    if (node == null) {
+        return null;
+    }
+    BiNodePair res = new BiNodePair(node, node);
+    if (node.node1 != null) {
+        BiNodePair leftRes = helper(node.node1);
+        res.leftMost = leftRes.leftMost;
+        leftRes.rightMost.node2 = node;
+        node.node1 = leftRes.rightMost;
+    }
+    if (node.node2 != null) {
+        BiNodePair rightRes = helper(node.node2);
+        res.rightMost = rightRes.rightMost;
+        rightRes.leftMost.node1 = node;
+        node.node2 = rightRes.leftMost;
+    }
+    return res;
+}
+
+static class BiNodePair {
+    BiNode leftMost;
+    BiNode rightMost;
+
+    public BiNodePair(BiNode node1, BiNode node2) {
+        leftMost = node1;
+        rightMost = node2;
+    }
+}
+</code></pre>
+
+<p><strong>Approach 2</strong></p>
+
+<pre><code>public static BiNode convert(BiNode root) {
+    if (root == null) {
+        return null;
+    }
+    return helper(root);
+}
+
+private static BiNode helper(BiNode node) {
+    // node is not null
+    BiNode newHead = node;
+    // do left part
+    if (node.node1 != null) {
+        newHead = helper(node.node1);
+        BiNode leftTail = getListTail(newHead);
+        leftTail.node2 = node;
+        node.node1 = leftTail;
+    }
+    // do right part
+    if (node.node2 != null) {
+        BiNode rightHead = helper(node.node2);
+        node.node2 = rightHead;
+        rightHead.node1 = node;
+    }
+    return newHead;
+}
+
+private static BiNode getListTail(BiNode head) {
+    // head is not null
+    while (head.node2 != null) {
+        head = head.node2;
+    }
+    return head;
+}
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-09-30T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/cc150v5/'>cc150v5</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/09/30/convert-bst-to-dll/" data-via="" data-counturl="http://okc1.github.io/blog/2014/09/30/convert-bst-to-dll/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/09/28/get-rank-stream-integers/" title="Previous Post: [CC150v5] 11.8 Get Rank in Stream of Integers ">&laquo; [CC150v5] 11.8 Get Rank in Stream of Integers </a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/10/01/optimal-unconcatenate-doc/" title="Next Post: [CC150v5] 17.14 Optimal Way to Unconcatenate Doc ">[CC150v5] 17.14 Optimal Way to Unconcatenate Doc  &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

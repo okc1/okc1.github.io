@@ -1,0 +1,1653 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link In a binary tree, if in the path from root to the node A, there is no node with greater value than A’s, this node A is visible. We need &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/29/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/27/Count-visible-nodes-binary-tree/">[Twitter] Count Visible Nodes in Binary Tree</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-27T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://codesays.com/2014/solution-to-count-visible-nodes-in-binary-tree/">link</a></p>
+
+<blockquote><p> In a binary tree, if in the path from root to the node A, there is no node with greater value than A’s, this node A is visible. We need to count the number of visible nodes in a binary tree. For example, in the following tree:</p></blockquote>
+
+<pre><code>        5
+     /     \
+   3        10
+  / \      /
+20   21   1
+</code></pre>
+
+<blockquote><p>There are four (4) visible nodes: 5, 20, 21, and 10.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>This is an easy question. A solution is available <a href="http://codesays.com/2014/solution-to-count-visible-nodes-in-binary-tree/">here</a>.</p>
+
+<h3>Code</h3>
+
+<p><strong>written by me</strong></p>
+
+<pre><code>public int countVisible(TreeNode root) {
+    return helper(root, Integer.MIN_VALUE);
+}
+
+private int helper(TreeNode node, int ancesterMax) {
+    if (node == null) {
+        return 0;
+    }
+    int newMax = Math.max(ancesterMax, node.val);
+    if (node.val &gt; ancesterMax) {
+        return 1 + helper(node.left, newMax) + helper(node.right, newMax);
+    } else {
+        return helper(node.left, newMax) + helper(node.right, newMax);
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/26/Virtual-memory-page-fault-thrashing/">[Design] Virtual Memory, Page Fault and Thrashing</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-26T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Terminologies</h3>
+
+<h4>Paging</h4>
+
+<p><a href="http://whatis.techtarget.com/definition/paging">Paging</a> is a method of writing data to, and reading it from, <strong>secondary storage</strong> for use in <strong>primary storage</strong>, also known as main memory. Paging plays a role in memory management for a operating system.</p>
+
+<h4>Page table</h4>
+
+<p><a href="http://en.wikipedia.org/wiki/Page_table">A page table</a> is the data structure used by a virtual memory system to store the mapping between <strong>virtual addresses</strong> and <strong>physical addresses</strong>.</p>
+
+<h4>Page fault</h4>
+
+<p>A <a href="http://en.wikipedia.org/wiki/Page_fault">page fault</a> is a trap to the software raised by the hardware when a program <strong>accesses a page that is mapped in the virtual address space</strong>, but <strong>not loaded in physical memory</strong>. In the typical case the operating system tries to handle the page fault by making the required page accessible at a location in physical memory or terminates the program in the case of an illegal access.</p>
+
+<p>An <strong>invalid page fault</strong> or <strong>page fault error</strong> occurs when the operating system cannot find the data in virtual memory. This usually happens when the virtual memory area, or the table that maps virtual addresses to real addresses, becomes corrupt.</p>
+
+<h4>Logical address</h4>
+
+<p><a href="http://en.wikipedia.org/wiki/Logical_address">Logical address</a> is the address at which an item (memory cell, storage element, network host) appears to reside from the perspective of an executing application program.</p>
+
+<h4>Physical address</h4>
+
+<p><a href="http://en.wikipedia.org/wiki/Physical_address">Physical address</a> (also real address, or binary address), is a memory address that is represented in the form of a binary number for accessing main memory.</p>
+
+<p><a href="http://www.geekinterview.com/question_details/3186">In general</a>, Logical address is the address generated <strong>by the CPU</strong>. Where as physical address is the <strong>actual address of the process in the memory</strong>. The CPU generates the logical address that is added with the <strong>offset value</strong> to get the actual address of the process inthe memory.</p>
+
+<h4>Thrashing</h4>
+
+<p><a href="http://www.computerhope.com/jargon/t/thrash.htm">Thrashing</a> or disk thrashing is a term used to describe when the hard drive is <strong>being overworked by moving information</strong> between the system memory and virtual memory excessively.</p>
+
+<h3>Demand Paging</h3>
+
+<p>Virtual memory is implemented (mostly) using demand paging. <strong><a href="http://www.webopedia.com/TERM/D/demand_paging.html">Demand Paging</a></strong> is a type of swapping in which pages of data are not copied from disk to RAM until they are needed. This is an example of a <a href="http://en.wikipedia.org/wiki/Demand_paging">lazy loading technique</a>.</p>
+
+<p>Pros:</p>
+
+<ol>
+<li>less RAM needed</li>
+<li>more users</li>
+<li>less I/O</li>
+</ol>
+
+
+<p>When a pages is needed, if <strong>invalid referernce</strong>, abort the process. else <strong>if valid</strong>, it&rsquo;s called page fault.</p>
+
+<p>Page fault time:</p>
+
+<ol>
+<li>servicing the page fault interrupt</li>
+<li>read in new page (major part)</li>
+<li>restart the process</li>
+</ol>
+
+
+<h3>Page Replacement</h3>
+
+<ol>
+<li>FIFO</li>
+<li>Optimal Algorithm</li>
+<li>LRU</li>
+<li>LRU Approximation
+
+<ol>
+<li>Additional-Reference-Bits algorithm</li>
+<li>Second-Chance (Clock) algorithm</li>
+</ol>
+</li>
+</ol>
+
+
+<p>Refer to another post <strong>&ldquo;Cache and Page Replacement Algorithms&rdquo;</strong>.</p>
+
+<h3>Solution to Thrashing</h3>
+
+<ol>
+<li>More RAM</li>
+<li>Less program running together</li>
+<li>Assign working priorities</li>
+<li>Improve <a href="http://en.wikipedia.org/wiki/Thrashing_(computer_science">spatial locality</a>#Solutions) by replacing loops, i.e.</li>
+</ol>
+
+
+<p>Replace</p>
+
+<pre><code>// recall that in C, arrays use Row-major order
+int m[256][256]; 
+for (k=0; k&lt;256; k++) { 
+    for (i=0; i&lt;256; i++) { 
+        m[i][k] = something(); 
+    }
+}
+</code></pre>
+
+<p>with</p>
+
+<pre><code>int m[256][256]; 
+for (i=0; i&lt;256; i++) { 
+    for (k=0; k&lt;256; k++) {
+        // consecutive values of k reside in adjacent memory locations 
+        m[i][k] = something(); 
+    }
+}
+</code></pre>
+
+<p>So that the use of data elements is within relatively <a href="http://en.wikipedia.org/wiki/Locality_of_reference">close storage locations</a>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/26/Test-hashcode-function/">[Testing] Test hashCode() Function</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-26T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>How to test hashCode() function? Example:</p></blockquote>
+
+<pre><code>public int hashCode(){
+    int result = 17 + hashDouble(re);
+    result = 31 * result + hashDouble(im);
+    return result;
+}
+</code></pre>
+
+<h3>Solution</h3>
+
+<p>We need to test that the hash function is <a href="http://stackoverflow.com/a/4449791">reflexive, symmetric, and transitive</a>.</p>
+
+<h3>Code</h3>
+
+<p>Not including &lsquo;not equal&rsquo; test.</p>
+
+<pre><code>@Test
+public void testEquals_Symmetric() {
+    Person x = new Person("Foo Bar");  // equals and hashCode check name field value
+    Person y = new Person("Foo Bar");
+    Assert.assertTrue(x.equals(y) &amp;&amp; y.equals(x));
+    Assert.assertTrue(x.hashCode() == y.hashCode());
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/26/Design-OOD-elevator/">[Design] OOD Design of Elevator</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-26T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://thought-works.blogspot.sg/2012/11/object-oriented-design-for-elevator-in.html">link</a></p>
+
+<blockquote><p>Object Oriented design for Elevator in a multi-storied apartment</p></blockquote>
+
+<h3>A Single Elevator</h3>
+
+<p>Use Case:</p>
+
+<ol>
+<li>User
+
+<ol>
+<li>press a button to summon the lift</li>
+<li>press a button to get to a specific floor</li>
+</ol>
+</li>
+<li>Button
+
+<ol>
+<li>floor button and level button</li>
+<li>illuminates when pressed</li>
+<li>place an &lsquo;elevator request&rsquo; when pressed</li>
+</ol>
+</li>
+<li>Elevator
+
+<ol>
+<li>moves up/down</li>
+<li>open/close the door</li>
+</ol>
+</li>
+</ol>
+
+
+<p><img class="middle" src="/assets/images/elevator-class-diagram.png"></p>
+
+<p><strong>ElevatorRequests Class</strong></p>
+
+<p>Each button press results in an elevator request which has to be served. Each of these requests is tracked at a global place. ElevatorRequests, the class which stores elevator requests can use different strategies to schedule the elevator requests.</p>
+
+<p><strong>ElevatorController</strong></p>
+
+<p>The elevator is controlled by a controller class which we call ElevatorController. The elevator controller instructs the elevator what to do and also can shutdown/start up the elevator of the building. The elevator controller reads the next elevator request to be processed and serves it.</p>
+
+<p><strong>Button (Abstract) Class</strong></p>
+
+<p>Button is abstract class defining common behavior like illuminate, doNotIlluminate. FloorButton, ElevatorButton extend Button type and define placeRequest() which is invoked when the button is pressed.</p>
+
+<p>In conclusion, <strong>ElevatorController</strong> runs the show by reading the <strong>ElevatorRequests</strong> to process and instructing the <strong>Elevator</strong> what to do. User send request by pressing <strong>Buttons</strong>.</p>
+
+<h3>Extend the answer to multiple elevators</h3>
+
+<ol>
+<li><p>Each elevator have 1 controller.</p></li>
+<li><p>Floor based requests can be served by any elevator, thus these requests are added to a common area accessible by all controllers.</p></li>
+<li><p>Each elevator controller runs as a separate thread and checks if it can process a floor request. Mind synchronization issues.</p></li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/25/design-parking-lot/">[CC150v5] 8.4 Design a Parking Lot</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-25T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Design a Parking Lot.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Class hierarchy:</p>
+
+<ol>
+<li>A parking lot has multiple Levels.</li>
+<li>A Level has multiple Parking Spot.</li>
+<li>A Spot can park motorcycle, car or bus, which all belongs to Vehicle.</li>
+</ol>
+
+
+<p>Implement methods:</p>
+
+<ol>
+<li>Vehicle.parkInSpot(Spot s)</li>
+<li>Vehicle.leaveSpot(Spot s)</li>
+<li>Vehicle.canFitIn(Spot s)</li>
+<li>ParkingLot.parkVehicle(Vehicle v)</li>
+<li>Level.parkVehicle(Vehicle v)</li>
+<li>Level.parkVehicleAtSpot(Vehicle v, Spot s)</li>
+<li>Level.findAvailableSpot(VehicleType vt)</li>
+</ol>
+
+
+<p><strong>ParkingLot Class is just a wrapper class of Levels</strong>. By doing this, we seperated out parking logic from other broader actions (like Spot management).</p>
+
+<p>The code below is from CC150v5. <strong>Its design is a bit strange</strong> (a car can occupy multiple spots), so just use this code as a guide but not a reference.</p>
+
+<h3>Code</h3>
+
+<p>ParkingLot.java</p>
+
+<pre><code>public class ParkingLot {
+    private Level[] levels;
+    private final int NUM_LEVELS = 5;
+
+    public ParkingLot() {
+        levels = new Level[NUM_LEVELS];
+        for (int i = 0; i &lt; NUM_LEVELS; i++) {
+            levels[i] = new Level(i, 30);
+        }
+    }
+
+    /* Park the vehicle in a spot (or multiple spots). Return false if failed. */
+    public boolean parkVehicle(Vehicle vehicle) {
+        for (int i = 0; i &lt; levels.length; i++) {
+            if (levels[i].parkVehicle(vehicle)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void print() {
+        for (int i = 0; i &lt; levels.length; i++) {
+            System.out.print("Level" + i + ": ");
+            levels[i].print();
+            System.out.println("");
+        }
+        System.out.println("");
+    }
+}
+</code></pre>
+
+<p>Level.java</p>
+
+<pre><code>/* Represents a level in a parking garage */
+public class Level {
+    private int floor;
+    private ParkingSpot[] spots;
+    private int availableSpots = 0; // number of free spots
+    private static final int SPOTS_PER_ROW = 10;
+
+    public Level(int flr, int numberSpots) {
+        floor = flr;
+        spots = new ParkingSpot[numberSpots];
+        int largeSpots = numberSpots / 4;
+        int bikeSpots = numberSpots / 4;
+        int compactSpots = numberSpots - largeSpots - bikeSpots;
+        for (int i = 0; i &lt; numberSpots; i++) {
+            VehicleSize sz = VehicleSize.Motorcycle;
+            if (i &lt; largeSpots) {
+                sz = VehicleSize.Large;
+            } else if (i &lt; largeSpots + compactSpots) {
+                sz = VehicleSize.Compact;
+            }
+            int row = i / SPOTS_PER_ROW;
+            spots[i] = new ParkingSpot(this, row, i, sz);
+        }
+        availableSpots = numberSpots;
+    }
+
+    public int availableSpots() {
+        return availableSpots;
+    }
+
+    /* Try to find a place to park this vehicle. Return false if failed. */
+    public boolean parkVehicle(Vehicle vehicle) {
+        if (availableSpots() &lt; vehicle.getSpotsNeeded()) {
+            return false;
+        }
+        int spotNumber = findAvailableSpots(vehicle);
+        if (spotNumber &lt; 0) {
+            return false;
+        }
+        return parkStartingAtSpot(spotNumber, vehicle);
+    }
+
+    /* Park a vehicle starting at the spot spotNumber, and continuing until vehicle.spotsNeeded. */
+    private boolean parkStartingAtSpot(int spotNumber, Vehicle vehicle) {
+        vehicle.clearSpots();
+        boolean success = true;
+        for (int i = spotNumber; i &lt; spotNumber + vehicle.spotsNeeded; i++) {
+             success &amp;= spots[i].park(vehicle);
+        }
+        availableSpots -= vehicle.spotsNeeded;
+        return success;
+    }
+
+    /* find a spot to park this vehicle. Return index of spot, or -1 on failure. */
+    private int findAvailableSpots(Vehicle vehicle) {
+        int spotsNeeded = vehicle.getSpotsNeeded();
+        int lastRow = -1;
+        int spotsFound = 0;
+        for (int i = 0; i &lt; spots.length; i++) {
+            ParkingSpot spot = spots[i];
+            if (lastRow != spot.getRow()) {
+                spotsFound = 0;
+                lastRow = spot.getRow();
+            }
+            if (spot.canFitVehicle(vehicle)) {
+                spotsFound++;
+            } else {
+                spotsFound = 0;
+            }
+            if (spotsFound == spotsNeeded) {
+                return i - (spotsNeeded - 1);
+            }
+        }
+        return -1;
+    }
+
+    public void print() {
+        int lastRow = -1;
+        for (int i = 0; i &lt; spots.length; i++) {
+            ParkingSpot spot = spots[i];
+            if (spot.getRow() != lastRow) {
+                System.out.print("  ");
+                lastRow = spot.getRow();
+            }
+            spot.print();
+        }
+    }
+
+    /* When a car was removed from the spot, increment availableSpots */
+    public void spotFreed() {
+        availableSpots++;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/25/design-in-memory-file-system/">[CC150v5] 8.9 Design a In-memory File System</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-25T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Explain the data structures and algorithms that you would use to design an in-memory file system. Illustrate with an example in code where possible.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>A file system consists of Files and Directories</strong>. Each Directory contains a set of Files and Directories.</p>
+
+<p>Since Files and Directories share so many characteristics, we&rsquo;ve implemented them such that they <strong>inherit from the same class</strong> &ndash; Entry.</p>
+
+<h3>Code</h3>
+
+<p>Entry.java</p>
+
+<pre><code>public abstract class Entry {
+    protected Directory parent;
+    protected long created;
+    protected long lastUpdated;
+    protected long lastAccessed;
+    protected String name;
+
+    public Entry(String n, Directory p) {
+        name = n;
+        parent = p;
+        created = System.currentTimeMillis();
+    }
+
+    public boolean delete() {
+        if (parent == null) {
+            return false;
+        }
+        return parent.deleteEntry(this);
+    }
+
+    public abstract int size();
+
+    public String getFullPath() {
+        if (parent == null) {
+            return name;
+        } else {
+            return parent.getFullPath() + "/" + name;
+        }
+    }
+
+    public long getCreationTime() {
+        return created;
+    }
+
+    public long getLastUpdatedTime() {
+        return lastUpdated;
+    }
+
+    public long getLastAccessedTime() {
+        return lastAccessed;
+    }
+
+    public void changeName(String n) {
+        name = n;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+</code></pre>
+
+<p>Directory.java</p>
+
+<pre><code>public class Directory extends Entry {
+    protected ArrayList&lt;Entry&gt; contents;
+
+    public Directory(String n, Directory p) {
+        super(n, p);
+        contents = new ArrayList&lt;Entry&gt;();
+    }
+
+    protected ArrayList&lt;Entry&gt; getContents() {
+        return contents;
+    }
+
+    public int size() {
+        int size = 0;
+        for (Entry e : contents) {
+            size += e.size();
+        }
+        return size;
+    }
+
+    public int numberOfFiles() {
+        int count = 0;
+        for (Entry e : contents) {
+            if (e instanceof Directory) {
+                count++; // Directory counts as a file
+                Directory d = (Directory) e;
+                count += d.numberOfFiles();
+            } else if (e instanceof File) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public boolean deleteEntry(Entry entry) {
+        return contents.remove(entry);
+    }
+
+    public void addEntry(Entry entry) {
+        contents.add(entry);
+    }
+}
+</code></pre>
+
+<p>File.java</p>
+
+<pre><code>public class File extends Entry {
+    private String content;
+    private int size;
+
+    public File(String n, Directory p, int sz) {
+        super(n, p);
+        size = sz;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public String getContents() {
+        return content;
+    }
+
+    public void setContents(String c) {
+        content = c;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/25/Implement-HashMap/">[CC150v5] 8.10 Implement a Hashmap</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-25T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Design and implement a hash table which uses chaining (linked lists) to handle collisions.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>I wrote this topic before (using Java source code as a reference). This time, I would like to take another (easier) approach.</p>
+
+<p>The main part of this is to use an array of list structure like this:</p>
+
+<pre><code>LinkedList&lt;Cell&lt;K, V&gt;&gt;[] items;
+</code></pre>
+
+<p>And the Cell Class looks like this:</p>
+
+<pre><code>public class Cell&lt;K, V&gt; {
+    private K key;
+    private V value;
+
+    public Cell(K k, V v) {
+        key = k;
+        value = v;
+    }
+
+    public boolean equivalent(Cell&lt;K, V&gt; c) {
+        return equivalent(c.getKey());
+    }
+
+    public boolean equivalent(K k) {
+        return key.equals(k);
+    }
+
+    public K getKey() {
+        return key;
+    }
+
+    public V getValue() {
+        return value;
+    }
+}
+</code></pre>
+
+<h3>Code</h3>
+
+<p><strong>written by me</strong></p>
+
+<pre><code>public class HashMapCC150&lt;K, V&gt; {
+
+    int size;
+    LinkedList&lt;Cell&lt;K, V&gt;&gt;[] items;
+
+    public HashMapCC150(int num) {
+        this.size = num;
+        items = (LinkedList&lt;Cell&lt;K, V&gt;&gt;[]) new LinkedList[10];
+    }
+
+    public V get(K k) {
+        int hashValue = this.calculateHashCode(k);
+        if (items[hashValue] == null) {
+            items[hashValue] = new LinkedList&lt;Cell&lt;K, V&gt;&gt;();
+            return null;
+        }
+        for (Cell&lt;K, V&gt; cell : items[hashValue]) {
+            if (k.equals(cell.getKey())) {
+                return cell.getValue();
+            }
+        }
+        return null;
+    }
+
+    public V put(K k, V v) {
+        int hashValue = this.calculateHashCode(k);
+        if (items[hashValue] == null) {
+            items[hashValue] = new LinkedList&lt;Cell&lt;K, V&gt;&gt;();
+        }
+        for (Cell&lt;K, V&gt; cell : items[hashValue]) {
+            if (k.equals(cell.getKey())) {
+                items[hashValue].remove(cell);
+                break;
+            }
+        }
+        Cell&lt;K, V&gt; newItem = new Cell&lt;K, V&gt;(k, v);
+        items[hashValue].add(newItem);
+        return null;
+    }
+
+    public V remove(K k) {
+        // not written
+        return null;
+    }
+
+    private int calculateHashCode(K k) {
+        return k.toString().length() % size;
+    }
+
+    public static void main(String[] args) {
+        HashMapCC150&lt;String, String&gt; map = new HashMapCC150&lt;String, String&gt;(10);
+        map.put("kevin", "durant");
+        map.put("steven", "curry");
+        map.put("al", "jefferson");
+        System.out.println(map.get("kevin"));
+        System.out.println(map.get("steven"));
+        System.out.println(map.get("al"));
+        map.put("kevin", "martin");
+        map.put("steven", "nash");
+        map.put("kevin", "braynt");
+        System.out.println(map.get("kevin"));
+        System.out.println(map.get("steven"));
+        System.out.println(map.get("al"));
+    }
+}
+
+class Cell&lt;K, V&gt; {
+    private K key;
+    private V value;
+
+    public Cell(K k, V v) {
+        key = k;
+        value = v;
+    }
+
+    public boolean equivalent(Cell&lt;K, V&gt; c) {
+        return equivalent(c.getKey());
+    }
+
+    public boolean equivalent(K k) {
+        return key.equals(k);
+    }
+
+    public K getKey() {
+        return key;
+    }
+
+    public V getValue() {
+        return value;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/24/design-othello-game/">[CC150v5] 8.8 Design Othello Game</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-24T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Othello is played as follows: Each Othello piece is white on one side and black on the other. When a piece is surrounded by its opponents on both the left and right sides, or both the top and bottom, it is said to be captured and its color is flipped.</p>
+
+<p>The win is assigned to the person with the most pieces. Implement the object-oriented design for Othello.</p></blockquote>
+
+<h3>Class</h3>
+
+<ol>
+<li>Game
+
+<ol>
+<li>Two Player objects</li>
+<li>a board object</li>
+<li>singleton class (unless otherwise specified, this needs to be discussed)</li>
+</ol>
+</li>
+<li>Board
+
+<ol>
+<li>Keep the score (black/white count). Of course we can put score in Game Class as well, it seems logically related to the board a bit more.</li>
+<li>Array of Piece objects</li>
+<li>getScore() method</li>
+</ol>
+</li>
+<li>Piece
+
+<ol>
+<li>stores color info</li>
+<li>flip() function</li>
+</ol>
+</li>
+<li>Player
+
+<ol>
+<li>stores color info</li>
+<li>playPiece() method</li>
+</ol>
+</li>
+<li>Color Enum</li>
+<li>Direction Enum</li>
+</ol>
+
+
+<h3>Functions</h3>
+
+<ol>
+<li>placePiece() by the Player (which triggers the following 2 methods)</li>
+<li>private flipSection(Position fromWhere, Color c, Direction up/down/left/right) by the board</li>
+<li>private updateScore() by the board</li>
+<li>getScore() by the board</li>
+</ol>
+
+
+<h4>Follow up: Do we need separate Board and Game classes?</h4>
+
+<p>Strictly speaking, no. The drawback is adding an extra layers. A function that calls Game class is immediately calling Board class.</p>
+
+<p>But keeping the objects separate allows us to have a logical separation between the board (which contains just logic involving placing pieces) and the game (which involves times, game flow, etc.).</p>
+
+<h3>Conclusion</h3>
+
+<p>This is an easy, and very standard OOD question. Keep the logic clear, design the layers and object hierarchy, and the rest of things will come naturally.</p>
+
+<h3>Code</h3>
+
+<p>Game.java</p>
+
+<pre><code>public class Game {
+    private Player[] players;
+    private static Game instance;
+    private Board board;
+    private final int ROWS = 10;
+    private final int COLUMNS = 10;
+
+    private Game() {
+        board = new Board(ROWS, COLUMNS);
+        players = new Player[2];
+        players[0] = new Player(Color.Black);
+        players[1] = new Player(Color.White);
+        Automator.getInstance().initialize(players); // used for testing
+    }
+
+    public static Game getInstance() {
+        if (instance == null) {
+            instance = new Game();
+        }
+        return instance;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+}
+</code></pre>
+
+<p>Board.java</p>
+
+<pre><code>public class Board {
+    private int blackCount = 0;
+    private int whiteCount = 0;
+    private Piece[][] board;
+
+    public Board(int rows, int columns) {
+        board = new Piece[rows][columns];
+    }
+
+    public void initialize() {
+        /* initial board has a grid like the following in the center:
+         *     WB
+         *     BW
+         */
+        int middleRow = board.length / 2;
+        int middleColumn = board[middleRow].length / 2;
+        board[middleRow][middleColumn] = new Piece(Color.White);
+        board[middleRow + 1][middleColumn] = new Piece(Color.Black);
+        board[middleRow + 1][middleColumn + 1] = new Piece(Color.White);
+        board[middleRow][middleColumn + 1] = new Piece(Color.Black);
+        blackCount = 2;
+        whiteCount = 2;
+    }
+
+    public boolean placeColor(int row, int column, Color color) {
+        if (board[row][column] != null) {
+            return false;
+        }
+
+        /* attempt to flip each of the four directions */
+        int[] results = new int[4];
+        results[0] = flipSection(row - 1, column, color, Direction.up);
+        results[1] = flipSection(row + 1, column, color, Direction.down);
+        results[2] = flipSection(row, column + 1, color, Direction.right);
+        results[3] = flipSection(row, column - 1, color, Direction.left);
+
+        /* compute how many pieces were flipped */
+        int flipped = 0;
+        for (int result : results) {
+            if (result &gt; 0) {
+                flipped += result;
+            }
+        }
+
+        /* if nothing was flipped, then it's an invalid move */
+        if (flipped &lt; 0) {
+            return false;
+        }
+
+        /* flip the piece, and update the score */
+        board[row][column] = new Piece(color);
+        updateScore(color, flipped + 1);
+        return true;
+    }
+
+    private int flipSection(int row, int column, Color color, Direction d) {
+        /* Compute the delta for the row and the column. At all times, only the row or the column
+         * will have a delta, since we're only moving in one direction at a time.
+         */
+        int r = 0;
+        int c = 0;
+        switch (d) {
+        case up:
+            r = -1;
+            break;
+        case down:
+            r = 1;
+            break;
+        case left:
+            c = -1;
+            break;
+        case right:
+            c = 1;
+            break;
+        }
+
+        /* If out of bounds, or nothing to flip, return an error (-1) */
+        if (row &lt; 0 || row &gt;= board.length || column &lt; 0 || column &gt;= board[row].length || board[row][column] == null) {
+            return -1;
+        }
+
+        /* Found same color - return nothing flipped */
+        if (board[row][column].getColor() == color) {
+            return 0;
+        }
+
+        /* Recursively flip the remainder of the row. If -1 is returned, then we know we hit the boundary
+         * of the row (or a null piece) before we found our own color, so there's nothing to flip. Return
+         * the error code.
+         */
+        int flipped = flipSection(row + r, column + c, color, d);
+        if (flipped &lt; 0) {
+            return -1;
+        }
+
+        /* flip our own color */
+        board[row][column].flip();
+        return flipped + 1;
+    }
+
+    public int getScoreForColor(Color c) {
+        if (c == Color.Black) {
+            return blackCount;
+        } else {
+            return whiteCount;
+        }
+    }
+
+    private void updateScore(Color newColor, int newPieces) {
+        /* If we added x pieces of a color, then we actually removed x - 1 pieces of the other
+         * color. The -1 is because one of the new pieces was the just-placed one.
+         */
+        if (newColor == Color.Black) {
+            whiteCount -= newPieces - 1;
+            blackCount += newPieces;
+        } else {
+            blackCount -= newPieces - 1;            
+            whiteCount += newPieces;
+        }
+    }
+
+    public void printBoard() {
+        for (int r = 0; r &lt; board.length; r++) {
+            for (int c = 0; c &lt; board[r].length; c++) {
+                if (board[r][c] == null) {
+                    System.out.print("_");
+                } else if (board[r][c].getColor() == Color.White) {
+                    System.out.print("W");
+                } else {
+                    System.out.print("B");
+                }
+            }
+            System.out.println();
+        }
+    }
+}
+</code></pre>
+
+<p>Player.java</p>
+
+<pre><code>public class Player {
+    private Color color;
+    public Player(Color c) {
+        color = c;
+    }
+
+    public int getScore() {
+        return Game.getInstance().getBoard().getScoreForColor(color);
+    }
+
+    public boolean playPiece(int row, int column) {
+        return Game.getInstance().getBoard().placeColor(row, column, color);
+    }
+
+    public Color getColor() {
+        return color;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/24/design-online-chat-server-2/">[CC150v5] 8.7 Design Online Chat Server (2)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-24T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>&hellip; Continued from previous post.</p>
+
+<h3>Overall view</h3>
+
+<p>The system consists of a database, a set of clients, and a set of servers. This is not about OOD, but we need to know.</p>
+
+<ol>
+<li><p>DB stores user list, chat archive. An SQL DB would be good, <strong>unless we want BigTable for scalability purpose</strong>.</p></li>
+<li><p><strong>We use XML for server-client communication</strong>. Because it&rsquo;s debugging friendly.</p></li>
+<li><p><strong>A set of servers</strong>.</p>
+
+<ol>
+<li>Data will be <strong>divided up across machines</strong>, requiring us to potentially hop from machine to machine.</li>
+<li>When possible, we will try to <strong>replicate some data</strong> across machines to minimize the lookups.</li>
+<li>One major design constraint here is to <strong>prevent having a single point of failure</strong>. For instance, if one machine controlled all the user sign-ins, then we&rsquo;d cut off millions of users potentially if a single machine lost network connectivity.</li>
+</ol>
+</li>
+</ol>
+
+
+<h3>Hardest problems</h3>
+
+<p>Or the most interesting questions.</p>
+
+<h4>Q1: How do we know if someone is online?</h4>
+
+<p>While we would like users to tell us when they sign off, we can&rsquo;t know for sure. A user&rsquo;s connection might have died, for example. To make sure that we know when a user has signed off, we might try regularly pinging the client to make sure it&rsquo;s still there.</p>
+
+<h4>Q2: How do we deal with conflicting information?</h4>
+
+<p>We have some information stored in the computer&rsquo;s memory and some in the database. What happens if they get out of sync? Which one is &ldquo;right&rdquo;?</p>
+
+<h4>Q3: How do we make our server scale?</h4>
+
+<p>While we designed out chat server without worrying—too much- about scalability, in real life this would be a concern. We&rsquo;d need to split our data across many servers, which would increase our concern about out-of-sync data.</p>
+
+<h4>Q4: How we do prevent denial of service attacks?</h4>
+
+<p>Clients can push data to us —- what if they try to DOS (denial of service) us? How do we prevent that?</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/24/design-online-chat-server-1/">[CC150v5] 8.7 Design Online Chat Server (1)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-24T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Explain how you would design a chat server. In particular, provide details about the various back end components, classes, and methods.</p>
+
+<p>What would be the hardest problems to solve?</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>First, decide the objects and methods. Here we&rsquo;ll focus on the core user management and conversation aspects.</p>
+
+<h4>Class</h4>
+
+<ol>
+<li>UserMgmt (business logic)</li>
+<li>User (includes basic info, UserStatus, a map of conversation, a map of requests)</li>
+<li>UserStatus (on/offline, status message)</li>
+<li>Conversation Abstract Class (a list of user and a list of messages)
+
+<ol>
+<li>PrivateChat (private conversation)</li>
+<li>GroupChat</li>
+</ol>
+</li>
+<li>Message (a string and a date/time)</li>
+<li>Request (add request and delete request, involves 2 Users)</li>
+</ol>
+
+
+<h4>Functions</h4>
+
+<ol>
+<li>Sign in and log off (update availability)</li>
+<li>update status message</li>
+<li>add/delete request</li>
+<li>send/accept/reject a request</li>
+<li>create a conversation (group or private)</li>
+<li>add a new message (group or private)</li>
+</ol>
+
+
+<h3>Code</h3>
+
+<p>The most important classes is User and UserMgmt. The others are simply data containers.</p>
+
+<p>UserManager.java</p>
+
+<pre><code>public class UserManager {
+    private static UserManager instance;
+    private HashMap&lt;Integer, User&gt; usersById = new HashMap&lt;Integer, User&gt;();
+    private HashMap&lt;String, User&gt; usersByAccountName = new HashMap&lt;String, User&gt;();
+    private HashMap&lt;Integer, User&gt; onlineUsers = new HashMap&lt;Integer, User&gt;();
+
+    public static UserManager getInstance() {
+        if (instance == null) {
+            instance = new UserManager();
+        }
+        return instance;
+    }
+
+    public void addUser(User fromUser, String toAccountName) {
+        User toUser = usersByAccountName.get(toAccountName);
+        AddRequest req = new AddRequest(fromUser, toUser, new Date());
+        toUser.receivedAddRequest(req);
+        fromUser.sentAddRequest(req);
+    }
+
+    public void approveAddRequest(AddRequest req) {
+        req.status = RequestStatus.Accepted;
+        User from = req.getFromUser();
+        User to = req.getToUser();
+        from.addContact(to);
+        to.addContact(from);
+    }
+
+    public void rejectAddRequest(AddRequest req) {
+        req.status = RequestStatus.Rejected;
+        User from = req.getFromUser();
+        User to = req.getToUser();
+        from.removeAddRequest(req);
+        to.removeAddRequest(req);       
+    }
+
+    public void userSignedOn(String accountName) {
+        User user = usersByAccountName.get(accountName);
+        if (user != null) {
+            user.setStatus(new UserStatus(UserStatusType.Available, ""));           
+            onlineUsers.put(user.getId(), user);
+        }
+    }
+
+    public void userSignedOff(String accountName) {
+        User user = usersByAccountName.get(accountName);
+        if (user != null) {
+            user.setStatus(new UserStatus(UserStatusType.Offline, ""));
+            onlineUsers.remove(user.getId());
+        }
+    }   
+}
+</code></pre>
+
+<p>User.java</p>
+
+<p>Property:</p>
+
+<ol>
+<li>id and name</li>
+<li>a map of conversations</li>
+<li>a map of sent request</li>
+<li>a map of received request</li>
+<li>a map of friends list</li>
+</ol>
+
+
+<p>Methods:</p>
+
+<ol>
+<li>sendMessageToUser(User)</li>
+<li>addContact(User)</li>
+<li>receivedAddRequest(Request)</li>
+<li>sentAddRequest(Request)</li>
+<li>removeAddRequest(Request)</li>
+<li>addConversation(Conversation)</li>
+</ol>
+
+
+<p>Note that all user actions are controlled by the UserManager Class. For example, when adding a friend:</p>
+
+<ol>
+<li>User A clicks &ldquo;add user&rdquo; on the client.</li>
+<li>User A calls requestAddUser (User B).</li>
+<li>This method calls UserManager.addUser(User a, userBid).</li>
+<li>UserManager calls both User A.sentAddRequest() and User B.receivedAddRequest().</li>
+</ol>
+
+
+<p>Code:</p>
+
+<pre><code>public class User {
+    private int id;
+    private UserStatus status = null;
+    private HashMap&lt;Integer, PrivateChat&gt; privateChats = new HashMap&lt;Integer, PrivateChat&gt;();
+    private ArrayList&lt;GroupChat&gt; groupChats = new ArrayList&lt;GroupChat&gt;();
+    private HashMap&lt;Integer, AddRequest&gt; receivedAddRequests = new HashMap&lt;Integer, AddRequest&gt;();
+    private HashMap&lt;Integer, AddRequest&gt; sentAddRequests = new HashMap&lt;Integer, AddRequest&gt;();
+
+    private HashMap&lt;Integer, User&gt; contacts = new HashMap&lt;Integer, User&gt;();
+    private String accountName;
+    private String fullName;
+
+    public User(int id, String accountName, String fullName) {
+        this.accountName = accountName;
+        this.fullName = fullName;
+        this.id = id;
+    }
+
+    public boolean sendMessageToUser(User toUser, String content) {
+        PrivateChat chat = privateChats.get(toUser.getId());
+        if (chat == null) {
+            chat = new PrivateChat(this, toUser);
+            privateChats.put(toUser.getId(), chat);
+        }
+        Message message = new Message(content, new Date());
+        return chat.addMessage(message);
+    }
+
+    public boolean sendMessageToGroupChat(int groupId, String content) {
+        GroupChat chat = groupChats.get(groupId);
+        if (chat != null) {
+            Message message = new Message(content, new Date());
+            return chat.addMessage(message);
+        }
+        return false;
+    }
+
+    public void setStatus(UserStatus status) {
+        this.status = status;
+    }
+
+    public UserStatus getStatus() {
+        return status;
+    }
+
+    public boolean addContact(User user) {
+        if (contacts.containsKey(user.getId())) {
+            return false;
+        } else {
+            contacts.put(user.getId(), user);
+            return true;
+        }
+    }
+
+    public void receivedAddRequest(AddRequest req) {
+        int senderId = req.getFromUser().getId();
+        if (!receivedAddRequests.containsKey(senderId)) {
+            receivedAddRequests.put(senderId, req);
+        }       
+    }
+
+    public void sentAddRequest(AddRequest req) {
+        int receiverId = req.getFromUser().getId();
+        if (!sentAddRequests.containsKey(receiverId)) {
+            sentAddRequests.put(receiverId, req);
+        }       
+    }
+
+    public void removeAddRequest(AddRequest req) {
+        if (req.getToUser() == this) {
+            receivedAddRequests.remove(req);
+        } else if (req.getFromUser() == this) {
+            sentAddRequests.remove(req);
+        }
+    }
+
+    public void requestAddUser(String accountName) {
+        UserManager.getInstance().addUser(this, accountName);
+    }
+
+    public void addConversation(PrivateChat conversation) {
+        User otherUser = conversation.getOtherParticipant(this);
+        privateChats.put(otherUser.getId(), conversation);
+    }
+
+    public void addConversation(GroupChat conversation) {
+        groupChats.add(conversation);
+    }   
+
+    public int getId() {
+        return id;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/30">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/28">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

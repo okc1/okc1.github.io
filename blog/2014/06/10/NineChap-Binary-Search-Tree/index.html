@@ -1,0 +1,360 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[NineChap 3.3] Binary Search Tree - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question list BST Validate Binary Search Tree
+Insert a Node in Binary Search Tree
+Delete a Node in Binary Search Tree
+Search Range in a Binary Search &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/06/10/NineChap-Binary-Search-Tree/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[NineChap 3.3] Binary Search Tree</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-10T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Question list</h2>
+
+<p><strong>BST</strong></p>
+
+<ol>
+<li><p><strong><a href="/blog/2014/05/26/Validate-Binary-Search-Tree/">Validate Binary Search Tree</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/06/11/BST-insert-and-delete/">Insert a Node in Binary Search Tree</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/06/11/BST-insert-and-delete/">Delete a Node in Binary Search Tree</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/06/13/Search-range-BST-trim-BST/">Search Range in a Binary Search Tree</a></strong></p></li>
+</ol>
+
+
+<p><strong>Additional</strong></p>
+
+<ol>
+<li><p><strong><a href="/blog/2014/05/25/Recover-Binary-Search-Tree/">Recover Binary Search Tree</a></strong> - used global variable</p></li>
+<li><p><strong><a href="/blog/2014/05/26/Convert-Sorted-Array-to-Binary-Search-Tree/">Convert Sorted Array to Binary Search Tree</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/26/Convert-Sorted-List-to-Binary-Search-Tree/">Convert Sorted List to Binary Search Tree</a></strong> - used global variable</p></li>
+</ol>
+
+
+<h2>Code</h2>
+
+<p><strong>Validate Binary Search Tree</strong></p>
+
+<pre><code>public boolean isValidBST(TreeNode root) {
+    return validate(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+}
+
+private boolean validate(TreeNode node, int min, int max) {
+    if (node == null) {
+        return true;
+    }
+    if (node.val &lt;= min || max &lt;= node.val) {
+        return false;
+    }
+    return validate(node.left, min, node.val) &amp; validate(node.right, node.val, max);
+}
+</code></pre>
+
+<p><strong>Insert a Node in Binary Search Tree</strong> and <strong>Delete a Node in Binary Search Tree</strong> are written in a new post.</p>
+
+<p><strong>Search Range in a Binary Search Tree</strong></p>
+
+<p>There is a new post for this.</p>
+
+<p><strong>Recover Binary Search Tree</strong></p>
+
+<pre><code>// 3 global variables used
+TreeNode first = null;
+TreeNode second = null; 
+TreeNode current = null;
+
+public void recoverTree(TreeNode root) {
+    traverse(root);
+    if (first != null) {
+        int temp = first.val;
+        first.val = second.val;
+        second.val = temp;
+    }
+}
+
+public void traverse(TreeNode root) {
+    if (root == null) {
+        return;
+    }
+    traverse(root.left);
+    // inorder traversal
+    if (current != null &amp;&amp; current.val &gt; root.val) {
+        if (first == null) {
+            first = current;
+        }
+        second = root;
+    }
+    current = root;
+    traverse(root.right);
+}
+</code></pre>
+
+<p><strong>Convert Sorted Array to Binary Search Tree</strong></p>
+
+<pre><code>public TreeNode sortedArrayToBST(int[] num) {
+    if (num == null || num.length == 0) {
+        return null;
+    }
+    return build(num, 0, num.length - 1);
+}
+
+private TreeNode build(int[] num, int start, int end) {
+    if (start &gt; end) {
+        return null;
+    }
+    int mid = start + (end - start) / 2;
+    TreeNode head = new TreeNode(num[mid]);
+    head.left = build(num, start, mid - 1);
+    head.right = build(num, mid + 1, end);
+    return head;
+}
+</code></pre>
+
+<p><strong>Convert Sorted List to Binary Search Tree</strong> - note that this solution uses 1 global variable</p>
+
+<pre><code>ListNode cur = null;
+
+public TreeNode sortedListToBST(ListNode head) {
+    // count total length of the list 
+    ListNode p = head;
+    int count = 0;
+    while (p != null) {
+        p = p.next;
+        count++;
+    }
+    // start to traverse the tree and fill in data
+    cur = head;
+    return build(0, count - 1);
+}
+
+private TreeNode build(int start, int end) {
+    if (start &gt; end) {
+        return null;
+    }
+    int mid = start + (end - start) / 2;
+    TreeNode head = new TreeNode(0);
+    head.left = build(start, mid - 1);
+    head.val = cur.val;
+    cur = cur.next;
+    head.right = build(mid + 1, end);
+    return head;
+}
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-06-10T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ninechap/'>ninechap</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/06/10/NineChap-Binary-Search-Tree/" data-via="" data-counturl="http://okc1.github.io/blog/2014/06/10/NineChap-Binary-Search-Tree/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/06/10/Lowest-Common-Ancestor-Tree-II/" title="Previous Post: [LeetCode Plus] Lowest Common Ancestor of Binary Tree (II)">&laquo; [LeetCode Plus] Lowest Common Ancestor of Binary Tree (II)</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/06/10/NineChap-Binary-Tree-BFS/" title="Next Post: [NineChap 3.2] Binary Tree BFS">[NineChap 3.2] Binary Tree BFS &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

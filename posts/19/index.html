@@ -1,0 +1,1091 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="ref 1 ref 2 Why Indexing? In database disks (we&rsquo;re talking about disk-based storage devices), data is stored as blocks. These blocks are &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/19/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/12/27/database-indexing/">[Design] Database Indexing</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-12-27T00:00:00-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://stackoverflow.com/a/1130">ref 1</a> <a href="http://www.interspire.com/content/2006/02/15/introduction-to-database-indexes/">ref 2</a></p>
+
+<h3>Why Indexing?</h3>
+
+<p>In database disks (we&rsquo;re talking about disk-based storage devices), data is stored as blocks. These blocks are accessed atomically. It&rsquo;s like a linked list with pointers to the blocks.</p>
+
+<p>Because of this, searching in database is linear time. That&rsquo;s why we need indexing.</p>
+
+<p><strong>Indexing is a way of sorting a number of records on multiple fields</strong>. Creating an index on a field in a table creates another data structure which holds the field value, and pointer to the record it relates to. This index structure is then sorted, allowing Binary Searches to be performed on it.</p>
+
+<p>In other words, indexing speed up search.</p>
+
+<h3>Downside</h3>
+
+<p>First disadvantage is <strong>the additional space usage</strong>. For example, in MyISAM engine, indexes are stored together with the data in one table. So the indexing files can quickly reach the size limits if many fields are indexed.</p>
+
+<p>Second disadvantage is that <strong>using too many indexes can actually slow your database down</strong>. Each time a page or database row is updated or removed, the reference or index also has to be updated.</p>
+
+<p>So indexes speed up finding data, but slow down inserting, updating or deleting data.</p>
+
+<h3>Primary keys</h3>
+
+<p><strong>Some fields are automatically indexed</strong>.</p>
+
+<p>A primary key or a field marked as ‘unique’ – for example an email address, a userid or a social security number – are <strong>automatically indexed</strong> so the database can quickly check to make sure that you’re not going to introduce bad data.</p>
+
+<h3>When to use</h3>
+
+<p>Since indexes are <strong>only</strong> used to speed up the searching, it&rsquo;s not wise to have indexing used only for output.</p>
+
+<p><strong>The general rule</strong> is, anything that is used to limit the number of results you’re trying to find. For more details, read <a href="http://www.interspire.com/content/2006/02/15/introduction-to-database-indexes/">ref 2</a>.</p>
+
+<h3>How to create index</h3>
+
+<p><a href="http://stackoverflow.com/a/1157">The following</a> is SQL92 standard that&rsquo;s supported by major RDMBSs:</p>
+
+<pre><code>CREATE INDEX [index name] ON [table name] ( [column name] )
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/12/23/Java-runtime-exception/">[Java OOP] Java Runtime Exception</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-12-23T00:00:00-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Exceptions in Java</h3>
+
+<p>In Java, there are <a href="http://www.tutorialspoint.com/java/java_exceptions.htm">3 categories of exceptions</a>:</p>
+
+<ol>
+<li><p>checked exceptions</p>
+
+<ol>
+<li>Typically a user error</li>
+<li>eg. if a file cannot be found.</li>
+<li>These exceptions cannot simply be ignored at the time of compilation.</li>
+</ol>
+</li>
+<li><p>runtime exceptions (also called un-checked exceptions)</p>
+
+<ol>
+<li>exception that could have been avoided by the programmer</li>
+<li>eg. NullPointerException</li>
+<li>ignored at the time of compilation</li>
+</ol>
+</li>
+<li><p>error</p>
+
+<ol>
+<li>These are not exceptions at all</li>
+<li>eg. stack overflow occurs</li>
+<li>also ignored at the time of compilation</li>
+</ol>
+</li>
+</ol>
+
+
+<h4>1. checked exception</h4>
+
+<p><a href="http://stackoverflow.com/a/2190175">A checked exception</a> <strong>must be handled explicitly</strong> by the code (by either putting a try/catch block around the code, or adding a &ldquo;throws&rdquo; clause to the method).</p>
+
+<p>The <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Exception.html">class Exception</a> and any subclasses that are not also subclasses of RuntimeException are <strong>checked exceptions</strong>. Example:</p>
+
+<ol>
+<li>FileNotFoundException</li>
+<li>HttpRetryException</li>
+<li>SocketException</li>
+<li>IOException</li>
+</ol>
+
+
+<p>Note: <strong>java.lang.RuntimeException</strong> is a subclass of <strong>java.lang.Exception</strong>.</p>
+
+<h4>2. un-checked exceptions (RuntimeException)</h4>
+
+<p>A un-checked exception <strong>does not need</strong> to be explicitly handled.</p>
+
+<p><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/RuntimeException.html">RuntimeException</a> and its subclasses are <strong>unchecked exceptions</strong>.</p>
+
+<p><a href="http://stackoverflow.com/a/2190177">Generally</a> RuntimeExceptions <strong>can be prevented</strong> programmatically. E.g NullPointerException, ArrayIndexOutOfBoundException. If you check for null before calling any method, NullPointerException would never occur. Similarly ArrayIndexOutOfBoundException would never occur if you check the index first. RuntimeException are not checked by the compiler, so it is clean code.</p>
+
+<p>The runtime exception classes <strong><a href="http://stackoverflow.com/a/2190659">are exempted</a> from compile-time checking</strong>, since the compiler cannot establish that run-time exceptions cannot occur.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/12/23/Endless-error-gem-dependencies/">[Ruby] Endless Error With Gem Dependencies</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-12-23T00:00:00-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>The problem</h3>
+
+<p>In setting up the octopress environment, we need to install dependencies like this:</p>
+
+<pre><code>gem install bundler
+bundle install
+</code></pre>
+
+<p>First line simply installs bundler (a Ruby dependency manager). The second line is where you might face problems:</p>
+
+<blockquote><p>bundle install</p>
+
+<p><a href="http://bundler.io/man/bundle-install.1.html">Install the dependencies</a> specified in your Gemfile</p></blockquote>
+
+<p>Look at the Gemfile in your octopress folder, it looks like <a href="https://github.com/imathis/octopress/blob/master/Gemfile">this</a>:</p>
+
+<pre><code>source "https://rubygems.org"
+
+group :development do
+  gem 'rake', '~&gt; 10.0'
+  gem 'jekyll', '~&gt; 2.0'
+  gem 'octopress-hooks', '~&gt; 2.2'
+  gem 'octopress-date-format', '~&gt; 2.0'
+  gem 'jekyll-sitemap'
+  gem 'rdiscount', '~&gt; 2.0'
+  gem 'RedCloth', '~&gt; 4.2.9'
+  gem 'haml', '~&gt; 4.0'
+  gem 'compass', '~&gt; 1.0.1'
+  gem 'sass-globbing', '~&gt; 1.0.0'
+  gem 'rubypants', '~&gt; 0.2.0'
+  gem 'rb-fsevent', '~&gt; 0.9'
+  gem 'stringex', '~&gt; 1.4.0'
+end
+
+gem 'sinatra', '~&gt; 1.4.2'
+</code></pre>
+
+<p>When I do &lsquo;bundle install&rsquo;:</p>
+
+<pre><code>$ bundle install
+Fetching gem metadata from https://rubygems.org/........
+Resolving dependencies...
+
+Gem::RemoteFetcher::FetchError: SSL_connect returned=1 errno=0 state=SSLv3 read
+server certificate B: certificate verify failed (https://rubygems.org/gems/rake-
+10.4.2.gem)
+An error occurred while installing rake (10.4.2), and Bundler cannot continue.
+Make sure that `gem install rake -v '10.4.2'` succeeds before bundling.
+</code></pre>
+
+<p>It shows the gem &lsquo;rake&rsquo; is missing. So I did as I was instrcucted to. I type <strong>gem install rake -v &lsquo;10.4.2&rsquo;</strong> into command line, and execute. Again, I was told another gem missing. I kept doing this, until I found this is an endless procedure:</p>
+
+<pre><code>$ bundle install
+Fetching gem metadata from https://rubygems.org/.......
+Using rake 10.3.2
+Using RedCloth 4.2.9
+Using blankslate 2.1.2.4
+
+Gem::RemoteFetcher::FetchError: SSL_connect returned=1 errno=0 state=SSLv3 read
+server certificate B: certificate verify failed (https://rubygems.org/gems/timer
+s-1.1.0.gem)
+An error occurred while installing timers (1.1.0), and Bundler cannot continue.
+Make sure that `gem install timers -v '1.1.0'` succeeds before bundling.
+</code></pre>
+
+<p>Something is very wrong with the execution of &lsquo;bundle install&rsquo;.</p>
+
+<h3>The solution</h3>
+
+<p>Until I found <a href="http://stackoverflow.com/questions/15529451/octopress-installation-stops-during-bundle-install">this post</a>, I was hopelessly searching and learning Ruby gems and related things.</p>
+
+<p>I fact, I just deleted 1 letter by changing <strong>source &ldquo;<a href="https://rubygems.org">https://rubygems.org</a>&rdquo;</strong> to <strong>source &ldquo;<a href="http://rubygems.org">http://rubygems.org</a>&rdquo;</strong> at line 1 of Gemfile in octopress folder.</p>
+
+<p>Then, everything is fine:</p>
+
+<pre><code>$ bundle install
+Fetching gem metadata from http://rubygems.org/........
+Resolving dependencies....
+Installing rake 10.4.2
+Using RedCloth 4.2.9
+Using blankslate 2.1.2.4
+Installing hitimes 1.2.2
+Installing timers 4.0.1
+Installing celluloid 0.16.0
+Installing chunky_png 1.3.3
+Installing fast-stemmer 1.0.2
+Installing classifier-reborn 2.0.2
+Installing coffee-script-source 1.8.0
+Installing execjs 2.2.2
+Installing coffee-script 2.3.0
+Installing colorator 0.1
+Installing multi_json 1.10.1
+Installing sass 3.4.9
+Installing compass-core 1.0.1
+Installing compass-import-once 1.0.5
+Installing rb-fsevent 0.9.4
+Installing ffi 1.9.6
+Installing rb-inotify 0.9.5
+Installing compass 1.0.1
+Installing tilt 1.4.1
+Installing haml 4.0.6
+Installing jekyll-coffeescript 1.0.1
+Installing jekyll-gist 1.1.0
+Installing jekyll-paginate 1.1.0
+Installing jekyll-sass-converter 1.3.0
+Installing listen 2.8.4
+Installing jekyll-watch 1.2.0
+Installing kramdown 1.5.0
+Installing liquid 2.6.1
+Installing mercenary 0.3.5
+Installing posix-spawn 0.3.9
+Installing yajl-ruby 1.1.0
+Installing pygments.rb 0.6.0
+Installing redcarpet 3.2.2
+Installing safe_yaml 1.0.4
+Installing parslet 1.5.0
+Installing toml 0.1.2
+Installing jekyll 2.5.3
+Installing jekyll-sitemap 0.7.0
+Installing octopress-hooks 2.2.3
+Installing octopress-date-format 2.0.2
+Installing rack 1.6.0
+Installing rack-protection 1.5.3
+Installing rdiscount 2.1.7.1
+Installing rubypants 0.2.0
+Installing sass-globbing 1.0.0
+Installing sinatra 1.4.5
+Installing stringex 1.4.0
+Using bundler 1.7.9
+Your bundle is complete!
+Use `bundle show [gemname]` to see where a bundled gem is installed.
+Post-install message from compass:
+    Compass is charityware. If you love it, please donate on our behalf at http:
+//umdf.org/compass Thanks!
+Post-install message from haml:
+
+HEADS UP! Haml 4.0 has many improvements, but also has changes that may break
+your application:
+
+* Support for Ruby 1.8.6 dropped
+* Support for Rails 2 dropped
+* Sass filter now always outputs &lt;style&gt; tags
+* Data attributes are now hyphenated, not underscored
+* html2haml utility moved to the html2haml gem
+* Textile and Maruku filters moved to the haml-contrib gem
+
+For more info see:
+
+http://rubydoc.info/github/haml/haml/file/CHANGELOG.md
+</code></pre>
+
+<p>I guess this is because my network security settings, but I do not know. If you are facing the same issue, I hope my solution helped. Or if you know the reason, please tell me by leaving a comment below. Thanks!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/12/22/overload-override-java-main-method/">[Java OOP] Override/overload Java Main Method</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-12-22T00:00:00-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Can we overload main method in Java?</h3>
+
+<p>Can. But only <strong>public static void main(String[] args)</strong> will be used when <a href="http://stackoverflow.com/questions/3759315/can-we-overload-the-main-method-in-java">your class is launched by the JVM</a>.</p>
+
+<p>You can call other <strong>main() method</strong> yourself from code.</p>
+
+<p>Eg.</p>
+
+<pre><code>class Simple{  
+  public static void main(int a){  
+  System.out.println(a);  
+  }  
+
+  public static void main(String args[]){  
+  System.out.println("main() method invoked");  
+  main(10);  
+  }  
+}
+</code></pre>
+
+<p>output:</p>
+
+<pre><code>main() method invoked
+10
+</code></pre>
+
+<h3>Can we override main method in Java?</h3>
+
+<p>No.</p>
+
+<p><a href="http://stackoverflow.com/questions/9083876/override-main-method">MAIN is a class method</a>. Hence, it does not makes sense to &ldquo;override&rdquo; it (or any static method). The concept of &ldquo;overriding&rdquo; is only for instance methods.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/12/22/common-root-java-class/">[Java OOP] Common Root of Java Classes</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-12-22T00:00:00-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Common Root Class</h3>
+
+<p><strong>java.lang.Object</strong>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html">link</a></p>
+
+<p>All Java classes are derived from this <a href="http://www.ntu.edu.sg/home/ehchua/programming/java/J3b_OOPInheritancePolymorphism.html">common root class</a>, that defines common behaviors.</p>
+
+<p>Common behaviors include multi-threading and garbage collector etc.</p>
+
+<h4>Some methods</h4>
+
+<p><a href="http://docs.oracle.com/javase/tutorial/java/IandI/objectclass.html">ref</a></p>
+
+<p>protected Object clone() throws CloneNotSupportedException</p>
+
+<blockquote><p>Creates and returns a copy of this object.</p></blockquote>
+
+<p>public boolean equals(Object obj)</p>
+
+<blockquote><p>Indicates whether some other object is &ldquo;equal to&rdquo; this one.</p></blockquote>
+
+<p>protected void finalize() throws Throwable</p>
+
+<blockquote><p>Called by the garbage collector on an object when garbage collection determines that there are no more references to the object</p></blockquote>
+
+<p>public final Class getClass()</p>
+
+<blockquote><p>Returns the runtime class of an object.</p></blockquote>
+
+<p>public int hashCode()</p>
+
+<blockquote><p>Returns a hash code value for the object.</p></blockquote>
+
+<p>public String toString()</p>
+
+<blockquote><p>Returns a string representation of the object.</p></blockquote>
+
+<h3>Sync-related methods</h3>
+
+<p>The notify, notifyAll, and wait methods of Object all play a part in synchronizing the activities of independently running threads in a program.</p>
+
+<pre><code>public final void notify()
+public final void notifyAll()
+public final void wait()
+public final void wait(long timeout)
+public final void wait(long timeout, int nanos)
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/12/22/can-interface-extend-interface/">[Java OOP] Interface Extend Another Interface</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-12-22T00:00:00-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Can an interface extend another interface in Java?</h3>
+
+<p>Yes. Just remember that you should implement the methods in <a href="http://www.programmerinterview.com/index.php/java-questions/java-can-an-interface-extend-another-interface/">both interfaces</a>.</p>
+
+<p>Example in Java source code <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html">link1</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Collection.html">link2</a>:</p>
+
+<pre><code>public interface List&lt;E&gt; extends Collection&lt;E&gt; {
+
+}
+
+public interface Collection&lt;E&gt; extends Iterable&lt;E&gt; {
+
+}
+</code></pre>
+
+<p>In conclusion, <a href="http://stackoverflow.com/questions/19546357/can-an-interface-extend-multiple-interfaces-in-java">ref</a></p>
+
+<p>An interface can extend multiple interfaces.</p>
+
+<p>A class can implement multiple interfaces.</p>
+
+<p>However, a class can only extend a single class.</p>
+
+<h4>a special case</h4>
+
+<pre><code>interface A
+{
+    void test();
+}
+
+interface B 
+{
+    void test();
+}
+
+class C implements A, B
+{
+    @Override
+    public void test() {
+
+    }
+}
+</code></pre>
+
+<p>Well, a single implementation works for the both methods. This implementation works no problem.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/12/22/Split-an-integer-or-coin/">[Question] Split an Integer or Coin</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-12-22T00:00:00-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://blog.csdn.net/hackbuteer1/article/details/8035261">link</a></p>
+
+<blockquote><p>整数的拆分问题</p>
+
+<p>如，对于正整数n=6，可以拆分为：</p></blockquote>
+
+<pre><code>6
+5+1
+4+2, 4+1+1
+3+3, 3+2+1, 3+1+1+1
+2+2+2, 2+2+1+1, 2+1+1+1+1
+1+1+1+1+1+1+1
+</code></pre>
+
+<blockquote><p>现在的问题是，对于给定的正整数n，程序输出该整数的拆分种类数(HDOJ  1028)。</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>This is very similar to another question I posted before: <strong>Coin Change Problem</strong>.</p>
+
+<p><strong>The DP equation is</strong>:</p>
+
+<blockquote><p>q(n,k) = q(n,k-1) + q(n-k,k)</p></blockquote>
+
+<h3>Code</h3>
+
+<p><strong>not written by me</strong></p>
+
+<pre><code>int main(void) {  
+    int n,i,j,dp[121][121];  
+    for(i = 1 ; i &lt; 121 ; ++i)  
+    {  
+        for(j = 1 ; j &lt; 121 ; ++j)  
+        {  
+            if(i == 1 ||  j == 1)  
+                dp[i][j] = 1;  
+            else if(i &gt; j)  
+                dp[i][j] = dp[i][j-1] + dp[i-j][j];  
+            else if(i == j)  
+                dp[i][j] = dp[i][j-1] + 1;  
+            else  
+                dp[i][j] = dp[i][i];  
+        }  
+    }  
+
+    while(scanf("%d",&amp;n)!=EOF)  
+    {  
+        cout&lt;&lt;dp[n][n]&lt;&lt;endl;  
+    }  
+    return 0;  
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/12/22/RubyGems-gem-other/">[Ruby] RubyGems, Gem, Gemfile and Bundler</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-12-22T00:00:00-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Sometme I found the different concepts in Ruby very confusing for beginners. So I write this post to explain some terminologies in ruby setup.</p>
+
+<h3>RubyGems (tool)</h3>
+
+<p><strong><a href="http://en.wikipedia.org/wiki/RubyGems">RubyGems</a></strong> is a package manager for the Ruby programming language.</p>
+
+<p>It is a tool to manage the installation of gems, and a server for distributing them.</p>
+
+<p>RubyGems is very similar to apt-get, portage, and yum in functionality.</p>
+
+<h3>gem (command)</h3>
+
+<p>&lsquo;gem&rsquo; command allows you to interact with RubyGems. It is used build, upload, download, and install Gem packages.</p>
+
+<p>Installation:</p>
+
+<pre><code>gem install mygem
+</code></pre>
+
+<p>Uninstallation:</p>
+
+<pre><code>gem uninstall mygem
+</code></pre>
+
+<p>Listing installed gems:</p>
+
+<pre><code>gem list --local
+</code></pre>
+
+<p>Listing available gems, e.g.:</p>
+
+<pre><code>gem list --remote
+</code></pre>
+
+<h3>Gemfile (text file)</h3>
+
+<p><a href="http://bundler.io/man/gemfile.5.html">A Gemfile</a> describes the gem dependencies required to execute associated Ruby code.</p>
+
+<p>It is placed in the root of the directory containing the associated code.</p>
+
+<p>A Gemfile is evaluated as Ruby code, in a context which makes available a number of methods used to describe the gem requirements.</p>
+
+<h3>gem (program)</h3>
+
+<p><a href="http://stackoverflow.com/questions/5233924/what-is-a-ruby-gem">ref1</a>, <a href="http://guides.rubygems.org/what-is-a-gem/">ref2</a></p>
+
+<p>A gem is a module/Library that you can install and use in every project on your server.</p>
+
+<p>Each gem has a <strong>name, version, and platform</strong>. For example, <strong>rake gem</strong> has a 10.3.2 version on platform Ruby.</p>
+
+<p>Inside a gems are the following components:</p>
+
+<ol>
+<li>Code (including tests and supporting utilities)</li>
+<li>Documentation</li>
+<li>gemspec</li>
+</ol>
+
+
+<p>Standard code structure:</p>
+
+<pre><code>% tree freewill
+freewill/
+├── bin/
+│   └── freewill
+├── lib/
+│   └── freewill.rb
+├── test/
+│   └── test_freewill.rb
+├── README
+├── Rakefile
+└── freewill.gemspec
+</code></pre>
+
+<h3>Bundler (dependency manager)</h3>
+
+<p><a href="http://bundler.io/">ref</a></p>
+
+<p>Bundler manages an application&rsquo;s dependencies.</p>
+
+<p>Bundler provides a consistent environment for Ruby projects by tracking and installing the exact gems and versions that are needed.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/12/22/Maximum-sum-no-adjacent/">[Facebook] Maximum Sum Such That No Two Elements Are Adjacent</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-12-22T00:00:00-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.geeksforgeeks.org/maximum-sum-such-that-no-two-elements-are-adjacent/">link</a></p>
+
+<blockquote><p>Given an array of positive numbers, find the maximum sum of a subsequence that no 2 numbers should be adjacent.</p>
+
+<p>Eg. (3, 2, 7, 10) should return 13 (3+10)</p>
+
+<p>Eg. (3, 2, 5, 10, 7) should return 15 (3+5+7).</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>It is an modified version of &ldquo;max sum subsequence&rdquo;. Answer given on <a href="http://www.geeksforgeeks.org/maximum-sum-such-that-no-two-elements-are-adjacent/">gfg</a> is:</p>
+
+<blockquote><p>Loop for all elements in arr[] and maintain two sums &lsquo;incl&rsquo; and &lsquo;excl&rsquo; where:</p>
+
+<p>incl = Max sum including the previous element</p>
+
+<p>excl = Max sum excluding the previous element</p></blockquote>
+
+<h3>Code</h3>
+
+<p><strong>written by me</strong></p>
+
+<pre><code>public int solve(int[] A) {
+    if (A == null || A.length == 0) {
+        return 0;
+    } else if (A.length == 1) {
+        return A[0];
+    } else if (A.length == 2) {
+        return Math.max(A[0], A[1]);
+    }
+
+    // prePreMax is the max non-adjacency sequence ending 2 position ahead
+    // preMax is the max non-adjacency sequence ending 1 position ahead
+    int prePreMax = A[0];
+    int preMax = A[1];
+    int ans = 0;
+
+    for (int i = 2; i &lt; A.length; i++) {
+        ans = Math.max(ans, prePreMax + A[i]);
+        // set the 2 variables: prePreMax, preMax
+        int temp = preMax;
+        preMax = Math.max(0, prePreMax + A[i]);
+        prePreMax = Math.max(prePreMax, temp);
+    }
+    return ans;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/12/22/Discussion-of-Polymorphism/">[Java OOP] Discussion of Polymorphism</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-12-22T00:00:00-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Overview</h1>
+
+<p>Polymorphism is to <a href="http://javarevisited.blogspot.sg/2011/08/what-is-polymorphism-in-java-example.html">use common interface</a> instead of concrete implementation while coding.</p>
+
+<p>The most common use of polymorphism in OOP occurs <strong>when a parent class reference is used to refer to a child class object</strong>.</p>
+
+<h2>Quick Summary:</h2>
+
+<p><a href="http://www.ntu.edu.sg/home/ehchua/programming/java/J3b_OOPInheritancePolymorphism.html">ref</a></p>
+
+<ol>
+<li><p>A subclass instance can be assigned to a superclass' reference.</p></li>
+<li><p>Once substituted, we can invoke methods defined in super-class; we CANNOT invoke methods from sub-class.</p></li>
+<li><p>if sub-class overrides inherited methods from the super-class, the overridden versions will be invoked.</p></li>
+<li><p>Reference cannot point to superclass.</p></li>
+</ol>
+
+
+<h2>Advantages</h2>
+
+<ol>
+<li><p>Simpler programs</p>
+
+<p> eg.
+ superRef[] = new Circle[2];
+ superRef[0] = new Cylinder();
+ superRef[1] = new Circle();</p>
+
+<blockquote><p>Just 1 single array to represent different objects</p></blockquote></li>
+<li><p>Better re-usability</p></li>
+</ol>
+
+
+<h2>A practical example</h2>
+
+<p>Cylinder is a subclass of Circle. We gonna do this:</p>
+
+<blockquote><p>Circle c1 = new Cylinder();</p></blockquote>
+
+<p>The code is below:</p>
+
+<pre><code>public class PolymorphismSubstitutabilityDemo {
+
+    public static void main(String[] args) {
+        Circle c1 = new Cylinder(1, "white", 10);
+        System.out.println(c1.getClass());
+        System.out.println(c1.getRadius());
+        System.out.println(c1.getArea());
+    }
+}
+
+class Circle {
+    int radius;
+    String color;
+
+    public Circle(int a, String b) {
+        this.radius = a;
+        this.color = b;
+    }
+
+    public int getRadius() {
+        return radius;
+    }
+
+    public double getArea() {
+        return 3.14159 * Math.pow(radius, 2);
+    }
+}
+
+class Cylinder extends Circle {
+    int height;
+
+    public Cylinder(int a, String b, int c) {
+        super(a, b);
+        this.height = c;
+    }
+
+    public double getArea() {
+        return super.getArea() * height;
+    }
+}
+</code></pre>
+
+<p>The output of execution:</p>
+
+<pre><code>class Cylinder
+1
+31.4159
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/20">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/18">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

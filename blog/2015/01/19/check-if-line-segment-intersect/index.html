@@ -1,0 +1,347 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Question] Check if Two Line Segments Intersect - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link Given two line segments (p1, q1) and (p2, q2), check if 2 line segments intersect. Orientation Considering 3 pointer, orientation can &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2015/01/19/check-if-line-segment-intersect/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Question] Check if Two Line Segments Intersect</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-19T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/">link</a></p>
+
+<blockquote><p>Given two line segments (p1, q1) and (p2, q2), check if 2 line segments intersect.</p></blockquote>
+
+<h3>Orientation</h3>
+
+<p>Considering 3 pointer, orientation can be:</p>
+
+<ol>
+<li>counterclockwise</li>
+<li>clockwise</li>
+<li>colinear (not considering direction)</li>
+</ol>
+
+
+<p><img class="middle" src="/assets/images/line-orientation.png"></p>
+
+<p>Note that orientation only tells the order and sequence relationship of 3 points. <strong>It tells nothing about intersection</strong>.</p>
+
+<h3>Intersection</h3>
+
+<p>Considering 2 line segments: (p1,q1) and (p2,q2).</p>
+
+<h4>Case 1: general</h4>
+
+<p>Two line segment intersect if <strong>BOTH</strong> the 2 conditions hold:</p>
+
+<ol>
+<li>(p1, q1, p2) and (p1, q1, q2) have different orientations and</li>
+<li>(p2, q2, p1) and (p2, q2, q1) have different orientations</li>
+</ol>
+
+
+<p><img class="middle" src="/assets/images/GeneralCaseExamples1.png"></p>
+
+<p><img class="middle" src="/assets/images/examplesGeneralCase211.png"></p>
+
+<h4>Case 2: special</h4>
+
+<p>The speical case is: <strong>what if all 4 pointers (p1, q1, p2, q2) are all on the same line</strong>!!! Well, this definitely can happen.</p>
+
+<p>If so, check if the values of x-axis and y-axis intersect. I.e. the below 2 cases:</p>
+
+<p><img class="middle" src="/assets/images/examplesSpecialCase1.png"></p>
+
+<h3>Code</h3>
+
+<p>Translated from G4G:</p>
+
+<pre><code>public boolean intersect(Pair p1, Pair q1, Pair p2, Pair q2) {
+
+    int o1 = orientation(p1, q1, p2);
+    int o2 = orientation(p1, q1, q2);
+    int o3 = orientation(p2, q2, p1);
+    int o4 = orientation(p2, q2, q1);
+
+    // General case
+    if (o1 != o2 &amp;&amp; o3 != o4) {
+        // 2 lines intersect
+        return true;
+    }
+
+    // Special Cases
+    Segment seg1 = new Segment(p1, q1);
+    Segment seg2 = new Segment(p2, q2);
+
+    // p1, q1 and p2 are colinear and p2 lies on segment p1q1
+    if (o1 == 0 &amp;&amp; onSegment(seg1, p2))
+        return true;
+
+    // p1, q1 and p2 are colinear and q2 lies on segment p1q1
+    if (o2 == 0 &amp;&amp; onSegment(seg1, q2))
+        return true;
+
+    // p2, q2 and p1 are colinear and p1 lies on segment p2q2
+    if (o3 == 0 &amp;&amp; onSegment(seg2, p1))
+        return true;
+
+    // p2, q2 and q1 are colinear and q1 lies on segment p2q2
+    if (o4 == 0 &amp;&amp; onSegment(seg2, q1))
+        return true;
+
+    return false; // Doesn't fall in any of the above cases
+}
+
+private boolean onSegment(Segment seg, Pair q) {
+    // check if q lies on line segment seg(p1, p2)
+    if (q.x &lt;= Math.max(seg.p1.x, seg.p2.x)
+            &amp;&amp; q.x &gt;= Math.min(seg.p1.x, seg.p2.x)
+            &amp;&amp; q.y &lt;= Math.max(seg.p1.y, seg.p2.y)
+            &amp;&amp; q.y &gt;= Math.min(seg.p1.y, seg.p2.y))
+        return true;
+
+    return false;
+}
+
+private int orientation(Pair first, Pair second, Pair third) {
+    int val = (second.y - first.y) * (third.x - second.x)
+            - (second.x - first.x) * (third.y - second.y);
+    if (val == 0) {
+        // colinear
+        return 0;
+    } else {
+        // clock or counterclock wise (1 or -1)
+        return val / Math.abs(val);
+    }
+}
+
+class Segment {
+    Pair p1;
+    Pair p2;
+
+    public Segment(Pair p1, Pair p2) {
+        this.p1 = p1;
+        this.p2 = p2;
+    }
+}
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-01-19T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/question/'>question</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2015/01/19/check-if-line-segment-intersect/" data-via="" data-counturl="http://okc1.github.io/blog/2015/01/19/check-if-line-segment-intersect/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/01/18/max-squre-with-all-1/" title="Previous Post: [Question] Maximum square sub-matrix with all 1s ">&laquo; [Question] Maximum square sub-matrix with all 1s </a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/01/19/check-if-point-inside-polygon/" title="Next Post: [Question] Check if given point inside polygon ">[Question] Check if given point inside polygon  &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

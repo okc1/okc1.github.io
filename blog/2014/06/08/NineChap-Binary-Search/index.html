@@ -1,0 +1,551 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[NineChap 2.1] Binary Search - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Binary Search Recursion or While-Loop? In general, it&rsquo;s never a good idea to do binary search with recursion, because that&rsquo;ll make the &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/06/08/NineChap-Binary-Search/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[NineChap 2.1] Binary Search</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-08T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Binary Search</h2>
+
+<h4>Recursion or While-Loop?</h4>
+
+<p>In general, it&rsquo;s never a good idea to do binary search with recursion, because that&rsquo;ll make the interview too boring.</p>
+
+<h4>Template</h4>
+
+<p><a href="http://answer.ninechapter.com/solutions/binary-search/">link</a></p>
+
+<p>This template is able to locate the first (or last) occurance of an element <strong>when array contains duplications</strong>.</p>
+
+<p>If item too small/large, left/right boundary is returned.</p>
+
+<p>Read Question &ldquo;Search for a Range&rdquo; for more details.</p>
+
+<pre><code>int binarySearch(vector&lt;int&gt; &amp;A, int target) {
+    if (A.size() == 0) {
+        return -1;
+    }
+
+    int start = 0;
+    int end = A.size() - 1;
+    int mid;
+
+    while (start + 1 &lt; end) {
+        mid = start + (end - start) / 2;
+        if (A[mid] &lt; target) {
+            start = mid;
+        } else {
+            end = mid;
+        }
+    }
+
+    if (A[start] == target) {
+        return start;
+    }
+    if (A[end] == target) {
+        return end;
+    }
+
+    return -1;
+}
+</code></pre>
+
+<h4>Keypoints</h4>
+
+<ol>
+<li>start + 1 &lt; end</li>
+<li>start + (end-start)/2</li>
+<li>A[mid] ==, &lt;, ></li>
+<li>A[start/end] == target</li>
+</ol>
+
+
+<h2>Question list</h2>
+
+<p><strong>Binary search</strong></p>
+
+<ol>
+<li><p><strong><a href="/blog/2014/05/12/Search-Insert-Position/">Search Insert Position</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/12/Search-for-a-Range/">Search for a Range</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/12/Search-in-Rotated-Sorted-Array/">Search in Rotated Sorted Array</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/22/Search-in-Rotated-Sorted-Array-II/">Search in Rotated Sorted Array II</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/21/Search-a-2D-Matrix/">Search a 2D Matrix</a></strong></p></li>
+</ol>
+
+
+<p><strong>Additional</strong></p>
+
+<ol>
+<li><p><strong><a href="/blog/2014/06/10/Searching-a-2D-Sorted-Matrix/">Search a 2D Matrix II</a></strong> - A tricky question</p></li>
+<li><p><strong>Find the First Bad Version</strong></p>
+
+<p> The code base version is an integer and start from 0 to n. One day, someone commit a bad version in the code case, so it caused itself and the following versions are all failed in the unittests. You can determine whether a version is bad by the following interface:</p>
+
+<blockquote><p>boolean isBadVersion(int version);</p></blockquote>
+
+<p> Find the first bad version.</p></li>
+<li><p><strong>Find a peek</strong></p>
+
+<p> There is an array which we can assume the numbers in adjcent positions are different. and A[0] &lt; A[1] &amp;&amp; A[A.length - 2] > A[A.length - 1]. We consider a position P is a peek if A[P] > A[P-1] &amp;&amp; A[P] > A[P+1]. Find a peek in this array.</p></li>
+</ol>
+
+
+<h2>Code</h2>
+
+<p>All following code are written with the template provided above.</p>
+
+<p><strong>Search Insert Position</strong></p>
+
+<pre><code>public int searchInsert(int[] A, int target) {
+    // 6 minutes
+    if (A == null || A.length == 0) {
+        return 0;
+    }
+    int left = 0, right = A.length - 1;
+    int mid;
+    while (left + 1 &lt; right) {
+        mid = left + (right - left) / 2;
+        if (A[mid] &lt; target) {
+            left = mid;
+        }
+        else {
+            right = mid;
+        }
+    }
+    if (target &lt;= A[left]) {
+        // equal or less than first element
+        return left;
+    }
+    else if (A[left] &lt; target &amp;&amp; target &lt;= A[right]) {
+        return right;
+    }
+    else {
+        // bigger than largest element
+        return right + 1;
+    }
+}
+</code></pre>
+
+<p><strong>Search for a Range</strong></p>
+
+<pre><code>public int[] searchRange(int[] A, int target) {
+    // 6 minutes
+    int[] result = new int[2];
+    result[0] = -1;
+    result[1] = -1;
+    if (A == null || A.length == 0) {
+        return result;
+    }
+    // find the start point of target
+    int left = 0, right = A.length - 1, mid;
+    while (left + 1 &lt; right) {
+        mid = left + (right - left) / 2;
+        if (A[mid] &lt; target) {
+            left = mid;
+        }
+        else {
+            right = mid;
+        }
+    }
+    if (A[left] == target) {
+        result[0] = left;
+    }
+    else if (A[right] == target) {
+        result[0] = right;
+    }
+    else {
+        return result;
+    }
+    // find the end point of target
+    left = 0;
+    right = A.length - 1;
+    while (left + 1 &lt; right) {
+        mid = left + (right - left) / 2;
+        if (A[mid] &lt;= target) {
+            left = mid;
+        }
+        else {
+            right = mid;
+        }
+    }
+    if (A[right] == target) {
+        result[1] = right;
+    }
+    else if (A[left] == target) {
+        result[1] = left;
+    }
+    return result;
+}
+</code></pre>
+
+<p><strong>Search in Rotated Sorted Array</strong></p>
+
+<p>Note: this is an high-freq qeustion. Every company will ask this question.</p>
+
+<p>The solution is using 4 if-conditions. It takes long time first, because I compare A[mid] with target. It become complex.</p>
+
+<p>We should compared A[left] and A[mid] first, then it&rsquo;ll be much easier for coding.</p>
+
+<pre><code>public int search(int[] A, int target) {
+    // this is the 4th time that I do this question
+    // 7 minutes
+    if (A == null || A.length == 0) {
+        return -1;
+    }
+    int left = 0;
+    int right = A.length - 1;
+    int mid;
+    while (left + 1 &lt; right) {
+        mid = left + (right - left) / 2;
+        if (A[mid] == target) {
+            return mid;
+        } else if (A[left] &lt; A[mid]) {
+            if (A[left] &lt;= target &amp;&amp; target &lt; A[mid]) {
+                right = mid;
+            } else {
+                left = mid;
+            }
+        } else {
+            if (A[mid] &lt; target &amp;&amp; target &lt;= A[right]) {
+                left = mid;
+            } else {
+                right = mid;
+            }
+        }
+    }
+    if (A[left] == target) {
+        return left;
+    } else if (A[right] == target) {
+        return right;
+    } 
+    return -1;
+}
+</code></pre>
+
+<p><strong>Search in Rotated Sorted Array II</strong></p>
+
+<p>There are multiple ways to remove duplications. My previous solution is removing duplicate before entering the while-loop, which is a very good idea.</p>
+
+<p>Binary can&rsquo;t be used, because there might be: value of start = mid = end. In this case, the entire list needs to be search. Impossible!</p>
+
+<p>The worse case will anyway take O(n) time. To indicate the time complexity is regardless of binary search, Mr. Huang suggests the following code:</p>
+
+<pre><code>public boolean search(int[] A, int target) {
+    for (int i = 0; i &lt; A.length; i ++) {
+        if (A[i] == target) {
+            return true;
+        }
+    }
+    return false;
+}
+</code></pre>
+
+<p><strong>Search a 2D Matrix</strong></p>
+
+<p>my code (2D search):</p>
+
+<pre><code>public boolean searchMatrix(int[][] matrix, int target) {
+    // 13 miniutes
+    if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+        return false;
+    }
+    int m = matrix.length;
+    int n = matrix[0].length;
+    // find target vertically from matrix[0] to matrix[m-1]
+    int top = 0, bottom = m - 1;
+    int mid;
+    while (top + 1 &lt; bottom) {
+        mid = top + (bottom - top) / 2;
+        if (matrix[mid][0] &lt; target) {
+            top = mid;
+        }
+        else {
+            bottom = mid;
+        }
+    }
+    // locate the row number
+    int row = -1;
+    if (matrix[top][0] &lt;= target &amp;&amp; target &lt;= matrix[top][n-1]) {
+        row = top;
+    }
+    else if (matrix[bottom][0]&lt;=target &amp;&amp; target &lt;= matrix[bottom][n-1]) {
+        row = bottom;
+    }
+    else {
+        return false;
+    }
+    // now find target from matrix[row]
+    int left = 0, right = n - 1;
+    while (left + 1 &lt; right) {
+        mid = left + (right - left) / 2;
+        if (matrix[row][mid] &lt; target) {
+            left = mid;
+        }
+        else {
+            right = mid;
+        }
+    }
+    return (matrix[row][left] == target || matrix[row][right] == target);
+}
+</code></pre>
+
+<p>better code (1D search):</p>
+
+<pre><code>public boolean searchMatrix(int[][] matrix, int target) {
+    int rows = matrix.length;
+    int cols = matrix[0].length;
+    int start = 0;
+    int end = rows * cols - 1;
+    while (start &lt;= end) {
+        int mid = (start + end) / 2;
+        // Tricks to treat it as a 1-D array
+        int digit = matrix[mid / cols][mid % cols];
+        if (target == digit) {
+            return true;
+        } else if (target &gt; digit) {
+            start = mid + 1;
+        } else {
+            end = mid - 1;
+        }
+    }
+    return false;
+}
+</code></pre>
+
+<p><strong>Search a 2D Matrix II</strong></p>
+
+<p>Read my new post for details.</p>
+
+<p><strong>Find the First Bad Version</strong></p>
+
+<p>A simple binary search.</p>
+
+<p><strong>Find a peek</strong></p>
+
+<p>A binary search, and for each &lsquo;mid&rsquo; point, judge weather it&rsquo;s a peek, or it&rsquo;s upward sloping, or downward sloping.</p>
+
+<p>Code skipped.</p>
+
+<h2>Conclusion</h2>
+
+<h4>Always try to exclude a half.</h4>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-06-08T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ninechap/'>ninechap</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/06/08/NineChap-Binary-Search/" data-via="" data-counturl="http://okc1.github.io/blog/2014/06/08/NineChap-Binary-Search/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/06/05/Software-testing/" title="Previous Post: [Testing] Software Testing">&laquo; [Testing] Software Testing</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/06/08/Recover-Rotated-Sorted-Array/" title="Next Post: [LintCode] Recover Rotated Sorted Array">[LintCode] Recover Rotated Sorted Array &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
