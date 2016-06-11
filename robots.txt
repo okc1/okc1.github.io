@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: 
-
-Sitemap: http://okc1.github.io/sitemap.xml 
