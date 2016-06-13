@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Experience | Woodstock Blog]]></title>
+  <link href="http://okc1.github.io/blog/categories/experience/atom.xml" rel="self"/>
+  <link href="http://okc1.github.io/"/>
+  <updated>2016-06-13T01:11:53-07:00</updated>
+  <id>http://okc1.github.io/</id>
+  <author>
+    <name><![CDATA[Kevin Durant]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[[Octopress] Add Aside Content to Octopress]]></title>
+    <link href="http://okc1.github.io/blog/2016/06/11/add-aside-content-octopress/"/>
+    <updated>2016-06-11T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2016/06/11/add-aside-content-octopress</id>
+    <content type="html"><![CDATA[<h1>Aside</h1>
+
+<p>Example of this is the &lsquo;categories&rsquo; list on the right hand side of the blog page. It&rsquo;s always pinned on RHS, regardless of page content.</p>
+
+<h1>Instruction</h1>
+
+<ol>
+<li><p>Add to source/_includes/asides/category_list.html with the following content. (remember to delete [delete-this-tag])</p>
+
+<pre><code> &lt;section class="well"&gt;
+   &lt;h1&gt;Categories&lt;/h1&gt;
+   &lt;ul id="categories" class="nav nav-list"&gt;
+     {[delete-this-tag]% category_list %[delete-this-tag]}
+   &lt;/ul&gt;
+ &lt;/section&gt;
+</code></pre></li>
+<li><p>Go to _config.yml and modify default_asides.</p>
+
+<pre><code> default_asides: [asides/category_list.html, asides/recent_posts.html, asides/github.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html, asides/advertise.html]
+</code></pre></li>
+<li><p>Since the &lsquo;category_list&rsquo; tag is not natively supported. Add plugins/category_list_tag.rb with the <a href="https://kaworu.ch/blog/2013/09/23/categories-page-with-octopress/">followin content</a>.</p>
+
+<pre><code> module Jekyll
+   class CategoryListTag &lt; Liquid::Tag
+     def render(context)
+       html = ""
+       categories = context.registers[:site].categories.keys
+       categories.sort.each do |category|
+         posts_in_category = context.registers[:site].categories[category].size
+         category_dir = context.registers[:site].config['category_dir']
+         category_url = File.join(category_dir, category.gsub(/_|\P{Word}/, '-').gsub(/-{2,}/, '-').downcase)
+         html &lt;&lt; "&lt;li class='category'&gt;&lt;a href='http://okc1.github.io/#{category_url}/'&gt;#{category} (#{posts_in_category})&lt;/a&gt;&lt;/li&gt;\n"
+       end
+       html
+     end
+   end
+ end
+
+ Liquid::Template.register_tag('category_list', Jekyll::CategoryListTag)
+</code></pre></li>
+<li><p>rake generate &amp;&amp; rake preview</p></li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Octopress] Add Google AdSense to Octopress]]></title>
+    <link href="http://okc1.github.io/blog/2015/04/07/add-adsense-octopress/"/>
+    <updated>2015-04-07T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2015/04/07/add-adsense-octopress</id>
+    <content type="html"><![CDATA[<h2>Apply for Google AdSense</h2>
+
+<p>My first request of AdSense is rejected because of &ldquo;<strong>Site does not comply with Google policies</strong>&rdquo;. I do not know the exact reason, but I did the following things to get it through:</p>
+
+<ol>
+<li><p>I registered a top-level .COM domain name to replace the original github page&rsquo;s domain.</p></li>
+<li><p>I added &ldquo;Privacy Policy&rdquo; page, and added the link to the bottom of each blog post.</p></li>
+<li><p>I re-wrote the &ldquo;About Me&rdquo; page, and added in administrator email address.</p></li>
+<li><p>I updated a few more posts, making it more than 580 posts in total.</p></li>
+<li><p>I set up Google Webmaster Tools, and updated sitemap.xml in the configurations.</p></li>
+<li><p>I resubmitted my request of AdSense again.</p></li>
+</ol>
+
+
+<h2>Put AdSense in your blog</h2>
+
+<ol>
+<li><p>Create a new file: source/_includes/asides/advertise.html</p></li>
+<li><p>Copy and paste the code from AdSense, eg.</p>
+
+<pre><code> &lt;script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"&gt;&lt;/script&gt;
+ &lt;!-- ad-name --&gt;
+ &lt;ins class="adsbygoogle"
+      ...............
+ &lt;script&gt;
+ (adsbygoogle = window.adsbygoogle || []).push({});
+ &lt;/script&gt;
+</code></pre></li>
+<li><p>Go to _config.yml, and look for &ldquo;default_asides&rdquo;, then add &ldquo;asides/advertise.html, &rdquo; in the beginning of the array</p>
+
+<p> default_asides: [asides/advertise.html, asides/category_list.html, asides/recent_posts.html, asides/github.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html]</p></li>
+<li><p>Now you&rsquo;ve added advertisement in your side menu.</p></li>
+<li><p>Go to source/_layouts/post.html and look for:</p>
+
+<p> \&lt;h1>Comments\&lt;/h1></p></li>
+<li><p>Below the h1 tag, add your AdSense code, again.</p></li>
+<li><p>Now you&rsquo;ve added advertisement above your comment area.</p></li>
+</ol>
+
+
+<p>Thanks for the effort from <a href="https://www.hi29.net/post/2013/11/30/octopresszen-mo-fang-adsense/">this reference</a>.</p>
+
+<h2>Updates</h2>
+
+<p>Apr 9th update: my re-submission of Google AdSense is not approached, because of &ldquo;not enough content&rdquo;. I don&rsquo;t know what else to do, so I switched to another ad platform.</p>
+
+<p>Apr 11th update: For the first time ever, my blog has more than 1,000 visit per day.</p>
+
+<p>{% img middle /assets/images/google-analytics-20150411.png %}</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Ruby] Endless Error With Gem Dependencies]]></title>
+    <link href="http://okc1.github.io/blog/2014/12/23/Endless-error-gem-dependencies/"/>
+    <updated>2014-12-23T00:00:00-08:00</updated>
+    <id>http://okc1.github.io/blog/2014/12/23/Endless-error-gem-dependencies</id>
+    <content type="html"><![CDATA[<h3>The problem</h3>
+
+<p>In setting up the octopress environment, we need to install dependencies like this:</p>
+
+<pre><code>gem install bundler
+bundle install
+</code></pre>
+
+<p>First line simply installs bundler (a Ruby dependency manager). The second line is where you might face problems:</p>
+
+<blockquote><p>bundle install</p>
+
+<p><a href="http://bundler.io/man/bundle-install.1.html">Install the dependencies</a> specified in your Gemfile</p></blockquote>
+
+<p>Look at the Gemfile in your octopress folder, it looks like <a href="https://github.com/imathis/octopress/blob/master/Gemfile">this</a>:</p>
+
+<pre><code>source "https://rubygems.org"
+
+group :development do
+  gem 'rake', '~&gt; 10.0'
+  gem 'jekyll', '~&gt; 2.0'
+  gem 'octopress-hooks', '~&gt; 2.2'
+  gem 'octopress-date-format', '~&gt; 2.0'
+  gem 'jekyll-sitemap'
+  gem 'rdiscount', '~&gt; 2.0'
+  gem 'RedCloth', '~&gt; 4.2.9'
+  gem 'haml', '~&gt; 4.0'
+  gem 'compass', '~&gt; 1.0.1'
+  gem 'sass-globbing', '~&gt; 1.0.0'
+  gem 'rubypants', '~&gt; 0.2.0'
+  gem 'rb-fsevent', '~&gt; 0.9'
+  gem 'stringex', '~&gt; 1.4.0'
+end
+
+gem 'sinatra', '~&gt; 1.4.2'
+</code></pre>
+
+<p>When I do &lsquo;bundle install&rsquo;:</p>
+
+<pre><code>$ bundle install
+Fetching gem metadata from https://rubygems.org/........
+Resolving dependencies...
+
+Gem::RemoteFetcher::FetchError: SSL_connect returned=1 errno=0 state=SSLv3 read
+server certificate B: certificate verify failed (https://rubygems.org/gems/rake-
+10.4.2.gem)
+An error occurred while installing rake (10.4.2), and Bundler cannot continue.
+Make sure that `gem install rake -v '10.4.2'` succeeds before bundling.
+</code></pre>
+
+<p>It shows the gem &lsquo;rake&rsquo; is missing. So I did as I was instrcucted to. I type <strong>gem install rake -v &lsquo;10.4.2&rsquo;</strong> into command line, and execute. Again, I was told another gem missing. I kept doing this, until I found this is an endless procedure:</p>
+
+<pre><code>$ bundle install
+Fetching gem metadata from https://rubygems.org/.......
+Using rake 10.3.2
+Using RedCloth 4.2.9
+Using blankslate 2.1.2.4
+
+Gem::RemoteFetcher::FetchError: SSL_connect returned=1 errno=0 state=SSLv3 read
+server certificate B: certificate verify failed (https://rubygems.org/gems/timer
+s-1.1.0.gem)
+An error occurred while installing timers (1.1.0), and Bundler cannot continue.
+Make sure that `gem install timers -v '1.1.0'` succeeds before bundling.
+</code></pre>
+
+<p>Something is very wrong with the execution of &lsquo;bundle install&rsquo;.</p>
+
+<h3>The solution</h3>
+
+<p>Until I found <a href="http://stackoverflow.com/questions/15529451/octopress-installation-stops-during-bundle-install">this post</a>, I was hopelessly searching and learning Ruby gems and related things.</p>
+
+<p>I fact, I just deleted 1 letter by changing <strong>source &ldquo;<a href="https://rubygems.org">https://rubygems.org</a>&rdquo;</strong> to <strong>source &ldquo;<a href="http://rubygems.org">http://rubygems.org</a>&rdquo;</strong> at line 1 of Gemfile in octopress folder.</p>
+
+<p>Then, everything is fine:</p>
+
+<pre><code>$ bundle install
+Fetching gem metadata from http://rubygems.org/........
+Resolving dependencies....
+Installing rake 10.4.2
+Using RedCloth 4.2.9
+Using blankslate 2.1.2.4
+Installing hitimes 1.2.2
+Installing timers 4.0.1
+Installing celluloid 0.16.0
+Installing chunky_png 1.3.3
+Installing fast-stemmer 1.0.2
+Installing classifier-reborn 2.0.2
+Installing coffee-script-source 1.8.0
+Installing execjs 2.2.2
+Installing coffee-script 2.3.0
+Installing colorator 0.1
+Installing multi_json 1.10.1
+Installing sass 3.4.9
+Installing compass-core 1.0.1
+Installing compass-import-once 1.0.5
+Installing rb-fsevent 0.9.4
+Installing ffi 1.9.6
+Installing rb-inotify 0.9.5
+Installing compass 1.0.1
+Installing tilt 1.4.1
+Installing haml 4.0.6
+Installing jekyll-coffeescript 1.0.1
+Installing jekyll-gist 1.1.0
+Installing jekyll-paginate 1.1.0
+Installing jekyll-sass-converter 1.3.0
+Installing listen 2.8.4
+Installing jekyll-watch 1.2.0
+Installing kramdown 1.5.0
+Installing liquid 2.6.1
+Installing mercenary 0.3.5
+Installing posix-spawn 0.3.9
+Installing yajl-ruby 1.1.0
+Installing pygments.rb 0.6.0
+Installing redcarpet 3.2.2
+Installing safe_yaml 1.0.4
+Installing parslet 1.5.0
+Installing toml 0.1.2
+Installing jekyll 2.5.3
+Installing jekyll-sitemap 0.7.0
+Installing octopress-hooks 2.2.3
+Installing octopress-date-format 2.0.2
+Installing rack 1.6.0
+Installing rack-protection 1.5.3
+Installing rdiscount 2.1.7.1
+Installing rubypants 0.2.0
+Installing sass-globbing 1.0.0
+Installing sinatra 1.4.5
+Installing stringex 1.4.0
+Using bundler 1.7.9
+Your bundle is complete!
+Use `bundle show [gemname]` to see where a bundled gem is installed.
+Post-install message from compass:
+    Compass is charityware. If you love it, please donate on our behalf at http:
+//umdf.org/compass Thanks!
+Post-install message from haml:
+
+HEADS UP! Haml 4.0 has many improvements, but also has changes that may break
+your application:
+
+* Support for Ruby 1.8.6 dropped
+* Support for Rails 2 dropped
+* Sass filter now always outputs &lt;style&gt; tags
+* Data attributes are now hyphenated, not underscored
+* html2haml utility moved to the html2haml gem
+* Textile and Maruku filters moved to the haml-contrib gem
+
+For more info see:
+
+http://rubydoc.info/github/haml/haml/file/CHANGELOG.md
+</code></pre>
+
+<p>I guess this is because my network security settings, but I do not know. If you are facing the same issue, I hope my solution helped. Or if you know the reason, please tell me by leaving a comment below. Thanks!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Ruby] RubyGems, Gem, Gemfile and Bundler]]></title>
+    <link href="http://okc1.github.io/blog/2014/12/22/RubyGems-gem-other/"/>
+    <updated>2014-12-22T00:00:00-08:00</updated>
+    <id>http://okc1.github.io/blog/2014/12/22/RubyGems-gem-other</id>
+    <content type="html"><![CDATA[<p>Sometme I found the different concepts in Ruby very confusing for beginners. So I write this post to explain some terminologies in ruby setup.</p>
+
+<h3>RubyGems (tool)</h3>
+
+<p><strong><a href="http://en.wikipedia.org/wiki/RubyGems">RubyGems</a></strong> is a package manager for the Ruby programming language.</p>
+
+<p>It is a tool to manage the installation of gems, and a server for distributing them.</p>
+
+<p>RubyGems is very similar to apt-get, portage, and yum in functionality.</p>
+
+<h3>gem (command)</h3>
+
+<p>&lsquo;gem&rsquo; command allows you to interact with RubyGems. It is used build, upload, download, and install Gem packages.</p>
+
+<p>Installation:</p>
+
+<pre><code>gem install mygem
+</code></pre>
+
+<p>Uninstallation:</p>
+
+<pre><code>gem uninstall mygem
+</code></pre>
+
+<p>Listing installed gems:</p>
+
+<pre><code>gem list --local
+</code></pre>
+
+<p>Listing available gems, e.g.:</p>
+
+<pre><code>gem list --remote
+</code></pre>
+
+<h3>Gemfile (text file)</h3>
+
+<p><a href="http://bundler.io/man/gemfile.5.html">A Gemfile</a> describes the gem dependencies required to execute associated Ruby code.</p>
+
+<p>It is placed in the root of the directory containing the associated code.</p>
+
+<p>A Gemfile is evaluated as Ruby code, in a context which makes available a number of methods used to describe the gem requirements.</p>
+
+<h3>gem (program)</h3>
+
+<p><a href="http://stackoverflow.com/questions/5233924/what-is-a-ruby-gem">ref1</a>, <a href="http://guides.rubygems.org/what-is-a-gem/">ref2</a></p>
+
+<p>A gem is a module/Library that you can install and use in every project on your server.</p>
+
+<p>Each gem has a <strong>name, version, and platform</strong>. For example, <strong>rake gem</strong> has a 10.3.2 version on platform Ruby.</p>
+
+<p>Inside a gems are the following components:</p>
+
+<ol>
+<li>Code (including tests and supporting utilities)</li>
+<li>Documentation</li>
+<li>gemspec</li>
+</ol>
+
+
+<p>Standard code structure:</p>
+
+<pre><code>% tree freewill
+freewill/
+├── bin/
+│   └── freewill
+├── lib/
+│   └── freewill.rb
+├── test/
+│   └── test_freewill.rb
+├── README
+├── Rakefile
+└── freewill.gemspec
+</code></pre>
+
+<h3>Bundler (dependency manager)</h3>
+
+<p><a href="http://bundler.io/">ref</a></p>
+
+<p>Bundler manages an application&rsquo;s dependencies.</p>
+
+<p>Bundler provides a consistent environment for Ruby projects by tracking and installing the exact gems and versions that are needed.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Octopress] Clone Octopress Blog From a Different Computer]]></title>
+    <link href="http://okc1.github.io/blog/2014/07/21/Clone-octopress-blog-from-a-different-computer/"/>
+    <updated>2014-07-21T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2014/07/21/Clone-octopress-blog-from-a-different-computer</id>
+    <content type="html"><![CDATA[<p><strong>Ruby/gem/bundler setup (on a new machine) has always been a hassle to me</strong>. Not only that, I&rsquo;ve had some confusions about developing Octopress blog on 2 different computers.</p>
+
+<p>Now that I&rsquo;ve had enough failures and success, I would like write a long post to summarize it.</p>
+
+<h3>Install Ruby</h3>
+
+<p>Well first of all, we must install <strong>Ruby</strong> and <strong>Development Kit</strong>. Simply go this <a href="http://rubyinstaller.org/downloads/">this page</a> and download:</p>
+
+<ol>
+<li>Ruby 1.9.3</li>
+<li>DevKit for Ruby 1.9.3</li>
+</ol>
+
+
+<p><strong>Installing Ruby</strong> is straight-forward, only remember to check &ldquo;Add Ruby to your PATH&rdquo;. Otherwise you need to manually set the <strong>Ruby directory</strong> (eg. C:\Ruby193\bin) in <strong>System Variables Settings</strong>.</p>
+
+<p>{% img middle /assets/images/install-ruby-193.png %}</p>
+
+<p><strong>Ruby DevKit is a self-extracting archive</strong>. After extracting the files, we should <a href="http://jekyll-windows.juthilo.com/1-ruby-and-devkit/">initialize the DevKit</a> like this:</p>
+
+<pre><code>cd C:/RubyDevKit
+ruby dk.rb init
+ruby dk.rb install
+</code></pre>
+
+<h3>Clone octopress</h3>
+
+<p><strong>clone the source branch to the local octopress folder</strong></p>
+
+<blockquote><p>using HTTPS</p>
+
+<p>git clone -b source <a href="https://github.com/okckd/okckd.github.io.git">https://github.com/okckd/okckd.github.io.git</a> octopress</p>
+
+<p>or using SSH</p>
+
+<p>git clone -b source git@github.com:okckd/okckd.github.io.git octopress</p></blockquote>
+
+<p>I would recommend using SSH over HTTPS, because <strong>using HTTPS, you will need to type your username and password everytime you push</strong>.</p>
+
+<p>To correct &lsquo;HTTPS&rsquo; to &lsquo;SSH&rsquo;, follow <a href="http://stackoverflow.com/a/6565661">this instruction</a>:</p>
+
+<blockquote><p>git remote set-url origin git@github.com:username/repo.git</p></blockquote>
+
+<p>More info about HTTPS and SSH is <a href="https://help.github.com/articles/which-remote-url-should-i-use/">available</a>.</p>
+
+<h3>Install dependencies</h3>
+
+<p>Follow <a href="http://www.techelex.org/setup-octopress-windows7/">this instruction</a> and install bundler and dependencies.</p>
+
+<pre><code>cd c:/github/octopress
+gem install bundler
+rbenv rehash    # optional, unless you are using rbenv
+bundle install
+</code></pre>
+
+<p>If you see endless dependency errors here, please refer to my other post: <strong><a href="{%%20post_url%20/experience/2014-12-23-Endless-error-gem-dependencies%20%}">[Ruby] Endless error with gem dependencies</a></strong>.</p>
+
+<p>If you are confused with some concepts in Ruby, read <strong><a href="{%%20post_url%20/experience/2014-12-22-RubyGems-gem-other%20%}">[Ruby] RubyGems, gem, Gemfile and Bundler</a></strong>.</p>
+
+<h3>Now, start octopress</h3>
+
+<p>You can use either of the commands below to start octopress. I can&rsquo;t remember clearly but you can simply follow <a href="http://octopress.org/docs/setup/">this guide</a>.</p>
+
+<blockquote><p>rake setup_github_pages</p>
+
+<p>when prompted, enter this url: git@github.com:okckd/okckd.github.io.git</p>
+
+<p>rake install</p></blockquote>
+
+<h3>Commit your changes</h3>
+
+<p>You can do &lsquo;rake gen_deploy&rsquo; to deploy to master branch. Do &lsquo;git commit", &ldquo;git push origin source&rsquo; to update blog source. <a href="http://blog.zerosharp.com/clone-your-octopress-to-blog-from-two-places/">reference</a></p>
+
+<p>At this step, congratulations you are all set!</p>
+
+<h3>Last word</h3>
+
+<p>Setting &lsquo;rake&rsquo; up is found to be a great hassle for many, for example, <a href="http://hamaluik.com/posts/switching-to-octopress/">someone spent 7 hours on it</a>.</p>
+
+<p>Wish this post can help!</p>
+]]></content>
+  </entry>
+  
+</feed>

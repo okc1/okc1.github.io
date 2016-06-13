@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Z-testing | Woodstock Blog]]></title>
+  <link href="http://okc1.github.io/blog/categories/z-testing/atom.xml" rel="self"/>
+  <link href="http://okc1.github.io/"/>
+  <updated>2016-06-13T01:11:53-07:00</updated>
+  <id>http://okc1.github.io/</id>
+  <author>
+    <name><![CDATA[Kevin Durant]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[[CC150v5] 12.0 Example - Troubleshoot Google Chrome]]></title>
+    <link href="http://okc1.github.io/blog/2014/09/24/troubleshoot-google-chrome/"/>
+    <updated>2014-09-24T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2014/09/24/troubleshoot-google-chrome</id>
+    <content type="html"><![CDATA[<h3>Question</h3>
+
+<blockquote><p>You'reworking on the Google Chrome team when you receivea bug report: Chrome crashes on launch. What would you do?</p></blockquote>
+
+<h3>Step 1: Understand the Scenario</h3>
+
+<ol>
+<li>How long has user seen this issue?</li>
+<li>version of browser and OS?</li>
+<li>Does this happen consistently? How often, and when?</li>
+</ol>
+
+
+<h3>Step 2: Break Down the Problem</h3>
+
+<p>Flow of situation:</p>
+
+<ol>
+<li>start menu</li>
+<li>click chrome</li>
+<li>browser starts</li>
+<li>browser load settings</li>
+<li>browser issues HTTP response</li>
+<li>browser get HTTP response</li>
+<li>browser parses webpage</li>
+<li>browser displays content</li>
+</ol>
+
+
+<p><strong>At some points in this process, something fails</strong>. A good tester would iterate thru the elements of this scenario and diagnose the problem.</p>
+
+<h3>Step 3: Create Specific, Manageable Tests</h3>
+
+<p>Come up with realistic instructions.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[CC150v4] 11.2 Random Error Debugging 2]]></title>
+    <link href="http://okc1.github.io/blog/2014/09/08/random-error-debugging-2/"/>
+    <updated>2014-09-08T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2014/09/08/random-error-debugging-2</id>
+    <content type="html"><![CDATA[<h3>Question</h3>
+
+<blockquote><p>You are given the source to an application which crashes when it is run After running it ten times in a debugger, you find it never crashes in the same place The application is single threaded, and uses only the C standard library What programming errors could be causing this crash? How would you test each one?</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>The solution is from <strong>both CC150v4 and CC150v5</strong>. My previous post <strong>[Testing] Random error debugging 1</strong> already covered this question.</p>
+
+<p>Again, the answer is very similar:</p>
+
+<ol>
+<li>Depends on random variable
+
+<ol>
+<li>RNG</li>
+<li>depends on user input</li>
+<li>depends on system date/time</li>
+</ol>
+</li>
+<li>Uninitialized variable
+
+<ol>
+<li>can take on arbitrary value</li>
+<li>can execute in different path</li>
+</ol>
+</li>
+<li>Memory Leak
+
+<ol>
+<li>out of RAM</li>
+<li>heap overflow</li>
+<li>stack data corruption</li>
+</ol>
+</li>
+<li>System Dependency
+
+<ol>
+<li>depends on external module</li>
+<li>depends on some system attributed that&rsquo;s being modified by another application (this is especially for hardware-facing applications)</li>
+</ol>
+</li>
+</ol>
+
+
+<p>In general, <strong>Web server is more prone to Memory Leak</strong>, and program that runs <strong>close to system level</strong> is more prone to system dependency errors.</p>
+
+<p>Additionally, we may be able to use tools to check for specific situations. For example, to investigate issue #2, we can <strong>utilize runtime tools which check for uninitialized variables</strong>.</p>
+]]></content>
+  </entry>
+  
+</feed>

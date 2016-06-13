@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Q-google | Woodstock Blog]]></title>
+  <link href="http://okc1.github.io/blog/categories/q-google/atom.xml" rel="self"/>
+  <link href="http://okc1.github.io/"/>
+  <updated>2016-06-13T01:11:53-07:00</updated>
+  <id>http://okc1.github.io/</id>
+  <author>
+    <name><![CDATA[Kevin Durant]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[[Google] Shortest Manhattan Distance]]></title>
+    <link href="http://okc1.github.io/blog/2015/10/02/shorest-manhattan-distance/"/>
+    <updated>2015-10-02T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2015/10/02/shorest-manhattan-distance</id>
+    <content type="html"><![CDATA[<h3>Question</h3>
+
+<p><a href="http://www.mitbbs.com/article_t/JobHunting/33054861.html">link</a></p>
+
+<blockquote><p>给一个 n*m 的房间，房间里存在各种可能的墙，房间的格子里已经放了 e 个器材，要
+求新放一个器材，放置位置距其它 e 个器材的距离最近。Breadth-first search.</p></blockquote>
+
+<h3>Solution</h3>
+
+<blockquote><p>对 e个设备 BFS, 求每个设备到每个可以放新器材的点的距离，然后叠加。</p>
+
+<p>最后O（n<sup>2</sup>）一遍找最小值。复杂度O（e*n<sup>2</sup>）</p></blockquote>
+
+<p>As for whether we choose to check each equipment position, or check each vacant position, it&rsquo;s decided by how many equipment is there. If very little equipments (e is small), then this solution should work.</p>
+
+<p>However, what is there is obstacles in the matrix?</p>
+
+<p>We have to use BFS then. It took more space usage, but the time complexity should be same.</p>
+
+<h3>Code</h3>
+
+<pre><code>public void findCenter(int[][] input, int numberOfEquip) {
+    int m = input.length;
+    int n = input[0].length;
+
+    // there's gonna be m * n positions
+    // we gonna cumulate (numberOfEquip) distances for each position
+    int[] dis = new int[m * n];
+
+    // from the input map, find Equipments
+    for (int i = 0; i &lt; m; i++) {
+        for (int j = 0; j &lt; n; j++) {
+            if (input[i][j] == 1) {
+                // 1 represents equipment
+                // when found, add the distance to every position
+                cumulateDistance(i, j, dis, m, n);
+            }
+        }
+    }
+
+    // find the smallest cumulated distance from dis[].
+    int sIndex = 0;
+    int smallest = dis[0];
+    for (int i = 0; i &lt; m * n; i++) {
+        if (dis[i] &lt; smallest) {
+            smallest = dis[i];
+            sIndex = i;
+        }
+    }
+
+    // index sIndex is the final answer
+    System.out.println("Answer: " + (sIndex / n) + " " + (sIndex % n));
+}
+
+private void cumulateDistance(int x, int y, int[] dis, int m, int n) {
+    for (int i = 0; i &lt; m * n; i++) {
+        int a = i / n;
+        int b = i % n;
+        dis[i] += Math.abs(a - x) + Math.abs(b - y);
+    }
+}
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Google] Minimum Adjustments]]></title>
+    <link href="http://okc1.github.io/blog/2015/02/13/minimum-adjustments/"/>
+    <updated>2015-02-13T00:00:00-08:00</updated>
+    <id>http://okc1.github.io/blog/2015/02/13/minimum-adjustments</id>
+    <content type="html"><![CDATA[<h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=6212066786410496">link</a></p>
+
+<blockquote><p>Given an integer array, adjust each integers so that the difference of every adjacent integers are not greater than a given number target.</p>
+
+<p>If the array before adjustment is A, the array after adjustment is B, you should minimize the sum of |A[i]-B[i]|</p>
+
+<p>Given [1,4,2,3] and target=1, one of the solutions is [2,3,2,3], the minimal adjustment cost is 2.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>This is a difficult DP. Now we define 2D array like this:</p>
+
+<blockquote><p>dp[i][j]: the minimal adjust cost on changing A[i] to j</p></blockquote>
+
+<p>And the equation:</p>
+
+<blockquote><p>dp[i][j] = min{dp[i-1][k] + |j-A[i]|} s.t. |k-j| &lt;= target</p></blockquote>
+
+<p>Refer to the post by <a href="http://www.careercup.com/question?id=6212066786410496">simon.zhangsm</a></p>
+
+<h3>Code</h3>
+
+<p>Not written.</p>
+
+<p>Available at <a href="http://lintcode.com/en/problem/minimum-adjustment-cost/#">OJ</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Google] Number of Slices]]></title>
+    <link href="http://okc1.github.io/blog/2015/02/09/number-of-slices/"/>
+    <updated>2015-02-09T00:00:00-08:00</updated>
+    <id>http://okc1.github.io/blog/2015/02/09/number-of-slices</id>
+    <content type="html"><![CDATA[<h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=5090693043191808">link</a></p>
+
+<blockquote><p>Calculate the number of slices. Slice means that the difference between the maximum and minimum in the slice &lt;= 2.</p>
+
+<p>eg. Given array 3 5 7 6 3.</p>
+
+<p>There&rsquo;re 10: (0,0) (1,1) (2,2) (3,3) (4,4) (5,5) (0,1) (1,2) (1,3) (2,3).</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>If only asked to output the total number of such slices, we can do it in <strong>O(n) using sliding-window-like algorithm</strong>, with the help of addtional queue-like data structure.</p>
+
+<p>This is <strong>a very difficult question</strong>! Quoted from the <a href="http://www.careercup.com/question?id=5090693043191808">top answer</a>:</p>
+
+<blockquote><p>The basic idea is that you can start with arr[0] and then see <strong>how many more elements you can include before you violate the max -min &lt;= K constraint</strong>. When you reach some index j you can no longer include, you know the maximum subarray starting at index 0 is arr[0&hellip;j-1], and you can count j different subarrays there.</p>
+
+<p>&hellip; you then start with a[1]. Now [1&hellip;j-1] has to be valid, so you try to advance the right boundary again (try arr[1&hellip;j], then arr[1&hellip;j+1]) and so on until again you reach a point past which you can&rsquo;t advance. Then you&rsquo;ll try string at a[2], and so on. This is what they mean when they talk about <strong>&ldquo;crawling&rdquo; over the array</strong>.</p>
+
+<p>The key issue here is how you will check whether a particular subarray is valid efficiently&hellip;</p></blockquote>
+
+<p>Sliding window is explained above. Now, <strong>the minMaxQueue</strong> explain in <a href="https://codility.com/media/train/solution-count-bounded-slices.pdf">this pdf</a>:</p>
+
+<blockquote><p>The PDF &hellip; have <strong>1 queue each</strong> (i.e. 2 queues in total) for min and max (the min is treated analogous to the max case).</p>
+
+<p>For maxQueue, whenever a new value comes in the max queue, they remove all values less than the value, since those <strong>can never be the max</strong>. For that reason the queue&rsquo;s values are in descending order. And the max at any given time is the first element.</p></blockquote>
+
+<p>In this way, getting min/max is O(1), thus entire solution is O(n). Nice question!</p>
+
+<h3>Code</h3>
+
+<p>Not written.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Google] Heap and BST Conversion]]></title>
+    <link href="http://okc1.github.io/blog/2015/02/09/heap-bst-conversion/"/>
+    <updated>2015-02-09T00:00:00-08:00</updated>
+    <id>http://okc1.github.io/blog/2015/02/09/heap-bst-conversion</id>
+    <content type="html"><![CDATA[<h3>Question 1</h3>
+
+<p><a href="http://www.careercup.com/question?id=4281027">link</a></p>
+
+<blockquote><p>Convert a BST to max heap.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>The <a href="http://www.careercup.com/question?id=4281027">second answer</a>:</p>
+
+<blockquote><p>a simple (reversed) in-order traversal of the BST. It would produce a sorted array which is indeed a max-heap!</p></blockquote>
+
+<h3>Question 2</h3>
+
+<p><a href="http://stackoverflow.com/questions/14106821/converting-a-heap-to-a-bst-in-on-time">link</a></p>
+
+<blockquote><p>Converting a heap to a BST in O(n) time?</p>
+
+<p>possible?</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><a href="http://stackoverflow.com/a/14107362">Impossible</a>. Because otherwise, we can do this:</p>
+
+<ol>
+<li>Take an array and build the heap in O(n) time</li>
+<li>Converting the heap to a BST in O(n) time (assuming)</li>
+<li>Walking the BST in O(n) time to get a sorted sequence.</li>
+</ol>
+
+
+<p>Thus we sort array in O(n) time, it can&rsquo;t happen.</p>
+
+<p>Right way to do, is to repeatedly dequeueing maximum value from the BST, then generate the BST recursively (bottom-up approach).</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Google] Array Signature]]></title>
+    <link href="http://okc1.github.io/blog/2015/02/09/array-signature/"/>
+    <updated>2015-02-09T00:00:00-08:00</updated>
+    <id>http://okc1.github.io/blog/2015/02/09/array-signature</id>
+    <content type="html"><![CDATA[<h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=14912744">link</a></p>
+
+<blockquote><p>You are given an array of n elements [1,2,&hellip;.n]. For example {3 2 1 4 6 5 7}.</p>
+
+<p>Now we create a signature of this array by comparing every consecutive pair of elements. If they increase, write &ldquo;I&rdquo; else write &ldquo;D&rdquo;.</p>
+
+<p>For example for the above array, the signature would be &ldquo;DDIIDI&rdquo;. The signature thus has a length of N-1.</p>
+
+<p>Now given a signature, compute the lexicographically <strong>smallest permutation</strong> of [1,2,&hellip;.n].</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>A great <a href="http://qr.ae/BPfNw">answer</a>:</p>
+
+<blockquote><p>Take the above case. Signature = DDIIDI.</p>
+
+<p>Take original permutation as 1 2 3 4 5 6 7.</p>
+
+<p>Then for first continuous sequence DD reverse the strip 1 2 3 to 3 2 1 hence sequence becomes 3 2 1 4 5 6 7.</p>
+
+<p>Then for second sequence D reverse strip 5 6 to 6 5 hence sequence becomes 3 2 1 4 6 5 7.</p>
+
+<p>There is no continuous D left we are done and reached the answer.</p></blockquote>
+
+<h3>Code</h3>
+
+<p>Not written.</p>
+]]></content>
+  </entry>
+  
+</feed>

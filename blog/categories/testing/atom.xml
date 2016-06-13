@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Testing | Woodstock Blog]]></title>
+  <link href="http://okc1.github.io/blog/categories/testing/atom.xml" rel="self"/>
+  <link href="http://okc1.github.io/"/>
+  <updated>2016-06-13T01:11:53-07:00</updated>
+  <id>http://okc1.github.io/</id>
+  <author>
+    <name><![CDATA[Kevin Durant]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[[Testing] Test hashCode() Function]]></title>
+    <link href="http://okc1.github.io/blog/2014/08/26/Test-hashcode-function/"/>
+    <updated>2014-08-26T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2014/08/26/Test-hashcode-function</id>
+    <content type="html"><![CDATA[<h3>Question</h3>
+
+<blockquote><p>How to test hashCode() function? Example:</p></blockquote>
+
+<pre><code>public int hashCode(){
+    int result = 17 + hashDouble(re);
+    result = 31 * result + hashDouble(im);
+    return result;
+}
+</code></pre>
+
+<h3>Solution</h3>
+
+<p>We need to test that the hash function is <a href="http://stackoverflow.com/a/4449791">reflexive, symmetric, and transitive</a>.</p>
+
+<h3>Code</h3>
+
+<p>Not including &lsquo;not equal&rsquo; test.</p>
+
+<pre><code>@Test
+public void testEquals_Symmetric() {
+    Person x = new Person("Foo Bar");  // equals and hashCode check name field value
+    Person y = new Person("Foo Bar");
+    Assert.assertTrue(x.equals(y) &amp;&amp; y.equals(x));
+    Assert.assertTrue(x.hashCode() == y.hashCode());
+}
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Testing] Test Command Line Copy]]></title>
+    <link href="http://okc1.github.io/blog/2014/08/09/Test-command-line-copy/"/>
+    <updated>2014-08-09T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2014/08/09/Test-command-line-copy</id>
+    <content type="html"><![CDATA[<h3>Question</h3>
+
+<p><a href="http://stackoverflow.com/questions/6591652/how-do-i-test-the-copy-command-in-the-windows-environment">link</a></p>
+
+<blockquote><p>testing the copy command in windows environment</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><a href="http://stackoverflow.com/a/6591999">The most important point</a> is to <strong>come up with different domains of inputs and scenarios</strong>.</p>
+
+<h3>Copying between:</h3>
+
+<ol>
+<li>network share</li>
+<li>A really slow network share across the Internet</li>
+<li>partitions</li>
+<li>disks</li>
+<li>disks of different types (flash, usb, external sata, SSD, etc&hellip;)</li>
+<li>directories</li>
+<li>within the same directory</li>
+</ol>
+
+
+<h3>Naming</h3>
+
+<ol>
+<li>Normal file name</li>
+<li>Filename that exceeds 8.3 (verylongfilename.whatever)</li>
+<li>Copying a very long file name, but referencing it by it&rsquo;s 8.3 name (copy verylo~1.wha d:)</li>
+<li>A full directory path that exeeds MAX_PATH (260) characters (e.g. c:\a\very\long\directory\name\that\goes\on\forever\in\length&hellip;&hellip;foo.txt)</li>
+<li>By absolute addressing (\?\c:\foo\foo.txt)</li>
+<li>wildcards (e.g. <em>.</em> *.txt foo?.txt )</li>
+<li>A filename with unicode characters</li>
+<li>A filename with illegal characters in it (there are creative ways to get these files on disk)</li>
+</ol>
+
+
+<h3>Attributes</h3>
+
+<ol>
+<li>Testing with different file attributes (read-only, hidden, system, archive, etc&hellip;)</li>
+<li>Validate timestamp is preserved across copies</li>
+<li>Validate timestamp is preserved across network file share copies when the destination machine is in another timezone</li>
+<li>NTFS ACLs are preserved</li>
+</ol>
+
+
+<h3>Addressing types</h3>
+
+<ol>
+<li>reference by absolute path (e.g. copy c:\some\directory\foo.txt c:\other\place\foo.txt)</li>
+<li>reference by relative path (e.g. copy ....\documents\whatever\foo.txt subdirectory/foo.txt)</li>
+<li>By absolute drive letter into current working directoroy of destination (with no path (e.g. copy foo.txt d:)</li>
+<li>Network share mounted to a drive letter</li>
+</ol>
+
+
+<h3>Failure cases, edge cases, and hack attacks</h3>
+
+<ol>
+<li>Try to copy a file onto itself (e.g copy c:\foo.txt c:\foo.txt)</li>
+<li>Copy when the network share is down.</li>
+<li>Unplug the network cable in the middle of a network file copy</li>
+<li>copy to a read only directory</li>
+<li>copy when the source file is locked.</li>
+<li>copy the when destination file exists but the destination file exists and is read only</li>
+<li>Detach the external disk right before the file copy starts</li>
+<li>disk is near full (But would be full before the entire copy finishes)</li>
+<li>disk is full</li>
+<li>Unplug the power cable in the middle of the copy!</li>
+<li>During a very long copy, start another copy with the same source file, but to another destination</li>
+<li>During a very long copy, start another copy with a different source file, but the the same destination</li>
+<li>During a very long copy, start another copy with the same source and destination files!</li>
+</ol>
+
+
+<h3>File types</h3>
+
+<ol>
+<li>ascii file</li>
+<li>unicode file</li>
+<li>binary file</li>
+</ol>
+
+
+<h3>Environments</h3>
+
+<ol>
+<li>RAID configurations</li>
+<li>FAT and NTFS</li>
+<li>Windows XP, Vista, 7, Server 2003, etc&hellip; (you can quantify this by asking the requirement of &ldquo;which OS&rdquo; up front)</li>
+<li>Virtual Machine (VMWare, virtual PC, hypervisor, etc&hellip;)</li>
+<li>Intel and AMD</li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Testing] Random Error Debugging 1]]></title>
+    <link href="http://okc1.github.io/blog/2014/08/07/Random-error-debugging-1/"/>
+    <updated>2014-08-07T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2014/08/07/Random-error-debugging-1</id>
+    <content type="html"><![CDATA[<h3>Question</h3>
+
+<p><a href="http://stackoverflow.com/questions/4531742/debugging-a-program-that-crashes-10-times-in-different-places">link</a></p>
+
+<blockquote><p>You are given the source to an application which is crashing during run time. After running it 10 times in a debugger, you find it never crashes in the same place.</p>
+
+<p>What programming errors could be causing this crash? How would you test each one?</p></blockquote>
+
+<h3>Analysis</h3>
+
+<ol>
+<li><p>code depends on <strong>system time or RNG</strong></p></li>
+<li><p>disk full, i.e. other processes may delete a different file causing more space to be available</p></li>
+<li><p>memory issue, i.e. other processes allocate and/or free memory</p></li>
+<li><p>a pointer points to a random location in memory that is changed by another process causing some values be &ldquo;valid&rdquo; (very rare though)</p></li>
+</ol>
+
+
+<p><a href="http://stackoverflow.com/a/4531769">In general</a> a situation <strong>with other process</strong> is likely.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Testing] Test Number Divisibility]]></title>
+    <link href="http://okc1.github.io/blog/2014/07/26/Test-Number-Divisibility/"/>
+    <updated>2014-07-26T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2014/07/26/Test-Number-Divisibility</id>
+    <content type="html"><![CDATA[<h3>Question</h3>
+
+<p><a href="http://www.mathsisfun.com/divisibility-rules.html">link</a></p>
+
+<blockquote><p>Pay attention on Number 3, 7, 9 and 11.</p></blockquote>
+
+<h3>The Divisibility Rules</h3>
+
+<table border="0" align="center" style='border:1px solid black'>
+                                <tbody><tr align="center">
+                                    <th width="100" class="bg-color bg-img font-color">Divisible by:</th>
+                                    <th width="300" class="bg-color bg-img font-color">If:</th>
+                                    <th width="300" class="bg-color bg-img font-color">Examples:</th>
+                                </tr>
+                                <tr>
+                                    <td class="large bg-color bg-img font-color" align="center">2</td>
+                                    <td class="bg-color bg-img font-color">The last digit is even (0,2,4,6,8)</td>
+                                    <td class="bg-color bg-img font-color">12<b>8</b> is<br>
+                                    12<b>9</b> is not                               </td>
+                                </tr>
+                                <tr>
+                                    <td class="large bg-color bg-img font-color" align="center">3</td>
+                                    <td class="bg-color bg-img font-color">The sum of the digits is divisible by 3</td>
+                                    <td class="bg-color bg-img font-color">
+                                        <p class="font-color">381 (3+8+1=12, and 12÷3 = 4) <b>Yes</b><br>
+                                    </p>
+                                        <p class="font-color">217 (2+1+7=10, and 10÷3 = 3&nbsp;<span class="frac font-color"><sup>1</sup>/<sub>3</sub></span>) <b>No</b></p>                                   </td>
+                                </tr>
+                                <tr>
+                                    <td class="large bg-color bg-img font-color" align="center">4</td>
+                                    <td class="bg-color bg-img font-color">The last 2 digits are divisible by 4</td>
+                                    <td class="bg-color bg-img font-color">
+                                        <p class="font-color">13<b>12</b> is<b></b> (12÷4=3)<br>
+                                    70<b>19</b> is not </p>                               </td>
+                                </tr>
+                                <tr>
+                                    <td class="large bg-color bg-img font-color" align="center">5</td>
+                                    <td class="bg-color bg-img font-color">The last digit is 0 or 5</td>
+                                    <td class="bg-color bg-img font-color">17<b>5</b> is<br>
+                                    80<b>9</b> is not                               </td>
+                                </tr>
+                                <tr>
+                                    <td class="large bg-color bg-img font-color" align="center">6</td>
+                                    <td class="bg-color bg-img font-color">The number is divisible by both 2 <i>and</i> 3</td>
+                                    <td class="bg-color bg-img font-color">
+                                        114 (it is even, and 1+1+4=6 and 6÷3 = 2) <b>Yes</b><br>
+                                        <br>
+                                        308 (it is even, but 3+0+8=11 and 11÷3 = 3&nbsp;<span class="frac font-color"><sup>2</sup>/<sub>3</sub></span>) <b>No</b>                                  </td>
+                                </tr>
+                                <tr>
+                                    <td class="large bg-color bg-img font-color" align="center">7</td>
+                                    <td class="bg-color bg-img font-color">If you double the last digit and subtract it from the rest of the number and 
+                                      the answer  is:
+                                      <ul class="bg-color bg-img font-color">
+                                        <li><b>0</b>, or </li>
+                                        <li><b>divisible by 7</b></li>
+                                  </ul>
+                                      (Note: you can apply this rule to that answer again if you want)</td>
+                                    <td class="bg-color bg-img font-color">
+                                        <p class="font-color">672 (Double 2 is 4, 67-4=63, and 63÷7=9) <b>Yes</b></p>
+                                        <p class="font-color">905 (Double 5 is 10, 90-10=80, and 80÷7=11&nbsp;<span class="frac font-color"><sup>3</sup>/<sub>7</sub></span>) <b>No<br>
+                                      </b></p>                                  </td>
+                                </tr>
+                                <tr>
+                                    <td class="large bg-color bg-img font-color" align="center">8</td>
+                                    <td class="bg-color bg-img font-color">The last three digits are divisible by 8</td>
+                                    <td class="bg-color bg-img font-color">
+                                        <p class="font-color">109<b>816</b> (816÷8=102) <b>Yes</b></p>
+                                        <p class="font-color">216<b>302</b> (302÷8=37&nbsp;<span class="frac font-color"><sup>3</sup>/<sub>4</sub></span>) <b>No</b></p>                                   </td>
+                                </tr>
+                                <tr>
+                                    <td class="large bg-color bg-img font-color" align="center">9</td>
+                                    <td class="bg-color bg-img font-color">The sum of the digits is divisible by 9<br>
+                                      <br>
+                                  (Note: you can apply this rule to that answer again if you want)</td>
+                                    <td class="bg-color bg-img font-color">
+                                        <p class="font-color">1629 (1+6+2+9=18, and again, 1+8=9) <b>Yes</b></p>
+                                        <p class="font-color">2013 (2+0+1+3=6) <b>No</b></p>                                  </td>
+                                </tr>
+                                <tr>
+                                    <td class="large bg-color bg-img font-color" align="center">10</td>
+                                    <td class="bg-color bg-img font-color">The number ends in 0</td>
+                                    <td class="bg-color bg-img font-color">
+                                        <p class="font-color">22<b>0</b> is<br>
+                                            22<b>1</b> is not                                     </p>                                </td>
+                                </tr>
+                                <tr>
+                                    <td class="large bg-color bg-img font-color" align="center">11</td>
+                                    <td class="bg-color bg-img font-color"><p class="font-color">If you sum every second digit and then subtract all other digits and the answer  is:</p>
+                                      <ul class="bg-color bg-img font-color">
+                                        <li><b>0</b>, or </li>
+                                        <li><b>divisible by 11</b></li>
+                      </ul>                                 </td>
+                                    <td class="bg-color bg-img font-color">
+                                        <p class="font-color">1<b>3</b>6<b>4</b> ((3+4) - (1+6) = <b>0</b>) <b>Yes</b></p>
+                                        <p class="font-color">3<b>7</b>2<b>9</b> ((7+9) - (3+2) = <b>11</b>) <b>Yes</b></p>
+                                      <p class="font-color">2<b>5</b>1<b>7</b>6 ((5+7) - (2+1+6) = <b>3</b>) <b>No</b></p>                                </td>
+                                </tr>
+                                <tr>
+                                    <td class="large bg-color bg-img font-color" align="center" height="16">12</td>
+                                    <td height="16" class="bg-color bg-img font-color">The number is divisible by both 3 <i><b>and</b></i> 4</td>
+                                    <td height="16" class="bg-color bg-img font-color">
+                                        <p class="font-color">648 <br>
+                                        (<i>By 3?</i> 6+4+8=18 and 18÷3=6 Yes. <br>
+                                        <i>By 4?</i> 48÷4=12 Yes) <b>Yes</b></p>
+                                        <p class="font-color">524 <br>
+                                        (<i>By 3?</i> 5+2+4=11, 11÷3= 3&nbsp;<span class="frac font-color"><sup>2</sup>/<sub>3</sub></span> No. <br>
+                                        Don't need to check by 4.) <b>No</b></p>
+</td>
+</tr>
+</tbody>
+</table>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Testing] Software Testing]]></title>
+    <link href="http://okc1.github.io/blog/2014/06/05/Software-testing/"/>
+    <updated>2014-06-05T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2014/06/05/Software-testing</id>
+    <content type="html"><![CDATA[<h2>First Word</h2>
+
+<p>There are generally four levels of tests: unit testing, integration testing, system testing, and acceptance testing.</p>
+
+<p>Software testing methods are traditionally divided into white-box and black-box testing.</p>
+
+<p>One of the testing methodologies is &ldquo;V-model&rdquo;.</p>
+
+<p>{% img middle /assets/images/Testing-V-Model.jpg %}</p>
+
+<h2>Testing Types and process</h2>
+
+<h4>Regression testing</h4>
+
+<p>There&rsquo;re a lot of types, one of them is called &ldquo;Regression testing&rdquo;.</p>
+
+<p>Regression testing focuses on finding defects <strong>after a major code change has occurred</strong>. In other words, it encsures that changes does not introduce new faults.</p>
+
+<h4>Testing process</h4>
+
+<p>Traditional: <strong>waterfall</strong>. Testing is done by independent group of testers after development. This practice often results in the testing phase being used as a project buffer to compensate for project delays.</p>
+
+<p>New trend: <strong>Agile or Extreme</strong>, which adhere to <strong>TDD Model</strong>. In this process, unit tests are written first. This methodology increases the testing effort done by development.</p>
+
+<p><strong>Bottom Up Testing</strong>: lowest level components are tested first, then integrated and used to facilitate the testing of higher level components.</p>
+
+<p><strong>Top Down Testing</strong>: top integrated modules are tested and the branch of the module is tested step by step until the end.</p>
+
+<h2>Testing Methods</h2>
+
+<h4>Black-box</h4>
+
+<p><a href="http://en.wikipedia.org/wiki/Black-box_testing">Black-box</a> testing is a method of software testing that examines the functionality of an application without peering into its internal structures or workings. This can be applied to every level of software testing: unit, integration, system and acceptance.</p>
+
+<h4>White-box</h4>
+
+<p><a href="http://en.wikipedia.org/wiki/White-box_testing">White-box</a> testing (also known as structural testing) is a method of testing software that tests internal structures or workings of an application, as opposed to its functionality. In white-box testing, an internal perspective of the system and programming skills are used to design test cases. The tester chooses inputs to exercise paths through the code and determine the appropriate outputs.</p>
+
+<h4>Other-box</h4>
+
+<p>A black-box tester is unaware of the internal structure of the application to be tested, while a white-box tester has access to the internal structure of the application.</p>
+
+<p><a href="http://en.wikipedia.org/wiki/Grey_box_testing">Gray-box</a> testing is a combination of both. Testers require both highlevel and detailed knowledge of the application.</p>
+
+<h2>Whitebox in detail</h2>
+
+<p>Whitebox testing is based on program code. The extent to which source code is executed (covered).</p>
+
+<ol>
+<li>statement coverage</li>
+<li>path coverage</li>
+<li>(multiple-) condition coverage</li>
+<li>decision / branch coverage</li>
+<li>loop coverage</li>
+<li>definition-use coverage</li>
+</ol>
+
+
+<p>Use of &ldquo;flow graphs&rdquo; to test the coverage. <a href="http://people.cs.aau.dk/~bnielsen/TOV07/lektioner/whitebox-07.pdf">source</a></p>
+
+<h2>Blackbox in detail</h2>
+
+<ol>
+<li>Equivalence partitioning</li>
+<li>Boundary value analysis</li>
+<li>Behavioural testing (interaction with w/ an environment)</li>
+<li>Random testing (random walk thru the system/mouse click)</li>
+<li>Stress testing (huge data, DoS attack, power off)</li>
+<li>Error guessing (Ad hoc, not really a technique)</li>
+</ol>
+
+
+<h4>Equivalence partitioning</h4>
+
+<p>This is related to &ldquo;validate&rdquo; input. First identify input equivalence classes, then make the test case by changing each valid cases into invalid.</p>
+
+<p>The <a href="http://en.wikipedia.org/wiki/Equivalence_partitioning">testing theory</a> related to equivalence partitioning says that only one test case of each partition is needed. In other words it is sufficient to select one test case out of each partition to test the program. To use more cases will not find new faults.</p>
+
+<p>The values within one partition are considered to be &ldquo;equivalent&rdquo;. Thus the number of test cases can be reduced considerably.</p>
+
+<blockquote><p>Example:</p>
+
+<p>There are 12 months per year</p>
+
+<p>Valid partition is from january to december</p>
+
+<p>Invalid partition is from &lt;=0 and >=13</p></blockquote>
+
+<p>A longer but better <a href="http://users.csc.calpoly.edu/~jdalbey/205/Resources/grocerystore.html">example</a></p>
+
+<h4>Boundary Value Analysis</h4>
+
+<ol>
+<li>Testing boundary conditions (directly on, above, and beneath the edges)</li>
+<li>Choose input boundary values</li>
+<li>Choose input boundary values that reaches output boundary (given the input value, choose expected output +/- 1)</li>
+</ol>
+
+
+<blockquote><p>Example:</p>
+
+<p>Suppose an integer boundary is 1 to 50, Then test for 0,2 values &amp; 49, 51 vales.</p>
+
+<p>Suppose input = 5, output = 100, then test input = 5, output = 99, 100, 101</p></blockquote>
+
+<p>Don’t start with designing white-box test cases! Start with black-box test cases, then check white-box coverage.</p>
+
+<p><a href="http://people.cs.aau.dk/~bnielsen/TOV07/lektioner/blackbox-07.pdf">source</a></p>
+
+<h4>More examples</h4>
+
+<p><strong>Q: how to test a log-in window</strong>?</p>
+
+<p>A: Eq. class: username empty, exits, don&rsquo;t exist and exceed length limit. Same for password field. Boundary: input length equals, less than or larger than length limit. <a href="http://www.geekinterview.com/question_details/23184">source</a></p>
+
+<p><strong>Q: how to test a vendor machine</strong>?</p>
+
+<ol>
+<li><p>Functional: put in $$ and get a coke</p></li>
+<li><p>Edge condition: put in Chinese RMB?</p></li>
+<li><p>Stress: keep putting $$ and popping goods</p></li>
+<li><p>Security: can you break the machine?</p></li>
+</ol>
+
+
+<h2>Last Word</h2>
+
+<p>Sometime it is not feasible to test everything. Instead, prioritize your testing so that you only focus on areas that present the greatest risk or have the greatest probability of occurring.</p>
+
+<p>For example, you might choose to test the slowest client computer, the busiest server, or the least reliable network link.</p>
+
+<p><a href="http://technet.microsoft.com/en-us/library/cc782852(v=ws.10">source</a>.aspx)</p>
+]]></content>
+  </entry>
+  
+</feed>

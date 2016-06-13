@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Fundamental | Woodstock Blog]]></title>
+  <link href="http://okc1.github.io/blog/categories/fundamental/atom.xml" rel="self"/>
+  <link href="http://okc1.github.io/"/>
+  <updated>2016-06-13T01:11:53-07:00</updated>
+  <id>http://okc1.github.io/</id>
+  <author>
+    <name><![CDATA[Kevin Durant]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[[Fundamental] Reflexive, Symmetric and Transitive Rules]]></title>
+    <link href="http://okc1.github.io/blog/2015/10/22/reflexive-symmetric-transitive/"/>
+    <updated>2015-10-22T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2015/10/22/reflexive-symmetric-transitive</id>
+    <content type="html"><![CDATA[<h1>Overview</h1>
+
+<p>O(n) time complexity is both <strong>reflexive, symmetric and transitive</strong>.</p>
+
+<h2>Reflexive Property</h2>
+
+<p>The Reflexive Property states that for every real number x, x = x.</p>
+
+<h2>Symmetric Property</h2>
+
+<p>The Symmetric Property states that for all real numbers x and y,</p>
+
+<p>if x = y, then y = x.</p>
+
+<h2>Transitive Property</h2>
+
+<p>The Transitive Property states that for all real numbers x, y, and z,</p>
+
+<p>if x = y and y = z, then x = z.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Fundamental] Polynomial, Quadratic, Cubic and Exponential]]></title>
+    <link href="http://okc1.github.io/blog/2015/10/22/polynomial-quadratic-cubic-exponential/"/>
+    <updated>2015-10-22T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2015/10/22/polynomial-quadratic-cubic-exponential</id>
+    <content type="html"><![CDATA[<h1>Overview</h1>
+
+<p>A comparison of all <a href="http://pages.cpsc.ucalgary.ca/~eharris/past/cpsc319/w12/tut01/">different time complexity</a>:</p>
+
+<p>{% img middle /assets/images/gnuplot0-1500.png %}</p>
+
+<p>Shown above: Constant, <strong>logarithmic</strong>, linear, n-log-n, quadratic, cubic, <strong>exponential</strong> ( eg. O(2<sup>n</sup>) ).</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Fundamental] What Is a Literal?]]></title>
+    <link href="http://okc1.github.io/blog/2015/10/22/literals/"/>
+    <updated>2015-10-22T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2015/10/22/literals</id>
+    <content type="html"><![CDATA[<h1>Overview</h1>
+
+<p><a href="https://en.wikipedia.org/wiki/Literal_(computer_programming">A Literal</a>) is a notation for <strong>representing a fixed value in source code</strong>.</p>
+
+<p>Almost all programming languages have notations for atomic values such as integers, floating-point numbers, and strings.</p>
+
+<p>eg.</p>
+
+<pre><code>int a = 1;
+String s = "cat";
+</code></pre>
+
+<h2>Integer literal</h2>
+
+<p><a href="https://en.wikipedia.org/wiki/Integer_literal">an integer literal</a> is an integer whose value is directly represented in source code.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Fundamental] UML Class Diagrams]]></title>
+    <link href="http://okc1.github.io/blog/2015/10/14/UML-diagrams/"/>
+    <updated>2015-10-14T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2015/10/14/UML-diagrams</id>
+    <content type="html"><![CDATA[<h1>Overview</h1>
+
+<p>A UML class diagram describes the object and information structures used by your application, both internally and in communication with its users.</p>
+
+<h2>example</h2>
+
+<p>Taken from <a href="https://msdn.microsoft.com/en-us/library/dd409437.aspx">here</a>.</p>
+
+<p>{% img middle /assets/images/IC315445.png %}</p>
+
+<p><tbody><tr><th><p><span class="label">Shape</span></p></th><th><p><span class="label">Element</span></p></th><th><p><span class="label">Description</span></p></th></tr><tr><td><p>1</p></td><td><p><strong>Class</strong></p></td><td><p>A definition of objects that share given structural or behavioral characteristics. For more information, see <a href="https://msdn.microsoft.com/en-us/library/dd323860.aspx">Properties of types on UML class diagrams</a>.</p></td></tr><tr><td><p>1</p></td><td><p>Classifier</p></td><td><p>The general name for a class, interface, or enumeration. Components, use cases, and actors are also classifiers.</p></td></tr><tr><td><p>2</p></td><td><p>Collapse/ Expand control</p></td><td><p>If you cannot see the details of a classifier, click the expander at upper-left of the classifier. You might also have to click the [+] on each segment.</p></td></tr><tr><td><p>3</p></td><td><p><strong>Attribute</strong></p></td><td><p>A typed value attached to each instance of a classifier. </p><p>To add an attribute, click the <strong>Attributes</strong> section and then press <strong>ENTER</strong>. Type the signature of the attribute. For more information, see <a href="https://msdn.microsoft.com/en-us/library/dd323861.aspx">Properties of attributes on UML class diagrams</a>.</p></td></tr><tr><td><p>4</p></td><td><p><strong>Operation</strong></p></td><td><p>A method or function that can be performed by instances of a classifier. To add an operation, click the <strong>Operations</strong> section and then press <strong>ENTER</strong>. Type the signature of the operation. For more information, see <a href="https://msdn.microsoft.com/en-us/library/dd323859.aspx">Properties of operations on UML class diagrams</a>. </p></td></tr><tr><td><p>5</p></td><td><p><strong>Association</strong></p></td><td><p>A relationship between the members of two classifiers. For more information, see <a href="https://msdn.microsoft.com/en-us/library/dd323862.aspx">Properties of associations on UML class diagrams</a>. </p></td></tr><tr><td><p>5a</p></td><td><p><strong>Aggregation</strong></p></td><td><p>An association representing a shared ownership relationship. The <strong>Aggregation</strong> property of the owner role is set to <strong>Shared</strong>.</p></td></tr><tr><td><p>5b</p></td><td><p><strong>Composition</strong></p></td><td><p>An Association representing a whole-part relationship. The <strong>Aggregation</strong> property of the owner role is set to <strong>Composite</strong>.</p></td></tr><tr><td><p>6</p></td><td><p><strong>Association Name</strong></p></td><td><p>The name of an association. The name can be left empty.</p></td></tr><tr><td><p>7</p></td><td><p><strong>Role Name</strong></p></td><td><p>The name of a role, that is, one end of an association. Can be used to refer to the associated object. In the previous illustration, for any Order <span class="code">O</span>, <span class="code">O.ChosenMenu</span> is its associated Menu.</p><p>Each role has its own properties, listed under the properties of the association.</p></td></tr><tr><td><p>8</p></td><td><p><strong>Multiplicity</strong></p></td><td><p>Indicates how many of the objects at this end can be linked to each object at the other. In the example, each Order must be linked to exactly one Menu. </p><p><strong>*</strong> means that there is no upper limit to the number of links that can be made.</p></td></tr><tr><td><p>9</p></td><td><p><strong>Generalization</strong></p></td><td><p>The <em>specific</em> classifier inherits part of its definition from the <em>general</em> classifier. The general classifier is at the arrow end of the connector. Attributes, associations, and operations are inherited by the specific classifier.</p><p>Use the <strong>Inheritance</strong> tool to create a generalization between two classifiers.</p></td></tr></tbody></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Fundamental] Segment Tree]]></title>
+    <link href="http://okc1.github.io/blog/2015/10/08/segment-tree/"/>
+    <updated>2015-10-08T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2015/10/08/segment-tree</id>
+    <content type="html"><![CDATA[<h1>Overview</h1>
+
+<p><strong><a href="https://en.wikipedia.org/wiki/Segment_tree">Segment tree</a></strong> is a tree data structure for storing intervals, or segments.</p>
+
+<p>Can be used to search <strong>the max/min or sum values in a range</strong>.</p>
+
+<ol>
+<li><p>modify = O(log n)</p></li>
+<li><p>query = O(log n)</p></li>
+<li><p>build = O(n)</p></li>
+</ol>
+
+
+<h2>question list</h2>
+
+<ol>
+<li><p>[LintCode] Segment Tree Build</p></li>
+<li><p>[LintCode] Segment Tree Build II</p></li>
+<li><p>[LintCode] Segment Tree Modify</p></li>
+<li><p>[LintCode] Segment Tree Query</p></li>
+<li><p>[LintCode] Segment Tree Query II</p></li>
+</ol>
+
+]]></content>
+  </entry>
+  
+</feed>

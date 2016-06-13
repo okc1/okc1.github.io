@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Cc150v5 | Woodstock Blog]]></title>
+  <link href="http://okc1.github.io/blog/categories/cc150v5/atom.xml" rel="self"/>
+  <link href="http://okc1.github.io/"/>
+  <updated>2016-06-13T01:11:53-07:00</updated>
+  <id>http://okc1.github.io/</id>
+  <author>
+    <name><![CDATA[Kevin Durant]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[[CC150v5] 18.7 Longest Word Made From Other Words]]></title>
+    <link href="http://okc1.github.io/blog/2014/10/02/longest-word-made-from-other/"/>
+    <updated>2014-10-02T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2014/10/02/longest-word-made-from-other</id>
+    <content type="html"><![CDATA[<h3>Question</h3>
+
+<blockquote><p>Given a list of words, write a program to find the longest word made of other words in the list.</p>
+
+<p>EXAMPLE</p>
+
+<p>Input: cat, banana, dog, nana, walk, walker, dogwalker</p>
+
+<p>Output: dogwalker</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>Search it recursively from longest to shortest</strong>. Use HashSet to help us search for words quickly.</p>
+
+<p>This question might look difficult at first, it&rsquo;s actually a very classical recursive search.</p>
+
+<h3>Code</h3>
+
+<pre><code>public static void printLongestWord(String[] arr) {
+    Arrays.sort(arr, new LengthComparator());
+    HashSet&lt;String&gt; set = new HashSet&lt;String&gt;();
+    for (String str : arr) {
+        set.add(str);
+    }
+    for (String word : arr) {
+        if (canDivide(word, 0, set)) {
+            System.out.println(word);
+            return;
+        }
+    }
+    System.out.println("can not find such word");
+}
+
+private static boolean canDivide(String word, int from, HashSet&lt;String&gt; set) {
+    if (from == word.length()) {
+        return true;
+    }
+    for (int i = from; i &lt; word.length(); i++) {
+        String str = word.substring(from, i + 1);
+        if (from == 0 &amp;&amp; i == word.length() - 1) {
+            continue;
+        } else if (!set.contains(str)) {
+            continue;
+        }
+        if (canDivide(word, i + 1, set)) {
+            return true;
+        }
+    }
+    return false;
+}
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[CC150v5] 17.14 Optimal Way to Unconcatenate Doc]]></title>
+    <link href="http://okc1.github.io/blog/2014/10/01/optimal-unconcatenate-doc/"/>
+    <updated>2014-10-01T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2014/10/01/optimal-unconcatenate-doc</id>
+    <content type="html"><![CDATA[<h3>Question</h3>
+
+<blockquote><p>Given a lengthy document without spaces, punctuation, and capitalization:</p>
+
+<p>eg: iresetthecomputeritstilldidntboot</p>
+
+<p>Now add back in the punctation and capitalization.</p>
+
+<p>Most of the words will be in a dictionary, but some strings, like proper names, will not. Given a dictionary (a list of words), design an algorithm to find the optimal way of &ldquo;unconcatenating&rdquo; a sequence of words (by minimizing unrecognized sequences of characters).</p>
+
+<p>For example, the string &ldquo;jesslookedjustliketimherbrother&rdquo; would be optimally parsed as &ldquo;JESS looked just like TIM her brother&rdquo;. This parsing has seven unrecognized characters, which we have capitalized for clarity.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>The solution given in the book is very hard to understand. It uses HashMap to memorize the previous result.</p>
+
+<p>After long time of struggle, I finally solved it with traditional DP approach. The key idea is to consider: &ldquo;<strong>whether I insert a space after this char, or not</strong>&rdquo;.</p>
+
+<p>The code is concise and easy to read.</p>
+
+<h3>Code</h3>
+
+<pre><code>public static int parse(String doc, Trie dict) {
+    int len = doc.length();
+    int[] dp = new int[len + 1];
+    // dp[i] denotes the number of special chars in first i chars of docs
+    for (int i = 1; i &lt;= len; i++) {
+        dp[i] =  Integer.MAX_VALUE;
+        for (int j = 0; j &lt; i; j++) {
+            String str = doc.substring(j, i);
+            if (dict.contains(str, true)) {
+                // consider (i to j) a valid word
+                dp[i] = Math.min(dp[i], dp[j]);
+            } else {
+                // consider (i to j) special chars
+                dp[i] = Math.min(dp[i], dp[j] + i - j);
+            }
+        }
+    }
+    return dp[len];
+}
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[CC150v5] 17.13 Convert BST to DLL]]></title>
+    <link href="http://okc1.github.io/blog/2014/09/30/convert-bst-to-dll/"/>
+    <updated>2014-09-30T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2014/09/30/convert-bst-to-dll</id>
+    <content type="html"><![CDATA[<h3>Question</h3>
+
+<blockquote><p>Consider a simple node-like data structure called BiNode, which has pointers to two other nodes.</p></blockquote>
+
+<pre><code>public class BiNode {
+    public BiNode node1, node2;
+    public int data;
+}
+</code></pre>
+
+<blockquote><p>The data structure BiNode could be used to represent both a binary tree (where node1 is the left node and node2 is the right node) or a doubly linked list (where node1 is the previous node and node2 is the next node). Implement a method to convert a binary search tree (implemented with BiNode) into a doubly linked list. The values should be kept in order and the operation should be performed in place (that is, on the original data structure).</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>At another post <strong>[LeetCode Plus] Convert BST to Circular DLL</strong>, we already discussed 2 approaches:</p>
+
+<ol>
+<li>in-order traversal approach</li>
+<li>divide and conquer approach</li>
+</ol>
+
+
+<p>First approach isn&rsquo;t intuitive. We will further discuss D&amp;C approach here.</p>
+
+<p><strong>The key of the solution is how we return both HEAD and TAIL</strong>. The book suggests 3 ways:</p>
+
+<ol>
+<li>Build a <strong>data structure</strong> to store both head and tail</li>
+<li><strong>Just return head</strong>, and retrieve tail by traversing thru - bad time complexity O(n<sup>2</sup>)</li>
+<li><strong>Use circular linked-list</strong>! Time O(n).</li>
+</ol>
+
+
+<p>I wrote the code for 1st and 2nd approach. And 3rd is already covered in previous post.</p>
+
+<ul>
+<li>You need to understand why we need the list to be circular.</li>
+</ul>
+
+
+<h3>Code</h3>
+
+<p><strong>Approach 1</strong></p>
+
+<pre><code>public static BiNode convert(BiNode root) {
+    BiNodePair res = helper(root);
+    return res.leftMost;
+}
+
+private static BiNodePair helper(BiNode node) {
+    if (node == null) {
+        return null;
+    }
+    BiNodePair res = new BiNodePair(node, node);
+    if (node.node1 != null) {
+        BiNodePair leftRes = helper(node.node1);
+        res.leftMost = leftRes.leftMost;
+        leftRes.rightMost.node2 = node;
+        node.node1 = leftRes.rightMost;
+    }
+    if (node.node2 != null) {
+        BiNodePair rightRes = helper(node.node2);
+        res.rightMost = rightRes.rightMost;
+        rightRes.leftMost.node1 = node;
+        node.node2 = rightRes.leftMost;
+    }
+    return res;
+}
+
+static class BiNodePair {
+    BiNode leftMost;
+    BiNode rightMost;
+
+    public BiNodePair(BiNode node1, BiNode node2) {
+        leftMost = node1;
+        rightMost = node2;
+    }
+}
+</code></pre>
+
+<p><strong>Approach 2</strong></p>
+
+<pre><code>public static BiNode convert(BiNode root) {
+    if (root == null) {
+        return null;
+    }
+    return helper(root);
+}
+
+private static BiNode helper(BiNode node) {
+    // node is not null
+    BiNode newHead = node;
+    // do left part
+    if (node.node1 != null) {
+        newHead = helper(node.node1);
+        BiNode leftTail = getListTail(newHead);
+        leftTail.node2 = node;
+        node.node1 = leftTail;
+    }
+    // do right part
+    if (node.node2 != null) {
+        BiNode rightHead = helper(node.node2);
+        node.node2 = rightHead;
+        rightHead.node1 = node;
+    }
+    return newHead;
+}
+
+private static BiNode getListTail(BiNode head) {
+    // head is not null
+    while (head.node2 != null) {
+        head = head.node2;
+    }
+    return head;
+}
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[CC150v5] 11.8 Get Rank in Stream of Integers]]></title>
+    <link href="http://okc1.github.io/blog/2014/09/28/get-rank-stream-integers/"/>
+    <updated>2014-09-28T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2014/09/28/get-rank-stream-integers</id>
+    <content type="html"><![CDATA[<h3>Question</h3>
+
+<blockquote><p>Imagine you are reading in a stream of integers. Periodically, you wish to be able to look up the rank of a number x (the number of values less than or equal to x).</p>
+
+<p>Implement the data structures and algorithms to support these operations. That is, implement the method <strong>track(int x)</strong>, which is called when each number is generated, and the method <strong>getRankOfNumber(int x)</strong>, which returns the number of values less than or equal to x (not including x itself).</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>This question requires a special type of Data Structure</strong>. It basically is a modified BST like this:</p>
+
+<blockquote><p>The tree node stores both number value and the <strong>count of node on left subtree</strong></p></blockquote>
+
+<p>{% img middle /assets/images/get-rank-number-stream.png %}</p>
+
+<p>Suppose we want to find the rank of 24 in the tree above. We would compare 24 with the root, 20, and find that 24 must reside on the right. The root has 4 nodes in its left subtree, and when we include the root itself, this gives us five total nodes smaller than 24. We set counter to 5.</p>
+
+<p>Then, we compare 24 with node 25 and find that 24 must be on the left. The value of counter does not update, since we&rsquo;re not &ldquo;passing over&rdquo; any smaller nodes. The value of counter is still 5.</p>
+
+<p>Next, we compare 24 with node 23,and find that 24 must be on the right. Counter gets incremented by just 1 (to 6), since 23 has no left nodes.</p>
+
+<p>Finally, we find 24 and we return counter: 6.</p>
+
+<h3>Code</h3>
+
+<p>Refer to another post <strong>[Question] Stock Span Problem</strong>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[CC150v5] 17.6 Order an Array by Sorting Middle]]></title>
+    <link href="http://okc1.github.io/blog/2014/09/27/Order-array-by-sorting-middle/"/>
+    <updated>2014-09-27T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2014/09/27/Order-array-by-sorting-middle</id>
+    <content type="html"><![CDATA[<h3>Question</h3>
+
+<blockquote><p>Given an array of integers, write a method to find indices m and n such that if you sorted elements m through n, the entire array would be sorted. Minimize n-m (that is, find the smallest such sequence).</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Referring to <a href="http://www.mitbbs.com/article_t/JobHunting/32772399.html">this guy</a>:</p>
+
+<blockquote><ol>
+<li><p>找到heading的最长递增序列.</p></li>
+<li><p>找到tailing的最长的递增序列.</p></li>
+</ol>
+</blockquote>
+
+<p>After that:</p>
+
+<blockquote><ol>
+<li><p>用中间部分的min去shrink左边.</p></li>
+<li><p>用中间部分的max去shrink右边.</p></li>
+</ol>
+</blockquote>
+
+<h3>Code</h3>
+
+<p><strong>written by me</strong></p>
+
+<pre><code>public static void findUnsortedSequence(int[] array, int[] ans) {
+    int len = array.length;
+    ans[0] = 0;
+    ans[1] = 0;
+
+    // find increasing sequence on left and on right
+    int leftPeak = 0;
+    while (leftPeak &lt; len - 1) {
+        if (array[leftPeak] &lt; array[leftPeak + 1]) {
+            leftPeak++;
+        } else {
+            break;
+        }
+    }
+    if (leftPeak == len - 1) {
+        return;
+    }
+    int rightBottom = len - 1;
+    while (rightBottom &gt; 0) {
+        if (array[rightBottom] &gt; array[rightBottom - 1]) {
+            rightBottom--;
+        } else {
+            break;
+        }
+    }
+
+    // leftPeak and rightBottom are found, now read mid part
+    int midMin = Integer.MAX_VALUE;
+    int midMax = Integer.MIN_VALUE;
+    for (int i = leftPeak; i &lt;= rightBottom; i++) {
+        midMin = Math.min(midMin, array[i]);
+        midMax = Math.max(midMax, array[i]);
+    }
+
+    // find left boudary and right boundary
+    int leftBound = leftPeak;
+    while (leftBound &gt;= 0) {
+        if (array[leftBound] &lt; midMin) {
+            break;
+        }
+        leftBound--;
+    }
+    int rightBound = rightBottom;
+    while (rightBound &lt; len) {
+        if (array[rightBound] &gt; midMax) {
+            break;
+        }
+        rightBound++;
+    }
+
+    // finish it up
+    ans[0] = leftBound + 1;
+    ans[1] = rightBound - 1;
+}
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

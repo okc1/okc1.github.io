@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Java Oop | Woodstock Blog]]></title>
+  <link href="http://okc1.github.io/blog/categories/java-oop/atom.xml" rel="self"/>
+  <link href="http://okc1.github.io/"/>
+  <updated>2016-06-13T01:11:53-07:00</updated>
+  <id>http://okc1.github.io/</id>
+  <author>
+    <name><![CDATA[Kevin Durant]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[[Java OOP] Java ArrayList Implementation]]></title>
+    <link href="http://okc1.github.io/blog/2015/10/28/arraylist-implementation/"/>
+    <updated>2015-10-28T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2015/10/28/arraylist-implementation</id>
+    <content type="html"><![CDATA[<h1>Overview</h1>
+
+<p><strong><a href="http://docs.oracle.com/javase/7/docs/api/java/util/ArrayList.html">Resizable-array</a></strong> implementation of the List interface. (it&rsquo;s actually an <a href="http://stackoverflow.com/a/7382507">array of Object</a>)</p>
+
+<p>It&rsquo;s not synced.</p>
+
+<h2>Underlying design</h2>
+
+<ol>
+<li><p><strong>Random access</strong> – no need to traverse thru all nodes.</p></li>
+<li><p><strong>Circular array</strong> - Array size is pre-defined. Use head and tail to keep track of list position.</p></li>
+<li><p><strong>Insertion and deletion</strong> - Implement <strong>shiftRight()</strong> and shiftLeft() methods.</p></li>
+</ol>
+
+
+<p>Actual code will come later&hellip;</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Java OOP] Static Class and Inner Class]]></title>
+    <link href="http://okc1.github.io/blog/2015/10/23/static-class-inner-class/"/>
+    <updated>2015-10-23T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2015/10/23/static-class-inner-class</id>
+    <content type="html"><![CDATA[<h1>Nested classes</h1>
+
+<p>Both Static class and Inner class are called <strong>nested class</strong>.</p>
+
+<p><a href="http://tutorials.jenkov.com/java/nested-classes.html">The purpose of a nested class</a> is to <strong>clearly group the nested class with its surrounding class</strong>, signaling that these two classes are to be used together.</p>
+
+<p>Now the 2 types:</p>
+
+<ol>
+<li>Static nested classes (also: Static Classes )</li>
+<li>Non-static nested classes (also: Inner Class)</li>
+</ol>
+
+
+<h2>Static Classes</h2>
+
+<p>Declare:</p>
+
+<pre><code>public class Outer {
+    public static class Nested {
+
+    }
+}
+</code></pre>
+
+<p>Instantiate (just like a normal class):</p>
+
+<pre><code>Outer.Nested instance = new Outer.Nested();
+</code></pre>
+
+<h2>Inner Classes</h2>
+
+<pre><code>public class Outer {
+    public class Inner {
+
+    }
+}
+</code></pre>
+
+<p>Instantiate (you MUST have an instance of enclosing class, and look weird the &lsquo;new&rsquo; keyword looks):</p>
+
+<pre><code>Outer outer = new Outer();
+Outer.Inner inner = outer.new Inner();
+</code></pre>
+
+<h1>access level</h1>
+
+<p><strong>Inner class</strong> can access private members in enclosing class (static or non-static).</p>
+
+<pre><code>public class Outer {
+
+    private String text = "I am private!";
+
+    public class Inner {
+
+        public void printText() {
+            System.out.println(text);
+        }
+    }
+}
+</code></pre>
+
+<p><strong>Static class</strong> <a href="http://www.geeksforgeeks.org/static-class-in-java/">cannot access non-static members</a>.</p>
+
+<h1>top-level static class?</h1>
+
+<p>Java has <strong><a href="http://stackoverflow.com/a/7486111">no way of making a top-level class static</a></strong> but you can simulate a static class like this:</p>
+
+<ol>
+<li><p>Declare your class final</p></li>
+<li><p>Make the constructor private</p></li>
+<li><p>Make all the members and functions of the class static</p></li>
+</ol>
+
+
+<p>(this basically is a Singleton)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Java OOP] What Is Java Exception]]></title>
+    <link href="http://okc1.github.io/blog/2015/10/23/java-what-is-exception/"/>
+    <updated>2015-10-23T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2015/10/23/java-what-is-exception</id>
+    <content type="html"><![CDATA[<h1>The class</h1>
+
+<p><strong><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Exception.html">The class Exception</a></strong> and its subclasses are a form of <strong>Throwable</strong> that indicates conditions that a reasonable application might want to catch.</p>
+
+<h1>The object</h1>
+
+<p><strong><a href="https://docs.oracle.com/javase/tutorial/essential/exceptions/definition.html">An exception is an event</a></strong>, which occurs during the execution of a program, that disrupts the normal flow of the program&rsquo;s instructions.</p>
+
+<p><strong>When an error occurs</strong> within a method, the method <strong>creates an object and hands it off to the runtime system</strong>. The object, called an <strong>exception object</strong>, contains information about the error(eg. type, state etc).</p>
+
+<h2>throw this object out!</h2>
+
+<p>Creating an exception object and handing it to the runtime system is called <strong>throwing an exception</strong>.</p>
+
+<p>After a method throws an exception, the runtime system (i.e. <strong>JVM</strong>) attempts to find something to handle it. This is <strong>exception handler</strong>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Java OOP] Java Vector and ArrayList]]></title>
+    <link href="http://okc1.github.io/blog/2015/10/23/java-vector-arraylist/"/>
+    <updated>2015-10-23T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2015/10/23/java-vector-arraylist</id>
+    <content type="html"><![CDATA[<h1>Vector in Java</h1>
+
+<p>Vector class implements a <strong>growable array</strong> of objects.</p>
+
+<p>It&rsquo;s an array, <strong>not a list</strong>.</p>
+
+<h1>Vector VS ArrayList</h1>
+
+<ol>
+<li>Vectors are synchronized, ArrayLists are not.</li>
+<li>Data Growth Methods (ArrayList grow by &frac12; of its size, while Vector doubles)</li>
+</ol>
+
+
+<p>Usage: <a href="http://stackoverflow.com/a/2986307">ALWAYS use ArrayLists</a></p>
+
+<blockquote><p>The vector was not the part of collection framework, it has been included in collections later. <strong>It can be considered as Legacy code</strong>.</p>
+
+<p>There is nothing about Vector which List collection cannot do. Therefore Vector <strong><a href="http://beginnersbook.com/2013/12/difference-between-arraylist-and-vector-in-java/">should be avoided</a></strong>.</p></blockquote>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Java OOP] Template Method Pattern (Abstract Class)]]></title>
+    <link href="http://okc1.github.io/blog/2015/10/23/Template-method-pattern/"/>
+    <updated>2015-10-23T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2015/10/23/Template-method-pattern</id>
+    <content type="html"><![CDATA[<h1>Overview</h1>
+
+<p><strong><a href="https://en.wikipedia.org/wiki/Template_method_pattern">Template method pattern</a> is a behavioral design pattern</strong> that defines the program skeleton of an algorithm in a method, called template method, which <strong>defers some steps to subclasses</strong>.</p>
+
+<p>It lets one <strong>redefine</strong> certain steps of an algorithm without changing the algorithm&rsquo;s structure.</p>
+
+<h2>Usage</h2>
+
+<p>The template method is used in frameworks, where each implements the invariant parts of a domain&rsquo;s architecture.</p>
+
+<h2>Example in Java</h2>
+
+<p>Refer to <a href="https://en.wikipedia.org/wiki/Template_method_pattern#Example_in_Java">code from WIKI</a>:</p>
+
+<pre><code>/**
+ * An abstract class that is common to several games in
+ * which players play against the others, but only one is
+ * playing at a given time.
+ */
+
+abstract class Game {
+ /* Hook methods. Concrete implementation may differ in each subclass*/
+    protected int playersCount;
+    abstract void initializeGame();
+    abstract void makePlay(int player);
+    abstract boolean endOfGame();
+    abstract void printWinner();
+
+    /* A template method : */
+    public final void playOneGame(int playersCount) {
+        this.playersCount = playersCount;
+        initializeGame();
+        int j = 0;
+        while (!endOfGame()) {
+            makePlay(j);
+            j = (j + 1) % playersCount;
+        }
+        printWinner();
+    }
+}
+
+//Now we can extend this class in order 
+//to implement actual games:
+
+class Monopoly extends Game {
+
+    /* Implementation of necessary concrete methods */
+    void initializeGame() {
+        // Initialize players
+        // Initialize money
+    }
+    void makePlay(int player) {
+        // Process one turn of player
+    }
+    boolean endOfGame() {
+        // Return true if game is over 
+        // according to Monopoly rules
+    }
+    void printWinner() {
+        // Display who won
+    }
+    /* Specific declarations for the Monopoly game. */
+
+    // ...
+}
+
+class Chess extends Game {
+
+    /* Implementation of necessary concrete methods */
+    void initializeGame() {
+        // Initialize players
+        // Put the pieces on the board
+    }
+    void makePlay(int player) {
+        // Process a turn for the player
+    }
+    boolean endOfGame() {
+        // Return true if in Checkmate or 
+        // Stalemate has been reached
+    }
+    void printWinner() {
+        // Display the winning player
+    }
+    /* Specific declarations for the chess game. */
+
+    // ...
+}
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>
