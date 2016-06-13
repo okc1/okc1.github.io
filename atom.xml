@@ -4,11 +4,7 @@
   <title><![CDATA[Woodstock Blog]]></title>
   <link href="http://okc1.github.io/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-<<<<<<< HEAD
-  <updated>2016-06-13T00:01:22-07:00</updated>
-=======
-  <updated>2016-06-11T09:44:47-07:00</updated>
->>>>>>> e967ed554a156b5ddf85309344e72d58c670b1fa
+  <updated>2016-06-13T00:41:19-07:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -24,11 +20,7 @@
     <id>http://okc1.github.io/blog/2016/06/11/add-aside-content-octopress</id>
     <content type="html"><![CDATA[<h1>Aside</h1>
 
-<<<<<<< HEAD
 <p>Example of this is the &lsquo;categories&rsquo; list on the right hand side of the blog page. It&rsquo;s always pinned on RHS regardless of page content.</p>
-=======
-<p>Example of this is the &lsquo;categories&rsquo; list on the right hand side of the blog page. It&rsquo;s always pin on RHS regardless of page content.</p>
->>>>>>> e967ed554a156b5ddf85309344e72d58c670b1fa
 
 <h1>Instruction</h1>
 
