@@ -8,7 +8,7 @@ category: experience
 
 # Aside
 
-Example of this is the 'categories' list on the right hand side of the blog page. It's always pinned on RHS regardless of page content.
+Example of this is the 'categories' list on the right hand side of the blog page. It's always pinned on RHS, regardless of page content.
 
 # Instruction
 
