@@ -31,19 +31,19 @@ __Ruby DevKit is a self-extracting archive__. After extracting the files, we sho
 
 __clone the source branch to the local octopress folder__
 
-> using HTTPS
->
-> git clone -b source https://github.com/okckd/okckd.github.io.git octopress
+using HTTPS
 
-> or using SSH
->
-> git clone -b source git@github.com:okckd/okckd.github.io.git octopress
+    git clone -b source https://github.com/okckd/okckd.github.io.git octopress
+
+    or using SSH
+
+    git clone -b source git@github.com:okckd/okckd.github.io.git octopress
 
 I would recommend using SSH over HTTPS, because __using HTTPS, you will need to type your username and password everytime you push__.
 
 To correct 'HTTPS' to 'SSH', follow [this instruction](http://stackoverflow.com/a/6565661):
 
-> git remote set-url origin git@github.com:username/repo.git
+    git remote set-url origin git@github.com:username/repo.git
 
 More info about HTTPS and SSH is [available](https://help.github.com/articles/which-remote-url-should-i-use/).
 
@@ -64,15 +64,19 @@ If you are confused with some concepts in Ruby, read __[[Ruby] RubyGems, gem, Ge
 
 You can use either of the commands below to start octopress. I can't remember clearly but you can simply follow [this guide](http://octopress.org/docs/setup/).
 
-> rake setup_github_pages
->
-> when prompted, enter this url: git@github.com:okckd/okckd.github.io.git
->
-> rake install
+    rake setup_github_pages
+
+when prompted, enter this url: git@github.com:okckd/okckd.github.io.git
+
+    rake install
 
 ### Commit your changes
 
-You can do 'rake gen_deploy' to deploy to master branch. Do 'git commit", "git push origin source' to update blog source. [reference](http://blog.zerosharp.com/clone-your-octopress-to-blog-from-two-places/)
+You can do 'rake generate', then 'rake deploy' to deploy to master branch. If you see the "__Liquid Exception: Tag xxx was not properly terminated with regexp__": [do this](https://github.com/davidfstr/rdiscount/issues/75):
+
+> The file that's causing this problem in octopress, is category_feed.xml, inside _includes/custom. You need to replace "markdownify" for "markdownize" and it works. Now I can rest.
+
+Do 'git commit", "git push origin source' to update blog source. [reference](http://blog.zerosharp.com/clone-your-octopress-to-blog-from-two-places/)
 
 At this step, congratulations you are all set!
 
