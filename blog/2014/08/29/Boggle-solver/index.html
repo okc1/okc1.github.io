@@ -1,0 +1,476 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Google] Boggle Solver (Search Words From Matrix) - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link Boggle Game: F X I E
+A M L O
+E W B X
+A S T U The goal of the game is to find as many words as you can that can be formed by chaining &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/08/29/Boggle-solver/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Google] Boggle Solver (Search Words From Matrix)</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-29T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>29</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://stackoverflow.com/questions/746082/how-to-find-list-of-possible-words-from-a-letter-matrix-boggle-solver">link</a></p>
+
+<blockquote><p>Boggle Game:</p></blockquote>
+
+<pre><code>F X I E
+A M L O
+E W B X
+A S T U
+</code></pre>
+
+<blockquote><p>The goal of the game is to find as many words as you can that can be formed by chaining letters together. You are given a dictionary of words are reference.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong><a href="http://stackoverflow.com/a/4314056">The best solution</a> is to use Trie</strong>, then do DFS search.</p>
+
+<p>The idea is from <a href="http://stackoverflow.com/a/746102">this answer</a> (however, this guy said his solution does not handle &lsquo;visited&rsquo; nodes properly, meaning that same char might be visited again to produce a word).</p>
+
+<p>We need to first define a class called Item:</p>
+
+<pre><code>class Item {
+    public final int x, y;
+    public final String prefix;
+
+    public Item(int row, int column, String prefix) {
+        this.x = row;
+        this.y = column;
+        this.prefix = prefix;
+    }
+}
+</code></pre>
+
+<p>So when we start doing DFS, we pass in an Item object which stores 2 information:</p>
+
+<ol>
+<li>The next position that we&rsquo;re going to visit.</li>
+<li>The prefix string that we have validated so far (before visiting this position).</li>
+</ol>
+
+
+<p>For example:</p>
+
+<pre><code>F X I E
+A M L O
+E W B X
+A S T U
+</code></pre>
+
+<p>We&rsquo;ll have Items objects like (0, 0, &ldquo;&rdquo;), (0, 1, &ldquo;F&rdquo;), (0, 2, &ldquo;FA&rdquo;) &hellip; We guarantee that the prefix must be a valid prefix by searching them in the Trie.</p>
+
+<p>How to tell whether a string is a prefix of word, or it&rsquo;s an actual word? We have a property in TrieNode called TrieNode.isWord() to help us.</p>
+
+<p>The code I wrote below is based on <a href="http://stackoverflow.com/a/11698898">this Java solution by zouzhile</a>.</p>
+
+<h3>Code</h3>
+
+<p>BoggleSolver.java</p>
+
+<pre><code>public class BoggleSolver {
+
+    private static BufferedReader in = null;
+    private static final String INPUT_FILE = "dictionary.txt";
+
+    public static void beginFileReader() {
+        try {
+            in = new BufferedReader(new FileReader(new File(BoggleSolver.class
+                    .getResource(INPUT_FILE).toURI())));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Trie buildTrie() {
+        Trie trie = new Trie();
+        beginFileReader();
+        String line = null;
+        try {
+            while ((line = in.readLine()) != null) {
+                String[] words = line.split(" ");
+                for (String word : words) {
+                    word = word.trim().toLowerCase();
+                    trie.addWord(word);
+                }
+            }
+            if (in != null) {
+                in.close();
+            }
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        return trie;
+    }
+
+    public Set&lt;String&gt; findWords(char[][] map, Trie dict) {
+        Set&lt;String&gt; ans = new TreeSet&lt;String&gt;();
+        int m = map.length;
+        int n = map[0].length;
+        for (int i = 0; i &lt; m; i++) {
+            for (int j = 0; j &lt; n; j++) {
+                boolean[][] visited = new boolean[m][n];
+                findWordsDfs(ans, dict, map, visited, new Item(i, j, ""));
+                // item have 3 parameters:
+                // location x,y and the prefix string before reaching (i.j)
+            }
+        }
+        return ans;
+    }
+
+    public void findWordsDfs(Set&lt;String&gt; ans, Trie dict, char[][] map,
+            boolean[][] visited, Item item) {
+        // item: the location that we're going to test
+        // item.prefix is the word prefix before reaching (x, y)
+
+        int m = map.length;
+        int n = map[0].length;
+        int x = item.x;
+        int y = item.y;
+
+        // check whether cur.(x,y) is a valid position
+        if (x &lt; 0 || x &gt;= m || y &lt; 0 || y &gt;= n) {
+            return;
+        } else if (visited[x][y]) {
+            return;
+        }
+        String newWord = item.prefix + map[x][y];
+        // check whether cur.prefix is a valid prefix
+        TrieNode findWord = dict.match(newWord);
+        if (findWord == null) {
+            // up to this position (x, y), the word dont' exists
+            return;
+        }
+        // now cur is in a valid position, with a valid prefix
+        if (findWord.isWord()) {
+            ans.add(newWord);
+        }
+        // visit this position, and continue in 4 different directions
+        visited[x][y] = true;
+        findWordsDfs(ans, dict, map, visited, new Item(x, y - 1, newWord));
+        findWordsDfs(ans, dict, map, visited, new Item(x, y + 1, newWord));
+        findWordsDfs(ans, dict, map, visited, new Item(x - 1, y, newWord));
+        findWordsDfs(ans, dict, map, visited, new Item(x + 1, y, newWord));
+        visited[x][y] = false;
+    }
+
+    public static void main(String[] args) {
+        String[] rows = "eela,elps,weut,korn".split(",");
+        char[][] input = new char[4][4];
+        for (int i = 0; i &lt; 4; i++) {
+            input[i] = rows[i].toCharArray();
+        }
+
+        // prepare test data
+        BoggleSolver solver = new BoggleSolver();
+        Trie dictionary = solver.buildTrie();
+        // start finding words
+        Set&lt;String&gt; set = solver.findWords(input, dictionary);
+        // present the result
+        System.out.println(set.size() + " words are found, they are: ");
+        for (String str : set) {
+            System.out.println(str);
+        }
+    }
+
+    class Item {
+        public final int x, y;
+        public final String prefix;
+
+        public Item(int row, int column, String prefix) {
+            this.x = row;
+            this.y = column;
+            this.prefix = prefix;
+        }
+    }
+}
+</code></pre>
+
+<p>Trie.java</p>
+
+<pre><code>public class Trie {
+    private TrieNode root;
+
+    public Trie() {
+        this.root = new TrieNode();
+    }
+
+    public void addWord(String word) {
+        TrieNode node = this.root;
+        for (char c : word.toCharArray()) {
+            node = node.addChild(c);
+            if (node == null)
+                return;
+        }
+        node.setWord(true);
+    }
+
+    public TrieNode match(String s) {
+        TrieNode node = this.root;
+        for (char c : s.toCharArray()) {
+            node = node.get(c);
+            if (node == null)
+                return null;
+        }
+        return node;
+    }
+}
+</code></pre>
+
+<p>TrieNode.java</p>
+
+<pre><code>public class TrieNode {
+    private TrieNode[] children;
+    private boolean isWord = false;
+
+    public TrieNode() {
+        this.children = new TrieNode[26];
+    }
+
+    public TrieNode addChild(char child) {
+        if (child &lt; 'a' || child &gt; 'z')
+            return null;
+
+        int offset = child - 'a';
+        if (this.children[offset] == null) {
+            this.children[offset] = new TrieNode();
+        }
+        return this.children[offset];
+    }
+
+    public boolean isWord() {
+        return isWord;
+    }
+
+    public void setWord(boolean isWord) {
+        this.isWord = isWord;
+    }
+
+    public TrieNode get(char c) {
+        int offset = c - 'a';
+        return this.children[offset];
+    }
+}
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-08-29T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>29</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/q-google/'>q-google</a>, <a class='category' href='/blog/categories/z-string-search/'>z-string-search</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/08/29/Boggle-solver/" data-via="" data-counturl="http://okc1.github.io/blog/2014/08/29/Boggle-solver/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/08/28/ugly-numbers/" title="Previous Post: [CC150v4] 10.7 Ugly Numbers (Hamming numbers) ">&laquo; [CC150v4] 10.7 Ugly Numbers (Hamming numbers) </a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/08/30/A-start-search/" title="Next Post: [Fundamental] A-Star Search ">[Fundamental] A-Star Search  &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

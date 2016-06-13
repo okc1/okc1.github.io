@@ -1,0 +1,482 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[NineChap System Design] Class 2.1: Database - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Overview This class covers database design: design data with class and inheritance
+design a user system (Netflix 2015)
+design a payment system (Yelp &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2015/08/26/design-class2-1/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[NineChap System Design] Class 2.1: Database</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-08-26T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1>Overview</h1>
+
+<p>This class covers database design:</p>
+
+<ol>
+<li>design data with class and inheritance</li>
+<li>design a user system (Netflix 2015)</li>
+<li>design a payment system (Yelp, BigCommerce 2015)</li>
+</ol>
+
+
+<h1>Question 1</h1>
+
+<p><strong>design account (login/out) system</strong> for our radio app.</p>
+
+<h2>Step one, scenario</h2>
+
+<ol>
+<li>register, update, remove account</li>
+<li>login/out</li>
+<li>user balance, VIP services</li>
+</ol>
+
+
+<h2>Step Two, necessary</h2>
+
+<ol>
+<li><p>Ask</p>
+
+<ol>
+<li>total user: 100 million</li>
+<li>daily user: 1 million</li>
+</ol>
+</li>
+<li><p>predict</p>
+
+<ol>
+<li>daily active user in 3 month: 10 million</li>
+<li>register percentage: 1%</li>
+<li>daily new register: 100 thousand</li>
+</ol>
+</li>
+<li><p>more predict</p>
+
+<ol>
+<li>login percentage: 15%</li>
+<li>average login frequency: 1.2 (ppl may input wrong password 20% of time)</li>
+<li>daily login attempts: 10 million * 15% * 1.2 = 1.8 million</li>
+<li>average login frequency: 1.8 million / 24hr = 21 login/sec</li>
+<li>normal login frequency: 21 * 2 = 42 login/sec</li>
+<li>peak login frequency: 42 * 3 = 126 login/sec</li>
+</ol>
+</li>
+</ol>
+
+
+<h2>Step Three, Application</h2>
+
+<p><img class="middle" src="/assets/images/design-class2-app-design.png"></p>
+
+<h2>Step Four, Kilobit</h2>
+
+<p>Data - User table should contain name and password. What else?</p>
+
+<pre><code>class User {
+    int userId; (primary key)
+    String name;
+    String password;
+}
+</code></pre>
+
+<p>Data - User Table</p>
+
+<pre><code>class UserTable {
+    list&lt;User&gt; table;
+
+    public insert(){}
+    public delete(User){}
+    public update(User){}
+    public User select(){}
+}
+</code></pre>
+
+<blockquote><p><strong><a href="https://en.wikipedia.org/wiki/Create,_read,_update_and_delete">CRUD</a></strong>, (Sometimes called SCRUD with an &ldquo;S&rdquo; for Search) are the four basic functions of persistent storage.</p></blockquote>
+
+<h1>Question 2</h1>
+
+<p><strong>verification and forbidden accounts</strong></p>
+
+<p>We have to know the concept of <strong>Account State Lifecycle Graph</strong>:</p>
+
+<p><img class="middle" src="/assets/images/design-class2-account-life-cycle.png"></p>
+
+<ol>
+<li><p>ban: fake user, advertising users&hellip; bannned by the management</p></li>
+<li><p>inactive: user choose to suspend his own account, voluntarily.</p></li>
+<li><p>delete account: normally we won&rsquo;t remove all related data (just make userId as &ldquo;deleted&rdquo;). Otherwise a lot of data can be violated. All your chatting history <strong>actually remains</strong>.</p></li>
+</ol>
+
+
+<h2>redesign User Table</h2>
+
+<p>Old User table:</p>
+
+<pre><code>class User {
+    int userId; (primary key)
+    String name;
+    String password;
+}
+</code></pre>
+
+<p>Modified User table:</p>
+
+<pre><code>class User {
+    int userId;
+    char name[10];
+    char hiddenPassword[10];
+    int state;
+}
+</code></pre>
+
+<ol>
+<li><p>We added state, to support Account life cycle.</p></li>
+<li><p>We changed username to fixed size, for better performance on searching and storing. Can prevent certain attacks, too.</p></li>
+<li><p>save encrypted password.</p></li>
+</ol>
+
+
+<h1>Question 3</h1>
+
+<p><strong>design login/out process</strong></p>
+
+<ol>
+<li>User account auto logged out after a certain period of time.</li>
+<li>multiple account logged in at same time.</li>
+</ol>
+
+
+<p><img class="middle" src="/assets/images/design-class2-session-life-cycle.png"></p>
+
+<h2>Session</h2>
+
+<p><strong>Session is a conversation</strong> between user and server.</p>
+
+<ol>
+<li>User can have >1 session, if he log in from different devices.</li>
+<li>Session must be verified, thus we have to keep <strong>sessionId</strong>.</li>
+</ol>
+
+
+<p>Session status: &ldquo;iPad online&rdquo;, &ldquo;PC online&rdquo;&hellip;</p>
+
+<p>Modify User table:</p>
+
+<pre><code>class User {
+    int userId;
+    char name[10];
+    char hiddenPassword[10];
+    int state;
+    List&lt;session&gt; sessionList;
+}
+</code></pre>
+
+<p>Important in Session table:</p>
+
+<ol>
+<li>device ID</li>
+<li><p>time-out period</p>
+
+<p> class Session {
+     private sessionId;
+     int userId;</p>
+
+<pre><code> int deviceCode;
+ long timeOut;
+</code></pre>
+
+<p> }</p></li>
+</ol>
+
+
+<p>User table would include a <strong>session list</strong>.</p>
+
+<h2>further improvement: session</h2>
+
+<ol>
+<li>we update sessionList very frequently.</li>
+<li>size of sessionList is dynamic.</li>
+</ol>
+
+
+<p>Solution: seperate the table.</p>
+
+<p><img class="middle" src="/assets/images/design-class2-user-session-table.png"></p>
+
+<p>Question: When to clean up the session data (considering huge amount of data and frequent calculation)?</p>
+
+<blockquote><p>Answer: every end of day. Or store sessions in-memory, so it lose all the data when machine restarts (it is used in Gaming platforms). Or we can clean up one user&rsquo;s session list whenever the user did a new log-in.</p>
+
+<p>We do not remove session whenever it expires. It&rsquo;s too much calculation.</p></blockquote>
+
+<h2>further improvement: inheritance</h2>
+
+<p>Apply inheritance to UserTable and SessionTable:</p>
+
+<pre><code>class Table {
+    list&lt;Row*&gt; table;
+
+    public insert(){}
+    public delete(){}
+    public update(){}
+    public User select(){}
+}
+
+class UserTable extends Table {
+}
+
+class SessionTable extends Table {
+}
+</code></pre>
+
+<p>As for the Row class:</p>
+
+<pre><code>class Row {
+    List&lt;Attributes&gt; row;
+}
+
+class User extends Row {
+}
+
+class Session extends Row {
+}
+</code></pre>
+
+<h1>Question 4</h1>
+
+<p><strong>design search algorithm</strong></p>
+
+<ol>
+<li>find my userId</li>
+<li>find my userId range</li>
+</ol>
+
+
+<p>Solution 1: add <strong>HashMap</strong> in the table. Can do search in O(1), but can&rsquo;t find range.</p>
+
+<p>Solution 2: <strong>BST data structure</strong>. Can do search range and search in O(log2 n) time.</p>
+
+<h2>Best solution: B+ tree</h2>
+
+<p><strong><a href="https://en.wikipedia.org/wiki/B%2B_tree">B+ tree</a></strong> - everything in O(logb n) which is <strong>close to constant time</strong>.</p>
+
+<p>Plus, B+ tree is hard disk friendly. Read more on a future post.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-08-26T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ninechap/'>ninechap</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2015/08/26/design-class2-1/" data-via="" data-counturl="http://okc1.github.io/blog/2015/08/26/design-class2-1/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/08/24/three-property-object/" title="Previous Post: [Java OOP] Three Properties of Class/Object ">&laquo; [Java OOP] Three Properties of Class/Object </a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/08/26/design-class2-2/" title="Next Post: [NineChap System Design] Class 2.2: Database ">[NineChap System Design] Class 2.2: Database  &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

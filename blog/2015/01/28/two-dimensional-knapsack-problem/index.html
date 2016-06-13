@@ -1,0 +1,301 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Question] Two Dimensional Knapsack Problem - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link 给定n种物品和一背包。物品i的重量是wi，体积是bi，其价值为vi，背包的容量为C，容积为D。问应如何选择装入背包中的物品，使得装入背包中物品的总价值最大？ 在选择装入背包的物品时，对每种物品i只有两种选择，即装入背包或者不装入背包。不能将物品i装入背包多次， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2015/01/28/two-dimensional-knapsack-problem/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Question] Two Dimensional Knapsack Problem</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-28T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://blog.sina.com.cn/s/blog_8a24b3a3010190ak.html">link</a></p>
+
+<blockquote><p>给定n种物品和一背包。物品i的重量是wi，体积是bi，其价值为vi，背包的容量为C，容积为D。问应如何选择装入背包中的物品，使得装入背包中物品的总价值最大？</p>
+
+<p>在选择装入背包的物品时，对每种物品i只有两种选择，即装入背包或者不装入背包。不能将物品i装入背包多次，也不能只装入部分的物品i。试设计一个解此问题的动态规划算法，并分析算法的计算复杂性。</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>This is a extended question from <strong>[Question] 0-1 Knapsack Problem</strong>.</p>
+
+<p>Same solution, just use 3D-array for DP.</p>
+
+<h3>Solution</h3>
+
+<p>First of all, define a 2D array, Knapsack(n,W) denotes getting &lsquo;n'th item, with weight 'W&rsquo;. When n == 0 or W = 0, dp value is 0.</p>
+
+<blockquote><p>int[][][] dp = new int[n + 1][W + 1][B + 1];</p></blockquote>
+
+<p>Now if item &lsquo;n&rsquo; is able to fit in:</p>
+
+<blockquote><p>dp[i][j][k] = max(dp[i-1][j][k] , dp[i-1][j-w[i]][k-b[i]] + v[i]);</p></blockquote>
+
+<p>If not able to fit in:</p>
+
+<blockquote><p>dp[i][j][k] = dp[i-1][j][k];</p></blockquote>
+
+<h3>Code</h3>
+
+<p>Code from <a href="http://blog.sina.com.cn/s/blog_8a24b3a3010190ak.html">绝对快乐一生</a>:</p>
+
+<pre><code>int main()
+{
+   int i,j,k;
+   int n,c,d;
+   int w[MAX] = {0};   //重量
+   int b[MAX] = {0};   //体积
+   int v[MAX] = {0};   //价值
+   cout&lt;&lt;"请输入物品个数:";
+   cin&gt;&gt;n;
+   cout&lt;&lt;"请输入背包的容量及容积:";
+   cin&gt;&gt;c&gt;&gt;d;
+   cout&lt;&lt;"请依次输入各个物品的重量,体积,价值:(共"&lt;&lt;n&lt;&lt;"个)"&lt;&lt;endl;
+   for(i =1;i&lt;n+1;i++)
+   {
+       cin&gt;&gt;w[i]&gt;&gt;b[i]&gt;&gt;v[i];
+   }
+
+   int dp[50][50][50]={0}; 
+   //dp[i][j][k] i代表着第1到第i个物品，j代表的是重量，k代表的是容积，dp为最优价值
+
+   for(i=1;i&lt;n+1;i++)
+       for(j =1;j &lt;=c;j++)
+           for(k = 1 ;k &lt;= d ; k++)
+           {
+               if(w[i]&lt;=j&amp;&amp;b[i]&lt;=k)  
+               //当前物品重量小于当前容量，且体积小于容积时 ，才可以考虑装入物品的问题
+                   dp[i][j][k] = max(dp[i-1][j][k] , dp[i-1][j-w[i]][k-b[i]] + v[i]);
+               else dp[i][j][k] = dp[i-1][j][k];
+           }
+   cout&lt;&lt;"背包能放物品的最大价值为:"&lt;&lt;dp[n][c][d]&lt;&lt;endl;
+  int x[MAX] ={0};   //记录是否被选中
+  for(i =n;i&gt;1;i--)
+       if(dp[i][c][d]==dp[i-1][c][d])x[i] =0;
+      else {x[i]=1;c -= w[i];d -= b[i];}
+   x[1]=(dp[1][c][d])?1:0;
+   cout&lt;&lt;"被选入背包的物品的编号,质量和体积,价值分别是:"&lt;&lt;endl;
+   for(i=1;i&lt;&lt;/span&gt;n+1;i++)
+       if(x[i]==1)
+           cout&lt;&lt;"第"&lt;&lt;i&lt;&lt;"个物品: "&lt;&lt;w[i]&lt;&lt;"  "&lt;&lt;b[i]&lt;&lt;"  "&lt;&lt;v[i]&lt;&lt;endl;
+
+}
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-01-28T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/question/'>question</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2015/01/28/two-dimensional-knapsack-problem/" data-via="" data-counturl="http://okc1.github.io/blog/2015/01/28/two-dimensional-knapsack-problem/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/01/28/implement-trie-suffix-tree/" title="Previous Post: [Fundamental] Implement Trie and Suffix Tree ">&laquo; [Fundamental] Implement Trie and Suffix Tree </a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/01/29/Packing-Rectangles/" title="Next Post: [Question] Packing Rectangles ">[Question] Packing Rectangles  &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

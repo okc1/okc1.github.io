@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Z-string-search | Woodstock Blog]]></title>
   <link href="http://okc1.github.io/blog/categories/z-string-search/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-06-13T01:11:53-07:00</updated>
+  <updated>2016-06-13T01:21:35-07:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -18,95 +18,92 @@
     <link href="http://okc1.github.io/blog/2015/01/28/implement-trie-suffix-tree/"/>
     <updated>2015-01-28T00:00:00-08:00</updated>
     <id>http://okc1.github.io/blog/2015/01/28/implement-trie-suffix-tree</id>
-    <content type="html"><![CDATA[<h3>Trie Node</h3>
+    <content type="html"><![CDATA[### Trie Node
 
-<pre><code>public class TrieNode {
-    boolean isLeaf;
-    TrieNode[] child;
+    public class TrieNode {
+        boolean isLeaf;
+        TrieNode[] child;
 
-    public TrieNode(boolean isLeaf) {
-        this.isLeaf = isLeaf;
-        this.child = new TrieNode[26];
-    }
-
-    public void insert(String str) {
-        if (str == null || str.length() == 0) {
-            this.isLeaf = true;
-            return;
+        public TrieNode(boolean isLeaf) {
+            this.isLeaf = isLeaf;
+            this.child = new TrieNode[26];
         }
-        char cur = str.charAt(0);
-        if (child[cur - 'a'] == null) {
-            child[cur - 'a'] = new TrieNode(str.length() == 1);
+
+        public void insert(String str) {
+            if (str == null || str.length() == 0) {
+                this.isLeaf = true;
+                return;
+            }
+            char cur = str.charAt(0);
+            if (child[cur - 'a'] == null) {
+                child[cur - 'a'] = new TrieNode(str.length() == 1);
+            }
+            child[cur - 'a'].insert(str.substring(1));
         }
-        child[cur - 'a'].insert(str.substring(1));
-    }
 
-    public boolean trieSearch(String str) {
-        // have to consider leaf node
-        if (str == null || str.length() == 0) {
-            return isLeaf;
+        public boolean trieSearch(String str) {
+            // have to consider leaf node
+            if (str == null || str.length() == 0) {
+                return isLeaf;
+            }
+            char cur = str.charAt(0);
+            if (child[cur - 'a'] == null) {
+                return false;
+            }
+            return child[cur - 'a'].trieSearch(str.substring(1));
         }
-        char cur = str.charAt(0);
-        if (child[cur - 'a'] == null) {
-            return false;
-        }
-        return child[cur - 'a'].trieSearch(str.substring(1));
-    }
 
-    public boolean suffixTreeSearch(String str) {
-        // suffixTreeSearch don't consider leaf node
-        // cuz we search for prefix of suffixes
-        if (str == null || str.length() == 0) {
-            return true;
-        }
-        char cur = str.charAt(0);
-        if (child[cur - 'a'] == null) {
-            return false;
-        }
-        return child[cur - 'a'].suffixTreeSearch(str.substring(1));
-    }
-}
-</code></pre>
-
-<h3>Trie</h3>
-
-<pre><code>public class Trie {
-    TrieNode root;
-
-    public Trie(String[] input) {
-        root = new TrieNode(false);
-
-        for (String str : input) {
-            root.insert(str);
+        public boolean suffixTreeSearch(String str) {
+            // suffixTreeSearch don't consider leaf node
+            // cuz we search for prefix of suffixes
+            if (str == null || str.length() == 0) {
+                return true;
+            }
+            char cur = str.charAt(0);
+            if (child[cur - 'a'] == null) {
+                return false;
+            }
+            return child[cur - 'a'].suffixTreeSearch(str.substring(1));
         }
     }
 
-    public boolean search(String query) {
-        return root.trieSearch(query);
-    }
-}
-</code></pre>
+### Trie
 
-<h4>Suffix Tree</h4>
+    public class Trie {
+        TrieNode root;
 
-<p>Suffix tree might also consider the <strong>List of indexes</strong> thing, which I do not take into consideration in my code.</p>
+        public Trie(String[] input) {
+            root = new TrieNode(false);
 
-<pre><code>public class SuffixTree {
-    TrieNode root;
+            for (String str : input) {
+                root.insert(str);
+            }
+        }
 
-    public SuffixTree(String input) {
-        root = new TrieNode(false);
-
-        for (int i = 0; i &lt; input.length(); i++) {
-            root.insert(input.substring(i));
+        public boolean search(String query) {
+            return root.trieSearch(query);
         }
     }
 
-    public boolean search(String query) {
-        return root.suffixTreeSearch(query);
+#### Suffix Tree
+
+Suffix tree might also consider the __List of indexes__ thing, which I do not take into consideration in my code. 
+
+    public class SuffixTree {
+        TrieNode root;
+
+        public SuffixTree(String input) {
+            root = new TrieNode(false);
+
+            for (int i = 0; i < input.length(); i++) {
+                root.insert(input.substring(i));
+            }
+        }
+
+        public boolean search(String query) {
+            return root.suffixTreeSearch(query);
+        }
     }
-}
-</code></pre>
 ]]></content>
   </entry>
   
@@ -115,52 +112,48 @@
     <link href="http://okc1.github.io/blog/2015/01/27/suffix-tree/"/>
     <updated>2015-01-27T00:00:00-08:00</updated>
     <id>http://okc1.github.io/blog/2015/01/27/suffix-tree</id>
-    <content type="html"><![CDATA[<p><a href="http://www.geeksforgeeks.org/pattern-searching-set-8-suffix-tree-introduction/">ref</a></p>
+    <content type="html"><![CDATA[[ref](http://www.geeksforgeeks.org/pattern-searching-set-8-suffix-tree-introduction/)
 
-<h3>Suffix tree</h3>
+### Suffix tree
 
-<p>Both KMP Algorithm and Rabin Karp Algorithm <strong>pre-process the pattern</strong> to make the pattern searching faster. The best time complexity that we could get by preprocessing pattern is <strong>O(n), where n is length of the text</strong>.</p>
+Both KMP Algorithm and Rabin Karp Algorithm __pre-process the pattern__ to make the pattern searching faster. The best time complexity that we could get by preprocessing pattern is __O(n), where n is length of the text__. 
 
-<p>Now we will discuss an approach that <strong>pre-processes the text</strong>. A suffix tree is built of the text. After preprocessing text (building suffix tree of text), we can <strong>search any pattern in O(m) time</strong> where m is length of the pattern.</p>
+Now we will discuss an approach that __pre-processes the text__. A suffix tree is built of the text. After preprocessing text (building suffix tree of text), we can __search any pattern in O(m) time__ where m is length of the pattern.
 
-<p>Though search is very fast - just proportional to length of the pattern, it may become costly if <strong>the text changes frequently</strong>. It is good for fixed text or less frequently changing text though.</p>
+Though search is very fast - just proportional to length of the pattern, it may become costly if __the text changes frequently__. It is good for fixed text or less frequently changing text though.
 
-<h4>Suffix Tree VS. Trie</h4>
+#### Suffix Tree VS. Trie
 
-<p><strong>A Suffix Tree is a compressed trie of all suffixes of the given text</strong>.</p>
+__A Suffix Tree is a compressed trie of all suffixes of the given text__. 
 
-<h4>Compressed Trie</h4>
+#### Compressed Trie
 
-<p><strong>A Compressed Trie</strong> is obtained from standard trie by joining chains of single nodes.</p>
+__A Compressed Trie__ is obtained from standard trie by joining chains of single nodes. 
 
-<p>Example, a standard trie:</p>
+Example, a standard trie: 
 
-<p>{% img middle /assets/images/standardtrieNew.png %}</p>
+<img class="middle" src="/assets/images/standardtrieNew.png">
 
-<p>A Compressed Trie:</p>
+A Compressed Trie: 
 
-<p>{% img middle /assets/images/CompressedTrieNew.png %}</p>
+<img class="middle" src="/assets/images/CompressedTrieNew.png">
 
-<h4>build a Suffix Tree</h4>
+#### build a Suffix Tree
 
-<ol>
-<li>Generate all suffixes of given text.</li>
-<li>Consider all suffixes as individual words and build a compressed trie.</li>
-</ol>
+1. Generate all suffixes of given text.
+1. Consider all suffixes as individual words and build a compressed trie.
 
+Eg.
 
-<p>Eg.</p>
+    banana\0
+    anana\0
+    nana\0
+    ana\0
+    na\0
+    a\0
+    \0
 
-<pre><code>banana\0
-anana\0
-nana\0
-ana\0
-na\0
-a\0
-\0
-</code></pre>
-
-<p>Example question: <strong>[CC150v4] 20.8 Full Text Search (Suffix Tree)</strong></p>
+Example question: __[CC150v4] 20.8 Full Text Search (Suffix Tree)__
 ]]></content>
   </entry>
   
@@ -169,19 +162,19 @@ a\0
     <link href="http://okc1.github.io/blog/2015/01/27/suffix-array/"/>
     <updated>2015-01-27T00:00:00-08:00</updated>
     <id>http://okc1.github.io/blog/2015/01/27/suffix-array</id>
-    <content type="html"><![CDATA[<p><a href="http://www.geeksforgeeks.org/suffix-array-set-1-introduction/">ref</a></p>
+    <content type="html"><![CDATA[[ref](http://www.geeksforgeeks.org/suffix-array-set-1-introduction/)
 
-<h3>Suffix Array</h3>
+### Suffix Array
 
-<p>A suffix array is a sorted array of all suffixes of a given string.</p>
+A suffix array is a sorted array of all suffixes of a given string. 
 
-<p><strong>Any suffix tree based algorithm</strong> can be replaced with an algorithm <strong>that uses a suffix array</strong> enhanced with additional information and solves the same problem in the same time complexity.</p>
+__Any suffix tree based algorithm__ can be replaced with an algorithm __that uses a suffix array__ enhanced with additional information and solves the same problem in the same time complexity. 
 
-<p><strong>Naive algorithm</strong> for construction of suffix array is to consider all suffixes, sort them using a O(nLogn) sorting algorithm and while sorting, maintain original indexes. Time complexity is _O(n<sup>2</sup> * Logn)__.</p>
+__Naive algorithm__ for construction of suffix array is to consider all suffixes, sort them using a O(nLogn) sorting algorithm and while sorting, maintain original indexes. Time complexity is _O(n^2 * Logn)__. 
 
-<p>There is an advanced <strong>nLogn Algorithm</strong> algorithm available to read <a href="http://www.geeksforgeeks.org/suffix-array-set-2-a-nlognlogn-algorithm/">here</a>. Basic idea is to &ldquo;Sort according to first two characters&rdquo; and then &ldquo;according to first four character&rdquo;.</p>
+There is an advanced __nLogn Algorithm__ algorithm available to read [here](http://www.geeksforgeeks.org/suffix-array-set-2-a-nlognlogn-algorithm/). Basic idea is to "Sort according to first two characters" and then "according to first four character". 
 
-<p>Example question: <strong>[Facebook] Query Search (HashMap, suffix array)</strong>.</p>
+Example question: __[Facebook] Query Search (HashMap, suffix array)__. 
 ]]></content>
   </entry>
   
@@ -190,54 +183,47 @@ a\0
     <link href="http://okc1.github.io/blog/2015/01/27/prefix-tree/"/>
     <updated>2015-01-27T00:00:00-08:00</updated>
     <id>http://okc1.github.io/blog/2015/01/27/prefix-tree</id>
-    <content type="html"><![CDATA[<p><a href="http://www.geeksforgeeks.org/trie-insert-and-search/">ref</a></p>
+    <content type="html"><![CDATA[[ref](http://www.geeksforgeeks.org/trie-insert-and-search/)
 
-<h3>Prefix tree</h3>
+### Prefix tree
 
-<ol>
-<li>Building a well balanced BST needs time proportional to M * log N, where M is maximum string length and N is number of keys in tree.</li>
-<li>Using trie, search in O(M) time.</li>
-<li>The penalty is on trie storage requirements.</li>
-</ol>
+1. Building a well balanced BST needs time proportional to M * log N, where M is maximum string length and N is number of keys in tree. 
+1. Using trie, search in O(M) time. 
+1. The penalty is on trie storage requirements.
 
+### Implementation
 
-<h3>Implementation</h3>
+1. Every node of trie consists of multiple branches. 
+1. Each branch represents a possible character of keys. 
+1. Mark the last node of every key as leaf node. 
 
-<ol>
-<li>Every node of trie consists of multiple branches.</li>
-<li>Each branch represents a possible character of keys.</li>
-<li><p>Mark the last node of every key as leaf node.</p>
+	struct trie_node
+	{
+		int value; /* Used to mark leaf nodes */
+		trie_node_t *children[ALPHABET_SIZE];
+	};
 
-<p> struct trie_node
- {
-     int value; /<em> Used to mark leaf nodes </em>/
-     trie_node_t *children[ALPHABET_SIZE];
- };</p></li>
-</ol>
+Note that a __non-terminating node can also be marked as leaf__. Eg. 
 
+                       root
+                    /   \    \
+                    t  'a'    b
+                    |   |     |
+                    h   n    'y'
+                    |   |  \    \
+                   'e'  s  'y'  'e'
+                 /  |   |
+                i   r   w
+               /    |   |
+             'r'   'e'  e
+                        |
+                       'r'
 
-<p>Note that a <strong>non-terminating node can also be marked as leaf</strong>. Eg.</p>
+The leaf nodes are quoted in ''.
 
-<pre><code>                   root
-                /   \    \
-                t  'a'    b
-                |   |     |
-                h   n    'y'
-                |   |  \    \
-               'e'  s  'y'  'e'
-             /  |   |
-            i   r   w
-           /    |   |
-         'r'   'e'  e
-                    |
-                   'r'
-</code></pre>
+Insert and search costs __O(key_length)__, however the memory requirements of trie is __O(ALPHABET_SIZE * key_length * N)__ where N is number of keys in trie. 
 
-<p>The leaf nodes are quoted in &lsquo;&rsquo;.</p>
-
-<p>Insert and search costs <strong>O(key_length)</strong>, however the memory requirements of trie is <strong>O(ALPHABET_SIZE * key_length * N)</strong> where N is number of keys in trie.</p>
-
-<p><strong>Compressed trie</strong>, ternary search tree, etc. can be used to minimize memory requirements of trie.</p>
+__Compressed trie__, ternary search tree, etc. can be used to minimize memory requirements of trie. 
 ]]></content>
   </entry>
   
@@ -246,26 +232,27 @@ a\0
     <link href="http://okc1.github.io/blog/2015/01/27/pattern-searching-algorithms/"/>
     <updated>2015-01-27T00:00:00-08:00</updated>
     <id>http://okc1.github.io/blog/2015/01/27/pattern-searching-algorithms</id>
-    <content type="html"><![CDATA[<p><a href="http://www.geeksforgeeks.org/tag/pattern-searching/page/2/">ref</a></p>
+    <content type="html"><![CDATA[[ref](http://www.geeksforgeeks.org/tag/pattern-searching/page/2/)
 
-<h3>Overview</h3>
+### Overview
 
-<p>strStr() is a classic question in CS. There are various ways to solve (which we have discussed before), this is a summarization:</p>
+strStr() is a classic question in CS. There are various ways to solve (which we have discussed before), this is a summarization: 
 
-<ol>
-<li><p>naive - O(m * n)</p></li>
-<li><p><a href="http://www.geeksforgeeks.org/searching-for-patterns-set-2-kmp-algorithm/">KMP</a> - O(n) in worst case</p></li>
-<li><p><a href="http://www.geeksforgeeks.org/searching-for-patterns-set-3-rabin-karp-algorithm/">Rabin-Karp</a>, rolling hash - between O(m * n) and O(m + n)</p>
+1. naive - O(m * n) 
 
-<p> Matches the hash value of the pattern with the hash value of pattern. If the hash values match, then only it starts matching individual characters.</p></li>
-<li><p><a href="http://www.geeksforgeeks.org/pattern-searching-set-4-a-naive-string-matching-algo-question/">Modified naive algo</a>, only work if pattern contains no duplicate characters.</p>
+1. [KMP](http://www.geeksforgeeks.org/searching-for-patterns-set-2-kmp-algorithm/) - O(n) in worst case
 
-<p> Only match the first char. This case is quite boring, can skip.</p></li>
-<li><p>Suffix tree</p>
+1. [Rabin-Karp](http://www.geeksforgeeks.org/searching-for-patterns-set-3-rabin-karp-algorithm/), rolling hash - between O(m * n) and O(m + n)
 
-<p> Will discuss in details.</p></li>
-</ol>
+    Matches the hash value of the pattern with the hash value of pattern. If the hash values match, then only it starts matching individual characters. 
 
+1. [Modified naive algo](http://www.geeksforgeeks.org/pattern-searching-set-4-a-naive-string-matching-algo-question/), only work if pattern contains no duplicate characters. 
+
+    Only match the first char. This case is quite boring, can skip. 
+
+1. Suffix tree
+
+    Will discuss in details. 
 ]]></content>
   </entry>
   

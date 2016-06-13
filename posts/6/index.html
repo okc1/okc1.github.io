@@ -1,0 +1,1251 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/6/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/05/10/House-Robber/">[LeetCode 198] House Robber</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-05-10T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/house-robber/">link</a></p>
+
+<div class="question-content">
+              <p></p><p>You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security system connected and <b>it will automatically contact the police if two adjacent houses were broken into on the same night</b>.</p>
+
+<p>Given a list of non-negative integers representing the amount of money of each house, determine the maximum amount of money you can rob tonight <b>without alerting the police</b>.</p>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/ifanchu">@ifanchu</a> for adding this problem and creating all test cases. Also thanks to <a href="https://oj.leetcode.com/discuss/user/ts">@ts</a> for adding additional test cases.</p><p></p>
+              
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/dynamic-programming/">Dynamic Programming</a>
+                  
+                </span>
+              
+</div>
+
+
+<h3>Solution</h3>
+
+<p>DP question. Be careful what the initial values of dp(1) is. You should work this out without a problem!</p>
+
+<h3>Code</h3>
+
+<pre><code>public class Solution {
+    public int rob(int[] num) {
+        if (num == null || num.length == 0) {
+            return 0;
+        } else if (num.length == 1) {
+            return num[0];
+        }
+        int len = num.length;
+        int[] dp = new int[len];
+        dp[0] = num[0];
+        dp[1] = Math.max(num[0], num[1]);
+        int max = Math.max(num[0], num[1]);
+        for (int i = 2; i &lt; len; i++) {
+            dp[i] = Math.max(dp[i - 1], dp[i - 2] + num[i]);
+            max = Math.max(max, dp[i]);
+        }
+        return max;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/05/10/Bitwise-AND-of-Numbers-Range/">[LeetCode 201] Bitwise and of Numbers Range</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-05-10T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/bitwise-and-of-numbers-range/">link</a></p>
+
+<div class="question-content">
+              <p></p><p>Given a range [m, n] where 0 &lt;= m &lt;= n &lt;= 2147483647, return the bitwise AND of all numbers in this range, inclusive.</p>
+
+<p>
+For example, given the range [5, 7], you should return 4.
+</p>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://leetcode.com/discuss/user/amrsaqr">@amrsaqr</a> for adding this problem and creating all test cases.</p><p></p>
+              
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/bit-manipulation/">Bit Manipulation</a>
+                  
+                </span>
+              
+            </div>
+
+
+<h3>Analysis</h3>
+
+<p>This is a pretty interesting mathematics question. Now we take 2 numbers as example:</p>
+
+<blockquote><p>Num1: 110010</p>
+
+<p>Num2: 110111</p>
+
+<p>Result: 110000</p></blockquote>
+
+<p>And:</p>
+
+<blockquote><p>Num1: 0110</p>
+
+<p>Num2: 1100</p>
+
+<p>Result: 0</p></blockquote>
+
+<p>Note that:</p>
+
+<ol>
+<li><p>if the first &lsquo;1&rsquo; bit of the 2 numbers are at different position, the answer should simply be 0.</p></li>
+<li><p>if have same position, then the result would be the continous sequence of 1s, followed by all 0s.</p></li>
+</ol>
+
+
+<h3>Solution</h3>
+
+<p>The 2 best solutions is very well presented by <a href="http://www.cnblogs.com/grandyang/p/4431646.html">Grandyang</a> using bit shifting and masking. Please refer to code 1 and code 2 below.</p>
+
+<p>I found a third solution at <a href="http://www.programcreek.com/2014/04/leetcode-bitwise-and-of-numbers-range-java/">programcreek</a>, which makes use of the fact that m is smaller than n.</p>
+
+<h3>Code</h3>
+
+<p>code 1</p>
+
+<pre><code>class Solution {
+public:
+    int rangeBitwiseAnd(int m, int n) {
+        int d = INT_MAX;
+        while ((m &amp; d) != (n &amp; d)) {
+            d &lt;&lt;= 1;
+        }
+        return m &amp; d;
+    }
+};
+</code></pre>
+
+<p>code 2</p>
+
+<pre><code>class Solution {
+public:
+    int rangeBitwiseAnd(int m, int n) {
+        int i = 0;
+        while (m != n) {
+            m &gt;&gt;= 1;
+            n &gt;&gt;= 1;
+            ++i;
+        }
+        return (m &lt;&lt; i);
+    }
+};
+</code></pre>
+
+<p>code 3</p>
+
+<pre><code>public int rangeBitwiseAnd(int m, int n) {
+     while (n &gt; m) {
+          n = n &amp; n - 1;
+     }
+     return m &amp; n;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/05/10/Binary-Tree-Right-Side-View/">[LeetCode 199] Binary Tree Right Side View</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-05-10T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/binary-tree-right-side-view/">link</a></p>
+
+<div class="question-content">
+              <p></p><p>Given a binary tree, imagine yourself standing on the <i>right</i> side of it, return the values of the nodes you can see ordered from top to bottom.</p>
+
+<p>
+For example:<br>
+Given the following binary tree,<br>
+</p><pre>   1            &lt;---
+ /   \
+2     3         &lt;---
+ \     \
+  5     4       &lt;---
+</pre>
+<p></p>
+<p>
+You should return <code>[1, 3, 4]</code>.
+</p>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://leetcode.com/discuss/user/amrsaqr">@amrsaqr</a> for adding this problem and creating all test cases.</p><p></p>
+              
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/tree/">Tree</a>
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/depth-first-search/">Depth-first Search</a>
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/breadth-first-search/">Breadth-first Search</a>
+                  
+                </span>
+              
+            </div>
+
+
+<h3>Solution</h3>
+
+<p>This question basically is binary tree traversal. During the process, we keep a list and update the elements in it.</p>
+
+<h3>Code</h3>
+
+<pre><code>/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public List&lt;Integer&gt; rightSideView(TreeNode root) {
+        List&lt;Integer&gt; result = new ArrayList&lt;Integer&gt;();
+        traverse(result, root, 1);
+        return result;
+    }
+
+    void traverse(List&lt;Integer&gt; result, TreeNode node, int level) {
+        if (node == null) return;
+        if (level &gt; result.size()) {
+            result.add(node.val);
+        }
+        traverse(result, node.right, level + 1);
+        traverse(result, node.left, level + 1);
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/05/01/Repeated-DNA-Sequences/">[LeetCode 187] Repeated DNA Sequences</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-05-01T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/repeated-dna-sequences/">link</a></p>
+
+<div class="question-content">
+              <p></p><p>
+All DNA is composed of a series of nucleotides abbreviated as A, C, G, and T, for example: "ACGAATTCCG". When studying DNA, it is sometimes useful to identify repeated sequences within the DNA.</p>
+
+<p>Write a function to find all the 10-letter-long sequences (substrings) that occur more than once in a DNA molecule.</p>
+
+<p>
+For example,</p>
+<pre>Given s = "AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT",
+
+Return:
+["AAAAACCCCC", "CCCCCAAAAA"].
+</pre><p></p>
+
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+
+                  <a class="btn btn-xs btn-primary" href="/tag/hash-table/">Hash Table</a>
+
+                  <a class="btn btn-xs btn-primary" href="/tag/bit-manipulation/">Bit Manipulation</a>
+
+                </span>
+
+            </div>
+
+
+<h3>Analysis</h3>
+
+<p>This question is straight-forward: just iterate thru all the 10-letter long subsequences, and then add into hashmap.</p>
+
+<p>However, if you simply use String as hash key, it will exceed OJ run time.</p>
+
+<h3>Solution</h3>
+
+<p>Convert string to int is the right approach. To get the best performance, we use 2 bits to represent each DNA nucleotide. Integer is 32-bit long so, no problem with that.</p>
+
+<p>Node that Integer.Max = 2,147,483,647. There&rsquo;s total of 10 digitals, so using 1 digit to represent 1 letter is not feasible.
+Ref: <a href="http://www.cnblogs.com/hzhesi/p/4285793.html">BUPT-哲人善思</a></p>
+
+<h3>Code</h3>
+
+<p>The code is pretty difficult to write.</p>
+
+<pre><code>public class Solution {
+    public List&lt;String&gt; findRepeatedDnaSequences(String s) {
+        List&lt;String&gt; res = new ArrayList&lt;String&gt;();
+        if (s == null || s.length() &lt; 10) {
+            return res;
+        }
+
+        Map&lt;Integer, Integer&gt; map = new HashMap&lt;Integer, Integer&gt;();
+        // map&lt;&gt; stores int-to-int: first int is "ACGT" -&gt; 1234
+        // second int is the init position of the pattern in s
+
+        int num = 0;
+        int mask = 0xFFFFFFFF;
+        mask &gt;&gt;&gt;= (32 - 18);
+
+        for (int i = 0; i &lt; s.length(); i++) {
+            num = mask &amp; num;
+            // get the last 18 binary digits of num
+
+            num = (num &lt;&lt; 2) | convertChatToInt(s.charAt(i));
+            // append num with the number representing charAt(i)
+
+            if (i &gt;= 9) {
+                // insert or search num in the map
+                if (!map.containsKey(num)) {
+                    map.put(num, (i - 9));
+                    // (i - 9) is the start position of 
+                    // the 10-letter-long sequence
+                } else if (map.get(num) != -1) {
+                    res.add(s.substring(map.get(num), map.get(num) + 10));
+                    map.put(num, -1);
+                    // after the sequence has been added, mark it in the map
+                } else {
+                    // do nothing
+                }
+            }
+        }
+
+        return res;
+    }
+
+    int convertChatToInt(char ch) {
+        if (ch == 'A') {
+            return 1;
+        } else if (ch == 'C') {
+            return 2;
+        } else if (ch == 'G') {
+            return 3;
+        }
+        return 0;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/15/Largest-Number/">[LeetCode 179] Largest Number</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-15T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/largest-number/">link</a></p>
+
+<div class="question-content">
+              <p></p><p>Given a list of non negative integers, arrange them such that they form the largest number.</p>
+
+<p>For example, given <code>[3, 30, 34, 5, 9]</code>, the largest formed number is <code>9534330</code>.</p>
+
+<p>Note: The result may be very large, so you need to return a string instead of an integer.</p>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/ts">@ts</a> for adding this problem and creating all test cases.</p><p></p>
+
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+
+                  <a class="btn btn-xs btn-primary" href="/tag/sort/">Sort</a>
+
+                </span>
+
+            </div>
+
+
+<h3>Analysis</h3>
+
+<p>Please refer to [[ItInt5] Numbers Concatenation Max (Largest Number)(/blog/2014/08/17/Numbers-Concatenation-Max/).</p>
+
+<h3>Solution</h3>
+
+<p>Note that we <strong>can not override Comparator(Integer)</strong>. So we must first convert int to string then sort.</p>
+
+<h3>Code</h3>
+
+<pre><code>public class Solution {
+
+    // this code should pass
+    public String largestNumber(int[] num) {
+        if (num == null || num.length == 0) {
+            return "0";
+        }
+        String[] strs = new String[num.length];
+        for (int i = 0; i &lt; num.length; i++) {
+            strs[i] = String.valueOf(num[i]);
+        }
+        Arrays.sort(strs, new LargerComparator());
+
+        String res = "";
+        for (String str : strs) {
+            res = res + str;
+        }
+        return res;
+    }
+
+    class LargerComparator implements Comparator&lt;String&gt; {
+
+        public int compare(String a, String b) {
+            String first = a + b;
+            String second = b + a;
+            return second.compareTo(first);
+        }
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/15/Dungeon-Game/">[LeetCode 174] Dungeon Game</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-15T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/dungeon-game/">link</a></p>
+
+<div class="question-content">
+              <p><style>
+table.dungeon, .dungeon th, .dungeon td {
+  border:3px solid black;
+}
+
+ .dungeon th, .dungeon td {
+    text-align: center;
+    height: 70px;
+    width: 70px;
+}
+</style>
+
+</p><p>The demons had captured the princess (<b>P</b>) and imprisoned her in the bottom-right corner of a dungeon. The dungeon consists of M x N rooms laid out in a 2D grid. Our valiant knight (<b>K</b>) was initially positioned in the top-left room and must fight his way through the dungeon to rescue the princess. </p>
+<p>The knight has an initial health point represented by a positive integer. If at any point his health point drops to 0 or below, he dies immediately. </p>
+<p>Some of the rooms are guarded by demons, so the knight loses health (<i>negative</i> integers) upon entering these rooms;
+other rooms are either empty (<i>0's</i>) or contain magic orbs that increase the knight's health (<i>positive</i> integers).</p>
+<p>In order to reach the princess as quickly as possible, the knight decides to move only rightward or downward in each step. </p>
+
+<br>
+<p><b>Write a function to determine the knight's minimum initial health so that he is able to rescue the princess.</b></p>
+<p>For example, given the dungeon below, the initial health of the knight must be at least <b>7</b> if he follows the optimal path <code>RIGHT-&gt; RIGHT -&gt; DOWN -&gt; DOWN</code>.</p>
+
+<table class="dungeon">
+<tbody><tr>
+<td>-2 (K)</td>
+<td>-3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>-5</td>
+<td>-10</td>
+<td>1</td>
+</tr>
+<tr>
+<td>10</td>
+<td>30</td>
+<td>-5 (P)</td>
+</tr>
+</tbody></table>
+<!---2K   -3  3
+-5   -10   1
+10 30   5P-->
+
+<br>
+<p><b>Notes:</b>
+</p><ul>
+<li>The knight's health has no upper bound.</li>
+<li>Any room can contain threats or power-ups, even the first room the knight enters and the bottom-right room where the princess is imprisoned.  </li>
+</ul>
+<p></p>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/stellari">@stellari</a> for adding this problem and creating all test cases.</p><p></p>
+
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+
+                  <a class="btn btn-xs btn-primary" href="/tag/dynamic-programming/">Dynamic Programming</a>
+
+                  <a class="btn btn-xs btn-primary" href="/tag/binary-search/">Binary Search</a>
+
+                </span>
+
+            </div>
+
+
+<h3>Analysis</h3>
+
+<p>The key of solving this problem is to <strong>do DP from bottom right to top left</strong>.</p>
+
+<h3>Solution</h3>
+
+<p>dp[i][j] means the minimum initial value of each position. As suggested by<a href="http://www.cnblogs.com/grandyang/p/4233035.html"></a>, the DP equation is:</p>
+
+<blockquote><p>dp[i][j] = max(1, min(dp[i+1][j], dp[i][j+1]) - dungeon[i][j]).</p></blockquote>
+
+<h3>Code</h3>
+
+<pre><code>public class Solution {
+    public int calculateMinimumHP(int[][] dungeon) {
+        if (dungeon == null) return 1;
+        int m = dungeon.length;
+        int n = dungeon[0].length;
+
+        int[][] dp = new int[m][n];
+        for (int i = m - 1; i &gt;= 0; i--) {
+            for (int j = n - 1; j &gt;= 0; j--) {
+                if (i == m - 1 &amp;&amp; j == n - 1) {
+                    dp[i][j] = Math.max(1, 1 - dungeon[i][j]);
+                } else if (i == m - 1) {
+                    dp[i][j] = Math.max(1, dp[i][j + 1] - dungeon[i][j]);
+                } else if (j == n - 1) {
+                    dp[i][j] = Math.max(1, dp[i + 1][j] - dungeon[i][j]);
+                } else {
+                    dp[i][j] = Math.max(1,
+                        Math.min(dp[i + 1][j], dp[i][j + 1]) - dungeon[i][j]);
+                }
+            }
+        }
+        return dp[0][0];
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/15/Binary-Search-Tree-Iterator/">[LeetCode 173] Binary Search Tree Iterator</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-15T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/binary-search-tree-iterator/">link</a></p>
+
+<div class="question-content">
+              <p></p><p>Implement an iterator over a binary search tree (BST). Your iterator will be initialized with the root node of a BST.</p>
+
+<p>Calling <code>next()</code> will return the next smallest number in the BST.</p>
+
+<p><b>Note: </b><code>next()</code> and <code>hasNext()</code> should run in average O(1) time and uses O(<i>h</i>) memory, where <i>h</i> is the height of the tree. </p>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/ts">@ts</a> for adding this problem and creating all test cases.</p><p></p>
+              
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/tree/">Tree</a>
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/stack/">Stack</a>
+                  
+                </span>
+              
+            </div>
+
+
+<h3>Analysis</h3>
+
+<p>This is an extremely important question, if you are going for an interview. I repeat: <strong>this is an extremely important question, if you are going for an interview</strong>. If you do not remember it by heart, I will repeat again.</p>
+
+<p>The solution of the iterator applies to a lot of related questions. So make sure you practise this question until you are perfect. You WILL BE ASKED this question at times.</p>
+
+<p>You could read my other post <a href="/blog/2014/06/14/Iterator-of-Tree/">[Question] Iterator of Binary Search Tree</a>.</p>
+
+<h3>Solution</h3>
+
+<p>We only need to keep 1 variable in RAM, that is a stack.</p>
+
+<h3>Code</h3>
+
+<pre><code>public class BSTIterator {
+
+    Stack&lt;TreeNode&gt; stack = new Stack&lt;TreeNode&gt;();
+
+    public BSTIterator(TreeNode root) {
+        while (root != null) {
+            stack.push(root);
+            root = root.left;
+        }
+    }
+
+    /** @return whether we have a next smallest number */
+    public boolean hasNext() {
+        return !stack.isEmpty();
+    }
+
+    /** @return the next smallest number */
+    public int next() {
+        if (!hasNext()) {
+            return 0;
+        }
+        TreeNode next = stack.pop();
+        TreeNode node = next.right;
+        while (node != null) {
+            stack.push(node);
+            node = node.left;
+        }
+        return next.val;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/14/wooden-stick/">[UVa] Wooden Sticks</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-14T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=323">link</a></p>
+
+<p><body>There is a pile of <i>n </i>wooden sticks. The length and weight of
+each stick are known in advance. The sticks are
+to be processed by a woodworking machine in one by one fashion. It
+needs some time, called setup time, for
+the machine to prepare processing a stick. The setup times are
+associated with cleaning operations and
+changing tools and shapes in the machine. The setup times of the
+woodworking machine are given as follows:</p>
+
+<ul>
+<li>The setup time for the first wooden
+stick is 1 minute.</li>
+<li>
+Right after processing a stick of length <i>l </i>and weight <i>w
+</i>, the machine will need no setup time for a stick
+of length <i>l</i>' and weight <i>w</i>' if <i>l </i>&lt;=<i>l</i>'
+and <i>w </i>&lt;=<i>w</i>' . </li>
+</ul>
+
+
+<p>Otherwise, it will need 1 minute for setup.<br>
+You are to find the minimum setup time to process a given pile of <i>n
+</i>wooden sticks. For example, if you have
+five sticks whose pairs of length and weight are (4,9), (5,2), (2,1), (3,5),
+and (1,4) then the minimum setup
+time should be 2 minutes since there is a sequence of pairs (1,4),
+(3,5), (4,9), (2,1), (5,2).</p>
+
+<h2><font size="4" color="#ff0000"><a name="SECTION0001001000000000000000">Input</a> <br>
+</font></h2>
+
+
+<p>The input consists of <i>T</i> test cases. The number of test cases (<i>T</i>) is given in the first line of the input file. Each
+test case consists of two lines: The first line has an integer <i>n</i>,
+1&lt;=<i>n&lt;=</i>5000, that represents the number of
+wooden sticks in the test case, and the second line contains 2<i>n </i>positive
+integers <i>l<sub>1</sub></i>, <i>w<sub>1</sub></i>, <i>l<sub>2</sub></i>,
+<i>w<sub>2</sub></i>, &hellip;, <i>l<sub>n</sub></i>, <i>w<sub>n</sub></i>,
+each of magnitude at most 10000, where <i>l<sub>i</sub> </i>and <i>w<sub>i</sub>
+</i>are the length and weight of the <i>i </i>th wooden stick,
+respectively. The 2<i>n </i>integers are delimited by one or
+more spaces.</p>
+
+<h2><font size="4" color="#ff0000"><a name="SECTION0001002000000000000000">Output</a>&nbsp;</font>
+</h2>
+
+
+<p>The output should contain the minimum setup time in minutes, one per
+line.</p>
+
+<h2><font size="4" color="#ff0000"><a name="SECTION0001003000000000000000">Sample Input</a> <br>
+</font></h2>
+
+
+
+
+<pre>3
+5
+4 9 5 2 2 1 3 5 1 4
+3
+2 2 1 1 2 2
+3
+1 3 2 2 3 1
+</pre>
+
+
+
+
+<h2><font size="4" color="#ff0000"><a name="SECTION000
+1004000000000000000">Sample Output</a>&nbsp;</font>
+</h2>
+
+
+
+
+<pre>2
+1
+3
+</pre>
+
+
+<p></body></p>
+
+<h3>Analysis</h3>
+
+<p>This question is a little similar to <a href="/blog/2014/09/17/stack-up-boxes/">[CC150v5] 9.10 Stack Up the Boxes</a>, yet different.</p>
+
+<h3>Solution</h3>
+
+<p>Solution quoted from <a href="http://www.csdn123.com/html/blogs/20130823/58042.htm">脚本百事通</a>:</p>
+
+<blockquote><p>按长度从小到大排序, 若长度相同, 则按重量从小到大排序(先按重量再按长度也行)</p>
+
+<p>然后, 我们针对当前木棍, 与剩下的木棍比较, 满足 w1 &lt;= w2 &amp;&amp; l1 &lt;= l2 的, 就更新一下当前棍, 并标记~</p>
+
+<p>当所有木棍都被编组后 输出到底设置了几次~</p></blockquote>
+
+<p><a href="http://www.android100.org/html/201502/03/109926.html">ref1</a>, <a href="http://blog.csdn.net/keshuai19940722/article/details/10735689">ref2</a></p>
+
+<h3>Code</h3>
+
+<p>The following Java code is written by me</p>
+
+<pre><code>public int count(Pair[] points) {
+    Arrays.sort(points, new PointComparator());
+    // now the array is sorted with Point.x
+    int total = 0;
+    int p = 0;
+    int len = points.length;
+
+    while (p &lt; len) {
+        // find the next non-null point
+        while (p &lt; len &amp;&amp; points[p] == null) {
+            p++;
+        }
+        if (p == len) {
+            break;
+        }
+        // use points[p] as the first elements in the queue
+        Pair temp = copy(points[p]);
+        points[p] = null;
+        total++;
+
+        // then mark all elements that follow points[p]
+        for (int k = p + 1; k &lt; len; k++) {
+            if (points[k] == null || points[k].y &lt; temp.y) {
+                continue;
+            }
+            temp = copy(points[k]);
+            points[k] = null;
+        }
+        p++;
+    }
+    return total;
+}
+
+Pair copy(Pair p) {
+    Pair newP = new Pair(p.x, p.y);
+    return newP;
+}
+
+class PointComparator implements Comparator&lt;Pair&gt; {
+
+    @Override
+    public int compare(Pair p1, Pair p2) {
+        return p1.x - p2.x;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/14/NIM-stone-game/">[Question] 编程之美 NIM 一排石头的游戏</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-14T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://blog.csdn.net/starcuan/article/details/20546993">link</a></p>
+
+<blockquote><p>N块石头排成一行，两个玩家依次取石头，每个玩家可以取其中任意一块或者相邻的两块，最后能将剩下的石头一次取光的玩家获胜。</p></blockquote>
+
+<h3>Solution</h3>
+
+<ol>
+<li>when n = 1, first move wins</li>
+<li>when n = 2, first move wins</li>
+<li>when n = 3, first move removes middle stone, wins</li>
+<li>when n = 4, first move removes 2 stones from middle, wins</li>
+<li>when n = 5, first move removes middle stone, which leaves 2 piles of stones of count 2. First move wins.</li>
+</ol>
+
+
+<p>So to conclude the above, we will have:</p>
+
+<blockquote><p>先取者只要取中间的元素，N为奇数取中间一个，偶数取中间两个，将石头分为两部分，然后无论第二个人怎么取，先取者只要在另一部分的同样位置取走同样多的石头，则最后先取者必胜</p></blockquote>
+
+<p>Quoted from <a href="http://blog.csdn.net/starcuan/article/details/20546993">王川的私房菜
+</a>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/14/Majority-Element/">[LeetCode 169] Majority Element</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-14T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/majority-element/">link</a></p>
+
+<h3>Solution</h3>
+
+<div class="question-content">
+              <p></p><p>Given an array of size <i>n</i>, find the majority element. The majority element is the element that appears more than <code>? n/2 ?</code> times.</p>
+
+<p>You may assume that the array is non-empty and the majority element always exist in the array.</p>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/ts">@ts</a> for adding this problem and creating all test cases.</p><p></p>
+              
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/divide-and-conquer/">Divide and Conquer</a>
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/array/">Array</a>
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/bit-manipulation/">Bit Manipulation</a>
+                  
+                </span>
+              
+            </div>
+
+
+<h3>Analysis</h3>
+
+<p>I have already covered this question in <a href="/blog/2014/06/28/Majority-Number/">[LintCode] Majority Number</a>. However, I have also discovered <strong>a few other very interesting solution</strong>. Check below.</p>
+
+<h3>Solution</h3>
+
+<p>The best solution is of course the voting algorithm. Read code below.</p>
+
+<p>Second solution presented by offical answer, is to do sorting:</p>
+
+<pre><code>public int majorityElement(int[] num) {
+    if (num.length == 1) {
+        return num[0];
+    }
+
+    Arrays.sort(num);
+    return num[num.length / 2];
+}
+</code></pre>
+
+<p>Third interesting solution is doing bit manipulation. Read <a href="http://www.yanyulin.info/pages/2014/12/851338983752.html">Yanyulin&rsquo;s blog</a> for more.</p>
+
+<h3>Code</h3>
+
+<pre><code>public class Solution {
+    public int majorityElement(int[] num) {
+        if (num == null || num.length == 0) {
+            return 0;
+        }
+        int major = num[0];
+        long count = 1;
+
+        for (int i = 1; i &lt; num.length; i++) {
+            if (major == num[i]) {
+                count++;
+            } else if (count == 0) {
+                major = num[i];
+                count = 1;
+            } else {
+                count--;
+            }
+        }
+
+        return major;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/7">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/5">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

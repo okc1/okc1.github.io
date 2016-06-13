@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Q-google | Woodstock Blog]]></title>
   <link href="http://okc1.github.io/blog/categories/q-google/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-06-13T01:11:53-07:00</updated>
+  <updated>2016-06-13T01:21:35-07:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -18,68 +18,67 @@
     <link href="http://okc1.github.io/blog/2015/10/02/shorest-manhattan-distance/"/>
     <updated>2015-10-02T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2015/10/02/shorest-manhattan-distance</id>
-    <content type="html"><![CDATA[<h3>Question</h3>
+    <content type="html"><![CDATA[### Question 
 
-<p><a href="http://www.mitbbs.com/article_t/JobHunting/33054861.html">link</a></p>
+[link](http://www.mitbbs.com/article_t/JobHunting/33054861.html)
 
-<blockquote><p>给一个 n*m 的房间，房间里存在各种可能的墙，房间的格子里已经放了 e 个器材，要
-求新放一个器材，放置位置距其它 e 个器材的距离最近。Breadth-first search.</p></blockquote>
+> 给一个 n*m 的房间，房间里存在各种可能的墙，房间的格子里已经放了 e 个器材，要
+求新放一个器材，放置位置距其它 e 个器材的距离最近。Breadth-first search.
 
-<h3>Solution</h3>
+### Solution 
 
-<blockquote><p>对 e个设备 BFS, 求每个设备到每个可以放新器材的点的距离，然后叠加。</p>
+> 对 e个设备 BFS, 求每个设备到每个可以放新器材的点的距离，然后叠加。
 
-<p>最后O（n<sup>2</sup>）一遍找最小值。复杂度O（e*n<sup>2</sup>）</p></blockquote>
+> 最后O（n^2）一遍找最小值。复杂度O（e*n^2）
 
-<p>As for whether we choose to check each equipment position, or check each vacant position, it&rsquo;s decided by how many equipment is there. If very little equipments (e is small), then this solution should work.</p>
+As for whether we choose to check each equipment position, or check each vacant position, it's decided by how many equipment is there. If very little equipments (e is small), then this solution should work.
 
-<p>However, what is there is obstacles in the matrix?</p>
+However, what is there is obstacles in the matrix?
 
-<p>We have to use BFS then. It took more space usage, but the time complexity should be same.</p>
+We have to use BFS then. It took more space usage, but the time complexity should be same. 
 
-<h3>Code</h3>
+### Code
 
-<pre><code>public void findCenter(int[][] input, int numberOfEquip) {
-    int m = input.length;
-    int n = input[0].length;
-
-    // there's gonna be m * n positions
-    // we gonna cumulate (numberOfEquip) distances for each position
-    int[] dis = new int[m * n];
-
-    // from the input map, find Equipments
-    for (int i = 0; i &lt; m; i++) {
-        for (int j = 0; j &lt; n; j++) {
-            if (input[i][j] == 1) {
-                // 1 represents equipment
-                // when found, add the distance to every position
-                cumulateDistance(i, j, dis, m, n);
-            }
-        }
-    }
-
-    // find the smallest cumulated distance from dis[].
-    int sIndex = 0;
-    int smallest = dis[0];
-    for (int i = 0; i &lt; m * n; i++) {
-        if (dis[i] &lt; smallest) {
-            smallest = dis[i];
-            sIndex = i;
-        }
-    }
-
-    // index sIndex is the final answer
-    System.out.println("Answer: " + (sIndex / n) + " " + (sIndex % n));
-}
-
-private void cumulateDistance(int x, int y, int[] dis, int m, int n) {
-    for (int i = 0; i &lt; m * n; i++) {
-        int a = i / n;
-        int b = i % n;
-        dis[i] += Math.abs(a - x) + Math.abs(b - y);
-    }
-}
-</code></pre>
+	public void findCenter(int[][] input, int numberOfEquip) {
+		int m = input.length;
+		int n = input[0].length;
+		
+		// there's gonna be m * n positions
+		// we gonna cumulate (numberOfEquip) distances for each position
+		int[] dis = new int[m * n];
+		
+		// from the input map, find Equipments
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				if (input[i][j] == 1) {
+					// 1 represents equipment
+					// when found, add the distance to every position
+					cumulateDistance(i, j, dis, m, n);
+				}
+			}
+		}
+		
+		// find the smallest cumulated distance from dis[].
+		int sIndex = 0;
+		int smallest = dis[0];
+		for (int i = 0; i < m * n; i++) {
+			if (dis[i] < smallest) {
+				smallest = dis[i];
+				sIndex = i;
+			}
+		}
+		
+		// index sIndex is the final answer
+		System.out.println("Answer: " + (sIndex / n) + " " + (sIndex % n));
+	}
+	
+	private void cumulateDistance(int x, int y, int[] dis, int m, int n) {
+		for (int i = 0; i < m * n; i++) {
+			int a = i / n;
+			int b = i % n;
+			dis[i] += Math.abs(a - x) + Math.abs(b - y);
+		}
+	}
 ]]></content>
   </entry>
   
@@ -88,33 +87,33 @@ private void cumulateDistance(int x, int y, int[] dis, int m, int n) {
     <link href="http://okc1.github.io/blog/2015/02/13/minimum-adjustments/"/>
     <updated>2015-02-13T00:00:00-08:00</updated>
     <id>http://okc1.github.io/blog/2015/02/13/minimum-adjustments</id>
-    <content type="html"><![CDATA[<h3>Question</h3>
+    <content type="html"><![CDATA[### Question 
 
-<p><a href="http://www.careercup.com/question?id=6212066786410496">link</a></p>
+[link](http://www.careercup.com/question?id=6212066786410496)
 
-<blockquote><p>Given an integer array, adjust each integers so that the difference of every adjacent integers are not greater than a given number target.</p>
+> Given an integer array, adjust each integers so that the difference of every adjacent integers are not greater than a given number target. 
 
-<p>If the array before adjustment is A, the array after adjustment is B, you should minimize the sum of |A[i]-B[i]|</p>
+> If the array before adjustment is A, the array after adjustment is B, you should minimize the sum of |A[i]-B[i]| 
 
-<p>Given [1,4,2,3] and target=1, one of the solutions is [2,3,2,3], the minimal adjustment cost is 2.</p></blockquote>
+> Given [1,4,2,3] and target=1, one of the solutions is [2,3,2,3], the minimal adjustment cost is 2.
 
-<h3>Solution</h3>
+### Solution 
 
-<p>This is a difficult DP. Now we define 2D array like this:</p>
+This is a difficult DP. Now we define 2D array like this: 
 
-<blockquote><p>dp[i][j]: the minimal adjust cost on changing A[i] to j</p></blockquote>
+> dp[i][j]: the minimal adjust cost on changing A[i] to j
 
-<p>And the equation:</p>
+And the equation: 
 
-<blockquote><p>dp[i][j] = min{dp[i-1][k] + |j-A[i]|} s.t. |k-j| &lt;= target</p></blockquote>
+> dp[i][j] = min{dp[i-1][k] + |j-A[i]|} s.t. |k-j| <= target
 
-<p>Refer to the post by <a href="http://www.careercup.com/question?id=6212066786410496">simon.zhangsm</a></p>
+Refer to the post by [simon.zhangsm](http://www.careercup.com/question?id=6212066786410496)
 
-<h3>Code</h3>
+### Code
 
-<p>Not written.</p>
+Not written.
 
-<p>Available at <a href="http://lintcode.com/en/problem/minimum-adjustment-cost/#">OJ</a></p>
+Available at [OJ](http://lintcode.com/en/problem/minimum-adjustment-cost/#)
 ]]></content>
   </entry>
   
@@ -123,39 +122,39 @@ private void cumulateDistance(int x, int y, int[] dis, int m, int n) {
     <link href="http://okc1.github.io/blog/2015/02/09/number-of-slices/"/>
     <updated>2015-02-09T00:00:00-08:00</updated>
     <id>http://okc1.github.io/blog/2015/02/09/number-of-slices</id>
-    <content type="html"><![CDATA[<h3>Question</h3>
+    <content type="html"><![CDATA[### Question 
 
-<p><a href="http://www.careercup.com/question?id=5090693043191808">link</a></p>
+[link](http://www.careercup.com/question?id=5090693043191808)
 
-<blockquote><p>Calculate the number of slices. Slice means that the difference between the maximum and minimum in the slice &lt;= 2.</p>
+> Calculate the number of slices. Slice means that the difference between the maximum and minimum in the slice <= 2.
 
-<p>eg. Given array 3 5 7 6 3.</p>
+> eg. Given array 3 5 7 6 3. 
 
-<p>There&rsquo;re 10: (0,0) (1,1) (2,2) (3,3) (4,4) (5,5) (0,1) (1,2) (1,3) (2,3).</p></blockquote>
+> There're 10: (0,0) (1,1) (2,2) (3,3) (4,4) (5,5) (0,1) (1,2) (1,3) (2,3). 
 
-<h3>Solution</h3>
+### Solution 
 
-<p>If only asked to output the total number of such slices, we can do it in <strong>O(n) using sliding-window-like algorithm</strong>, with the help of addtional queue-like data structure.</p>
+If only asked to output the total number of such slices, we can do it in __O(n) using sliding-window-like algorithm__, with the help of addtional queue-like data structure. 
 
-<p>This is <strong>a very difficult question</strong>! Quoted from the <a href="http://www.careercup.com/question?id=5090693043191808">top answer</a>:</p>
+This is __a very difficult question__! Quoted from the [top answer](http://www.careercup.com/question?id=5090693043191808):
 
-<blockquote><p>The basic idea is that you can start with arr[0] and then see <strong>how many more elements you can include before you violate the max -min &lt;= K constraint</strong>. When you reach some index j you can no longer include, you know the maximum subarray starting at index 0 is arr[0&hellip;j-1], and you can count j different subarrays there.</p>
+> The basic idea is that you can start with arr[0] and then see __how many more elements you can include before you violate the max -min <= K constraint__. When you reach some index j you can no longer include, you know the maximum subarray starting at index 0 is arr[0...j-1], and you can count j different subarrays there. 
 
-<p>&hellip; you then start with a[1]. Now [1&hellip;j-1] has to be valid, so you try to advance the right boundary again (try arr[1&hellip;j], then arr[1&hellip;j+1]) and so on until again you reach a point past which you can&rsquo;t advance. Then you&rsquo;ll try string at a[2], and so on. This is what they mean when they talk about <strong>&ldquo;crawling&rdquo; over the array</strong>.</p>
+> ... you then start with a[1]. Now [1...j-1] has to be valid, so you try to advance the right boundary again (try arr[1...j], then arr[1...j+1]) and so on until again you reach a point past which you can't advance. Then you'll try string at a[2], and so on. This is what they mean when they talk about __"crawling" over the array__. 
 
-<p>The key issue here is how you will check whether a particular subarray is valid efficiently&hellip;</p></blockquote>
+> The key issue here is how you will check whether a particular subarray is valid efficiently...
 
-<p>Sliding window is explained above. Now, <strong>the minMaxQueue</strong> explain in <a href="https://codility.com/media/train/solution-count-bounded-slices.pdf">this pdf</a>:</p>
+Sliding window is explained above. Now, __the minMaxQueue__ explain in [this pdf](https://codility.com/media/train/solution-count-bounded-slices.pdf): 
 
-<blockquote><p>The PDF &hellip; have <strong>1 queue each</strong> (i.e. 2 queues in total) for min and max (the min is treated analogous to the max case).</p>
+> The PDF ... have __1 queue each__ (i.e. 2 queues in total) for min and max (the min is treated analogous to the max case). 
 
-<p>For maxQueue, whenever a new value comes in the max queue, they remove all values less than the value, since those <strong>can never be the max</strong>. For that reason the queue&rsquo;s values are in descending order. And the max at any given time is the first element.</p></blockquote>
+> For maxQueue, whenever a new value comes in the max queue, they remove all values less than the value, since those __can never be the max__. For that reason the queue's values are in descending order. And the max at any given time is the first element.
 
-<p>In this way, getting min/max is O(1), thus entire solution is O(n). Nice question!</p>
+In this way, getting min/max is O(1), thus entire solution is O(n). Nice question! 
 
-<h3>Code</h3>
+### Code
 
-<p>Not written.</p>
+Not written.
 ]]></content>
   </entry>
   
@@ -164,40 +163,37 @@ private void cumulateDistance(int x, int y, int[] dis, int m, int n) {
     <link href="http://okc1.github.io/blog/2015/02/09/heap-bst-conversion/"/>
     <updated>2015-02-09T00:00:00-08:00</updated>
     <id>http://okc1.github.io/blog/2015/02/09/heap-bst-conversion</id>
-    <content type="html"><![CDATA[<h3>Question 1</h3>
+    <content type="html"><![CDATA[### Question 1
 
-<p><a href="http://www.careercup.com/question?id=4281027">link</a></p>
+[link](http://www.careercup.com/question?id=4281027)
 
-<blockquote><p>Convert a BST to max heap.</p></blockquote>
+> Convert a BST to max heap. 
 
-<h3>Solution</h3>
+### Solution 
 
-<p>The <a href="http://www.careercup.com/question?id=4281027">second answer</a>:</p>
+The [second answer](http://www.careercup.com/question?id=4281027): 
 
-<blockquote><p>a simple (reversed) in-order traversal of the BST. It would produce a sorted array which is indeed a max-heap!</p></blockquote>
+> a simple (reversed) in-order traversal of the BST. It would produce a sorted array which is indeed a max-heap!
 
-<h3>Question 2</h3>
+### Question 2
 
-<p><a href="http://stackoverflow.com/questions/14106821/converting-a-heap-to-a-bst-in-on-time">link</a></p>
+[link](http://stackoverflow.com/questions/14106821/converting-a-heap-to-a-bst-in-on-time)
 
-<blockquote><p>Converting a heap to a BST in O(n) time?</p>
+> Converting a heap to a BST in O(n) time?
 
-<p>possible?</p></blockquote>
+> possible? 
 
-<h3>Solution</h3>
+### Solution 
 
-<p><a href="http://stackoverflow.com/a/14107362">Impossible</a>. Because otherwise, we can do this:</p>
+[Impossible](http://stackoverflow.com/a/14107362). Because otherwise, we can do this: 
 
-<ol>
-<li>Take an array and build the heap in O(n) time</li>
-<li>Converting the heap to a BST in O(n) time (assuming)</li>
-<li>Walking the BST in O(n) time to get a sorted sequence.</li>
-</ol>
+1. Take an array and build the heap in O(n) time
+1. Converting the heap to a BST in O(n) time (assuming) 
+1. Walking the BST in O(n) time to get a sorted sequence.
 
+Thus we sort array in O(n) time, it can't happen. 
 
-<p>Thus we sort array in O(n) time, it can&rsquo;t happen.</p>
-
-<p>Right way to do, is to repeatedly dequeueing maximum value from the BST, then generate the BST recursively (bottom-up approach).</p>
+Right way to do, is to repeatedly dequeueing maximum value from the BST, then generate the BST recursively (bottom-up approach). 
 ]]></content>
   </entry>
   
@@ -206,35 +202,35 @@ private void cumulateDistance(int x, int y, int[] dis, int m, int n) {
     <link href="http://okc1.github.io/blog/2015/02/09/array-signature/"/>
     <updated>2015-02-09T00:00:00-08:00</updated>
     <id>http://okc1.github.io/blog/2015/02/09/array-signature</id>
-    <content type="html"><![CDATA[<h3>Question</h3>
+    <content type="html"><![CDATA[### Question 
 
-<p><a href="http://www.careercup.com/question?id=14912744">link</a></p>
+[link](http://www.careercup.com/question?id=14912744)
 
-<blockquote><p>You are given an array of n elements [1,2,&hellip;.n]. For example {3 2 1 4 6 5 7}.</p>
+> You are given an array of n elements [1,2,....n]. For example {3 2 1 4 6 5 7}. 
 
-<p>Now we create a signature of this array by comparing every consecutive pair of elements. If they increase, write &ldquo;I&rdquo; else write &ldquo;D&rdquo;.</p>
+> Now we create a signature of this array by comparing every consecutive pair of elements. If they increase, write "I" else write "D". 
 
-<p>For example for the above array, the signature would be &ldquo;DDIIDI&rdquo;. The signature thus has a length of N-1.</p>
+> For example for the above array, the signature would be "DDIIDI". The signature thus has a length of N-1. 
 
-<p>Now given a signature, compute the lexicographically <strong>smallest permutation</strong> of [1,2,&hellip;.n].</p></blockquote>
+> Now given a signature, compute the lexicographically __smallest permutation__ of [1,2,....n]. 
 
-<h3>Solution</h3>
+### Solution 
 
-<p>A great <a href="http://qr.ae/BPfNw">answer</a>:</p>
+A great [answer](http://qr.ae/BPfNw): 
 
-<blockquote><p>Take the above case. Signature = DDIIDI.</p>
+> Take the above case. Signature = DDIIDI.
 
-<p>Take original permutation as 1 2 3 4 5 6 7.</p>
+> Take original permutation as 1 2 3 4 5 6 7.
 
-<p>Then for first continuous sequence DD reverse the strip 1 2 3 to 3 2 1 hence sequence becomes 3 2 1 4 5 6 7.</p>
+> Then for first continuous sequence DD reverse the strip 1 2 3 to 3 2 1 hence sequence becomes 3 2 1 4 5 6 7.
 
-<p>Then for second sequence D reverse strip 5 6 to 6 5 hence sequence becomes 3 2 1 4 6 5 7.</p>
+> Then for second sequence D reverse strip 5 6 to 6 5 hence sequence becomes 3 2 1 4 6 5 7.
 
-<p>There is no continuous D left we are done and reached the answer.</p></blockquote>
+> There is no continuous D left we are done and reached the answer.
 
-<h3>Code</h3>
+### Code
 
-<p>Not written.</p>
+Not written.
 ]]></content>
   </entry>
   

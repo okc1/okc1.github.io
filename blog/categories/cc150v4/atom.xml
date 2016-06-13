@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Cc150v4 | Woodstock Blog]]></title>
   <link href="http://okc1.github.io/blog/categories/cc150v4/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-06-13T01:11:53-07:00</updated>
+  <updated>2016-06-13T01:21:35-07:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -18,22 +18,21 @@
     <link href="http://okc1.github.io/blog/2014/09/10/top-million-from-billion/"/>
     <updated>2014-09-10T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2014/09/10/top-million-from-billion</id>
-    <content type="html"><![CDATA[<h3>Question</h3>
+    <content type="html"><![CDATA[### Question
 
-<blockquote><p>Describe an algorithm to find the largest 1 million numbers in 1 billion numbers.</p>
+> Describe an algorithm to find the largest 1 million numbers in 1 billion numbers. 
 
-<p>Assume that the computer memory can hold all one billion numbers.</p></blockquote>
+> Assume that the computer memory can hold all one billion numbers. 
 
-<h3>Solution</h3>
+### Solution
 
-<p>There&rsquo;re enough discussion on <strong>Top K problems</strong> so far in this blog. The suggest solutions is:</p>
+There're enough discussion on __Top K problems__ so far in this blog. The suggest solutions is: 
 
-<ol>
-<li><p>Sort</p></li>
-<li><p>Min Heap, O(n logm) time.</p></li>
-<li><p>Quickselect algorithm. O(n) time.</p></li>
-</ol>
+1. Sort
 
+1. Min Heap, O(n logm) time. 
+
+1. Quickselect algorithm. O(n) time. 
 ]]></content>
   </entry>
   
@@ -42,23 +41,20 @@
     <link href="http://okc1.github.io/blog/2014/09/10/submatrix-with-largest-sum/"/>
     <updated>2014-09-10T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2014/09/10/submatrix-with-largest-sum</id>
-    <content type="html"><![CDATA[<h3>Question</h3>
+    <content type="html"><![CDATA[### Question
 
-<blockquote><p>Given an NxN matrix of positive and negative integers, write code to find the sub-matrix with the largest possible sum.</p></blockquote>
+> Given an NxN matrix of positive and negative integers, write code to find the sub-matrix with the largest possible sum. 
 
-<h3>Solution</h3>
+### Solution
 
-<p>I wrote about this question before: <strong>[Question] Max Sum In A 2D Array (sub-matrix)</strong>, and the solution gave a better time complexity (O(n<sup>3</sup>)) than in the book (O(n<sup>4</sup>)).</p>
+I wrote about this question before: __[Question] Max Sum In A 2D Array (sub-matrix)__, and the solution gave a better time complexity (O(n^3)) than in the book (O(n^4)). 
 
-<ol>
-<li>locate a row - O(n)</li>
-<li>locate another row - O(n)</li>
-<li>compute sub value of that column - O(n), and then find largest subarray in array - also O(n)</li>
-<li>The above 3 steps each take O(n) time, total time is O(n<sup>3</sup>).</li>
-</ol>
+1. locate a row - O(n)
+1. locate another row - O(n)
+1. compute sub value of that column - O(n), and then find largest subarray in array - also O(n)
+1. The above 3 steps each take O(n) time, total time is O(n^3). 
 
-
-<p>Please refer to the other post for more detail.</p>
+Please refer to the other post for more detail. 
 ]]></content>
   </entry>
   
@@ -67,33 +63,32 @@
     <link href="http://okc1.github.io/blog/2014/09/10/generate-m-from-array-of-n/"/>
     <updated>2014-09-10T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2014/09/10/generate-m-from-array-of-n</id>
-    <content type="html"><![CDATA[<h3>Question</h3>
+    <content type="html"><![CDATA[### Question
 
-<blockquote><p>Write a method to randomly generate a set of m integers from an array of size n. Each element must have equal probability of being chosen.</p></blockquote>
+> Write a method to randomly generate a set of m integers from an array of size n. Each element must have equal probability of being chosen. 
 
-<h3>Solution</h3>
+### Solution
 
-<p>This is very similar to another post I wrote: <strong>[Question] Shuffle An Array (Fisher–Yates)</strong>.</p>
+This is very similar to another post I wrote: __[Question] Shuffle An Array (Fisher–Yates)__.
 
-<p>The basic idea is to choose element one by one using RNG. After choosing an int, swap it to top and <strong>then mark this element as &lsquo;dead&rsquo;</strong>. Next time, the RNG will not touch on the &lsquo;dead&rsquo; elements.</p>
+The basic idea is to choose element one by one using RNG. After choosing an int, swap it to top and __then mark this element as 'dead'__. Next time, the RNG will not touch on the 'dead' elements. 
 
-<p><strong>Very similar to Fisher–Yates Shuffle</strong>, and the code below is written by me.</p>
+__Very similar to Fisher–Yates Shuffle__, and the code below is written by me. 
 
-<h3>Code</h3>
+### Code
 
-<pre><code>public static int[] pickMRandomly(int[] original, int m) {
-    int[] ans = new int[m];
-    for (int i = 0; i &lt; m; i++) {
-        int rand = Question.listRand.get(i);
-        // note: rand is RN in the range [i, max]
-        ans[i] = original[rand];
-        original[rand] = original[i];
-        // now (i)th position in original is dead
-        // no one cares what value is at original[i]
-    }
-    return ans;
-}
-</code></pre>
+	public static int[] pickMRandomly(int[] original, int m) {
+		int[] ans = new int[m];
+		for (int i = 0; i < m; i++) {
+			int rand = Question.listRand.get(i);
+			// note: rand is RN in the range [i, max]
+			ans[i] = original[rand];
+			original[rand] = original[i];
+			// now (i)th position in original is dead
+			// no one cares what value is at original[i]
+		}
+		return ans;
+	}
 ]]></content>
   </entry>
   
@@ -102,100 +97,97 @@
     <link href="http://okc1.github.io/blog/2014/09/10/full-text-search/"/>
     <updated>2014-09-10T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2014/09/10/full-text-search</id>
-    <content type="html"><![CDATA[<h3>Question</h3>
+    <content type="html"><![CDATA[### Question
 
-<blockquote><p>Given a string s and an array of smaller strings T, design a method to search s for each small string in T.</p></blockquote>
+> Given a string s and an array of smaller strings T, design a method to search s for each small string in T. 
 
-<h3>Solution</h3>
+### Solution
 
-<p><strong>This is a very classic question of string search</strong>, favored by Google and Facebook.</p>
+__This is a very classic question of string search__, favored by Google and Facebook. 
 
-<p>The solution is <strong>suffix tree</strong> (to be distinguished from <strong>trie</strong>, or prefix tree, which searched word by its prefix). Suffix tree is good for search a proportion of a long string. For example, using &ldquo;bibs&rdquo; to build a suffix tree like this:</p>
+The solution is __suffix tree__ (to be distinguished from __trie__, or prefix tree, which searched word by its prefix). Suffix tree is good for search a proportion of a long string. For example, using "bibs" to build a suffix tree like this: 
 
-<p>{% img middle /assets/images/suffix-tree-example-bibs.png %}</p>
+<img class="middle" src="/assets/images/suffix-tree-example-bibs.png">
 
-<p>The building of suffix tree and searching is not a very lengthy code. It&rsquo;s posted below and it&rsquo;s not written by me.</p>
+The building of suffix tree and searching is not a very lengthy code. It's posted below and it's not written by me. 
 
-<h3>Code</h3>
+### Code
 
-<p>Main method:</p>
+Main method:
 
-<pre><code>public static void main(String[] args) {
-    String testString = "mississippi";
-    String[] stringList = { "is", "sip", "hi", "sis" };
-    SuffixTree tree = new SuffixTree(testString);
-    for (String s : stringList) {
-        ArrayList&lt;Integer&gt; list = tree.getIndexes(s);
-        if (list != null) {
-            System.out.println(s + ": " + list.toString());
-        } else {
-            System.out.println(s + ": does not exist.");
-        }
-    }
-}
-</code></pre>
+	public static void main(String[] args) {
+		String testString = "mississippi";
+		String[] stringList = { "is", "sip", "hi", "sis" };
+		SuffixTree tree = new SuffixTree(testString);
+		for (String s : stringList) {
+			ArrayList<Integer> list = tree.getIndexes(s);
+			if (list != null) {
+				System.out.println(s + ": " + list.toString());
+			} else {
+				System.out.println(s + ": does not exist.");
+			}
+		}
+	}
 
-<p>SuffixTree.java</p>
+SuffixTree.java
 
-<pre><code>public class SuffixTree {
-    SuffixTreeNode root = new SuffixTreeNode();
+	public class SuffixTree {
+		SuffixTreeNode root = new SuffixTreeNode();
+		
+		public SuffixTree(String s) {
+			// create a suffix tree with input string s
+			for (int i = 0; i < s.length(); i++) {
+				String suffix = s.substring(i);
+				root.insertString(suffix, i);
+			}
+		}
+		
+		public ArrayList<Integer> getIndexes(String s) {
+			return root.getIndexes(s);
+		}
+	}
 
-    public SuffixTree(String s) {
-        // create a suffix tree with input string s
-        for (int i = 0; i &lt; s.length(); i++) {
-            String suffix = s.substring(i);
-            root.insertString(suffix, i);
-        }
-    }
+SuffixTreeNode.java
 
-    public ArrayList&lt;Integer&gt; getIndexes(String s) {
-        return root.getIndexes(s);
-    }
-}
-</code></pre>
+	public class SuffixTreeNode {
 
-<p>SuffixTreeNode.java</p>
+		char value;
+		HashMap<Character, SuffixTreeNode> children;
+		ArrayList<Integer> indexes = new ArrayList<Integer>();
 
-<pre><code>public class SuffixTreeNode {
+		public SuffixTreeNode() {
+			children = new HashMap<Character, SuffixTreeNode>();
+		}
 
-    char value;
-    HashMap&lt;Character, SuffixTreeNode&gt; children;
-    ArrayList&lt;Integer&gt; indexes = new ArrayList&lt;Integer&gt;();
+		public void insertString(String s, int index) {
+			indexes.add(index);
+			if (s != null && s.length() > 0) {
+				value = s.charAt(0);
+				SuffixTreeNode child = null;
+				if (children.containsKey(value)) {
+					child = children.get(value);
+				} else {
+					child = new SuffixTreeNode();
+					children.put(value, child);
+				}
+				String remainder = s.substring(1);
+				child.insertString(remainder, index);
+			}
+		}
 
-    public SuffixTreeNode() {
-        children = new HashMap&lt;Character, SuffixTreeNode&gt;();
-    }
-
-    public void insertString(String s, int index) {
-        indexes.add(index);
-        if (s != null &amp;&amp; s.length() &gt; 0) {
-            value = s.charAt(0);
-            SuffixTreeNode child = null;
-            if (children.containsKey(value)) {
-                child = children.get(value);
-            } else {
-                child = new SuffixTreeNode();
-                children.put(value, child);
-            }
-            String remainder = s.substring(1);
-            child.insertString(remainder, index);
-        }
-    }
-
-    public ArrayList&lt;Integer&gt; getIndexes(String s) {
-        if (s == null || s.length() == 0) {
-            return indexes;
-        } else {
-            char first = s.charAt(0);
-            if (children.containsKey(first)) {
-                String remainder = s.substring(1);
-                return children.get(first).getIndexes(remainder);
-            }
-        }
-        return null;
-    }
-}
-</code></pre>
+		public ArrayList<Integer> getIndexes(String s) {
+			if (s == null || s.length() == 0) {
+				return indexes;
+			} else {
+				char first = s.charAt(0);
+				if (children.containsKey(first)) {
+					String remainder = s.substring(1);
+					return children.get(first).getIndexes(remainder);
+				}
+			}
+			return null;
+		}
+	}
 ]]></content>
   </entry>
   
@@ -204,74 +196,73 @@
     <link href="http://okc1.github.io/blog/2014/09/10/find-subsquare-with-black-border/"/>
     <updated>2014-09-10T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2014/09/10/find-subsquare-with-black-border</id>
-    <content type="html"><![CDATA[<h3>Question</h3>
+    <content type="html"><![CDATA[### Question
 
-<blockquote><p>Imagine you have a square matrix, where each cell is filled with either black or white.</p>
+> Imagine you have a square matrix, where each cell is filled with either black or white. 
 
-<p>Design an algorithm to find the maximum subsquare such that all four borders are filled with black pixels.</p></blockquote>
+> Design an algorithm to find the maximum subsquare such that all four borders are filled with black pixels. 
 
-<h3>Solution</h3>
+### Solution
 
-<p>There is no better way to solve this except Brute Force. First find a point (as the top-left corner), and then test square size from large to small.</p>
+There is no better way to solve this except Brute Force. First find a point (as the top-left corner), and then test square size from large to small. 
 
-<p>The code below is from the book.</p>
+The code below is from the book. 
 
-<h3>Code</h3>
+### Code
 
-<pre><code>public static Subsquare findMaxSquareInMatrix(int[][] matrix) {
-    assert (matrix.length &gt; 0);
-    for (int row = 0; row &lt; matrix.length; row++) {
-        assert (matrix[row].length == matrix.length);
-    }
+	public static Subsquare findMaxSquareInMatrix(int[][] matrix) {
+		assert (matrix.length > 0);
+		for (int row = 0; row < matrix.length; row++) {
+			assert (matrix[row].length == matrix.length);
+		}
 
-    int N = matrix.length;
-    int currentMaxSize = 0;
-    Subsquare sq = null;
-    int col = 0;
+		int N = matrix.length;
+		int currentMaxSize = 0;
+		Subsquare sq = null;
+		int col = 0;
 
-    // Iterate through each column from left to right
-    while (N - col &gt; currentMaxSize) { // See step 4 above
-        for (int row = 0; row &lt; matrix.length; row++) {
-            // starting from the biggest
-            int size = N - Math.max(row, col);
-            while (size &gt; currentMaxSize) {
-                if (checkSquareBorders(matrix, row, col, size)) {
-                    currentMaxSize = size;
-                    sq = new Subsquare(row, col, size);
-                    break; // go to next (full) column
-                }
-                size--;
-            }
-        }
-        col++;
-    }
-    return sq;
-}
+		// Iterate through each column from left to right
+		while (N - col > currentMaxSize) { // See step 4 above
+			for (int row = 0; row < matrix.length; row++) {
+				// starting from the biggest
+				int size = N - Math.max(row, col);
+				while (size > currentMaxSize) {
+					if (checkSquareBorders(matrix, row, col, size)) {
+						currentMaxSize = size;
+						sq = new Subsquare(row, col, size);
+						break; // go to next (full) column
+					}
+					size--;
+				}
+			}
+			col++;
+		}
+		return sq;
+	}
 
-private static boolean checkSquareBorders(int[][] matrix, int row, int col,
-        int size) {
-    // Check top and bottom border.
-    for (int j = 0; j &lt; size; j++) {
-        if (matrix[row][col + j] == 1) {
-            return false;
-        }
-        if (matrix[row + size - 1][col + j] == 1) {
-            return false;
-        }
-    }
+	private static boolean checkSquareBorders(int[][] matrix, int row, int col,
+			int size) {
+		// Check top and bottom border.
+		for (int j = 0; j < size; j++) {
+			if (matrix[row][col + j] == 1) {
+				return false;
+			}
+			if (matrix[row + size - 1][col + j] == 1) {
+				return false;
+			}
+		}
 
-    // Check left and right border.
-    for (int i = 1; i &lt; size - 1; i++) {
-        if (matrix[row + i][col] == 1) {
-            return false;
-        }
-        if (matrix[row + i][col + size - 1] == 1) {
-            return false;
-        }
-    }
-    return true;
-}
-</code></pre>
+		// Check left and right border.
+		for (int i = 1; i < size - 1; i++) {
+			if (matrix[row + i][col] == 1) {
+				return false;
+			}
+			if (matrix[row + i][col + size - 1] == 1) {
+				return false;
+			}
+		}
+		return true;
+	}
 ]]></content>
   </entry>
   

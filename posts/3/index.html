@@ -1,0 +1,1271 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link For a Maximum Segment Tree, which each node has an extra value max to store the maximum value in this node&rsquo;s interval. Implement &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/3/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/13/Segment-Tree-Modify/">[LintCode] Segment Tree Modify</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-10-13T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.lintcode.com/en/problem/segment-tree-modify/#">link</a></p>
+
+<blockquote><p>For a Maximum Segment Tree, which each node has an extra value max to store the maximum value in this node&rsquo;s interval.</p>
+
+<p>Implement a modify function with three parameter root, index and value to change the node&rsquo;s value with [start, end] = [index, index] to the new given value. Make sure after this change, every node in segment tree still has the max attribute with the correct value.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>It&rsquo;s very similar to <strong>Segment Tree Modify/search</strong>.</p>
+
+<h3>Code</h3>
+
+<pre><code>/**
+ * Definition of SegmentTreeNode:
+ * public class SegmentTreeNode {
+ *     public int start, end, max;
+ *     public SegmentTreeNode left, right;
+ *     public SegmentTreeNode(int start, int end, int max) {
+ *         this.start = start;
+ *         this.end = end;
+ *         this.max = max
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+public class Solution {
+    /**
+     *@param root, index, value: The root of segment tree and 
+     *@ change the node's value with [index, index] to the new given value
+     *@return: void
+     */
+    public void modify(SegmentTreeNode root, int index, int value) {
+        helper(root, index, value);
+    }
+
+    private int helper(SegmentTreeNode node, int target, int val) {
+        if (node.start &gt; target || node.end &lt; target) {
+            // no update, then just return max as normal
+            return node.max;
+        } else if (node.start == node.end &amp;&amp; node.start == target) {
+            node.max = val;
+            return val;
+        } else {
+            // check left and right, and update max value accordingly
+            node.max = Math.max(helper(node.left, target, val), 
+                                helper(node.right, target, val));
+            return node.max;
+        }
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/13/Segment-Tree-Build-II/">[LintCode] Segment Tree Build II</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-10-13T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.lintcode.com/en/problem/segmemt-tree-build-ii/">link</a></p>
+
+<blockquote><p>The structure of Segment Tree is a binary tree which each node has two attributes start and end denote an segment / interval.</p>
+
+<p>start and end are both integers, they should be assigned in following rules:</p>
+
+<p>The root&rsquo;s start and end is given by build method.
+The left child of node A has start=A.left, end=(A.left + A.right) / 2.
+The right child of node A has start=(A.left + A.right) / 2 + 1, end=A.right.
+if start equals to end, there will be no children for this node.</p>
+
+<p>Implement a build method with a given array, so that we can create a corresponding segment tree with every node value represent the corresponding interval max value in the array, return the root of this segment tree.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Similar.</p>
+
+<h3>Code</h3>
+
+<pre><code>/**
+ * Definition of SegmentTreeNode:
+ * public class SegmentTreeNode {
+ *     public int start, end, max;
+ *     public SegmentTreeNode left, right;
+ *     public SegmentTreeNode(int start, int end, int max) {
+ *         this.start = start;
+ *         this.end = end;
+ *         this.max = max
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+public class Solution {
+    /**
+     *@param A: a list of integer
+     *@return: The root of Segment Tree
+     */
+    public SegmentTreeNode build(int[] A) {
+        if (A == null || A.length == 0) {
+            return null;
+        }
+        return helper(A, 0, A.length - 1);
+    }
+
+    private SegmentTreeNode helper(int[] A, int start, int end) {
+        if (start &gt; end) {
+            return null;
+        }
+        SegmentTreeNode node = new SegmentTreeNode(start, end);
+        if (start == end) {
+            node.max = A[start];
+            return node;
+        } else {
+            node.left = helper(A, start, (start + end) / 2);
+            node.right = helper(A, (start + end) / 2 + 1, end);
+            if (node.right != null) {
+                node.max = Math.max(node.left.max, node.right.max);
+            } else {
+                node.max = node.left.max;
+            }
+        }
+        return node;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/13/Segment-Tree-Build/">[LintCode] Segment Tree Build</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-10-13T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.lintcode.com/en/problem/segment-tree-build/">link</a></p>
+
+<blockquote><p>The structure of Segment Tree is a binary tree which each node has two attributes start and end denote an segment / interval.</p>
+
+<p>start and end are both integers, they should be assigned in following rules:</p>
+
+<p>The root&rsquo;s start and end is given by build method.
+The left child of node A has start=A.left, end=(A.left + A.right) / 2.
+The right child of node A has start=(A.left + A.right) / 2 + 1, end=A.right.
+if start equals to end, there will be no children for this node.</p>
+
+<p>Implement a build method with two parameters start and end, so that we can create a corresponding segment tree with every node has the correct start and end value, return the root of this segment tree.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>A simple top-down run through.</p>
+
+<h3>Code</h3>
+
+<pre><code>/**
+ * Definition of SegmentTreeNode:
+ * public class SegmentTreeNode {
+ *     public int start, end;
+ *     public SegmentTreeNode left, right;
+ *     public SegmentTreeNode(int start, int end) {
+ *         this.start = start, this.end = end;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+public class Solution {
+    /**
+     *@param start, end: Denote an segment / interval
+     *@return: The root of Segment Tree
+     */
+    public SegmentTreeNode build(int start, int end) {
+        // write your code here
+        if (start &gt; end) {
+            return null;
+        }
+        SegmentTreeNode node = new SegmentTreeNode(start, end);
+        if (start &lt; end) {
+            node.left = build(start, (start + end) / 2);
+            node.right = build((start + end) / 2 + 1, end);
+        }
+        return node;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/08/segment-tree/">[Fundamental] Segment Tree</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-10-08T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Overview</h1>
+
+<p><strong><a href="https://en.wikipedia.org/wiki/Segment_tree">Segment tree</a></strong> is a tree data structure for storing intervals, or segments.</p>
+
+<p>Can be used to search <strong>the max/min or sum values in a range</strong>.</p>
+
+<ol>
+<li><p>modify = O(log n)</p></li>
+<li><p>query = O(log n)</p></li>
+<li><p>build = O(n)</p></li>
+</ol>
+
+
+<h2>question list</h2>
+
+<ol>
+<li><p>[LintCode] Segment Tree Build</p></li>
+<li><p>[LintCode] Segment Tree Build II</p></li>
+<li><p>[LintCode] Segment Tree Modify</p></li>
+<li><p>[LintCode] Segment Tree Query</p></li>
+<li><p>[LintCode] Segment Tree Query II</p></li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/07/largest-subsquare-with-edge-filled/">[Question] Largest Sub-square With Edges Filled</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-10-07T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="www.geeksforgeeks.org/given-matrix-o-x-find-largest-subsquare-surrounded-x/index.html">link</a></p>
+
+<blockquote><p>Given a matrix where every element is either ‘O’ or ‘X’, find the largest sub-square surrounded by ‘X’. (meaning that the 4 edges are filled with &lsquo;X&rsquo;)</p>
+
+<p>Example Input:</p></blockquote>
+
+<pre><code> {'X', 'O', 'X', 'X', 'X'},
+ {'X', 'X', 'X', 'X', 'X'},
+ {'X', 'X', 'O', 'X', 'O'},
+ {'X', 'X', 'X', 'X', 'X'},
+ {'X', 'X', 'X', 'O', 'O'},
+</code></pre>
+
+<blockquote><p>Output: 3. The square submatrix starting at (1, 1) is the largest sub-squre.</p>
+
+<p>Example Input:</p></blockquote>
+
+<pre><code> {'X', 'O', 'X', 'X', 'X', 'X'},
+ {'X', 'O', 'X', 'X', 'O', 'X'},
+ {'X', 'X', 'X', 'O', 'O', 'X'},
+ {'X', 'X', 'X', 'X', 'X', 'X'},
+ {'X', 'X', 'X', 'O', 'X', 'O'},
+</code></pre>
+
+<blockquote><p>Output: 4. The square submatrix starting at (0, 2) is the largest</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Read a very similar question - <strong>[Question] Maximum Square Sub-matrix With All 1s</strong></p>
+
+<p>Typical DP question. Now the solution is to build 2 arrays to cache info. One horizontally and one, vertical.</p>
+
+<blockquote><p>create two auxiliary arrays hor[N][N] and ver[N][N].</p>
+
+<p>hor[i][j] is the number of horizontal continuous ‘X’ characters till mat[i][j] in mat[][].</p>
+
+<p>ver[i][j] is the number of vertical continuous ‘X’ characters till mat[i][j] in mat[][].</p></blockquote>
+
+<pre><code>mat[6][6] =  X  O  X  X  X  X
+             X  O  X  X  O  X
+             X  X  X  O  O  X
+             O  X  X  X  X  X
+             X  X  X  O  X  O
+             O  O  X  O  O  O
+
+hor[6][6] = 1  0  1  2  3  4
+            1  0  1  2  0  1
+            1  2  3  0  0  1
+            0  1  2  3  4  5
+            1  2  3  0  1  0
+            0  0  1  0  0  0
+
+ver[6][6] = 1  0  1  1  1  1
+            2  0  2  2  0  2
+            3  1  3  0  0  3
+            0  2  4  1  1  4
+            1  3  5  0  2  0
+            0  0  6  0  0  0
+</code></pre>
+
+<p>After we got these, start from the bottom-right corner row by row up&hellip; For every mat[i][j], we compare hor[i][j] with ver[i][j] and pick the smaller one.</p>
+
+<p>All we need to do next, is to check the other 2 edges. This solution is O(n<sup>3</sup>).</p>
+
+<h3>Code</h3>
+
+<p>C++ code provided by <a href="www.geeksforgeeks.org/given-matrix-o-x-find-largest-subsquare-surrounded-x/index.html">G4G</a>:</p>
+
+<pre><code>int findSubSquare(int mat[][N])
+{
+    int max = 1; // Initialize result
+
+    // Initialize the left-top value in hor[][] and ver[][]
+    int hor[N][N], ver[N][N];
+    hor[0][0] = ver[0][0] = (mat[0][0] == 'X');
+
+    // Fill values in hor[][] and ver[][]
+    for (int i=0; i&lt;N; i++)
+    {
+        for (int j=0; j&lt;N; j++)
+        {
+            if (mat[i][j] == 'O')
+                ver[i][j] = hor[i][j] = 0;
+            else
+            {
+                hor[i][j] = (j==0)? 1: hor[i][j-1] + 1;
+                ver[i][j] = (i==0)? 1: ver[i-1][j] + 1;
+            }
+        }
+    }
+
+    // Start from the rightmost-bottommost corner element and find
+    // the largest ssubsquare with the help of hor[][] and ver[][]
+    for (int i = N-1; i&gt;=1; i--)
+    {
+        for (int j = N-1; j&gt;=1; j--)
+        {
+            // Find smaller of values in hor[][] and ver[][]
+            // A Square can only be made by taking smaller
+            // value
+            int small = getMin(hor[i][j], ver[i][j]);
+
+            // At this point, we are sure that there is a right
+            // vertical line and bottom horizontal line of length
+            // at least 'small'.
+
+            // We found a bigger square if following conditions
+            // are met:
+            // 1)If side of square is greater than max.
+            // 2)There is a left vertical line of length &gt;= 'small'
+            // 3)There is a top horizontal line of length &gt;= 'small'
+            while (small &gt; max)
+            {
+                if (ver[i][j-small+1] &gt;= small &amp;&amp;
+                    hor[i-small+1][j] &gt;= small)
+                {
+                    max = small;
+                }
+                small--;
+            }
+        }
+    }
+    return max;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/07/closest-leaf-binary-tree/">[Question] Find Cloest Leaf in Binary Tree</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-10-07T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="www.geeksforgeeks.org/find-closest-leaf-binary-tree/index.html">link</a></p>
+
+<blockquote><p>Given a Binary Tree and a key, find distance of the closest leaf.</p>
+
+<p>Examples:</p></blockquote>
+
+<pre><code>          1
+        /    \    
+       2       3
+             /   \  
+            5     6   
+           /       \
+          7         8
+         / \       /
+        9  10     11
+
+Closest key to '8' is '11', so distance is 1 for '8'
+Closest key to '3' is '2', so distance is 2 for '3'
+Closest key to '5' is either '9' or '10', so distance is 2 for '5'
+Closest key to '2' is '2' itself, so distance is 0 for '2' 
+</code></pre>
+
+<h3>Solution</h3>
+
+<blockquote><p>traverse the given tree in preorder and keep track of ancestors (in a caching data struture, either it&rsquo;s List or an array with a correct pointer)</p></blockquote>
+
+<p>When we find our target, we do 2 things:</p>
+
+<ol>
+<li><p>find <strong>closest distance on lower subtrees of current node</strong>.</p></li>
+<li><p>for every ancester, find the <strong>closest distance on lower subtrees</strong>, then add with <strong>distance to ancester</strong>.</p></li>
+</ol>
+
+
+<p>Finally, return the smallest value seen above.</p>
+
+<h3>Code</h3>
+
+<p>Inspired by the code from <a href="www.geeksforgeeks.org/find-closest-leaf-binary-tree/index.html">G4G</a></p>
+
+<pre><code>int answer;
+
+public int findClosest(TreeNode root, int key) {
+    answer = Integer.MAX_VALUE;
+    helper(root, key, new ArrayList&lt;TreeNode&gt;());
+    return answer;
+}
+
+private void helper(TreeNode node, int key, List&lt;TreeNode&gt; path) {
+    if (node == null) {
+        return;
+    } else if (node.val != key) {
+        path.add(node);
+        helper(node.left, key, path);
+        helper(node.right, key, path);
+        path.remove(path.size() - 1);
+    } else {
+        // key matches with current node value
+        answer = lenToLowerLeaf(node);
+        // answer initially = cloest leaf from lower
+
+        int len = path.size();
+        for (int i = 0; i &lt; len; i++) {
+            // for every ancestor, calculate distance and compare
+            int ithToLowerLeaf = lenToLowerLeaf(path.get(i));
+            answer = Math.min(answer, (len - i) + ithToLowerLeaf);
+        }
+    }
+}
+
+private int lenToLowerLeaf(TreeNode node) {
+    if (node == null) {
+        return Integer.MAX_VALUE;
+    } else if (node.left == null &amp;&amp; node.right == null) {
+        return 0;
+    } else {
+        return 1 + Math.min(lenToLowerLeaf(node.left), lenToLowerLeaf(node.right));
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/07/all-string-placing-space/">[Amazon] All Strings by Placing Spaces</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-10-07T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="www.geeksforgeeks.org/print-possible-strings-can-made-placing-spaces/index.html">link</a></p>
+
+<blockquote><p>Given a string, print all possible strings that can be made by placing spaces (zero or one) in between them.</p>
+
+<p>Input:  str[] = &ldquo;ABC&rdquo;</p>
+
+<p>Output:</p></blockquote>
+
+<pre><code>    ABC
+    AB C
+    A BC
+    A B C
+</code></pre>
+
+<h3>Solution</h3>
+
+<p>recursion.</p>
+
+<h3>Code</h3>
+
+<pre><code>public void printAll(String input) {
+    if (input == null || input.length() &lt;= 1) {
+        // since we insert space in-between chars, so
+        return;
+    }
+    int len = input.length();
+    // len &gt;= 2
+    helper(input, len - 1);
+}
+
+private void helper(String s, int p) {
+    if (p == 1) {
+        System.out.println(s);
+        // no insertion
+        System.out.println(s.substring(0, 1) + " " + s.substring(1));
+        // insert at position 1
+    } else {
+        helper(s, p - 1);
+        helper(s.substring(0, p) + " " + s.substring(p), p - 1);
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/04/seven-bridge/">[Fundamental] the 7 Bridges Problem</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-10-04T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Overview</h1>
+
+<p>In East Prussia(普鲁士), people try to walk all <a href="https://en.wikipedia.org/wiki/Seven_Bridges_of_K%C3%B6nigsberg">7 bridges</a> w/o crossing a bridge twice.</p>
+
+<p>Leonhard Euler (pronounced &ldquo;oiler&rdquo;) – Swiss</p>
+
+<h1>Euler path</h1>
+
+<p>An Euler path, also called an Eulerian trail, is a walk on the graph edges of a graph which uses each graph edge in the original graph exactly once.</p>
+
+<h2>Degree</h2>
+
+<p>Node degree of a vertex: the number of edges incident with it.</p>
+
+<h2>Euler Theorem</h2>
+
+<p>A graph contains an euler path iffeither of the following cases hold:</p>
+
+<ol>
+<li>All except for two nodes have even degrees – the 2 odd-degree nodes must be start and end points</li>
+<li>all nodes have even degrees.</li>
+</ol>
+
+
+<h1>Application</h1>
+
+<p>networks, distributed systems, coding theory</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/02/shorest-manhattan-distance/">[Google] Shortest Manhattan Distance</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-10-02T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.mitbbs.com/article_t/JobHunting/33054861.html">link</a></p>
+
+<blockquote><p>给一个 n*m 的房间，房间里存在各种可能的墙，房间的格子里已经放了 e 个器材，要
+求新放一个器材，放置位置距其它 e 个器材的距离最近。Breadth-first search.</p></blockquote>
+
+<h3>Solution</h3>
+
+<blockquote><p>对 e个设备 BFS, 求每个设备到每个可以放新器材的点的距离，然后叠加。</p>
+
+<p>最后O（n<sup>2</sup>）一遍找最小值。复杂度O（e*n<sup>2</sup>）</p></blockquote>
+
+<p>As for whether we choose to check each equipment position, or check each vacant position, it&rsquo;s decided by how many equipment is there. If very little equipments (e is small), then this solution should work.</p>
+
+<p>However, what is there is obstacles in the matrix?</p>
+
+<p>We have to use BFS then. It took more space usage, but the time complexity should be same.</p>
+
+<h3>Code</h3>
+
+<pre><code>public void findCenter(int[][] input, int numberOfEquip) {
+    int m = input.length;
+    int n = input[0].length;
+
+    // there's gonna be m * n positions
+    // we gonna cumulate (numberOfEquip) distances for each position
+    int[] dis = new int[m * n];
+
+    // from the input map, find Equipments
+    for (int i = 0; i &lt; m; i++) {
+        for (int j = 0; j &lt; n; j++) {
+            if (input[i][j] == 1) {
+                // 1 represents equipment
+                // when found, add the distance to every position
+                cumulateDistance(i, j, dis, m, n);
+            }
+        }
+    }
+
+    // find the smallest cumulated distance from dis[].
+    int sIndex = 0;
+    int smallest = dis[0];
+    for (int i = 0; i &lt; m * n; i++) {
+        if (dis[i] &lt; smallest) {
+            smallest = dis[i];
+            sIndex = i;
+        }
+    }
+
+    // index sIndex is the final answer
+    System.out.println("Answer: " + (sIndex / n) + " " + (sIndex % n));
+}
+
+private void cumulateDistance(int x, int y, int[] dis, int m, int n) {
+    for (int i = 0; i &lt; m * n; i++) {
+        int a = i / n;
+        int b = i % n;
+        dis[i] += Math.abs(a - x) + Math.abs(b - y);
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/09/02/Facebook-photo-storage/">[Design] Facebook Photo Storage</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-09-02T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Stats</h1>
+
+<p>Facebook has 1.5 billion monthly active users, 970 million daily active users <a href="http://newsroom.fb.com/company-info/">as of June 2015</a>.</p>
+
+<p><img class="middle" src="/assets/images/facebook-user-count.png"></p>
+
+<p>image from <a href="http://www.statista.com/statistics/264810/number-of-monthly-active-facebook-users-worldwide/">statista.com</a>.</p>
+
+<p>In 2009, Facebook stores 15 billion photos for the user, which grows at 220 million per week, and 550,000 per second at peak.</p>
+
+<p>It&rsquo;s 2015 now, you might want to mulitply these numbers by 3~6.</p>
+
+<p>I have roughly estimated the statistics of Facebook users, Facebook photos and growth rate, just to give you an idea of the size of data Facebook has got:</p>
+
+<blockquote><p>Total user: 1.5b</p>
+
+<p>Total photoes: 150b, which is 100 photo/user</p>
+
+<p>Each photo got 4 different sizes, so 600b photos are stored.</p>
+
+<p>New photo per day: 500m</p>
+
+<p>New photo per second: 6,000</p>
+
+<p>Peak incoming photo per second: 3m</p></blockquote>
+
+<h1>Old architecture</h1>
+
+<p>3 tiers design:</p>
+
+<ol>
+<li><p><strong>Upload tier</strong> receives users’ photo uploads, scales the original images and saves them on the NFS storage tier.</p></li>
+<li><p><strong>Photo serving tier</strong> receives HTTP requests for photo images and serves them from the NFS storage tier.</p></li>
+<li><p><strong>NFS storage tier</strong> built on top of commercial storage appliances.</p></li>
+</ol>
+
+
+<blockquote><p><strong><a href="https://en.wikipedia.org/wiki/Network_File_System">Network File System</a></strong> (NFS) is a distributed file system protocol originally developed by Sun Microsystems in 1984, allowing a user on a client computer to access files over a network much like local storage is accessed.</p></blockquote>
+
+<h2>Problem</h2>
+
+<ol>
+<li><p>there is an <strong>enormous amount of metadata</strong></p>
+
+<p> &hellip; so much that is <a href="https://code.facebook.com/posts/685565858139515/needle-in-a-haystack-efficient-storage-of-billions-of-photos/">exceeds the caching abilities of the NFS storage tier</a>, <strong> resulting in multiple I/O operations</strong> per photo upload or read request</p></li>
+</ol>
+
+
+<h2>Solution</h2>
+
+<ol>
+<li><p>relies heavily on CDNs to serve photos.</p></li>
+<li><p>Cachr: a caching server tier caching Facebook &ldquo;profile&rdquo; images.</p></li>
+<li><p>NFS file handle cache - deployed on the photo serving tier eliminates some of the NFS storage tier metadata overhead</p></li>
+</ol>
+
+
+<h1>Haystack Photo Infrastructure</h1>
+
+<p>The new photo infrastructure merges the <strong>photo serving</strong> and <strong>storage tier</strong> into one physical tier. It implements <strong>a HTTP based photo server</strong> which stores photos in a generic object store called Haystack.</p>
+
+<p>Goal: eliminate any unnecessary metadata overhead for photo read operations, so that each read I/O operation was only reading actual photo data</p>
+
+<p>5 main functional layers:</p>
+
+<ol>
+<li><p>HTTP server</p></li>
+<li><p>Photo Store</p></li>
+<li><p>Haystack Object Store</p></li>
+<li><p>Filesystem</p></li>
+<li><p>Storage</p></li>
+</ol>
+
+
+<h2>Storage</h2>
+
+<p>The commodity machine HW typically is 2x quadcore CPU + 32GB RAM + 512MB NV-RAM cache + 12TB SATA drives.</p>
+
+<blockquote><p><a href="https://en.wikipedia.org/wiki/Non-volatile_random-access_memory">Non-volatile random-access memory</a> (NVRAM) is random-access memory that retains its information when power is turned off (non-volatile).</p>
+
+<p>This is in contrast to dynamic random-access memory (DRAM) and static random-access memory (SRAM)</p></blockquote>
+
+<p>So each <strong>storage blade</strong> is around 10TB. Configured as <strong>RAID-6</strong> partition.</p>
+
+<blockquote><p><a href="http://searchstorage.techtarget.com/definition/RAID-6-redundant-array-of-independent-disks">RAID 6</a>, also known as double-parity RAID, uses two parity stripes on each disk. It allows for two disk failures within the RAID set before any data is lost.</p></blockquote>
+
+<p>Pros:</p>
+
+<ol>
+<li>adequate redundancy</li>
+<li>excellent read performance</li>
+<li>low storage cost down</li>
+</ol>
+
+
+<p>Cons:</p>
+
+<p><strong>The poor write performance</strong> is partially mitigated by the <strong>RAID controller NVRAM write-back cache</strong>. Since the reads are mostly random, the NVRAM cache is fully reserved for writes.</p>
+
+<p><strong>The disk caches are disabled</strong> in order to guarantee data consistency in the event of a crash or a power loss.</p>
+
+<h2>Filesystem</h2>
+
+<h3>How does filesystem read pictures?</h3>
+
+<p>Photo read requests result in <strong>read() system calls</strong> at known offsets in these files.</p>
+
+<p>Each file in the filesystem is represented by a structure called an inode which contains a block map that maps the logical file offset to the physical block offset on the physical volume.</p>
+
+<p>For large files, the block map can be quite large.</p>
+
+<h3>Problem</h3>
+
+<p><strong>Block based filesystems</strong> maintain mappings for <strong>each logical block</strong>, and for large files, this information will not typically fit into the cached inode and is stored in indirect address blocks instead, which must be traversed in order to read the data for a file.</p>
+
+<p>There can be several layers of indirection, so a single read could result in <strong>several I/Os</strong> (if not cached).</p>
+
+<h3>Solution</h3>
+
+<p><strong>Extent based filesystems</strong> maintain mappings only for contiguous ranges of blocks (extents). A block map for a contiguous large file could consist of only one extent which would fit in the inode itself.</p>
+
+<blockquote><p><a href="https://goo.gl/uQA35V">An extent</a> is a contiguous area of storage reserved for a file in a file system, represented as a range. A file can consist of zero or more extents; <strong>one file fragment requires one extent</strong>. The direct benefit is in storing each range compactly as two numbers, instead of canonically storing every block number in the range.</p>
+
+<p>Extent-based file systems can also <strong>eliminate most of the metadata overhead of large files</strong> that would traditionally be taken up by the block allocation tree&hellip; saving on storage space is pretty slight, but&hellip; <strong>the reduction in metadata is significant and reduces exposure to file system corruption</strong> as one bad sector in the <em>block allocation tree</em> causes much greater data loss than one bad sector in stored data.</p></blockquote>
+
+<h3>Problem of Extent-based file systems</h3>
+
+<p>However, if the file is severely fragmented and its blocks are not contiguous on the underlying volume, its block map can grow large as well.</p>
+
+<h3>The solution</h3>
+
+<p>Fragmentation can be mitigated by <strong>aggressively allocating a large chunk of space</strong> whenever growing the physical file.</p>
+
+<p>Currently, the filesystem of choice is XFS, an extent based filesystem providing efficient file preallocation.</p>
+
+<blockquote><p><strong><a href="https://en.wikipedia.org/wiki/XFS">XFS</a></strong> is a high-performance 64-bit journaling file system created by Silicon Graphics, Inc (SGI) in 1993.</p>
+
+<p>&hellip;was ported to the Linux kernel in 2001. As of June 2014, XFS is supported by most Linux distributions, some of which use it as the default file system.</p>
+
+<p>XFS enables <strong>extreme scalability of I/O threads</strong>, file system bandwidth, and size of files and of the file system itself when spanning multiple physical storage devices.</p>
+
+<p>Space allocation is performed via extents with <strong>data structures stored in B+ trees</strong>, improving the overall performance of the file system, especially when handling large files.</p>
+
+<p><strong>Delayed allocation</strong> assists in the prevention of file system fragmentation; <strong>online defragmentation</strong> is also supported. A feature unique to XFS is the <strong>pre-allocation of I/O bandwidth</strong> at a pre-determined rate, which is suitable for many real-time applications.</p></blockquote>
+
+<h2>Haystack</h2>
+
+<p>Haystack is a simple <strong>log structured (append-only) object store</strong>. Many images store in one Haystack. Typically, <a href="http://jishu.zol.com.cn/17742.html">Haystack Store is 100GB size</a>.</p>
+
+<p>A Haystack consists of two files:</p>
+
+<ol>
+<li><strong>haystack store file</strong> (containing the needles)
+
+<ol>
+<li>superblock</li>
+<li>needles (1 needle is 1 image)</li>
+</ol>
+</li>
+<li><strong>an index file</strong></li>
+</ol>
+
+
+<h3>1. haystack store file</h3>
+
+<p><img class="middle" src="/assets/images/851582_1409519009260319_311676661_n.jpg"></p>
+
+<ol>
+<li><p>The first 8KB of the haystack store is occupied by the <strong>superblock</strong>.</p></li>
+<li><p>following the superblock are <strong>needles</strong></p>
+
+<p> <strong>Needles represents the stored objects</strong>. Needle consisting of a header, the data, and a footer:</p>
+
+<p> <img class="middle" src="/assets/images/851578_319395058204993_541487263_n.jpg"></p>
+
+<p> A needle is uniquely identified by its \&lt;Offset, Key, Alternate Key, Cookie> tuple.</p>
+
+<p> Haystack doesn’t put any restriction on the values of the keys, and there can be needles with duplicate keys.</p></li>
+</ol>
+
+
+<h3>2. Index File</h3>
+
+<p><strong>Needle</strong> consisting of a header, the data, and a footer:</p>
+
+<p><img class="middle" src="/assets/images/851582_1374324519464800_699636937_n.jpg"></p>
+
+<p>The index file provides the minimal metadata required to locate a particular needle in the haystack store file.</p>
+
+<p><img class="middle" src="/assets/images/851582_314454922033518_1196942525_n.jpg"></p>
+
+<p>The index file is not critical, as it can be rebuilt from the haystack store file if required.</p>
+
+<p>The main purpose of the index: quick loading of the needle metadata into memory without traversing the larger Haystack store file, since the index is usually less than 1% the size of the store file.</p>
+
+<h3>Summary</h3>
+
+<p>All needles are stored in Haystack store file, and their location information is stored in Index File.</p>
+
+<p>What is Needle? Needles represents the stored objects (1 needle - 1 image).</p>
+
+<h2>Haystack Operations</h2>
+
+<ol>
+<li><p><strong>write</strong></p>
+
+<p> append new needle to haystack store file.</p>
+
+<p> later, corresponding index records are <strong>updated async</strong>.</p>
+
+<p> In case of failure, any partial needles are discarded, and fix index from the end of the haystack.</p>
+
+<p> You can&rsquo;t overwrite any needle, but you can insert using same key. Later, the needle <strong>with dup keys but largest offset</strong> became the most recent one.</p></li>
+<li><p><strong>read</strong></p>
+
+<p> <strong>parameters passed in</strong>: offset, key, alt key, cookie, data size</p>
+
+<p> if key, alt key and cookie matches, and checksum correct and needle is not marked as deleted, return.</p></li>
+<li><p><strong>delete</strong></p>
+
+<p> marks needle as deleted (set 1 bit), but index is not modified.</p>
+
+<p> the deleted space is not reclaimed unless <strong>compact the haystack</strong></p></li>
+</ol>
+
+
+<h2>Photo Store Server</h2>
+
+<p>Photo Store Server is responsible for accepting HTTP requests and translating them to the corresponding Haystack store operations.</p>
+
+<p>In order to minimize the number of I/Os required to retrieve photos, the server keeps an <strong>in-memory index of all photo offsets</strong>.</p>
+
+<p>At startup, <strong>the (photo) server reads the haystack index file and populates the in-memory index</strong>. The in-memory index is different from the index file in Haystack, as it stores lesser information, like this:</p>
+
+<p><img class="middle" src="/assets/images/851584_503528913060377_1268325854_n.jpg"></p>
+
+<ol>
+<li><p><strong>Photo Store Write/Modify Operation</strong></p>
+
+<ol>
+<li>writes photos to the haystack</li>
+<li>updates the in-memory index</li>
+</ol>
+
+
+<p> if there are duplicate images, the one stored at a larger offset is valid.</p></li>
+<li><p><strong>Photo Store Read Operation</strong></p>
+
+<p> passed in:</p>
+
+<ol>
+<li>haystack id</li>
+<li>a photo key,</li>
+<li>size</li>
+<li>cookie</li>
+</ol>
+
+
+<p> The server performs a lookup in the in-memory index based on the photo key and retrieves the offset of the needle containing the requested image.</p>
+
+<p> Since haystack delete operation doesn’t update the haystack index file record. Therefore a freshly populated in-memory index can contain stale entries for the previously deleted photos. Read such photo will fail and the in-memory index is updated to 0.</p></li>
+<li><p><strong>Photo Store Delete Operation</strong></p>
+
+<p> After calling the haystack delete operation, the in-memory index is updated to &lsquo;offset = zero&rsquo;</p></li>
+<li><p><strong>Compaction</strong></p>
+
+<p> Compaction is an online operation which reclaims the space used by the deleted and duplicate needles.</p>
+
+<p> creates a new haystack</p></li>
+<li><p><strong>HTTP Server</strong></p>
+
+<p> evhttp server</p>
+
+<p> multiple threads, with each serving a single HTTP request. Workload is mostly I/O bound, thus the performance of the HTTP server is not critical.</p></li>
+</ol>
+
+
+<h1>Summary</h1>
+
+<p>Storing photos as needles in the haystack <strong>eliminates the metadata overhead</strong> by aggregating hundreds of thousands of images in a single haystack store file.</p>
+
+<p>This keeps the metadata overhead very small and allows us to <strong>store each needle’s location in the store file in an in-memory index</strong>.</p>
+
+<p>This allows retrieval of an image’s data in <strong>a minimal number of I/O operations</strong>, eliminating all unnecessary metadata overhead.</p>
+
+<p>Ref: <a href="https://code.facebook.com/posts/685565858139515/needle-in-a-haystack-efficient-storage-of-billions-of-photos/">https://code.facebook.com/posts/685565858139515/needle-in-a-haystack-efficient-storage-of-billions-of-photos/</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/4">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/2">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,372 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[NineChap 3.2] Binary Tree BFS - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Template (BFS) BFS can be implemented using either 2 queues (replacing) or 1 queue. Of course 1 queue is better. link public ArrayList&lt;ArrayList& &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/06/10/NineChap-Binary-Tree-BFS/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[NineChap 3.2] Binary Tree BFS</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-10T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Template (BFS)</h2>
+
+<p>BFS can be implemented using either 2 queues (replacing) or 1 queue. Of course 1 queue is better.</p>
+
+<p><a href="http://answer.ninechapter.com/solutions/bfs-template/">link</a></p>
+
+<pre><code>public ArrayList&lt;ArrayList&lt;Integer&gt;&gt; levelOrder(TreeNode root) {
+    ArrayList result = new ArrayList();
+
+    if (root == null)
+        return result;
+
+    Queue&lt;TreeNode&gt; queue = new LinkedList&lt;TreeNode&gt;();
+    queue.offer(root);
+
+    while (!queue.isEmpty()) {
+        ArrayList&lt;Integer&gt; level = new ArrayList&lt;Integer&gt;(); // important
+        int size = queue.size();
+        for (int i = 0; i &lt; size; i++) {
+            TreeNode head = queue.poll();
+            level.add(head.val);
+            if (head.left != null)
+                queue.offer(head.left);
+            if (head.right != null)
+                queue.offer(head.right);
+        }
+        result.add(level); // important
+    }
+
+    return result;
+}
+</code></pre>
+
+<h2>Question list</h2>
+
+<p><strong>BFS</strong></p>
+
+<ol>
+<li><p><strong><a href="/blog/2014/05/25/Binary-Tree-Level-Order-Traversal/">Binary Tree Level Order Traversal</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/25/Binary-Tree-Level-Order-Traversal-II/">Binary Tree Level Order Traversal II</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/25/Binary-Tree-Zigzag-Level-Order-Traversal/">Binary Tree Zigzag Level Order Traversal</a></strong></p></li>
+</ol>
+
+
+<p><strong>Additional</strong></p>
+
+<ol>
+<li><p><strong><a href="/blog/2014/05/27/Construct-Binary-Tree-from-Preorder-and-Inorder/">Construct Binary Tree from Preorder and Inorder</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/27/Construct-Binary-Tree-from-Inorder-and-Postorder/">Construct Binary Tree from Inorder and Postorder</a></strong></p></li>
+</ol>
+
+
+<h2>Code</h2>
+
+<p>First 3 questions are basically same. Below code is for question 1. There is no &lsquo;catch-ya&rsquo;, it&rsquo;s very standard code.</p>
+
+<pre><code>public List&lt;List&lt;Integer&gt;&gt; levelOrder(TreeNode root) {
+    List&lt;List&lt;Integer&gt;&gt; ans = new LinkedList&lt;List&lt;Integer&gt;&gt;();
+    if (root == null) {
+        return ans;
+    }
+    Queue&lt;TreeNode&gt; q = new LinkedList&lt;TreeNode&gt;();
+    q.offer(root);
+    while(!q.isEmpty()) {
+        int size = q.size();
+        List&lt;Integer&gt; level = new LinkedList&lt;Integer&gt;();
+        for (int i = 0; i &lt; size; i ++) {
+            TreeNode node = q.poll();
+            level.add(node.val);
+            if (node.left != null) {
+                q.offer(node.left);
+            }
+            if (node.right != null) {
+                q.offer(node.right);
+            }
+        }
+        ans.add(level);
+    }
+    return ans;
+}
+</code></pre>
+
+<p><strong>Construct Binary Tree from Preorder and Inorder</strong> - written by me</p>
+
+<pre><code>public TreeNode buildTree(int[] preorder, int[] inorder) {
+    if (preorder == null || inorder == null || preorder.length != inorder.length) {
+        return null;
+    }
+    return helper(preorder, 0, preorder.length-1, inorder, 0, inorder.length-1);
+}
+
+private TreeNode helper(int[] preorder, int a, int b, int[] inorder, int c, int d) {
+    if (a &gt; b) {
+        return null;
+    }
+    int headVal = preorder[a];
+    TreeNode head = new TreeNode(headVal);
+    int p = c;
+    while (p &lt;= d) {
+        if (inorder[p] == headVal) {
+            break;
+        }
+        p ++;
+    }
+    head.left = helper(preorder, a+1, a+p-c, inorder, c, p-1);
+    head.right = helper(preorder, b-d+p+1, b, inorder, p+1, d);
+    return head;
+}
+</code></pre>
+
+<p><strong>Construct Binary Tree from Inorder and Postorder</strong> - similar to previous code, copied from <a href="http://answer.ninechapter.com/solutions/construct-binary-tree-from-inorder-and-postorder-traversal/">ninechap</a></p>
+
+<pre><code>private int findPosition(int[] arr, int start, int end, int key) {
+    int i;
+    for (i = start; i &lt;= end; i++) {
+        if (arr[i] == key) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+private TreeNode myBuildTree(int[] inorder, int instart, int inend,
+        int[] postorder, int poststart, int postend) {
+    if (instart &gt; inend) {
+        return null;
+    }
+
+    TreeNode root = new TreeNode(postorder[postend]);
+    int position = findPosition(inorder, instart, inend, postorder[postend]);
+
+    root.left = myBuildTree(inorder, instart, position - 1,
+            postorder, poststart, poststart + position - instart - 1);
+    root.right = myBuildTree(inorder, position + 1, inend,
+            postorder, poststart + position - instart, postend - 1);
+    return root;
+}
+
+public TreeNode buildTree(int[] inorder, int[] postorder) {
+    if (inorder.length != postorder.length) {
+        return null;
+    }
+    return myBuildTree(inorder, 0, inorder.length - 1, postorder, 0, postorder.length - 1);
+}
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-06-10T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ninechap/'>ninechap</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/06/10/NineChap-Binary-Tree-BFS/" data-via="" data-counturl="http://okc1.github.io/blog/2014/06/10/NineChap-Binary-Tree-BFS/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/06/10/NineChap-Binary-Search-Tree/" title="Previous Post: [NineChap 3.3] Binary Search Tree">&laquo; [NineChap 3.3] Binary Search Tree</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/06/10/NineChap-Binary-Tree-DFS/" title="Next Post: [NineChap 3.1] Binary Tree DFS and Divide Conquer">[NineChap 3.1] Binary Tree DFS and Divide Conquer &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,325 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Design] MapReduce Common Friends Example - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link Facebook&rsquo;s &ldquo;You and Joe have 230 friends in common&rdquo; feature. Sure you could use a decent caching strategy, but for &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/08/05/MapReduce-Common-Friends/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Design] MapReduce Common Friends Example</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-05T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://stackoverflow.com/a/12375878">link</a></p>
+
+<blockquote><p>Facebook&rsquo;s &ldquo;You and Joe have 230 friends in common&rdquo; feature. Sure you could use a decent caching strategy, but for now, use MapReduce.</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>This list doesn&rsquo;t change frequently so it&rsquo;d be wasteful to recalculate it every time. We&rsquo;re going to use mapreduce to calculate everyone&rsquo;s common friends once a day and store those results.</p>
+
+<p>Note that friends are <strong>bi-directional</strong>. If I&rsquo;m your friend, you&rsquo;re mine. (follow-up: how to do it for follower system?)</p>
+
+<h4>Input</h4>
+
+<p>Assume the friends are stored as Person->[List of Friends], our friends list is then:</p>
+
+<pre><code>A -&gt; B C D
+B -&gt; A C D E
+C -&gt; A B D E
+D -&gt; A B C E
+E -&gt; B C D
+</code></pre>
+
+<h4>Map</h4>
+
+<p>The mapper will output a key-value pair. The key will be a friend along with the person. The value will be the list of friends. The key will be sorted so that the friends are in order, causing all pairs of friends to go to the same reducer.</p>
+
+<p>For map(A -> B C D) :</p>
+
+<pre><code>(A B) -&gt; B C D
+(A C) -&gt; B C D
+(A D) -&gt; B C D
+</code></pre>
+
+<p>For map(B -> A C D E) : (Note that A comes before B in the key)</p>
+
+<pre><code>(A B) -&gt; A C D E
+(B C) -&gt; A C D E
+(B D) -&gt; A C D E
+(B E) -&gt; A C D E
+</code></pre>
+
+<p>For map(C -> A B D E) :</p>
+
+<pre><code>(A C) -&gt; A B D E
+(B C) -&gt; A B D E
+(C D) -&gt; A B D E
+(C E) -&gt; A B D E
+</code></pre>
+
+<p>For map(D -> A B C E) :</p>
+
+<pre><code>(A D) -&gt; A B C E
+(B D) -&gt; A B C E
+(C D) -&gt; A B C E
+(D E) -&gt; A B C E
+</code></pre>
+
+<p>And finally for map(E -> B C D):</p>
+
+<pre><code>(B E) -&gt; B C D
+(C E) -&gt; B C D
+(D E) -&gt; B C D
+</code></pre>
+
+<p>Before we send these key-value pairs to the reducers, we group them by their keys and get:</p>
+
+<pre><code>(A B) -&gt; (A C D E) (B C D)
+(A C) -&gt; (A B D E) (B C D)
+(A D) -&gt; (A B C E) (B C D)
+(B C) -&gt; (A B D E) (A C D E)
+(B D) -&gt; (A B C E) (A C D E)
+(B E) -&gt; (A C D E) (B C D)
+(C D) -&gt; (A B C E) (A B D E)
+(C E) -&gt; (A B D E) (B C D)
+(D E) -&gt; (A B C E) (B C D)
+</code></pre>
+
+<p>Each line will be passed as an argument to a reducer.</p>
+
+<h4>Reduce</h4>
+
+<p>The reduce function will simply intersect the lists of values and output the same key with the result of the intersection. After reduction:</p>
+
+<pre><code>(A B) -&gt; (C D)
+(A C) -&gt; (B D)
+(A D) -&gt; (B C)
+(B C) -&gt; (A D E)
+(B D) -&gt; (A C E)
+(B E) -&gt; (C D)
+(C D) -&gt; (A B E)
+(C E) -&gt; (B D)
+(D E) -&gt; (B C)
+</code></pre>
+
+<h4>Result</h4>
+
+<p>Now when D visits B&rsquo;s profile, we can quickly look up (B D) and see that they have three friends in common, (A C E).</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-08-05T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/design/'>design</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/08/05/MapReduce-Common-Friends/" data-via="" data-counturl="http://okc1.github.io/blog/2014/08/05/MapReduce-Common-Friends/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/08/05/AWS-explained/" title="Previous Post: [Design] Amazon Web Services">&laquo; [Design] Amazon Web Services</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/08/05/MapReduce-Intro/" title="Next Post: [Design] MapReduce Intro">[Design] MapReduce Intro &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

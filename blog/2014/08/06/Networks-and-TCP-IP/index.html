@@ -1,0 +1,305 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Design] Networks and TCP/IP - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Overview Internet protocol suite is a networking model and communications protocols used by the Internet. It is commonly known as TCP/IP. Four &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/08/06/Networks-and-TCP-IP/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Design] Networks and TCP/IP</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-06T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Overview</h2>
+
+<p><strong><a href="http://en.wikipedia.org/wiki/Internet_protocol_suite">Internet protocol suite</a></strong> is a networking model and communications protocols used by the Internet. It is commonly known as <strong>TCP/IP</strong>.</p>
+
+<p>Four abstraction layers:</p>
+
+<ol>
+<li>Application layer</li>
+<li>Transport layer</li>
+<li>Internet layer</li>
+<li>Link layer</li>
+</ol>
+
+
+<p><img class="middle" src="/assets/images/network-layers-connected.png"></p>
+
+<p>The protocols are maintained by the <strong>Internet Engineering Task Force</strong> (IETF).</p>
+
+<h3>A summary of four-layer model</h3>
+
+<ol>
+<li>Application: authentication, compression, and end user services</li>
+<li>Transport: handles the flow of data between systems and provides access to the network for applications via the BSD socket library</li>
+<li>Network: packet routing</li>
+<li>Link: Kernel OS/device driver interface to the network interface on the computer.</li>
+</ol>
+
+
+<p><a href="http://searchnetworking.techtarget.com/news/851291/TCP-Internet-Protocol-and-OSI">source</a></p>
+
+<h3>More details</h3>
+
+<p><strong>The Application layer</strong>:</p>
+
+<ol>
+<li>where applications create user data and communicate with other applications on another host (make use of Transport Layer to provide reliable or unreliable pipes to other processes).</li>
+<li>different application architecture, such as the client-server model and peer-to-peer.</li>
+<li>SMTP, FTP, SSH, HTTP all operate above this layer.</li>
+<li>processes are addressed via ports.</li>
+</ol>
+
+
+<p><img class="middle" src="/assets/images/network-ports.gif"></p>
+
+<blockquote><p>Well-known official port numbers are in the range of 0 - 255. Port 256 - 1023 are reserved for other well-known services. 1024 - 65535 are neither in-use nor reserved. They are used when TCP/IP automatically assigns port numbers to client programs.</p></blockquote>
+
+<p><strong>The Transport Layer</strong>:</p>
+
+<ol>
+<li>performs host-to-host communications.</li>
+<li>&ldquo;UDP&rdquo; provides unreliable datagram service.</li>
+<li>&ldquo;<strong>Transmission Control Protocol</strong>&rdquo; provides flow-control, connection establishment, and reliable transmission of data.</li>
+</ol>
+
+
+<p><strong>The Internet layer</strong>:</p>
+
+<ol>
+<li>exchange datagrams across network boundaries.</li>
+<li>establishes internetworking thus establishes the Internet.</li>
+<li>&ldquo;<strong>Internet Protocol</strong>&rdquo;, defines IP addresses and the routing structures used for the TCP/IP protocol suite.</li>
+<li>routing: transport datagrams to the next IP router that has the connectivity to a network closer to the final data destination.</li>
+</ol>
+
+
+<p><strong>The Link layer</strong>:</p>
+
+<ol>
+<li>defines the networking methods within local network link without intervening routers.</li>
+<li>describe local network topology and the interfaces needed to effect transmission of Internet layer datagrams to next-neighbor hosts.</li>
+</ol>
+
+
+<h3>Difference from OSI</h3>
+
+<p>The Internet protocol suite was in use <strong>before the OSI model</strong>, and is well established worldwide.</p>
+
+<p><a href="http://electronicdesign.com/what-s-difference-between/what-s-difference-between-osi-seven-layer-network-model-and-tcpip">The OSI model</a>, however, is a proven concept that is used in all other data communications protocols. It will continue to be used as a guideline for all other communications applications.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-08-06T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/design/'>design</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/08/06/Networks-and-TCP-IP/" data-via="" data-counturl="http://okc1.github.io/blog/2014/08/06/Networks-and-TCP-IP/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/08/06/HTTP-headers/" title="Previous Post: [Design] HTTP Headers">&laquo; [Design] HTTP Headers</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/08/06/Postorder-successor-Binary-Tree/" title="Next Post: [Google] Postorder successor in Binary Tree">[Google] Postorder successor in Binary Tree &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
