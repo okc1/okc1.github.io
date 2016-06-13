@@ -45,4 +45,8 @@ Example of this is the 'categories' list on the right hand side of the blog page
 
         Liquid::Template.register_tag('category_list', Jekyll::CategoryListTag)
 
+<<<<<<< HEAD
 1. rake generate && rake preview
+=======
+1. rake generate && rake preview
+>>>>>>> 0c97438afe650fd549605cc20093d02b773ee985
