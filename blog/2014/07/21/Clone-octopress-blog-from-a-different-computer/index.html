@@ -113,19 +113,21 @@ ruby dk.rb install
 
 <p><strong>clone the source branch to the local octopress folder</strong></p>
 
-<blockquote><p>using HTTPS</p>
+<p>using HTTPS</p>
 
-<p>git clone -b source <a href="https://github.com/okckd/okckd.github.io.git">https://github.com/okckd/okckd.github.io.git</a> octopress</p>
+<pre><code>git clone -b source https://github.com/okckd/okckd.github.io.git octopress
 
-<p>or using SSH</p>
+or using SSH
 
-<p>git clone -b source git@github.com:okckd/okckd.github.io.git octopress</p></blockquote>
+git clone -b source git@github.com:okckd/okckd.github.io.git octopress
+</code></pre>
 
 <p>I would recommend using SSH over HTTPS, because <strong>using HTTPS, you will need to type your username and password everytime you push</strong>.</p>
 
 <p>To correct &lsquo;HTTPS&rsquo; to &lsquo;SSH&rsquo;, follow <a href="http://stackoverflow.com/a/6565661">this instruction</a>:</p>
 
-<blockquote><p>git remote set-url origin git@github.com:username/repo.git</p></blockquote>
+<pre><code>git remote set-url origin git@github.com:username/repo.git
+</code></pre>
 
 <p>More info about HTTPS and SSH is <a href="https://help.github.com/articles/which-remote-url-should-i-use/">available</a>.</p>
 
@@ -147,15 +149,17 @@ bundle install
 
 <p>You can use either of the commands below to start octopress. I can&rsquo;t remember clearly but you can simply follow <a href="http://octopress.org/docs/setup/">this guide</a>.</p>
 
-<blockquote><p>rake setup_github_pages</p>
+<pre><code>rake setup_github_pages
+</code></pre>
 
 <p>when prompted, enter this url: git@github.com:okckd/okckd.github.io.git</p>
 
-<p>rake install</p></blockquote>
+<pre><code>rake install
+</code></pre>
 
 <h3>Commit your changes</h3>
 
-<p>You can do &lsquo;rake generate&rsquo;, then &lsquo;rake deploy&rsquo; to deploy to master branch. If you see this error when generate: &ldquo;Liquid Exception: Tag &hellip; was not properly terminated with regexp&rdquo;: <a href="https://github.com/davidfstr/rdiscount/issues/75">reference</a></p>
+<p>You can do &lsquo;rake generate&rsquo;, then &lsquo;rake deploy&rsquo; to deploy to master branch. If you see the &ldquo;<strong>Liquid Exception: Tag xxx was not properly terminated with regexp</strong>&rdquo;: <a href="https://github.com/davidfstr/rdiscount/issues/75">do this</a>:</p>
 
 <blockquote><p>The file that&rsquo;s causing this problem in octopress, is category_feed.xml, inside _includes/custom. You need to replace &ldquo;markdownify&rdquo; for &ldquo;markdownize&rdquo; and it works. Now I can rest.</p></blockquote>
 
