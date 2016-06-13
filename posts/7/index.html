@@ -1,0 +1,1239 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link Given a positive integer, return its corresponding column title as appear in an Excel sheet. For example: 1 -&gt; A 2 -&gt; B 3 -&gt; C &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/7/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/14/Excel-Sheet-Column-Title/">[LeetCode 168] Excel Sheet Column Title</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-14T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/excel-sheet-column-title/">link</a></p>
+
+<div class="question-content">
+              <pExcel Sheet Column Number></p><p>Given a positive integer, return its corresponding column title as appear in an Excel sheet.</p>
+
+<p>For example:</p>
+<pre>    1 -&gt; A
+    2 -&gt; B
+    3 -&gt; C
+    ...
+    26 -&gt; Z
+    27 -&gt; AA
+    28 -&gt; AB </pre>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/ifanchu">@ifanchu</a> for adding this problem and creating all test cases.</p><p></p>
+              
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/math/">Math</a>
+                  
+                </span>
+              
+            </div>
+
+
+<h3>Analysis</h3>
+
+<p>This is pretty much a similar question. It&rsquo;s pretty easy.</p>
+
+<h3>Code</h3>
+
+<pre><code>public class Solution {
+    public int titleToNumber(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        int sum = 0;
+        for (char ch: s.toCharArray()) {
+            sum *= 26;
+            sum += (int) (ch - 'A' + 1);
+        }
+        return sum;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/13/Maximum-Gap/">[LeetCode 164] Maximum Gap</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-13T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/maximum-gap/">link</a></p>
+
+<div class="question-content">
+              <p></p><p>Given an unsorted array, find the maximum difference between the successive elements in its sorted form.</p>
+
+<p>Try to solve it in linear time/space.</p>
+
+<p>Return 0 if the array contains less than 2 elements.</p>
+
+<p>You may assume all elements in the array are non-negative integers and fit in the 32-bit signed integer range.</p>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/porker2008">@porker2008</a> for adding this problem and creating all test cases.</p><p></p>
+              
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/sort/">Sort</a>
+                  
+                </span>
+              
+            </div>
+
+
+<h3>Analysis</h3>
+
+<p><strong>This is an extremely difficult question</strong> of bucket sort. I refered to <a href="http://www.programcreek.com/2014/03/leetcode-maximum-gap-java/">programcreek</a> and <a href="http://leetcode.tgic.me/maximum-gap/index.html">tgic&rsquo;s blog</a> for reference.</p>
+
+<h3>Solution</h3>
+
+<p><strong>Basic idea is to put elements into buckets</strong>. The number of bucket is (almost) same as the number of elements in the input. In this way, each bucket <strong>ideally</strong> will contain 1 element.</p>
+
+<p>We then know that <strong>the max gap must be cross-bucket instead of within bucket</strong>. So we simply keep track of max and min value within each bucket for the purpose of calculating gap.</p>
+
+<p><strong>Why did I say &ldquo;number of bucket is (almost) same as the number of elements in the input&rdquo;</strong>? Well, consider this case: 3 values and (maxVal - minVal) == 100. We can make 3 bucket with size = 34. How about 5 values and (maxVal - minVal) == 6? Bucket size shall be either 1 or 2. So we&rsquo;ll have either 3 or 6 bucket.</p>
+
+<p>So, in the code below, you can see I make bucket size &ldquo;larger by 1&rdquo;:</p>
+
+<pre><code>// bSize is size of bucket (should be larger by 1)
+int bSize = (maxVal - minVal + 1) / num.length + 1;
+
+// calcualte number of buckets needed
+int bCount = (maxVal - minVal) / bSize + 1;
+Bucket[] buckets = new Bucket[bCount];
+</code></pre>
+
+<p>Note that simply use <strong>input.length</strong> as bucket count is wrong.</p>
+
+<h3>Code</h3>
+
+<p>My code written in Java:</p>
+
+<pre><code>public class Solution {
+    public int maximumGap(int[] num) {
+        if (num == null || num.length &lt; 2) {
+            return 0;
+        }
+
+        // find out max and min values of input
+        int minVal = num[0];
+        int maxVal = num[0];
+        for (int n: num) {
+            minVal = Math.min(minVal, n);
+            maxVal = Math.max(maxVal, n);
+        }
+        // bSize is size of bucket (should be larger by 1)
+        int bSize = (maxVal - minVal + 1) / num.length + 1;
+
+        // calcualte number of buckets needed
+        int bCount = (maxVal - minVal) / bSize + 1;
+        Bucket[] buckets = new Bucket[bCount];
+
+        // match every value into a bucket
+        // bucket maintains the max/min within the bucket
+        for (int n: num) {
+            int bIndex = (n - minVal) / bSize;
+            if (buckets[bIndex] == null) {
+                buckets[bIndex] = new Bucket(n, n);
+            } else {
+                buckets[bIndex].updateVal(n);
+            }
+        }
+
+        // for every bucket, check in sequence and get max gap
+        int gap = 0;
+        int pre = 0;
+        int cur = 1;
+        while (cur &lt; bCount) {
+            // skip all empty buckets
+            while (cur &lt; bCount &amp;&amp; buckets[cur] == null) {
+                cur++;
+            }
+            if (cur == bCount) break;
+            // update gap, pre and cur
+            gap = Math.max(gap, buckets[cur].min - buckets[pre].max);
+            pre = cur;
+            cur++;
+        }
+
+        return gap;
+    }
+
+    class Bucket {
+        int min;
+        int max;
+
+        public Bucket(int a, int b) {
+            min = a;
+            max = b;
+        }
+
+        public void updateVal(int val) {
+            min = Math.min(min, val);
+            max = Math.max(max, val);
+        }
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/13/Factorial-Trailing-Zeroes/">[LeetCode 172] Factorial Trailing Zeroes</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-13T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/factorial-trailing-zeroes/">link</a></p>
+
+<div class="question-content">
+              <p></p><p>Given an integer <i>n</i>, return the number of trailing zeroes in <i>n</i>!.</p>
+
+<p><b>Note: </b>Your solution should be in logarithmic time complexity.</p>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/ts">@ts</a> for adding this problem and creating all test cases.</p><p></p>
+
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+
+                  <a class="btn btn-xs btn-primary" href="/tag/math/">Math</a>
+
+                </span>
+
+            </div>
+
+
+<h3>Analysis</h3>
+
+<p>This question I&rsquo;ve seen it quite a few time, also. We&rsquo;re basically count the number of factor 5s.</p>
+
+<p>Eg.</p>
+
+<blockquote><p>n = 5, count = 1</p>
+
+<p>n = 6, count = 1</p>
+
+<p>n = 10, count = 2</p>
+
+<p>n = 24, count = 4</p>
+
+<p>n = 25, count = 6</p>
+
+<p>n = 26, count = 6</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Please read this post <strong><a href="/blog/2014/07/02/Trailing-Zero-of-Factorial/">[LintCode] Trailing Zeros of Factorial</a></strong>.</p>
+
+<h3>Code</h3>
+
+<pre><code>public class Solution {
+    public int trailingZeroes(int n) {
+        if (n &lt; 5) {
+            return 0;
+        }
+        int res = 0;
+        long base = 5;
+        while (n &gt;= base) {
+            res += n / base;
+            base *= 5;
+        }
+        return res;
+    }
+}
+</code></pre>
+
+<p>another pretty good solution:</p>
+
+<pre><code>public class Solution {
+    public int trailingZeroes(int n) {
+        int count = 0;
+        for (int i = n / 5; i &gt; 0; i = i / 5) {
+            count = count + i;
+        }
+        return count;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/13/Excel-Sheet-Column-Number/">[LeetCode 171] Excel Sheet Column Number</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-13T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/excel-sheet-column-number/">link</a></p>
+
+<div class="question-content">
+              <p></p><p>Related to question <a href="https://oj.leetcode.com/problems/excel-sheet-column-title/">Excel Sheet Column Title</a></p>
+<p>Given a column title as appear in an Excel sheet, return its corresponding column number.</p>
+
+<p>For example:</p>
+<pre>    A -&gt; 1
+    B -&gt; 2
+    C -&gt; 3
+    ...
+    Z -&gt; 26
+    AA -&gt; 27
+    AB -&gt; 28 </pre>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/ts">@ts</a> for adding this problem and creating all test cases.</p><p></p>
+              
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/math/">Math</a>
+                  
+                </span>
+              
+            </div>
+
+
+<h3>Analysis</h3>
+
+<p>This question I&rsquo;ve seen it quite a few time. It&rsquo;s very standard integer conversion question.</p>
+
+<h3>Solution</h3>
+
+<p>Please read this post <strong><a href="/blog/2014/08/16/Excel-decimal-conversion/">[ItInt5] Excel Decimal Conversion</a></strong>.</p>
+
+<h3>Code</h3>
+
+<p>recursively:</p>
+
+<pre><code>public class Solution {
+    public String convertToTitle(int n) {
+        if (n &lt; 1) {
+            return "";
+        }
+        n--;
+        char ch = (char) ((n % 26) + 'A');
+        return convertToTitle(n / 26) + ch;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/12/multi-map-java/">[Palantir] MultiMap in Java Without Using Collections</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-12T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=18479662">link</a></p>
+
+<blockquote><p>Explain how you would implement a multi-map in Java without using any collections?</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>This question is pretty strange in a tech interview. But still, if you are asked, I think the most obvious solution is pointed out by <a href="http://www.careercup.com/question?id=18479662">careercup user Abhi</a>.</p>
+
+<p>The basic idea is to build a nested list structure ourselves, without considering the time complexity. See code below.</p>
+
+<h3>Code</h3>
+
+<pre><code>public class Node {
+    Object key;
+    Node next;
+    ValueNode vnode;
+}
+public class ValueNode {
+    Object Value;
+    ValueNode next;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/12/duplicate-within-k-distance/">[Palantir] Find Duplicate Within K Distance</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-12T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=18517665">link</a></p>
+
+<blockquote><p>Given an array of values, design and code an algorithm that returns whether there are two duplicates within k indices of each other?</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>We can keep a HashMap for storing the previous occuring position of a number.</p>
+
+<h3>Code</h3>
+
+<pre><code>public boolean dupWithinK(int k, int[] arr) {
+    Set&lt;Integer&gt; set = new HashSet&lt;Integer&gt;();
+    for (int i = 0; i &lt; arr.length; i++) {
+        if (set.contains(arr[i])) {
+            return true;
+        }
+        if (i &lt; k) {
+            // the first k numbers
+            set.add(arr[i]);
+        } else {
+            // the (k+1) th number and onwards
+            set.add(arr[i]);
+            set.remove(arr[i - k]);
+        }
+    }
+    return false;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/12/Find-Peak-Element/">[LeetCode 162] Find Peak Element</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-12T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/find-peak-element/">link</a></p>
+
+<div class="question-content">
+              <p></p><p>A peak element is an element that is greater than its neighbors.</p>
+
+<p>Given an input array where <code>num[i] ? num[i+1]</code>, find a peak element and return its index.</p>
+
+<p>The array may contain multiple peaks, in that case return the index to any one of the peaks is fine.</p>
+
+<p>You may imagine that <code>num[-1] = num[n] = -8</code>.</p>
+
+<p>For example, in array <code>[1, 2, 3, 1]</code>, 3 is a peak element and your function should return the index number 2.</p>
+
+<p class="showspoilers"><a href="#" onclick="showSpoilers(this); return false;">click to show spoilers.</a></p>
+
+<div class="spoilers" style="display: none;"><b>Note:</b>
+<p>Your solution should be in logarithmic complexity.</p>
+</div>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/ts">@ts</a> for adding this problem and creating all test cases.</p><p></p>
+              
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/array/">Array</a>
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/binary-search/">Binary Search</a>
+                  
+                </span>
+              
+            </div>
+
+
+<h3>Analysis</h3>
+
+<p>This basically is a binary search question. Instead of checking the values, we check the slope (upgoing or downslope).</p>
+
+<p><strong>The important point</strong> is the special cases like [1, 2, 3] or [3, 2, 1], we need to return the corner values. Well there&rsquo;re 2 ways to handle these corner cases.</p>
+
+<h3>Solution</h3>
+
+<p>First, referring to <a href="http://www.geeksforgeeks.org/find-a-peak-in-a-given-array/">G4G</a>, the corner case is handled in this way:</p>
+
+<pre><code>if ((mid == 0 || arr[mid-1] &lt;= arr[mid]) &amp;&amp;
+        (mid == n-1 || arr[mid+1] &lt;= arr[mid]))
+    return mid;
+</code></pre>
+
+<p>The code 1 below is doing similar things. That code is readable and easy to come up with. I recommend this solution during a interview.</p>
+
+<p>For those who are interested, there is a extremely concise solution thanks to <a href="http://blog.csdn.net/u010367506/article/details/41943309">Duplan</a>. I have the Java version posted below as code 2.</p>
+
+<h3>Code</h3>
+
+<p>Code 1</p>
+
+<pre><code>public class Solution {
+    public int findPeakElement(int[] num) {
+        if (num == null || num.length == 0) {
+            return 0;
+        } else if (num.length == 1) {
+            return 0;
+        } else if (num[0] &gt; num[1]) {
+            return 0;
+        } else if (num[num.length - 2] &lt; num[num.length - 1]) {
+            return num.length - 1;
+        }
+        // now the leftmost edge is increasing
+        // and the rightmost edge is also increasing backwards
+        return helper(num, 0, num.length - 1);
+    }
+
+    public int helper(int[] num, int left, int right) {
+        int mid = left + (right - left) / 2;
+        if (left + 2 == right) {
+            return mid;
+        } else if (num[mid] &gt; num[mid + 1]) {
+            // middle is decreasing, so peak on the left side
+            return helper(num, left, mid + 1);
+        } else {
+            return helper(num, mid, right);
+        }
+    }
+}
+</code></pre>
+
+<p>Code 2</p>
+
+<pre><code>public class Solution {
+    public int findPeakElement(int[] num) {
+        if (num == null || num.length == 0) {
+            return 0;
+        }
+        return helper(num, 0, num.length - 1);
+    }
+
+    public int helper(int[] num, int left, int right) {
+        int mid = left + (right - left) / 2;
+        if (left == right) {
+            return left;
+        } else if (num[mid] &gt; num[mid + 1]) {
+            // middle is decreasing, so peak on the left side
+            return helper(num, left, mid);
+        } else {
+            return helper(num, mid + 1, right);
+        }
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/12/Compare-Version-Numbers/">[LeetCode 165] Compare Version Numbers</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-12T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/compare-version-numbers/">link</a></p>
+
+<div class="question-content">
+              <p></p><p>Compare two version numbers <i>version1</i> and <i>version2</i>.<br>
+If <i>version1</i> &gt; <i>version2</i> return 1, if <i>version1</i> &lt; <i>version2</i> return -1, otherwise return 0.</p>
+
+<p>You may assume that the version strings are non-empty and contain only digits and the <code>.</code> character.<br>
+The <code>.</code> character does not represent a decimal point and is used to separate number sequences.<br>
+For instance, <code>2.5</code> is not "two and a half" or "half way to version three", it is the fifth second-level revision of the second first-level revision.</p>
+
+<p>Here is an example of version numbers ordering:</p>
+<pre>0.1 &lt; 1.1 &lt; 1.2 &lt; 13.37</pre>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/ts">@ts</a> for adding this problem and creating all test cases.</p><p></p>
+              
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/string/">String</a>
+                  
+                </span>
+              
+            </div>
+
+
+<h3>Analysis</h3>
+
+<p>I&rsquo;ve seen a couple of interesting ideas on other people&rsquo;s blogs, including <a href="http://www.programcreek.com/2014/03/leetcode-compare-version-numbers-java/">one</a> that uses String.split() to convert input to an array, and <a href="http://www.meetqun.com/thread-3331-1-1.html">this one</a> which uses 2 pointers to compare.</p>
+
+<p>My solution might seem more intuitive for some. See below for my solution.</p>
+
+<h3>Solution</h3>
+
+<p>The idea is to identify what the current number is (before end of string, or before the next &lsquo;.&rsquo;). If there&rsquo;s no more string, value = 0, so the case of (1.0, 1) essentially equals. Without further ado, let&rsquo;s look at the code.</p>
+
+<h3>Code</h3>
+
+<pre><code>public class Solution {
+    public int compareVersion(String version1, String version2) {
+        if (version1 == null || version2 == null) {
+            return 0;
+        }
+        return helper(version1, version2);
+    }
+
+    private int helper(String v1, String v2) {
+        if (v1.length() == 0 &amp;&amp; v2.length() == 0) {
+            return 0;
+        }
+
+        int num1 = 0;
+        int num2 = 0;
+
+        if (v1.length() != 0) {
+            int p1 = 0;
+            while (p1 &lt; v1.length() &amp;&amp; v1.charAt(p1) != '.') {
+                p1++;
+            }
+            num1 = Integer.parseInt(v1.substring(0, p1));
+            if (p1 &lt; v1.length()) p1++;
+            v1 = v1.substring(p1);
+        }
+
+        if (v2.length() != 0) {
+            int p2 = 0;
+            while (p2 &lt; v2.length() &amp;&amp; v2.charAt(p2) != '.') {
+                p2++;
+            }
+            num2 = Integer.parseInt(v2.substring(0, p2));
+            if (p2 &lt; v2.length()) p2++;
+            v2 = v2.substring(p2);
+        }
+
+        if (num1 != num2) {
+            return (num1 - num2) / Math.abs(num1 - num2);
+        } else {
+            return helper(v1, v2);
+        }
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/11/Fraction-to-Recurring-Decimal/">[LeetCode 166] Fraction to Recurring Decimal</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-11T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/fraction-to-recurring-decimal/">link</a></p>
+
+<div class="question-content">
+              <p></p><p>Given two integers representing the numerator and denominator of a fraction, return the fraction in string format.</p>
+
+<p>If the fractional part is repeating, enclose the repeating part in parentheses.</p>
+<p>
+For example,
+</p><ul>
+<li>Given numerator = 1, denominator = 2, return "0.5".</li>
+<li>Given numerator = 2, denominator = 1, return "2".</li>
+<li>Given numerator = 2, denominator = 3, return "0.(6)".</li>
+</ul>
+<p></p>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/Shangrila">@Shangrila</a> for adding this problem and creating all test cases.</p><p></p>
+              
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/hash-table/">Hash Table</a>
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/math/">Math</a>
+                  
+                </span>
+</div>
+
+
+<h3>Analysis</h3>
+
+<p>Wow, this is just another incredible question on Leetcode. Quite a few difficult corner cases in the OJ.</p>
+
+<p>Current AC rate is first lowest at 12.4%.</p>
+
+<h3>Solution</h3>
+
+<p>There&rsquo;re 3 things that we must take note:</p>
+
+<ol>
+<li>Handle positive/nagetive cases well. Note that both numerator and denominator can be negative number. And there&rsquo;re also case like:</li>
+</ol>
+
+
+<blockquote><p>1 / -3 = -0.(3)</p></blockquote>
+
+<ol>
+<li>Note that we have to match the repetation of the actual numerator. Not the quotient. What do I mean by that?</li>
+</ol>
+
+
+<blockquote><p>1 / 6 = 0.1(6)</p>
+
+<p>1 / 333 = 0.(003)</p></blockquote>
+
+<ol>
+<li><p>Note below is <strong>how to override the equals() method</strong> (first one is wrong and second is right):</p>
+
+<p> public boolean equals(Pair p) {</p>
+
+<p> }</p>
+
+<p> public boolean equals(Object obj) {</p>
+
+<p> }</p></li>
+</ol>
+
+
+<p><strong>One more thing</strong>: Most other guys' solutions like <a href="http://www.programcreek.com/2014/03/leetcode-fraction-to-recurring-decimal-java/">this</a>, <a href="http://blog.csdn.net/ljiabin/article/details/42025037">this</a> and <a href="http://yuanhsh.iteye.com/blog/2176178">this</a> are using Hashing. It&rsquo;s fine and definitely good. I used linearly search though, which is a small time compromise. I am presenting my code below and please just consider it as something different. Keep in mind it&rsquo;s not the optimized solution.</p>
+
+<h3>Code</h3>
+
+<pre><code>public class Solution {
+    public String fractionToDecimal(int numerator, int denominator) {
+        long quotient = (long) numerator / denominator;
+        long reminder = (long) numerator % denominator;
+        if (reminder == 0) {
+            return String.valueOf(quotient);
+        }
+
+        // The result has 3 parts: sign, integer part, and fraction part
+        // eg. -4 / 3 = -1 and the result of (1/3) = (3)
+        String sign = ((long) numerator * denominator &gt;= 0) ? "" : "-";
+        long integer = Math.abs(quotient);
+        String fraction = fraction(Math.abs((long)reminder), Math.abs((long)denominator));
+
+        // why do we have to seperate sign from integer?
+        // cuz 1 / -3 = -0.(3), while quotient is 0. 
+        // So, we can't simply concatenate quotient with fraction
+        return sign + integer + "." + fraction;
+    }
+
+    String fraction(long num, long denum) {
+        // eg. num = 1, denum = 4, should return "25"
+
+        List&lt;Pair&gt; list = new ArrayList&lt;Pair&gt;();
+        String result = "";
+        while (num != 0) {
+            num *= 10;
+            long digit = num / denum;
+
+            // eg. 1 / 333 = (003), so the pairs would be like this:
+            // {10, 0}, {100, 0}, {1000, 3}, {10, 0}...
+            Pair cur = new Pair(num, digit);
+            num %= denum;
+
+            // now add cur Pair to the list
+            if (list.indexOf(cur) == -1) {
+                list.add(cur);
+            } else {
+                // found a recurring dicimal in the previous output stream
+                int pos = list.indexOf(cur);
+                for (int i = 0; i &lt; pos; i++) {
+                    result += list.get(i).digit;
+                }
+                result += "(";
+                for (int i = pos; i &lt; list.size(); i++) {
+                    result += list.get(i).digit;
+                }
+                result += ")";
+                break;
+            }
+        }
+
+        // if there is recurring digit, the result should have already been generated
+        if (result.length() == 0) {
+            for (Pair p: list) {
+                result += p.digit;
+            }
+        }
+        return result;
+    }
+
+    class Pair {
+        long num;
+        long digit;
+
+        public Pair(long a, long b) {
+            num = a;
+            digit = b;
+        }
+
+        public boolean equals(Object obj) {
+            // note the equals interface passes in (Object obj)
+            // instead of a Pair object
+            Pair p = (Pair) obj;
+            return this.num == p.num &amp;&amp; this.digit == p.digit;
+        }
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/08/Intersection-of-Two-Linked-Lists/">[LeetCode 160] Intersection of Two Linked Lists</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-08T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/intersection-of-two-linked-lists/">link</a></p>
+
+<div class="question-content">
+              <p></p><p>Write a program to find the node at which the intersection of two singly linked lists begins.</p>
+<br>
+<p>For example, the following two linked lists: </p>
+<pre>A:          a1 ? a2
+                   ?
+                     c1 ? c2 ? c3
+                   ?            
+B:     b1 ? b2 ? b3
+</pre>
+<p>begin to intersect at node c1.</p>
+<br>
+<p><b>Notes:</b>
+</p><ul>
+<li>If the two linked lists have no intersection at all, return <code>null</code>.</li>
+<li>The linked lists must retain their original structure after the function returns. </li>
+<li>You may assume there are no cycles anywhere in the entire linked structure.</li>
+<li>Your code should preferably run in O(n) time and use only O(1) memory.</li>
+</ul>
+<p></p>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/stellari">@stellari</a> for adding this problem and creating all test cases.</p><p></p>
+              
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/linked-list/">Linked List</a>
+                  
+                </span>
+              
+            </div>
+
+
+<h3>Analysis</h3>
+
+<p>This question is very similar to <strong>[LeetCode Plus] Lowest Common Ancestor of Binary Tree (II)</strong>.</p>
+
+<h3>Solution</h3>
+
+<p><a href="http://stackoverflow.com/a/2216683/909524">This</a> is a pretty nice answer. The following explanation is quoted from <a href="http://www.geeksforgeeks.org/write-a-function-to-get-the-intersection-point-of-two-linked-lists/">g4g</a>:</p>
+
+<blockquote><ol>
+<li><p>Get count of the nodes in first list, let count be c1.</p></li>
+<li><p>Get count of the nodes in second list, let count be c2.</p></li>
+<li><p>Get the difference of counts d = abs(c1 – c2)</p></li>
+<li><p>Now traverse the bigger list from the first node till d nodes so that from here onwards both the lists have equal no of nodes.</p></li>
+<li><p>Then we can traverse both the lists in parallel till we come across a common node.</p></li>
+</ol>
+</blockquote>
+
+<h3>Code</h3>
+
+<pre><code>/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        return helper(headA, headB, length(headA) - length(headB));
+    }
+
+    public ListNode helper(ListNode n1, ListNode n2, int offset) {
+        if (offset &lt; 0) {
+            return helper(n2, n1, 0 - offset);
+        }
+        // move n1 to the distance of offset
+        while (offset != 0) {
+            n1 = n1.next;
+            offset--;
+        }
+        while (n1 != null &amp;&amp; n1 != n2) {
+            n1 = n1.next;
+            n2 = n2.next;
+        }
+        return n1;
+    }
+
+    int length(ListNode node) {
+        int len = 0;
+        while (node != null) {
+            node = node.next;
+            len++;
+        }
+        return len;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/8">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/6">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

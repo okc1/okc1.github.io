@@ -1,0 +1,350 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[LeetCode 134] Gas Station - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link There are N gas stations along a circular route, where the amount of gas at station i is gas[i]. You have a car with an unlimited gas &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/05/31/Gas-Station/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[LeetCode 134] Gas Station</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-31T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>31</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/gas-station/">link</a></p>
+
+<div class="question-content">
+            <p class="font-color"></p><p class="font-color">
+There are <i>N</i> gas stations along a circular route, where the amount of gas at station <i>i</i> is <code>gas[i]</code>.
+</p>
+
+<p class="font-color">
+You have a car with an unlimited gas tank and it costs <code>cost[i]</code> of gas to travel from station <i>i</i> to its next station (<i>i</i>+1). You begin the journey with an empty tank at one of the gas stations.
+</p>
+
+<p class="font-color">
+Return the starting gas station's index if you can travel around the circuit once, otherwise return -1.
+</p>
+
+<p class="font-color">
+<b>Note:</b><br>
+The solution is guaranteed to be unique.
+</p><p class="font-color"></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is a tough question, which requires a lot of math-related thinking</strong>.</p>
+
+<p><strong>My solution is IMHO very simple and easy</strong>. I first do a cumulation of gas from beginning to the end, and find the lowest cumulative value of the  gas tank (of course can be negative). That point is where I start the journey, which is to say, I will validate the path from that point, and then return the result.</p>
+
+<p><strong>This idea is not seen on Internet</strong>, although it is just 2 loops thru the list, and time complexity is also O(n). Anyway, there&rsquo;s a great solution which most people uses.</p>
+
+<p><strong>There&rsquo;s a great <a href="https://oj.leetcode.com/discuss/4159/share-some-of-my-ideas">post</a> that gives 2 valid conclusions</strong>:</p>
+
+<blockquote><ol>
+<li>If car starts at A and can not reach B (let&rsquo;s say B is the first station that A can not reach), then any station between A and B can not reach B.</li>
+<li>If the total number of gas is bigger than the total number of cost. There must be a valid solution.</li>
+</ol>
+</blockquote>
+
+<p>From here, a great solution can be found.</p>
+
+<h3>Solution</h3>
+
+<p><strong>A very detailed explanation and code is found from <a href="http://leetcodenotes.wordpress.com/2013/11/21/leetcode-gas-station-%E8%BD%AC%E5%9C%88%E7%9A%84%E5%8A%A0%E6%B2%B9%E7%AB%99%E7%9C%8B%E8%83%BD%E4%B8%8D%E8%83%BD%E8%B5%B0%E4%B8%80%E5%9C%88/">this blog</a></strong>.</p>
+
+<blockquote><ol>
+<li>从i开始，j是当前station的指针，sum += gas[j] – cost[j] （从j站加了油，再算上从i开始走到j剩的油，走到j+1站还能剩下多少油）</li>
+<li>如果sum &lt; 0，说明从i开始是不行的。那能不能从i..j中间的某个位置开始呢？假设能从k (i &lt;=k&lt;=j)走，那么i..j &lt; 0，若k..j >=0，说明i..k – 1更是&lt;0，那从k处就早该断开了，根本轮不到j。</li>
+<li>所以一旦sum&lt;0，i就赋成j + 1，sum归零。</li>
+</ol>
+</blockquote>
+
+<p>And note that if i is moved to j, there is no need to check (0..old_i) again, because this range must be reachable (write code again for beter understanding).</p>
+
+<p>Coding this solution <strong>is not easy</strong>! I failed to do it.</p>
+
+<h3>Code</h3>
+
+<p><strong>First, my solution</strong></p>
+
+<pre><code>public int canCompleteCircuit(int[] gas, int[] cost) {
+    int len = gas.length;
+    if (len == 0) return -1;
+    int start = -1, min = Integer.MAX_VALUE, total = 0;
+    for (int i = 0; i &lt; len; i ++) {
+        total += getDiff(gas, cost, i);
+        if (total &lt; min) {
+            min = total;
+            start = i;
+        }
+    }
+    start = (start + 1) % len;
+    // now traverse the route from start 
+    total = 0;
+    for (int i = 0; i &lt; len; i ++) {
+        total += getDiff(gas, cost, (start + i) % len);
+        if (total &lt; 0) return -1; 
+    }
+    return start;
+}
+
+private int getDiff(int[] gas, int[] cost, int i) {
+    return gas[i] - cost[i];
+}
+</code></pre>
+
+<p><strong>Second, best solution</strong></p>
+
+<pre><code>public int canCompleteCircuit(int[] gas, int[] cost) {
+    int i = 0, j = 0;
+    int sum = 0;
+    int total = 0;
+    while (j &lt; gas.length) {
+        int diff = gas[j] - cost[j];
+        if (sum + diff &lt; 0) {
+            i = j + 1;
+            sum = 0;
+        } else {
+            sum += diff;
+        }
+        j++;
+        total += diff;
+    }
+    return total &gt;= 0 ? i : -1;
+}
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-05-31T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>31</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/leetcode/'>leetcode</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/05/31/Gas-Station/" data-via="" data-counturl="http://okc1.github.io/blog/2014/05/31/Gas-Station/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/05/31/Candy/" title="Previous Post: [LeetCode 135] Candy">&laquo; [LeetCode 135] Candy</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/06/01/Single-Number/" title="Next Post: [LeetCode 136] Single Number">[LeetCode 136] Single Number &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

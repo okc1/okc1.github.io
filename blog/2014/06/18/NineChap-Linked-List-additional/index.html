@@ -1,0 +1,496 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[NineChap 4.2] Linked List Additional - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question list Union and Intersection of two Linked Lists
+Insertion Sort List - difficult
+Flatten Binary Tree to Linked List
+Convert Sorted List to &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/06/18/NineChap-Linked-List-additional/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[NineChap 4.2] Linked List Additional</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-18T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Question list</h2>
+
+<ol>
+<li><p><strong><a href="/blog/2014/06/17/Union-and-intersection-of-linked-list/">Union and Intersection of two Linked Lists</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/30/Insertion-Sort-List/">Insertion Sort List</a></strong> - difficult</p></li>
+<li><p><strong><a href="/blog/2014/05/28/Flatten-Binary-Tree-to-Linked-List/">Flatten Binary Tree to Linked List</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/26/Convert-Sorted-List-to-Binary-Search-Tree/">Convert Sorted List to Binary Search Tree</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/19/Rotate-List/">Rotate List</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/02/Remove-Nth-Node-From-End-of-List/">Remove Nth Node From End of List</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/06/03/LRU-Cache/">LRU Cache </a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/11/Reverse-Nodes-in-k-Group/">Reverse Nodes in k-Groups</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/09/Swap-Nodes-in-Pairs/">Swap Nodes in Pairs</a></strong></p></li>
+</ol>
+
+
+<h2>Code</h2>
+
+<p><strong>Union and Intersection of two Linked Lists</strong></p>
+
+<p>Think about the idea only.</p>
+
+<p><strong>Insertion Sort List</strong></p>
+
+<pre><code>public ListNode insertionSortList(ListNode head) {
+    if (head == null) {
+        return null;
+    }
+    ListNode dummy = new ListNode(0);
+    ListNode cur = head;
+    while (cur != null) {
+        // insert cur into correct pos
+        ListNode pos = dummy;
+        while (pos.next != null &amp;&amp; pos.next.val &lt; cur.val) {
+            pos = pos.next;
+        }
+        ListNode temp = cur.next;
+        cur.next = pos.next;
+        pos.next = cur;
+        cur = temp;
+    }
+    return dummy.next;
+}
+</code></pre>
+
+<p><strong>Flatten Binary Tree to Linked List</strong></p>
+
+<p>I forgot to set &ldquo;root.left = null&rdquo; again, which result in long-time debugging. This is a very common and very silly mistake that I really should avoid.</p>
+
+<pre><code>public void flatten(TreeNode root) {
+    root = helper(root);
+}
+
+private TreeNode helper(TreeNode node) {
+    if (node == null) {
+        return null;
+    } else if (node.left == null &amp;&amp; node.right == null) {
+        return node;
+    } else if (node.left == null) {
+        return helper(node.right);
+    } else if (node.right == null) {
+        node.right = node.left;
+        node.left = null;
+        return helper(node.right);
+    } else {
+        TreeNode tempRight = node.right;
+        node.right = node.left;
+        node.left = null;
+        TreeNode leftTail = helper(node.right);
+        leftTail.right = tempRight;
+        return helper(tempRight);
+    }
+}
+</code></pre>
+
+<p><strong>Convert Sorted List to Binary Search Tree</strong></p>
+
+<p>This is the Mock Interview question. My solution is:</p>
+
+<pre><code>public TreeNode sortedListToBST(ListNode listHead) {
+    if (listHead == null) {
+        return null;
+    }
+    if (listHead.next == null) {
+        return new TreeNode(listHead.val);
+    }
+    ListNode listFirstHalf = listHead;
+    ListNode listPreMid = findMiddle(listHead);
+    ListNode listSecondHalf = null;
+    if (listPreMid.next != null) {
+        listSecondHalf = listPreMid.next.next;
+    }
+    TreeNode head = new TreeNode(listPreMid.next.val);
+    listPreMid.next = null;
+    head.left = sortedListToBST(listFirstHalf);
+    head.right = sortedListToBST(listSecondHalf);
+    return head;
+}
+
+private ListNode findMiddle(ListNode listHead) {
+    if (listHead == null) {
+        return null;
+    }
+    ListNode slow = listHead;
+    ListNode fast = listHead.next;
+    while (fast != null &amp;&amp; fast.next != null&amp;&amp; fast.next.next != null) {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    return slow;
+}
+</code></pre>
+
+<p>This is not a good answer, cuz I have to findMid in each recursion.</p>
+
+<p>The best solution is, use a global variable and 2 numbers to simplify this process. Code:</p>
+
+<pre><code>ListNode cur = null;
+
+public TreeNode sortedListToBST(ListNode head) {
+    if (head == null) {
+        return null;
+    }
+    cur = head;
+    int k = 0;
+    ListNode p = head;
+    while (p != null) {
+        k++;
+        p = p.next;
+    }
+    return build(0, k - 1);
+}
+
+private TreeNode build(int start, int end) {
+    if (start &gt; end) {
+        return null;
+    }
+    int mid = start + (end - start) / 2;
+    TreeNode leftBranch = build(start, mid - 1);
+    TreeNode head = new TreeNode(cur.val);
+    cur = cur.next;
+    head.left = leftBranch;
+    head.right = build(mid + 1, end);
+    return head;
+}
+</code></pre>
+
+<p><strong>Rotate List</strong></p>
+
+<p>Naive solution:</p>
+
+<pre><code>public ListNode rotateRight(ListNode head, int n) {
+    if (head == null) {
+        return null;
+    }
+    ListNode p = head;
+    for (int i = 0; i &lt; n; i++) {
+        if (p.next == null) {
+            p = head;
+        } else {
+            p = p.next;
+        }
+    }
+    ListNode q = head;
+    while (p.next != null) {
+        p = p.next;
+        q = q.next;
+    }
+    p.next = head;
+    ListNode newHead = q.next;
+    q.next = null;
+    return newHead;
+}
+</code></pre>
+
+<p>Make a circular list:</p>
+
+<pre><code>public ListNode rotateRight(ListNode head, int n) {
+    if (head == null) {
+        return null;
+    }
+    ListNode p = head;
+    int k = 1;
+    while (p.next != null) {
+        k++;
+        p = p.next;
+    }
+    p.next = head;
+    int steps = k - (n % k);
+    for (int i = 0; i &lt; steps; i++) {
+        p = p.next;
+    }
+    head = p.next;
+    p.next = null;
+    return head;
+}
+</code></pre>
+
+<p><strong>Remove Nth Node From End of List</strong></p>
+
+<pre><code>public ListNode removeNthFromEnd(ListNode head, int n) {
+    if (head == null || n == 0) {
+        return null;
+    }
+    ListNode dummy = new ListNode(0);
+    dummy.next = head;
+    ListNode right = dummy;
+    for (int i = 0; i &lt; n; i++) {
+        right = right.next;
+    }
+    ListNode left = dummy;
+    while (right.next != null) {
+        left = left.next;
+        right = right.next;
+    }
+    left.next = left.next.next;
+    return dummy.next;
+}
+</code></pre>
+
+<p><strong>LRU Cache</strong></p>
+
+<p>I solved it in the original post.</p>
+
+<p><strong>Reverse Nodes in k-Groups</strong></p>
+
+<pre><code>public ListNode reverseKGroup(ListNode head, int k) {
+    ListNode p = head;
+    int count = 0;
+    while (p != null) {
+        p = p.next;
+        count++;
+    }
+    return helper(head, k, count);
+}
+
+public ListNode helper(ListNode head, int k, int count) {
+    if (head == null || k &lt; 1 || count &lt; k) {
+        return head;
+    }
+    ListNode result = null;
+    ListNode cur = head;
+    for (int i = 0; i &lt; k; i++) {
+        if (cur == null) break;
+        ListNode temp = cur.next;
+        cur.next = result;
+        result = cur;
+        cur = temp;
+    }
+    head.next = helper(cur, k, count - k);
+    return result;
+}
+</code></pre>
+
+<p><strong>Swap Nodes in Pairs</strong></p>
+
+<pre><code>public ListNode swapPairs(ListNode head) {
+    if (head == null || head.next == null) {
+        return head;
+    }
+    ListNode result = head.next;
+    ListNode temp = head.next.next;
+    result.next = head;
+    head.next = swapPairs(temp);
+    return result;
+}
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-06-18T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ninechap/'>ninechap</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/06/18/NineChap-Linked-List-additional/" data-via="" data-counturl="http://okc1.github.io/blog/2014/06/18/NineChap-Linked-List-additional/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/06/17/Union-and-intersection-of-linked-list/" title="Previous Post: [Question] Union and Intersection of two Linked Lists">&laquo; [Question] Union and Intersection of two Linked Lists</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/06/18/Number-sum-sequence/" title="Next Post: [Question] Number Sum Sequence">[Question] Number Sum Sequence &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

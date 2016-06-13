@@ -1,0 +1,377 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[LeetCode 133] Clone Graph - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link Clone an undirected graph. Each node in the graph contains a label and a list of its neighbors. OJ's undirected graph serialization: &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/05/30/Clone-Graph/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[LeetCode 133] Clone Graph</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-30T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/clone-graph/">link</a></p>
+
+<div class="question-content bg-color bg-img font-color">
+
+<p class="font-color"></p><p class="font-color">
+Clone an undirected graph. Each node in the graph contains a <code>label</code> and a list of its <code>neighbors</code>.
+</p>
+
+<div class="bg-color bg-img font-color">
+<br>
+<b>OJ's undirected graph serialization:</b>
+
+<p class="font-color">
+Nodes are labeled uniquely.
+</p>
+
+We use <code>#</code> as a separator for each node, and <code>,</code> as a separator for node label and each neighbor of the node.
+<p class="font-color"></p>
+
+<p class="font-color">
+As an example, consider the serialized graph <code><font color="red">{<font color="black">0</font>,1,2#</font><font color="blue"><font color="black">1</font>,2#</font><font color="green"><font color="black">2</font>,2}</font></code>.
+</p>
+
+<p class="font-color">
+The graph has a total of three nodes, and therefore contains three parts as separated by <code>#</code>.
+</p><ol>
+<li>First node is labeled as <code><font color="black">0</font></code>. Connect node <code><font color="black">0</font></code> to both nodes <code><font color="red">1</font></code> and <code><font color="red">2</font></code>.</li>
+<li>Second node is labeled as <code><font color="black">1</font></code>. Connect node <code><font color="black">1</font></code> to node <code><font color="blue">2</font></code>.</li>
+<li>Third node is labeled as <code><font color="black">2</font></code>. Connect node <code><font color="black">2</font></code> to node <code><font color="green">2</font></code> (itself), thus forming a self-cycle.</li>
+</ol>
+<p class="font-color"></p>
+
+<p class="font-color">
+Visually, the graph looks like the following:
+</p><pre class="bg-color bg-img font-color">       1
+      / \
+     /   \
+    0 --- 2
+         / \
+         \_/
+</pre>
+<p class="font-color"></p>
+
+</div><p class="font-color"></p>
+</div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="red">thought for a while</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is a difficult coding question, although the idea is simple</strong>.</p>
+
+<h3>Solution</h3>
+
+<p>Two solution: <strong>BFS (recommended) and DFS</strong>. <a href="http://leetcode.com/2012/05/clone-graph-part-i.html">This</a> is a good analysis article.</p>
+
+<blockquote cite="http://leetcode.com/2012/05/clone-graph-part-i.html">
+<p>Let’s analyze this further by using the below example:</p>
+<div style="text-align: center; margin-bottom: 30px;"> <a href="http://www.leetcode.com/wp-content/uploads/2012/05/graph.png"><img src="http://www.leetcode.com/wp-content/uploads/2012/05/graph.png" alt="" title="graph" width="211" height="84" class="aligncenter size-full wp-image-1365"></a><span style="font-size: x-small;">A simple graph</span></div>
+<p>Assume that the starting point of the graph is A. First, you make a copy of node A (A2), and found that A has only one neighbor B. You make a copy of B (B2) and connects A2-&gt;B2 by pushing B2 as A2′s neighbor. Next, you find that B has A as neighbor, which you have already made a copy of. Here, we have to be careful not to make a copy of A again, but to connect B2-&gt;A2 by pushing A2 as B2′s neighbor. But, how do we know if a node has already been copied?</p>
+</blockquote>
+
+
+<p><strong>Basic idea is to use HashMap to store the already-copied nodes</strong>.</p>
+
+<p>My first attempt is DFS by making use of a &lsquo;visited&rsquo; Set to mark which node I have copied and which is not. This is a nice idea and it solved the problem neatly.</p>
+
+<p>But after reading <a href="http://www.programcreek.com/2012/12/leetcode-clone-graph-java/">this article</a>, I realize that <strong>&lsquo;visited&rsquo; is not needed for BFS solution</strong>!</p>
+
+<p><strong>The trick is, whenever I do a &lsquo;HashMap.put(curNode, newNode)&rsquo;, I push &lsquo;curNode&rsquo; to queue</strong>. This very well replaces the functionality of the &lsquo;visited&rsquo; set. It also guarantees that when I pop a new element from the queue, <strong>I CAN ALWAYS FIND ITS CORRESPONDING COPY</strong> from the HashMap - always there.</p>
+
+<h3>Code</h3>
+
+<p><strong>First, my DFS code</strong></p>
+
+<pre><code>public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+    if (node == null) return null;
+    UndirectedGraphNode newNode = new UndirectedGraphNode(node.label);
+    HashMap&lt;Integer, UndirectedGraphNode&gt; map = 
+        new HashMap&lt;Integer, UndirectedGraphNode&gt;();
+    map.put(node.label, newNode);
+    copy(node, newNode, map, new HashSet&lt;Integer&gt;());
+    return newNode;
+}
+
+private void copy(UndirectedGraphNode orin, UndirectedGraphNode cp,
+        HashMap&lt;Integer, UndirectedGraphNode&gt; map,
+        HashSet&lt;Integer&gt; visited) {
+    if (visited.contains(orin.label))
+        return;
+    else
+        visited.add(orin.label);
+    for (UndirectedGraphNode n : orin.neighbors) {
+        if (map.containsKey(n.label)) {
+            cp.neighbors.add(map.get(n.label));
+        } else {
+            UndirectedGraphNode newNode = new UndirectedGraphNode(n.label);
+            map.put(n.label, newNode);
+            cp.neighbors.add(map.get(n.label));
+        }
+    }
+    // do DFS recursively
+    for (int i = 0; i &lt; orin.neighbors.size(); i++) {
+        copy(orin.neighbors.get(i), cp.neighbors.get(i), map, visited);
+    }
+}
+</code></pre>
+
+<p><strong>Second, my BFS code without using &lsquo;visited&rsquo; HashSet</strong></p>
+
+<pre><code>public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+    if (node == null) return null;
+    HashMap&lt;UndirectedGraphNode, UndirectedGraphNode&gt; map 
+            = new HashMap&lt;UndirectedGraphNode, UndirectedGraphNode&gt;();
+    map.put(node, new UndirectedGraphNode(node.label));
+    LinkedList&lt;UndirectedGraphNode&gt; queue = new LinkedList&lt;UndirectedGraphNode&gt;();
+    queue.add(node);
+    // queue is guaranteed to always have non-traversed nodes
+    while ( !queue.isEmpty() ) {
+        UndirectedGraphNode orin = queue.remove();
+        UndirectedGraphNode cp = map.get(orin);
+        for (UndirectedGraphNode n : orin.neighbors) {
+            if ( !map.containsKey(n) ) {
+                map.put(n, new UndirectedGraphNode(n.label));
+                queue.add(n);
+            }
+            UndirectedGraphNode newNode = map.get(n);
+            cp.neighbors.add(newNode);
+        }
+    }
+    return map.get(node);
+}
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-05-30T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/leetcode/'>leetcode</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/05/30/Clone-Graph/" data-via="" data-counturl="http://okc1.github.io/blog/2014/05/30/Clone-Graph/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/05/29/Word-Ladder/" title="Previous Post: [LeetCode 127] Word Ladder">&laquo; [LeetCode 127] Word Ladder</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/05/30/Insertion-Sort-List/" title="Next Post: [LeetCode 147] Insertion Sort List">[LeetCode 147] Insertion Sort List &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

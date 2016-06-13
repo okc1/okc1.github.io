@@ -1,0 +1,1588 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link Given s1, s2, s3, find whether s3 is formed by the interleaving of s1 and s2. For example,
+Given:
+s1 = "aabcc",
+s2 = "dbbca", When s3 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/54/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/24/Interleaving-String/">[LeetCode 97] Interleaving String</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-24T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/interleaving-string/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>
+Given <i>s1</i>, <i>s2</i>, <i>s3</i>, find whether <i>s3</i> is formed by the interleaving of <i>s1</i> and <i>s2</i>.
+</p>
+
+<p>
+For example,<br>
+Given:<br>
+<i>s1</i> = <code>"aabcc"</code>,<br>
+<i>s2</i> = <code>"dbbca"</code>,
+</p>
+<p>
+When <i>s3</i> = <code>"aadbbcbcac"</code>, return true.<br>
+When <i>s3</i> = <code>"aadbbbaccc"</code>, return false.
+</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="red">5</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is a DP question</strong>.</p>
+
+<p>At first look it might look like very easily solved by DFS. It it, but TLE exception.</p>
+
+<p>So, I learnt the idea from <a href="http://blog.csdn.net/u011095253/article/details/9248073">this blog</a>. It&rsquo;s easy to realize this is a <strong>very standard DP question</strong>.</p>
+
+<h3>Solution</h3>
+
+<p>Declare a 2-D array for DP, and dp(i)(j) denotes whether it&rsquo;s possible to construct s3 (of length i+j) by using s1 (of length i) and s2 (of length j).</p>
+
+<p>Only thing needs to mention is the size of dp is (m+1)*(n+1), because i = [0, m] and j = [0, n].</p>
+
+<h3>Code</h3>
+
+<p><strong>DP solution</strong></p>
+
+<pre><code>public boolean isInterleave(String s1, String s2, String s3) {
+    int len1 = s1.length();
+    int len2 = s2.length();
+    int len3 = s3.length();
+    if (len1 + len2 != len3) return false;
+    boolean[][] dp = new boolean[len1 + 1][len2 + 1];
+    dp[0][0] = true;
+    for (int i = 1; i &lt;= len2; i ++)
+        dp[0][i] = dp[0][i - 1] &amp; s2.charAt(i-1) == s3.charAt(i-1);
+    for (int i = 1; i &lt;= len1; i ++)
+        dp[i][0] = dp[i-1][0] &amp; s1.charAt(i-1) == s3.charAt(i-1);
+    for (int i = 1; i &lt;= len1; i ++) {
+        for (int j = 1; j &lt;= len2; j ++) {
+            if (s1.charAt(i-1) == s3.charAt(i+j-1) &amp;&amp; dp[i-1][j])
+                dp[i][j] = true;
+            if (s2.charAt(j-1) == s3.charAt(i+j-1) &amp;&amp; dp[i][j-1])
+                dp[i][j] = true;
+        }
+    }
+    return dp[len1][len2];
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/24/Binary-Tree-Inorder-Traversal/">[LeetCode 94] Binary Tree Inorder Traversal</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-24T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/binary-tree-inorder-traversal/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Given a binary tree, return the <i>inorder</i> traversal of its nodes' values.</p>
+
+<p>
+For example:<br>
+Given binary tree <code>{1,#,2,3}</code>,<br>
+</p><pre>   1
+    \
+     2
+    /
+   3
+</pre>
+<p></p>
+<p>
+return <code>[1,3,2]</code>.
+</p>
+
+<p><b>Note:</b> Recursive solution is trivial, could you do it iteratively?</p>
+
+<p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="red">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Solution</h3>
+
+<p><strong>This is a classic AND EXTREMELY IMPORTANT question</strong>.</p>
+
+<p>Solution is well explained in <a href="http://leetcode.com/2010/04/binary-search-tree-in-order-traversal.html">this blog</a>:</p>
+
+<blockquote><p>First, the current pointer is initialized to the root. Keep traversing to its left child while pushing visited nodes onto the stack. When you reach a NULL node (ie, you&rsquo;ve reached a leaf node), you would pop off an element from the stack and set it to current. Now is the time to print current&rsquo;s value. Then, current is set to its right child and repeat the process again. When the stack is empty, this means you&rsquo;re done printing.</p></blockquote>
+
+<h3>Code</h3>
+
+<p><strong>concise code, hard to think of</strong></p>
+
+<pre><code>public ArrayList&lt;Integer&gt; inorderTraversal(TreeNode root) {
+    ArrayList&lt;Integer&gt; ans = new ArrayList&lt;Integer&gt;();
+    Stack&lt;TreeNode&gt; stack = new Stack&lt;TreeNode&gt;();
+    TreeNode p = root;
+    while (p != null || ! stack.isEmpty()) {
+        if (p != null) {
+            stack.push(p);
+            p = p.left;
+        }
+        else if (! stack.isEmpty()) {
+            TreeNode temp = stack.pop();
+            ans.add(temp.val);
+            p = temp.right;
+        }
+    }
+    return ans;
+}
+</code></pre>
+
+<p><strong>more intuitive code, written by Oct 8th, 2014</strong></p>
+
+<pre><code>public List&lt;Integer&gt; inorderTraversal(TreeNode root) {
+    List&lt;Integer&gt; ans = new ArrayList&lt;Integer&gt;();
+    if (root == null) {
+        return ans;
+    }
+
+    Stack&lt;TreeNode&gt; stack = new Stack&lt;TreeNode&gt;();
+    TreeNode p = root;
+    while (p != null) {
+        stack.push(p);
+        p = p.left;
+    }
+    while (!stack.isEmpty()) {
+        p = stack.pop();
+        ans.add(p.val);
+        p = p.right;
+        while (p != null) {
+            stack.push(p);
+            p = p.left;
+        }
+    }
+    return ans;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/23/Scramble-String/">[LeetCode 87] Scramble String</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-23T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/scramble-string/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>
+Given a string <i>s1</i>, we may represent it as a binary tree by partitioning it to two non-empty substrings recursively.
+</p>
+<p>
+Below is one possible representation of <i>s1</i> = <code>"great"</code>:
+</p>
+<pre>    great
+   /    \
+  gr    eat
+ / \    /  \
+g   r  e   at
+           / \
+          a   t
+</pre>
+<p>
+To scramble the string, we may choose any non-leaf node and swap its two children.
+</p>
+<p>
+For example, if we choose the node <code>"gr"</code> and swap its two children, it produces a scrambled string <code>"rgeat"</code>.
+</p>
+<pre>    rgeat
+   /    \
+  rg    eat
+ / \    /  \
+r   g  e   at
+           / \
+          a   t
+</pre>
+<p>
+We say that <code>"rgeat"</code> is a scrambled string of <code>"great"</code>.
+</p>
+<p>
+Similarly, if we continue to swap the children of nodes <code>"eat"</code> and <code>"at"</code>, it produces a scrambled string <code>"rgtae"</code>.
+</p>
+<pre>    rgtae
+   /    \
+  rg    tae
+ / \    /  \
+r   g  ta  e
+       / \
+      t   a
+</pre>
+<p>
+We say that <code>"rgtae"</code> is a scrambled string of <code>"great"</code>.
+</p>
+<p>
+Given two strings <i>s1</i> and <i>s2</i> of the same length, determine if <i>s2</i> is a scrambled string of <i>s1</i>.
+</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="red">5</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">5</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="red">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p>This is problem can be solved by <strong>either DFS or DP.</strong></p>
+
+<p><strong><a href="http://zhaohongze.com/wordpress/2013/12/12/leetcode-scramble-string/">This blog</a> have a very good analysis of the DFS approach</strong>.</p>
+
+<blockquote>
+<p>Note that the binary tree can be constructed arbitrarily. So the general idea to tackle this problem is to enumerate every possible binary trees using DFS to see if two strings are scrambled strings. We can accelerate this process by adding a very efficient pruning.<br>
+Given two strings, s1, s2. First check if they have same letters and same length, denote as len.<br>
+For any l (1 &lt;= l &lt;= len): partition s1 into s11 = s1[0 : l), s12 = s1[l : len). We have two ways to partition s1:</p>
+<ol>
+<li>s21 = s2[0 : 1), s22 = s2[l : len). In this case, check s11 and s21 have same letters and are scrambled strings. And check s12 and s22 have same letters and are scrambled strings</li>
+<li>s21 = s2[0 : len – l), s22 = s2[len – l : len). In this case, check s11 and s22 have same letters and are scrambled strings. Then check s12 and s21 have same letters and are scrambled strings </li>
+</ol>
+</blockquote>
+
+
+<p><strong><a href="http://blog.sina.com.cn/s/blog_b9285de20101gy6n.html">This blog</a> have a very good DP analysis</strong>.</p>
+
+<blockquote>
+<span style="font-family: Arial; vertical-align: baseline; white-space: pre-wrap;">
+dp[i][j][k] 代表了s1从i开始，s2从j开始，长度为k的两个substring是否为scramble
+string。</span><br>
+<span style="font-family: Arial; vertical-align: baseline; white-space: pre-wrap;">
+有三种情况需要考虑：</span><br>
+<span style="font-family: Arial; vertical-align: baseline; white-space: pre-wrap;">
+1. 如果两个substring相等的话，则为true</span><br>
+<span style="font-family: Arial; vertical-align: baseline; white-space: pre-wrap;">
+2. 如果两个substring中间某一个点，左边的substrings为scramble string，
+同时右边的substrings也为scramble string，则为true</span><br>
+<span style="font-family: Arial; vertical-align: baseline; white-space: pre-wrap;">
+3. 如果两个substring中间某一个点，s1左边的substring和s2右边的substring为scramble
+string, 同时s1右边substring和s2左边的substring也为scramble
+string，则为true</span><br>
+</blockquote>
+
+
+<p>For more explanation, <a href="http://yihuad.blogspot.sg/2013/10/scramble-string-leetcode.html">this blog</a> and <a href="http://www.blogjava.net/sandy/archive/2013/05/22/399605.html">this blog</a> and <a href="http://blog.csdn.net/linhuanmars/article/details/24506703">this blog</a> have discussed about it.</p>
+
+<h3>Code</h3>
+
+<p><strong>my code</strong></p>
+
+<pre><code>public boolean isScramble(String s1, String s2) {
+    if (! sameLetters(s1, s2)) return false;
+    if (s1.equals(s2)) return true;
+    for (int i = 1; i &lt; s1.length(); i ++) {
+        String left1 = s1.substring(0,  i);
+        String right1 = s1.substring(i, s1.length());
+        String left2 = s2.substring(0,  i);
+        String right2 = s2.substring(i, s2.length());
+        if (isScramble(left1, left2) &amp;&amp; isScramble(right1, right2))
+            return true;
+        left2 = s2.substring(0, s2.length() - i);
+        right2 = s2.substring(s2.length() - i, s2.length());
+        if (isScramble(left1, right2) &amp;&amp; isScramble(right1, left2))
+            return true;
+    }
+    return false;
+}
+
+private boolean sameLetters(String a, String b) {
+    if (a.length() != b.length()) return false;
+    int[] count = new int[26];
+    for (Character aa: a.toCharArray()) 
+        count[aa - 'a'] ++;
+    for (Character bb: b.toCharArray()) 
+        if (count[bb - 'a'] -- &lt;= 0) 
+            return false;
+    return true;
+}
+</code></pre>
+
+<p><strong>Updated on July 5th, 2014</strong>: written again with less substring operations and more variables inside the method:</p>
+
+<pre><code>public boolean isScramble(String s1, String s2) {
+    if (s1 == null || s2 == null || s1.length() != s2.length()) {
+        return false;
+    }
+    int len = s1.length();
+    return helper(s1, 0, len - 1, s2, 0, len - 1);
+}
+
+private boolean helper(String s1, int a1, int b1, String s2, int a2, int b2) {
+    if (a1 - b1 != a2 - b2) 
+        return false;
+    // check s1[a1, b1] and s2[a2, b2] have same set of letters
+    int[] count = new int[26];
+    for (int i = a1; i &lt;= b1; i++) 
+        count[s1.charAt(i) - 'a'] ++;
+    for (int i = a2; i &lt;= b2; i++) 
+        if (count[s2.charAt(i) - 'a'] -- &lt;= 0) 
+            return false;
+    // check s1[a1, b1] and s2[a2, b2] is scramble or not
+    if (a1 == b1) {
+        return (s1.charAt(a1) == s2.charAt(a2));
+    }
+    for (int i = 0; i &lt; b1 - a1; i++) {
+        boolean check = helper(s1, a1, a1 + i, s2, a2, a2 + i) 
+                    &amp;&amp; helper(s1, a1 + i + 1, b1, s2, a2 + i + 1, b2);
+        if (check) return true;
+        check = helper(s1, a1, a1 + i, s2, b2 - i, b2) 
+                    &amp;&amp; helper(s1, a1 + i + 1, b1, s2, a2, b2 - i - 1);
+        if (check) return true;
+    }
+    return false;
+}
+</code></pre>
+
+<p><strong>DP code</strong>, not written by me</p>
+
+<pre><code>public boolean isScramble(String s1, String s2) {
+    int n = s1.length();
+    boolean[][][] dp = new boolean[n][n][n + 1];
+    for (int i = n - 1; i &gt;= 0; i--)
+        for (int j = n - 1; j &gt;= 0; j--)
+            for (int k = 1; k &lt;= n - Math.max(i, j); k++) {
+                if (s1.substring(i, i + k).equals(s2.substring(j, j + k)))
+                    dp[i][j][k] = true;
+                else {
+                    for (int l = 1; l &lt; k; l++) {
+                        if (dp[i][j][l] &amp;&amp; dp[i + l][j + l][k - l] 
+                            || dp[i][j + k - l][l] &amp;&amp; dp[i + l][j][k - l]) {
+                            dp[i][j][k] = true;
+                            break;
+                        }
+                    }
+                }
+            }
+    return dp[0][0][n];
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/23/Reverse-Linked-List-II/">[LeetCode 92] Reverse Linked List II</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-23T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/reverse-linked-list-ii/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>
+Reverse a linked list from position <i>m</i> to <i>n</i>. Do it in-place and in one-pass.
+</p>
+
+<p>
+For example:<br>
+Given <code>1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL</code>, <i>m</i> = 2 and <i>n</i> = 4,
+</p>
+<p>
+return <code>1-&gt;4-&gt;3-&gt;2-&gt;5-&gt;NULL</code>.
+</p>
+<p>
+<b>Note:</b><br>
+Given <i>m</i>, <i>n</i> satisfy the following condition:<br>
+1 ≤ <i>m</i> ≤ <i>n</i> ≤ length of list.
+</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="lime">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is a very standard interview question of LinkedList</strong>.</p>
+
+<h3>Solution</h3>
+
+<p><strong>Keep 2 pointers, one of which points to preReversePosition, another one points to finalTailOfTheReversedPart</strong>. Each time, I will get next element and insert it between the 2 pointers mentioned above. See below image for details:</p>
+
+<p><img class="middle" src="/assets/images/reverse-linked-list-ii.png"></p>
+
+<p>The coding isn&rsquo;t easy, there can be a lot of details being omitted. Just think of it in this way: in the above picture, 123 is broken away from 45678. Each time, get next element from 45678, and insert it right after 2. Do this 2 times, so that 4,5 are moved. In the end, make 3 point to 6, and solution done.</p>
+
+<h3>Code</h3>
+
+<p><strong>First, my code</strong></p>
+
+<pre><code>public ListNode reverseBetween(ListNode head, int m, int n) {
+    ListNode preHead = new ListNode(0);
+    preHead.next = head;
+    ListNode before = preHead;
+    for (int i = 1; i &lt; m; i ++)
+        before = before.next;
+    ListNode rTail = before.next;
+    ListNode cur = before.next.next;
+    for (int i = 0; i &lt; n - m; i ++) {
+        ListNode temp = cur.next;
+        cur.next = before.next;
+        before.next = cur;
+        cur = temp;
+    }
+    rTail.next = cur;
+    return preHead.next;
+}
+</code></pre>
+
+<p><strong>Second, </strong></p>
+
+<p>A lot of people have similar solutions, so I won&rsquo;t post any of their code. Reading it won&rsquo;t help, write it yourself is actually important.</p>
+
+<p>A lot of people have complained about this problem not easy to write.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/23/Partition-List/">[LeetCode 86] Partition List</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-23T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/partition-list/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Given a linked list and a value <i>x</i>, partition it such that all nodes less than <i>x</i> come before nodes greater than or equal to <i>x</i>.
+</p>
+<p>
+You should preserve the original relative order of the nodes in each of the two partitions.
+</p>
+<p>
+For example,<br>
+Given <code>1-&gt;4-&gt;3-&gt;2-&gt;5-&gt;2</code> and <i>x</i> = 3,<br>
+return <code>1-&gt;2-&gt;2-&gt;4-&gt;3-&gt;5</code>.
+</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This question is not very difficult</strong>, but can be confusing if the code don&rsquo;t have good logic.</p>
+
+<h3>Solution</h3>
+
+<p>There is no fancy algorithm solution. I got it wrong in 10 submissions at first. After a few days, I did this problem again and passed with 1 attempt.</p>
+
+<p>So just keep practicing.</p>
+
+<h3>Code</h3>
+
+<p><strong>my code</strong></p>
+
+<pre><code>public ListNode partition(ListNode head, int x) {
+    if (head == null) return head;
+    ListNode PH = new ListNode(1);
+    PH.next = head;
+    ListNode left = PH, preRight = PH, right = head;
+    while (right != null) {
+        if (right.val &lt; x) {
+            if (preRight != left) {
+                preRight.next = right.next;
+                right.next = left.next;
+                left.next = right;
+                left = right;
+                right = preRight.next;
+            } else {
+                left = left.next;
+                preRight = left;
+                right = right.next;
+            }
+        } else {
+            preRight = right;
+            right = preRight.next;
+        }
+    }
+    return PH.next;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/23/Merge-Sorted-Array/">[LeetCode 88] Merge Sorted Array</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-23T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/merge-sorted-array/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Given two sorted integer arrays A and B, merge B into A as one sorted array.</p>
+
+<p>
+<b>Note:</b><br>
+You may assume that A has enough space (size that is greater or equal to <i>m</i> + <i>n</i>) to hold additional elements from B. The number of elements initialized in A and B are <i>m</i> and <i>n</i> respectively.</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="red">5</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="white">1</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="lime">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is an easy question.</strong></p>
+
+<h3>Solution</h3>
+
+<p>Just insert from the end to the head.</p>
+
+<h3>Code</h3>
+
+<pre><code>public void merge(int A[], int m, int B[], int n) {
+    int p1 = m - 1, p2 = n - 1;
+    for (int i = m + n - 1; i &gt;= 0; i --){
+        if (p2 == -1) return;
+        if (p1 == -1) {
+            for (int j = 0; j &lt;= p2; j++) A[j] = B[j];
+            return;
+        }
+        if (A[p1] &gt; B[p2]) A[i] = A[p1--];
+        else A[i] = B[p2--];
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/23/Largest-Rectangle-in-Histogram/">[LeetCode 84] Largest Rectangle in Histogram</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-23T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/largest-rectangle-in-histogram/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>
+Given <i>n</i> non-negative integers representing the histogram's bar height where the width of each bar is 1, find the area of largest rectangle in the histogram.
+</p>
+
+<p>
+<img src="http://www.leetcode.com/wp-content/uploads/2012/04/histogram.png"><br>
+</p><p style="font-size: 11px">Above is a histogram where width of each bar is 1, given height = <code>[2,1,5,6,2,3]</code>.</p>
+<p></p>
+
+<p>
+<img src="http://www.leetcode.com/wp-content/uploads/2012/04/histogram_area.png"><br>
+</p><p style="font-size: 11px">The largest rectangle is shown in the shaded area, which has area = <code>10</code> unit.</p>
+<p></p>
+
+<p>
+For example,<br>
+Given height = <code>[2,1,5,6,2,3]</code>,<br>
+return <code>10</code>.
+</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="red">5</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">5</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="red">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is an extremely difficult question</strong>.</p>
+
+<p>The idea of the solution (using stack) seems understandable, but can be very tricky when coding.</p>
+
+<p><strong>The basic idea is, always keep increasing elements in the stack</strong>. When I see a decrease in number, pop stack. And I calculate max area only when poping elements. In the end, a &lsquo;0&rsquo; is inserted to the end, so that all stack item will be popped (and at the same time, max area been calculated).</p>
+
+<p>Sorry if I did not explain well enough. <a href="http://www.geeksforgeeks.org/largest-rectangle-under-histogram/">Here</a> is a better one:</p>
+
+<blockquote cite="http://www.geeksforgeeks.org/largest-rectangle-under-histogram/">
+<p>
+We traverse all bars from left to right, maintain a stack of bars.  Every bar is pushed to stack once.  A bar is popped from stack when a bar of smaller height is seen.  When a bar is popped, we calculate the area with the popped bar as smallest bar. How do we get left and right indexes of the popped bar – the current index tells us the ‘right index’ and index of previous item in stack is the ‘left index’.  Following is the complete algorithm.
+</p>
+<p><strong>1) </strong>Create an empty stack.</p>
+<p><strong>2) </strong>Start from first bar, and do following for every bar ‘hist[i]‘ where ‘i’ varies from 0 to n-1.<br>
+……<strong>a)</strong> If stack is empty or hist[i] is higher than the bar at top of stack, then push ‘i’ to stack.<br>
+……<strong>b)</strong> If this bar is smaller than the top of stack, then keep removing the top of stack while top of the stack is greater. Let the removed bar be hist[tp]. Calculate area  of rectangle with hist[tp] as smallest bar. For hist[tp], the ‘left index’ is previous (previous to tp) item in stack and ‘right index’ is ‘i’ (current index).</p>
+<p><strong>3)</strong> If the stack is not empty, then one by one remove all bars from stack and do step 2.b for every removed bar.</p>
+</blockquote>
+
+
+<p>Time complexity of the stack solution is <strong>O(n)</strong>. (Another algo analysis article <a href="http://tech-queries.blogspot.sg/2011/03/maximum-area-rectangle-in-histogram.html">here</a>)</p>
+
+<h3>Solution</h3>
+
+<p><strong>I wrote the code using idea from <a href="http://jane4532.blogspot.sg/2013/07/longest-rectangle-in-histogramleetcode.html">blog</a></strong>. It works, but there are 2 things that I got wrong.</p>
+
+<p><strong>First, if elements are equal</strong>. I shall also push it. I can not simply skip it, I don&rsquo;t know why!</p>
+
+<blockquote><p>if (stack.isEmpty() || cur >= height[stack.peek()])</p></blockquote>
+
+<p><strong>Second, about how to calculate the width of the rectangle</strong>. I used this before:</p>
+
+<blockquote><p>int width = stack.isEmpty() ? p : p - h;</p></blockquote>
+
+<p>It&rsquo;s wrong, I must get the value of next element from stack, and then calculate width. Why? there might be element been popped before, which locate between these 2 elements in stack.</p>
+
+<blockquote><p>int width = stack.isEmpty() ? p : p - stack.peek() - 1;</p></blockquote>
+
+<p><strong>Updated on July 4th, 2014</strong>: the above 2 points are very valid, especially the second. Keep in mind:</p>
+
+<ol>
+<li><p>The values in stack means the last position that a height can be found. For example, height is (2, 10, 5) then the stack would have (2, removed, 5). When calculating the area for height 5, we should note the removed space is in consideration as well.</p></li>
+<li><p>So, when equal height is found, pop it. Because you won&rsquo;t need it any more. The stack only stores last position this height is found.</p></li>
+<li><p>When stack is empty, the width of rectange should be calculated from 0.</p></li>
+</ol>
+
+
+<h3>Code</h3>
+
+<p><strong>My code written on July 4th, 2014</strong></p>
+
+<pre><code>public int largestRectangleArea(int[] height) {
+    if (height == null || height.length == 0) {
+        return 0;
+    }
+    Stack&lt;Integer&gt; stack = new Stack&lt;Integer&gt;();
+    stack.add(0);
+    int len = height.length;
+    int area = 0;
+    for (int i = 1; i &lt;= len; i++) {
+        int h = i == len ? 0 : height[i];
+        // pop a element and calculate its max area
+        // pop until the top element is smaller than h, then push h
+        while (!stack.isEmpty() &amp;&amp; h &lt;= height[stack.peek()]) {
+            int pos = stack.pop();
+            int width = stack.isEmpty() ? i : i - stack.peek() - 1;
+            area = Math.max(area, height[pos] * width);
+        }
+        stack.push(i);
+    }
+    return area;
+}
+</code></pre>
+
+<p><strong>My code written on July 18th, 2014</strong></p>
+
+<pre><code>public int largestRectangleArea(int[] height) {
+    if (height == null || height.length == 0) {
+        return 0;
+    }
+    int maxArea = Integer.MIN_VALUE;
+    Stack&lt;Integer&gt; stack = new Stack&lt;Integer&gt;();
+    int p = 0;
+    while (p &lt; height.length) {
+        if (stack.isEmpty() || height[stack.peek()] &lt;= height[p]) {
+            stack.push(p);
+            p++;
+        } else {
+            int h = stack.pop();
+            int w = stack.isEmpty() ? p : p - stack.peek() - 1;
+            int area = height[h] * w;
+            maxArea = Math.max(maxArea, area);
+        }
+    }
+    while (!stack.isEmpty()) {
+        int h = stack.pop();
+        int w = stack.isEmpty() ? p : p - stack.peek() -1;
+        int area = height[h] * w;
+        maxArea = Math.max(maxArea, area);
+    }
+    return maxArea;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/23/Gray-Code/">[LeetCode 89] Gray Code</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-23T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/gray-code/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>The gray code is a binary numeral system where two successive values differ in only one bit.</p>
+
+<p>Given a non-negative integer <i>n</i> representing the total number of bits in the code, print the sequence of gray code. A gray code sequence must begin with 0.</p>
+
+<p>For example, given <i>n</i> = 2, return <code>[0,1,3,2]</code>. Its gray code sequence is:</p>
+<pre>00 - 0
+01 - 1
+11 - 3
+10 - 2
+</pre>
+
+<p><b>Note:</b><br>
+For a given <i>n</i>, a gray code sequence is not uniquely defined.
+</p>
+<p>For example, <code>[0,2,3,1]</code> is also a valid gray code sequence according to the above definition.</p>
+
+<p>For now, the judge is able to judge based on one instance of gray code sequence. Sorry about that.</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is a qure mathematics question.</strong></p>
+
+<p><a href="http://en.wikipedia.org/wiki/Gray_code">Gray Code</a> is a very classic binary system, and we shall keep in mind clearly of its mathematical solution.</p>
+
+<h3>Solution</h3>
+
+<p><strong>My solution is using recursion</strong>. First get the answer of input value = (n-1), then from that list, generate answer for input = n. <a href="http://fisherlei.blogspot.sg/2012/12/leetcode-gray-code.html">A post</a> talked about this.</p>
+
+<p><strong>The math approach to solve this problem is much more simpler</strong>. The (i)th element of Gray Code is calculated by the following method (I learnt from <a href="http://blog.csdn.net/worldwindjp/article/details/21536103">this blog</a>):</p>
+
+<blockquote><p>binaryToGray = (i >> 1) ^ i;</p></blockquote>
+
+<p>For example,</p>
+
+<blockquote><p>00 -> 00</p>
+
+<p>01 -> 01</p>
+
+<p>10 -> 11</p>
+
+<p>11 -> 10</p></blockquote>
+
+<h3>Code</h3>
+
+<p><strong>First, my solution</strong></p>
+
+<pre><code>public ArrayList&lt;Integer&gt; grayCode(int n) {
+    ArrayList&lt;Integer&gt; ans = new ArrayList&lt;Integer&gt;();
+    if (n == 0) {
+        ans.add(0);
+        return ans;
+    }
+    ArrayList&lt;Integer&gt; half = grayCode(n-1);
+    ans.addAll(half);
+    for (int i = half.size() - 1; i &gt;= 0; i -- ) 
+        ans.add(half.get(i) + (int)Math.pow(2, n-1));
+    return ans;
+}
+</code></pre>
+
+<p><strong>Second, math solution</strong></p>
+
+<pre><code>public ArrayList&lt;Integer&gt; grayCode(int n) {
+    ArrayList&lt;Integer&gt; ans = new ArrayList&lt;Integer&gt;();
+    for (int i = 0; i &lt; 1 &lt;&lt; n; i ++) 
+        ans.add((i &gt;&gt; 1) ^ i);
+    return ans;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/23/Decode-Ways/">[LeetCode 91] Decode Ways</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-23T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/decode-ways/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>
+A message containing letters from <code>A-Z</code> is being encoded to numbers using the following mapping:
+</p>
+
+<pre>'A' -&gt; 1
+'B' -&gt; 2
+...
+'Z' -&gt; 26
+</pre>
+
+<p>
+Given an encoded message containing digits, determine the total number of ways to decode it.
+</p>
+
+<p>
+For example,<br>
+Given encoded message <code>"12"</code>,
+it could be decoded as <code>"AB"</code> (1 2) or <code>"L"</code> (12).
+</p>
+
+<p>
+The number of ways decoding <code>"12"</code> is 2.
+</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="lime">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This question is easy to think, but hard to write.</strong></p>
+
+<p>Why? Because there are a lot of cases that the decode ways = 0. For example, input = &ldquo;02&rdquo; or &ldquo;50&rdquo;. We must handle those cases well. Also, boundary cases can cause some trouble.</p>
+
+<h3>Solution</h3>
+
+<p><strong>DP solution, the transformation function is:</strong></p>
+
+<blockquote><p>Count[i] = Count[i-1]  if only S[i-1] is valid</p>
+
+<p>Count[i] = Count[i-1] + Count[i-2] if S[i-1] and S[i-2] both valid</p></blockquote>
+
+<h3>Code</h3>
+
+<p><strong>First, my code.</strong></p>
+
+<pre><code>public int numDecodings(String s) {
+    int len = s.length();
+    if (len == 0) return 0;
+    // now len &gt;= 1
+    int[] dp = new int[len];
+    if (s.charAt(0) == '0') dp[0] = 0;
+    else dp[0] = 1;
+    if (len == 1) return dp[0];
+    // now len &gt;= 2
+    for (int i = 1; i &lt; len; i ++) {
+        if (s.charAt(i) != '0') dp[i] += dp[i-1];
+        int doubleDigit = Integer.parseInt(s.substring(i-1, i+1));
+        if (s.charAt(i-1) != '0' &amp;&amp; 1 &lt;= doubleDigit &amp;&amp; doubleDigit &lt;= 26)
+            if (i != 1) dp[i] += dp[i-2];
+            else dp[i] += 1;
+    }
+    return dp[len - 1];
+}
+</code></pre>
+
+<p><strong>Second, code from <a href="http://blog.csdn.net/u011095253/article/details/9248109">this blog</a>.</strong></p>
+
+<p>The only difference is an additional &lsquo;1&rsquo; at position 0 of the dp array. This helps simply the code a lot!</p>
+
+<pre><code>public int numDecodings(String s) {  
+    int n = s.length();  
+    if (n==0) return 0;  
+    int[] dp = new int[n+1];  
+    dp[0] = 1;  
+    if (isValid(s.substring(0,1))) dp[1] = 1;  
+    else dp[1] = 0;  
+    for(int i=2; i&lt;=n;i++){  
+        if (isValid(s.substring(i-1,i)))  
+            dp[i] = dp[i-1];  
+        if (isValid(s.substring(i-2,i)))  
+            dp[i] += dp[i-2];  
+    }  
+    return dp[n];  
+}  
+
+public boolean isValid(String s){  
+    if (s.charAt(0)=='0') return false;  
+    int code = Integer.parseInt(s);  
+    return code&gt;=1 &amp;&amp; code&lt;=26;  
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/22/Subsets-II/">[LeetCode 90] Subsets II</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-22T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/subsets-ii/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>
+Given a collection of integers that might contain duplicates, <i>S</i>, return all possible subsets.
+</p>
+<p><b>Note:</b><br>
+</p><ul>
+<li>Elements in a subset must be in non-descending order.</li>
+<li>The solution set must not contain duplicate subsets.</li>
+</ul>
+<p></p>
+<p>
+For example,<br>
+If <b><i>S</i></b> = <code>[1,2,2]</code>, a solution is:
+</p>
+
+<pre>[
+  [2],
+  [1],
+  [1,2,2],
+  [2,2],
+  [1,2],
+  []
+]
+</pre><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is a question based on &ldquo;Subsets&rdquo; question</strong>.</p>
+
+<p>Solution is similar, only need to add features to avoid duplication.</p>
+
+<h3>Solution</h3>
+
+<p>Based on the solution of previous question, I only add 1 variable called <strong>nonDupSize</strong>, which is the size that I need to merge new element with. For example, <strong>input = {1, 2, 3, 3}</strong></p>
+
+<blockquote><p>Initialize the subset:  {}</p>
+
+<p>Added element &ldquo;1&rdquo;: {}, <strong>{&ldquo;1&rdquo;}</strong> (1 more elements)</p>
+
+<p>Added element &ldquo;2&rdquo;: {}, {&ldquo;1&rdquo;}, <strong>{&ldquo;2&rdquo;}, {&ldquo;1&rdquo;, &ldquo;2&rdquo;}</strong> (2 more elements)</p>
+
+<p>Added element &ldquo;3&rdquo;: {}, {&ldquo;1&rdquo;}, {&ldquo;2&rdquo;}, {&ldquo;1&rdquo;, &ldquo;2&rdquo;}, <strong>{&ldquo;3&rdquo;}, {&ldquo;1&rdquo;,&ldquo;3&rdquo;}, {&ldquo;2&rdquo;,&ldquo;3&rdquo;}, {&ldquo;1&rdquo;, &ldquo;2&rdquo;,&ldquo;3&rdquo;}</strong> (4 more elements)</p>
+
+<p>Added element &ldquo;3&rdquo;: {}, {&ldquo;1&rdquo;}, {&ldquo;2&rdquo;}, {&ldquo;1&rdquo;, &ldquo;2&rdquo;}, {&ldquo;3&rdquo;}, {&ldquo;1&rdquo;,&ldquo;3&rdquo;}, {&ldquo;2&rdquo;,&ldquo;3&rdquo;}, {&ldquo;1&rdquo;,&ldquo;2&rdquo;,&ldquo;3&rdquo;}, <strong>{&ldquo;3&rdquo;,&ldquo;3&rdquo;}, {&ldquo;1&rdquo;,&ldquo;3&rdquo;,&ldquo;3&rdquo;}, {&ldquo;2&rdquo;,&ldquo;3&rdquo;,&ldquo;3&rdquo;}, {&ldquo;1&rdquo;,&ldquo;2&rdquo;,&ldquo;3&rdquo;,&ldquo;3&rdquo;}</strong> (4 more elements)</p></blockquote>
+
+<p>So instead of getting every list and merge with new element, I only get the lists of pre-calculated size (from bottom), and merge. Someone is having <a href="http://blog.csdn.net/perfect8886/article/details/22922785">similar solution</a> using a start-pointer.</p>
+
+<h3>Code</h3>
+
+<p><strong>my code</strong></p>
+
+<pre><code>public ArrayList&lt;ArrayList&lt;Integer&gt;&gt; subsetsWithDup(int[] num) {
+    ArrayList&lt;ArrayList&lt;Integer&gt;&gt; ans = new ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();
+    ans.add(new ArrayList&lt;Integer&gt;());
+    Arrays.sort(num);
+    // In this solution I introduce a new variable: nonDupSize
+    int curSize = 1, nonDupSize = 1;
+    for (int i = 0; i &lt; num.length; i ++) {
+        curSize = ans.size();
+        if (i &gt; 0 &amp;&amp; num[i] != num[i - 1]) nonDupSize = curSize;
+        for (int j = curSize - nonDupSize; j &lt; curSize; j ++) {
+            ArrayList&lt;Integer&gt; cur = new ArrayList&lt;Integer&gt;(ans.get(j));
+            cur.add(num[i]);
+            ans.add(cur);
+        }
+    }
+    return ans;
+}
+</code></pre>
+
+<p><strong>Updated on June 12th</strong> - solution using the &lsquo;Permutation Model&rsquo;.</p>
+
+<pre><code>public List&lt;List&lt;Integer&gt;&gt; subsetsWithDup(int[] num) {
+    List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;List&lt;Integer&gt;&gt;();
+    if(num == null || num.length == 0) {
+        return result;
+    }
+    Arrays.sort(num);
+    helper(result, new LinkedList&lt;Integer&gt;(), num, 0);
+    return result;
+}
+
+private void helper(List&lt;List&lt;Integer&gt;&gt; ans, List&lt;Integer&gt; path, int[] num, int position) {
+    ans.add(new LinkedList&lt;Integer&gt;(path));
+    for (int i = position; i &lt; num.length; i ++) {
+        if (i &gt; position &amp;&amp; num[i - 1] == num[i]) {
+            // if duplicate, only append num[position]
+            continue;
+        }
+        path.add(num[i]);
+        helper(ans, path, num, i + 1);
+        path.remove(path.size() - 1);
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/55">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/53">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (80)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
