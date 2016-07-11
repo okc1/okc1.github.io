@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given an array with four integers A, B, C, D, shuffle them in some order (there are 24 shuffles). &hellip; Get the best shuffle such &hellip;">
+  <meta name="description" content="Question link, link. example: A * B + C becomes A B * C + A * (B + C) becomes A B C + * Solution One of the main purpose of converting infix to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,108 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/11/20/infix-to-postfix/">[Amazon] Infix to Postfix Conversion</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-11-20T00:00:00-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Question</h1>
+
+<p><a href="https://cs.nyu.edu/courses/Fall12/CSCI-GA.1133-002/notes/InfixToPostfixExamples.pdf">link</a>, <a href="http://csis.pace.edu/~wolf/CS122/infix-postfix.htm">link</a>.</p>
+
+<blockquote><p>example: A * B + C becomes A B * C +</p>
+
+<p>A * (B + C) becomes A B C + *</p></blockquote>
+
+<h1>Solution</h1>
+
+<p>One of the main purpose of converting infix to postfix is to <strong>remove alll parentheses</strong> from the expression.</p>
+
+<p>This is a very difficult question. The solution is:</p>
+
+<ol>
+<li><p>Print operands as they arrive.</p></li>
+<li><p>If the incoming symbol is &lsquo;+&rsquo; or &lsquo;-&rsquo; or &lsquo;(&rsquo;, push it on the stack.</p></li>
+<li><p>If the incoming symbol is a &lsquo;)&rsquo;, pop the stack and print the operators until you see a &lsquo;(&rsquo;. Discard the pair of parentheses.</p></li>
+<li><p>If the incoming symbol is &lsquo;*&rsquo; or &lsquo;/&rsquo;, pop until we sees &lsquo;+&rsquo; or &lsquo;-&rsquo; or &lsquo;(&rsquo; at top of the stack, then push the symbol onto the stack.</p></li>
+<li><p>At the end of the expression, pop and print all operators on the stack. (No parentheses should remain.)</p></li>
+</ol>
+
+
+<h1>Code</h1>
+
+<pre><code>public String solve(String infix) {
+    StringBuilder sb = new StringBuilder();
+    // get next operand or non-operand
+    // notice that operand is &gt;=1 chars
+    int p = 0;
+    int len = infix.length();
+    Stack&lt;Character&gt; stack = new Stack&lt;Character&gt;();
+
+    while (p != len) {
+        if (isDigit(infix.charAt(p))) {
+            // if char at p is a digit
+            int q = p;
+            while (q != len &amp;&amp; isDigit(infix.charAt(q))) {
+                q++;
+            }
+            // it is a number in the range [p, q-1]
+            sb.append(infix.substring(p, q) + " ");
+            p = q;
+        } else {
+            // if char at p is + - * / or ( )
+            char op = infix.charAt(p++);
+            if (op == ')') {
+                // pop until sees a '('
+                while (stack.peek() != '(') {
+                    sb.append(stack.pop() + " ");
+                }
+                stack.pop();
+            } else if (op == '(' || op == '+' || op == '-') {
+                stack.push(op);
+            } else {
+                // if * or /
+                // pop until sees + or - or '('
+                while (!stack.isEmpty()) {
+                    if (stack.peek() == '+' || stack.peek() == '-' || stack.peek() == '(') {
+                        break;
+                    }
+                    sb.append(stack.pop() + " ");
+                }
+                stack.push(op);
+            }
+        }
+    }
+    // reach Eof, pop everything
+    while (!stack.isEmpty()) {
+        sb.append(stack.pop() + " ");
+    }
+    return sb.toString();
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -380,6 +482,10 @@ class Meeting {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -393,10 +499,6 @@ class Meeting {
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

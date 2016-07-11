@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given an array &ldquo;nums&rdquo; of integers and an int &ldquo;k&rdquo;, Partition the array (i.e move the elements in &ldquo;nums& &hellip;">
+  <meta name="description" content="Question link In an array, all numbers in the array repeat twice except two numbers, which repeat only once. Assume all the numbers are placed &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,104 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/28/Single-Number-III/">[Question] Single Number III</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-28T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.geeksforgeeks.org/find-two-non-repeating-elements-in-an-array-of-repeating-elements/">link</a></p>
+
+<blockquote><p>In an array, all numbers in the array repeat twice except two numbers, which repeat only once.</p>
+
+<p>Assume all the numbers are placed randomly. Find the 2 numbers.</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>The main idea of the solution is how to remove repeated elements. It&rsquo;s definitely <strong>using XOR</strong>.</p>
+
+<p>We need to try solve this problem like we did in &lsquo;Single number 1&rsquo; but how? We can divide the array into 2 part, each part containing 1 non-repeating number.</p>
+
+<p>The difficulty and the trick, is how do we divide?</p>
+
+<h3>Solution</h3>
+
+<ol>
+<li><p>xor = arr[0]^arr[1]^arr[2]&hellip;..arr[n-1]</p></li>
+<li><p>We can extract the rightmost set bit of any number n by taking ( n &amp; ~(n-1))</p></li>
+<li><p>We take any set bit of xor and <strong>divide the elements of the array in two sets</strong> – one set of elements with same bit set and other set with same bit not set.</p>
+
+<p> By doing so, we will get x in one set and y in another set.</p></li>
+</ol>
+
+
+<h3>Code</h3>
+
+<p>C++ Code from GFG</p>
+
+<pre><code>/* This finction sets the values of *x and *y to nonr-epeating
+ elements in an array arr[] of size n*/
+void get2NonRepeatingNos(int arr[], int n, int *x, int *y)
+{
+  int xor = arr[0]; /* Will hold xor of all elements */
+  int set_bit_no;  /* Will have only single set bit of xor */
+  int i;
+  *x = 0;
+  *y = 0;
+
+  /* Get the xor of all elements */
+  for(i = 1; i &lt; n; i++)
+   xor ^= arr[i];
+
+  /* Get the rightmost set bit in set_bit_no */
+  set_bit_no = xor &amp; ~(xor-1);
+
+  /* Now divide elements in two sets by comparing rightmost set
+   bit of xor with bit at same position in each element. */
+  for(i = 0; i &lt; n; i++)
+  {
+    if(arr[i] &amp; set_bit_no)
+     *x = *x ^ arr[i]; /*XOR of first set */
+    else
+     *y = *y ^ arr[i]; /*XOR of second set*/
+  }
+}
+
+/* Driver program to test above function */
+int main()
+{
+  int arr[] = {2, 3, 7, 9, 11, 2, 3, 11};
+  int *x = (int *)malloc(sizeof(int));
+  int *y = (int *)malloc(sizeof(int));
+  get2NonRepeatingNos(arr, 8, x, y);
+  printf("The non-repeating elements are %d and %d", *x, *y);
+  getchar();
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1422,106 +1520,6 @@ class Node {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/27/Previous-Permutation/">[LintCode] Previous Permutation</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-06-27T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.lintcode.com/en/problem/previous-permuation/">link</a></p>
-
-<div style="min-height:100px">
-<p>Given a list of integers, which denote a permutation.</p>
-
-<p>Find the previous permutation in ascending order.</p>
-    
-<div class="m-t-lg m-b-lg">
-      <b>Note</b>
-      <div><p>The list may contains duplicate integers.</p>
-      </div>
-</div>
-    
-<div class="m-t-lg m-b-lg">
-      <b>Example</b>
-      <div><p>For <strong><span style="color:#B22222;">[1,3,2,3]</span></strong>, the previous permutation is <span style="color:#B22222;"><strong>[1,2,3,3]</strong></span></p>
-
-<p>For <span style="color:#B22222;"><strong>[1,2,3,4]</strong></span>, the previous permutation is <span style="color:#B22222;"><strong>[4,3,2,1]</strong></span></p>
-    </div>
-</div>
-</div>
-
-
-<h3>Analysis</h3>
-
-<p>This is almost the same question as &ldquo;Next Permutation&rdquo;.</p>
-
-<ol>
-<li>Find</li>
-<li>Swap</li>
-<li>Replace</li>
-</ol>
-
-
-<h3>Code</h3>
-
-<pre><code>public ArrayList&lt;Integer&gt; previousPermuation(ArrayList&lt;Integer&gt; nums) {
-    // write your code
-    if (nums == null || nums.size() == 0) {
-        return null;
-    }
-    int len = nums.size();
-    int p = len - 2;
-    // 1. find 1st increasing position from the back
-    while (p &gt;= 0 &amp;&amp; nums.get(p) &lt;= nums.get(p + 1)) {
-        p--;
-    }
-    // 2. swap p with the first smaller value from the back
-    if (p != -1) {
-        int q = len - 1;
-        while (nums.get(q) &gt;= nums.get(p)) {
-            q--;
-        }
-        swap(nums, p, q);
-    }
-    // swap array in range of (p+1, end)
-    int left = p + 1;
-    int right = len - 1;
-    while (left &lt; right) {
-        swap(nums, left++, right--);
-    }
-    return nums;
-}
-
-private void swap(ArrayList&lt;Integer&gt; num, int p, int q) {
-    int temp = num.get(p);
-    num.set(p, num.get(q));
-    num.set(q, temp);
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/44">&larr; Older</a>
@@ -1562,6 +1560,10 @@ private void swap(ArrayList&lt;Integer&gt; num, int p, int q) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -1575,10 +1577,6 @@ private void swap(ArrayList&lt;Integer&gt; num, int p, int q) {
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

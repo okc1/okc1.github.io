@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link The diameter of a tree (sometimes called the width) is the number of nodes on the longest path between two leaves in the tree. Solution &hellip;">
+  <meta name="description" content="Question link Find a polynomial-time algorithm that takes a string of length n, and a number k, output the number of distinct k-character &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,100 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/11/all-distinct-subsequences-given-length%20-%20Copy/">[Question] All Distinct Subsequences With Given Length</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-11T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://11011110.livejournal.com/254164.html">link</a></p>
+
+<blockquote><p>Find a polynomial-time algorithm that takes a string of length n, and a number k, output the number of distinct k-character subsequences.</p>
+
+<p>For instance, input &ldquo;food&rdquo; and number k=2, output should be 4. There are four distinct 2-character subsequences of &ldquo;food&rdquo;: &ldquo;fo&rdquo;, &ldquo;fd&rdquo;, &ldquo;oo&rdquo;, and &ldquo;od&rdquo;.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Similar to <strong>[Question] Number of distinct sub-sequence</strong>, we solve this problem with DP. The dp equation is a bit difficult to write.</p>
+
+<p>The idea come from comment from <a href="http://11011110.livejournal.com/254164.html">gareth_rees</a>:</p>
+
+<blockquote><p>Let θ(S, k) be the number of distinct k-character subsequences in the string S of length n.</p>
+
+<p>Clearly θ(S, k) = 1 if n = k or k = 0</p>
+
+<p>and θ(S, k) = 0 if n &lt; k.</p>
+
+<p>Otherwise, <strong>choose 1 unique char from S</strong>, and deduct k by 1, then do the DP calculation with the remaining part of S.</p></blockquote>
+
+<p>Look at this example:</p>
+
+<pre><code>θ("food", 2) = θ("ood", 1) + θ("od", 1) + θ("", 1)
+= (θ("od", 0) + θ("", 0)) + (θ("d", 0) + θ("", 0)) + 0
+= (1 + 1) + (1 + 1)
+= 4
+</code></pre>
+
+<p><strong>&ldquo;food&rdquo; is divided into 3 parts</strong>. First part we choose &ldquo;f&rdquo; to be the first char, thus the value is θ(&ldquo;ood&rdquo;, 1). Second part we choose &ldquo;o&rdquo;, and final part we choose &ldquo;d&rdquo;.</p>
+
+<p><strong>Note that when we choose a char, it must never have been chosen before</strong>. In case of &ldquo;food&rdquo;, we only choose &lsquo;f&rsquo;, &lsquo;o&rsquo;, &rsquo;d' once for each.</p>
+
+<p>This is a very difficult DP question, but the explanation really makes the answer easier. Read my implementation below.</p>
+
+<h3>Code</h3>
+
+<pre><code>public int countSubSeq(String input, int k) {
+    // assuming all input chars are small letter
+    return choose(input, 0, k);
+}
+
+private int choose(String input, int start, int numChar) {
+    int charLeft = input.length() - start;
+    if (charLeft == numChar || numChar == 0) {
+        return 1;
+    } else if (charLeft &lt; numChar || numChar &lt; 0) {
+        return 0;
+    }
+    // now numChar is smaller than charLeft, and larger than 0
+    // start to pick a char (which is at first appearance)
+    int total = 0;
+    HashSet&lt;Character&gt; chosen = new HashSet&lt;Character&gt;();
+    while (start &lt; input.length()) {
+        char currentChar = input.charAt(start);
+        if (!chosen.contains(currentChar)) {
+            // pick the char pointer by 'start'
+            total += choose(input, start + 1, numChar - 1);
+            chosen.add(currentChar);
+        }
+        start++;
+    }
+    return total;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -751,88 +845,6 @@ i C[0,0,2,0]   N[4, 3, 2, 1]
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/09/big-data-real-time-top-k/">[Design] Real Time Top K</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-09T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://stackoverflow.com/questions/10189685/realtime-tracking-of-top-100-twitter-words-per-min-hour-day">link</a></p>
-
-<blockquote><p>Given a continuous twitter feed, design an algorithm to return the 100 most
-frequent words used at this minute, this hour and this day.</p></blockquote>
-
-<h3>Analysis</h3>
-
-<p>This is a frequent and useful problem for companies like Google and Twitter.</p>
-
-<p>The first solution below is <strong>an approximation method</strong> which select keywords that occur more than a certain threshold.</p>
-
-<p>The second solution is <strong>more accurate</strong> but RAM-intensive.</p>
-
-<h3>Lossy Count (used to get an inaccurate trend)</h3>
-
-<p><strong>Solution 1 is a modified version of <a href="http://stackoverflow.com/a/8033083">Lossy Count</a></strong>. The detailed steps are explained <a href="http://stackoverflow.com/a/3260905">here</a>:</p>
-
-<blockquote><p>Start with an empty map (red-black tree). The keys will be search terms, and the values will be a counter for the term.</p>
-
-<ol>
-<li><p>Look at each item in the stream.</p></li>
-<li><p>If the term exists in the map, increment the associated counter.</p></li>
-<li><p>Otherwise, if the map has fewer candidates than you&rsquo;re looking for, add it to the map with a count of one.</p></li>
-<li><p>However, if the map is &ldquo;full&rdquo;, decrement the counter in each entry. If any counter reaches zero during this process, remove it from the map.</p></li>
-</ol>
-</blockquote>
-
-<p><a href="http://www.cse.ust.hk/vldb2002/VLDB2002-proceedings/slides/S10P03slides.pdf">This slide show</a> explains <strong>Lossy Count</strong>, which is to divide input data into chunks. Then count elements and decrease counter by 1 after each chunk.</p>
-
-<p><strong>Note that the result is NOT the top frequency items</strong>. Instead, the final results are <strong>order-dependent</strong>, giving heavier weight to the counts processed last. It maybe helpful in some cases, cuz we want to check the latest trend. However, if we want more accurate top keywords for all data, we will <strong>do a second pass over the log data</strong>.</p>
-
-<p>Now let&rsquo;s discuss the threshold. Use &ldquo;aaabcd&rdquo; and map size = 2 as example. &lsquo;a&rsquo; will be inserted into map with occurance = 3. Then &lsquo;b&rsquo; is inserted, and removed. &lsquo;c&rsquo; is inserted, and removed. &rsquo;d' is inserted. Since we always decrease 1 at each step, &lsquo;a&rsquo; should only have occurance of 1 at the end. As explained <a href="http://stackoverflow.com/a/3260905">here</a>:</p>
-
-<blockquote><p>If we limit the map to 99 entries, we are guaranteed to find any term that occurs more than 1/(1 + 99) (1%) of the time.</p></blockquote>
-
-<p>We change the size of the map to change the threshold. The occurance of in the final result does not matter.</p>
-
-<h3>Solution 2</h3>
-
-<p>The lossy count does not actually produce the hourly, daily and monthly result accurately. Solution 2 will discuss how we deal with retiring old data in an accurate way.</p>
-
-<p>Suggested by <a href="http://stackoverflow.com/a/3260768">this answer</a>, <strong>we keep a 30-day list for each keyword</strong>, that counts the daily occurance. This list is FIFO. When we remove and insert a new counter value, we update monthly total.</p>
-
-<p>Alaternatively, <a href="http://stackoverflow.com/a/10190836">this answer</a> suggests keeping 1440 (24 * 60) HashMaps, each storing the information for one minute. <strong>And another 2 HashMap for the rolling total for the past hour, and past day</strong>.</p>
-
-<blockquote><p>You need an array of 1440 (24*60) word+count hash maps organized the way that you describe; these are your minute-by-minute counts. You need two additional hash maps - for the rolling total of the hour and the day.</p>
-
-<p>Define two operations on hash maps - add and subtract, with the semantic of merging counts of identical words, and removing words when their count drops to zero.</p>
-
-<p>Each minute you start a new hash map, and update counts from the feed. At the end of the minute, you place that hash map into the array for the current minute, add it to the rolling total for the hour and for the day, and then subtract the hash map of an hour ago from the hourly running total, and subtract the hash map of 24 hours ago from the daily running total.</p></blockquote>
-
-<p>This is a very good solution, which I would recommend as the standard solution to this &ldquo;Real Time Top k&rdquo; problem.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/18">&larr; Older</a>
@@ -873,6 +885,10 @@ frequent words used at this minute, this hour and this day.</p></blockquote>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -886,10 +902,6 @@ frequent words used at this minute, this hour and this day.</p></blockquote>
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

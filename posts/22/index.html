@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question 1 A magic index in an array A[l.. .n-l] is defined to be an index such that A[i] = i. Given a sorted array of distinct integers, write a &hellip;">
+  <meta name="description" content="Question Implement the &ldquo;paint fill&rdquo; function that one might see on many image editing programs. That is, given a screen (represented by a &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,124 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/17/paint-fill-map/">[CC150v5] 9.7 Paint Fill in Map</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-17T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Implement the &ldquo;paint fill&rdquo; function that one might see on many image editing programs.</p>
+
+<p>That is, given a screen (represented by a two-dimensional array of colors), a point, and a new color, <strong>fill in the surrounding area</strong> until the color changes from the original color.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>This is a BFS/DFS question, very similar to <strong>[LeetCode 130] Surrounded Regions</strong>.</p>
+
+<p><strong>However, this question is not same as surrounding region</strong>, because no temporary storage of state is needed, <strong>and we DO NOT NEED TO keep track of the visited positions</strong>!</p>
+
+<p>Why is this?</p>
+
+<ol>
+<li>This question, we simple change the color <strong>from A to B</strong>.</li>
+<li>Surrounding Region is <strong>change A to B, and B to A</strong>.</li>
+</ol>
+
+
+<p>That&rsquo;s why, the nature of 2 questions are different.</p>
+
+<p>Code 1 is my first solution, and Code 2 is doing a BFS and set color directly to expected value. This type of questions is highly frequent and sometimes may cause confusions.</p>
+
+<h3>Code</h3>
+
+<p><strong>my code 1</strong>, with &lsquo;temp&rsquo; state</p>
+
+<pre><code>public static void PaintFill1(Color[][] screen, int posX, int posY,
+        Color ncolor) {
+    // the queue keeps the list of positions that I'm going to visit
+    Queue&lt;Position&gt; q = new LinkedList&lt;Position&gt;();
+    int len = screen.length;
+    Color original = screen[posX][posY];
+    // visited origin node first
+    q.offer(new Position(posX, posY));
+    while (!q.isEmpty()) {
+        // visit positions in q one by one (mark color as 'Temp')
+        Position p = q.poll();
+        if (p.x &lt; 0 || p.x &gt;= len || p.y &lt; 0 || p.y &gt;= len) {
+            // invalid pos coordinate
+            continue;
+        } else if (screen[p.x][p.y] == Color.Temp
+                || screen[p.x][p.y] != original) {
+            continue;
+        }
+        screen[p.x][p.y] = Color.Temp;
+        q.offer(new Position(p.x - 1, p.y));
+        q.offer(new Position(p.x + 1, p.y));
+        q.offer(new Position(p.x, p.y - 1));
+        q.offer(new Position(p.x, p.y + 1));
+    }
+    // finish visiting all positions that's original color
+    for (int i = 0; i &lt; len; i++) {
+        for (int j = 0; j &lt; len; j++) {
+            if (screen[i][j] == Color.Temp) {
+                screen[i][j] = ncolor;
+            }
+        }
+    }
+}
+</code></pre>
+
+<p><strong>my code 2</strong>, without &lsquo;temp&rsquo; state</p>
+
+<pre><code>public static void PaintFill2(Color[][] screen, int posX, int posY,
+        Color ncolor) {
+    // the queue keeps the list of positions that I'm going to visit
+    Queue&lt;Position&gt; q = new LinkedList&lt;Position&gt;();
+    int len = screen.length;
+    Color original = screen[posX][posY];
+    // visited origin node first
+    q.offer(new Position(posX, posY));
+    while (!q.isEmpty()) {
+        // visit positions in q one by one (mark color as 'Temp')
+        Position p = q.poll();
+        if (p.x &lt; 0 || p.x &gt;= len || p.y &lt; 0 || p.y &gt;= len) {
+            // invalid pos coordinate
+            continue;
+        } else if (screen[p.x][p.y] != original) {
+            continue;
+        }
+        screen[p.x][p.y] = ncolor;
+        q.offer(new Position(p.x - 1, p.y));
+        q.offer(new Position(p.x + 1, p.y));
+        q.offer(new Position(p.x, p.y - 1));
+        q.offer(new Position(p.x, p.y + 1));
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -791,82 +909,6 @@ public static boolean recursiveHelper(int from, int to) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/15/implement-stack/">[CC150v5] 3.0 Example - Implement Stack</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-09-15T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<blockquote><p>Implement a stack.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p><strong>Stack uses LinkedNode to implement</strong>.</p>
-
-<h3>Code</h3>
-
-<pre><code>public class MyStack {
-
-    Node top;
-
-    public int pop() {
-        if (top == null) {
-            return -1;
-        }
-        int returnVal = top.val;
-        top = top.next;
-        return returnVal;
-    }
-
-    public int peek() {
-        if (top == null) {
-            return -1;
-        }
-        return top.val;
-
-    }
-
-    public void push(int val) {
-        Node newNode = new Node(val);
-        newNode.next = top;
-        top = newNode;
-    }
-
-    class Node {
-
-        int val;
-        Node next;
-
-        Node(int value) {
-            val = value;
-        }
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/23">&larr; Older</a>
@@ -907,6 +949,10 @@ public static boolean recursiveHelper(int from, int to) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -920,10 +966,6 @@ public static boolean recursiveHelper(int from, int to) {
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

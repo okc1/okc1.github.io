@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link The n-queens puzzle is the problem of placing n queens on an n×n chessboard such that no two queens attack each other. Given an integer &hellip;">
+  <meta name="description" content="Question link Follow up for N-Queens problem. Now, instead outputting board configurations, return the total number of distinct solutions. Stats &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,139 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/16/N-Queens-II/">[LeetCode 52] N-Queens II</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-16T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>16</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/n-queens-ii/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Follow up for N-Queens problem.</p>
+
+<p>Now, instead outputting board configurations, return the total number of distinct solutions.</p>
+
+<p><img src="http://www.leetcode.com/wp-content/uploads/2012/03/8-queens.png"></p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="lime">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Solution</h3>
+
+<p>I posted 2 solution by me. Second code is same as <a href="https://github.com/rffffffff007/leetcode/blob/master/N-Queens%20II.java">this guy&rsquo;s code</a>.</p>
+
+<h3>My code</h3>
+
+<p><strong>Using global variable</strong> (similar to [LeetCode 51] N-Queens)</p>
+
+<pre><code>public class Solution {
+
+    int total = 0;
+
+    public int totalNQueens(int n) {
+        if (n &lt;= 0) {
+            return 0;
+        }
+        int[] map = new int[n];
+        helper(map, 0, n);
+        return total;
+    }
+
+    private void helper(int[] map, int row, int n) {
+        if (row == n) {
+            total++;
+            return;
+        }
+        for (int i = 0; i &lt; n; i++) {
+            map[row] = i;
+            // check if map[row] conflicts with any row above
+            boolean valid = true;
+            for (int k = 0; k &lt; row; k++) {
+                if (Math.abs(map[k] - map[row]) == row - k || map[k] == map[row]) {
+                    // not valid!
+                    valid = false;
+                    break;
+                }
+            }
+            if (valid) {
+                helper(map, row + 1, n);
+            }
+        }
+    }
+}
+</code></pre>
+
+<p><strong>Without using global variable</strong></p>
+
+<pre><code>public class Solution {
+    public int totalNQueens(int n) {
+        return solve(0, n, new int[n]);
+    }
+
+    private int solve(int cur, int n, int[] list) {
+        if (cur == n) return 1;
+        int ans = 0;
+        for (int i = 0; i &lt; n; i++) {
+            boolean conflict = false;
+            for (int j = 0; j &lt; cur; j++)
+                if (i == list[j] || cur - j == Math.abs(i - list[j]))
+                    conflict = true;
+            if (conflict) continue;
+            list[cur] = i;
+            ans += solve(cur + 1, n, list);
+        }
+        return ans;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1215,127 +1348,6 @@ Could you do this in-place?</p><p></p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/14/Permutations-II/">[LeetCode 47] Permutations II</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-05-14T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://oj.leetcode.com/problems/permutations-ii/">link</a></p>
-
-<div class="question-content">
-            <p></p><p>
-Given a collection of numbers that might contain duplicates, return all possible unique permutations.
-</p>
-
-<p>
-For example,<br>
-<code>[1,1,2]</code> have the following unique permutations:<br>
-<code>[1,1,2]</code>, <code>[1,2,1]</code>, and <code>[2,1,1]</code>.
-</p><p></p>
-          </div>
-
-
-<h3>Stats</h3>
-
-<table border="2">
-    <tr>
-        <td>Frequency</td>
-        <td bgcolor="lime">2</td>
-    </tr>
-    <tr>
-        <td>Difficulty</td>
-        <td bgcolor="red">4</td>
-    </tr>
-    <tr>
-        <td>Adjusted Difficulty</td>
-        <td bgcolor="red">4</td>
-    </tr>
-    <tr>
-        <td>Time to use</td>
-        <td bgcolor="yellow">--------</td>
-    </tr>
-</table>
-
-
-<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
-
-<h3>Solution</h3>
-
-<p><strong>This question is based on &ldquo;Permutations&rdquo;</strong>, plus duplication avoidance.</p>
-
-<p>This question, together with &ldquo;Permutations&rdquo;, is very classic and frequent questions, thus the basis for many similar DFS problems. Read <a href="http://www.programcreek.com/2013/02/leetcode-permutations-ii-java/">this blog</a> for more.</p>
-
-<p>The idea is when getting element from remaining list and add to current list, check for duplication. <strong>If the number occured before, skip operation</strong>. (Don&rsquo;t forget sorting is required at first).</p>
-
-<p>The key points to keep in mind:</p>
-
-<ol>
-<li>Use another array to flag the &lsquo;visited&rsquo; items</li>
-<li>Check items with same value, and <strong>ONLY USE THE FIRST INSTANCE OF THE SAME VALUE</strong>. Which is to say, if current = previous, but previous is not visited, do not use current number.</li>
-</ol>
-
-
-<h3>My code</h3>
-
-<pre><code>public class Solution {
-    public List&lt;List&lt;Integer&gt;&gt; permuteUnique(int[] num) {
-        List&lt;List&lt;Integer&gt;&gt; ans = new ArrayList&lt;List&lt;Integer&gt;&gt;();
-        if (num == null || num.length == 0) {
-            return ans;
-        }
-        int len = num.length;
-        Arrays.sort(num);
-        helper(ans, new ArrayList&lt;Integer&gt;(), num, len, new boolean[len]);
-        return ans;
-    }
-
-    private void helper(List&lt;List&lt;Integer&gt;&gt; ans, List&lt;Integer&gt; path, int[] num, int len, boolean[] visited) {
-        if (path.size() == len) {
-            ans.add(new ArrayList&lt;Integer&gt;(path));
-            return;
-        }
-        for (int i = 0; i &lt; len; i++) {
-            if (i &gt; 0 &amp;&amp; num[i - 1] == num[i] &amp;&amp; !visited[i - 1]) {
-                // important: if previous number have same value as (i)th
-                // but have never been visited, then skip current number
-                continue;
-            }
-            if (!visited[i]) {
-                path.add(num[i]);
-                visited[i] = true;
-                helper(ans, path, num, len, visited);
-                path.remove(path.size() - 1);
-                visited[i] = false;
-            }
-        }
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/59">&larr; Older</a>
@@ -1376,6 +1388,10 @@ For example,<br>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -1389,10 +1405,6 @@ For example,<br>
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

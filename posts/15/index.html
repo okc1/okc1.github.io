@@ -9,7 +9,8 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Definition source A abstract class is declared when it has one or more abstract methods. An interface differs from an abstract class because an &hellip;">
+  <meta name="description" content="Difference Vectors are synchronized, ArrayLists are not.
+Data Growth Methods A Vector defaults to doubling the size of its array, while the ArrayList &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +66,61 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/20/java-vector-arraylist/">[Java OOP] Java Vector and ArrayList</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-20T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Difference</h3>
+
+<ol>
+<li><p>Vectors are synchronized, ArrayLists are not.</p></li>
+<li><p>Data Growth Methods</p>
+
+<p> <a href="http://stackoverflow.com/a/2986307">A Vector defaults to</a> doubling the size of its array, while the ArrayList increases its array size by 50 percent.</p></li>
+</ol>
+
+
+<h3>Similarities</h3>
+
+<ol>
+<li><p>Both Vector and ArrayList use <strong>growable array</strong> data structure.</p></li>
+<li><p>They both are <strong>ordered collection classes</strong> as they maintain the elements insertion order.</p></li>
+<li><p>Vector &amp; ArrayList both allows duplicate and null values.</p></li>
+<li><p>They both grows and shrinks automatically when overflow and deletion happens.</p></li>
+</ol>
+
+
+<p><a href="http://beginnersbook.com/2013/12/difference-between-arraylist-and-vector-in-java/">source</a></p>
+
+<h3>History</h3>
+
+<p>The vector was not the part of collection framework - it has been included in collections later. It can be considered as <strong>Legacy code</strong>.</p>
+
+<p><strong>There is nothing about Vector which List collection cannot do</strong>. Therefore Vector should be avoided. If there is a need of thread-safe operation, make ArrayList synchronized.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1106,67 +1162,6 @@ public int helper(String input) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/17/find-nodes-distance-k-binary-tree/">[Amazon] Find Nodes of Distance K From Binary Tree</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-17T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.careercup.com/question?id=15069740">link</a></p>
-
-<blockquote><p>Find the nodes at d distance from a certain node in a Binary Tree</p></blockquote>
-
-<h3>Solution</h3>
-
-<p><a href="http://www.geeksforgeeks.org/print-nodes-distance-k-given-node-binary-tree/">There are two types</a> of nodes to be considered:</p>
-
-<ol>
-<li>Nodes in the subtree rooted of the target node.</li>
-<li>Other nodes, may be an ancestor of target, or a node in some other subtree.</li>
-</ol>
-
-
-<p>The details of find these nodes:</p>
-
-<ol>
-<li><p>Find the nodes which can be reached in k hops from the given node.</p></li>
-<li><p>Second part we look at those nodes <strong>on the upper part of the tree</strong>. The parent of the given node is 1 hop away. Hence in the <strong>other child subtree</strong> of the parent, we find nodes with k-1 hops.</p>
-
-<p> Similarly the grand parent of B, we find nodes with k - 2 distance.</p></li>
-</ol>
-
-
-<p>Implementation:</p>
-
-<ol>
-<li><p>Start from root, <strong>store all nodes in a queue</strong> of maximum size k till you reach the given node.</p></li>
-<li><p>Call FindNodesAtDistance() on the nodes from the queue to get all the nodes <strong>distance k -i</strong> from the node.</p></li>
-</ol>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/16">&larr; Older</a>
@@ -1207,6 +1202,10 @@ public int helper(String input) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -1220,10 +1219,6 @@ public int helper(String input) {
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

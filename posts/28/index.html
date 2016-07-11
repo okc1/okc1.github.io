@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Definition For every two-person, zero-sum game with finitely many strategies, there exists a value V and a mixed strategy for each player, such that &hellip;">
+  <meta name="description" content="TSP problem Given a list of cities and the distances between each pair of cities, what is the shortest possible route that visits each city exactly &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,77 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/30/Travelling-salesman-problem/">[Fundamental] Travelling Salesman Problem</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-30T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>TSP problem</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Travelling_salesman_problem">Given a list of cities</a> and the distances between each pair of cities, what is the shortest possible route that visits each city exactly once and returns to the origin city?</p>
+
+<p>It is an NP-hard problem in combinatorial optimization. We will discuss 2 category of solutions:</p>
+
+<ol>
+<li>Exact algorithms</li>
+<li>Heuristic and approximation algorithms</li>
+</ol>
+
+
+<h3>Exact algorithms</h3>
+
+<ol>
+<li><p><strong>Brute force search</strong>, which the run time is O(n!), which is impossible for 20 cities.</p></li>
+<li><p><strong>DP</strong> Held–Karp algorithm. O(n<sup>2</sup> x 2<sup>n</sup>).</p></li>
+<li><p><strong>Branch-and-bound</strong> algorithm. This can process 40-60 cities.</p></li>
+</ol>
+
+
+<h3>Heuristic and approximation algorithms</h3>
+
+<ol>
+<li><p><strong>Greedy</strong>, or Nearest Neighbour algorithm. (an improved version is called Nearest Fragment algorithm, which connect NN in groups)</p></li>
+<li><p><strong>Minimum Spanning Tree (MST)</strong>, build the <a href="http://en.m.wikipedia.org/wiki/Minimum_spanning_tree">MST</a> using <a href="http://en.wikipedia.org/wiki/Kruskal's_algorithm">Kruskal&rsquo;s algorithm</a> and then do a <strong>Depth-first Tree Tour</strong>. <a href="http://www.youtube.com/watch?v=HWHZAtQl1vI">link</a> to video.</p>
+
+<ol>
+<li><p>Sort all edges from small to large, then add edges into MST as long as no cycle is created. In the end, a MST is achieved.</p></li>
+<li><p>Do Depth-first Tree Tour(DFTT)</p></li>
+<li><p>Length of DFTT is 2 x weight of MST.</p></li>
+<li><p>Skip some nodes that&rsquo;s only visited once.</p></li>
+<li><p>We get an legitimate solution.</p></li>
+</ol>
+</li>
+</ol>
+
+
+<h3>Iterative improvement</h3>
+
+<p>Now these are the solutions. However we can improve it by doing <strong>2-opt Swap</strong>.</p>
+
+<p>It means selecting 2 edges at random. If swapping results in an improvement, then keep it. Keep doing this. <a href="http://www.youtube.com/watch?v=SC5CX8drAtU">link</a> to video.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -927,124 +998,6 @@ public String read(int n) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/27/Duplicate-rows-in-matrix/">[Question] Duplicate Rows in Matrix</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-08-27T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question 1</h3>
-
-<p><a href="http://www.careercup.com/question?id=6488077455327232">link</a></p>
-
-<blockquote><p>Given a 2D array (n x m) of integers, find all duplicate rows and print their index.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>This is a <a href="http://get-that-job-at-google.blogspot.sg/2012/12/google-interview-experience.html">google question</a>.</p>
-
-<p><strong>Use HashMap</strong> (but make your own). Computer hash value of each row and insert into HashMap as value pair of HashMap(hashValue, rowNumber). When there&rsquo;s a collision, just check the rowNumber stored in HashMap with current row.</p>
-
-<p>This requires O(n*m) time and O(n) space. Note that <strong>we&rsquo;re not store the entire row into HashMap</strong> cuz it&rsquo;ll take up too much space.</p>
-
-<p>We (probably) can also use Trie.</p>
-
-<h3>Question 2</h3>
-
-<p><a href="http://www.careercup.com/question?id=9478119">link</a></p>
-
-<blockquote><p>Given a binary matrix of N X N of integers, you need to return only unique rows of binary arrays.</p></blockquote>
-
-<pre><code>input: 
-0 1 0 0 1 
-1 0 1 1 0 
-0 1 0 0 1 
-1 1 1 0 0 
-
-ans: 
-0 1 0 0 1 
-1 0 1 1 0 
-1 1 1 0 0
-</code></pre>
-
-<h3>Solution</h3>
-
-<p>Different from <strong>Question 1</strong>, this input is only 0 and 1.</p>
-
-<p><strong>The solution is to use Trie</strong>. Each node <a href="http://www.geeksforgeeks.org/print-unique-rows/">only have 2 children</a> (that&rsquo;s why Trie is perfect solution here).</p>
-
-<h3>Code</h3>
-
-<p><strong>Using binary trie node</strong>, refactored by me.</p>
-
-<pre><code>public int[][] getUniqueRows(int[][] matrix) {
-    int m = matrix.length;
-    int n = matrix[0].length;
-
-    TrieNode root = new TrieNode();
-    TrieNode p;
-    int uniqueCount = 0;
-    boolean[] isUnique = new boolean[m];
-    // isUnique is used to mark the lines that would appear in final result
-
-    // start to build the trie
-    for (int i = 0; i &lt; m; i++) {
-        // insert number matrix[i][] into the trie
-        p = root;
-        // root element would be an empty heading for all numbers
-        for (int j = 0; j &lt; n; j++) {
-            int digit = matrix[i][j];
-            if (p.kids == null) {
-                p.kids = new TrieNode[2];
-            }
-            if (p.kids[digit] == null) {
-                // this is a whole new branch, create a new node here
-                p.kids[digit] = new TrieNode();
-                if (j == n - 1) {
-                    uniqueCount++;
-                    isUnique[i] = true;
-                }
-            }
-            p = p.kids[digit];
-        }
-    }
-    System.out.println("uniqueCount is " + uniqueCount);
-    int[][] result = new int[uniqueCount][];
-    int k = 0;
-    for (int w = 0; w &lt; isUnique.length; w++) {
-        if (isUnique[w]) {
-            result[k++] = matrix[w];
-        }
-    }
-    return result;
-}
-
-class TrieNode {
-    TrieNode[] kids = null;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/29">&larr; Older</a>
@@ -1085,6 +1038,10 @@ class TrieNode {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -1098,10 +1055,6 @@ class TrieNode {
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

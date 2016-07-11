@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given a binary tree, determine if it is height-balanced. For this problem, a height-balanced binary tree is defined as a binary tree in &hellip;">
+  <meta name="description" content="Question link Given an array where elements are sorted in ascending order, convert it to a height balanced BST. Stats Frequency 3 Difficulty 2 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,97 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/26/Convert-Sorted-Array-to-Binary-Search-Tree/">[LeetCode 108] Convert Sorted Array to Binary Search Tree</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-26T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/convert-sorted-array-to-binary-search-tree/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Given an array where elements are sorted in ascending order, convert it to a height balanced BST.</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>My first understanding of this question is wrong</strong>.</p>
+
+<p>A BST does not necessarily have to fill in left side of the leaf as muc has possible. I was confusing &ldquo;balanced binary tree&rdquo; with &ldquo;left-balanced binary tree&rdquo;.</p>
+
+<blockquote><p><strong>A balanced binary tree</strong> is commonly defined as a binary tree in which the depth of the left and right subtrees of every node differ by 1 or less</p>
+
+<p><strong>A left-balanced binary tree</strong> is a balanced binary tree where the left sub-tree of each node is filled before the right sub-tree</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Then this question become straight-forward.</p>
+
+<h3>Code</h3>
+
+<pre><code>public TreeNode sortedArrayToBST(int[] num) {
+    if (num.length == 0) return null;
+    return helper(num, 0, num.length - 1);
+}
+
+public TreeNode helper(int[] num, int start, int end) {
+    if (start &gt; end) return null;
+    int mid = (start + end) / 2;
+    TreeNode node = new TreeNode(num[mid]);
+    node.left = helper(num, start, mid - 1);
+    node.right = helper(num, mid + 1, end);
+    return node;
+} 
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1342,198 +1433,6 @@ bool isValid(string s) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/24/Maximal-Rectangle/">[LeetCode 85] Maximal Rectangle</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-05-24T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="https://oj.leetcode.com/problems/maximal-rectangle/">link</a></p>
-
-<div class="question-content">
-            <p></p><p>
-Given a 2D binary matrix filled with 0's and 1's, find the largest rectangle containing all ones and return its area.
-</p><p></p>
-          </div>
-
-
-<h3>Stats</h3>
-
-<table border="2">
-    <tr>
-        <td>Frequency</td>
-        <td bgcolor="white">1</td>
-    </tr>
-    <tr>
-        <td>Difficulty</td>
-        <td bgcolor="red">5</td>
-    </tr>
-    <tr>
-        <td>Adjusted Difficulty</td>
-        <td bgcolor="red">5</td>
-    </tr>
-    <tr>
-        <td>Time to use</td>
-        <td bgcolor="red">--------</td>
-    </tr>
-</table>
-
-
-<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
-
-<h3>Analysis</h3>
-
-<p><strong>This is a very difficult question</strong>. It is similar and also related to &ldquo;<strong>Largest Rectangle in Histogram</strong>&rdquo;.</p>
-
-<p>Two solutions are available for this question.</p>
-
-<p><strong>First solution is O(n<sup>2</sup>)</strong>. This makes use of solution of &ldquo;<strong>Largest Rectangle in Histogram</strong>&rdquo;, which is to say, we are finding the max rectangle for each row (as base) in the matrix.</p>
-
-<p>This solution is very easy to write once you realize this connection - I guess not many people would. That&rsquo;s why I have the next solution.</p>
-
-<p><strong>Second solution is a clever Brute Force, time complexity is O(n<sup>3</sup>)</strong>. The fundamental idea is to make a 2-D array storing the number of &lsquo;1&rsquo;s occured before current node (inclusive). After this is done, there&rsquo;re 2 different ways to implement. Read code 2 and code 3.</p>
-
-<h3>Solution</h3>
-
-<p>FIrst code is easy.</p>
-
-<p>Second code is the idea from <a href="http://blog.csdn.net/fightforyourdream/article/details/17711893">this blog</a>. For every node in the 2-D array, checks all possible rectangles ending at this node (which mean check all the way up/left).</p>
-
-<p>Third code from <a href="http://leetcodenotes.wordpress.com/2013/10/19/leetcode-maximal-rectangle-0101%E7%BB%84%E6%88%90%E7%9A%84%E7%9F%A9%E9%98%B5%EF%BC%8C%E6%B1%82%E9%87%8C%E9%9D%A2%E5%85%A8%E6%98%AF1%E7%9A%84%E7%9F%A9%E5%BD%A2%E7%9A%84%E6%9C%80%E5%A4%A7%E9%9D%A2/">this blog</a>. It is similar to second, but it&rsquo;s checking all rectangles that shared same width as current line. So it&rsquo;s checking up then down, both direction. Read the code and it&rsquo;s easy to understand.</p>
-
-<h3>Code</h3>
-
-<p><strong>First, solution making use of &ldquo;Largest rectangle&rdquo;</strong></p>
-
-<pre><code>public int maximalRectangle(char[][] matrix) {
-    if (matrix.length == 0 || matrix[0].length == 0) return 0;
-    int[][] m = new int[matrix.length][matrix[0].length];
-    for (int i = 0; i &lt; matrix.length; i ++) {
-        for (int j = 0; j &lt; matrix[i].length; j ++) {
-            if (i == 0 || matrix[i][j] == '0') 
-                m[i][j] = matrix[i][j] - '0';
-            else 
-                m[i][j] = m[i-1][j] + 1;
-        }
-    }
-    int max = 0;
-    for (int i = 0; i &lt; m.length; i ++) {
-        max = Math.max(max, largestRectangleArea(m[i]));
-    }
-    return max;
-}
-
-// the following code is the solution for "Largest Rectangle in Histogram"
-public int largestRectangleArea(int[] height) {
-    int len = height.length;
-    if (len == 0) return 0;
-    int max = Integer.MIN_VALUE;
-    Stack&lt;Integer&gt; stack = new Stack&lt;Integer&gt;();
-    for (int i = 0; i &lt; len; i ++) {
-        if (stack.isEmpty() || height[stack.peek()] &lt;= height[i]) stack.push(i);
-        else {
-            int temp = stack.pop();
-            // here I must do a check of stack.isEmpty(), 
-            // And do nto use (i-height[temp]) instead use (i-stack.peek()-1])
-            max = Math.max(max, height[temp] * 
-                (stack.isEmpty() ? i : (i - stack.peek() - 1)));
-            i --;
-        }
-    }
-    while (! stack.isEmpty()) {
-            int temp = stack.pop();
-            max = Math.max(max, height[temp] * 
-                (stack.isEmpty() ? len : (len - stack.peek() - 1)));
-    }
-    return max;
-}
-</code></pre>
-
-<p><strong>Second </strong></p>
-
-<pre><code>public int maximalRectangle(char[][] matrix) {
-    int rows = matrix.length;  
-    if (rows == 0) return 0;  
-    int cols = matrix[0].length;  
-    int [][] hOnes = new int[rows][cols];
-    int max = 0;
-    for (int i=0; i&lt;rows; i++)
-        for(int j=0; j&lt;cols; j++) 
-            if(matrix[i][j] == '1')
-                if(j == 0) hOnes[i][j] = 1;
-                else hOnes[i][j] = hOnes[i][j-1] + 1;
-    for (int i=0; i&lt;rows; i++)
-        for (int j=0; j&lt;cols; j++){  
-            if (hOnes[i][j] != 0){  
-                int minI = i;
-                int minRowWidth = hOnes[i][j];
-                while (minI &gt;= 0){
-                    minRowWidth = Math.min(minRowWidth, hOnes[minI][j]);  
-                    int area = minRowWidth * (i-minI+1);  
-                    max = Math.max(max, area);  
-                    minI--;  
-                }
-            }
-        }
-    return max;  
-}
-</code></pre>
-
-<p><strong>Third</strong></p>
-
-<pre><code>public int maximalRectangle(char[][] matrix) {
-    if (matrix.length == 0) return 0;
-    int res = 0;
-    int m = matrix.length, n = matrix[0].length;
-    int[][] d = new int[m][n];
-    for (int i = 0; i &lt; m; i++) {
-        d[i][0] = matrix[i][0] - '0';
-        for (int j = 1; j &lt; n; j++) 
-            d[i][j] = matrix[i][j] == '1' ? d[i][j - 1] + 1 : 0;
-    }
-    for (int i = 0; i &lt; m; i++) 
-        for (int j = 0; j &lt; n; j++) 
-            res = Math.max(res, expand(d, i, j));
-    return res;
-}
-
-private int expand(int[][] d, int I, int J) {
-    int height = 0, width = d[I][J];
-    //go up
-    for (int i = I - 1; i &gt;= 0; i--)
-        if (d[i][J] &gt;= width) height++;
-        else break;
-    //go down
-    for (int i = I; i &lt; d.length; i++) 
-        if (d[i][J] &gt;= width) height++;
-        else break;
-    return width * height;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/54">&larr; Older</a>
@@ -1574,6 +1473,10 @@ private int expand(int[][] d, int I, int J) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -1587,10 +1490,6 @@ private int expand(int[][] d, int I, int J) {
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

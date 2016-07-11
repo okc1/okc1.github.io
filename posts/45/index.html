@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Master theorem In the analysis of algorithms, the master theorem provides a cookbook solution in asymptotic terms (using Big O notation) for &hellip;">
+  <meta name="description" content="Question link Given two Linked Lists, create union and intersection lists that contain union and intersection of the elements present in the given &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,57 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/17/Union-and-intersection-of-linked-list/">[Question] Union and Intersection of Two Linked Lists</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-17T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.geeksforgeeks.org/union-and-intersection-of-two-linked-lists/">link</a></p>
+
+<blockquote><p>Given two Linked Lists, create union and intersection lists that contain union and intersection of the elements present in the given lists. Order of elments in output lists doesn’t matter.</p>
+
+<p>Example:</p>
+
+<p>Input: &ldquo;10->15->4->20&rdquo; and &ldquo;8->4->2->10&rdquo;</p>
+
+<p>Intersection: 4->10</p>
+
+<p>Union: 2->8->20->4->15->10</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>There are 2 solutions.</p>
+
+<p>First solution is to do mergesort, then do a linear search. Time complexity is O(mlgm + nlgn).</p>
+
+<p>Second solution is using hashing. On time <a href="http://www.geeksforgeeks.org/union-and-intersection-of-two-linked-lists/">complexity</a>:</p>
+
+<blockquote><p>Time complexity of this method depends on the hashing technique used and the distribution of elements in input lists. In practical, this approach may turn out to be better than above method.</p></blockquote>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1358,73 +1409,6 @@ while (e.hasNext()) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/14/Count-negative-in-2D-Sorted-Matrix/">[Question] Count Negative in a 2D Sorted Matrix</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-06-14T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://leetcode.com/2010/10/searching-2d-sorted-matrix.html">link</a></p>
-
-<blockquote>
-<p class="font-color">Write an efficient algorithm that searches for a value in an <i>n</i> x <i>m</i> table (two-dimensional array). This table is sorted along the rows and columns — that is,</p><p class="font-color">Table[i][j] ≤ Table[i][j + 1], <br>Table[i][j] ≤ Table[i + 1][j]</p>
-</blockquote>
-
-
-<h3>Related questions</h3>
-
-<p><strong><a href="/blog/2014/05/21/Search-a-2D-Matrix/">Search a 2D Matrix</a></strong>.</p>
-
-<p><strong><a href="/blog/2014/06/10/Searching-a-2D-Sorted-Matrix/">Searching a 2D Sorted Matrix</a></strong>.</p>
-
-<p><strong><a href="/blog/2014/06/14/Count-negative-in-2D-Sorted-Matrix/">Count negative in a 2D Sorted Matrix</a></strong>.</p>
-
-<h3>Analysis</h3>
-
-<p>This is a very similar question as prevous one. The solution is O(n) with a linear walk from top-right to bottom-left.</p>
-
-<h3>Code</h3>
-
-<pre><code>int countNegatives(int array[][], int size) {
-    int col = size - 1, row = 0;
-    int count = 0;
-
-    while(row &amp;lt; size &amp;&amp; col &amp;gt;= 0) {
-        if(array[row][col] &amp;lt; 0 ) {
-            count = count + (col + 1);
-            row = row + 1;
-        }
-        else {
-            col = col - 1;
-        }
-    }
-    return count;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/46">&larr; Older</a>
@@ -1465,6 +1449,10 @@ while (e.hasNext()) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -1478,10 +1466,6 @@ while (e.hasNext()) {
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

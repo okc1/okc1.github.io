@@ -9,7 +9,9 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Overview defination the process of defining the architecture, components, modules, interfaces and data to satisfy specified requirements. conceptual &hellip;">
+  <meta name="description" content="A bottom-up example Example two: design a recommendation module A simple algo: u1={m3,m5,m7,m11}
+u2={m1,m2,m3,m4,m5,m6,m7,m8,m9}
+Similarity( u1, u2 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +67,145 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/08/23/design-class1-2/">[NineChap System Design] Class 1.2: An Example</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-08-23T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>A bottom-up example</h1>
+
+<p>Example two: <strong>design a recommendation module</strong></p>
+
+<h2>A simple algo:</h2>
+
+<pre><code>u1={m3,m5,m7,m11}
+u2={m1,m2,m3,m4,m5,m6,m7,m8,m9}
+Similarity( u1, u2 ) = 3
+</code></pre>
+
+<p>m - music</p>
+
+<p>u - user</p>
+
+<p>Similarity = # of same music for different users</p>
+
+<h2>Adv algo:</h2>
+
+<p>find his <strong>top-1 similar user</strong>. Stay tuned for future posts.</p>
+
+<h2>Use the 5 Steps (SNAKE)</h2>
+
+<ol>
+<li>Step One, Scenario</li>
+<li>Step Two, Necessary</li>
+<li>Step Three, Application</li>
+<li>Step Four, Kilobit: data</li>
+<li>Last Step, Evolve</li>
+</ol>
+
+
+<p>Because this question is relatively easy, we will not do case-analysis (Macro).</p>
+
+<p><strong>Instead, we do micro design</strong> by starting at the interface.</p>
+
+<h2>Step One, Scenario</h2>
+
+<p>Interface</p>
+
+<pre><code>class Recommender {
+    public int findSimilarUser(int userId) {
+        //
+    }
+}
+</code></pre>
+
+<h2>Step Two, Necessary</h2>
+
+<ol>
+<li><p>ask</p>
+
+<ol>
+<li>total users = 100,000,000</li>
+<li>total music = 10,000,000</li>
+<li>peak users in 3 month = 6,000,000</li>
+</ol>
+
+
+<p> However, not everyone is logged in. Thus we won&rsquo;t need to recommend for everybody. On average, the logged-in ratio is 1% - 30%. Let&rsquo;s assume 5%.</p>
+
+<ol>
+<li>participation percentage = 5%</li>
+</ol>
+
+
+<p> And user&rsquo;s interest won&rsquo;t change every minute. Let&rsquo;s recalculate only after 10 minutes.</p>
+
+<ol>
+<li>calculation frequency = 1 update/10min/user</li>
+</ol>
+</li>
+<li><p>predict</p>
+
+<ol>
+<li>user analysis (skip)</li>
+<li>Traffic analysis (skip)</li>
+<li>Memory analysis (skip)</li>
+<li>QPS</li>
+</ol>
+
+
+<p> Peak QPS = 6,000,000 * 5% / (10 * 60) = 500/s</p></li>
+</ol>
+
+
+<h2>Step Three, Application</h2>
+
+<p><strong>The simpliest algorithm: BF compare</strong>. The complexity is O(m n) for each user, where m is # of music a person likes, and n is # of total users. For k users, it takes O(k m n) time (k can be = peak concurrent users).</p>
+
+<p>This is roughly 0.2s per user. Thus <strong>Max QPS = 5</strong>.</p>
+
+<blockquote><p>One word about complexity-to-seconds estimation.</p>
+
+<p>O(n ^ 3) -> 1s</p>
+
+<p>O(n ^ 2) -> 0.2s</p>
+
+<p>O(n) -> 20ms</p>
+
+<p>O(k) -> k ms</p></blockquote>
+
+<h2>Step Four, Kilobit: data</h2>
+
+<p>Very simple:</p>
+
+<p><img class="middle" src="/assets/images/design-class1-reco-1.png"></p>
+
+<h2>Last Step, Evolve</h2>
+
+<p>Read on.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1161,79 +1302,6 @@ uint32_t reverseBits(uint32_t n) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/05/10/Number-of-1-Bits/">[LeetCode 191] Number of 1 Bits</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-05-10T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="https://leetcode.com/problems/number-of-1-bits/">link</a></p>
-
-<div class="question-content">
-              <p></p><p>Write a function that takes an unsigned integer and returns the number of ’1' bits it has (also known as the <a href="http://en.wikipedia.org/wiki/Hamming_weight">Hamming weight</a>).</p>
-
-<p>For example, the 32-bit integer ’11' has binary representation <code>00000000000000000000000000001011</code>, so the function should return 3.</p>
-
-<p><b>Credits:</b><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/ts">@ts</a> for adding this problem and creating all test cases.</p><p></p>
-              
-                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
-                <span class="hide">
-                  
-                  <a class="btn btn-xs btn-primary" href="/tag/bit-manipulation/">Bit Manipulation</a>
-                  
-                </span>
-              
-            </div>
-
-
-<h3>Analysis</h3>
-
-<p>In order to remove the last &lsquo;1&rsquo; bit, we use this operation:</p>
-
-<pre><code>n = n &amp; (n - 1);
-</code></pre>
-
-<h3>Solution</h3>
-
-<p>Just remove all the &lsquo;1&rsquo; bits.</p>
-
-<h3>Code</h3>
-
-<pre><code>public class Solution {
-    public int hammingWeight(int n) {
-        int count = 0;
-        while (n != 0) {
-            n = n &amp; (n - 1);
-            count++;
-        }
-        return count;
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/6">&larr; Older</a>
@@ -1274,6 +1342,10 @@ uint32_t reverseBits(uint32_t n) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -1287,10 +1359,6 @@ uint32_t reverseBits(uint32_t n) {
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

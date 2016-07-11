@@ -9,8 +9,9 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given a singly linked list L: L0→L1→…→Ln-1→Ln,
-reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→… You must do this in-place without altering the &hellip;">
+  <meta name="description" content="Question link Given an input string, reverse the string word by word. For example,
+Given s = "the sky is blue",
+return "blue is sky the". &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +67,171 @@ reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→… You must do this in-place w
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/03/Reverse-Words-in-a-String/">[LeetCode 151] Reverse Words in a String</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-03T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/reverse-words-in-a-string/">link</a></p>
+
+<div class="question-content bg-color bg-img font-color">
+<p class="font-color"></p><p class="font-color">
+Given an input string, reverse the string word by word.
+</p>
+
+<p class="font-color">
+For example,<br>
+Given s = "<code>the sky is blue</code>",<br>
+return "<code>blue is sky the</code>".
+</p>
+
+<div>
+<b>Clarification:</b>
+
+<p class="font-color">
+</p><ul class="bg-color bg-img font-color">
+<li>What constitutes a word?<br>
+A sequence of non-space characters constitutes a word.</li>
+<li>Could the input string contain leading or trailing spaces?<br>
+Yes. However, your reversed string should not contain leading or trailing spaces.</li>
+<li>How about multiple spaces between two words?<br>
+Reduce them to a single space in the reversed string.</li>
+</ul>
+<p class="font-color"></p>
+</div><p class="font-color"></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is an very classic question</strong>, and there is a very nice solution.</p>
+
+<h3>Solution</h3>
+
+<p><strong>First solution is read each character from the back, and insert each word into answer String</strong>. I used this method, and passed in 2 attempts. I have always been afriad of string question, and this time it gave me an easy time.</p>
+
+<p>I post my code below. Altough it can be better if I use StringBuilder. Most blog/forum would give this solution including <a href="https://oj.leetcode.com/discuss/3378/is-my-solution-good-enough">this one</a>.</p>
+
+<p>However, previous solution uses extra space. <strong>We can do it in-place suggested by <a href="http://stackoverflow.com/a/1009174">this post</a></strong>.</p>
+
+<blockquote cite="http://stackoverflow.com/a/1009174">
+    <p class="font-color">Reverse the entire string, then reverse the letters of each individual word.</p>
+
+    <p class="font-color">After the first pass the string will be</p>
+
+    <pre><code>s1 = "Z Y X si eman yM"
+    </code></pre>
+
+    <p class="font-color">and after the second pass it will be</p>
+
+    <pre><code>s1 = "Z Y X is name My"
+    </code></pre>
+</blockquote>
+
+
+<p>There are 2 things to note.</p>
+
+<p><strong>One, the edge cases</strong> are easily omitted, like all-space input, double-space in between, and a lot more.</p>
+
+<p><strong>Two, The Clarification part is extremely helpful</strong> for writing a bug-free solution. It&rsquo;s always better to clarify further about what the question is ask. For example, can we use <strong>String.split()</strong> and <strong>String.substring()</strong>? (normally we would better not to) Can we use any extra space? That decides weather we copy by substring or by character.</p>
+
+<p>In conclusion, <strong>this is an easy question that&rsquo;s not easy to get correct answer</strong>. Practise more! And since this is the last post of Leetcode questions, my focus from tomorrow onwards will be shifted to &ldquo;CC150&rdquo;. Thanks for reading!</p>
+
+<h3>Code</h3>
+
+<p><strong>My code</strong>. pointer solution.</p>
+
+<pre><code>public String reverseWords(String s) {
+    if (s.length() == 0) return "";
+    int p = s.length() - 1;
+    // p points to the last non-space character
+    String ans = "";
+    while (p &gt;= 0) {
+        int j = p;
+        while (j &gt;= 0 &amp;&amp; s.charAt(j) != ' ') {
+            j --;
+        }
+        ans += s.substring(j + 1, p + 1) + " ";
+        p = j;
+        while (p &gt;= 0 &amp;&amp; s.charAt(p) == ' ') {
+            p--;
+        }
+    }
+    return ans.trim();
+}
+</code></pre>
+
+<p><strong>Updated on Sep 12th</strong>: updated with 3-step-reverse method.</p>
+
+<pre><code>public String reverseWords(String s) {
+    if (s == null || s.length() == 0) {
+        return s;
+    }
+    StringBuilder ans = new StringBuilder();
+    int len = s.length();
+    int p = len - 1;
+    while (p &gt;= 0) {
+        while (p &gt;= 0 &amp;&amp; s.charAt(p) == ' ') {
+            p--;
+        }
+        if (p == -1) {
+            break;
+        }
+        StringBuilder word = new StringBuilder();
+        while (p &gt;= 0 &amp;&amp; s.charAt(p) != ' ') {
+            word.append(s.charAt(p));
+            p--;
+        }
+        if (ans.length() == 0) {
+            ans.append(word.reverse().toString());
+        } else {
+            ans.append(" " + word.reverse().toString());
+        }
+    }
+    return ans.toString();
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1207,111 +1373,6 @@ Return true because <code>"leetcode"</code> can be segmented as <code>"leet code
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/02/Sort-List/">[LeetCode 148] Sort List</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-06-02T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="https://oj.leetcode.com/problems/sort-list/">link</a></p>
-
-<div class="question-content bg-color bg-img font-color">
-            <p class="font-color"></p><p class="font-color">Sort a linked list in <i>O</i>(<i>n</i> log <i>n</i>) time using constant space complexity.</p><p class="font-color"></p>
-          </div>
-
-
-<h3>Stats</h3>
-
-<table border="2">
-    <tr>
-        <td>Adjusted Difficulty</td>
-        <td bgcolor="red">4</td>
-    </tr>
-    <tr>
-        <td>Time to use</td>
-        <td bgcolor="red">--------</td>
-    </tr>
-</table>
-
-
-<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
-
-<h3>Analysis</h3>
-
-<p><strong>This is a difficult question</strong>.</p>
-
-<p>To sort with O(nlgn) time, we must use either quick sort or <strong>merge sort</strong>.</p>
-
-<h3>Solution</h3>
-
-<p>This is a standard merge sort algorithm. The details can be found <a href="http://www.programcreek.com/2012/11/leetcode-solution-merge-sort-linkedlist-in-java/">here</a>.</p>
-
-<p>I am being lazy here, I reused the code from &ldquo;Merge Two Sorted Lists&rdquo;. Surprisingly it worked! Just remember, we must set the last node of first half to point to null.</p>
-
-<h3>Code</h3>
-
-<pre><code>public ListNode sortList(ListNode head) {
-    if (head == null || head.next == null) 
-        return head;
-    int len = 0;
-    ListNode temp = head;
-    while (temp != null) {
-        temp = temp.next;
-        len ++;
-    }
-    temp = head;
-    for (int i = 1; i &lt; len / 2; i ++)
-        temp = temp.next;
-    ListNode firstHalf = head, secondHalf = temp.next;
-    temp.next = null;
-    return mergeTwoLists(sortList(firstHalf), 
-                         sortList(secondHalf));
-}
-
-// The following code is copied from
-// Question - Merge Two Sorted Lists
-public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-    ListNode pre = new ListNode(Integer.MIN_VALUE);
-    ListNode cur = pre;
-    while (l1 != null &amp;&amp; l2 != null) {
-        if (l1.val &lt; l2.val) {
-            cur.next = l1;
-            l1 = l1.next;
-        } else {
-            cur.next = l2;
-            l2 = l2.next;
-        }
-        cur = cur.next;
-    }
-    if (l1 == null) cur.next = l2;
-    else cur.next = l1;
-    return pre.next;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/49">&larr; Older</a>
@@ -1352,6 +1413,10 @@ public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -1365,10 +1430,6 @@ public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Apply for Google AdSense My first request of AdSense is rejected because of &ldquo;Site does not comply with Google policies&rdquo;. I do not know &hellip;">
+  <meta name="description" content="Question link Write a program to find the node at which the intersection of two singly linked lists begins. For example, the following two linked &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,132 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/08/Intersection-of-Two-Linked-Lists/">[LeetCode 160] Intersection of Two Linked Lists</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-08T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/intersection-of-two-linked-lists/">link</a></p>
+
+<div class="question-content">
+              <p></p><p>Write a program to find the node at which the intersection of two singly linked lists begins.</p>
+<br>
+<p>For example, the following two linked lists: </p>
+<pre>A:          a1 ? a2
+                   ?
+                     c1 ? c2 ? c3
+                   ?            
+B:     b1 ? b2 ? b3
+</pre>
+<p>begin to intersect at node c1.</p>
+<br>
+<p><b>Notes:</b>
+</p><ul>
+<li>If the two linked lists have no intersection at all, return <code>null</code>.</li>
+<li>The linked lists must retain their original structure after the function returns. </li>
+<li>You may assume there are no cycles anywhere in the entire linked structure.</li>
+<li>Your code should preferably run in O(n) time and use only O(1) memory.</li>
+</ul>
+<p></p>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/stellari">@stellari</a> for adding this problem and creating all test cases.</p><p></p>
+              
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/linked-list/">Linked List</a>
+                  
+                </span>
+              
+            </div>
+
+
+<h3>Analysis</h3>
+
+<p>This question is very similar to <strong>[LeetCode Plus] Lowest Common Ancestor of Binary Tree (II)</strong>.</p>
+
+<h3>Solution</h3>
+
+<p><a href="http://stackoverflow.com/a/2216683/909524">This</a> is a pretty nice answer. The following explanation is quoted from <a href="http://www.geeksforgeeks.org/write-a-function-to-get-the-intersection-point-of-two-linked-lists/">g4g</a>:</p>
+
+<blockquote><ol>
+<li><p>Get count of the nodes in first list, let count be c1.</p></li>
+<li><p>Get count of the nodes in second list, let count be c2.</p></li>
+<li><p>Get the difference of counts d = abs(c1 – c2)</p></li>
+<li><p>Now traverse the bigger list from the first node till d nodes so that from here onwards both the lists have equal no of nodes.</p></li>
+<li><p>Then we can traverse both the lists in parallel till we come across a common node.</p></li>
+</ol>
+</blockquote>
+
+<h3>Code</h3>
+
+<pre><code>/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        return helper(headA, headB, length(headA) - length(headB));
+    }
+
+    public ListNode helper(ListNode n1, ListNode n2, int offset) {
+        if (offset &lt; 0) {
+            return helper(n2, n1, 0 - offset);
+        }
+        // move n1 to the distance of offset
+        while (offset != 0) {
+            n1 = n1.next;
+            offset--;
+        }
+        while (n1 != null &amp;&amp; n1 != n2) {
+            n1 = n1.next;
+            n2 = n2.next;
+        }
+        return n1;
+    }
+
+    int length(ListNode node) {
+        int len = 0;
+        while (node != null) {
+            node = node.next;
+            len++;
+        }
+        return len;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -779,75 +905,6 @@ What if <i>duplicates</i> are allowed?</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/02/14/speed-up-web-page-1/">[Design] Speed Up Webpage for Slow Connection (1)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-02-14T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="www.geeksforgeeks.org/amazon-interview-set-72-campus-sde-1">ref</a></p>
-
-<h3>Question</h3>
-
-<blockquote><p>Suppose you are handling Amazon website and you have 10 MB size home page. Optimize the homepage for a customer who has 100 kbps internet connection.</p>
-
-<p>Further he asked for the customer who has 100 mbps internet connection.</p></blockquote>
-
-<h3>Reading</h3>
-
-<p><a href="http://sixrevisions.com/web-development/site-speed-performance/">This</a> is a very nice article about website speedup. Below is the full quoted text.</p>
-
-<h4>1. Defer Loading Content When Possible</h4>
-
-<p>Ajax allows us to build web pages that can be <strong>asynchronously updated</strong> at any time. This means that instead of reloading an entire page when a user performs an action, we can simply update parts of that page.</p>
-
-<p>We can use an image gallery as an example. Image files are big and heavy; they can slow down page-loading speeds of web pages. Instead of loading all of the images when a user first visits the web page, we can just display thumbnails of the images and then when the user clicks on them, we can asynchronously request the full-size images from the server and update the page. This way, if a user only wants to see a few pictures, they don’t have to suffer waiting for all of the pictures to download. This development pattern is called <strong>lazy loading</strong>.</p>
-
-<p><strong>Ajax/web development libraries</strong> like jQuery, Prototype, and MooTools can make deferred content-loading easier to implement.</p>
-
-<h4>2. Use External JS and CSS Files</h4>
-
-<p>When the user first loads your web page, the browser will cache external resources like CSS and JavaScript files. Thus, instead of inline JavaScript and CSS files, it’s best to <strong>place them in external files</strong>.</p>
-
-<p>Using inline CSS also increases the rendering time of a web page; having everything defined in your main CSS file lets the browser do less work when rendering the page, since it already knows all the style rules that it needs to apply.</p>
-
-<p><strong>As a bonus</strong>, using external JavaScript and CSS files makes site maintenance easier because you only need to maintain global files instead of code scattered in multiple web pages.</p>
-
-<h4>3. Use Caching Systems</h4>
-
-<p>If you find that your site is connecting to your database in order to create the same content, it’s time to start using a <strong>caching system</strong>. By having a caching system in place, your site will only have to create the content once instead of creating the content every time the page is visited by your users. Don’t worry, caching systems periodically refresh their caches depending on how you set it up — so even constantly-changing web pages (like a blog post with comments) can be cached.</p>
-
-<p><strong>Popular content management systems</strong> like WordPress and Drupal will have <strong>static caching features</strong> that convert dynamically generated pages to static HTML files to reduce unnecessary server processing. For WordPress, check out <a href="https://wordpress.org/plugins/wp-super-cache/">WP Super Cache</a> (one of the six critical WordPress plugins which, claimed by the author, enjoyed a improvement by 259.1% for content-heavy pages). Drupal has a page-caching feature in the core.</p>
-
-<p>There are also <strong>database caching and server-side scripts caching systems</strong> that you can install on your web server (if you have the ability to do so). For example, PHP has extensions called PHP accelerators that optimize performance through caching and various other methods; one example of a <a href="http://en.wikipedia.org/wiki/PHP_accelerator">PHP accelerator</a> is APC. <a href="http://en.wikipedia.org/wiki/Database_caching">Database caching</a> improves performance and scalability of your web applications by reducing the work associated with database read/write/access processes; <strong><a href="http://www.memcached.org/">memcached</a></strong>, for example, caches frequently used database queries.</p>
-
-<h4>8. Load JavaScript at the End of Your Document</h4>
-
-<p>It’s best if you have your scripts loading at the end of the page rather than at the beginning. It allows for the browser to render everything before getting started with the JavaScript. This makes your web pages feel more responsive because the way JavaScript works is that it blocks anything below it from rendering until it has finished downloading. If possible, reference JavaScript right before the closing (body) tag of your HTML documents. To learn more, read about deferring the loading of JavaScript.</p>
-
-<p>(to be continued&hellip;)</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/9">&larr; Older</a>
@@ -888,6 +945,10 @@ What if <i>duplicates</i> are allowed?</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -901,10 +962,6 @@ What if <i>duplicates</i> are allowed?</p>
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

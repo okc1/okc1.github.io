@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question Imagine you have a square matrix, where each cell is filled with either black or white. Design an algorithm to find the maximum subsquare &hellip;">
+  <meta name="description" content="Question Given a string s and an array of smaller strings T, design a method to search s for each small string in T. Solution This is a very classic &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,128 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/10/full-text-search/">[CC150v4] 20.8 Full Text Search (Suffix Tree)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-10T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Given a string s and an array of smaller strings T, design a method to search s for each small string in T.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>This is a very classic question of string search</strong>, favored by Google and Facebook.</p>
+
+<p>The solution is <strong>suffix tree</strong> (to be distinguished from <strong>trie</strong>, or prefix tree, which searched word by its prefix). Suffix tree is good for search a proportion of a long string. For example, using &ldquo;bibs&rdquo; to build a suffix tree like this:</p>
+
+<p><img class="middle" src="/assets/images/suffix-tree-example-bibs.png"></p>
+
+<p>The building of suffix tree and searching is not a very lengthy code. It&rsquo;s posted below and it&rsquo;s not written by me.</p>
+
+<h3>Code</h3>
+
+<p>Main method:</p>
+
+<pre><code>public static void main(String[] args) {
+    String testString = "mississippi";
+    String[] stringList = { "is", "sip", "hi", "sis" };
+    SuffixTree tree = new SuffixTree(testString);
+    for (String s : stringList) {
+        ArrayList&lt;Integer&gt; list = tree.getIndexes(s);
+        if (list != null) {
+            System.out.println(s + ": " + list.toString());
+        } else {
+            System.out.println(s + ": does not exist.");
+        }
+    }
+}
+</code></pre>
+
+<p>SuffixTree.java</p>
+
+<pre><code>public class SuffixTree {
+    SuffixTreeNode root = new SuffixTreeNode();
+
+    public SuffixTree(String s) {
+        // create a suffix tree with input string s
+        for (int i = 0; i &lt; s.length(); i++) {
+            String suffix = s.substring(i);
+            root.insertString(suffix, i);
+        }
+    }
+
+    public ArrayList&lt;Integer&gt; getIndexes(String s) {
+        return root.getIndexes(s);
+    }
+}
+</code></pre>
+
+<p>SuffixTreeNode.java</p>
+
+<pre><code>public class SuffixTreeNode {
+
+    char value;
+    HashMap&lt;Character, SuffixTreeNode&gt; children;
+    ArrayList&lt;Integer&gt; indexes = new ArrayList&lt;Integer&gt;();
+
+    public SuffixTreeNode() {
+        children = new HashMap&lt;Character, SuffixTreeNode&gt;();
+    }
+
+    public void insertString(String s, int index) {
+        indexes.add(index);
+        if (s != null &amp;&amp; s.length() &gt; 0) {
+            value = s.charAt(0);
+            SuffixTreeNode child = null;
+            if (children.containsKey(value)) {
+                child = children.get(value);
+            } else {
+                child = new SuffixTreeNode();
+                children.put(value, child);
+            }
+            String remainder = s.substring(1);
+            child.insertString(remainder, index);
+        }
+    }
+
+    public ArrayList&lt;Integer&gt; getIndexes(String s) {
+        if (s == null || s.length() == 0) {
+            return indexes;
+        } else {
+            char first = s.charAt(0);
+            if (children.containsKey(first)) {
+                String remainder = s.substring(1);
+                return children.get(first).getIndexes(remainder);
+            }
+        }
+        return null;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -759,77 +881,6 @@ group by
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/08/java-reflection/">[CC150v4] 14.5 Java Reflection</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-09-08T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<blockquote><p>Explain what object reflection is in Java and why it is useful.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p><strong><a href="http://tutorials.jenkov.com/java-reflection/index.html">Java Reflection</a> makes it possible to inspect classes, interfaces, fields and methods at runtime</strong>, without knowing the names of the classes, methods etc. at compile time. It is also possible to instantiate new objects, invoke methods and get/set field values using reflection.</p>
-
-<p>For example, say you have an object of <a href="http://stackoverflow.com/a/37632">an unknown type in Java</a>, and <strong>you would like to call a &lsquo;doSomething&rsquo; method on it if one exists</strong>. Java&rsquo;s static typing system isn&rsquo;t really designed to support this unless the object conforms to a known interface, <strong>but using reflection</strong>, your code can look at the object and find out if it has a method called &lsquo;doSomething&rsquo; and then call it if you want to. Like this:</p>
-
-<pre><code>Method method = foo.getClass().getMethod("doSomething", null);
-method.invoke(foo, null);
-</code></pre>
-
-<h4>Usage in Junit</h4>
-
-<p>One very common use case in Java is the usage with annotations. JUnit 4, for example, will use reflection to <strong>look through your classes for methods tagged with the @Test annotation</strong>, and will then call them when running the unit test.</p>
-
-<h3>Code</h3>
-
-<p>The following example code is covered in <a href="http://tutorials.jenkov.com/java-reflection/index.html">this post</a>:</p>
-
-<pre><code>public class JavaReflection {
-
-    public static void main(String[] args) {
-        Method[] methods;
-
-        methods = ListNode.class.getMethods();
-
-        for (Method method : methods) {
-            System.out.println(formatMethodName(method.getName() + "()")
-                    + method.getDeclaringClass());
-        }
-    }
-
-    private static String formatMethodName(String methodName) {
-        for (int i = methodName.length(); i &lt; 30; i++) {
-            methodName += ".";
-        }
-        return methodName;
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/25">&larr; Older</a>
@@ -870,6 +921,10 @@ method.invoke(foo, null);
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -883,10 +938,6 @@ method.invoke(foo, null);
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given an unsorted array arr[0..n-1] of size n, find the minimum length subarray arr[s..e] such that sorting this subarray makes the &hellip;">
+  <meta name="description" content="ref Question Suppose you are handling Amazon website and you have 10 MB size home page. Optimize the homepage for a customer who has 100 kbps &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,75 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/14/speed-up-web-page-1/">[Design] Speed Up Webpage for Slow Connection (1)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-14T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="www.geeksforgeeks.org/amazon-interview-set-72-campus-sde-1">ref</a></p>
+
+<h3>Question</h3>
+
+<blockquote><p>Suppose you are handling Amazon website and you have 10 MB size home page. Optimize the homepage for a customer who has 100 kbps internet connection.</p>
+
+<p>Further he asked for the customer who has 100 mbps internet connection.</p></blockquote>
+
+<h3>Reading</h3>
+
+<p><a href="http://sixrevisions.com/web-development/site-speed-performance/">This</a> is a very nice article about website speedup. Below is the full quoted text.</p>
+
+<h4>1. Defer Loading Content When Possible</h4>
+
+<p>Ajax allows us to build web pages that can be <strong>asynchronously updated</strong> at any time. This means that instead of reloading an entire page when a user performs an action, we can simply update parts of that page.</p>
+
+<p>We can use an image gallery as an example. Image files are big and heavy; they can slow down page-loading speeds of web pages. Instead of loading all of the images when a user first visits the web page, we can just display thumbnails of the images and then when the user clicks on them, we can asynchronously request the full-size images from the server and update the page. This way, if a user only wants to see a few pictures, they don’t have to suffer waiting for all of the pictures to download. This development pattern is called <strong>lazy loading</strong>.</p>
+
+<p><strong>Ajax/web development libraries</strong> like jQuery, Prototype, and MooTools can make deferred content-loading easier to implement.</p>
+
+<h4>2. Use External JS and CSS Files</h4>
+
+<p>When the user first loads your web page, the browser will cache external resources like CSS and JavaScript files. Thus, instead of inline JavaScript and CSS files, it’s best to <strong>place them in external files</strong>.</p>
+
+<p>Using inline CSS also increases the rendering time of a web page; having everything defined in your main CSS file lets the browser do less work when rendering the page, since it already knows all the style rules that it needs to apply.</p>
+
+<p><strong>As a bonus</strong>, using external JavaScript and CSS files makes site maintenance easier because you only need to maintain global files instead of code scattered in multiple web pages.</p>
+
+<h4>3. Use Caching Systems</h4>
+
+<p>If you find that your site is connecting to your database in order to create the same content, it’s time to start using a <strong>caching system</strong>. By having a caching system in place, your site will only have to create the content once instead of creating the content every time the page is visited by your users. Don’t worry, caching systems periodically refresh their caches depending on how you set it up — so even constantly-changing web pages (like a blog post with comments) can be cached.</p>
+
+<p><strong>Popular content management systems</strong> like WordPress and Drupal will have <strong>static caching features</strong> that convert dynamically generated pages to static HTML files to reduce unnecessary server processing. For WordPress, check out <a href="https://wordpress.org/plugins/wp-super-cache/">WP Super Cache</a> (one of the six critical WordPress plugins which, claimed by the author, enjoyed a improvement by 259.1% for content-heavy pages). Drupal has a page-caching feature in the core.</p>
+
+<p>There are also <strong>database caching and server-side scripts caching systems</strong> that you can install on your web server (if you have the ability to do so). For example, PHP has extensions called PHP accelerators that optimize performance through caching and various other methods; one example of a <a href="http://en.wikipedia.org/wiki/PHP_accelerator">PHP accelerator</a> is APC. <a href="http://en.wikipedia.org/wiki/Database_caching">Database caching</a> improves performance and scalability of your web applications by reducing the work associated with database read/write/access processes; <strong><a href="http://www.memcached.org/">memcached</a></strong>, for example, caches frequently used database queries.</p>
+
+<h4>8. Load JavaScript at the End of Your Document</h4>
+
+<p>It’s best if you have your scripts loading at the end of the page rather than at the beginning. It allows for the browser to render everything before getting started with the JavaScript. This makes your web pages feel more responsive because the way JavaScript works is that it blocks anything below it from rendering until it has finished downloading. If possible, reference JavaScript right before the closing (body) tag of your HTML documents. To learn more, read about deferring the loading of JavaScript.</p>
+
+<p>(to be continued&hellip;)</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -724,65 +793,6 @@ private String sequence(String s) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/02/09/intro-google-spanner/">[Design] Intro to Google Spanner</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-02-09T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Spanner</h3>
-
-<p><a href="http://en.wikipedia.org/wiki/Spanner_%28database%29">Spanner</a> is Google&rsquo;s globally <strong>distributed NewSQL database, the successor to BigTable</strong>. Google describes Spanner as not a pure relational system because each table must have a primary-key column.</p>
-
-<p>Currently, <strong>F1, Google&rsquo;s advertisement platform</strong>, uses Spanner. Gmail and Google Search will also use it soon.</p>
-
-<h3>NewSQL VS. NoSQL</h3>
-
-<p><strong>NewSQL</strong>, a wholly different database architecture, differentiated from NoSQL, is beginning to emerge.</p>
-
-<h4>NoSQL</h4>
-
-<p>There are many reasons why NoSQL products have been popular. As there are a variety of NoSQL products. As you can see in Hadoop or Cassandra, main advantages of NoSQL is its horizontal scalability.</p>
-
-<p>As these NoSQL products <strong>don&rsquo;t provide Strong Consistency</strong>, they cannot be used where <strong>high-level data consistency</strong> is required.</p>
-
-<h4>NewSQL</h4>
-
-<p>NewSQL has as <strong>excellent scalability</strong> as NoSQL, and at the same time it <strong>guarantees ACID like RDBMS</strong> which is performed in a single node.</p>
-
-<h3>What is Spanner?</h3>
-
-<p>Spanner is <a href="http://www.cubrid.org/blog/dev-platform/spanner-globally-distributed-database-by-google/">a NewSQL created by Google</a>. It is a distributed relational database that can distribute and store data in Google&rsquo;s BigTable storage system in multiple data centers. Spanner meets ACID (of course, it supports transaction) and supports SQL.</p>
-
-<p><strong>Data R/W eff</strong>: When you read data, Spanner connects you to the data center that is geographically closest to you, and when you write data, it distributes and stores it to multiple data centers.</p>
-
-<p><strong>Failure</strong>: If the data center you try to access has a failure, of course, you can read the data from another data center that has a replica of the data (in US, <strong>5 replica</strong>).</p>
-
-<p>The Spanner client automatically <strong>performs a failover between replicas</strong>. When the number of servers storing data is changed or a failure occurs in equipment, Spanner automatically <strong>re-distributes data</strong> through data transfer among the equipments.</p>
-
-<p>More details of Spanner: will come later.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/10">&larr; Older</a>
@@ -823,6 +833,10 @@ private String sequence(String s) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -836,10 +850,6 @@ private String sequence(String s) {
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

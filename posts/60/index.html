@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given a sorted array and a target value, return the index if the target is found. If not, return the index where it would be if it were &hellip;">
+  <meta name="description" content="Question link Given a sorted array of integers, find the starting and ending position of a given target value. Your algorithm's runtime complexity &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,149 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/12/Search-for-a-Range/">[LeetCode 34] Search for a Range</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-12T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/search-for-a-range/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Given a sorted array of integers, find the starting and ending position of a given target value.</p>
+
+<p>Your algorithm's runtime complexity must be in the order of <i>O</i>(log <i>n</i>).</p>
+
+<p>If the target is not found in the array, return <code>[-1, -1]</code>.</p>
+
+<p>
+For example,<br>
+Given <code>[5, 7, 7, 8, 8, 10]</code> and target value 8,<br>
+return <code>[3, 4]</code>.
+</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="lime">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Solution</h3>
+
+<p><strong>The key to solve this problem is binary search</strong>. Previously my solution is to find the element first, then check left bound and right bound respectively. In worst case, this will take O(n) time. This method, though, will pass OJ, but is not an optimized solution.</p>
+
+<p><strong>First solution is from <a href="http://xixiaogualu.blogspot.sg/2013/09/search-for-range.html">this blog</a></strong>. Using binary search to search twice - once for left bound, and once for right bound. Code is below.</p>
+
+<p><strong>Second solution is from <a href="http://rleetcode.blogspot.sg/2014/02/search-for-range-java.html">this blog</a></strong>. This idea is still using binary search, also search twice, but a more tricky manner. Instead of searching the number, it searches (number - 0.5) and (number + 0.5).</p>
+
+<h3>My code</h3>
+
+<p>Solution 1</p>
+
+<pre><code>public class Solution {
+    public int[] searchRange(int[] A, int target) {
+        int[] ans = new int[] {-1, -1};
+        if (A == null || A.length == 0) {
+            return ans;
+        }
+        int len = A.length;
+        int left = 0, right = len - 1;
+        while (left &lt; right) {
+            int mid = left + (right - left) / 2;
+            if (A[mid] &gt;= target) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        if (A[left] == target) {
+            ans[0] = left;
+        } else {
+            return ans;
+        }
+        left = 0;
+        right = len - 1;
+        while (left &lt; right) {
+            int mid = left + (right - left + 1) / 2;
+            if (A[mid] &lt;= target) {
+                left = mid;
+            } else {
+                right = mid - 1;
+            }
+        }
+        ans[1] = right;
+        return ans;
+    }
+}
+</code></pre>
+
+<p>Solution 2</p>
+
+<pre><code>public int[] searchRange(int[] A, int target) {
+    if (A == null) return null;
+    int[] result = { -1, -1 };
+    int low = binarySearch(A, target - 0.5);
+    // Be care for there , low&gt;=A.length must be checked
+    if (low &gt;= A.length || A[low] != target) return result;
+    result[0] = low;
+    result[1] = binarySearch(A, target + 0.5) - 1;
+    return result;
+}
+
+public int binarySearch(int[] A, double t) {
+    int low = 0, high = A.length - 1;
+    while (low &lt;= high) {
+        int m = (low + high) / 2;
+        if (A[m] &lt; t) low = m + 1;
+        if (A[m] &gt; t) high = m - 1;
+    }
+    return low;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1173,117 +1316,6 @@ For average case, It really is (as the wikipedia page says) O(1+n/k) where K is 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/10/Implement-strStr/">[LeetCode 28] Implement strStr</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-05-10T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://oj.leetcode.com/problems/implement-strstr/">link</a></p>
-
-<div class="question-content">
-<p></p><p>
-Implement strStr().
-</p>
-<p>
-Returns a pointer to the first occurrence of needle in haystack, or <b>null</b> if needle is not part of haystack.
-</p><p></p>
-</div>
-
-
-<h3>Stats</h3>
-
-<table border="2">
-    <tr>
-        <td>Frequency</td>
-        <td bgcolor="red">5</td>
-    </tr>
-    <tr>
-        <td>Diffficulty</td>
-        <td bgcolor="red">4</td>
-    </tr>
-    <tr>
-        <td>Adjusted Difficulty</td>
-        <td bgcolor="red">4</td>
-    </tr>
-    <tr>
-        <td>Time to use</td>
-        <td bgcolor="white">----------</td>
-    </tr>
-</table>
-
-
-<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
-
-<h3>Analysis</h3>
-
-<p>There are 2 ways to solve this problem.</p>
-
-<ol>
-<li><p><strong>Most common way</strong> is using 2 nested loop</p></li>
-<li><p>Also can be solved by <a href="http://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm">KPM algorithm</a></p></li>
-</ol>
-
-
-<h3>Solution</h3>
-
-<p>Standard solution is posted below. Read <a href="http://www.programcreek.com/2012/12/leetcode-implement-strstr-java/">this post</a> for more.</p>
-
-<p>As for KMP algo, I have to admit I am not able to do it. Plz refer to <a href="http://discuss.leetcode.com/questions/76/implement-strstr">this blog</a> and <a href="http://fisherlei.blogspot.sg/2012/12/leetcode-implement-strstr.html">this blog</a> for more!</p>
-
-<h3>My code</h3>
-
-<pre><code>public class Solution {
-    public int strStr(String haystack, String needle) {
-        if (haystack == null || needle == null) {
-            return -1;
-        } else if (haystack.length() &lt; needle.length()) {
-            return -1;
-        } else if (haystack.length() == 0 &amp;&amp; needle.length() == 0) {
-            return 0;
-        }
-        for (int i = 0; i &lt;= haystack.length() - needle.length(); i++) {
-            int j;
-            // try to match part of haystack (starting from i) to needle 
-            for (j = 0; j &lt; needle.length(); j++) {
-                if (haystack.charAt(i + j) != needle.charAt(j)) {
-                    break;
-                }
-            }
-            // if part of haystack (starting from i) matches needle 
-            if (j == needle.length()) {
-                return i;
-            }
-            // if not match, proceed to next loop
-        }
-        return -1;
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/61">&larr; Older</a>
@@ -1324,6 +1356,10 @@ Returns a pointer to the first occurrence of needle in haystack, or <b>null</b> 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -1337,10 +1373,6 @@ Returns a pointer to the first occurrence of needle in haystack, or <b>null</b> 
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

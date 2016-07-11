@@ -9,8 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link There are 100 people in a room. A person always speaks either lie or truth. When asked: 1st person says =&gt; all are liars
-2nd person &hellip;">
+  <meta name="description" content="Question link There are n coins in a line. Two players take turns to take a coin from one of the ends of the line until there are no more coins left &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,90 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/27/Coins-in-Line/">[LeetCode Plus] Coins in a Line</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-27T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://leetcode.com/2011/02/coins-in-line.html">link</a></p>
+
+<blockquote><p>There are n coins in a line. Two players take turns to take a coin from one of the ends of the line until there are no more coins left. The player with the larger amount of money wins. Assume that you go first, describe an algorithm to compute the maximum amount of money you can win.</p>
+
+<p>There might be even or odd number of coins.</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p><strong>There&rsquo;s a guaranteed &lsquo;win strategy&rsquo;</strong>, if the input array is even size. Find the sum of coins at even and odd positions respectively. Then, make sure you always take coin from even (or odd, whichever sum is bigger) position.</p>
+
+<p>This strategy is clever and simple, but <strong>DOES NOT maximize your total sum</strong>, and coins must be even number.</p>
+
+<h3>Solution</h3>
+
+<p><strong>The optimized solution is to use <a href="http://tech-queries.blogspot.sg/2011/06/get-maximum-sum-from-coins-in-line.html">2D DP</a></strong>. Now we have array A and C(i, j) which is the maximum sum possible when remaining coins are from i to j.</p>
+
+<p>You can take either i or j. Since the opponent is as smart as you, he would have chosen the choice that yields the minimum amount to you.</p>
+
+<p>So, the final equation is:</p>
+
+<blockquote><p>C(i, j) = MAX {</p>
+
+<pre><code>      Ai + MIN{C(i+2, j), C(i+1, j-1)}, 
+
+      Aj + MIN{C(i+1, j-1), C(i, j-2)} 
+</code></pre>
+
+<p>}</p></blockquote>
+
+<p>If interested, read <strong>[Fundamental] Min-Max Algorithm</strong> for more.</p>
+
+<h3>Code</h3>
+
+<pre><code>public int maxMoney(int[] coins) {
+    int len = coins.length;
+    int[][] dp = new int[len][len];
+    for (int i = len - 1; i &gt;= 0; i--) {
+        for (int j = i; j &lt; len; j++) {
+            if (i == j) {
+                dp[i][j] = coins[i];
+            } else if (i + 1 == j) {
+                dp[i][j] = Math.max(coins[i], coins[j]);
+            } else {
+                int chooseHead = coins[i]
+                        + Math.min(dp[i + 2][j], dp[i + 1][j - 1]);
+                int chooseTail = coins[j]
+                        + Math.min(dp[i][j - 2], dp[i + 1][j - 1]);
+                dp[i][j] = Math.max(chooseHead, chooseTail);
+            }
+        }
+    }
+    return dp[0][len - 1];
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -763,88 +846,6 @@ private static int get10001stPrime() {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/24/Multithreading-basics/">[Design] Multithreading Basics</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-07-24T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Terminologies</h2>
-
-<h3>Atomicity, Atomic Operation</h3>
-
-<p><strong><a href="http://www.geeksforgeeks.org/g-fact-57/">Atomicity</a> is unbreakability</strong>, or uninterrupted operation.</p>
-
-<p>Atomic operation helps in understanding reentrancy, critical section, thread safety, synchronization primitives, etc.</p>
-
-<h3>Critical Section</h3>
-
-<p><strong><a href="http://www.geeksforgeeks.org/g-fact-70/">Critical section</a></strong> is group of instructions/statements or region of code that <strong>need to be executed atomically</strong>.</p>
-
-<p>If one thread tries to change a shared data while another thread tries to read, the result is unpredictable. It is critical to understand the importance of race condition while writing kernel mode programming.</p>
-
-<p>A simple solution to critical section:</p>
-
-<pre><code>acquireLock();
-Process Critical Section
-releaseLock();
-</code></pre>
-
-<h3>Synchronization primitives</h3>
-
-<p><a href="http://stackoverflow.com/a/8017629">Synchronization primitives</a> are simple software mechanisms for the purposes of supporting thread or process synchronization.</p>
-
-<p><strong>Mutex, event, conditional variables and semaphores</strong> are all synchronization primitives.</p>
-
-<p><strong>Critical section</strong> is not a synchronization primitive. It&rsquo;s a part of an execution path that must be protected from concurrent execution in order to maintain some invariants.</p>
-
-<p>You need to use some synchronization primitives to protect critical section.</p>
-
-<h3>Producer–consumer</h3>
-
-<p>Two processes, <a href="http://en.wikipedia.org/wiki/Producer-consumer_problem">producer and consumer</a>. Producer thread will collect the data and writes it to the buffer. Consumer thread will process the collected data from the buffer.</p>
-
-<p>Producer won&rsquo;t try to add when buffer&rsquo;s full and consumer won&rsquo;t remove when buffer&rsquo;s empty.</p>
-
-<p><strong>Solution 1: Mutex</strong></p>
-
-<p>A mutex provides mutual exclusion, either producer or consumer can have the key (mutex) and proceed with their work. As long as the buffer is filled by producer, the consumer needs to wait, and vice versa.</p>
-
-<p><strong>Solution 2: Semaphore</strong></p>
-
-<p><a href="http://en.wikipedia.org/wiki/Producer-consumer_problem#Using_semaphores">A semaphore</a> is a generalized mutex. In lieu of single buffer, we can split the 4 KB buffer into four 1 KB buffers (identical resources). A semaphore can be associated with these four buffers. The consumer and producer can work on different buffers at the same time.</p>
-
-<h3>Interrupt service routine</h3>
-
-<p><a href="http://en.wikipedia.org/wiki/Interrupt_handler">Interrupt service routine</a> (ISR), is a callback subroutine in an operating system or device driver whose execution is triggered by the reception of an interrupt.</p>
-
-<p><a href="http://stackoverflow.com/a/3392889">One good example</a> is reading from a hard drive. The drive is slow and you don&rsquo;t want your OS to wait for the data to come back; you want the OS to go and do other things. <strong>So you set up the system so that when the disk has the data (ready), it raises an interrupt</strong>. In the <strong>ISR for the disk</strong>, CPU will take the data and return it to the requester.</p>
-
-<p><strong>ISRs often need to happen quickly</strong> as the hardware can have a limited buffer, which will be overwritten by new data if it&rsquo;s now pulled off quickly enough.</p>
-
-<p>It&rsquo;s also important to have your ISR complete quickly as while the CPU is servicing one ISR other interrupts will be masked.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/40">&larr; Older</a>
@@ -885,6 +886,10 @@ releaseLock();
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -898,10 +903,6 @@ releaseLock();
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

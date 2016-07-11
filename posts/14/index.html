@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="ref Suffix Array A suffix array is a sorted array of all suffixes of a given string. Any suffix tree based algorithm can be replaced with an &hellip;">
+  <meta name="description" content="ref Suffix tree Both KMP Algorithm and Rabin Karp Algorithm pre-process the pattern to make the pattern searching faster. The best time complexity &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,80 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/27/suffix-tree/">[Fundamental] Suffix Tree</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-27T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.geeksforgeeks.org/pattern-searching-set-8-suffix-tree-introduction/">ref</a></p>
+
+<h3>Suffix tree</h3>
+
+<p>Both KMP Algorithm and Rabin Karp Algorithm <strong>pre-process the pattern</strong> to make the pattern searching faster. The best time complexity that we could get by preprocessing pattern is <strong>O(n), where n is length of the text</strong>.</p>
+
+<p>Now we will discuss an approach that <strong>pre-processes the text</strong>. A suffix tree is built of the text. After preprocessing text (building suffix tree of text), we can <strong>search any pattern in O(m) time</strong> where m is length of the pattern.</p>
+
+<p>Though search is very fast - just proportional to length of the pattern, it may become costly if <strong>the text changes frequently</strong>. It is good for fixed text or less frequently changing text though.</p>
+
+<h4>Suffix Tree VS. Trie</h4>
+
+<p><strong>A Suffix Tree is a compressed trie of all suffixes of the given text</strong>.</p>
+
+<h4>Compressed Trie</h4>
+
+<p><strong>A Compressed Trie</strong> is obtained from standard trie by joining chains of single nodes.</p>
+
+<p>Example, a standard trie:</p>
+
+<p><img class="middle" src="/assets/images/standardtrieNew.png"></p>
+
+<p>A Compressed Trie:</p>
+
+<p><img class="middle" src="/assets/images/CompressedTrieNew.png"></p>
+
+<h4>build a Suffix Tree</h4>
+
+<ol>
+<li>Generate all suffixes of given text.</li>
+<li>Consider all suffixes as individual words and build a compressed trie.</li>
+</ol>
+
+
+<p>Eg.</p>
+
+<pre><code>banana\0
+anana\0
+nana\0
+ana\0
+na\0
+a\0
+\0
+</code></pre>
+
+<p>Example question: <strong>[CC150v4] 20.8 Full Text Search (Suffix Tree)</strong></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -746,61 +820,6 @@ class SpecialComparator implements Comparator&lt;Pair&gt; {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/20/java-vector-arraylist/">[Java OOP] Java Vector and ArrayList</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-20T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Difference</h3>
-
-<ol>
-<li><p>Vectors are synchronized, ArrayLists are not.</p></li>
-<li><p>Data Growth Methods</p>
-
-<p> <a href="http://stackoverflow.com/a/2986307">A Vector defaults to</a> doubling the size of its array, while the ArrayList increases its array size by 50 percent.</p></li>
-</ol>
-
-
-<h3>Similarities</h3>
-
-<ol>
-<li><p>Both Vector and ArrayList use <strong>growable array</strong> data structure.</p></li>
-<li><p>They both are <strong>ordered collection classes</strong> as they maintain the elements insertion order.</p></li>
-<li><p>Vector &amp; ArrayList both allows duplicate and null values.</p></li>
-<li><p>They both grows and shrinks automatically when overflow and deletion happens.</p></li>
-</ol>
-
-
-<p><a href="http://beginnersbook.com/2013/12/difference-between-arraylist-and-vector-in-java/">source</a></p>
-
-<h3>History</h3>
-
-<p>The vector was not the part of collection framework - it has been included in collections later. It can be considered as <strong>Legacy code</strong>.</p>
-
-<p><strong>There is nothing about Vector which List collection cannot do</strong>. Therefore Vector should be avoided. If there is a need of thread-safe operation, make ArrayList synchronized.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/15">&larr; Older</a>
@@ -841,6 +860,10 @@ class SpecialComparator implements Comparator&lt;Pair&gt; {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -854,10 +877,6 @@ class SpecialComparator implements Comparator&lt;Pair&gt; {
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

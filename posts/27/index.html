@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link 数组排序， 排成 a1a3a5。。。这种形式。 Solution The are 2 solutions. The easy one is this: sort first, then 把临近的奇数换到偶数(index)上, O(nlog n). There&rsquo &hellip;">
+  <meta name="description" content="Question link You are given a graph and an algorithm that can find the shortest path b/w any two nodes. Now you have to find the second shortest path &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/04/Find-second-shortest-path/">[Google] Find Second Shortest Path</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-04T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=16922663">link</a></p>
+
+<blockquote><p>You are given a graph and an algorithm that can find the shortest path b/w any two nodes.</p>
+
+<p>Now you have to find the second shortest path between same two nodes.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>From the top answer:</p>
+
+<blockquote><p><strong>Find the shortest path</strong> between any two nodes. Let them be A and B.</p>
+
+<p>Now to get second shortest path between the same nodes, <strong>remove any one edge that is involved in the shortest path</strong> between the same nodes and calculate the shortest path.</p>
+
+<p>Do the above process for each of the node involved in shortest path and keep track of the minimum second shortest path found.</p></blockquote>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -717,77 +762,6 @@ baaa
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/30/Travelling-salesman-problem/">[Fundamental] Travelling Salesman Problem</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-08-30T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>TSP problem</h3>
-
-<p><a href="http://en.wikipedia.org/wiki/Travelling_salesman_problem">Given a list of cities</a> and the distances between each pair of cities, what is the shortest possible route that visits each city exactly once and returns to the origin city?</p>
-
-<p>It is an NP-hard problem in combinatorial optimization. We will discuss 2 category of solutions:</p>
-
-<ol>
-<li>Exact algorithms</li>
-<li>Heuristic and approximation algorithms</li>
-</ol>
-
-
-<h3>Exact algorithms</h3>
-
-<ol>
-<li><p><strong>Brute force search</strong>, which the run time is O(n!), which is impossible for 20 cities.</p></li>
-<li><p><strong>DP</strong> Held–Karp algorithm. O(n<sup>2</sup> x 2<sup>n</sup>).</p></li>
-<li><p><strong>Branch-and-bound</strong> algorithm. This can process 40-60 cities.</p></li>
-</ol>
-
-
-<h3>Heuristic and approximation algorithms</h3>
-
-<ol>
-<li><p><strong>Greedy</strong>, or Nearest Neighbour algorithm. (an improved version is called Nearest Fragment algorithm, which connect NN in groups)</p></li>
-<li><p><strong>Minimum Spanning Tree (MST)</strong>, build the <a href="http://en.m.wikipedia.org/wiki/Minimum_spanning_tree">MST</a> using <a href="http://en.wikipedia.org/wiki/Kruskal's_algorithm">Kruskal&rsquo;s algorithm</a> and then do a <strong>Depth-first Tree Tour</strong>. <a href="http://www.youtube.com/watch?v=HWHZAtQl1vI">link</a> to video.</p>
-
-<ol>
-<li><p>Sort all edges from small to large, then add edges into MST as long as no cycle is created. In the end, a MST is achieved.</p></li>
-<li><p>Do Depth-first Tree Tour(DFTT)</p></li>
-<li><p>Length of DFTT is 2 x weight of MST.</p></li>
-<li><p>Skip some nodes that&rsquo;s only visited once.</p></li>
-<li><p>We get an legitimate solution.</p></li>
-</ol>
-</li>
-</ol>
-
-
-<h3>Iterative improvement</h3>
-
-<p>Now these are the solutions. However we can improve it by doing <strong>2-opt Swap</strong>.</p>
-
-<p>It means selecting 2 edges at random. If swapping results in an improvement, then keep it. Keep doing this. <a href="http://www.youtube.com/watch?v=SC5CX8drAtU">link</a> to video.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/28">&larr; Older</a>
@@ -828,6 +802,10 @@ baaa
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -841,10 +819,6 @@ baaa
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

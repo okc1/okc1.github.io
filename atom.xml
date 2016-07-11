@@ -4,7 +4,7 @@
   <title><![CDATA[Woodstock Blog]]></title>
   <link href="http://okc1.github.io/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-06-13T01:31:14-07:00</updated>
+  <updated>2016-07-11T00:08:45-07:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -12,6 +12,254 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Design Twitter]]></title>
+    <link href="http://okc1.github.io/blog/2016/07/11/design-twitter/"/>
+    <updated>2016-07-11T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2016/07/11/design-twitter</id>
+    <content type="html"><![CDATA[<h1>System design evaluation form</h1>
+
+<ol>
+<li>work solution</li>
+<li>special cases</li>
+<li>analysis</li>
+<li>trade off</li>
+<li>knowledge base</li>
+</ol>
+
+
+<h1>Design guideline: 4S</h1>
+
+<ol>
+<li><p>Scenario</p>
+
+<p> ask, features, qps, DAU, interfaces</p></li>
+<li><p>Service</p>
+
+<p> split, application, module</p></li>
+<li><p>Storage</p>
+
+<p> schema, data, sql, NoSql, file system</p></li>
+<li><p>Scale</p>
+
+<p> sharding, optimize, special case</p></li>
+</ol>
+
+
+<h1>Scenario</h1>
+
+<h2>DAU?</h2>
+
+<p>Whta&rsquo;s the DAU/MAU rate?</p>
+
+<p>Chatting apps like wechat/whatapp has a rate of around 75%, but facebook/twitter is lower at 60%.</p>
+
+<h2>Enumerate the functions</h2>
+
+<ol>
+<li>registration</li>
+<li>user profile display/edit</li>
+<li>upload image/video</li>
+<li>search</li>
+<li>post a tweet</li>
+<li>share a tweet</li>
+<li>timeline</li>
+<li>newsfeed</li>
+<li>follow/unfollow</li>
+</ol>
+
+
+<h2>QPS</h2>
+
+<ol>
+<li><p>concurrent user</p>
+
+<p> 150M user * 60 query/user / 60<em>60</em>24s = average QPS = 100K</p>
+
+<p> <strong>peak QPS = 3 * average QPS = 300K</strong></p>
+
+<p> fast growing product = 2 * peak QPS = 600K</p></li>
+<li><p>read qps: 300K QPS</p></li>
+<li>write qps: 5K QPS</li>
+</ol>
+
+
+<p>On average, <strong>a web server support around 1000 QPS</strong>, thus in this case, we need 300 servers to support the system.</p>
+
+<h1>Service</h1>
+
+<h2>4 services for Twitter</h2>
+
+<p><img class="middle" src="http://okc1.github.io/assets/images/jiuzhang-four-service.png"></p>
+
+<ol>
+<li>user service
+
+<ol>
+<li>register</li>
+<li>login</li>
+</ol>
+</li>
+<li>tweet service
+
+<ol>
+<li>post tweet</li>
+<li>news feed</li>
+<li>timeline</li>
+</ol>
+</li>
+<li>media service
+
+<ol>
+<li>upload image</li>
+<li>upload video</li>
+</ol>
+</li>
+<li>friendship service
+
+<ol>
+<li>follow</li>
+<li>upfollow</li>
+</ol>
+</li>
+</ol>
+
+
+<h1>Storage</h1>
+
+<ol>
+<li><p>SQL</p>
+
+<p> <strong>Good for</strong> accurate, small amount of data, more read than write.
+ user table</p></li>
+<li><p>NoSQL</p>
+
+<p> <strong>Good for</strong> large amount of read/write, high scalability.
+ tweets
+ social graph (follower)</p></li>
+<li><p>File System</p>
+
+<p> <strong>Good for</strong> media files
+ photo, video</p></li>
+</ol>
+
+
+<h2>Select the right DB</h2>
+
+<p><img class="middle" src="http://okc1.github.io/assets/images/jiuzhang-db-selection.png"></p>
+
+<p><strong>Question: can we use file system for tweets</strong>?</p>
+
+<p>No, it&rsquo;s hard to query. Eg. query all tweets of my friends.</p>
+
+<h2>Design data schema</h2>
+
+<p>(optional) 3 tables needed:</p>
+
+<ol>
+<li>user table</li>
+<li>tweet table</li>
+<li>friendship table: this is not as straight forward, as it shall contain double directions info</li>
+</ol>
+
+
+<p><img class="middle" src="http://okc1.github.io/assets/images/jiuzhang-data-schema.png"></p>
+
+<h1>Important: News Feed</h1>
+
+<h2>pull model</h2>
+
+<p>Read top 50 feeds from top 100 friends, then merge sort by date. (note that user is getting sync-blocked here).</p>
+
+<p>Post tweet is simple 1 DB write.</p>
+
+<p><strong>This design is bad, because file-system/DB read is slow</strong>. If you have N friends, you query O(N) DB queries. <strong>It&rsquo;s too slow (and user is getting sync-blocked, too)</strong>. We should have, ideally, &lt;= 7 DB queries per web page.</p>
+
+<p><img class="middle" src="http://okc1.github.io/assets/images/jiuzhang-pull-diagram.png"></p>
+
+<p><img class="middle" src="http://okc1.github.io/assets/images/jiuzhang-pull-code.png"></p>
+
+<h3>problem</h3>
+
+<ol>
+<li>synchronously block user from getting news feed</li>
+<li>too many DB reads</li>
+</ol>
+
+
+<h2>push model</h2>
+
+<p>Each person have a list storing new feeds. When friend post tweet, <strong>fanout</strong> to my feed list.</p>
+
+<p>When I read, I simply read top 100 from the feed list. <strong>So read is 1 DB read</strong>.</p>
+
+<p>Post tweet is N DB writes, which is slow. <strong>However this is done async, so it does not matter</strong>.</p>
+
+<p><img class="middle" src="http://okc1.github.io/assets/images/jiuzhang-push-diagram.png"></p>
+
+<p><img class="middle" src="http://okc1.github.io/assets/images/jiuzhang-push-code.png"></p>
+
+<p>One example of async implementation: <strong>RabbitMQ</strong></p>
+
+<h1>Scale</h1>
+
+<h2>optimize pull model</h2>
+
+<p>Although it looks like push is faster than pull, <strong>facebook and twitter both use pull model</strong>.</p>
+
+<ol>
+<li>add cache for DB, reduce # of DB read</li>
+<li><p>also cache each user&rsquo;s news feed</p>
+
+<p> your yesterday&rsquo;s feeds are all cached, thus don&rsquo;t need to read everytime.</p></li>
+</ol>
+
+
+<h2>optimize push model</h2>
+
+<ol>
+<li>disk waste a lot, although disk is cheap</li>
+<li><p>inactive user!</p>
+
+<p> rank follower by weight, and don&rsquo;t write to inactive user (eg. last login time)</p></li>
+<li><p>if follower is toooo much, like Lady Gaga, user pull for Lady Gaga.</p>
+
+<p> Tradeoff: Push + Pull model.</p></li>
+</ol>
+
+
+<h2>optimize &lsquo;Like&rsquo; info</h2>
+
+<p>In tweet table, if we need to count(user) who liked, it&rsquo;s gonna table forever.</p>
+
+<p><strong>We must denormalize this data</strong>!</p>
+
+<p><img class="middle" src="http://okc1.github.io/assets/images/jiuzhang-denormalize.png"></p>
+
+<p>Denormalize: it&rsquo;s duplicate info but we store in table, because of performance improvement.</p>
+
+<p><strong>Shortcoming: inconsistency</strong>!</p>
+
+<ol>
+<li>unless using SQL transaction, async failure can result in wrong counting number</li>
+<li>race condition</li>
+</ol>
+
+
+<p>Solution: 1. use atomic operation 2. every day, schedule to update this number.</p>
+
+<h2>optimize thundering hert problem</h2>
+
+<p>When cache fails, all DB query will go to DB. This results in DB crash.</p>
+
+<p>Hot spot (thundering hert)</p>
+
+<p><img class="middle" src="http://okc1.github.io/assets/images/jiuzhang-thundering-herd.png"></p>
+
+<p>Solution: hold all incoming queries (who fails cache), and only send 1 DB query. When result is returned, return to every query.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[[Octopress] Add Aside Content to Octopress]]></title>
@@ -1022,68 +1270,6 @@ public class Solution {
         int mid = (root.start + root.end) / 2;
         return query(root.left, start, Math.min(mid, end)) + 
                 query(root.right, Math.max(mid + 1, start), end);
-    }
-}
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[[LintCode] Segment Tree Query]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/13/Segment-Tree-Query/"/>
-    <updated>2015-10-13T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/13/Segment-Tree-Query</id>
-    <content type="html"><![CDATA[<h3>Question</h3>
-
-<p><a href="http://www.lintcode.com/en/problem/segment-tree-query/">link</a></p>
-
-<blockquote><p>For an integer array (index from 0 to n-1, where n is the size of this array), in the corresponding SegmentTree, each node stores an extra attribute max to denote the maximum number in the interval of the array (index from start to end).</p>
-
-<p>Design a query method with three parameters root, start and end, find the maximum number in the interval [start, end] by the given root of segment tree.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>Slightly difficult as we need to keep in mind the following:</p>
-
-<ol>
-<li><p>what&rsquo;s the return condition? (start and end is large enough to cover the entire range)</p></li>
-<li><p>how to handle overlapping case? (find min-point first and then analyse case by case)</p></li>
-</ol>
-
-
-<h3>Code</h3>
-
-<pre><code>/**
- * Definition of SegmentTreeNode:
- * public class SegmentTreeNode {
- *     public int start, end, max;
- *     public SegmentTreeNode left, right;
- *     public SegmentTreeNode(int start, int end, int max) {
- *         this.start = start;
- *         this.end = end;
- *         this.max = max
- *         this.left = this.right = null;
- *     }
- * }
- */
-public class Solution {
-    /**
-     *@param root, start, end: The root of segment tree and 
-     *                         an segment / interval
-     *@return: The maximum number in the interval [start, end]
-     */
-    public int query(SegmentTreeNode root, int start, int end) {
-        // write your code here
-        if (root == null || start &gt; end) {
-            return -1;
-        } else if (root.start &gt; end || root.end &lt; start) {
-            return -1;
-        } else if (root.start &gt;= start &amp;&amp; root.end &lt;= end) {
-            return root.max;
-        }
-        int mid = (root.start + root.end) / 2;
-        return Math.max(query(root.left, start, Math.min(mid, end)), 
-                        query(root.right, Math.max(mid + 1, start), end));
     }
 }
 </code></pre>

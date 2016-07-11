@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Graph For graph, there are only 2 high-frequency questions, which is &lsquo;clone graph&rsquo; and &lsquo;topology sorting&rsquo;. Question list &hellip;">
+  <meta name="description" content="Question link Given a list of integers, which denote a permutation. Find the previous permutation in ascending order. Note The list may contains &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,106 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/27/Previous-Permutation/">[LintCode] Previous Permutation</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-27T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.lintcode.com/en/problem/previous-permuation/">link</a></p>
+
+<div style="min-height:100px">
+<p>Given a list of integers, which denote a permutation.</p>
+
+<p>Find the previous permutation in ascending order.</p>
+    
+<div class="m-t-lg m-b-lg">
+      <b>Note</b>
+      <div><p>The list may contains duplicate integers.</p>
+      </div>
+</div>
+    
+<div class="m-t-lg m-b-lg">
+      <b>Example</b>
+      <div><p>For <strong><span style="color:#B22222;">[1,3,2,3]</span></strong>, the previous permutation is <span style="color:#B22222;"><strong>[1,2,3,3]</strong></span></p>
+
+<p>For <span style="color:#B22222;"><strong>[1,2,3,4]</strong></span>, the previous permutation is <span style="color:#B22222;"><strong>[4,3,2,1]</strong></span></p>
+    </div>
+</div>
+</div>
+
+
+<h3>Analysis</h3>
+
+<p>This is almost the same question as &ldquo;Next Permutation&rdquo;.</p>
+
+<ol>
+<li>Find</li>
+<li>Swap</li>
+<li>Replace</li>
+</ol>
+
+
+<h3>Code</h3>
+
+<pre><code>public ArrayList&lt;Integer&gt; previousPermuation(ArrayList&lt;Integer&gt; nums) {
+    // write your code
+    if (nums == null || nums.size() == 0) {
+        return null;
+    }
+    int len = nums.size();
+    int p = len - 2;
+    // 1. find 1st increasing position from the back
+    while (p &gt;= 0 &amp;&amp; nums.get(p) &lt;= nums.get(p + 1)) {
+        p--;
+    }
+    // 2. swap p with the first smaller value from the back
+    if (p != -1) {
+        int q = len - 1;
+        while (nums.get(q) &gt;= nums.get(p)) {
+            q--;
+        }
+        swap(nums, p, q);
+    }
+    // swap array in range of (p+1, end)
+    int left = p + 1;
+    int right = len - 1;
+    while (left &lt; right) {
+        swap(nums, left++, right--);
+    }
+    return nums;
+}
+
+private void swap(ArrayList&lt;Integer&gt; num, int p, int q) {
+    int temp = num.get(p);
+    num.set(p, num.get(q));
+    num.set(q, temp);
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -2345,57 +2445,6 @@ public ListNode helper(ListNode head, int k, int count) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/17/Union-and-intersection-of-linked-list/">[Question] Union and Intersection of Two Linked Lists</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-06-17T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.geeksforgeeks.org/union-and-intersection-of-two-linked-lists/">link</a></p>
-
-<blockquote><p>Given two Linked Lists, create union and intersection lists that contain union and intersection of the elements present in the given lists. Order of elments in output lists doesn’t matter.</p>
-
-<p>Example:</p>
-
-<p>Input: &ldquo;10->15->4->20&rdquo; and &ldquo;8->4->2->10&rdquo;</p>
-
-<p>Intersection: 4->10</p>
-
-<p>Union: 2->8->20->4->15->10</p></blockquote>
-
-<h3>Analysis</h3>
-
-<p>There are 2 solutions.</p>
-
-<p>First solution is to do mergesort, then do a linear search. Time complexity is O(mlgm + nlgn).</p>
-
-<p>Second solution is using hashing. On time <a href="http://www.geeksforgeeks.org/union-and-intersection-of-two-linked-lists/">complexity</a>:</p>
-
-<blockquote><p>Time complexity of this method depends on the hashing technique used and the distribution of elements in input lists. In practical, this approach may turn out to be better than above method.</p></blockquote>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/45">&larr; Older</a>
@@ -2436,6 +2485,10 @@ public ListNode helper(ListNode head, int k, int count) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -2449,10 +2502,6 @@ public ListNode helper(ListNode head, int k, int count) {
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

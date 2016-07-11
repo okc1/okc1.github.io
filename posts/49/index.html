@@ -9,8 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given a linked list, return the node where the cycle begins. If there is no cycle, return null. Follow up:
-Can you solve it without &hellip;">
+  <meta name="description" content="Question link Sort a linked list in O(n log n) time using constant space complexity. Stats Adjusted Difficulty 4 Time to use -------- Ratings/Color &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,111 @@ Can you solve it without &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/02/Sort-List/">[LeetCode 148] Sort List</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-02T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/sort-list/">link</a></p>
+
+<div class="question-content bg-color bg-img font-color">
+            <p class="font-color"></p><p class="font-color">Sort a linked list in <i>O</i>(<i>n</i> log <i>n</i>) time using constant space complexity.</p><p class="font-color"></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="red">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is a difficult question</strong>.</p>
+
+<p>To sort with O(nlgn) time, we must use either quick sort or <strong>merge sort</strong>.</p>
+
+<h3>Solution</h3>
+
+<p>This is a standard merge sort algorithm. The details can be found <a href="http://www.programcreek.com/2012/11/leetcode-solution-merge-sort-linkedlist-in-java/">here</a>.</p>
+
+<p>I am being lazy here, I reused the code from &ldquo;Merge Two Sorted Lists&rdquo;. Surprisingly it worked! Just remember, we must set the last node of first half to point to null.</p>
+
+<h3>Code</h3>
+
+<pre><code>public ListNode sortList(ListNode head) {
+    if (head == null || head.next == null) 
+        return head;
+    int len = 0;
+    ListNode temp = head;
+    while (temp != null) {
+        temp = temp.next;
+        len ++;
+    }
+    temp = head;
+    for (int i = 1; i &lt; len / 2; i ++)
+        temp = temp.next;
+    ListNode firstHalf = head, secondHalf = temp.next;
+    temp.next = null;
+    return mergeTwoLists(sortList(firstHalf), 
+                         sortList(secondHalf));
+}
+
+// The following code is copied from
+// Question - Merge Two Sorted Lists
+public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+    ListNode pre = new ListNode(Integer.MIN_VALUE);
+    ListNode cur = pre;
+    while (l1 != null &amp;&amp; l2 != null) {
+        if (l1.val &lt; l2.val) {
+            cur.next = l1;
+            l1 = l1.next;
+        } else {
+            cur.next = l2;
+            l2 = l2.next;
+        }
+        cur = cur.next;
+    }
+    if (l1 == null) cur.next = l2;
+    else cur.next = l1;
+    return pre.next;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1221,207 +1325,6 @@ private void getPaths(Node end, Map&lt;String, Node&gt; map,
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/30/Palindrome-Partitioning-II/">[LeetCode 132] Palindrome Partitioning II</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-05-30T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="https://oj.leetcode.com/problems/palindrome-partitioning-ii/">link</a></p>
-
-<div class="question-content">
-            <p></p><p>
-Given a string <i>s</i>, partition <i>s</i> such that every substring of the partition is a palindrome.
-</p>
-<p>
-Return the minimum cuts needed for a palindrome partitioning of <i>s</i>.
-</p>
-<p>
-For example, given <i>s</i> = <code>"aab"</code>,<br>
-Return <code>1</code> since the palindrome partitioning <code>["aa","b"]</code> could be produced using 1 cut.
-</p><p></p>
-          </div>
-
-
-<h3>Stats</h3>
-
-<table border="2">
-    <tr>
-        <td>Frequency</td>
-        <td bgcolor="yellow">3</td>
-    </tr>
-    <tr>
-        <td>Difficulty</td>
-        <td bgcolor="red">4</td>
-    </tr>
-    <tr>
-        <td>Adjusted Difficulty</td>
-        <td bgcolor="red">5</td>
-    </tr>
-    <tr>
-        <td>Time to use</td>
-        <td bgcolor="red">--------</td>
-    </tr>
-</table>
-
-
-<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
-
-<h3>Analysis</h3>
-
-<p><strong>This is DP, but not traditional DP question</strong></p>
-
-<h4>IT IS DOUBLE DP!</h4>
-
-<p>It is very hard for me to even understand the solution, but <strong>I have found a great analysis from <a href="http://blog.sina.com.cn/s/blog_b9285de20101iwqt.html">peking2&rsquo;s blog</a></strong>.</p>
-
-<blockquote><p>这题一般人一看就是DP，DP公式也很容易推出，算是一道简单的DP。</p>
-
-<p>dp(i) = min( 1+dp(j+1), if substring(i,j) is palindrome)</p>
-
-<p>从以上的分析时间复杂度为O(n<sup>3</sup>), 主要是因为检查回文也需要O(n)的时间。因此这题有意思的一点就是如何降低时间复杂度到O(n<sup>2</sup>)？</p>
-
-<p><strong>其实这题是两个DP混杂在了一起</strong>，这也是这道题最有意思的地方。另外一个DP就是跟检查回文有关了，公式如下</p>
-
-<p>dp(i)(j)=true if s(i)==s(j) &amp;&amp; dp(i+1)(j-1)</p>
-
-<p>也就是说，你要检查一个回文只需要知道头尾的字符相等，并且中间的字串已经成为了回文即可。O(1)复杂度。</p></blockquote>
-
-<p><strong>A more detailed analysis is available in <a href="http://fisherlei.blogspot.sg/2013/03/leetcode-palindrome-partitioning-ii.html">this blog</a></strong>.</p>
-
-<blockquote cite="http://fisherlei.blogspot.sg/2013/03/leetcode-palindrome-partitioning-ii.html">
-
-    <b>[Thoughts]</b>
-    <br>凡是求最优解的，一般都是走DP的路线。这一题也不例外。首先求dp函数，
-    <br>
-    <br>定义函数
-    <br>D[i,n] = 区间[i,n]之间最小的cut数，n为字符串长度
-    <br>
-    <br>&nbsp;a &nbsp; b &nbsp; a &nbsp; b &nbsp; b &nbsp; b &nbsp; a &nbsp; b &nbsp; b &nbsp; a &nbsp; b &nbsp; a
-    <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;i &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;n
-    <br>如果现在求[i,n]之间的最优解？应该是多少？简单看一看，至少有下面一个解
-    <br>
-    <br>
-    <br>&nbsp;a &nbsp; b &nbsp; a &nbsp; b &nbsp; b &nbsp; b &nbsp; a &nbsp; b &nbsp; b &nbsp; a &nbsp; b &nbsp; a
-    <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;i &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-    <span style="color: red;">j</span>&nbsp;
-    <span style="color: red;">j+1</span>&nbsp; &nbsp; n
-    <br>
-    <br>此时 &nbsp;D[i,n] = min(D[i, j] + D[j+1,n]) &nbsp;i&lt;=j &lt;n。这是个二维的函数，实际写代码时维护比较麻烦。所以要转换成一维DP。如果每次，从i往右扫描，每找到一个回文就算一次DP的话，就可以转换为
-    <br>D[i] = 区间[i,n]之间最小的cut数，n为字符串长度， 则,
-    <br>
-    <br>D[i] = min(1+D[j+1] ) &nbsp; &nbsp;i&lt;=j &lt;n
-    <br>
-    <br>有个转移函数之后，一个问题出现了，就是如何判断[i,j]是否是回文？每次都从i到j比较一遍？太浪费了，这里也是一个DP问题。
-    <br>定义函数
-    <br>P[i][j] = true if [i,j]为回文
-    <br>
-    <br>那么
-    <br>P[i][j] = str[i] == str[j] &amp;&amp; P[i+1][j-1];
-    <br>
-</blockquote>
-
-
-<h3>Solution</h3>
-
-<p>The coding is not easy, especially <strong>when 2 DP are written in 1 for-loop</strong>.</p>
-
-<p>I wrote many times until I finally achieved the nice and concise solution that you see below.</p>
-
-<h3>Code</h3>
-
-<p><strong>Doing everything in 1 loop</strong>, not an intuitive code.</p>
-
-<pre><code>public int minCut(String s) {
-    int len = s.length();
-    if (len &lt;= 1) return 0;
-    boolean[][] pl = new boolean[len][len];
-    int[] dp = new int[len];
-    for (int i = len-1; i &gt;= 0; i --) {
-        dp[i] = Integer.MAX_VALUE;
-        for (int j = i; j &lt; len; j ++) {
-            // first set pl[][], then update dp[i]
-            if (j - i &lt;= 1) pl[i][j] = s.charAt(i) == s.charAt(j);
-            else pl[i][j] = s.charAt(i) == s.charAt(j) &amp; pl[i+1][j-1];
-            if (pl[i][j]) {
-                if (j == len-1) dp[i] = 0;
-                else 
-                    dp[i] = Math.min(dp[i], dp[j+1] + 1);
-            }
-        }
-    }
-    return dp[0];
-}
-</code></pre>
-
-<p><strong>Updated on July 18th, 2014</strong>, written by me.</p>
-
-<pre><code>boolean[][] map = null;
-
-public int minCut(String s) {
-    if (s == null || s.length() == 0) {
-        return 0;
-    }
-    map = getMap(s);
-    int len = s.length();
-    int[] dp = new int[len + 1];
-    dp[0] = -1;
-    for (int i = 0; i &lt; len; i++) {
-        dp[i+1] = Integer.MAX_VALUE;
-        for (int j = 0; j &lt;= i; j++) {
-            if (map[j][i]) {
-                dp[i+1] = Math.min(dp[i+1], dp[j] + 1);
-            }
-        }
-    }
-    return dp[len];
-}
-
-private boolean[][] getMap(String s) {
-    int len = s.length();
-    boolean[][] map = new boolean[len][len];
-    for (int i = len - 1; i &gt;= 0; i--) {
-        for (int j = 0; j &lt; len; j++) {
-            if (i &gt; j) {
-                continue;
-            } else if (i == j) {
-                map[i][j] = true;
-            } else {
-                if (i + 1 == j) {
-                    map[i][j] = s.charAt(i) == s.charAt(j);
-                } else {
-                    map[i][j] = s.charAt(i) == s.charAt(j) &amp;&amp; map[i+1][j-1];
-                }
-            }
-        }
-    }
-    return map;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/50">&larr; Older</a>
@@ -1462,6 +1365,10 @@ private boolean[][] getMap(String s) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -1475,10 +1382,6 @@ private boolean[][] getMap(String s) {
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

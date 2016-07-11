@@ -9,7 +9,8 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given a string, find the number of distinct substrings of the string. Example: input = &ldquo;aaaa&rdquo;, output = 4 (the 4 substrings &hellip;">
+  <meta name="description" content="Question link Given a continuous twitter feed, design an algorithm to return the 100 most
+frequent words used at this minute, this hour and this day &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +66,88 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/09/big-data-real-time-top-k/">[Design] Real Time Top K</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-09T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://stackoverflow.com/questions/10189685/realtime-tracking-of-top-100-twitter-words-per-min-hour-day">link</a></p>
+
+<blockquote><p>Given a continuous twitter feed, design an algorithm to return the 100 most
+frequent words used at this minute, this hour and this day.</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>This is a frequent and useful problem for companies like Google and Twitter.</p>
+
+<p>The first solution below is <strong>an approximation method</strong> which select keywords that occur more than a certain threshold.</p>
+
+<p>The second solution is <strong>more accurate</strong> but RAM-intensive.</p>
+
+<h3>Lossy Count (used to get an inaccurate trend)</h3>
+
+<p><strong>Solution 1 is a modified version of <a href="http://stackoverflow.com/a/8033083">Lossy Count</a></strong>. The detailed steps are explained <a href="http://stackoverflow.com/a/3260905">here</a>:</p>
+
+<blockquote><p>Start with an empty map (red-black tree). The keys will be search terms, and the values will be a counter for the term.</p>
+
+<ol>
+<li><p>Look at each item in the stream.</p></li>
+<li><p>If the term exists in the map, increment the associated counter.</p></li>
+<li><p>Otherwise, if the map has fewer candidates than you&rsquo;re looking for, add it to the map with a count of one.</p></li>
+<li><p>However, if the map is &ldquo;full&rdquo;, decrement the counter in each entry. If any counter reaches zero during this process, remove it from the map.</p></li>
+</ol>
+</blockquote>
+
+<p><a href="http://www.cse.ust.hk/vldb2002/VLDB2002-proceedings/slides/S10P03slides.pdf">This slide show</a> explains <strong>Lossy Count</strong>, which is to divide input data into chunks. Then count elements and decrease counter by 1 after each chunk.</p>
+
+<p><strong>Note that the result is NOT the top frequency items</strong>. Instead, the final results are <strong>order-dependent</strong>, giving heavier weight to the counts processed last. It maybe helpful in some cases, cuz we want to check the latest trend. However, if we want more accurate top keywords for all data, we will <strong>do a second pass over the log data</strong>.</p>
+
+<p>Now let&rsquo;s discuss the threshold. Use &ldquo;aaabcd&rdquo; and map size = 2 as example. &lsquo;a&rsquo; will be inserted into map with occurance = 3. Then &lsquo;b&rsquo; is inserted, and removed. &lsquo;c&rsquo; is inserted, and removed. &rsquo;d' is inserted. Since we always decrease 1 at each step, &lsquo;a&rsquo; should only have occurance of 1 at the end. As explained <a href="http://stackoverflow.com/a/3260905">here</a>:</p>
+
+<blockquote><p>If we limit the map to 99 entries, we are guaranteed to find any term that occurs more than 1/(1 + 99) (1%) of the time.</p></blockquote>
+
+<p>We change the size of the map to change the threshold. The occurance of in the final result does not matter.</p>
+
+<h3>Solution 2</h3>
+
+<p>The lossy count does not actually produce the hourly, daily and monthly result accurately. Solution 2 will discuss how we deal with retiring old data in an accurate way.</p>
+
+<p>Suggested by <a href="http://stackoverflow.com/a/3260768">this answer</a>, <strong>we keep a 30-day list for each keyword</strong>, that counts the daily occurance. This list is FIFO. When we remove and insert a new counter value, we update monthly total.</p>
+
+<p>Alaternatively, <a href="http://stackoverflow.com/a/10190836">this answer</a> suggests keeping 1440 (24 * 60) HashMaps, each storing the information for one minute. <strong>And another 2 HashMap for the rolling total for the past hour, and past day</strong>.</p>
+
+<blockquote><p>You need an array of 1440 (24*60) word+count hash maps organized the way that you describe; these are your minute-by-minute counts. You need two additional hash maps - for the rolling total of the hour and the day.</p>
+
+<p>Define two operations on hash maps - add and subtract, with the semantic of merging counts of identical words, and removing words when their count drops to zero.</p>
+
+<p>Each minute you start a new hash map, and update counts from the feed. At the end of the minute, you place that hash map into the array for the current minute, add it to the rolling total for the hour and for the day, and then subtract the hash map of an hour ago from the hourly running total, and subtract the hash map of 24 hours ago from the daily running total.</p></blockquote>
+
+<p>This is a very good solution, which I would recommend as the standard solution to this &ldquo;Real Time Top k&rdquo; problem.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1044,104 +1127,6 @@ private void printIndentation(int tab) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/02/frog-crossing-dp/">[Question] Frog Crossing (Dynamic Programming)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-02T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="https://tkramesh.wordpress.com/2011/02/15/frog-crossing-more-on-dynamic-programming-3/">link</a></p>
-
-<blockquote><p>A frog wants to cross the river n meters wide. There&rsquo;re some stones, but not complete from 1 to n.</p>
-
-<p>The frog has a peculiar jumping rule. If it jumps x meters on one jump, the next jump has to lie in the range {x-1, x, x+1}. Further, the 1st jump that the frog makes is of exactly 1 meter.</p>
-
-<p>Given whether stones are removed or not as array of 0 and 1, check if it is possible to reach the other end.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p><strong>This is a difficult DP question</strong>. It can be solved in O(n<sup>2</sup>) time.</p>
-
-<p>The main equation is:</p>
-
-<blockquote><p>can_reach [s, d] =</p>
-
-<p>Stone[d] AND Stone[s] AND [ can_reach [(d-s)-1, s] OR can_reach[d-s, s] OR can_reach[d-s)+1, s] ].</p>
-
-<p>where &rsquo;s' is starting point, and &rsquo;d' is destination.</p></blockquote>
-
-<h3>Code</h3>
-
-<pre><code>public boolean canCross(int[] stones) {
-    if (stones.length &lt; 2 || (stones[0] != 1 || stones[1] != 1)) {
-        // invalid input data
-        return false;
-    }
-    int n = stones.length;
-    boolean[][] dp = new boolean[n][n];
-    // dp[i][j] denotes that frog can jump from index i to j
-
-    for (int i = 0; i &lt; n; i++) {
-        for (int j = i + 1; j &lt; n; j++) {
-            if (stones[i] == 0 || stones[j] == 0) {
-                // if either stones i or stone j is removed, skip
-                continue;
-            }
-            // note that j start from (i+1) because we make sure dp[i][i]
-            // false. Otherwise, dp[i][i+1] will always be true
-
-            if (i == 0) {
-                // if jump from position 0, can only reach 1
-                dp[i][j] = j == 1;
-            } else {
-                // if jump from other positions, need to check previous
-                // distance, within range or not.
-                int dis = j - i;
-                for (int pre = i - dis - 1; pre &lt;= i - dis + 1; pre++) {
-                    // pre is the previous position where frog jumps to i
-                    if (pre &lt; 0) {
-                        continue;
-                    } else if (dp[pre][i]) {
-                        // frog jumps from pre to i, then frog is able to
-                        // jump from i to j
-                        dp[i][j] = true;
-                        break;
-                    }
-                }
-            }
-            // finish calculating dp[i][j], now check termination
-            if (j == n - 1 &amp;&amp; dp[i][j]) {
-                return true;
-            }
-        }
-    }
-    return false;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/19">&larr; Older</a>
@@ -1182,6 +1167,10 @@ private void printIndentation(int tab) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -1195,10 +1184,6 @@ private void printIndentation(int tab) {
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

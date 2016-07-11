@@ -1,0 +1,240 @@
+<h1>System design evaluation form</h1>
+
+<ol>
+<li>work solution</li>
+<li>special cases</li>
+<li>analysis</li>
+<li>trade off</li>
+<li>knowledge base</li>
+</ol>
+
+
+<h1>Design guideline: 4S</h1>
+
+<ol>
+<li><p>Scenario</p>
+
+<p> ask, features, qps, DAU, interfaces</p></li>
+<li><p>Service</p>
+
+<p> split, application, module</p></li>
+<li><p>Storage</p>
+
+<p> schema, data, sql, NoSql, file system</p></li>
+<li><p>Scale</p>
+
+<p> sharding, optimize, special case</p></li>
+</ol>
+
+
+<h1>Scenario</h1>
+
+<h2>DAU?</h2>
+
+<p>Whta&rsquo;s the DAU/MAU rate?</p>
+
+<p>Chatting apps like wechat/whatapp has a rate of around 75%, but facebook/twitter is lower at 60%.</p>
+
+<h2>Enumerate the functions</h2>
+
+<ol>
+<li>registration</li>
+<li>user profile display/edit</li>
+<li>upload image/video</li>
+<li>search</li>
+<li>post a tweet</li>
+<li>share a tweet</li>
+<li>timeline</li>
+<li>newsfeed</li>
+<li>follow/unfollow</li>
+</ol>
+
+
+<h2>QPS</h2>
+
+<ol>
+<li><p>concurrent user</p>
+
+<p> 150M user * 60 query/user / 60<em>60</em>24s = average QPS = 100K</p>
+
+<p> <strong>peak QPS = 3 * average QPS = 300K</strong></p>
+
+<p> fast growing product = 2 * peak QPS = 600K</p></li>
+<li><p>read qps: 300K QPS</p></li>
+<li>write qps: 5K QPS</li>
+</ol>
+
+
+<p>On average, <strong>a web server support around 1000 QPS</strong>, thus in this case, we need 300 servers to support the system.</p>
+
+<h1>Service</h1>
+
+<h2>4 services for Twitter</h2>
+
+<p><img class="middle" src="/assets/images/jiuzhang-four-service.png"></p>
+
+<ol>
+<li>user service
+
+<ol>
+<li>register</li>
+<li>login</li>
+</ol>
+</li>
+<li>tweet service
+
+<ol>
+<li>post tweet</li>
+<li>news feed</li>
+<li>timeline</li>
+</ol>
+</li>
+<li>media service
+
+<ol>
+<li>upload image</li>
+<li>upload video</li>
+</ol>
+</li>
+<li>friendship service
+
+<ol>
+<li>follow</li>
+<li>upfollow</li>
+</ol>
+</li>
+</ol>
+
+
+<h1>Storage</h1>
+
+<ol>
+<li><p>SQL</p>
+
+<p> <strong>Good for</strong> accurate, small amount of data, more read than write.
+ user table</p></li>
+<li><p>NoSQL</p>
+
+<p> <strong>Good for</strong> large amount of read/write, high scalability.
+ tweets
+ social graph (follower)</p></li>
+<li><p>File System</p>
+
+<p> <strong>Good for</strong> media files
+ photo, video</p></li>
+</ol>
+
+
+<h2>Select the right DB</h2>
+
+<p><img class="middle" src="/assets/images/jiuzhang-db-selection.png"></p>
+
+<p><strong>Question: can we use file system for tweets</strong>?</p>
+
+<p>No, it&rsquo;s hard to query. Eg. query all tweets of my friends.</p>
+
+<h2>Design data schema</h2>
+
+<p>(optional) 3 tables needed:</p>
+
+<ol>
+<li>user table</li>
+<li>tweet table</li>
+<li>friendship table: this is not as straight forward, as it shall contain double directions info</li>
+</ol>
+
+
+<p><img class="middle" src="/assets/images/jiuzhang-data-schema.png"></p>
+
+<h1>Important: News Feed</h1>
+
+<h2>pull model</h2>
+
+<p>Read top 50 feeds from top 100 friends, then merge sort by date. (note that user is getting sync-blocked here).</p>
+
+<p>Post tweet is simple 1 DB write.</p>
+
+<p><strong>This design is bad, because file-system/DB read is slow</strong>. If you have N friends, you query O(N) DB queries. <strong>It&rsquo;s too slow (and user is getting sync-blocked, too)</strong>. We should have, ideally, &lt;= 7 DB queries per web page.</p>
+
+<p><img class="middle" src="/assets/images/jiuzhang-pull-diagram.png"></p>
+
+<p><img class="middle" src="/assets/images/jiuzhang-pull-code.png"></p>
+
+<h3>problem</h3>
+
+<ol>
+<li>synchronously block user from getting news feed</li>
+<li>too many DB reads</li>
+</ol>
+
+
+<h2>push model</h2>
+
+<p>Each person have a list storing new feeds. When friend post tweet, <strong>fanout</strong> to my feed list.</p>
+
+<p>When I read, I simply read top 100 from the feed list. <strong>So read is 1 DB read</strong>.</p>
+
+<p>Post tweet is N DB writes, which is slow. <strong>However this is done async, so it does not matter</strong>.</p>
+
+<p><img class="middle" src="/assets/images/jiuzhang-push-diagram.png"></p>
+
+<p><img class="middle" src="/assets/images/jiuzhang-push-code.png"></p>
+
+<p>One example of async implementation: <strong>RabbitMQ</strong></p>
+
+<h1>Scale</h1>
+
+<h2>optimize pull model</h2>
+
+<p>Although it looks like push is faster than pull, <strong>facebook and twitter both use pull model</strong>.</p>
+
+<ol>
+<li>add cache for DB, reduce # of DB read</li>
+<li><p>also cache each user&rsquo;s news feed</p>
+
+<p> your yesterday&rsquo;s feeds are all cached, thus don&rsquo;t need to read everytime.</p></li>
+</ol>
+
+
+<h2>optimize push model</h2>
+
+<ol>
+<li>disk waste a lot, although disk is cheap</li>
+<li><p>inactive user!</p>
+
+<p> rank follower by weight, and don&rsquo;t write to inactive user (eg. last login time)</p></li>
+<li><p>if follower is toooo much, like Lady Gaga, user pull for Lady Gaga.</p>
+
+<p> Tradeoff: Push + Pull model.</p></li>
+</ol>
+
+
+<h2>optimize &lsquo;Like&rsquo; info</h2>
+
+<p>In tweet table, if we need to count(user) who liked, it&rsquo;s gonna table forever.</p>
+
+<p><strong>We must denormalize this data</strong>!</p>
+
+<p><img class="middle" src="/assets/images/jiuzhang-denormalize.png"></p>
+
+<p>Denormalize: it&rsquo;s duplicate info but we store in table, because of performance improvement.</p>
+
+<p><strong>Shortcoming: inconsistency</strong>!</p>
+
+<ol>
+<li>unless using SQL transaction, async failure can result in wrong counting number</li>
+<li>race condition</li>
+</ol>
+
+
+<p>Solution: 1. use atomic operation 2. every day, schedule to update this number.</p>
+
+<h2>optimize thundering hert problem</h2>
+
+<p>When cache fails, all DB query will go to DB. This results in DB crash.</p>
+
+<p>Hot spot (thundering hert)</p>
+
+<p><img class="middle" src="/assets/images/jiuzhang-thundering-herd.png"></p>
+
+<p>Solution: hold all incoming queries (who fails cache), and only send 1 DB query. When result is returned, return to every query.</p>

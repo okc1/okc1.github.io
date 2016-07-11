@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question DLL - link Inorder - link Given a BST, write a function that returns true if there is a triplet that sums to 0, returns false otherwise. &hellip;">
+  <meta name="description" content="Overview Polymorphism is to use common interface instead of concrete implementation while coding. The most common use of polymorphism in OOP occurs &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,123 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/12/22/Discussion-of-Polymorphism/">[Java OOP] Discussion of Polymorphism</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-12-22T00:00:00-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Overview</h1>
+
+<p>Polymorphism is to <a href="http://javarevisited.blogspot.sg/2011/08/what-is-polymorphism-in-java-example.html">use common interface</a> instead of concrete implementation while coding.</p>
+
+<p>The most common use of polymorphism in OOP occurs <strong>when a parent class reference is used to refer to a child class object</strong>.</p>
+
+<h2>Quick Summary:</h2>
+
+<p><a href="http://www.ntu.edu.sg/home/ehchua/programming/java/J3b_OOPInheritancePolymorphism.html">ref</a></p>
+
+<ol>
+<li><p>A subclass instance can be assigned to a superclass' reference.</p></li>
+<li><p>Once substituted, we can invoke methods defined in super-class; we CANNOT invoke methods from sub-class.</p></li>
+<li><p>if sub-class overrides inherited methods from the super-class, the overridden versions will be invoked.</p></li>
+<li><p>Reference cannot point to superclass.</p></li>
+</ol>
+
+
+<h2>Advantages</h2>
+
+<ol>
+<li><p>Simpler programs</p>
+
+<p> eg.
+ superRef[] = new Circle[2];
+ superRef[0] = new Cylinder();
+ superRef[1] = new Circle();</p>
+
+<blockquote><p>Just 1 single array to represent different objects</p></blockquote></li>
+<li><p>Better re-usability</p></li>
+</ol>
+
+
+<h2>A practical example</h2>
+
+<p>Cylinder is a subclass of Circle. We gonna do this:</p>
+
+<blockquote><p>Circle c1 = new Cylinder();</p></blockquote>
+
+<p>The code is below:</p>
+
+<pre><code>public class PolymorphismSubstitutabilityDemo {
+
+    public static void main(String[] args) {
+        Circle c1 = new Cylinder(1, "white", 10);
+        System.out.println(c1.getClass());
+        System.out.println(c1.getRadius());
+        System.out.println(c1.getArea());
+    }
+}
+
+class Circle {
+    int radius;
+    String color;
+
+    public Circle(int a, String b) {
+        this.radius = a;
+        this.color = b;
+    }
+
+    public int getRadius() {
+        return radius;
+    }
+
+    public double getArea() {
+        return 3.14159 * Math.pow(radius, 2);
+    }
+}
+
+class Cylinder extends Circle {
+    int height;
+
+    public Cylinder(int a, String b, int c) {
+        super(a, b);
+        this.height = c;
+    }
+
+    public double getArea() {
+        return super.getArea() * height;
+    }
+}
+</code></pre>
+
+<p>The output of execution:</p>
+
+<pre><code>class Cylinder
+1
+31.4159
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -798,85 +915,6 @@ private void swap(int[] array, int a, int b) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/10/02/longest-word-made-from-other/">[CC150v5] 18.7 Longest Word Made From Other Words</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-10-02T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<blockquote><p>Given a list of words, write a program to find the longest word made of other words in the list.</p>
-
-<p>EXAMPLE</p>
-
-<p>Input: cat, banana, dog, nana, walk, walker, dogwalker</p>
-
-<p>Output: dogwalker</p></blockquote>
-
-<h3>Solution</h3>
-
-<p><strong>Search it recursively from longest to shortest</strong>. Use HashSet to help us search for words quickly.</p>
-
-<p>This question might look difficult at first, it&rsquo;s actually a very classical recursive search.</p>
-
-<h3>Code</h3>
-
-<pre><code>public static void printLongestWord(String[] arr) {
-    Arrays.sort(arr, new LengthComparator());
-    HashSet&lt;String&gt; set = new HashSet&lt;String&gt;();
-    for (String str : arr) {
-        set.add(str);
-    }
-    for (String word : arr) {
-        if (canDivide(word, 0, set)) {
-            System.out.println(word);
-            return;
-        }
-    }
-    System.out.println("can not find such word");
-}
-
-private static boolean canDivide(String word, int from, HashSet&lt;String&gt; set) {
-    if (from == word.length()) {
-        return true;
-    }
-    for (int i = from; i &lt; word.length(); i++) {
-        String str = word.substring(from, i + 1);
-        if (from == 0 &amp;&amp; i == word.length() - 1) {
-            continue;
-        } else if (!set.contains(str)) {
-            continue;
-        }
-        if (canDivide(word, i + 1, set)) {
-            return true;
-        }
-    }
-    return false;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/21">&larr; Older</a>
@@ -917,6 +955,10 @@ private static boolean canDivide(String word, int from, HashSet&lt;String&gt; se
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -930,10 +972,6 @@ private static boolean canDivide(String word, int from, HashSet&lt;String&gt; se
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

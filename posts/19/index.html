@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="ref 1 ref 2 Why Indexing? In database disks (we&rsquo;re talking about disk-based storage devices), data is stored as blocks. These blocks are &hellip;">
+  <meta name="description" content="Question link A frog wants to cross the river n meters wide. There&rsquo;re some stones, but not complete from 1 to n. The frog has a peculiar &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,104 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/02/frog-crossing-dp/">[Question] Frog Crossing (Dynamic Programming)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-02T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://tkramesh.wordpress.com/2011/02/15/frog-crossing-more-on-dynamic-programming-3/">link</a></p>
+
+<blockquote><p>A frog wants to cross the river n meters wide. There&rsquo;re some stones, but not complete from 1 to n.</p>
+
+<p>The frog has a peculiar jumping rule. If it jumps x meters on one jump, the next jump has to lie in the range {x-1, x, x+1}. Further, the 1st jump that the frog makes is of exactly 1 meter.</p>
+
+<p>Given whether stones are removed or not as array of 0 and 1, check if it is possible to reach the other end.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>This is a difficult DP question</strong>. It can be solved in O(n<sup>2</sup>) time.</p>
+
+<p>The main equation is:</p>
+
+<blockquote><p>can_reach [s, d] =</p>
+
+<p>Stone[d] AND Stone[s] AND [ can_reach [(d-s)-1, s] OR can_reach[d-s, s] OR can_reach[d-s)+1, s] ].</p>
+
+<p>where &rsquo;s' is starting point, and &rsquo;d' is destination.</p></blockquote>
+
+<h3>Code</h3>
+
+<pre><code>public boolean canCross(int[] stones) {
+    if (stones.length &lt; 2 || (stones[0] != 1 || stones[1] != 1)) {
+        // invalid input data
+        return false;
+    }
+    int n = stones.length;
+    boolean[][] dp = new boolean[n][n];
+    // dp[i][j] denotes that frog can jump from index i to j
+
+    for (int i = 0; i &lt; n; i++) {
+        for (int j = i + 1; j &lt; n; j++) {
+            if (stones[i] == 0 || stones[j] == 0) {
+                // if either stones i or stone j is removed, skip
+                continue;
+            }
+            // note that j start from (i+1) because we make sure dp[i][i]
+            // false. Otherwise, dp[i][i+1] will always be true
+
+            if (i == 0) {
+                // if jump from position 0, can only reach 1
+                dp[i][j] = j == 1;
+            } else {
+                // if jump from other positions, need to check previous
+                // distance, within range or not.
+                int dis = j - i;
+                for (int pre = i - dis - 1; pre &lt;= i - dis + 1; pre++) {
+                    // pre is the previous position where frog jumps to i
+                    if (pre &lt; 0) {
+                        continue;
+                    } else if (dp[pre][i]) {
+                        // frog jumps from pre to i, then frog is able to
+                        // jump from i to j
+                        dp[i][j] = true;
+                        break;
+                    }
+                }
+            }
+            // finish calculating dp[i][j], now check termination
+            if (j == n - 1 &amp;&amp; dp[i][j]) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -871,123 +969,6 @@ freewill/
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/12/22/Discussion-of-Polymorphism/">[Java OOP] Discussion of Polymorphism</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-12-22T00:00:00-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1>Overview</h1>
-
-<p>Polymorphism is to <a href="http://javarevisited.blogspot.sg/2011/08/what-is-polymorphism-in-java-example.html">use common interface</a> instead of concrete implementation while coding.</p>
-
-<p>The most common use of polymorphism in OOP occurs <strong>when a parent class reference is used to refer to a child class object</strong>.</p>
-
-<h2>Quick Summary:</h2>
-
-<p><a href="http://www.ntu.edu.sg/home/ehchua/programming/java/J3b_OOPInheritancePolymorphism.html">ref</a></p>
-
-<ol>
-<li><p>A subclass instance can be assigned to a superclass' reference.</p></li>
-<li><p>Once substituted, we can invoke methods defined in super-class; we CANNOT invoke methods from sub-class.</p></li>
-<li><p>if sub-class overrides inherited methods from the super-class, the overridden versions will be invoked.</p></li>
-<li><p>Reference cannot point to superclass.</p></li>
-</ol>
-
-
-<h2>Advantages</h2>
-
-<ol>
-<li><p>Simpler programs</p>
-
-<p> eg.
- superRef[] = new Circle[2];
- superRef[0] = new Cylinder();
- superRef[1] = new Circle();</p>
-
-<blockquote><p>Just 1 single array to represent different objects</p></blockquote></li>
-<li><p>Better re-usability</p></li>
-</ol>
-
-
-<h2>A practical example</h2>
-
-<p>Cylinder is a subclass of Circle. We gonna do this:</p>
-
-<blockquote><p>Circle c1 = new Cylinder();</p></blockquote>
-
-<p>The code is below:</p>
-
-<pre><code>public class PolymorphismSubstitutabilityDemo {
-
-    public static void main(String[] args) {
-        Circle c1 = new Cylinder(1, "white", 10);
-        System.out.println(c1.getClass());
-        System.out.println(c1.getRadius());
-        System.out.println(c1.getArea());
-    }
-}
-
-class Circle {
-    int radius;
-    String color;
-
-    public Circle(int a, String b) {
-        this.radius = a;
-        this.color = b;
-    }
-
-    public int getRadius() {
-        return radius;
-    }
-
-    public double getArea() {
-        return 3.14159 * Math.pow(radius, 2);
-    }
-}
-
-class Cylinder extends Circle {
-    int height;
-
-    public Cylinder(int a, String b, int c) {
-        super(a, b);
-        this.height = c;
-    }
-
-    public double getArea() {
-        return super.getArea() * height;
-    }
-}
-</code></pre>
-
-<p>The output of execution:</p>
-
-<pre><code>class Cylinder
-1
-31.4159
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/20">&larr; Older</a>
@@ -1028,6 +1009,10 @@ class Cylinder extends Circle {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -1041,10 +1026,6 @@ class Cylinder extends Circle {
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

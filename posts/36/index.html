@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="link A Hadoop cluster is a special type of computational cluster designed specifically for storing and analyzing huge amounts of unstructured data in &hellip;">
+  <meta name="description" content="Overview Model–view–controller (MVC) is a software architectural pattern for implementing user interfaces. From MIT handouts 3: MVC uses separate &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,60 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/04/MVC/">[Design] Model–view–controller (MVC)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-04T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Overview</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">Model–view–controller</a> (MVC) is a software architectural pattern for implementing <strong>user interfaces</strong>.</p>
+
+<p><strong>From MIT handouts 3</strong>: MVC uses separate programming entities to <strong>store the data(model), display the data(view), and modify the data(controller)</strong>.</p>
+
+<h3>Components</h3>
+
+<p><strong>The central component of MVC, the model</strong>, captures the application&rsquo;s behavior in terms of its problem domain, independent of the user interface. The model directly manages the application&rsquo;s data, logic and rules.</p>
+
+<p><strong>A view can be any output representation</strong> of information, such as a chart or a diagram; multiple views of the same information are possible, such as a bar chart for management and a tabular view for accountants.</p>
+
+<p><strong>The third part, the controller</strong>, accepts input and converts it to commands for the model or view.</p>
+
+<p>Early web MVC frameworks took a thin client approach that placed almost the entire MVC on server. As client technologies have matured, MVC components can be executed partly on the client(AJAX).</p>
+
+<h3>Other good explanation</h3>
+
+<p>MVC is a <a href="http://geekswithblogs.net/gregorymalcolm/archive/2009/07/14/user-interface-patterns.aspx">user interface design pattern</a>.</p>
+
+<ol>
+<li><p>Controller – Represents interactions, typically with the mouse or keyboard, or in the case of web applications, in the form of HTTP requests.</p></li>
+<li><p>View – Renders the graphical output of the application</p></li>
+<li><p>Model – Everything else. In particular this includes <strong>the data and business logic</strong>.</p></li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -704,125 +758,6 @@ public static void dfs(String path) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/01/Shuffle-array-Fisher-Yates/">[Question] Shuffle an Array (Fisher–Yates)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-08-01T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.geeksforgeeks.org/shuffle-a-given-array/">link</a></p>
-
-<blockquote><p>Given an array, generate a random permutation of array elements.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>O(n) time complexity.</p>
-
-<pre><code>To shuffle an array a of n elements (indices 0..n-1):
-  for i from n − 1 downto 1 do
-       j ← random integer with 0 ≤ j ≤ i
-       exchange a[j] and a[i]
-</code></pre>
-
-<p>Note the RNG is having limit from 0 to i, and number i keeps decreasing.</p>
-
-<h3>Proof</h3>
-
-<p>This is called <strong><a href="http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle">Fisher–Yates shuffle</a></strong>. Proof can be seen at question post:</p>
-
-<blockquote><p>The probability that ith element goes to second last position can be proved to be 1/n by dividing it in two cases.</p>
-
-<p>Case 1: i = n-1 (index of last element):</p>
-
-<p>The probability of last element going to second last position is = (probability that last element doesn&rsquo;t stay at its original position) x (probability that the index picked in previous step is picked again so that the last element is swapped)</p>
-
-<p>So the probability = ((n-1)/n) x (1/(n-1)) = 1/n</p>
-
-<p>Case 2: 0 &lt; i &lt; n-1 (index of non-last):</p>
-
-<p>The probability of ith element going to second position = (probability that ith element is not picked in previous iteration) x (probability that ith element is picked in this iteration)</p>
-
-<p>So the probability = ((n-1)/n) x (1/(n-1)) = 1/n</p>
-
-<p>We can easily generalize above proof for any other position.</p></blockquote>
-
-<p><strong>Updated on Sep 10th, 2014</strong>: analysis of the approach. This question is on CC150v4 Q20.2.</p>
-
-<p>Note that when we generate a new number between 0 and i, we swap it (with the last &lsquo;alive&rsquo; number (ith number). <strong>After this, ith number is &lsquo;dead&rsquo;</strong>.</p>
-
-<p>By doing it this way, we get a perfect shuffle! Idea is from cc150.</p>
-
-<p><strong>Updated again on Oct 2nd, 2014</strong>: I re-wrote the code for CC150v5 Q18.2. It&rsquo;s very important to note that:</p>
-
-<pre><code>if (a == b) {
-    return;
-}
-</code></pre>
-
-<p>When a == b, do not swap, otherwise <strong>the XOR swap method will product an zero</strong>!</p>
-
-<h3>Code</h3>
-
-<p><strong>code form G4G</strong>, <a href="http://www.geeksforgeeks.org/shuffle-a-given-array/">link</a></p>
-
-<pre><code>def sattoloCycle(items):
-    i = len(items)
-    while i &gt; 1:
-        i = i - 1
-        j = randrange(i)  # 0 &lt;= j &lt;= i-1
-        items[j], items[i] = items[i], items[j]
-    return
-</code></pre>
-
-<p><strong>written by me</strong></p>
-
-<pre><code>public static void shuffleArrayInteratively(int[] cards) {
-    for (int i = 0; i &lt; cards.length; i++) {
-        // all nums to the left of (i) is 'dead', don't consider them
-        int choose = rand(i, cards.length - 1);
-        swap(cards, i, choose);
-        // now (i) is also 'dead'
-    }
-}
-
-private static int rand(int from, int to) {
-    int count = to - from + 1;
-    return from + (int) (Math.random() * count);
-}
-
-private static void swap(int[] nums, int a, int b) {
-    if (a == b) {
-        return;
-    }
-    nums[a] ^= nums[b];
-    nums[b] ^= nums[a];
-    nums[a] ^= nums[b];
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/37">&larr; Older</a>
@@ -863,6 +798,10 @@ private static void swap(int[] nums, int a, int b) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -876,10 +815,6 @@ private static void swap(int[] nums, int a, int b) {
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

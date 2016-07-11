@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question Implement an algorithm to find the kth to last element of a singly linked list. Do it recursively. Solution Iterative solution is easy, &hellip;">
+  <meta name="description" content="Question Implement a stack. Solution Stack uses LinkedNode to implement. Code public class MyStack { Node top; public int pop() { if (top == null) { &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,82 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/15/implement-stack/">[CC150v5] 3.0 Example - Implement Stack</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-15T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Implement a stack.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>Stack uses LinkedNode to implement</strong>.</p>
+
+<h3>Code</h3>
+
+<pre><code>public class MyStack {
+
+    Node top;
+
+    public int pop() {
+        if (top == null) {
+            return -1;
+        }
+        int returnVal = top.val;
+        top = top.next;
+        return returnVal;
+    }
+
+    public int peek() {
+        if (top == null) {
+            return -1;
+        }
+        return top.val;
+
+    }
+
+    public void push(int val) {
+        Node newNode = new Node(val);
+        newNode.next = top;
+        top = newNode;
+    }
+
+    class Node {
+
+        int val;
+        Node next;
+
+        Node(int value) {
+            val = value;
+        }
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -585,128 +661,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/10/full-text-search/">[CC150v4] 20.8 Full Text Search (Suffix Tree)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-09-10T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<blockquote><p>Given a string s and an array of smaller strings T, design a method to search s for each small string in T.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p><strong>This is a very classic question of string search</strong>, favored by Google and Facebook.</p>
-
-<p>The solution is <strong>suffix tree</strong> (to be distinguished from <strong>trie</strong>, or prefix tree, which searched word by its prefix). Suffix tree is good for search a proportion of a long string. For example, using &ldquo;bibs&rdquo; to build a suffix tree like this:</p>
-
-<p><img class="middle" src="/assets/images/suffix-tree-example-bibs.png"></p>
-
-<p>The building of suffix tree and searching is not a very lengthy code. It&rsquo;s posted below and it&rsquo;s not written by me.</p>
-
-<h3>Code</h3>
-
-<p>Main method:</p>
-
-<pre><code>public static void main(String[] args) {
-    String testString = "mississippi";
-    String[] stringList = { "is", "sip", "hi", "sis" };
-    SuffixTree tree = new SuffixTree(testString);
-    for (String s : stringList) {
-        ArrayList&lt;Integer&gt; list = tree.getIndexes(s);
-        if (list != null) {
-            System.out.println(s + ": " + list.toString());
-        } else {
-            System.out.println(s + ": does not exist.");
-        }
-    }
-}
-</code></pre>
-
-<p>SuffixTree.java</p>
-
-<pre><code>public class SuffixTree {
-    SuffixTreeNode root = new SuffixTreeNode();
-
-    public SuffixTree(String s) {
-        // create a suffix tree with input string s
-        for (int i = 0; i &lt; s.length(); i++) {
-            String suffix = s.substring(i);
-            root.insertString(suffix, i);
-        }
-    }
-
-    public ArrayList&lt;Integer&gt; getIndexes(String s) {
-        return root.getIndexes(s);
-    }
-}
-</code></pre>
-
-<p>SuffixTreeNode.java</p>
-
-<pre><code>public class SuffixTreeNode {
-
-    char value;
-    HashMap&lt;Character, SuffixTreeNode&gt; children;
-    ArrayList&lt;Integer&gt; indexes = new ArrayList&lt;Integer&gt;();
-
-    public SuffixTreeNode() {
-        children = new HashMap&lt;Character, SuffixTreeNode&gt;();
-    }
-
-    public void insertString(String s, int index) {
-        indexes.add(index);
-        if (s != null &amp;&amp; s.length() &gt; 0) {
-            value = s.charAt(0);
-            SuffixTreeNode child = null;
-            if (children.containsKey(value)) {
-                child = children.get(value);
-            } else {
-                child = new SuffixTreeNode();
-                children.put(value, child);
-            }
-            String remainder = s.substring(1);
-            child.insertString(remainder, index);
-        }
-    }
-
-    public ArrayList&lt;Integer&gt; getIndexes(String s) {
-        if (s == null || s.length() == 0) {
-            return indexes;
-        } else {
-            char first = s.charAt(0);
-            if (children.containsKey(first)) {
-                String remainder = s.substring(1);
-                return children.get(first).getIndexes(remainder);
-            }
-        }
-        return null;
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/24">&larr; Older</a>
@@ -747,6 +701,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -760,10 +718,6 @@
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

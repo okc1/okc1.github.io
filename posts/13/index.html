@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link 有一个接口叫 void setRPS(int num); 接下来不断有request过来，如何实现下面的接口，返回accept或者deny， bool process(int timestamp){ } Solution Suggested by level 5 of &hellip;">
+  <meta name="description" content="Question Given stock price of Amazon for some consecutive days. Need to find the maximum span of each day’s stock price. Definition of &lsquo;span& &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,139 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/01/stock-span-problem/">[Question] Stock Span Problem (Couting BST)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-01T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Given stock price of Amazon for some consecutive days. Need to find the maximum span of each day’s stock price.</p></blockquote>
+
+<p>Definition of &lsquo;span&rsquo; have got 2 variant:</p>
+
+<h3>Variant 1</h3>
+
+<p><a href="http://www.geeksforgeeks.org/the-stock-span-problem/">link</a></p>
+
+<blockquote><p>Span is the number of consecutive days right before that day, which have less or equal stock value.</p>
+
+<p>(Or in GFG language): The span Si of the stock’s price on a given day i is defined as the maximum number of consecutive days just before the given day, for which the price of the stock on the current day is less than or equal to its price on the given day.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><img class="middle" src="/assets/images/StockSpanProblem1.png"></p>
+
+<p>Use stack.</p>
+
+<h3>Variant 2</h3>
+
+<p><a href="http://www.careercup.com/question?id=4825417139617792">link</a></p>
+
+<blockquote><p>Span is the amount of days before the given day where the stock price is less than that of given day.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>The top answer in <a href="http://www.careercup.com/question?id=4825417139617792">here</a> is wrong. Eg. {1,3,2,4}, the count for 4 would be 2, instead of 3.</p>
+
+<p>Instead, the <strong>BST (AVL tree) solution is correct</strong>. It&rsquo;s commented by user zahidbuet106.</p>
+
+<blockquote><p>insert numbers in a AVL tree one by one from right to left. During each insert we will keep updating the <strong>size of left subtree</strong> at the node being inserted. This will give us our desired smaller element count.</p>
+
+<p>We also need to handle balancing the tree while insert.</p></blockquote>
+
+<p><strong>The key of this question is the special BST, where each node stores an additional counting number</strong>.</p>
+
+<p>This type of special BST is extremely frequntly used in Computer Science, especially when we want to dynamically insert elements and find out it&rsquo;s ranking within the past history.</p>
+
+<p>Read another very interesting post: <strong>[CC150v5] 11.8 Get Rank in Stream of Integers</strong>.</p>
+
+<h3>Code</h3>
+
+<pre><code>class TreeNodePlus extends TreeNode {
+    int leftCount;
+    int dupCount;
+
+    public TreeNodePlus(int v, int leftC) {
+        super(v);
+        this.leftCount = leftC;
+        this.dupCount = 1;
+    }
+
+    public int findRank(TreeNodePlus node) {
+        TreeNodePlus leftBranch = (TreeNodePlus) this.left;
+        TreeNodePlus rightBranch = (TreeNodePlus) this.right;
+
+        if (this == node) {
+            return 0;
+        } else if (node.val &lt; this.val) {
+            if (this.left == null) {
+                return 0;
+            } else {
+                return leftBranch.findRank(node);
+            }
+        } else {
+            if (this.right == null) {
+                return this.leftCount + this.dupCount;
+            } else {
+                return this.leftCount + this.dupCount
+                        + rightBranch.findRank(node);
+            }
+        }
+    }
+
+    public TreeNodePlus insertNum(int num) {
+        TreeNodePlus leftBranch = (TreeNodePlus) this.left;
+        TreeNodePlus rightBranch = (TreeNodePlus) this.right;
+
+        if (num == this.val) {
+            this.dupCount++;
+            return this;
+        } else if (num &lt; this.val) {
+            // insert num to the left branch
+            this.leftCount++;
+            if (this.left == null) {
+                this.left = new TreeNodePlus(num, 0);
+                return (TreeNodePlus) this.left;
+            } else {
+                return leftBranch.insertNum(num);
+            }
+        } else {
+            // insert num to the right branch
+            // this.leftCount does not change
+            if (this.right == null) {
+                this.right = new TreeNodePlus(num, 0);
+                return (TreeNodePlus) this.right;
+            } else {
+                return rightBranch.insertNum(num);
+            }
+        }
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -769,80 +902,6 @@ The approximation ratio of Sleator's algorithm is 2.5 which is tight.</p></li>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/27/suffix-tree/">[Fundamental] Suffix Tree</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-27T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://www.geeksforgeeks.org/pattern-searching-set-8-suffix-tree-introduction/">ref</a></p>
-
-<h3>Suffix tree</h3>
-
-<p>Both KMP Algorithm and Rabin Karp Algorithm <strong>pre-process the pattern</strong> to make the pattern searching faster. The best time complexity that we could get by preprocessing pattern is <strong>O(n), where n is length of the text</strong>.</p>
-
-<p>Now we will discuss an approach that <strong>pre-processes the text</strong>. A suffix tree is built of the text. After preprocessing text (building suffix tree of text), we can <strong>search any pattern in O(m) time</strong> where m is length of the pattern.</p>
-
-<p>Though search is very fast - just proportional to length of the pattern, it may become costly if <strong>the text changes frequently</strong>. It is good for fixed text or less frequently changing text though.</p>
-
-<h4>Suffix Tree VS. Trie</h4>
-
-<p><strong>A Suffix Tree is a compressed trie of all suffixes of the given text</strong>.</p>
-
-<h4>Compressed Trie</h4>
-
-<p><strong>A Compressed Trie</strong> is obtained from standard trie by joining chains of single nodes.</p>
-
-<p>Example, a standard trie:</p>
-
-<p><img class="middle" src="/assets/images/standardtrieNew.png"></p>
-
-<p>A Compressed Trie:</p>
-
-<p><img class="middle" src="/assets/images/CompressedTrieNew.png"></p>
-
-<h4>build a Suffix Tree</h4>
-
-<ol>
-<li>Generate all suffixes of given text.</li>
-<li>Consider all suffixes as individual words and build a compressed trie.</li>
-</ol>
-
-
-<p>Eg.</p>
-
-<pre><code>banana\0
-anana\0
-nana\0
-ana\0
-na\0
-a\0
-\0
-</code></pre>
-
-<p>Example question: <strong>[CC150v4] 20.8 Full Text Search (Suffix Tree)</strong></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/14">&larr; Older</a>
@@ -883,6 +942,10 @@ a\0
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -896,10 +959,6 @@ a\0
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

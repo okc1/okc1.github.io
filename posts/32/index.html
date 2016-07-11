@@ -9,7 +9,8 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link 每一种语言，都有自己的字母表，类似英文的a-z，但是顺序不相同。例如，有的语言可能是z是第一个之类的。现在给定这个语言的字典，请分析这个字典，得到这个语言的字母表的顺序。 例如：有如下的字母：C CAC CB BCC BA。 经过分析，得到字母表为C->A->B。 &hellip;">
+  <meta name="description" content="Question Get GCD in more efficient code Code this is 掉渣天。 public int gcd(int a, int b) { return b == 0 ? a : gcd(b, a % b);
+} ">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +66,46 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/15/Greatest-common-divisor/">[Question] Greatest Common Divisor</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-15T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Get GCD in more efficient code</p></blockquote>
+
+<h3>Code</h3>
+
+<p>this is 掉渣天。</p>
+
+<pre><code>public int gcd(int a, int b) {
+    return b == 0 ? a : gcd(b, a % b);
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -729,47 +770,6 @@ k: number of hash functions
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/10/big-data-find-existence-of-number/">[Design] Big Data - Find Existence of a Number</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-08-10T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://blog.csdn.net/v_july_v/article/details/7382693">link</a></p>
-
-<blockquote><p>给40亿个不重复的unsigned int的整数，没排过序的，然后再给一个数，如何快速判断这个数是否在那40亿个数当中？</p></blockquote>
-
-<h3>Analysis</h3>
-
-<p>Categorized under <strong>BitMap</strong>.</p>
-
-<p>There&rsquo;re 4.3 billion unsigned integers in Java. This is a perfect question to use BitMap.</p>
-
-<p>申请512M的内存，一个bit位代表一个unsigned int值。读入40亿个数，设置相应的bit位，读入要查询的数，查看相应bit位是否为1，为1表示存在，为0表示不存在。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/33">&larr; Older</a>
@@ -810,6 +810,10 @@ k: number of hash functions
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -823,10 +827,6 @@ k: number of hash functions
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Ruby/gem/bundler setup (on a new machine) has always been a hassle to me. Not only that, I&rsquo;ve had some confusions about developing Octopress &hellip;">
+  <meta name="description" content="Question link Given a string, find the longest substring that contains only two unique characters. For example, given &ldquo;abcbbbbcccbdddadacb& &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -71,6 +71,123 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2014/07/21/Largest-window-2-Unique-Chars/">[Question] Longest Substring With at Most Two Distinct Characters</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-21T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.programcreek.com/2013/02/longest-substring-which-contains-2-unique-characters/">link</a></p>
+
+<blockquote><p>Given a string, find the longest substring that contains only two unique characters. For example, given &ldquo;abcbbbbcccbdddadacb&rdquo;, the longest substring that contains 2 unique character is &ldquo;bcbbbbcccb&rdquo;.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>First, the most basic and naive solution</strong>, which we use 2 pointers and 1 hashset. Read thru and when seeing the 3rd different char, <strong>rebuild the hashset</strong>. Idea is from original post. This approach is not very efficient.</p>
+
+<p><strong>Second, we can use HashMap instead of HashSet</strong>, so that we keep couting how many of each char we currently got. This should do the trick well.</p>
+
+<blockquote><p>What if the question change from &lsquo;2 unique chars&rsquo; to &lsquo;N unique chars&rsquo;? <strong>Use HashMap instead of HashSet</strong>. The rest of the is very similar.</p></blockquote>
+
+<p><strong>Third solution I found it <a href="http://stackoverflow.com/a/15000204">here</a></strong>. It keeps a &lsquo;lastGroupStart&rsquo; pointer, that points to <strong>the last position where character changes</strong>. Eg. &ldquo;aaaabbbbbcccc&rdquo;, &lsquo;lastGroupStart&rsquo; would pointer to the first occurance of &lsquo;b&rsquo;. When we read until c, we update the window starting point to &lsquo;lastGroupStart&rsquo;, and update &lsquo;lastGroupStart&rsquo; to the first occurance of &lsquo;c&rsquo;.</p>
+
+<p>This is a frequent question. I personally would <strong>recommend 2nd solution: using HashMap</strong>.</p>
+
+<h3>Code</h3>
+
+<p><strong>first solution</strong></p>
+
+<pre><code>private String solution(String input) {
+    HashSet&lt;Character&gt; set = new HashSet&lt;Character&gt;();
+    char[] letters = input.toCharArray();
+    set.add(letters[0]);
+
+    int start = 0;
+    String longest = input.substring(0, 1);
+
+    for (int i = 1; i &lt; input.length(); i++) {
+        if (set.add(letters[i])) {
+            if (set.size() &gt; 2) {
+                // first, update the longest substring that exists before i
+                if (i - start &gt; longest.length()) {
+                    longest = input.substring(start, i);
+                }
+                // clear and rebuild the HashSet
+                set.clear();
+                set.add(letters[i]);
+                set.add(letters[i - 1]);
+                // remove 1 char entirely from current substring
+                int p = i - 1;
+                while (p &gt; 0 &amp;&amp; letters[p] == letters[p - 1]) {
+                    p--;
+                }
+                start = p;
+            }
+        }
+    }
+    if (input.length() - start &gt; longest.length()) {
+        longest = input.substring(start);
+    }
+    return longest;
+}
+</code></pre>
+
+<p><strong>third solution</strong>, pay attention to &lsquo;lastGroupStart&rsquo;.</p>
+
+<pre><code>// Find the first letter that is not equal to the first one, 
+// or return the entire string if it consists of one type of characters
+int start = 0;
+int i = 1;
+while (i &lt; str.length() &amp;&amp; str[i] == str[start])
+    i++;
+if (i == str.length())
+    return str;
+
+// The main algorithm
+char[2] chars = {str[start], str[i]};
+int lastGroupStart = 0;
+while (i &lt; str.length()) {
+    if (str[i] == chars[0] || str[i] == chars[1]) {
+        if (str[i] != str[i - 1])
+            lastGroupStart = i;
+    }
+    else {
+        //TODO: str.substring(start, i) is a locally maximal string; 
+        //      compare it to the longest one so far
+        start = lastGroupStart;
+        lastGroupStart = i;
+        chars[0] = str[start];
+        chars[1] = str[lastGroupStart];
+    }
+    i++;
+}
+//TODO: After the loop, str.substring(start, str.length()) 
+//      is also a potential solution.
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2014/07/21/Clone-octopress-blog-from-a-different-computer/">[Octopress] Clone Octopress Blog From a Different Computer</a></h1>
     
     
@@ -116,18 +233,16 @@ ruby dk.rb install
 
 <p><strong>clone the source branch to the local octopress folder</strong></p>
 
-<p>using HTTPS</p>
-
-<pre><code>git clone -b source https://github.com/okckd/okckd.github.io.git octopress
+<pre><code>using HTTPS
+git clone -b source https://github.com/okckd/okckd.github.io.git octopress
 
 or using SSH
-
 git clone -b source git@github.com:okckd/okckd.github.io.git octopress
 </code></pre>
 
 <p>I would recommend using SSH over HTTPS, because <strong>using HTTPS, you will need to type your username and password everytime you push</strong>.</p>
 
-<p>To correct &lsquo;HTTPS&rsquo; to &lsquo;SSH&rsquo;, follow <a href="http://stackoverflow.com/a/6565661">this instruction</a>:</p>
+<p>To change from &lsquo;HTTPS&rsquo; to &lsquo;SSH&rsquo;, follow <a href="http://stackoverflow.com/a/6565661">this instruction</a>:</p>
 
 <pre><code>git remote set-url origin git@github.com:username/repo.git
 </code></pre>
@@ -140,7 +255,7 @@ git clone -b source git@github.com:okckd/okckd.github.io.git octopress
 
 <pre><code>cd c:/github/octopress
 gem install bundler
-rbenv rehash    # optional, unless you are using rbenv
+rbenv rehash    # generally optional, unless you are using rbenv
 bundle install
 </code></pre>
 
@@ -741,70 +856,6 @@ static class Building {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/01/Min-Stack/">[Question] Min Stack</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-07-01T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.geeksforgeeks.org/design-and-implement-special-stack-data-structure/">link</a></p>
-
-<blockquote><p>Implement a stack, enable O(1) Push, Pop Top, Min. Where Min() will return the value of minimum number in the stack.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>Using two stacks.</p>
-
-<p>The first one is the regular stack.</p>
-
-<p>The second one only store minimum numbers.</p>
-
-<p>Eg:</p>
-
-<blockquote><p>Actual stack: (head) 16 15 29 19 18 (tail)</p>
-
-<p>Auxiliary Stack: (head) 15 15 18 18 18 (tail)</p></blockquote>
-
-<h3>Code</h3>
-
-<p>Psudu-code:</p>
-
-<pre><code>Push(int x):
-1) push x to the first stack (the stack with actual elements)
-2) compare x with the top element of the second stack (the auxiliary stack). Let the top element be y.
-…..a) If x is smaller than y then push x to the auxiliary stack.
-…..b) If x is greater than y then push y to the auxiliary stack.
-
-Pop():
-1) pop the top element from the auxiliary stack.
-2) pop the top element from the actual stack and return it.
-</code></pre>
-
-<p>Code is skipped.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/42">&larr; Older</a>
@@ -845,6 +896,10 @@ Pop():
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -858,10 +913,6 @@ Pop():
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

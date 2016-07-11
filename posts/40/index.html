@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Question One: Given a string, find the first non-repeating character in it link Question Two: Given a stream of characters, find the &hellip;">
+  <meta name="description" content="Terminologies Atomicity, Atomic Operation Atomicity is unbreakability, or uninterrupted operation. Atomic operation helps in understanding reentrancy &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,88 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/24/Multithreading-basics/">[Design] Multithreading Basics</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-24T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Terminologies</h2>
+
+<h3>Atomicity, Atomic Operation</h3>
+
+<p><strong><a href="http://www.geeksforgeeks.org/g-fact-57/">Atomicity</a> is unbreakability</strong>, or uninterrupted operation.</p>
+
+<p>Atomic operation helps in understanding reentrancy, critical section, thread safety, synchronization primitives, etc.</p>
+
+<h3>Critical Section</h3>
+
+<p><strong><a href="http://www.geeksforgeeks.org/g-fact-70/">Critical section</a></strong> is group of instructions/statements or region of code that <strong>need to be executed atomically</strong>.</p>
+
+<p>If one thread tries to change a shared data while another thread tries to read, the result is unpredictable. It is critical to understand the importance of race condition while writing kernel mode programming.</p>
+
+<p>A simple solution to critical section:</p>
+
+<pre><code>acquireLock();
+Process Critical Section
+releaseLock();
+</code></pre>
+
+<h3>Synchronization primitives</h3>
+
+<p><a href="http://stackoverflow.com/a/8017629">Synchronization primitives</a> are simple software mechanisms for the purposes of supporting thread or process synchronization.</p>
+
+<p><strong>Mutex, event, conditional variables and semaphores</strong> are all synchronization primitives.</p>
+
+<p><strong>Critical section</strong> is not a synchronization primitive. It&rsquo;s a part of an execution path that must be protected from concurrent execution in order to maintain some invariants.</p>
+
+<p>You need to use some synchronization primitives to protect critical section.</p>
+
+<h3>Producer–consumer</h3>
+
+<p>Two processes, <a href="http://en.wikipedia.org/wiki/Producer-consumer_problem">producer and consumer</a>. Producer thread will collect the data and writes it to the buffer. Consumer thread will process the collected data from the buffer.</p>
+
+<p>Producer won&rsquo;t try to add when buffer&rsquo;s full and consumer won&rsquo;t remove when buffer&rsquo;s empty.</p>
+
+<p><strong>Solution 1: Mutex</strong></p>
+
+<p>A mutex provides mutual exclusion, either producer or consumer can have the key (mutex) and proceed with their work. As long as the buffer is filled by producer, the consumer needs to wait, and vice versa.</p>
+
+<p><strong>Solution 2: Semaphore</strong></p>
+
+<p><a href="http://en.wikipedia.org/wiki/Producer-consumer_problem#Using_semaphores">A semaphore</a> is a generalized mutex. In lieu of single buffer, we can split the 4 KB buffer into four 1 KB buffers (identical resources). A semaphore can be associated with these four buffers. The consumer and producer can work on different buffers at the same time.</p>
+
+<h3>Interrupt service routine</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Interrupt_handler">Interrupt service routine</a> (ISR), is a callback subroutine in an operating system or device driver whose execution is triggered by the reception of an interrupt.</p>
+
+<p><a href="http://stackoverflow.com/a/3392889">One good example</a> is reading from a hard drive. The drive is slow and you don&rsquo;t want your OS to wait for the data to come back; you want the OS to go and do other things. <strong>So you set up the system so that when the disk has the data (ready), it raises an interrupt</strong>. In the <strong>ISR for the disk</strong>, CPU will take the data and return it to the requester.</p>
+
+<p><strong>ISRs often need to happen quickly</strong> as the hardware can have a limited buffer, which will be overwritten by new data if it&rsquo;s now pulled off quickly enough.</p>
+
+<p>It&rsquo;s also important to have your ISR complete quickly as while the CPU is servicing one ISR other interrupts will be masked.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -881,123 +963,6 @@ private static String removeDigit(String number, int digitIndex) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/21/Largest-window-2-Unique-Chars/">[Question] Longest Substring With at Most Two Distinct Characters</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-07-21T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.programcreek.com/2013/02/longest-substring-which-contains-2-unique-characters/">link</a></p>
-
-<blockquote><p>Given a string, find the longest substring that contains only two unique characters. For example, given &ldquo;abcbbbbcccbdddadacb&rdquo;, the longest substring that contains 2 unique character is &ldquo;bcbbbbcccb&rdquo;.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p><strong>First, the most basic and naive solution</strong>, which we use 2 pointers and 1 hashset. Read thru and when seeing the 3rd different char, <strong>rebuild the hashset</strong>. Idea is from original post. This approach is not very efficient.</p>
-
-<p><strong>Second, we can use HashMap instead of HashSet</strong>, so that we keep couting how many of each char we currently got. This should do the trick well.</p>
-
-<blockquote><p>What if the question change from &lsquo;2 unique chars&rsquo; to &lsquo;N unique chars&rsquo;? <strong>Use HashMap instead of HashSet</strong>. The rest of the is very similar.</p></blockquote>
-
-<p><strong>Third solution I found it <a href="http://stackoverflow.com/a/15000204">here</a></strong>. It keeps a &lsquo;lastGroupStart&rsquo; pointer, that points to <strong>the last position where character changes</strong>. Eg. &ldquo;aaaabbbbbcccc&rdquo;, &lsquo;lastGroupStart&rsquo; would pointer to the first occurance of &lsquo;b&rsquo;. When we read until c, we update the window starting point to &lsquo;lastGroupStart&rsquo;, and update &lsquo;lastGroupStart&rsquo; to the first occurance of &lsquo;c&rsquo;.</p>
-
-<p>This is a frequent question. I personally would <strong>recommend 2nd solution: using HashMap</strong>.</p>
-
-<h3>Code</h3>
-
-<p><strong>first solution</strong></p>
-
-<pre><code>private String solution(String input) {
-    HashSet&lt;Character&gt; set = new HashSet&lt;Character&gt;();
-    char[] letters = input.toCharArray();
-    set.add(letters[0]);
-
-    int start = 0;
-    String longest = input.substring(0, 1);
-
-    for (int i = 1; i &lt; input.length(); i++) {
-        if (set.add(letters[i])) {
-            if (set.size() &gt; 2) {
-                // first, update the longest substring that exists before i
-                if (i - start &gt; longest.length()) {
-                    longest = input.substring(start, i);
-                }
-                // clear and rebuild the HashSet
-                set.clear();
-                set.add(letters[i]);
-                set.add(letters[i - 1]);
-                // remove 1 char entirely from current substring
-                int p = i - 1;
-                while (p &gt; 0 &amp;&amp; letters[p] == letters[p - 1]) {
-                    p--;
-                }
-                start = p;
-            }
-        }
-    }
-    if (input.length() - start &gt; longest.length()) {
-        longest = input.substring(start);
-    }
-    return longest;
-}
-</code></pre>
-
-<p><strong>third solution</strong>, pay attention to &lsquo;lastGroupStart&rsquo;.</p>
-
-<pre><code>// Find the first letter that is not equal to the first one, 
-// or return the entire string if it consists of one type of characters
-int start = 0;
-int i = 1;
-while (i &lt; str.length() &amp;&amp; str[i] == str[start])
-    i++;
-if (i == str.length())
-    return str;
-
-// The main algorithm
-char[2] chars = {str[start], str[i]};
-int lastGroupStart = 0;
-while (i &lt; str.length()) {
-    if (str[i] == chars[0] || str[i] == chars[1]) {
-        if (str[i] != str[i - 1])
-            lastGroupStart = i;
-    }
-    else {
-        //TODO: str.substring(start, i) is a locally maximal string; 
-        //      compare it to the longest one so far
-        start = lastGroupStart;
-        lastGroupStart = i;
-        chars[0] = str[start];
-        chars[1] = str[lastGroupStart];
-    }
-    i++;
-}
-//TODO: After the loop, str.substring(start, str.length()) 
-//      is also a potential solution.
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/41">&larr; Older</a>
@@ -1038,6 +1003,10 @@ while (i &lt; str.length()) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -1051,10 +1020,6 @@ while (i &lt; str.length()) {
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

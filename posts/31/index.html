@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link A perfect binary tree, i.e. each node in the tree is either a leaf node, or has two children, and all leaf nodes are on the same level &hellip;">
+  <meta name="description" content="Factory Method Pattern Factory Method design pattern is one of the 2 most frequent topics for OOD. Factory method pattern is a creational pattern &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,76 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/19/factory-pattern/">[Java OOP] Factory Pattern</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-19T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Factory Method Pattern</h3>
+
+<p><strong>Factory Method</strong> design pattern is one of the <strong>2 most frequent topics</strong> for OOD.</p>
+
+<p><strong><a href="http://en.wikipedia.org/wiki/Factory_method_pattern">Factory method pattern</a></strong> is a creational pattern which uses <strong>factory methods</strong> to deal with the problem of creating objects without specifying the exact class of object that will be created.</p>
+
+<p>This is done by creating objects via factory method, either:</p>
+
+<ol>
+<li>specified in an interface/abstract class and implemente (differently)</li>
+<li>implemented in a base class, and be overridden in derived classes</li>
+</ol>
+
+
+<h4>in Java</h4>
+
+<p>A normal <a href="http://en.wikipedia.org/wiki/Factory_method_pattern#Java">Maze Game</a>:</p>
+
+<pre><code>public class MazeGame {
+    public MazeGame() {
+        Room room1 = makeRoom();
+        Room room2 = makeRoom();
+        room1.connect(room2);
+        this.addRoom(room1);
+        this.addRoom(room2);
+    }
+
+    protected Room makeRoom() {
+        return new OrdinaryRoom();
+    }
+}
+</code></pre>
+
+<p>A magic game:</p>
+
+<pre><code>public class MagicMazeGame extends MazeGame {
+    @Override
+    protected Room makeRoom() {
+        return new MagicRoom();
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -841,46 +911,6 @@ bool canJump(int p, int q, int x, int y, int x2, int y2) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/15/Greatest-common-divisor/">[Question] Greatest Common Divisor</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-08-15T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<blockquote><p>Get GCD in more efficient code</p></blockquote>
-
-<h3>Code</h3>
-
-<p>this is 掉渣天。</p>
-
-<pre><code>public int gcd(int a, int b) {
-    return b == 0 ? a : gcd(b, a % b);
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/32">&larr; Older</a>
@@ -921,6 +951,10 @@ bool canJump(int p, int q, int x, int y, int x2, int y2) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -934,10 +968,6 @@ bool canJump(int p, int q, int x, int y, int x2, int y2) {
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

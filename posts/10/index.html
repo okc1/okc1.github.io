@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question 1 link Convert a BST to max heap. Solution The second answer: a simple (reversed) in-order traversal of the BST. It would produce a sorted &hellip;">
+  <meta name="description" content="Spanner Spanner is Google&rsquo;s globally distributed NewSQL database, the successor to BigTable. Google describes Spanner as not a pure relational &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,65 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/09/intro-google-spanner/">[Design] Intro to Google Spanner</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-09T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Spanner</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Spanner_%28database%29">Spanner</a> is Google&rsquo;s globally <strong>distributed NewSQL database, the successor to BigTable</strong>. Google describes Spanner as not a pure relational system because each table must have a primary-key column.</p>
+
+<p>Currently, <strong>F1, Google&rsquo;s advertisement platform</strong>, uses Spanner. Gmail and Google Search will also use it soon.</p>
+
+<h3>NewSQL VS. NoSQL</h3>
+
+<p><strong>NewSQL</strong>, a wholly different database architecture, differentiated from NoSQL, is beginning to emerge.</p>
+
+<h4>NoSQL</h4>
+
+<p>There are many reasons why NoSQL products have been popular. As there are a variety of NoSQL products. As you can see in Hadoop or Cassandra, main advantages of NoSQL is its horizontal scalability.</p>
+
+<p>As these NoSQL products <strong>don&rsquo;t provide Strong Consistency</strong>, they cannot be used where <strong>high-level data consistency</strong> is required.</p>
+
+<h4>NewSQL</h4>
+
+<p>NewSQL has as <strong>excellent scalability</strong> as NoSQL, and at the same time it <strong>guarantees ACID like RDBMS</strong> which is performed in a single node.</p>
+
+<h3>What is Spanner?</h3>
+
+<p>Spanner is <a href="http://www.cubrid.org/blog/dev-platform/spanner-globally-distributed-database-by-google/">a NewSQL created by Google</a>. It is a distributed relational database that can distribute and store data in Google&rsquo;s BigTable storage system in multiple data centers. Spanner meets ACID (of course, it supports transaction) and supports SQL.</p>
+
+<p><strong>Data R/W eff</strong>: When you read data, Spanner connects you to the data center that is geographically closest to you, and when you write data, it distributes and stores it to multiple data centers.</p>
+
+<p><strong>Failure</strong>: If the data center you try to access has a failure, of course, you can read the data from another data center that has a replica of the data (in US, <strong>5 replica</strong>).</p>
+
+<p>The Spanner client automatically <strong>performs a failover between replicas</strong>. When the number of servers storing data is changed or a failure occurs in equipment, Spanner automatically <strong>re-distributes data</strong> through data transfer among the equipments.</p>
+
+<p>More details of Spanner: will come later.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -592,49 +651,6 @@ boolean RNG()
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/02/08/difference-internet-and-www/">[Design] Difference: Internet and the Web</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-02-08T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Internet</h3>
-
-<p><a href="http://www.webopedia.com/DidYouKnow/Internet/Web_vs_Internet.asp">The Internet</a> is a massive network of networks, a <strong>networking infrastructure</strong>. It connects millions of computers together globally, and computers talk thru <strong>protocols</strong>.</p>
-
-<p><a href="http://netforbeginners.about.com/od/internet101/f/the_difference_between_internet_and_web.htm">The Internet</a> is a Big Collection of Computers and Cables.</p>
-
-<h3>Web</h3>
-
-<p><a href="http://www.webopedia.com/DidYouKnow/Internet/Web_vs_Internet.asp">The World Wide Web</a>, or simply Web, is <strong>a way of accessing information</strong> over the medium of the Internet.</p>
-
-<p>It is an information-sharing model that is built on top of the Internet. The Web uses the <strong>HTTP protocol</strong>, only one of the languages spoken over the Internet, to transmit data.</p>
-
-<p><a href="http://netforbeginners.about.com/od/internet101/f/the_difference_between_internet_and_web.htm">The Web</a> Is a Big Collection of HTML Pages on the Internet.</p>
-
-<p><img class="middle" src="/assets/images/internet-and-web.jpg"></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/11">&larr; Older</a>
@@ -675,6 +691,10 @@ boolean RNG()
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -688,10 +708,6 @@ boolean RNG()
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

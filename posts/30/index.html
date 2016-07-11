@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Overview Value types are created on the stack, and reference types are created on the heap. Both are stored in computer RAM. Each thread gets a stack &hellip;">
+  <meta name="description" content="Question Explain how you would design a chat server. In particular, provide details about the various back end components, classes, and methods. What &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,273 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/24/design-online-chat-server-1/">[CC150v5] 8.7 Design Online Chat Server (1)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-24T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Explain how you would design a chat server. In particular, provide details about the various back end components, classes, and methods.</p>
+
+<p>What would be the hardest problems to solve?</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>First, decide the objects and methods. Here we&rsquo;ll focus on the core user management and conversation aspects.</p>
+
+<h4>Class</h4>
+
+<ol>
+<li>UserMgmt (business logic)</li>
+<li>User (includes basic info, UserStatus, a map of conversation, a map of requests)</li>
+<li>UserStatus (on/offline, status message)</li>
+<li>Conversation Abstract Class (a list of user and a list of messages)
+
+<ol>
+<li>PrivateChat (private conversation)</li>
+<li>GroupChat</li>
+</ol>
+</li>
+<li>Message (a string and a date/time)</li>
+<li>Request (add request and delete request, involves 2 Users)</li>
+</ol>
+
+
+<h4>Functions</h4>
+
+<ol>
+<li>Sign in and log off (update availability)</li>
+<li>update status message</li>
+<li>add/delete request</li>
+<li>send/accept/reject a request</li>
+<li>create a conversation (group or private)</li>
+<li>add a new message (group or private)</li>
+</ol>
+
+
+<h3>Code</h3>
+
+<p>The most important classes is User and UserMgmt. The others are simply data containers.</p>
+
+<p>UserManager.java</p>
+
+<pre><code>public class UserManager {
+    private static UserManager instance;
+    private HashMap&lt;Integer, User&gt; usersById = new HashMap&lt;Integer, User&gt;();
+    private HashMap&lt;String, User&gt; usersByAccountName = new HashMap&lt;String, User&gt;();
+    private HashMap&lt;Integer, User&gt; onlineUsers = new HashMap&lt;Integer, User&gt;();
+
+    public static UserManager getInstance() {
+        if (instance == null) {
+            instance = new UserManager();
+        }
+        return instance;
+    }
+
+    public void addUser(User fromUser, String toAccountName) {
+        User toUser = usersByAccountName.get(toAccountName);
+        AddRequest req = new AddRequest(fromUser, toUser, new Date());
+        toUser.receivedAddRequest(req);
+        fromUser.sentAddRequest(req);
+    }
+
+    public void approveAddRequest(AddRequest req) {
+        req.status = RequestStatus.Accepted;
+        User from = req.getFromUser();
+        User to = req.getToUser();
+        from.addContact(to);
+        to.addContact(from);
+    }
+
+    public void rejectAddRequest(AddRequest req) {
+        req.status = RequestStatus.Rejected;
+        User from = req.getFromUser();
+        User to = req.getToUser();
+        from.removeAddRequest(req);
+        to.removeAddRequest(req);       
+    }
+
+    public void userSignedOn(String accountName) {
+        User user = usersByAccountName.get(accountName);
+        if (user != null) {
+            user.setStatus(new UserStatus(UserStatusType.Available, ""));           
+            onlineUsers.put(user.getId(), user);
+        }
+    }
+
+    public void userSignedOff(String accountName) {
+        User user = usersByAccountName.get(accountName);
+        if (user != null) {
+            user.setStatus(new UserStatus(UserStatusType.Offline, ""));
+            onlineUsers.remove(user.getId());
+        }
+    }   
+}
+</code></pre>
+
+<p>User.java</p>
+
+<p>Property:</p>
+
+<ol>
+<li>id and name</li>
+<li>a map of conversations</li>
+<li>a map of sent request</li>
+<li>a map of received request</li>
+<li>a map of friends list</li>
+</ol>
+
+
+<p>Methods:</p>
+
+<ol>
+<li>sendMessageToUser(User)</li>
+<li>addContact(User)</li>
+<li>receivedAddRequest(Request)</li>
+<li>sentAddRequest(Request)</li>
+<li>removeAddRequest(Request)</li>
+<li>addConversation(Conversation)</li>
+</ol>
+
+
+<p>Note that all user actions are controlled by the UserManager Class. For example, when adding a friend:</p>
+
+<ol>
+<li>User A clicks &ldquo;add user&rdquo; on the client.</li>
+<li>User A calls requestAddUser (User B).</li>
+<li>This method calls UserManager.addUser(User a, userBid).</li>
+<li>UserManager calls both User A.sentAddRequest() and User B.receivedAddRequest().</li>
+</ol>
+
+
+<p>Code:</p>
+
+<pre><code>public class User {
+    private int id;
+    private UserStatus status = null;
+    private HashMap&lt;Integer, PrivateChat&gt; privateChats = new HashMap&lt;Integer, PrivateChat&gt;();
+    private ArrayList&lt;GroupChat&gt; groupChats = new ArrayList&lt;GroupChat&gt;();
+    private HashMap&lt;Integer, AddRequest&gt; receivedAddRequests = new HashMap&lt;Integer, AddRequest&gt;();
+    private HashMap&lt;Integer, AddRequest&gt; sentAddRequests = new HashMap&lt;Integer, AddRequest&gt;();
+
+    private HashMap&lt;Integer, User&gt; contacts = new HashMap&lt;Integer, User&gt;();
+    private String accountName;
+    private String fullName;
+
+    public User(int id, String accountName, String fullName) {
+        this.accountName = accountName;
+        this.fullName = fullName;
+        this.id = id;
+    }
+
+    public boolean sendMessageToUser(User toUser, String content) {
+        PrivateChat chat = privateChats.get(toUser.getId());
+        if (chat == null) {
+            chat = new PrivateChat(this, toUser);
+            privateChats.put(toUser.getId(), chat);
+        }
+        Message message = new Message(content, new Date());
+        return chat.addMessage(message);
+    }
+
+    public boolean sendMessageToGroupChat(int groupId, String content) {
+        GroupChat chat = groupChats.get(groupId);
+        if (chat != null) {
+            Message message = new Message(content, new Date());
+            return chat.addMessage(message);
+        }
+        return false;
+    }
+
+    public void setStatus(UserStatus status) {
+        this.status = status;
+    }
+
+    public UserStatus getStatus() {
+        return status;
+    }
+
+    public boolean addContact(User user) {
+        if (contacts.containsKey(user.getId())) {
+            return false;
+        } else {
+            contacts.put(user.getId(), user);
+            return true;
+        }
+    }
+
+    public void receivedAddRequest(AddRequest req) {
+        int senderId = req.getFromUser().getId();
+        if (!receivedAddRequests.containsKey(senderId)) {
+            receivedAddRequests.put(senderId, req);
+        }       
+    }
+
+    public void sentAddRequest(AddRequest req) {
+        int receiverId = req.getFromUser().getId();
+        if (!sentAddRequests.containsKey(receiverId)) {
+            sentAddRequests.put(receiverId, req);
+        }       
+    }
+
+    public void removeAddRequest(AddRequest req) {
+        if (req.getToUser() == this) {
+            receivedAddRequests.remove(req);
+        } else if (req.getFromUser() == this) {
+            sentAddRequests.remove(req);
+        }
+    }
+
+    public void requestAddUser(String accountName) {
+        UserManager.getInstance().addUser(this, accountName);
+    }
+
+    public void addConversation(PrivateChat conversation) {
+        User otherUser = conversation.getOtherParticipant(this);
+        privateChats.put(otherUser.getId(), conversation);
+    }
+
+    public void addConversation(GroupChat conversation) {
+        groupChats.add(conversation);
+    }   
+
+    public int getId() {
+        return id;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -700,76 +967,6 @@ class BlackJackCard extends Card {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/19/factory-pattern/">[Java OOP] Factory Pattern</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-08-19T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Factory Method Pattern</h3>
-
-<p><strong>Factory Method</strong> design pattern is one of the <strong>2 most frequent topics</strong> for OOD.</p>
-
-<p><strong><a href="http://en.wikipedia.org/wiki/Factory_method_pattern">Factory method pattern</a></strong> is a creational pattern which uses <strong>factory methods</strong> to deal with the problem of creating objects without specifying the exact class of object that will be created.</p>
-
-<p>This is done by creating objects via factory method, either:</p>
-
-<ol>
-<li>specified in an interface/abstract class and implemente (differently)</li>
-<li>implemented in a base class, and be overridden in derived classes</li>
-</ol>
-
-
-<h4>in Java</h4>
-
-<p>A normal <a href="http://en.wikipedia.org/wiki/Factory_method_pattern#Java">Maze Game</a>:</p>
-
-<pre><code>public class MazeGame {
-    public MazeGame() {
-        Room room1 = makeRoom();
-        Room room2 = makeRoom();
-        room1.connect(room2);
-        this.addRoom(room1);
-        this.addRoom(room2);
-    }
-
-    protected Room makeRoom() {
-        return new OrdinaryRoom();
-    }
-}
-</code></pre>
-
-<p>A magic game:</p>
-
-<pre><code>public class MagicMazeGame extends MazeGame {
-    @Override
-    protected Room makeRoom() {
-        return new MagicRoom();
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/31">&larr; Older</a>
@@ -810,6 +1007,10 @@ class BlackJackCard extends Card {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -823,10 +1024,6 @@ class BlackJackCard extends Card {
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>

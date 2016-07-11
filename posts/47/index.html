@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given a binary tree, find the lowest common ancestor of two given nodes in the tree. _______3______ / \ ___5__ ___1__ / \ / \ 6 _2 0 8 &hellip;">
+  <meta name="description" content="Question link Given a binary tree, find the lowest common ancestor of two given nodes in the tree. Each node contains a parent pointer which links to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,106 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/10/Lowest-Common-Ancestor-Tree-II/">[LeetCode Plus] Lowest Common Ancestor of Binary Tree (II)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-10T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://leetcode.com/2011/07/lowest-common-ancestor-of-a-binary-tree-part-ii.html">link</a></p>
+
+<div class="entry bg-color bg-img font-color">
+    <blockquote>
+        <p class="font-color">Given a binary tree, find the lowest common ancestor of two given nodes in the tree. Each node contains a parent pointer which links to its parent.</p>
+    </blockquote>
+    <p class="font-color bg-color bg-img"><span id="more-797" class="font-color"></span>
+        <br> <strong><span style="color: red;" class="font-color">Note:</span></strong>
+        <br>This is Part II of Lowest Common Ancestor of a Binary Tree. If you need to find the lowest common ancestor without parent pointers, please read <a href="http://www.leetcode.com/2011/07/lowest-common-ancestor-of-a-binary-tree-part-i.html" class="font-color">Lowest Common Ancestor of a Binary Tree Part I</a>.
+        <br>
+    </p><pre>        _______<span style="color: #990000;" class="font-color">3</span>______
+       /              \
+    ___<span style="color: #990000;" class="font-color">5</span>__          ___<span style="color: #990000;" class="font-color">1</span>__
+   /      \        /      \
+   <span style="color: #990000;" class="font-color">6</span>      _<span style="color: #990000;" class="font-color">2       0       8</span>
+         /  \
+         <span style="color: #990000;" class="font-color">7   4</span></pre>
+    <p class="font-color">If you are not so sure about the definition of lowest common ancestor (LCA), please refer to my previous post: <a href="http://www.leetcode.com/2011/07/lowest-common-ancestor-of-a-binary-search-tree.html" class="font-color">Lowest Common Ancestor of a Binary Search Tree (BST)</a> or the definition of LCA <a href="http://en.wikipedia.org/wiki/Lowest_common_ancestor" class="font-color">here</a>. Using the tree above as an example, the LCA of nodes <span style="color: #990000;" class="font-color">5</span> and <span style="color: #990000;" class="font-color">1</span> is <span style="color: #990000;" class="font-color">3</span>. Please note that LCA for nodes <span style="color: #990000;" class="font-color">5</span> and <span style="color: #990000;" class="font-color">4</span> is <span style="color: #990000;" class="font-color">5</span>.</p>
+    <p class="font-color">In my last post: <a href="http://www.leetcode.com/2011/07/lowest-common-ancestor-of-a-binary-tree-part-i.html" class="font-color">Lowest Common Ancestor of a Binary Tree Part I</a>, we have devised a recursive solution which finds the LCA in O(<em>n</em>) time. If each node has a pointer that link to its parent, could we devise a better solution?</p>
+    <p class="font-color"><strong>Hint:</strong>
+        <br>No recursion is needed. There is an easy solution which uses extra space. Could you eliminate the need of extra space?</p>
+</div>
+
+
+<h3>Analysis</h3>
+
+<p><strong>If have parent pointer, we do not wish to use extra space for the solution</strong>.</p>
+
+<ol>
+<li>Find the height of both nodes (from the head)</li>
+<li>By calculating the height difference, move the lower nodes up (follow the parent path) to the same level as the other node.</li>
+<li>Two nodes move up together until they meet.</li>
+<li>This solution requires no extra space.</li>
+</ol>
+
+
+<p>Here is <strong>a very similar question: <a href="http://www.geeksforgeeks.org/write-a-function-to-get-the-intersection-point-of-two-linked-lists/">Intersection of 2 LinkedList</a></strong>.</p>
+
+<h3>Code</h3>
+
+<pre><code>// As root-&gt;parent is NULL, we don't need to pass root in.
+Node *LCA(Node *p, Node *q) {
+  int h1 = getHeight(p);
+  int h2 = getHeight(q);
+  // swap both nodes in case p is deeper than q.
+  if (h1 &gt; h2) {
+    swap(h1, h2);
+    swap(p, q);
+  }
+  // invariant: h1 &lt;= h2.
+  int dh = h2 - h1;
+  for (int h = 0; h &lt; dh; h++)
+    q = q-&gt;parent;
+  while (p &amp;&amp; q) {
+    if (p == q) return p;
+    p = p-&gt;parent;
+    q = q-&gt;parent;
+  }
+  return NULL;  // p and q are not in the same tree
+}
+
+int getHeight(Node *p) {
+  int height = 0;
+  while (p) {
+    height++;
+    p = p-&gt;parent;
+  }
+  return height;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1420,171 +1520,6 @@ sequence</th>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/03/Reverse-Words-in-a-String/">[LeetCode 151] Reverse Words in a String</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-06-03T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="https://oj.leetcode.com/problems/reverse-words-in-a-string/">link</a></p>
-
-<div class="question-content bg-color bg-img font-color">
-<p class="font-color"></p><p class="font-color">
-Given an input string, reverse the string word by word.
-</p>
-
-<p class="font-color">
-For example,<br>
-Given s = "<code>the sky is blue</code>",<br>
-return "<code>blue is sky the</code>".
-</p>
-
-<div>
-<b>Clarification:</b>
-
-<p class="font-color">
-</p><ul class="bg-color bg-img font-color">
-<li>What constitutes a word?<br>
-A sequence of non-space characters constitutes a word.</li>
-<li>Could the input string contain leading or trailing spaces?<br>
-Yes. However, your reversed string should not contain leading or trailing spaces.</li>
-<li>How about multiple spaces between two words?<br>
-Reduce them to a single space in the reversed string.</li>
-</ul>
-<p class="font-color"></p>
-</div><p class="font-color"></p>
-          </div>
-
-
-<h3>Stats</h3>
-
-<table border="2">
-    <tr>
-        <td>Adjusted Difficulty</td>
-        <td bgcolor="yellow">3</td>
-    </tr>
-    <tr>
-        <td>Time to use</td>
-        <td bgcolor="yellow">--------</td>
-    </tr>
-</table>
-
-
-<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
-
-<h3>Analysis</h3>
-
-<p><strong>This is an very classic question</strong>, and there is a very nice solution.</p>
-
-<h3>Solution</h3>
-
-<p><strong>First solution is read each character from the back, and insert each word into answer String</strong>. I used this method, and passed in 2 attempts. I have always been afriad of string question, and this time it gave me an easy time.</p>
-
-<p>I post my code below. Altough it can be better if I use StringBuilder. Most blog/forum would give this solution including <a href="https://oj.leetcode.com/discuss/3378/is-my-solution-good-enough">this one</a>.</p>
-
-<p>However, previous solution uses extra space. <strong>We can do it in-place suggested by <a href="http://stackoverflow.com/a/1009174">this post</a></strong>.</p>
-
-<blockquote cite="http://stackoverflow.com/a/1009174">
-    <p class="font-color">Reverse the entire string, then reverse the letters of each individual word.</p>
-
-    <p class="font-color">After the first pass the string will be</p>
-
-    <pre><code>s1 = "Z Y X si eman yM"
-    </code></pre>
-
-    <p class="font-color">and after the second pass it will be</p>
-
-    <pre><code>s1 = "Z Y X is name My"
-    </code></pre>
-</blockquote>
-
-
-<p>There are 2 things to note.</p>
-
-<p><strong>One, the edge cases</strong> are easily omitted, like all-space input, double-space in between, and a lot more.</p>
-
-<p><strong>Two, The Clarification part is extremely helpful</strong> for writing a bug-free solution. It&rsquo;s always better to clarify further about what the question is ask. For example, can we use <strong>String.split()</strong> and <strong>String.substring()</strong>? (normally we would better not to) Can we use any extra space? That decides weather we copy by substring or by character.</p>
-
-<p>In conclusion, <strong>this is an easy question that&rsquo;s not easy to get correct answer</strong>. Practise more! And since this is the last post of Leetcode questions, my focus from tomorrow onwards will be shifted to &ldquo;CC150&rdquo;. Thanks for reading!</p>
-
-<h3>Code</h3>
-
-<p><strong>My code</strong>. pointer solution.</p>
-
-<pre><code>public String reverseWords(String s) {
-    if (s.length() == 0) return "";
-    int p = s.length() - 1;
-    // p points to the last non-space character
-    String ans = "";
-    while (p &gt;= 0) {
-        int j = p;
-        while (j &gt;= 0 &amp;&amp; s.charAt(j) != ' ') {
-            j --;
-        }
-        ans += s.substring(j + 1, p + 1) + " ";
-        p = j;
-        while (p &gt;= 0 &amp;&amp; s.charAt(p) == ' ') {
-            p--;
-        }
-    }
-    return ans.trim();
-}
-</code></pre>
-
-<p><strong>Updated on Sep 12th</strong>: updated with 3-step-reverse method.</p>
-
-<pre><code>public String reverseWords(String s) {
-    if (s == null || s.length() == 0) {
-        return s;
-    }
-    StringBuilder ans = new StringBuilder();
-    int len = s.length();
-    int p = len - 1;
-    while (p &gt;= 0) {
-        while (p &gt;= 0 &amp;&amp; s.charAt(p) == ' ') {
-            p--;
-        }
-        if (p == -1) {
-            break;
-        }
-        StringBuilder word = new StringBuilder();
-        while (p &gt;= 0 &amp;&amp; s.charAt(p) != ' ') {
-            word.append(s.charAt(p));
-            p--;
-        }
-        if (ans.length() == 0) {
-            ans.append(word.reverse().toString());
-        } else {
-            ans.append(" " + word.reverse().toString());
-        }
-    }
-    return ans.toString();
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/48">&larr; Older</a>
@@ -1625,6 +1560,10 @@ Reduce them to a single space in the reversed string.</li>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">Design Twitter</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
@@ -1638,10 +1577,6 @@ Reduce them to a single space in the reversed string.</li>
     
       <li class="post">
         <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a>
       </li>
     
   </ul>
