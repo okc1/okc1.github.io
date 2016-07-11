@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Design | Woodstock Blog]]></title>
   <link href="http://okc1.github.io/blog/categories/design/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-07-11T01:28:48-07:00</updated>
+  <updated>2016-07-11T01:30:05-07:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -192,7 +192,7 @@ Although it looks like push is faster than pull, __facebook and twitter both use
     
 ## optimize 'Like' info
 
-In tweet table, if we need to count(user) who liked, it's gonna table forever. 
+In tweet table, if we need to count(user) who liked, it's gonna take forever. 
 
 __We must denormalize this data__!
 
