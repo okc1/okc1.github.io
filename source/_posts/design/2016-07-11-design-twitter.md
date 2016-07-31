@@ -1,3 +1,11 @@
+---
+layout: post
+title: "[Design] Design Twitter"
+comments: true
+category: Design
+
+---
+
 # System design evaluation form
 
 1. work solution
@@ -172,7 +180,7 @@ Although it looks like push is faster than pull, __facebook and twitter both use
     
 ## optimize 'Like' info
 
-In tweet table, if we need to count(user) who liked, it's gonna table forever. 
+In tweet table, if we need to count(user) who liked, it's gonna take forever. 
 
 __We must denormalize this data__!
 
@@ -187,11 +195,11 @@ __Shortcoming: inconsistency__!
 
 Solution: 1. use atomic operation 2. every day, schedule to update this number.
 
-## optimize thundering hert problem
+## optimize thundering herd problem
 
 When cache fails, all DB query will go to DB. This results in DB crash.
 
-Hot spot (thundering hert)
+Hot spot (thundering herd)
 
 {% img middle /assets/images/jiuzhang-thundering-herd.png %}
 
