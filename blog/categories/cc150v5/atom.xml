@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Cc150v5 | Woodstock Blog]]></title>
   <link href="http://okc1.github.io/blog/categories/cc150v5/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-07-11T01:30:05-07:00</updated>
+  <updated>2016-07-31T02:06:49-07:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -249,7 +249,7 @@ __This question requires a special type of Data Structure__. It basically is a m
 
 > The tree node stores both number value and the __count of node on left subtree__
 
-<img class="middle" src="/assets/images/get-rank-number-stream.png">
+{% img middle /assets/images/get-rank-number-stream.png %}
 
 Suppose we want to find the rank of 24 in the tree above. We would compare 24 with the root, 20, and find that 24 must reside on the right. The root has 4 nodes in its left subtree, and when we include the root itself, this gives us five total nodes smaller than 24. We set counter to 5.
 

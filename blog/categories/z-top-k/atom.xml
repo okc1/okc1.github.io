@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Z-top-k | Woodstock Blog]]></title>
   <link href="http://okc1.github.io/blog/categories/z-top-k/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-07-11T01:30:05-07:00</updated>
+  <updated>2016-07-31T02:06:49-07:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -168,7 +168,7 @@ There're enough discussion on __Top K problems__ so far in this blog. The sugges
 
 ### Analysis
 
-__Standard solution__ is 【分治+trie树/hash+小顶堆/quickselect】, which I covered in another post [Big Data - Top k Frequency](/blog/2014/07/25/big-data-Top-k-frequency/). Briefly it is 3 steps: 
+__Standard solution__ is 【分治+trie树/hash+小顶堆/quickselect】, which I covered in another post [Big Data - Top k Frequency]({% post_url /design/2014-07-25-big-data-Top-k-frequency %}). Briefly it is 3 steps: 
 
 1. 先将数据集按照hash方法分解成多个小数据集，
 1. 使用trie树或者hash统计每个小数据集中的query词频，

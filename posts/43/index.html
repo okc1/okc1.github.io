@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link In an array, all numbers in the array repeat twice except two numbers, which repeat only once. Assume all the numbers are placed &hellip;">
+  <meta name="description" content="Question link You are given an array of n+2 elements. All elements of the array are in range 1 to n. And all elements occur once except two numbers &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,101 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/28/Single-Number-IV/">[Question] Single Number IV</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-28T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.geeksforgeeks.org/find-the-two-repeating-elements-in-a-given-array/">link</a></p>
+
+<blockquote><p>You are given an array of n+2 elements. All elements of the array are in range 1 to n. And all elements occur once except two numbers which occur twice. Find the two repeating numbers.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>Solution 1</strong>: User count array. O(n) time and O(n) space. Not efficient enough.</p>
+
+<p><strong>Solution 2</strong>: Calculate sum of x,y and product of x,y. O(n) time and O(1) space, but there&rsquo;s risk of overflow.</p>
+
+<p><strong>Solution 3</strong>: XOR. Add number 1 to N to the array, and this becomes Single Number III. O(n) time and O(1) space.</p>
+
+<p>There is also a <strong>solution 4</strong>: Use array elements as index. This is the same method as used in <strong>[LeetCode 41] First Missing Positive</strong>.</p>
+
+<h3>Code</h3>
+
+<p>C++ Code from GFG</p>
+
+<pre><code>void printRepeating(int arr[], int size)
+{
+  int xor = arr[0]; /* Will hold xor of all elements */
+  int set_bit_no;  /* Will have only single set bit of xor */
+  int i;
+  int n = size - 2;
+  int x = 0, y = 0;
+
+  /* Get the xor of all elements in arr[] and {1, 2 .. n} */
+  for(i = 1; i &lt; size; i++)
+    xor ^= arr[i];
+  for(i = 1; i &lt;= n; i++)
+    xor ^= i;
+
+  /* Get the rightmost set bit in set_bit_no */
+  set_bit_no = xor &amp; ~(xor-1);
+
+  /* Now divide elements in two sets by comparing rightmost set
+   bit of xor with bit at same position in each element. */
+  for(i = 0; i &lt; size; i++)
+  {
+    if(arr[i] &amp; set_bit_no)
+      x = x ^ arr[i]; /*XOR of first set in arr[] */
+    else
+      y = y ^ arr[i]; /*XOR of second set in arr[] */
+  }
+  for(i = 1; i &lt;= n; i++)
+  {
+    if(i &amp; set_bit_no)
+      x = x ^ i; /*XOR of first set in arr[] and {1, 2, ...n }*/
+    else
+      y = y ^ i; /*XOR of second set in arr[] and {1, 2, ...n } */
+  }
+
+  printf("\n The two repeating elements are %d &amp; %d ", x, y);
+}     
+
+
+int main()
+{
+  int arr[] = {4, 2, 4, 5, 2, 3, 1};
+  int arr_size = sizeof(arr)/sizeof(arr[0]);  
+  printRepeating(arr, arr_size);
+  getchar();
+  return 0;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1328,198 +1423,6 @@ Remove:
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/27/Topology-sorting/">[Question] Topology Sort</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-06-27T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://en.wikipedia.org/wiki/Topological_sorting">link</a></p>
-
-<blockquote><p>Topological ordering of a directed graph is a linear ordering of its vertices such that <strong>for every directed edge uv from vertex u to vertex v, u comes before v in the ordering</strong>.</p>
-
-<p>A topological ordering is possible if and only if the graph has no directed cycles, that is, if it is a <strong>directed acyclic graph (DAG)</strong>.</p></blockquote>
-
-<h3>Analysis</h3>
-
-<p>Canonical application of toposort is to schedule tasks with dependency (project management etc.) It&rsquo;s also used for computing formulas, logic synthesis, order of compilation (&lsquo;make&rsquo; command) and data serialization.</p>
-
-<p><img class="middle" src="/assets/images/topology_sort_example.png"></p>
-
-<h3>Solution</h3>
-
-<p>The usual algorithms have <strong>linear run-time</strong>, i.e. O(V + E).</p>
-
-<blockquote><p>First step is to find a list of &ldquo;start nodes&rdquo; which have no incoming edges. Then insert them into a set S and delete it. At least one such node must exist in an <strong>directed acyclic graph</strong>. From a university <a href="https://courses.cs.washington.edu/courses/cse326/03wi/lectures/RaoLect20.pdf">lecture</a>.</p></blockquote>
-
-<p>From Wiki:</p>
-
-<pre><code>L ← Empty list that will contain the sorted elements
-S ← Set of all nodes with no incoming edges
-while S is non-empty do
-    remove a node n from S
-    add n to tail of L
-    for each node m with an edge e from n to m do
-        remove edge e from the graph
-        if m has no other incoming edges then
-            insert m into S
-if graph has edges then
-    return error (graph has at least one cycle)
-else 
-    return L (a topologically sorted order)
-</code></pre>
-
-<p>If the graph is a DAG, <strong>a solution will be contained in the list L</strong> (the solution is not necessarily unique). Otherwise, the graph must have at least one cycle and therefore <strong>a topological sorting is impossible</strong>.</p>
-
-<h3>Code</h3>
-
-<p>The solution comes from <a href="http://codereview.stackexchange.com/questions/44689/topological-sort-in-java">here</a>.</p>
-
-<p><img class="middle" src="/assets/images/topology_sort.png" width="250" height="250"></p>
-
-<pre><code>public class Graph {
-    private int vertices;
-    private Set&lt;Node&gt; nodes = new HashSet&lt;Node&gt;();
-
-    public Graph(int vertices) {
-        this.vertices = vertices;
-    }
-
-    public void addVertex(Node node) {
-        this.nodes.add(node);
-    }
-
-    public Set&lt;Node&gt; topologicalSort() {
-        Queue&lt;Node&gt; q = new LinkedList&lt;Node&gt;();
-        Set&lt;Node&gt; topoSort = new LinkedHashSet&lt;Node&gt;();
-        int vertexProcessesCtr = 0;
-        for (Node m : this.nodes) {
-            vertexProcessesCtr = addToQueue(m, topoSort, vertexProcessesCtr, q);
-        }
-        while (!q.isEmpty()) {
-            Node m = q.poll();
-            for (Node child : m.getAdjacenctNode()) {
-                int indeq = child.getInDegree() - 1;
-                child.setInDegree(indeq);
-                vertexProcessesCtr = addToQueue(child, topoSort,
-                        vertexProcessesCtr, q);
-            }
-        }
-        if (vertexProcessesCtr &gt; this.vertices) {
-            System.out.println();
-        }
-        return topoSort;
-    }
-
-    private int addToQueue(Node node, Set&lt;Node&gt; topoSort, int vertexProcess,
-            Queue&lt;Node&gt; q) {
-        if (node.getInDegree() == 0) {
-            q.add(node);
-            topoSort.add(node);
-            return vertexProcess + 1;
-        }
-        return vertexProcess;
-    }
-
-    public static void main(String[] args) {
-        Graph g = new Graph(8);
-
-        Node TEN = new Node("10");
-        Node ELEVEN = new Node("11");
-        Node TWO = new Node("2");
-        Node THREE = new Node("3");
-        Node FIVE = new Node("5");
-        Node SEVEN = new Node("7");
-        Node EIGHT = new Node("8");
-        Node NINE = new Node("9");
-
-        SEVEN.AdjacenctNode.add(ELEVEN);
-        ELEVEN.inDegree++;
-        SEVEN.AdjacenctNode.add(EIGHT);
-        EIGHT.inDegree++;
-        FIVE.AdjacenctNode.add(ELEVEN);
-        ELEVEN.inDegree++;
-        THREE.AdjacenctNode.add(EIGHT);
-        EIGHT.inDegree++;
-        THREE.AdjacenctNode.add(TEN);
-        TEN.inDegree++;
-        ELEVEN.AdjacenctNode.add(TEN);
-        TEN.inDegree++;
-        ELEVEN.AdjacenctNode.add(TWO);
-        TWO.inDegree++;
-        ELEVEN.AdjacenctNode.add(NINE);
-        NINE.inDegree++;
-        EIGHT.AdjacenctNode.add(NINE);
-        NINE.inDegree++;
-
-        g.nodes.add(TWO);
-        g.nodes.add(THREE);
-        g.nodes.add(FIVE);
-        g.nodes.add(SEVEN);
-        g.nodes.add(EIGHT);
-        g.nodes.add(NINE);
-
-        System.out.println("Now calling the topologial sorts");
-        Set&lt;Node&gt; result = g.topologicalSort();
-        for (Node node : result) {
-            System.out.println(node.data + " ");
-        }
-    }
-}
-
-class Node {
-    public String data;
-    public int dist;
-    public int inDegree;
-    LinkedList&lt;Node&gt; AdjacenctNode = new LinkedList&lt;Node&gt;();
-
-    public void addAdjNode(final Node Child) {
-        AdjacenctNode.add(Child);
-        Child.inDegree++;
-    }
-
-    public Node(String data) {
-        super();
-        this.data = data;
-    }
-
-    public int getInDegree() {
-        return inDegree;
-    }
-
-    public void setInDegree(int inDegree) {
-        this.inDegree = inDegree;
-    }
-
-    public LinkedList&lt;Node&gt; getAdjacenctNode() {
-        return AdjacenctNode;
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/44">&larr; Older</a>
@@ -1537,7 +1440,7 @@ class Node {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -1560,6 +1463,10 @@ class Node {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -1573,10 +1480,6 @@ class Node {
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

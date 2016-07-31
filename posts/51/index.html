@@ -9,8 +9,8 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given a binary tree, flatten it to a linked list in-place. For example,
-Given 1 / \ 2 5 / \ \ 3 4 6 The flattened tree should look like &hellip;">
+  <meta name="description" content="Question link Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases. For example,
+"A man, a &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +66,114 @@ Given 1 / \ 2 5 / \ \ 3 4 6 The flattened tree should look like &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/28/Valid-Palindrome/">[LeetCode 125] Valid Palindrome</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-28T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/valid-palindrome/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>
+Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
+</p>
+
+<p>
+For example,<br>
+<code>"A man, a plan, a canal: Panama"</code> is a palindrome.<br>
+<code>"race a car"</code> is <i>not</i> a palindrome.
+</p>
+
+<p>
+<b>Note:</b><br>
+Have you consider that the string might be empty? This is a good question to ask during an interview.</p>
+<p>
+For the purpose of this problem, we define empty string as valid palindrome.
+</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="red">5</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="white">1</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="lime">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p>Wow, it&rsquo;s frequency 5!</p>
+
+<p><strong>This is a very classic and easy question</strong>.</p>
+
+<h3>Code</h3>
+
+<pre><code>public boolean isPalindrome(String s) {
+    int len = s.length();
+    s = s.toLowerCase();
+    int left = 0, right = len - 1;
+    while (left &lt; right) {
+        while (left &lt; len &amp;&amp; !isAlphanumeric(s.charAt(left)))
+            left ++;
+        while (right &gt;= 0 &amp;&amp; ! isAlphanumeric(s.charAt(right)))
+            right --;
+        if (left == len &amp;&amp; right == -1) return true;
+        if (left == len || right == -1) return false;
+        if (s.charAt(left) != s.charAt(right)) 
+            return false;
+        left ++;
+        right --;
+    }
+    return true;
+}
+
+private boolean isAlphanumeric(char c) {
+    return ('a' &lt;= c &amp;&amp; c &lt;= 'z') 
+        || ('0' &lt;= c &amp;&amp; c &lt;= '9');
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1305,109 +1413,6 @@ private void helper(TreeNode node, int total, ArrayList&lt;Integer&gt; list,
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/27/Path-Sum/">[LeetCode 112] Path Sum</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-05-27T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="https://oj.leetcode.com/problems/path-sum/">link</a></p>
-
-<div class="question-content">
-            <p></p><p>
-Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.
-</p>
-
-For example:<br>
-Given the below binary tree and <code>sum = 22</code>,
-<pre>              5
-             / \
-            4   8
-           /   / \
-          11  13  4
-         /  \      \
-        7    2      1
-</pre>
-
-<p>
-return true, as there exist a root-to-leaf path <code>5-&gt;4-&gt;11-&gt;2</code> which sum is 22.</p><p></p>
-          </div>
-
-
-<h3>Stats</h3>
-
-<table border="2">
-    <tr>
-        <td>Frequency</td>
-        <td bgcolor="yellow">3</td>
-    </tr>
-    <tr>
-        <td>Difficulty</td>
-        <td bgcolor="white">1</td>
-    </tr>
-    <tr>
-        <td>Adjusted Difficulty</td>
-        <td bgcolor="white">1</td>
-    </tr>
-    <tr>
-        <td>Time to use</td>
-        <td bgcolor="white">--------</td>
-    </tr>
-</table>
-
-
-<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
-
-<h3>Analysis</h3>
-
-<p><strong>This question can be solved with either DFS or BFS</strong>.</p>
-
-<h3>Solution</h3>
-
-<p>My code is <strong>DFS recursion</strong>.</p>
-
-<p>I found another BFS non-recursive solution <a href="http://www.programcreek.com/2013/01/leetcode-path-sum/">here</a>, but I did not post this code, because this question is too simple.</p>
-
-<p><strong>One more thing, the last line of code has a || operation</strong>. Isn&rsquo;t it duplicate execution? I mean if answer is found in root.left, no need to check root.right.</p>
-
-<p>Actually it&rsquo;s not duplication. The <a href="http://docs.oracle.com/javase/tutorial/java/nutsandbolts/op2.html">official doc</a> explains it:</p>
-
-<blockquote><p>The &amp;&amp; and || operators perform Conditional-AND and Conditional-OR operations on two boolean expressions. These operators exhibit &ldquo;short-circuiting&rdquo; behavior, which means that the second operand is evaluated only if needed.</p></blockquote>
-
-<h3>Code</h3>
-
-<pre><code>public boolean hasPathSum(TreeNode root, int sum) {
-    if (root == null) return false;
-    if (root.left == null &amp;&amp; root.right == null) 
-        return (sum == root.val);
-    return hasPathSum(root.left, sum - root.val) 
-        || hasPathSum(root.right, sum - root.val);
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/52">&larr; Older</a>
@@ -1425,7 +1430,7 @@ return true, as there exist a root-to-leaf path <code>5-&gt;4-&gt;11-&gt;2</code
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -1448,6 +1453,10 @@ return true, as there exist a root-to-leaf path <code>5-&gt;4-&gt;11-&gt;2</code
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -1461,10 +1470,6 @@ return true, as there exist a root-to-leaf path <code>5-&gt;4-&gt;11-&gt;2</code
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

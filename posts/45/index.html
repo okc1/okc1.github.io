@@ -9,7 +9,10 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given two Linked Lists, create union and intersection lists that contain union and intersection of the elements present in the given &hellip;">
+  <meta name="description" content="Question list Union and Intersection of two Linked Lists
+Insertion Sort List - difficult
+Flatten Binary Tree to Linked List
+Convert Sorted List to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +68,300 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/18/NineChap-Linked-List-additional/">[NineChap 4.2] Linked List Additional</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-18T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Question list</h2>
+
+<ol>
+<li><p><strong><a href="/blog/2014/06/17/Union-and-intersection-of-linked-list/">Union and Intersection of two Linked Lists</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/30/Insertion-Sort-List/">Insertion Sort List</a></strong> - difficult</p></li>
+<li><p><strong><a href="/blog/2014/05/28/Flatten-Binary-Tree-to-Linked-List/">Flatten Binary Tree to Linked List</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/26/Convert-Sorted-List-to-Binary-Search-Tree/">Convert Sorted List to Binary Search Tree</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/19/Rotate-List/">Rotate List</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/02/Remove-Nth-Node-From-End-of-List/">Remove Nth Node From End of List</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/06/03/LRU-Cache/">LRU Cache </a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/11/Reverse-Nodes-in-k-Group/">Reverse Nodes in k-Groups</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/09/Swap-Nodes-in-Pairs/">Swap Nodes in Pairs</a></strong></p></li>
+</ol>
+
+
+<h2>Code</h2>
+
+<p><strong>Union and Intersection of two Linked Lists</strong></p>
+
+<p>Think about the idea only.</p>
+
+<p><strong>Insertion Sort List</strong></p>
+
+<pre><code>public ListNode insertionSortList(ListNode head) {
+    if (head == null) {
+        return null;
+    }
+    ListNode dummy = new ListNode(0);
+    ListNode cur = head;
+    while (cur != null) {
+        // insert cur into correct pos
+        ListNode pos = dummy;
+        while (pos.next != null &amp;&amp; pos.next.val &lt; cur.val) {
+            pos = pos.next;
+        }
+        ListNode temp = cur.next;
+        cur.next = pos.next;
+        pos.next = cur;
+        cur = temp;
+    }
+    return dummy.next;
+}
+</code></pre>
+
+<p><strong>Flatten Binary Tree to Linked List</strong></p>
+
+<p>I forgot to set &ldquo;root.left = null&rdquo; again, which result in long-time debugging. This is a very common and very silly mistake that I really should avoid.</p>
+
+<pre><code>public void flatten(TreeNode root) {
+    root = helper(root);
+}
+
+private TreeNode helper(TreeNode node) {
+    if (node == null) {
+        return null;
+    } else if (node.left == null &amp;&amp; node.right == null) {
+        return node;
+    } else if (node.left == null) {
+        return helper(node.right);
+    } else if (node.right == null) {
+        node.right = node.left;
+        node.left = null;
+        return helper(node.right);
+    } else {
+        TreeNode tempRight = node.right;
+        node.right = node.left;
+        node.left = null;
+        TreeNode leftTail = helper(node.right);
+        leftTail.right = tempRight;
+        return helper(tempRight);
+    }
+}
+</code></pre>
+
+<p><strong>Convert Sorted List to Binary Search Tree</strong></p>
+
+<p>This is the Mock Interview question. My solution is:</p>
+
+<pre><code>public TreeNode sortedListToBST(ListNode listHead) {
+    if (listHead == null) {
+        return null;
+    }
+    if (listHead.next == null) {
+        return new TreeNode(listHead.val);
+    }
+    ListNode listFirstHalf = listHead;
+    ListNode listPreMid = findMiddle(listHead);
+    ListNode listSecondHalf = null;
+    if (listPreMid.next != null) {
+        listSecondHalf = listPreMid.next.next;
+    }
+    TreeNode head = new TreeNode(listPreMid.next.val);
+    listPreMid.next = null;
+    head.left = sortedListToBST(listFirstHalf);
+    head.right = sortedListToBST(listSecondHalf);
+    return head;
+}
+
+private ListNode findMiddle(ListNode listHead) {
+    if (listHead == null) {
+        return null;
+    }
+    ListNode slow = listHead;
+    ListNode fast = listHead.next;
+    while (fast != null &amp;&amp; fast.next != null&amp;&amp; fast.next.next != null) {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    return slow;
+}
+</code></pre>
+
+<p>This is not a good answer, cuz I have to findMid in each recursion.</p>
+
+<p>The best solution is, use a global variable and 2 numbers to simplify this process. Code:</p>
+
+<pre><code>ListNode cur = null;
+
+public TreeNode sortedListToBST(ListNode head) {
+    if (head == null) {
+        return null;
+    }
+    cur = head;
+    int k = 0;
+    ListNode p = head;
+    while (p != null) {
+        k++;
+        p = p.next;
+    }
+    return build(0, k - 1);
+}
+
+private TreeNode build(int start, int end) {
+    if (start &gt; end) {
+        return null;
+    }
+    int mid = start + (end - start) / 2;
+    TreeNode leftBranch = build(start, mid - 1);
+    TreeNode head = new TreeNode(cur.val);
+    cur = cur.next;
+    head.left = leftBranch;
+    head.right = build(mid + 1, end);
+    return head;
+}
+</code></pre>
+
+<p><strong>Rotate List</strong></p>
+
+<p>Naive solution:</p>
+
+<pre><code>public ListNode rotateRight(ListNode head, int n) {
+    if (head == null) {
+        return null;
+    }
+    ListNode p = head;
+    for (int i = 0; i &lt; n; i++) {
+        if (p.next == null) {
+            p = head;
+        } else {
+            p = p.next;
+        }
+    }
+    ListNode q = head;
+    while (p.next != null) {
+        p = p.next;
+        q = q.next;
+    }
+    p.next = head;
+    ListNode newHead = q.next;
+    q.next = null;
+    return newHead;
+}
+</code></pre>
+
+<p>Make a circular list:</p>
+
+<pre><code>public ListNode rotateRight(ListNode head, int n) {
+    if (head == null) {
+        return null;
+    }
+    ListNode p = head;
+    int k = 1;
+    while (p.next != null) {
+        k++;
+        p = p.next;
+    }
+    p.next = head;
+    int steps = k - (n % k);
+    for (int i = 0; i &lt; steps; i++) {
+        p = p.next;
+    }
+    head = p.next;
+    p.next = null;
+    return head;
+}
+</code></pre>
+
+<p><strong>Remove Nth Node From End of List</strong></p>
+
+<pre><code>public ListNode removeNthFromEnd(ListNode head, int n) {
+    if (head == null || n == 0) {
+        return null;
+    }
+    ListNode dummy = new ListNode(0);
+    dummy.next = head;
+    ListNode right = dummy;
+    for (int i = 0; i &lt; n; i++) {
+        right = right.next;
+    }
+    ListNode left = dummy;
+    while (right.next != null) {
+        left = left.next;
+        right = right.next;
+    }
+    left.next = left.next.next;
+    return dummy.next;
+}
+</code></pre>
+
+<p><strong>LRU Cache</strong></p>
+
+<p>I solved it in the original post.</p>
+
+<p><strong>Reverse Nodes in k-Groups</strong></p>
+
+<pre><code>public ListNode reverseKGroup(ListNode head, int k) {
+    ListNode p = head;
+    int count = 0;
+    while (p != null) {
+        p = p.next;
+        count++;
+    }
+    return helper(head, k, count);
+}
+
+public ListNode helper(ListNode head, int k, int count) {
+    if (head == null || k &lt; 1 || count &lt; k) {
+        return head;
+    }
+    ListNode result = null;
+    ListNode cur = head;
+    for (int i = 0; i &lt; k; i++) {
+        if (cur == null) break;
+        ListNode temp = cur.next;
+        cur.next = result;
+        result = cur;
+        cur = temp;
+    }
+    head.next = helper(cur, k, count - k);
+    return result;
+}
+</code></pre>
+
+<p><strong>Swap Nodes in Pairs</strong></p>
+
+<pre><code>public ListNode swapPairs(ListNode head) {
+    if (head == null || head.next == null) {
+        return head;
+    }
+    ListNode result = head.next;
+    ListNode temp = head.next.next;
+    result.next = head;
+    head.next = swapPairs(temp);
+    return result;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1317,98 +1614,6 @@ private boolean mirror(TreeNode left, TreeNode right) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/14/Iterator-of-Tree/">[Question] Iterator of Binary Search Tree</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-06-14T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<blockquote><p>Implement a iterator for a binary search tree</p></blockquote>
-
-<p><strong>Related question</strong>: <a href="/blog/2014/05/24/Binary-Tree-Inorder-Traversal/">Binary Tree Inorder Traversal</a></p>
-
-<h3>Analysis</h3>
-
-<p>First of all, what is an iterator in Java?</p>
-
-<blockquote><p>Java has a commonly used Iterator interface.</p>
-
-<p>It is usually used like this:</p></blockquote>
-
-<pre><code>Iterator e = container.iterator();  
-while (e.hasNext()) {
-    System.out.println(e.next());
-}
-</code></pre>
-
-<p>The source code of Iterator interface:</p>
-
-<pre><code>public interface Iterator&lt;E&gt; {
-    boolean hasNext();
-    E next();
-    void remove();
-}
-</code></pre>
-
-<p>In this post, we will only implement next(), because Tree node deletion is covered in another post, and it&rsquo;s not easy.</p>
-
-<p>The most standard way is to do an inorder traversal (by storing a pointer to the next node). The only difference is iterator is 1 step at a time. If you cannot write inorder traversal without using recursion, <a href="/blog/2014/05/24/Binary-Tree-Inorder-Traversal/">learn it first</a>. The solution of iterator is available from <a href="http://manbroski.blogspot.sg/2011/11/iterator-for-binary-search-tree.html">this blog</a>, although he made some small syntax errors.</p>
-
-<h3>Code</h3>
-
-<pre><code>public class BinaryTreeIterator {
-
-    private Stack&lt;TreeNode&gt; stack = new Stack&lt;TreeNode&gt;();
-
-    public BinaryTreeIterator(TreeNode root) {
-        if (root == null) {
-            throw new NoSuchElementException("Empty tree");
-        }
-        while (root != null) {
-            stack.push(root);
-            root = root.left;
-        }
-    }
-
-    public boolean hasNext() {
-        return !stack.isEmpty();
-    }
-
-    public TreeNode next() {
-        TreeNode top = stack.pop();
-        TreeNode right = top.right;
-        while (right != null) {
-            stack.push(right);
-            right = right.left;
-        }
-        return top;
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/46">&larr; Older</a>
@@ -1426,7 +1631,7 @@ while (e.hasNext()) {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -1449,6 +1654,10 @@ while (e.hasNext()) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -1462,10 +1671,6 @@ while (e.hasNext()) {
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

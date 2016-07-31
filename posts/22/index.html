@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question Implement the &ldquo;paint fill&rdquo; function that one might see on many image editing programs. That is, given a screen (represented by a &hellip;">
+  <meta name="description" content="Question Given a boolean expression consisting of the symbols 0, 1, &lsquo;&amp;&rsquo;, &lsquo;|&rsquo;, and &lsquo;^&rsquo;, and a desired boolean &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,115 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/17/parenthesize-expression/">[CC150v5] 9.11 Parenthesize the Expression</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-17T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Given a boolean expression consisting of the symbols 0, 1, &lsquo;&amp;&rsquo;, &lsquo;|&rsquo;, and &lsquo;^&rsquo;, and a desired boolean result value &lsquo;result&rsquo;.</p>
+
+<p>Now implement a function to count the number of ways of <strong>parenthesizing the expression</strong> such that it evaluates to &lsquo;result&rsquo;.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>This is a difficult question</strong>.</p>
+
+<blockquote><p>Each parenthesized expression must have an outermost pair of
+parentheses.</p>
+
+<p>That is, we can iterate through the expression, treating each operator as the first operator to be parenthesized.</p></blockquote>
+
+<p>Nice idea suggested in the book! So <strong>for each operator, we consider is as first operator (to evaluate)</strong>, and then we shall if the total possible count.</p>
+
+<p>(Note that while coding, we DO NOT WRITE {if-else if-else&hellip;} but instead use {if&hellip; if&hellip; if&hellip;} in order to get the total count. )</p>
+
+<p>DP is more time-efficient.</p>
+
+<p><strong>Like CC150v5 Q9.10, the code given in the book is very hard to read</strong>. I have my own code posted below.</p>
+
+<h3>Code</h3>
+
+<pre><code>public static int countMyAnswer(String exp, boolean result) {
+    if (exp.length() == 1) {
+        return convertIntToBool(exp.charAt(0)) == result ? 1 : 0;
+    }
+    // eg. 1^0|0|1
+    // result: true
+    int totalCount = 0;
+    for (int i = 1; i &lt; exp.length(); i += 2) {
+
+        char op = exp.charAt(i);
+        String firstHalf = exp.substring(0, i);
+        String secondHalf = exp.substring(i + 1);
+
+        int firstHalfTrue = countMyAnswer(firstHalf, true);
+        int firstHalfFalse = countMyAnswer(firstHalf, false);
+        int secondHalfTrue = countMyAnswer(secondHalf, true);
+        int secondHalfFalse = countMyAnswer(secondHalf, false);
+
+        if (evaluate('0', op, '0') == result) {
+            totalCount += firstHalfFalse * secondHalfFalse;
+        }
+        if (evaluate('0', op, '1') == result) {
+            totalCount += firstHalfFalse * secondHalfTrue;
+        }
+        if (evaluate('1', op, '0') == result) {
+            totalCount += firstHalfTrue * secondHalfFalse;
+        }
+        if (evaluate('1', op, '1') == result) {
+            totalCount += firstHalfTrue * secondHalfTrue;
+        }
+    }
+    return totalCount;
+}
+
+private static boolean convertIntToBool(char num) {
+    if (num == '1') {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+private static boolean evaluate(char num1, char op, char num2) {
+    boolean b1 = convertIntToBool(num1);
+    boolean b2 = convertIntToBool(num2);
+    if (op == '&amp;') {
+        return b1 &amp; b2;
+    } else if (op == '|') {
+        return b1 | b2;
+    } else if (op == '^') {
+        return b1 ^ b2;
+    }
+    System.out.println("Did not found operator " + op);
+    return false;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -814,101 +923,6 @@ class Dog extends Animal {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/15/linked-list-palindrome/">[CC150v5] 2.7 Linked List Palindrome</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-09-15T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<blockquote><p>Implement a function to check if a linked list is a palindrome.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>There are multiple solutions for this question.</p>
-
-<p><strong>First, maybe the simplest solution of all</strong>, is to compare the list with the reversed list (compare first half would be enough). This is a very nice idea.</p>
-
-<p><strong>Second solution is iterative approach to use a Stack</strong>. Alternatively, we can also use <strong>fast/slow pointer</strong> to find the mid point.</p>
-
-<p><strong>Third solution is recursive</strong>. We basically uses a public pointer to:</p>
-
-<ol>
-<li>get starting value</li>
-<li>check middle parts</li>
-<li>get ending value</li>
-<li>if starting == ending and middle part is valid, then true.</li>
-</ol>
-
-
-<p>This code is pretty hard to think. Read it below.</p>
-
-<h3>Code</h3>
-
-<p>Recursive</p>
-
-<pre><code>private static LinkedListNode p;
-
-public static boolean isPalindromeRecursive(LinkedListNode head) {
-    p = head;
-    int len = getListLength(head);
-    return recursiveHelper(0, len - 1);
-}
-
-private static int getListLength(LinkedListNode node) {
-    int count = 0;
-    while (node != null) {
-        count++;
-        node = node.next;
-    }
-    return count;
-}
-
-public static boolean recursiveHelper(int from, int to) {
-    if (from &gt; to) {
-        return true;
-    } else if (from == to) {
-        p = p.next;
-        return true;
-    } else {
-        // first get fromVal, then check middle part, last, get toVal
-        int fromVal = p.data;
-        p = p.next;
-        if (!recursiveHelper(from + 1, to - 1)) {
-            return false;
-        }
-        int toVal = p.data;
-        p = p.next;
-        if (fromVal != toVal) {
-            return false;
-        }
-    }
-    return true;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/23">&larr; Older</a>
@@ -926,7 +940,7 @@ public static boolean recursiveHelper(int from, int to) {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -949,6 +963,10 @@ public static boolean recursiveHelper(int from, int to) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -962,10 +980,6 @@ public static boolean recursiveHelper(int from, int to) {
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

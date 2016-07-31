@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Testing | Woodstock Blog]]></title>
   <link href="http://okc1.github.io/blog/categories/testing/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-07-11T01:30:05-07:00</updated>
+  <updated>2016-07-31T02:06:49-07:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -288,7 +288,7 @@ Software testing methods are traditionally divided into white-box and black-box 
 
 One of the testing methodologies is "V-model".
 
-<img class="middle" src="/assets/images/Testing-V-Model.jpg">
+{% img middle /assets/images/Testing-V-Model.jpg %}
 
 ## Testing Types and process
 

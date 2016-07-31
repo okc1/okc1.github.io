@@ -9,7 +9,10 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given a collection of integers that might contain duplicates, S, return all possible subsets. Note: Elements in a subset must be in non &hellip;">
+  <meta name="description" content="Question link A message containing letters from A-Z is being encoded to numbers using the following mapping: 'A' -&gt; 1
+'B' -&gt; 2
+...
+'Z' -&gt; 26 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +68,153 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/23/Decode-Ways/">[LeetCode 91] Decode Ways</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-23T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/decode-ways/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>
+A message containing letters from <code>A-Z</code> is being encoded to numbers using the following mapping:
+</p>
+
+<pre>'A' -&gt; 1
+'B' -&gt; 2
+...
+'Z' -&gt; 26
+</pre>
+
+<p>
+Given an encoded message containing digits, determine the total number of ways to decode it.
+</p>
+
+<p>
+For example,<br>
+Given encoded message <code>"12"</code>,
+it could be decoded as <code>"AB"</code> (1 2) or <code>"L"</code> (12).
+</p>
+
+<p>
+The number of ways decoding <code>"12"</code> is 2.
+</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="lime">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This question is easy to think, but hard to write.</strong></p>
+
+<p>Why? Because there are a lot of cases that the decode ways = 0. For example, input = &ldquo;02&rdquo; or &ldquo;50&rdquo;. We must handle those cases well. Also, boundary cases can cause some trouble.</p>
+
+<h3>Solution</h3>
+
+<p><strong>DP solution, the transformation function is:</strong></p>
+
+<blockquote><p>Count[i] = Count[i-1]  if only S[i-1] is valid</p>
+
+<p>Count[i] = Count[i-1] + Count[i-2] if S[i-1] and S[i-2] both valid</p></blockquote>
+
+<h3>Code</h3>
+
+<p><strong>First, my code.</strong></p>
+
+<pre><code>public int numDecodings(String s) {
+    int len = s.length();
+    if (len == 0) return 0;
+    // now len &gt;= 1
+    int[] dp = new int[len];
+    if (s.charAt(0) == '0') dp[0] = 0;
+    else dp[0] = 1;
+    if (len == 1) return dp[0];
+    // now len &gt;= 2
+    for (int i = 1; i &lt; len; i ++) {
+        if (s.charAt(i) != '0') dp[i] += dp[i-1];
+        int doubleDigit = Integer.parseInt(s.substring(i-1, i+1));
+        if (s.charAt(i-1) != '0' &amp;&amp; 1 &lt;= doubleDigit &amp;&amp; doubleDigit &lt;= 26)
+            if (i != 1) dp[i] += dp[i-2];
+            else dp[i] += 1;
+    }
+    return dp[len - 1];
+}
+</code></pre>
+
+<p><strong>Second, code from <a href="http://blog.csdn.net/u011095253/article/details/9248109">this blog</a>.</strong></p>
+
+<p>The only difference is an additional &lsquo;1&rsquo; at position 0 of the dp array. This helps simply the code a lot!</p>
+
+<pre><code>public int numDecodings(String s) {  
+    int n = s.length();  
+    if (n==0) return 0;  
+    int[] dp = new int[n+1];  
+    dp[0] = 1;  
+    if (isValid(s.substring(0,1))) dp[1] = 1;  
+    else dp[1] = 0;  
+    for(int i=2; i&lt;=n;i++){  
+        if (isValid(s.substring(i-1,i)))  
+            dp[i] = dp[i-1];  
+        if (isValid(s.substring(i-2,i)))  
+            dp[i] += dp[i-2];  
+    }  
+    return dp[n];  
+}  
+
+public boolean isValid(String s){  
+    if (s.charAt(0)=='0') return false;  
+    int code = Integer.parseInt(s);  
+    return code&gt;=1 &amp;&amp; code&lt;=26;  
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1373,174 +1523,6 @@ private boolean search(char[][] board, boolean[][] visited,
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/21/Sort-Colors/">[LeetCode 75] Sort Colors</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-05-21T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="https://oj.leetcode.com/problems/sort-colors/">link</a></p>
-
-<div class="question-content">
-            <p></p><p>
-Given an array with <i>n</i> objects colored red, white or blue, sort them so that objects of the same color are adjacent, with the colors in the order red, white and blue.
-</p>
-
-<p>
-Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.
-</p>
-
-<p>
-<b>Note:</b><br>
-You are not suppose to use the library's sort function for this problem.
-</p>
-
-<div class="spoilers" >
-<p><b>Follow up:</b><br>
-A rather straight forward solution is a two-pass algorithm using counting sort.<br>
-First, iterate the array counting number of 0's, 1's, and 2's, then overwrite array with total number of 0's, then 1's and followed by 2's.</p>
-<p>Could you come up with an one-pass algorithm using only constant space?<br>
-</p>
-</div><p></p>
-          </div>
-
-
-<h3>Stats</h3>
-
-<table border="2">
-    <tr>
-        <td>Frequency</td>
-        <td bgcolor="lime">2</td>
-    </tr>
-    <tr>
-        <td>Difficulty</td>
-        <td bgcolor="red">4</td>
-    </tr>
-    <tr>
-        <td>Adjusted Difficulty</td>
-        <td bgcolor="red">4</td>
-    </tr>
-    <tr>
-        <td>Time to use</td>
-        <td bgcolor="yellow">--------</td>
-    </tr>
-</table>
-
-
-<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
-
-<h3>Analysis</h3>
-
-<p><strong>This is a extremely interesting question, with very tricky solutions</strong>. But the 3rd piece of code is actually the standard solution (by making use of the idea from <strong>partition array</strong>).</p>
-
-<h3>Code</h3>
-
-<p><strong>First solution came from</strong> <a href="https://oj.leetcode.com/discuss/1827/anyone-with-one-pass-and-constant-space-solution">this blog</a>.</p>
-
-<pre><code>public void sortColors(int[] A) {
-    int a = -1, b = -1, c = -1;
-    for (int i = 0; i &lt; A.length; i ++) {
-        if (A[i] == 0) {
-            A[++ c] = 2;
-            A[++ b] = 1;
-            A[++ a] = 0;
-        } else if (A[i] == 1) {
-            A[++ c] = 2;
-            A[++ b] = 1;
-        } else {
-            A[++ c] = 2;
-        }
-    }
-}
-</code></pre>
-
-<p><strong>Second solution, 2 pointer &amp; swap</strong> which is written <a href="http://fisherlei.blogspot.sg/2013/01/leetcode-sort-colors.html">here</a>.</p>
-
-<pre><code>public void sortColors(int[] A) {
-    int len = A.length;
-    int i = 0, x = 0, y = len - 1;
-    while (i &lt;= y) {
-        if (A[i] == 0) 
-            swap(A, i ++, x ++);
-        else if (A[i] == 2) 
-            swap(A, i, y --);
-        else i ++;
-    }
-}
-
-private void swap(int[] A, int a, int b) {
-    int temp = A[a];
-    A[a] = A[b];
-    A[b] = temp;
-}
-</code></pre>
-
-<p><strong>Updated on July 4th, 2014</strong>: Use of solution of <strong>Partition Array</strong> to partition colors twice:</p>
-
-<ol>
-<li>first time move all 0 to left.</li>
-<li>second time move all 1 to left, following the 0s.</li>
-</ol>
-
-
-<p>Code :</p>
-
-<pre><code>public void sortColors(int[] A) {
-    if (A == null || A.length == 0) {
-        return;
-    }
-    int len = A.length;
-    partition(A, 0, len - 1, 0);
-    int p = 0;
-    while (p &lt; len &amp;&amp; A[p] == 0) {
-        p++;
-    }
-    partition(A, p, len - 1, 1);
-}
-
-private void partition(int[] A, int start, int end, int target) {
-    // find the target and put it on the left side of the array
-    while (start &lt; end) {
-        while (start &lt; A.length &amp;&amp; A[start] == target) {
-            start++;
-        }
-        while (end &gt;= 0 &amp;&amp; A[end] != target) {
-            end--;
-        }
-        if (start &gt; end) {
-            break;
-        } else {
-            int temp = A[start];
-            A[start] = A[end];
-            A[end] = temp;
-        }
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/56">&larr; Older</a>
@@ -1558,7 +1540,7 @@ private void partition(int[] A, int start, int end, int target) {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -1581,6 +1563,10 @@ private void partition(int[] A, int start, int end, int target) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -1594,10 +1580,6 @@ private void partition(int[] A, int start, int end, int target) {
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

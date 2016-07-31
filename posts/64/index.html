@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link, link. example: A * B + C becomes A B * C + A * (B + C) becomes A B C + * Solution One of the main purpose of converting infix to &hellip;">
+  <meta name="description" content="Question link 两个人（A，B）参与一个游戏，规则如下： 1）一个随机的整数数列有偶数个数,a1,a2,&hellip;a2n 2）A 先从数列取数，但只能从两头取,a1 or a2n 3)然后Ｂ取数，也是只能从剩下的两头取，依此类推，两个人轮流，都只能从两头取 Output the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,138 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/11/21/get-max-number-game/">[Question] Get Max Number Game (Minmax + Dp)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-11-21T00:00:00-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2013</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Question</h1>
+
+<p><a href="http://www.weiming.info/zhuti/JobHunting/31725587/">link</a></p>
+
+<blockquote><p>两个人（A，B）参与一个游戏，规则如下：</p>
+
+<p>1）一个随机的整数数列有偶数个数,a1,a2,&hellip;a2n</p>
+
+<p>2）A 先从数列取数，但只能从两头取,a1 or a2n</p>
+
+<p>3)然后Ｂ取数，也是只能从剩下的两头取，依此类推，两个人轮流，都只能从两头取</p>
+
+<p>Output <strong>the max sum of numbers</strong> that player 1 is going to get.</p></blockquote>
+
+<h1>Solution</h1>
+
+<p>This question can be solved with DP by using the following 3 equations:</p>
+
+<ol>
+<li>sum[i][j] sum of number from i to j</li>
+<li>val[i][j]: the max value that can be obtained if only the range [i,j] is left and you take the move first</li>
+<li>pos[][] is related to val[][], as it denotes whether we take i or j</li>
+</ol>
+
+
+<p>After we got sum[][] array fully filled up, the transition equation of val[][] looks like:</p>
+
+<pre><code>val[x][y] = sum[x][y] - MIN( val[x+1][y], val[x][y-1] )
+</code></pre>
+
+<p>As for pos[][]:</p>
+
+<pre><code>pos[x][y] = x  if val[x+1][y] &lt; val[x][y-1]
+            y  otherwise
+</code></pre>
+
+<h1>Code</h1>
+
+<pre><code>public int getMaxSumPlayerOne(int[] input) {
+    int len = input.length;
+    // sum[i][j] sum of number from i to j
+    int[][] sum = new int[len][len];
+    // val[i][j]: the max value that can be obtained if only
+    // the range [i,j] is left and you take the move first
+    int[][] val = new int[len][len];
+    // pos is related to val, as it denotes whether we take i or j
+    int[][] pos = new int[len][len];
+
+    // 1. fill in sum[][]
+    for (int x = 0; x &lt; len; x++) {
+        for (int y = x; y &lt; len; y++) {
+            if (x == y) {
+                sum[x][y] = input[x];
+            } else if (x == 0) {
+                // fill up the first row in the sum[][] dp array
+                sum[x][y] = sum[x][y - 1] + input[y];
+            } else {
+                // starting from the 2nd row, it's gonna make use of 1st row
+                // x &gt;= 1
+                sum[x][y] = sum[0][y] - sum[0][x - 1];
+            }
+        }
+    }
+
+    // 2. fill in val[][] and pos[][]
+    for (int x = len - 1; x &gt;= 0; x--) {
+        for (int y = x; y &lt; len; y++) {
+            if (x == y) {
+                val[x][y] = input[x];
+                pos[x][y] = x;
+            } else {
+                // when I choose either x or y, I look at what the opponent
+                // is gonna get after my move, then chose the smaller
+                // v[][] for the remaining part
+                val[x][y] = sum[x][y] - Math.min(val[x + 1][y], val[x][y - 1]);
+                pos[x][y] = val[x + 1][y] &lt; val[x][y - 1] ? x : y;
+            }
+        }
+    }
+    this.printSteps(pos, len);
+    return val[0][len - 1];
+}
+</code></pre>
+
+<h1>Testing</h1>
+
+<pre><code>Input {1, 4, 3, 2}
+Player 1 take position 3
+Player 2 take position 2
+Player 1 take position 1
+Player 2 take position 0
+max sum for player 1 is 6
+
+Input {7, 5, 2, 6, 9, 8, 3, 4}
+Player 1 take position 0
+Player 2 take position 1
+Player 1 take position 7
+Player 2 take position 6
+Player 1 take position 5
+Player 2 take position 4
+Player 1 take position 3
+Player 2 take position 2
+max sum for player 1 is 25
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -459,7 +591,7 @@ class Meeting {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -482,6 +614,10 @@ class Meeting {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -495,10 +631,6 @@ class Meeting {
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

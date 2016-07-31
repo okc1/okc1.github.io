@@ -4,7 +4,7 @@
   <title><![CDATA[Woodstock Blog]]></title>
   <link href="http://okc1.github.io/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-07-11T01:30:05-07:00</updated>
+  <updated>2016-07-31T02:06:22-07:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -12,6 +12,100 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[[Design] MVC, MVP and MVVM]]></title>
+    <link href="http://okc1.github.io/blog/2016/07/31/mvc-mvp-mvvm/"/>
+    <updated>2016-07-31T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2016/07/31/mvc-mvp-mvvm</id>
+    <content type="html"><![CDATA[<h1>MVC Pattern</h1>
+
+<p>Model-View-Controller.</p>
+
+<p>The model and controller logic are <strong>decoupled from user interface (view)</strong>.</p>
+
+<p><img class="middle" src="http://okc1.github.io/assets/images/mvc-pattern.png"></p>
+
+<ol>
+<li><p>Model</p>
+
+<p> business model + <strong>data access operations</strong> (i.e. data model)</p></li>
+<li><p>View</p>
+
+<p> <strong>only for displaying data</strong> (received from the controller, transforms the model into UI)</p></li>
+<li><p>Controller <strong>(IMPORTANT)</strong></p>
+
+<p> <strong>process incoming requests</strong>. It receives input from users via the View, then process the user&rsquo;s data with the help of Model and passing the results back to the View. Typically, it acts as the coordinator between the View and the Model.</p></li>
+</ol>
+
+
+<h2>example</h2>
+
+<p>Ruby on Rails, Spring Framework, Apple iOS Development and ASP.NET MVC.</p>
+
+<p>Softwares (not web apps).</p>
+
+<h1>MVP pattern</h1>
+
+<p>separate the presentation layer from the logic</p>
+
+<p>The Presenter is responsible for handling all UI events on behalf of the view.</p>
+
+<p><img class="middle" src="http://okc1.github.io/assets/images/mvp-pattern.png"></p>
+
+<p>Unlike view and controller, view and presenter are completely decoupled from each other’s and communicate to each other’s by an interface.</p>
+
+<p>Also, presenter does not manage the incoming request traffic as controller.</p>
+
+<h2>Key Points about MVP</h2>
+
+<ol>
+<li><p>User interacts with the View.</p></li>
+<li><p>There is one-to-one relationship between View and Presenter means one View is mapped to only one Presenter.</p></li>
+<li><p>View has a reference to Presenter but View has not reference to Model.</p></li>
+<li><p>Provides two way communication between View and Presenter.</p></li>
+</ol>
+
+
+<h2>example</h2>
+
+<p>Android, ASP.NET Web Forms applications</p>
+
+<h1>MVVM pattern</h1>
+
+<p>This pattern supports two-way data binding between view and View model.</p>
+
+<p>This enables automatic propagation of changes, within the state of view model to the View.</p>
+
+<p>Typically, <strong>the view model uses the observer pattern</strong> to notify changes in the view model to model.</p>
+
+<p><img class="middle" src="http://okc1.github.io/assets/images/mvvm-pattern.png"></p>
+
+<h2>details</h2>
+
+<p>The View Model is responsible for exposing methods, commands, and other properties that helps to maintain the state of the view, manipulate the model as the result of actions on the view, and trigger events in the view itself.</p>
+
+<h2>Key Points about MVVM</h2>
+
+<ol>
+<li><p>User interacts with the View.</p></li>
+<li><p>There is many-to-one relationship between View and ViewModel means many View can be mapped to one ViewModel.</p></li>
+<li><p>View has a reference to ViewModel but View Model has no information about the View.</p></li>
+<li><p>Supports two-way data binding between View and ViewModel.</p></li>
+</ol>
+
+
+<h2>example</h2>
+
+<p>Ember.js, WPF, Silverlight</p>
+
+<h1>Ref</h1>
+
+<p>Main: <a href="http://www.dotnet-tricks.com/Tutorial/designpatterns/2FMM060314-Understanding-MVC,-MVP-and-MVVM-Design-Patterns.html">http://www.dotnet-tricks.com/Tutorial/designpatterns/2FMM060314-Understanding-MVC,-MVP-and-MVVM-Design-Patterns.html</a></p>
+
+<p>TLDR: <a href="http://www.beyondjava.net/blog/model-view-whatever/">http://www.beyondjava.net/blog/model-view-whatever/</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[[Design] Design Twitter]]></title>
@@ -249,11 +343,11 @@
 
 <p>Solution: 1. use atomic operation 2. every day, schedule to update this number.</p>
 
-<h2>optimize thundering hert problem</h2>
+<h2>optimize thundering herd problem</h2>
 
 <p>When cache fails, all DB query will go to DB. This results in DB crash.</p>
 
-<p>Hot spot (thundering hert)</p>
+<p>Hot spot (thundering herd)</p>
 
 <p><img class="middle" src="http://okc1.github.io/assets/images/jiuzhang-thundering-herd.png"></p>
 
@@ -1218,61 +1312,6 @@ color is colored
 <p><img class="middle" src="http://okc1.github.io/assets/images/IC315445.png"></p>
 
 <p><tbody><tr><th><p><span class="label">Shape</span></p></th><th><p><span class="label">Element</span></p></th><th><p><span class="label">Description</span></p></th></tr><tr><td><p>1</p></td><td><p><strong>Class</strong></p></td><td><p>A definition of objects that share given structural or behavioral characteristics. For more information, see <a href="https://msdn.microsoft.com/en-us/library/dd323860.aspx">Properties of types on UML class diagrams</a>.</p></td></tr><tr><td><p>1</p></td><td><p>Classifier</p></td><td><p>The general name for a class, interface, or enumeration. Components, use cases, and actors are also classifiers.</p></td></tr><tr><td><p>2</p></td><td><p>Collapse/ Expand control</p></td><td><p>If you cannot see the details of a classifier, click the expander at upper-left of the classifier. You might also have to click the [+] on each segment.</p></td></tr><tr><td><p>3</p></td><td><p><strong>Attribute</strong></p></td><td><p>A typed value attached to each instance of a classifier. </p><p>To add an attribute, click the <strong>Attributes</strong> section and then press <strong>ENTER</strong>. Type the signature of the attribute. For more information, see <a href="https://msdn.microsoft.com/en-us/library/dd323861.aspx">Properties of attributes on UML class diagrams</a>.</p></td></tr><tr><td><p>4</p></td><td><p><strong>Operation</strong></p></td><td><p>A method or function that can be performed by instances of a classifier. To add an operation, click the <strong>Operations</strong> section and then press <strong>ENTER</strong>. Type the signature of the operation. For more information, see <a href="https://msdn.microsoft.com/en-us/library/dd323859.aspx">Properties of operations on UML class diagrams</a>. </p></td></tr><tr><td><p>5</p></td><td><p><strong>Association</strong></p></td><td><p>A relationship between the members of two classifiers. For more information, see <a href="https://msdn.microsoft.com/en-us/library/dd323862.aspx">Properties of associations on UML class diagrams</a>. </p></td></tr><tr><td><p>5a</p></td><td><p><strong>Aggregation</strong></p></td><td><p>An association representing a shared ownership relationship. The <strong>Aggregation</strong> property of the owner role is set to <strong>Shared</strong>.</p></td></tr><tr><td><p>5b</p></td><td><p><strong>Composition</strong></p></td><td><p>An Association representing a whole-part relationship. The <strong>Aggregation</strong> property of the owner role is set to <strong>Composite</strong>.</p></td></tr><tr><td><p>6</p></td><td><p><strong>Association Name</strong></p></td><td><p>The name of an association. The name can be left empty.</p></td></tr><tr><td><p>7</p></td><td><p><strong>Role Name</strong></p></td><td><p>The name of a role, that is, one end of an association. Can be used to refer to the associated object. In the previous illustration, for any Order <span class="code">O</span>, <span class="code">O.ChosenMenu</span> is its associated Menu.</p><p>Each role has its own properties, listed under the properties of the association.</p></td></tr><tr><td><p>8</p></td><td><p><strong>Multiplicity</strong></p></td><td><p>Indicates how many of the objects at this end can be linked to each object at the other. In the example, each Order must be linked to exactly one Menu. </p><p><strong>*</strong> means that there is no upper limit to the number of links that can be made.</p></td></tr><tr><td><p>9</p></td><td><p><strong>Generalization</strong></p></td><td><p>The <em>specific</em> classifier inherits part of its definition from the <em>general</em> classifier. The general classifier is at the arrow end of the connector. Attributes, associations, and operations are inherited by the specific classifier.</p><p>Use the <strong>Inheritance</strong> tool to create a generalization between two classifiers.</p></td></tr></tbody></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[[LintCode] Segment Tree Query II]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/13/Segment-Tree-Query-II/"/>
-    <updated>2015-10-13T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/13/Segment-Tree-Query-II</id>
-    <content type="html"><![CDATA[<h3>Question</h3>
-
-<p><a href="http://www.lintcode.com/en/problem/segment-tree-query-ii/">link</a></p>
-
-<blockquote><p>For an array, we can build a SegmentTree for it, each node stores an extra attribute count to denote the number of elements in the the array which value is between interval start and end. (The array may not fully filled by elements)</p>
-
-<p>Design a query method with three parameters root, start and end, find the number of elements in the in array&rsquo;s interval [start, end] by the given root of value SegmentTree.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>Similar.</p>
-
-<h3>Code</h3>
-
-<pre><code>/**
- * Definition of SegmentTreeNode:
- * public class SegmentTreeNode {
- *     public int start, end, count;
- *     public SegmentTreeNode left, right;
- *     public SegmentTreeNode(int start, int end, int count) {
- *         this.start = start;
- *         this.end = end;
- *         this.count = count;
- *         this.left = this.right = null;
- *     }
- * }
- */
-public class Solution {
-    /**
-     *@param root, start, end: The root of segment tree and 
-     *                         an segment / interval
-     *@return: The count number in the interval [start, end]
-     */
-    public int query(SegmentTreeNode root, int start, int end) {
-        if (root == null || start &gt; end) {
-            return 0;
-        } else if (root.start &gt; end || root.end &lt; start) {
-            return 0;
-        } else if (start &lt;= root.start &amp;&amp; root.end &lt;= end) {
-            return root.count;
-        }
-        int mid = (root.start + root.end) / 2;
-        return query(root.left, start, Math.min(mid, end)) + 
-                query(root.right, Math.max(mid + 1, start), end);
-    }
-}
-</code></pre>
 ]]></content>
   </entry>
   

@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link 给40亿个不重复的unsigned int的整数，没排过序的，然后再给一个数，如何快速判断这个数是否在那40亿个数当中？ Analysis Categorized under BitMap. There&rsquo;re 4.3 billion unsigned &hellip;">
+  <meta name="description" content="Question link 5亿个int找它们的中位数. Analysis Categorized under 双层桶划分. Idea: 首先我们将int划分为216个区域，然后读取数据统计落到各个区域里的数的个数，之后我们根据统计结果就可以判断中位数落到那个区域， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,53 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/10/big-data-find-median/">[Design] Big Data - Find Median Numbers</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-10T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://blog.csdn.net/v_july_v/article/details/7382693">link</a></p>
+
+<blockquote><p>5亿个int找它们的中位数.</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>Categorized under <strong>双层桶划分</strong>.</p>
+
+<p>Idea: 首先我们将int划分为2<sup>16</sup>个区域，然后读取数据统计落到各个区域里的数的个数，之后我们根据统计结果就可以判断中位数落到那个区域，同时知道这个区域中的第几大数刚好是中位数。然后第二次扫描我们只统计落在这个区域中的那些数就可以了。</p>
+
+<h3>Details</h3>
+
+<p>开一个大小为65536的Int数组，第一遍读取，统计Int32的高16位的情况(就相当于用该数除以65536)。每读取一个数，数组中对应的计数+1。第一遍统计之后，遍历数组，逐个累加统计，看中位数处于哪个区间。</p>
+
+<p>第二遍统计同上面的方法类似，但这次只统计处于区间k的情况，这次计数之后，再统计一下，看中位数所处的区间，最后将高位和低位组合一下就是结果了。</p>
+
+<p>And this can be done more than 2 times, depending on the input size (eg. if input is int64, then do 24/20/20 bits).</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -916,63 +963,6 @@ procedure consumer() {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/08/Max-sum-non-consecutive/">[Question] Max Sum of Non-Consecutive Elements</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-08-08T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://tech-queries.blogspot.sg/2009/05/max-possible-sum-of-non-consecutive.html">link</a></p>
-
-<blockquote><p>There is an integer array consisting positive numbers only.</p>
-
-<p>Find maximum possible sum of elements such that there are no 2 consecutive elements present in the sum.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>It&rsquo;s a little tricky to write the equation. Always remember the <strong>basic principle of DP</strong> is to assume that solution is found for (i -1), and then we calculate solution for input (i).</p>
-
-<p><strong>Don&rsquo;t miss the (i-1) part</strong>.</p>
-
-<h3>Code</h3>
-
-<p><strong>written by me</strong></p>
-
-<pre><code>public int maxSumNonConsec(int[] input) {
-    int len = input.length;
-    int[] dp = new int[len];
-    dp[0] = input[0];
-    dp[1] = Math.max(input[0], input[1]);
-    for (int i = 2; i &lt; len; i++) {
-        dp[i] = Math.max(dp[i - 1], input[i] + dp[i - 2]);
-    }
-    return dp[len - 1];
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/34">&larr; Older</a>
@@ -990,7 +980,7 @@ procedure consumer() {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -1013,6 +1003,10 @@ procedure consumer() {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -1026,10 +1020,6 @@ procedure consumer() {
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

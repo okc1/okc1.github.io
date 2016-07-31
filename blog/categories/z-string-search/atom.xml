@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Z-string-search | Woodstock Blog]]></title>
   <link href="http://okc1.github.io/blog/categories/z-string-search/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-07-11T01:30:05-07:00</updated>
+  <updated>2016-07-31T02:06:49-07:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -132,11 +132,11 @@ __A Compressed Trie__ is obtained from standard trie by joining chains of single
 
 Example, a standard trie: 
 
-<img class="middle" src="/assets/images/standardtrieNew.png">
+{% img middle /assets/images/standardtrieNew.png %}
 
 A Compressed Trie: 
 
-<img class="middle" src="/assets/images/CompressedTrieNew.png">
+{% img middle /assets/images/CompressedTrieNew.png %}
 
 #### build a Suffix Tree
 

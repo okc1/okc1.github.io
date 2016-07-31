@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Find the nodes at d distance from a certain node in a Binary Tree Solution There are two types of nodes to be considered: Nodes in the &hellip;">
+  <meta name="description" content="Question link Given a string, find its rank among all its permutations sorted lexicographically. For example, rank of “abc” is 1, rank of “acb” is 2 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,80 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/18/Lexicographic-rank-of-string/">[Amazon] Lexicographic Rank of a String</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-18T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.geeksforgeeks.org/lexicographic-rank-of-a-string/">link</a></p>
+
+<blockquote><p>Given a string, find its rank among all its permutations sorted lexicographically.</p>
+
+<p>For example, rank of “abc” is 1, rank of “acb” is 2, and rank of “cba” is 6.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Let the given string be “<strong>STRG</strong>”. In the input string, ‘S’ is the first character. There are total 4 characters and <strong>2 of them are smaller than ‘S’</strong>. So there can be <strong>2 * 3!</strong> smaller strings where first character is smaller than ‘S’, like following:</p>
+
+<pre><code>G X X X
+R X X X
+</code></pre>
+
+<p>Repeat the same process for T, and we get:</p>
+
+<pre><code>Rank = 2*3! + 2*2! + 1*1! + 0*0! = 17
+</code></pre>
+
+<h3>Code</h3>
+
+<pre><code>public int getRank(String input) {
+    if (input == null || input.length() == 0) {
+        return 0;
+    }
+    input = input.toUpperCase();
+    return helper(input) + 1;
+}
+
+public int helper(String input) {
+    if (input == null || input.length() == 0) {
+        return 0;
+    }
+    char headChar = input.charAt(0);
+    int countSmallerThanHead = 0;
+    for (char ch : input.toCharArray()) {
+        if (ch &lt; headChar) {
+            countSmallerThanHead++;
+        }
+    }
+    return countSmallerThanHead * Common.factorial(input.length() - 1)
+            + helper(input.substring(1));
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1070,79 +1144,6 @@ class Result {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/11/all-repeating-substring-given-length/">[LinkedIn] Find All Repeating Substring With Given Length</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-11T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.careercup.com/question?id=6495932900179968">link</a></p>
-
-<blockquote><p>Find all the repeating substring of specified length in a large string sequence.</p>
-
-<p>For e.g.</p></blockquote>
-
-<pre><code>Input String: "ABCACBABC" 
-repeated sub-string length: 3 
-Output: ABC 
-</code></pre>
-
-<blockquote><p>eg.</p></blockquote>
-
-<pre><code>Input String: "ABCABCA" 
-repeated sub-string length: 2 
-Output: AB, BC, CA
-</code></pre>
-
-<h3>Solution</h3>
-
-<p>Similar to <strong>[Amazon] Longest Repeating Substring</strong>, the best solution is to do <strong>Suffix Tree</strong>, or suffix array. We then need to print nodes on a certain level, who has more than 1 descendant.</p>
-
-<p>However, since the length of substring is given, we can also do simply iteration: insert all substring with given length into a HashSet, and check repetition. <a href="https://github.com/techpanja/interviewproblems/blob/master/src/strings/repeatingstringsofspecifiedlength/RepeatingStringOfSpecificLength.java">ref</a></p>
-
-<h3>Code</h3>
-
-<p>Suffix tree solution: not written.</p>
-
-<p>Hashset code:</p>
-
-<pre><code>public List&lt;String&gt; solve(String input, int k) {
-    List&lt;String&gt; ans = new ArrayList&lt;String&gt;();
-    HashSet&lt;String&gt; set = new HashSet&lt;String&gt;();
-    for (int i = 0; i &lt;= input.length() - k; i++) {
-        String sub = input.substring(i, i + k);
-        if (set.contains(sub)) {
-            ans.add(sub);
-        }
-        set.add(sub);
-    }
-    return ans;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/17">&larr; Older</a>
@@ -1160,7 +1161,7 @@ Output: AB, BC, CA
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -1183,6 +1184,10 @@ Output: AB, BC, CA
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -1196,10 +1201,6 @@ Output: AB, BC, CA
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

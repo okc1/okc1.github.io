@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Cc150v4 | Woodstock Blog]]></title>
   <link href="http://okc1.github.io/blog/categories/cc150v4/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-07-11T01:30:05-07:00</updated>
+  <updated>2016-07-31T02:06:49-07:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -107,7 +107,7 @@ __This is a very classic question of string search__, favored by Google and Face
 
 The solution is __suffix tree__ (to be distinguished from __trie__, or prefix tree, which searched word by its prefix). Suffix tree is good for search a proportion of a long string. For example, using "bibs" to build a suffix tree like this: 
 
-<img class="middle" src="/assets/images/suffix-tree-example-bibs.png">
+{% img middle /assets/images/suffix-tree-example-bibs.png %}
 
 The building of suffix tree and searching is not a very lengthy code. It's posted below and it's not written by me. 
 

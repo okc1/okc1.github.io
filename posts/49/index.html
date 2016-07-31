@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Sort a linked list in O(n log n) time using constant space complexity. Stats Adjusted Difficulty 4 Time to use -------- Ratings/Color &hellip;">
+  <meta name="description" content="Question link Given a string s and a dictionary of words dict, determine if s can be segmented into a space-separated sequence of one or more &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,104 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/02/Word-Break/">[LeetCode 139] Word Break</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-02T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/word-break/">link</a></p>
+
+<div class="question-content bg-color bg-img font-color">
+            <p class="font-color"></p><p class="font-color">
+Given a string <i>s</i> and a dictionary of words <i>dict</i>, determine if <i>s</i> can be segmented into a space-separated sequence of one or more dictionary words.
+</p>
+
+<p class="font-color">For example, given<br>
+<i>s</i> = <code>"leetcode"</code>,<br>
+<i>dict</i> = <code>["leet", "code"]</code>.
+</p>
+
+<p class="font-color">
+Return true because <code>"leetcode"</code> can be segmented as <code>"leet code"</code>.
+</p><p class="font-color"></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="lime">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is a standard DP question</strong>.</p>
+
+<h3>Solution</h3>
+
+<p>I see a lot of people solve this DP problem with 2D array. It actually requires only 1D aray.</p>
+
+<p>Declare an boolean array of (input string length) + 1, and dp[i] mean whether or not subtring(0,i) is work-breakable. Then the problem is clear and easy.</p>
+
+<p>Pay attention to index while coding.</p>
+
+<h3>Code</h3>
+
+<p><strong>my code</strong></p>
+
+<pre><code>public boolean wordBreak(String s, Set&lt;String&gt; dict) {
+    int len = s.length();
+    if (len == 0 || dict.isEmpty())  {
+        return false;
+    }
+    boolean[] dp = new boolean[len + 1];
+    dp[0] = true;
+    for (int i = 1; i &lt;= len; i ++)  {
+        for (int j = 0; j &lt; i; j ++)  {
+            if (dp[j] &amp;&amp; dict.contains(s.substring(j, i)))  {
+                dp[i] = true;
+                break;
+            }
+        }
+    }
+    return dp[len];
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1125,206 +1223,6 @@ What is the minimum candies you must give?
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/30/Word-Ladder-II/">[LeetCode 126] Word Ladder II (Unsolvable)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-05-30T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="https://oj.leetcode.com/problems/word-ladder-ii/">link</a></p>
-
-<div class="question-content">
-            <p></p><p>
-Given two words (<i>start</i> and <i>end</i>), and a dictionary, find all shortest transformation sequence(s) from <i>start</i> to <i>end</i>, such that:
-</p>
-<ol>
-<li>Only one letter can be changed at a time</li>
-<li>Each intermediate word must exist in the dictionary</li>
-</ol>
-
-<p>
-For example,
-</p>
-<p>
-Given:<br>
-<i>start</i> = <code>"hit"</code><br>
-<i>end</i> = <code>"cog"</code><br>
-<i>dict</i> = <code>["hot","dot","dog","lot","log"]</code><br>
-</p>
-<p>
-Return<br>
-</p><pre>  [
-    ["hit","hot","dot","dog","cog"],
-    ["hit","hot","lot","log","cog"]
-  ]
-</pre>
-<p></p>
-
-<p>
-<b>Note:</b><br>
-</p><ul>
-<li>All words have the same length.</li>
-<li>All words contain only lowercase alphabetic characters.</li>
-</ul>
-<p></p><p></p>
-          </div>
-
-
-<h3>Stats</h3>
-
-<table border="2">
-    <tr>
-        <td>Frequency</td>
-        <td bgcolor="white">1</td>
-    </tr>
-    <tr>
-        <td>Difficulty</td>
-        <td bgcolor="white">1</td>
-    </tr>
-    <tr>
-        <td>Adjusted Difficulty</td>
-        <td bgcolor="red">5</td>
-    </tr>
-    <tr>
-        <td>Time to use</td>
-        <td bgcolor="red">--------</td>
-    </tr>
-</table>
-
-
-<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
-
-<h3>Analysis</h3>
-
-<p><strong>This is an unsolvable question</strong>.</p>
-
-<h3>Solution</h3>
-
-<p>A solution is available <a href="http://blog.csdn.net/whuwangyi/article/details/21611433">here</a>, but I did not solved it and I gave up.</p>
-
-<h3>Code</h3>
-
-<pre><code>public class Node {  
-    public int dist;  
-    public String str;  
-    public LinkedList&lt;Node&gt; prev;  
-
-    public Node(int dist, String str) {  
-        this.dist = dist;  
-        this.str = str;  
-        this.prev = new LinkedList&lt;Node&gt;();
-    }
-
-    public void addPrev(Node pNode) {  
-        prev.add(pNode);  
-    }  
-}  
-
-public ArrayList&lt;ArrayList&lt;String&gt;&gt; findLadders(String start,  
-        String end, HashSet&lt;String&gt; dict) {  
-    dict.add(end);  
-
-    // Key: the dictionary string; Value: Node  
-    Map&lt;String, Node&gt; map = new HashMap&lt;String, Node&gt;();  
-    Queue&lt;String&gt; queue = new LinkedList&lt;String&gt;();  
-
-    Node startNode = new Node(1, start);  
-    queue.offer(start);  
-    map.put(start, startNode);  
-
-    ArrayList&lt;ArrayList&lt;String&gt;&gt; ret = new ArrayList&lt;ArrayList&lt;String&gt;&gt;();  
-
-    while (!queue.isEmpty()) {  
-        String str = queue.poll();  
-
-        if (str.equals(end)) {  
-            getPaths(map.get(end), map, new ArrayList&lt;String&gt;(), ret);  
-            return ret;  
-        }  
-
-        for (int i = 0; i &lt; str.length(); i++) {  
-            for (int j = 0; j &lt;= 25; j++) {  
-                // transform it into another word  
-                String newStr = replace(str, i, (char) ('a' + j));  
-
-                // if a new word is explored  
-                if (dict.contains(newStr)) {  
-                    if (!map.containsKey(newStr)) {  
-                        // construct a new node  
-                        Node node = map.get(str);  
-                        Node newNode = new Node(node.dist + 1, newStr);  
-                        newNode.prev = new LinkedList&lt;Node&gt;();  
-                        newNode.prev.add(node);  
-
-                        map.put(newStr, newNode);  
-                        queue.offer(newStr);  
-                    } else {  
-                        Node node = map.get(newStr);  
-                        Node prevNode = map.get(str);  
-
-                        // increase the path set  
-                        if (node.dist == prevNode.dist + 1) {  
-                            node.addPrev(prevNode);  
-                            // queue.offer(newStr); // will cause TLE!!!  
-                        }  
-                    }  
-                }  
-            }  
-        }  
-    }  
-
-    return ret; // return an empty set  
-}  
-
-// replace the index of the given string with the given char  
-private String replace(String str, int index, char c) {  
-    StringBuilder sb = new StringBuilder(str);  
-    sb.setCharAt(index, c);  
-    return sb.toString();  
-}  
-
-// get all the paths by using DFS  
-private void getPaths(Node end, Map&lt;String, Node&gt; map,  
-        ArrayList&lt;String&gt; curPath, ArrayList&lt;ArrayList&lt;String&gt;&gt; paths) {  
-    if (end == null) {  
-        paths.add(curPath);  
-        return;  
-    }  
-
-    curPath.add(0, end.str);  
-    if (!end.prev.isEmpty()) {  
-        for (Node prevNode : end.prev) {  
-            getPaths(prevNode, map, new ArrayList&lt;String&gt;(curPath), paths);  
-        }  
-    } else {  
-        getPaths(null, map, curPath, paths);  
-    }  
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/50">&larr; Older</a>
@@ -1342,7 +1240,7 @@ private void getPaths(Node end, Map&lt;String, Node&gt; map,
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -1365,6 +1263,10 @@ private void getPaths(Node end, Map&lt;String, Node&gt; map,
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -1378,10 +1280,6 @@ private void getPaths(Node end, Map&lt;String, Node&gt; map,
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

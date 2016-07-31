@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Write an efficient algorithm that searches for a value in an n x m table (two-dimensional array). This table is sorted along the rows &hellip;">
+  <meta name="description" content="Question Implement a iterator for a binary search tree Related question: Binary Tree Inorder Traversal Analysis First of all, what is an iterator in &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,98 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/14/Iterator-of-Tree/">[Question] Iterator of Binary Search Tree</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-14T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Implement a iterator for a binary search tree</p></blockquote>
+
+<p><strong>Related question</strong>: <a href="/blog/2014/05/24/Binary-Tree-Inorder-Traversal/">Binary Tree Inorder Traversal</a></p>
+
+<h3>Analysis</h3>
+
+<p>First of all, what is an iterator in Java?</p>
+
+<blockquote><p>Java has a commonly used Iterator interface.</p>
+
+<p>It is usually used like this:</p></blockquote>
+
+<pre><code>Iterator e = container.iterator();  
+while (e.hasNext()) {
+    System.out.println(e.next());
+}
+</code></pre>
+
+<p>The source code of Iterator interface:</p>
+
+<pre><code>public interface Iterator&lt;E&gt; {
+    boolean hasNext();
+    E next();
+    void remove();
+}
+</code></pre>
+
+<p>In this post, we will only implement next(), because Tree node deletion is covered in another post, and it&rsquo;s not easy.</p>
+
+<p>The most standard way is to do an inorder traversal (by storing a pointer to the next node). The only difference is iterator is 1 step at a time. If you cannot write inorder traversal without using recursion, <a href="/blog/2014/05/24/Binary-Tree-Inorder-Traversal/">learn it first</a>. The solution of iterator is available from <a href="http://manbroski.blogspot.sg/2011/11/iterator-for-binary-search-tree.html">this blog</a>, although he made some small syntax errors.</p>
+
+<h3>Code</h3>
+
+<pre><code>public class BinaryTreeIterator {
+
+    private Stack&lt;TreeNode&gt; stack = new Stack&lt;TreeNode&gt;();
+
+    public BinaryTreeIterator(TreeNode root) {
+        if (root == null) {
+            throw new NoSuchElementException("Empty tree");
+        }
+        while (root != null) {
+            stack.push(root);
+            root = root.left;
+        }
+    }
+
+    public boolean hasNext() {
+        return !stack.isEmpty();
+    }
+
+    public TreeNode next() {
+        TreeNode top = stack.pop();
+        TreeNode right = top.right;
+        while (right != null) {
+            stack.push(right);
+            right = right.left;
+        }
+        return top;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1674,164 +1766,6 @@ public TreeNode buildTree(int[] inorder, int[] postorder) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/10/NineChap-Binary-Search-Tree/">[NineChap 3.3] Binary Search Tree</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-06-10T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Question list</h2>
-
-<p><strong>BST</strong></p>
-
-<ol>
-<li><p><strong><a href="/blog/2014/05/26/Validate-Binary-Search-Tree/">Validate Binary Search Tree</a></strong></p></li>
-<li><p><strong><a href="/blog/2014/06/11/BST-insert-and-delete/">Insert a Node in Binary Search Tree</a></strong></p></li>
-<li><p><strong><a href="/blog/2014/06/11/BST-insert-and-delete/">Delete a Node in Binary Search Tree</a></strong></p></li>
-<li><p><strong><a href="/blog/2014/06/13/Search-range-BST-trim-BST/">Search Range in a Binary Search Tree</a></strong></p></li>
-</ol>
-
-
-<p><strong>Additional</strong></p>
-
-<ol>
-<li><p><strong><a href="/blog/2014/05/25/Recover-Binary-Search-Tree/">Recover Binary Search Tree</a></strong> - used global variable</p></li>
-<li><p><strong><a href="/blog/2014/05/26/Convert-Sorted-Array-to-Binary-Search-Tree/">Convert Sorted Array to Binary Search Tree</a></strong></p></li>
-<li><p><strong><a href="/blog/2014/05/26/Convert-Sorted-List-to-Binary-Search-Tree/">Convert Sorted List to Binary Search Tree</a></strong> - used global variable</p></li>
-</ol>
-
-
-<h2>Code</h2>
-
-<p><strong>Validate Binary Search Tree</strong></p>
-
-<pre><code>public boolean isValidBST(TreeNode root) {
-    return validate(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
-}
-
-private boolean validate(TreeNode node, int min, int max) {
-    if (node == null) {
-        return true;
-    }
-    if (node.val &lt;= min || max &lt;= node.val) {
-        return false;
-    }
-    return validate(node.left, min, node.val) &amp; validate(node.right, node.val, max);
-}
-</code></pre>
-
-<p><strong>Insert a Node in Binary Search Tree</strong> and <strong>Delete a Node in Binary Search Tree</strong> are written in a new post.</p>
-
-<p><strong>Search Range in a Binary Search Tree</strong></p>
-
-<p>There is a new post for this.</p>
-
-<p><strong>Recover Binary Search Tree</strong></p>
-
-<pre><code>// 3 global variables used
-TreeNode first = null;
-TreeNode second = null; 
-TreeNode current = null;
-
-public void recoverTree(TreeNode root) {
-    traverse(root);
-    if (first != null) {
-        int temp = first.val;
-        first.val = second.val;
-        second.val = temp;
-    }
-}
-
-public void traverse(TreeNode root) {
-    if (root == null) {
-        return;
-    }
-    traverse(root.left);
-    // inorder traversal
-    if (current != null &amp;&amp; current.val &gt; root.val) {
-        if (first == null) {
-            first = current;
-        }
-        second = root;
-    }
-    current = root;
-    traverse(root.right);
-}
-</code></pre>
-
-<p><strong>Convert Sorted Array to Binary Search Tree</strong></p>
-
-<pre><code>public TreeNode sortedArrayToBST(int[] num) {
-    if (num == null || num.length == 0) {
-        return null;
-    }
-    return build(num, 0, num.length - 1);
-}
-
-private TreeNode build(int[] num, int start, int end) {
-    if (start &gt; end) {
-        return null;
-    }
-    int mid = start + (end - start) / 2;
-    TreeNode head = new TreeNode(num[mid]);
-    head.left = build(num, start, mid - 1);
-    head.right = build(num, mid + 1, end);
-    return head;
-}
-</code></pre>
-
-<p><strong>Convert Sorted List to Binary Search Tree</strong> - note that this solution uses 1 global variable</p>
-
-<pre><code>ListNode cur = null;
-
-public TreeNode sortedListToBST(ListNode head) {
-    // count total length of the list 
-    ListNode p = head;
-    int count = 0;
-    while (p != null) {
-        p = p.next;
-        count++;
-    }
-    // start to traverse the tree and fill in data
-    cur = head;
-    return build(0, count - 1);
-}
-
-private TreeNode build(int start, int end) {
-    if (start &gt; end) {
-        return null;
-    }
-    int mid = start + (end - start) / 2;
-    TreeNode head = new TreeNode(0);
-    head.left = build(start, mid - 1);
-    head.val = cur.val;
-    cur = cur.next;
-    head.right = build(mid + 1, end);
-    return head;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/47">&larr; Older</a>
@@ -1849,7 +1783,7 @@ private TreeNode build(int start, int end) {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -1872,6 +1806,10 @@ private TreeNode build(int start, int end) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -1885,10 +1823,6 @@ private TreeNode build(int start, int end) {
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

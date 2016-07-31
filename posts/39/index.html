@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link There are n coins in a line. Two players take turns to take a coin from one of the ends of the line until there are no more coins left &hellip;">
+  <meta name="description" content="Question link There&rsquo;s a elephant, which can carry max 1000 bananas. The elephant eats a banana every 1 Km (both forward and back). Now we want &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,55 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/27/Elephant-And-Bananas/">[Question] Elephant and Bananas</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-27T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://tech-queries.blogspot.sg/2011/04/elephant-and-banana.html">link</a></p>
+
+<blockquote><p>There&rsquo;s a elephant, which can carry max 1000 bananas. The elephant eats a banana every 1 Km (both forward and back).</p>
+
+<p>Now we want to transfer 3000 bananas to a place 1000 Km away. How many bananas can be left?</p>
+
+<p>Also solved to generalized problem (write code for solution).</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p><strong>If we subdivide distances for each kilometer</strong>. Notice if elephant wants to shift all the bananas 1 km, <strong>you will loose 5 bananas every km</strong>.</p>
+
+<p>So we transferred 2995 (998+998+999) to one km distance. This process continues until after 200 km, we have only 2000 bananas left with remaining distance of 800 km.</p>
+
+<p><strong>Start from here, we only loose 3 bananas every km</strong>. This goes on for another 334 km, we will have 998 bananas left, and the rest of the bananas can be transfered in a single journey.</p>
+
+<h3>Solution</h3>
+
+<p><strong>532 bananas</strong>.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -801,51 +850,6 @@ private static int get10001stPrime() {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/24/Octal-and-Hexadecimal-Numbers/">[Java OOP] Octal and Hexadecimal Numbers in Java</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-07-24T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.geeksforgeeks.org/g-fact-61/">link</a></p>
-
-<blockquote><p>Predict the output of following program.</p></blockquote>
-
-<pre><code>public static void main(String[] args) {
-    int a = 012;
-    System.out.println("a is " + a);
-}
-</code></pre>
-
-<h3>Analysis</h3>
-
-<p>Putting a 0 before an integer constant makes it an <strong>octal number</strong> and putting 0x (or 0X) makes it a <strong>hexadecimal number</strong>.</p>
-
-<p><strong>Answer: 10</strong>.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/40">&larr; Older</a>
@@ -863,7 +867,7 @@ private static int get10001stPrime() {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -886,6 +890,10 @@ private static int get10001stPrime() {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -899,10 +907,6 @@ private static int get10001stPrime() {
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

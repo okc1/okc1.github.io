@@ -9,7 +9,8 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question An array A[1&hellip;n] contains all the integers from 0 to n except for one number which is missing. In this problem, we cannot access an &hellip;">
+  <meta name="description" content="Question Write a method to compute all permutations of a string. Do it recursively. Solution Get first char.
+Permute the reminder of the string. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +66,69 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/07/generate-permutation-recursively/">[CC150v4] 8.4 Generate Permutation Recursively</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-07T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Write a method to compute all permutations of a string.</p>
+
+<p>Do it recursively.</p></blockquote>
+
+<h3>Solution</h3>
+
+<ol>
+<li><p>Get first char.</p></li>
+<li><p>Permute the reminder of the string.</p></li>
+<li><p>Insert that char into all possible positions.</p></li>
+</ol>
+
+
+<p>The code is more concise that doing it iteratively, <strong>and no visited array needed</strong>!</p>
+
+<h3>Code</h3>
+
+<pre><code>public static ArrayList&lt;String&gt; getPerms(String s) {
+    ArrayList&lt;String&gt; ans = new ArrayList&lt;String&gt;();
+    if (s.length() == 1) {
+        ans.add(s);
+        return ans;
+    }
+    char single = s.charAt(0);
+    ArrayList&lt;String&gt; partialPerms = getPerms(s.substring(1));
+    for (String part : partialPerms) {
+        for (int i = 0; i &lt;= part.length(); i++) {
+            ans.add(part.substring(0, i) + single + part.substring(i));
+        }
+    }
+    return ans;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -764,60 +828,6 @@ private static boolean matchTree(TreeNode t1, TreeNode t2) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/04/unsolved-mystery-of-utf8/">[Google] Unsolved Mystery of UTF8 Encoding</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-09-04T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://algorithmguru.com/blog/?p=148">link</a></p>
-
-<blockquote><p>UTF-8 is a variable-length encoding of letters or runes. If the most significant bit of the first byte is 0, the letter is 1 byte long. Otherwise, its length is the number of leading 1’s in the first byte. If a letter is more than one byte long, all subsequent runes start with 10. Here’s a chart:</p>
-
-<p>UTF-8 encoding scheme is described below:</p></blockquote>
-
-<pre><code>0XXXXXXX = this is the entire rune
-10XXXXXX = this is a continuation of the rune from the previous byte
-110XXXXX = this is the start of a 2-byte rune.
-1110XXXX = this is the start of a 3-byte rune.
-11110XXX = this is the start of a 4-byte rune.
-111110XX = this is the start of a 5-byte rune.
-1111110X = this is the start of a 6-byte rune.
-11111110 = this is the start of a 7-byte rune.
-11111111 = this is the start of a 8-byte rune.
-</code></pre>
-
-<blockquote><p>For example, a 3-byte rune would be 1110XXXX 10XXXXXX 10XXXXXX.</p>
-
-<p>Write a function that decides whether a given byte array (or string) is valid UTF-8 encoded text.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>This is an easy question, just put here for reference.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/27">&larr; Older</a>
@@ -835,7 +845,7 @@ private static boolean matchTree(TreeNode t1, TreeNode t2) {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -858,6 +868,10 @@ private static boolean matchTree(TreeNode t1, TreeNode t2) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -871,10 +885,6 @@ private static boolean matchTree(TreeNode t1, TreeNode t2) {
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

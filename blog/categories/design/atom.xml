@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Design | Woodstock Blog]]></title>
   <link href="http://okc1.github.io/blog/categories/design/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-07-11T01:30:05-07:00</updated>
+  <updated>2016-07-31T02:06:49-07:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -12,6 +12,99 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[[Design] MVC, MVP and MVVM]]></title>
+    <link href="http://okc1.github.io/blog/2016/07/31/mvc-mvp-mvvm/"/>
+    <updated>2016-07-31T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2016/07/31/mvc-mvp-mvvm</id>
+    <content type="html"><![CDATA[# MVC Pattern
+
+Model-View-Controller. 
+
+The model and controller logic are __decoupled from user interface (view)__. 
+
+{% img middle /assets/images/mvc-pattern.png %}
+
+1. Model
+
+    business model + __data access operations__ (i.e. data model)
+
+2. View
+
+    __only for displaying data__ (received from the controller, transforms the model into UI)
+
+3. Controller __(IMPORTANT)__
+
+    __process incoming requests__. It receives input from users via the View, then process the user's data with the help of Model and passing the results back to the View. Typically, it acts as the coordinator between the View and the Model.
+
+## example 
+
+Ruby on Rails, Spring Framework, Apple iOS Development and ASP.NET MVC.
+
+Softwares (not web apps). 
+
+# MVP pattern
+
+separate the presentation layer from the logic
+
+The Presenter is responsible for handling all UI events on behalf of the view. 
+
+{% img middle /assets/images/mvp-pattern.png %}
+
+Unlike view and controller, view and presenter are completely decoupled from each other’s and communicate to each other’s by an interface.
+
+Also, presenter does not manage the incoming request traffic as controller.
+
+## Key Points about MVP
+
+1. User interacts with the View.
+
+1. There is one-to-one relationship between View and Presenter means one View is mapped to only one Presenter.
+
+1. View has a reference to Presenter but View has not reference to Model.
+
+1. Provides two way communication between View and Presenter.
+
+## example
+
+Android, ASP.NET Web Forms applications
+
+# MVVM pattern
+
+This pattern supports two-way data binding between view and View model. 
+
+This enables automatic propagation of changes, within the state of view model to the View. 
+
+Typically, __the view model uses the observer pattern__ to notify changes in the view model to model.
+
+{% img middle /assets/images/mvvm-pattern.png %}
+
+## details
+
+The View Model is responsible for exposing methods, commands, and other properties that helps to maintain the state of the view, manipulate the model as the result of actions on the view, and trigger events in the view itself.
+
+## Key Points about MVVM
+
+1. User interacts with the View.
+
+1. There is many-to-one relationship between View and ViewModel means many View can be mapped to one ViewModel.
+
+1. View has a reference to ViewModel but View Model has no information about the View.
+
+1. Supports two-way data binding between View and ViewModel.
+
+## example 
+
+Ember.js, WPF, Silverlight
+
+# Ref
+
+Main: http://www.dotnet-tricks.com/Tutorial/designpatterns/2FMM060314-Understanding-MVC,-MVP-and-MVVM-Design-Patterns.html
+
+TLDR: http://www.beyondjava.net/blog/model-view-whatever/
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[[Design] Design Twitter]]></title>
@@ -83,7 +176,7 @@ On average, __a web server support around 1000 QPS__, thus in this case, we need
 
 ## 4 services for Twitter
 
-<img class="middle" src="/assets/images/jiuzhang-four-service.png">
+{% img middle /assets/images/jiuzhang-four-service.png %}
 
 1. user service
     1. register
@@ -119,7 +212,7 @@ On average, __a web server support around 1000 QPS__, thus in this case, we need
 
 ## Select the right DB
 
-<img class="middle" src="/assets/images/jiuzhang-db-selection.png">
+{% img middle /assets/images/jiuzhang-db-selection.png %}
 
 __Question: can we use file system for tweets__?
 
@@ -133,7 +226,7 @@ No, it's hard to query. Eg. query all tweets of my friends.
 2. tweet table
 3. friendship table: this is not as straight forward, as it shall contain double directions info
 
-<img class="middle" src="/assets/images/jiuzhang-data-schema.png">
+{% img middle /assets/images/jiuzhang-data-schema.png %}
 
 # Important: News Feed
 
@@ -145,9 +238,9 @@ Post tweet is simple 1 DB write.
 
 __This design is bad, because file-system/DB read is slow__. If you have N friends, you query O(N) DB queries. __It's too slow (and user is getting sync-blocked, too)__. We should have, ideally, <= 7 DB queries per web page.
 
-<img class="middle" src="/assets/images/jiuzhang-pull-diagram.png">
+{% img middle /assets/images/jiuzhang-pull-diagram.png %}
 
-<img class="middle" src="/assets/images/jiuzhang-pull-code.png">
+{% img middle /assets/images/jiuzhang-pull-code.png %}
 
 ### problem
 
@@ -162,9 +255,9 @@ When I read, I simply read top 100 from the feed list. __So read is 1 DB read__.
 
 Post tweet is N DB writes, which is slow. __However this is done async, so it does not matter__.  
 
-<img class="middle" src="/assets/images/jiuzhang-push-diagram.png">
+{% img middle /assets/images/jiuzhang-push-diagram.png %}
 
-<img class="middle" src="/assets/images/jiuzhang-push-code.png">
+{% img middle /assets/images/jiuzhang-push-code.png %}
 
 One example of async implementation: __RabbitMQ__
 
@@ -196,7 +289,7 @@ In tweet table, if we need to count(user) who liked, it's gonna take forever.
 
 __We must denormalize this data__!
 
-<img class="middle" src="/assets/images/jiuzhang-denormalize.png">
+{% img middle /assets/images/jiuzhang-denormalize.png %}
 
 Denormalize: it's duplicate info but we store in table, because of performance improvement. 
 
@@ -207,13 +300,13 @@ __Shortcoming: inconsistency__!
 
 Solution: 1. use atomic operation 2. every day, schedule to update this number.
 
-## optimize thundering hert problem
+## optimize thundering herd problem
 
 When cache fails, all DB query will go to DB. This results in DB crash.
 
-Hot spot (thundering hert)
+Hot spot (thundering herd)
 
-<img class="middle" src="/assets/images/jiuzhang-thundering-herd.png">
+{% img middle /assets/images/jiuzhang-thundering-herd.png %}
 
 Solution: hold all incoming queries (who fails cache), and only send 1 DB query. When result is returned, return to every query. 
 ]]></content>
@@ -234,7 +327,7 @@ The tables, __we must use RDBMS__, as it's more reliable.
 
 __Friendship table__ is important:
 
-<img class="middle" src="/assets/images/design-user-registry-tables.png">
+{% img middle /assets/images/design-user-registry-tables.png %}
 ]]></content>
   </entry>
   
@@ -286,7 +379,7 @@ Following the spirit of other don’t repeat yourself frameworks, such as Django
 
 For more, read [Scrapy Architecture ](http://doc.scrapy.org/en/latest/topics/architecture.html).
 
-<img class="middle" src="/assets/images/scrapy_architecture.png">
+{% img middle /assets/images/scrapy_architecture.png %}
 
 1. Scrapy Engine 
 
@@ -423,98 +516,6 @@ This is most common and [one of the simplest ways to generate a maze using a com
 > To add difficulty and a fun factor to the DFS, you can __influence the likelihood of which neighbor you should visit__, instead of completely random. 
 
 > By making it more likely to visit neighbors to your sides, you can have a more horizontal maze generation.  
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[[Design] Strategy Design Pattern]]></title>
-    <link href="http://okc1.github.io/blog/2015/11/18/strategy-pattern/"/>
-    <updated>2015-11-18T00:00:00-08:00</updated>
-    <id>http://okc1.github.io/blog/2015/11/18/strategy-pattern</id>
-    <content type="html"><![CDATA[# Overview
-
-__[Strategy pattern](https://en.wikipedia.org/wiki/Strategy_pattern)__ (also known as the policy pattern) is a design pattern that __enables an algorithm's behavior to be selected__ at runtime.
-
-For instance, a class that performs __validation on incoming data__ may use a strategy pattern to select a validation algorithm __based on the type of data__, the source of the data, user choice... These factors are not known __until run-time__... 
-
-## A car example
-
-Since accelerate and brake behaviors change frequently between models, __a common approach is to implement these behaviors in subclasses__. This approach has significant drawbacks: accelerate and brake behaviors __must be declared in each new Car model__. 
-
-<img class="middle" src="/assets/images/600px-StrategyPattern_IBrakeBehavior.png">
-
-The strategy pattern uses __composition__ instead of inheritance. This allows: 
-
-1. better __decoupling between the behavior__ and the class that uses it. (i.e. behavior can be changed without breaking the classes that use it)
-
-1. classes can switch between behaviors by changing the specific implementation used without requiring any significant code changes. 
-
-Code:
-
-    /* Encapsulated family of Algorithms 
-     * Interface and its implementations
-     */
-    public interface IBrakeBehavior {
-        public void brake(); 
-    }
-
-    public class BrakeWithABS implements IBrakeBehavior {
-        public void brake() {
-            System.out.println("Brake with ABS applied");
-        }
-    }
-
-    public class Brake implements IBrakeBehavior {
-        public void brake() {
-            System.out.println("Simple Brake applied");
-        }
-    }
-
-
-    /* Client which can use the algorithms above interchangeably */
-    public abstract class Car {
-        protected IBrakeBehavior brakeBehavior;
-
-        public void applyBrake() {
-            brakeBehavior.brake();
-        }
-
-        public void setBrakeBehavior(IBrakeBehavior brakeType) {
-            this.brakeBehavior = brakeType;
-        }
-    }
-
-    /* Client 1 uses one algorithm (Brake) in the constructor */
-    public class Sedan extends Car {
-        public Sedan() {
-            this.brakeBehavior = new Brake();
-        }
-    }
-
-    /* Client 2 uses another algorithm (BrakeWithABS) in the constructor */
-    public class SUV extends Car {
-        public SUV() {
-            this.brakeBehavior = new BrakeWithABS();
-        }
-    }
-
-
-    /* Using the Car Example */
-    public class CarExample {
-        public static void main(String[] args) {
-            Car sedanCar = new Sedan();
-            sedanCar.applyBrake();  // This will invoke class "Brake"
-
-            Car suvCar = new SUV(); 
-            suvCar.applyBrake();    // This will invoke class "BrakeWithABS"
-
-            // set brake behavior dynamically
-            suvCar.setBrakeBehavior( new Brake() ); 
-            suvCar.applyBrake();    // This will invoke class "Brake" 
-        }
-    }
-
-This gives greater flexibility in design and is in harmony with the __[Open/closed principle](https://en.wikipedia.org/wiki/Open/closed_principle)__ (OCP) that states that __classes should be open for extension but closed for modification__.
 ]]></content>
   </entry>
   

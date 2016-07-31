@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link For an integer array (index from 0 to n-1, where n is the size of this array), in the corresponding SegmentTree, each node stores an &hellip;">
+  <meta name="description" content="Question link For an array, we can build a SegmentTree for it, each node stores an extra attribute count to denote the number of elements in the the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,81 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/13/Segment-Tree-Query-II/">[LintCode] Segment Tree Query II</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-10-13T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.lintcode.com/en/problem/segment-tree-query-ii/">link</a></p>
+
+<blockquote><p>For an array, we can build a SegmentTree for it, each node stores an extra attribute count to denote the number of elements in the the array which value is between interval start and end. (The array may not fully filled by elements)</p>
+
+<p>Design a query method with three parameters root, start and end, find the number of elements in the in array&rsquo;s interval [start, end] by the given root of value SegmentTree.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Similar.</p>
+
+<h3>Code</h3>
+
+<pre><code>/**
+ * Definition of SegmentTreeNode:
+ * public class SegmentTreeNode {
+ *     public int start, end, count;
+ *     public SegmentTreeNode left, right;
+ *     public SegmentTreeNode(int start, int end, int count) {
+ *         this.start = start;
+ *         this.end = end;
+ *         this.count = count;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+public class Solution {
+    /**
+     *@param root, start, end: The root of segment tree and 
+     *                         an segment / interval
+     *@return: The count number in the interval [start, end]
+     */
+    public int query(SegmentTreeNode root, int start, int end) {
+        if (root == null || start &gt; end) {
+            return 0;
+        } else if (root.start &gt; end || root.end &lt; start) {
+            return 0;
+        } else if (start &lt;= root.start &amp;&amp; root.end &lt;= end) {
+            return root.count;
+        }
+        int mid = (root.start + root.end) / 2;
+        return query(root.left, start, Math.min(mid, end)) + 
+                query(root.right, Math.max(mid + 1, start), end);
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -846,96 +921,6 @@ private void helper(String s, int p) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/10/02/shorest-manhattan-distance/">[Google] Shortest Manhattan Distance</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-10-02T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.mitbbs.com/article_t/JobHunting/33054861.html">link</a></p>
-
-<blockquote><p>给一个 n*m 的房间，房间里存在各种可能的墙，房间的格子里已经放了 e 个器材，要
-求新放一个器材，放置位置距其它 e 个器材的距离最近。Breadth-first search.</p></blockquote>
-
-<h3>Solution</h3>
-
-<blockquote><p>对 e个设备 BFS, 求每个设备到每个可以放新器材的点的距离，然后叠加。</p>
-
-<p>最后O（n<sup>2</sup>）一遍找最小值。复杂度O（e*n<sup>2</sup>）</p></blockquote>
-
-<p>As for whether we choose to check each equipment position, or check each vacant position, it&rsquo;s decided by how many equipment is there. If very little equipments (e is small), then this solution should work.</p>
-
-<p>However, what is there is obstacles in the matrix?</p>
-
-<p>We have to use BFS then. It took more space usage, but the time complexity should be same.</p>
-
-<h3>Code</h3>
-
-<pre><code>public void findCenter(int[][] input, int numberOfEquip) {
-    int m = input.length;
-    int n = input[0].length;
-
-    // there's gonna be m * n positions
-    // we gonna cumulate (numberOfEquip) distances for each position
-    int[] dis = new int[m * n];
-
-    // from the input map, find Equipments
-    for (int i = 0; i &lt; m; i++) {
-        for (int j = 0; j &lt; n; j++) {
-            if (input[i][j] == 1) {
-                // 1 represents equipment
-                // when found, add the distance to every position
-                cumulateDistance(i, j, dis, m, n);
-            }
-        }
-    }
-
-    // find the smallest cumulated distance from dis[].
-    int sIndex = 0;
-    int smallest = dis[0];
-    for (int i = 0; i &lt; m * n; i++) {
-        if (dis[i] &lt; smallest) {
-            smallest = dis[i];
-            sIndex = i;
-        }
-    }
-
-    // index sIndex is the final answer
-    System.out.println("Answer: " + (sIndex / n) + " " + (sIndex % n));
-}
-
-private void cumulateDistance(int x, int y, int[] dis, int m, int n) {
-    for (int i = 0; i &lt; m * n; i++) {
-        int a = i / n;
-        int b = i % n;
-        dis[i] += Math.abs(a - x) + Math.abs(b - y);
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/4">&larr; Older</a>
@@ -953,7 +938,7 @@ private void cumulateDistance(int x, int y, int[] dis, int m, int n) {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -976,6 +961,10 @@ private void cumulateDistance(int x, int y, int[] dis, int m, int n) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -989,10 +978,6 @@ private void cumulateDistance(int x, int y, int[] dis, int m, int n) {
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

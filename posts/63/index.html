@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given n non-negative integers a1, a2, ..., an, where each represents a point at coordinate (i, ai). n vertical lines are drawn such &hellip;">
+  <meta name="description" content="Question link Determine whether an integer is a palindrome. Do this without extra space. Some hints: Could negative integers be palindromes? (ie, -1 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,134 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/04/29/Palindrome-Number/">[LeetCode 9] Palindrome Number</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-04-29T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>29</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/palindrome-number/">link</a></p>
+
+<div class="question-content">
+<p></p><p>Determine whether an integer is a palindrome. Do this without extra space.</p>
+
+<div class="spoilers" style="display: block;"><b>Some hints:</b>
+
+<p>Could negative integers be palindromes? (ie, -1)</p>
+
+<p>If you are thinking of converting the integer to string, note the restriction of using extra space.</p>
+
+<p>You could also try reversing an integer. However, if you have solved the problem "Reverse Integer", you know that the reversed integer might overflow. How would you handle such case?</p>
+
+<p>There is a more generic way of solving this problem.</p>
+
+</div><p></p>
+</div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Diffficulty</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="white">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p>This question is easy, and very similar to the &ldquo;Reverse Integer&rdquo; question. <strong>Simpliest solution is to just reverse the integer</strong> and compare with original number.</p>
+
+<p>But again, reversing the integer have chances of <strong>overflow</strong>. How do we work this out?</p>
+
+<h3>Solution</h3>
+
+<p>First, same as previous post <strong>[LeetCode 7] Reverse Integer</strong>, we can use Long type to handle the overflow issues.</p>
+
+<p>Second, <strong>we can also do direct compare</strong> to always compare the head and tail of the number. No numerical type conversion is needed. I came up with idea previously, and code is posted below.</p>
+
+<h3>My code</h3>
+
+<p>Use Long type:</p>
+
+<pre><code>public class Solution {
+    public boolean isPalindrome(int x) {
+        if (x &lt; 0) {
+            return false;
+        }
+        long rev = 0;
+        long original = x;
+        while (x != 0) {
+            rev = rev * 10 + (x % 10);
+            x = x / 10;
+        }
+        return original == rev;
+    }
+}
+</code></pre>
+
+<p>Compare head and tail:</p>
+
+<pre><code>public boolean isPalindrome(int x) {
+    if (x &lt; 0) {
+        return false;
+    }
+    int divide = 1;
+    while (x / divide &gt;= 10) {
+        divide *= 10;
+    }
+    int head = 0, tail = 0;
+    while (divide &gt; 0) {
+        head = x / divide;
+        tail = x % 10;
+        if (head != tail) {
+            return false;
+        }
+        x = x % divide / 10;
+        divide /= 100;
+    }
+    return true;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -4512,138 +4640,6 @@ Print the list:
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/11/21/get-max-number-game/">[Question] Get Max Number Game (Minmax + Dp)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2013-11-21T00:00:00-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2013</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1>Question</h1>
-
-<p><a href="http://www.weiming.info/zhuti/JobHunting/31725587/">link</a></p>
-
-<blockquote><p>两个人（A，B）参与一个游戏，规则如下：</p>
-
-<p>1）一个随机的整数数列有偶数个数,a1,a2,&hellip;a2n</p>
-
-<p>2）A 先从数列取数，但只能从两头取,a1 or a2n</p>
-
-<p>3)然后Ｂ取数，也是只能从剩下的两头取，依此类推，两个人轮流，都只能从两头取</p>
-
-<p>Output <strong>the max sum of numbers</strong> that player 1 is going to get.</p></blockquote>
-
-<h1>Solution</h1>
-
-<p>This question can be solved with DP by using the following 3 equations:</p>
-
-<ol>
-<li>sum[i][j] sum of number from i to j</li>
-<li>val[i][j]: the max value that can be obtained if only the range [i,j] is left and you take the move first</li>
-<li>pos[][] is related to val[][], as it denotes whether we take i or j</li>
-</ol>
-
-
-<p>After we got sum[][] array fully filled up, the transition equation of val[][] looks like:</p>
-
-<pre><code>val[x][y] = sum[x][y] - MIN( val[x+1][y], val[x][y-1] )
-</code></pre>
-
-<p>As for pos[][]:</p>
-
-<pre><code>pos[x][y] = x  if val[x+1][y] &lt; val[x][y-1]
-            y  otherwise
-</code></pre>
-
-<h1>Code</h1>
-
-<pre><code>public int getMaxSumPlayerOne(int[] input) {
-    int len = input.length;
-    // sum[i][j] sum of number from i to j
-    int[][] sum = new int[len][len];
-    // val[i][j]: the max value that can be obtained if only
-    // the range [i,j] is left and you take the move first
-    int[][] val = new int[len][len];
-    // pos is related to val, as it denotes whether we take i or j
-    int[][] pos = new int[len][len];
-
-    // 1. fill in sum[][]
-    for (int x = 0; x &lt; len; x++) {
-        for (int y = x; y &lt; len; y++) {
-            if (x == y) {
-                sum[x][y] = input[x];
-            } else if (x == 0) {
-                // fill up the first row in the sum[][] dp array
-                sum[x][y] = sum[x][y - 1] + input[y];
-            } else {
-                // starting from the 2nd row, it's gonna make use of 1st row
-                // x &gt;= 1
-                sum[x][y] = sum[0][y] - sum[0][x - 1];
-            }
-        }
-    }
-
-    // 2. fill in val[][] and pos[][]
-    for (int x = len - 1; x &gt;= 0; x--) {
-        for (int y = x; y &lt; len; y++) {
-            if (x == y) {
-                val[x][y] = input[x];
-                pos[x][y] = x;
-            } else {
-                // when I choose either x or y, I look at what the opponent
-                // is gonna get after my move, then chose the smaller
-                // v[][] for the remaining part
-                val[x][y] = sum[x][y] - Math.min(val[x + 1][y], val[x][y - 1]);
-                pos[x][y] = val[x + 1][y] &lt; val[x][y - 1] ? x : y;
-            }
-        }
-    }
-    this.printSteps(pos, len);
-    return val[0][len - 1];
-}
-</code></pre>
-
-<h1>Testing</h1>
-
-<pre><code>Input {1, 4, 3, 2}
-Player 1 take position 3
-Player 2 take position 2
-Player 1 take position 1
-Player 2 take position 0
-max sum for player 1 is 6
-
-Input {7, 5, 2, 6, 9, 8, 3, 4}
-Player 1 take position 0
-Player 2 take position 1
-Player 1 take position 7
-Player 2 take position 6
-Player 1 take position 5
-Player 2 take position 4
-Player 1 take position 3
-Player 2 take position 2
-max sum for player 1 is 25
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/64">&larr; Older</a>
@@ -4661,7 +4657,7 @@ max sum for player 1 is 25
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -4684,6 +4680,10 @@ max sum for player 1 is 25
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -4697,10 +4697,6 @@ max sum for player 1 is 25
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

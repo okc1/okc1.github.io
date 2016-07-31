@@ -9,7 +9,11 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="TSP problem Given a list of cities and the distances between each pair of cities, what is the shortest possible route that visits each city exactly &hellip;">
+  <meta name="description" content="Question link Given a wordlist like this: 1. ccaa
+1. baca
+1. baaa
+1. bbbb and a Grid like this: X X XXXX
+X X XXXX Now solve this crossword. One &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +69,83 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/01/Crossword-solver/">[Google] Crosswod Solver</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-01T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://stackoverflow.com/questions/8585090/algorithm-for-crossword-puzzle-with-given-grid">link</a></p>
+
+<blockquote><p>Given a wordlist like this:</p></blockquote>
+
+<pre><code>1. ccaa
+1. baca
+1. baaa
+1. bbbb
+</code></pre>
+
+<blockquote><p>and a Grid like this:</p></blockquote>
+
+<pre><code>X X 
+XXXX
+X X 
+XXXX
+</code></pre>
+
+<blockquote><p>Now solve this crossword. One possible solution:</p></blockquote>
+
+<pre><code>b c 
+baca
+b a 
+baaa
+</code></pre>
+
+<h3>Solution</h3>
+
+<p><a href="http://stackoverflow.com/a/8586102">The corssword problem</a> is NP-Complete, so your best shot is brute force: just try all possibilities, and stop when a possibility is a valid. Return failure when you exhausted all possible solutions.</p>
+
+<h3>Code</h3>
+
+<p><strong>Pseudo code for brute force</strong>. (this just serve as a guide, not a complete/correct solution)</p>
+
+<pre><code>solve(words,grid):
+   if words is empty:
+       if grid.isValudSol():
+          return grid
+       else:
+          return None
+   for each word in words:
+       possibleSol &lt;- grid.fillFirst(word)
+       ret &lt;- solve(words\{word},possibleSol)
+       if (ret != None):
+          return ret
+   return None
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -912,92 +993,6 @@ A S T U
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/27/google-api-read-4096/">[Google] Google API Read4096 (read4K)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-08-27T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.careercup.com/question?id=14424684">link</a></p>
-
-<blockquote><p>Given API: int Read4096(char* buf);</p>
-
-<p>It reads data from a file and records the position so that the next time when it is called it read the next 4k chars (or the rest of the file, whichever is smaller) from the file. The return is the number of chars read.</p>
-
-<p>Use above API to Implement API &ldquo;int Read(char* buf, int n)&rdquo; which reads any number of chars from the file.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>Since the nature of C++ and Java is different, I changed the api to:</p>
-
-<pre><code>GoogleApi.read4096(){}
-GoogleRead4096.read(int n){}
-</code></pre>
-
-<p>As <a href="http://www.careercup.com/question?id=14424684">suggested</a>, the solution is to keep <strong>one local buffer</strong>, and 1 pointer within the buffer.</p>
-
-<h3>Code</h3>
-
-<pre><code>String buffer = null;
-int p = 0;
-
-public String read(int n) {
-    if (n &lt; 0) {
-        return null;
-    } else if (n == 0) {
-        return "";
-    }
-    StringBuilder sb = new StringBuilder();
-    while (n &gt; 0) {
-        // there is (LENGTH - p) chars left in the local buffer
-        if (buffer == null || p == buffer.length()) {
-            // no char left in buffer, update buffer
-            buffer = GoogleApi.read4096();
-            p = 0;
-            if (buffer.length() == 0) {
-                // finish reading the file (no more input chars)
-                break;
-            }
-        } else {
-            int numChars = buffer.length() - p;
-            if (numChars &gt;= n) {
-                sb.append(buffer.substring(p, p + n));
-                p = p + n;
-                n = 0;
-            } else {
-                sb.append(buffer.substring(p));
-                p = buffer.length();
-                n -= numChars;
-            }
-        }
-    }
-    return sb.toString();
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/29">&larr; Older</a>
@@ -1015,7 +1010,7 @@ public String read(int n) {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -1038,6 +1033,10 @@ public String read(int n) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -1051,10 +1050,6 @@ public String read(int n) {
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

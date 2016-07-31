@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given a list of integers, which denote a permutation. Find the previous permutation in ascending order. Note The list may contains &hellip;">
+  <meta name="description" content="Question link Topological ordering of a directed graph is a linear ordering of its vertices such that for every directed edge uv from vertex u to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,198 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/27/Topology-sorting/">[Question] Topology Sort</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-27T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Topological_sorting">link</a></p>
+
+<blockquote><p>Topological ordering of a directed graph is a linear ordering of its vertices such that <strong>for every directed edge uv from vertex u to vertex v, u comes before v in the ordering</strong>.</p>
+
+<p>A topological ordering is possible if and only if the graph has no directed cycles, that is, if it is a <strong>directed acyclic graph (DAG)</strong>.</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>Canonical application of toposort is to schedule tasks with dependency (project management etc.) It&rsquo;s also used for computing formulas, logic synthesis, order of compilation (&lsquo;make&rsquo; command) and data serialization.</p>
+
+<p><img class="middle" src="/assets/images/topology_sort_example.png"></p>
+
+<h3>Solution</h3>
+
+<p>The usual algorithms have <strong>linear run-time</strong>, i.e. O(V + E).</p>
+
+<blockquote><p>First step is to find a list of &ldquo;start nodes&rdquo; which have no incoming edges. Then insert them into a set S and delete it. At least one such node must exist in an <strong>directed acyclic graph</strong>. From a university <a href="https://courses.cs.washington.edu/courses/cse326/03wi/lectures/RaoLect20.pdf">lecture</a>.</p></blockquote>
+
+<p>From Wiki:</p>
+
+<pre><code>L ← Empty list that will contain the sorted elements
+S ← Set of all nodes with no incoming edges
+while S is non-empty do
+    remove a node n from S
+    add n to tail of L
+    for each node m with an edge e from n to m do
+        remove edge e from the graph
+        if m has no other incoming edges then
+            insert m into S
+if graph has edges then
+    return error (graph has at least one cycle)
+else 
+    return L (a topologically sorted order)
+</code></pre>
+
+<p>If the graph is a DAG, <strong>a solution will be contained in the list L</strong> (the solution is not necessarily unique). Otherwise, the graph must have at least one cycle and therefore <strong>a topological sorting is impossible</strong>.</p>
+
+<h3>Code</h3>
+
+<p>The solution comes from <a href="http://codereview.stackexchange.com/questions/44689/topological-sort-in-java">here</a>.</p>
+
+<p><img class="middle" src="/assets/images/topology_sort.png" width="250" height="250"></p>
+
+<pre><code>public class Graph {
+    private int vertices;
+    private Set&lt;Node&gt; nodes = new HashSet&lt;Node&gt;();
+
+    public Graph(int vertices) {
+        this.vertices = vertices;
+    }
+
+    public void addVertex(Node node) {
+        this.nodes.add(node);
+    }
+
+    public Set&lt;Node&gt; topologicalSort() {
+        Queue&lt;Node&gt; q = new LinkedList&lt;Node&gt;();
+        Set&lt;Node&gt; topoSort = new LinkedHashSet&lt;Node&gt;();
+        int vertexProcessesCtr = 0;
+        for (Node m : this.nodes) {
+            vertexProcessesCtr = addToQueue(m, topoSort, vertexProcessesCtr, q);
+        }
+        while (!q.isEmpty()) {
+            Node m = q.poll();
+            for (Node child : m.getAdjacenctNode()) {
+                int indeq = child.getInDegree() - 1;
+                child.setInDegree(indeq);
+                vertexProcessesCtr = addToQueue(child, topoSort,
+                        vertexProcessesCtr, q);
+            }
+        }
+        if (vertexProcessesCtr &gt; this.vertices) {
+            System.out.println();
+        }
+        return topoSort;
+    }
+
+    private int addToQueue(Node node, Set&lt;Node&gt; topoSort, int vertexProcess,
+            Queue&lt;Node&gt; q) {
+        if (node.getInDegree() == 0) {
+            q.add(node);
+            topoSort.add(node);
+            return vertexProcess + 1;
+        }
+        return vertexProcess;
+    }
+
+    public static void main(String[] args) {
+        Graph g = new Graph(8);
+
+        Node TEN = new Node("10");
+        Node ELEVEN = new Node("11");
+        Node TWO = new Node("2");
+        Node THREE = new Node("3");
+        Node FIVE = new Node("5");
+        Node SEVEN = new Node("7");
+        Node EIGHT = new Node("8");
+        Node NINE = new Node("9");
+
+        SEVEN.AdjacenctNode.add(ELEVEN);
+        ELEVEN.inDegree++;
+        SEVEN.AdjacenctNode.add(EIGHT);
+        EIGHT.inDegree++;
+        FIVE.AdjacenctNode.add(ELEVEN);
+        ELEVEN.inDegree++;
+        THREE.AdjacenctNode.add(EIGHT);
+        EIGHT.inDegree++;
+        THREE.AdjacenctNode.add(TEN);
+        TEN.inDegree++;
+        ELEVEN.AdjacenctNode.add(TEN);
+        TEN.inDegree++;
+        ELEVEN.AdjacenctNode.add(TWO);
+        TWO.inDegree++;
+        ELEVEN.AdjacenctNode.add(NINE);
+        NINE.inDegree++;
+        EIGHT.AdjacenctNode.add(NINE);
+        NINE.inDegree++;
+
+        g.nodes.add(TWO);
+        g.nodes.add(THREE);
+        g.nodes.add(FIVE);
+        g.nodes.add(SEVEN);
+        g.nodes.add(EIGHT);
+        g.nodes.add(NINE);
+
+        System.out.println("Now calling the topologial sorts");
+        Set&lt;Node&gt; result = g.topologicalSort();
+        for (Node node : result) {
+            System.out.println(node.data + " ");
+        }
+    }
+}
+
+class Node {
+    public String data;
+    public int dist;
+    public int inDegree;
+    LinkedList&lt;Node&gt; AdjacenctNode = new LinkedList&lt;Node&gt;();
+
+    public void addAdjNode(final Node Child) {
+        AdjacenctNode.add(Child);
+        Child.inDegree++;
+    }
+
+    public Node(String data) {
+        super();
+        this.data = data;
+    }
+
+    public int getInDegree() {
+        return inDegree;
+    }
+
+    public void setInDegree(int inDegree) {
+        this.inDegree = inDegree;
+    }
+
+    public LinkedList&lt;Node&gt; getAdjacenctNode() {
+        return AdjacenctNode;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -2151,300 +2343,6 @@ def test(n):
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/18/NineChap-Linked-List-additional/">[NineChap 4.2] Linked List Additional</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-06-18T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Question list</h2>
-
-<ol>
-<li><p><strong><a href="/blog/2014/06/17/Union-and-intersection-of-linked-list/">Union and Intersection of two Linked Lists</a></strong></p></li>
-<li><p><strong><a href="/blog/2014/05/30/Insertion-Sort-List/">Insertion Sort List</a></strong> - difficult</p></li>
-<li><p><strong><a href="/blog/2014/05/28/Flatten-Binary-Tree-to-Linked-List/">Flatten Binary Tree to Linked List</a></strong></p></li>
-<li><p><strong><a href="/blog/2014/05/26/Convert-Sorted-List-to-Binary-Search-Tree/">Convert Sorted List to Binary Search Tree</a></strong></p></li>
-<li><p><strong><a href="/blog/2014/05/19/Rotate-List/">Rotate List</a></strong></p></li>
-<li><p><strong><a href="/blog/2014/05/02/Remove-Nth-Node-From-End-of-List/">Remove Nth Node From End of List</a></strong></p></li>
-<li><p><strong><a href="/blog/2014/06/03/LRU-Cache/">LRU Cache </a></strong></p></li>
-<li><p><strong><a href="/blog/2014/05/11/Reverse-Nodes-in-k-Group/">Reverse Nodes in k-Groups</a></strong></p></li>
-<li><p><strong><a href="/blog/2014/05/09/Swap-Nodes-in-Pairs/">Swap Nodes in Pairs</a></strong></p></li>
-</ol>
-
-
-<h2>Code</h2>
-
-<p><strong>Union and Intersection of two Linked Lists</strong></p>
-
-<p>Think about the idea only.</p>
-
-<p><strong>Insertion Sort List</strong></p>
-
-<pre><code>public ListNode insertionSortList(ListNode head) {
-    if (head == null) {
-        return null;
-    }
-    ListNode dummy = new ListNode(0);
-    ListNode cur = head;
-    while (cur != null) {
-        // insert cur into correct pos
-        ListNode pos = dummy;
-        while (pos.next != null &amp;&amp; pos.next.val &lt; cur.val) {
-            pos = pos.next;
-        }
-        ListNode temp = cur.next;
-        cur.next = pos.next;
-        pos.next = cur;
-        cur = temp;
-    }
-    return dummy.next;
-}
-</code></pre>
-
-<p><strong>Flatten Binary Tree to Linked List</strong></p>
-
-<p>I forgot to set &ldquo;root.left = null&rdquo; again, which result in long-time debugging. This is a very common and very silly mistake that I really should avoid.</p>
-
-<pre><code>public void flatten(TreeNode root) {
-    root = helper(root);
-}
-
-private TreeNode helper(TreeNode node) {
-    if (node == null) {
-        return null;
-    } else if (node.left == null &amp;&amp; node.right == null) {
-        return node;
-    } else if (node.left == null) {
-        return helper(node.right);
-    } else if (node.right == null) {
-        node.right = node.left;
-        node.left = null;
-        return helper(node.right);
-    } else {
-        TreeNode tempRight = node.right;
-        node.right = node.left;
-        node.left = null;
-        TreeNode leftTail = helper(node.right);
-        leftTail.right = tempRight;
-        return helper(tempRight);
-    }
-}
-</code></pre>
-
-<p><strong>Convert Sorted List to Binary Search Tree</strong></p>
-
-<p>This is the Mock Interview question. My solution is:</p>
-
-<pre><code>public TreeNode sortedListToBST(ListNode listHead) {
-    if (listHead == null) {
-        return null;
-    }
-    if (listHead.next == null) {
-        return new TreeNode(listHead.val);
-    }
-    ListNode listFirstHalf = listHead;
-    ListNode listPreMid = findMiddle(listHead);
-    ListNode listSecondHalf = null;
-    if (listPreMid.next != null) {
-        listSecondHalf = listPreMid.next.next;
-    }
-    TreeNode head = new TreeNode(listPreMid.next.val);
-    listPreMid.next = null;
-    head.left = sortedListToBST(listFirstHalf);
-    head.right = sortedListToBST(listSecondHalf);
-    return head;
-}
-
-private ListNode findMiddle(ListNode listHead) {
-    if (listHead == null) {
-        return null;
-    }
-    ListNode slow = listHead;
-    ListNode fast = listHead.next;
-    while (fast != null &amp;&amp; fast.next != null&amp;&amp; fast.next.next != null) {
-        slow = slow.next;
-        fast = fast.next.next;
-    }
-    return slow;
-}
-</code></pre>
-
-<p>This is not a good answer, cuz I have to findMid in each recursion.</p>
-
-<p>The best solution is, use a global variable and 2 numbers to simplify this process. Code:</p>
-
-<pre><code>ListNode cur = null;
-
-public TreeNode sortedListToBST(ListNode head) {
-    if (head == null) {
-        return null;
-    }
-    cur = head;
-    int k = 0;
-    ListNode p = head;
-    while (p != null) {
-        k++;
-        p = p.next;
-    }
-    return build(0, k - 1);
-}
-
-private TreeNode build(int start, int end) {
-    if (start &gt; end) {
-        return null;
-    }
-    int mid = start + (end - start) / 2;
-    TreeNode leftBranch = build(start, mid - 1);
-    TreeNode head = new TreeNode(cur.val);
-    cur = cur.next;
-    head.left = leftBranch;
-    head.right = build(mid + 1, end);
-    return head;
-}
-</code></pre>
-
-<p><strong>Rotate List</strong></p>
-
-<p>Naive solution:</p>
-
-<pre><code>public ListNode rotateRight(ListNode head, int n) {
-    if (head == null) {
-        return null;
-    }
-    ListNode p = head;
-    for (int i = 0; i &lt; n; i++) {
-        if (p.next == null) {
-            p = head;
-        } else {
-            p = p.next;
-        }
-    }
-    ListNode q = head;
-    while (p.next != null) {
-        p = p.next;
-        q = q.next;
-    }
-    p.next = head;
-    ListNode newHead = q.next;
-    q.next = null;
-    return newHead;
-}
-</code></pre>
-
-<p>Make a circular list:</p>
-
-<pre><code>public ListNode rotateRight(ListNode head, int n) {
-    if (head == null) {
-        return null;
-    }
-    ListNode p = head;
-    int k = 1;
-    while (p.next != null) {
-        k++;
-        p = p.next;
-    }
-    p.next = head;
-    int steps = k - (n % k);
-    for (int i = 0; i &lt; steps; i++) {
-        p = p.next;
-    }
-    head = p.next;
-    p.next = null;
-    return head;
-}
-</code></pre>
-
-<p><strong>Remove Nth Node From End of List</strong></p>
-
-<pre><code>public ListNode removeNthFromEnd(ListNode head, int n) {
-    if (head == null || n == 0) {
-        return null;
-    }
-    ListNode dummy = new ListNode(0);
-    dummy.next = head;
-    ListNode right = dummy;
-    for (int i = 0; i &lt; n; i++) {
-        right = right.next;
-    }
-    ListNode left = dummy;
-    while (right.next != null) {
-        left = left.next;
-        right = right.next;
-    }
-    left.next = left.next.next;
-    return dummy.next;
-}
-</code></pre>
-
-<p><strong>LRU Cache</strong></p>
-
-<p>I solved it in the original post.</p>
-
-<p><strong>Reverse Nodes in k-Groups</strong></p>
-
-<pre><code>public ListNode reverseKGroup(ListNode head, int k) {
-    ListNode p = head;
-    int count = 0;
-    while (p != null) {
-        p = p.next;
-        count++;
-    }
-    return helper(head, k, count);
-}
-
-public ListNode helper(ListNode head, int k, int count) {
-    if (head == null || k &lt; 1 || count &lt; k) {
-        return head;
-    }
-    ListNode result = null;
-    ListNode cur = head;
-    for (int i = 0; i &lt; k; i++) {
-        if (cur == null) break;
-        ListNode temp = cur.next;
-        cur.next = result;
-        result = cur;
-        cur = temp;
-    }
-    head.next = helper(cur, k, count - k);
-    return result;
-}
-</code></pre>
-
-<p><strong>Swap Nodes in Pairs</strong></p>
-
-<pre><code>public ListNode swapPairs(ListNode head) {
-    if (head == null || head.next == null) {
-        return head;
-    }
-    ListNode result = head.next;
-    ListNode temp = head.next.next;
-    result.next = head;
-    head.next = swapPairs(temp);
-    return result;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/45">&larr; Older</a>
@@ -2462,7 +2360,7 @@ public ListNode helper(ListNode head, int k, int count) {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -2485,6 +2383,10 @@ public ListNode helper(ListNode head, int k, int count) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -2498,10 +2400,6 @@ public ListNode helper(ListNode head, int k, int count) {
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

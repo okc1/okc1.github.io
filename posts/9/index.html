@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="ref Question Suppose you are handling Amazon website and you have 10 MB size home page. Optimize the homepage for a customer who has 100 kbps &hellip;">
+  <meta name="description" content="(&hellip; continued from last post) 9. Use a Content Delivery Network (CDN) Your site’s speed is greatly affected by where the user’s location is, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,64 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/14/speed-up-web-page-2/">[Design] Speed Up Webpage for Slow Connection (2)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-14T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>(&hellip; continued from last post)</p>
+
+<h4>9. Use a Content Delivery Network (CDN)</h4>
+
+<p>Your site’s speed is greatly affected by where the user’s location is, relative to your web server. The farther away they are, the more distance the data being transmitted has to travel. Having your content cached <strong>across multiple, strategically placed geographical locations</strong> helps take care of this problem.</p>
+
+<p>A CDN will often make your operating cost a little higher, but you definitely gain a speed bonus. Check out MaxCDN or <strong>Amazon Simple Storage Service (Amazon S3)</strong>.</p>
+
+<h4>10. Optimize Web Caching</h4>
+
+<p>Along with using caching systems, you should create websites that utilize <strong>web caching</strong> as much as possible. Web caching is when files are <strong>cached by the web browser</strong> for later use. Things that browsers can cache include CSS files, JavaScript files, and images.</p>
+
+<p>Aside from the basics, such as putting CSS and JavaScript code that are used in multiple pages in external files, there are many ways to make sure that you are caching your files in the most efficient way possible.</p>
+
+<p>For example, you can set HTTP response headers such as Expires and Last-Modified to reduce the need of re-downloading certain files when the user comes back to your site. To learn more, read about <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html">caching in HTTP</a> and <a href="https://developers.google.com/speed/docs/insights/LeverageBrowserCaching?csw=1#LeverageBrowserCaching">leveraging browser caching</a>.</p>
+
+<p>To set up HTTP Expires headers in Apache, read this tutorial on adding future expires headers.</p>
+
+<h4>Other mentions</h4>
+
+<ol>
+<li><p><strong>Avoid Resizing Images in HTML</strong> (using HTML’s width and height attributes), for the sake of smaller file size.</p></li>
+<li><p><strong>Optimize Image Sizes by Using the Correct File Format</strong>. Eg. JPG format often displays photographic images at smaller file sizes than PNG.</p></li>
+<li><p><strong>Optimize the Way You Write Code</strong>. For example, instead of using (h1)(em)Your heading(em)(h1), you can easily use CSS to make your headings italics.</p>
+
+<p> Writing code efficiently not only reduces file sizes of your HTML and CSS documents, but also makes it easier to maintain.</p></li>
+</ol>
+
+
+<p>Ref: <a href="http://sixrevisions.com/web-development/site-speed-performance/">http://sixrevisions.com/web-development/site-speed-performance/</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -732,67 +790,6 @@ private String sequence(String s) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/02/09/number-of-slices/">[Google] Number of Slices</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-02-09T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.careercup.com/question?id=5090693043191808">link</a></p>
-
-<blockquote><p>Calculate the number of slices. Slice means that the difference between the maximum and minimum in the slice &lt;= 2.</p>
-
-<p>eg. Given array 3 5 7 6 3.</p>
-
-<p>There&rsquo;re 10: (0,0) (1,1) (2,2) (3,3) (4,4) (5,5) (0,1) (1,2) (1,3) (2,3).</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>If only asked to output the total number of such slices, we can do it in <strong>O(n) using sliding-window-like algorithm</strong>, with the help of addtional queue-like data structure.</p>
-
-<p>This is <strong>a very difficult question</strong>! Quoted from the <a href="http://www.careercup.com/question?id=5090693043191808">top answer</a>:</p>
-
-<blockquote><p>The basic idea is that you can start with arr[0] and then see <strong>how many more elements you can include before you violate the max -min &lt;= K constraint</strong>. When you reach some index j you can no longer include, you know the maximum subarray starting at index 0 is arr[0&hellip;j-1], and you can count j different subarrays there.</p>
-
-<p>&hellip; you then start with a[1]. Now [1&hellip;j-1] has to be valid, so you try to advance the right boundary again (try arr[1&hellip;j], then arr[1&hellip;j+1]) and so on until again you reach a point past which you can&rsquo;t advance. Then you&rsquo;ll try string at a[2], and so on. This is what they mean when they talk about <strong>&ldquo;crawling&rdquo; over the array</strong>.</p>
-
-<p>The key issue here is how you will check whether a particular subarray is valid efficiently&hellip;</p></blockquote>
-
-<p>Sliding window is explained above. Now, <strong>the minMaxQueue</strong> explain in <a href="https://codility.com/media/train/solution-count-bounded-slices.pdf">this pdf</a>:</p>
-
-<blockquote><p>The PDF &hellip; have <strong>1 queue each</strong> (i.e. 2 queues in total) for min and max (the min is treated analogous to the max case).</p>
-
-<p>For maxQueue, whenever a new value comes in the max queue, they remove all values less than the value, since those <strong>can never be the max</strong>. For that reason the queue&rsquo;s values are in descending order. And the max at any given time is the first element.</p></blockquote>
-
-<p>In this way, getting min/max is O(1), thus entire solution is O(n). Nice question!</p>
-
-<h3>Code</h3>
-
-<p>Not written.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/10">&larr; Older</a>
@@ -810,7 +807,7 @@ private String sequence(String s) {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -833,6 +830,10 @@ private String sequence(String s) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -846,10 +847,6 @@ private String sequence(String s) {
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

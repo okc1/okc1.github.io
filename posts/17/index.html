@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Find a polynomial-time algorithm that takes a string of length n, and a number k, output the number of distinct k-character &hellip;">
+  <meta name="description" content="Question link Find all the repeating substring of specified length in a large string sequence. For e.g. Input String: "ABCACBABC" repeated sub-string &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,79 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/11/all-repeating-substring-given-length/">[LinkedIn] Find All Repeating Substring With Given Length</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-11T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=6495932900179968">link</a></p>
+
+<blockquote><p>Find all the repeating substring of specified length in a large string sequence.</p>
+
+<p>For e.g.</p></blockquote>
+
+<pre><code>Input String: "ABCACBABC" 
+repeated sub-string length: 3 
+Output: ABC 
+</code></pre>
+
+<blockquote><p>eg.</p></blockquote>
+
+<pre><code>Input String: "ABCABCA" 
+repeated sub-string length: 2 
+Output: AB, BC, CA
+</code></pre>
+
+<h3>Solution</h3>
+
+<p>Similar to <strong>[Amazon] Longest Repeating Substring</strong>, the best solution is to do <strong>Suffix Tree</strong>, or suffix array. We then need to print nodes on a certain level, who has more than 1 descendant.</p>
+
+<p>However, since the length of substring is given, we can also do simply iteration: insert all substring with given length into a HashSet, and check repetition. <a href="https://github.com/techpanja/interviewproblems/blob/master/src/strings/repeatingstringsofspecifiedlength/RepeatingStringOfSpecificLength.java">ref</a></p>
+
+<h3>Code</h3>
+
+<p>Suffix tree solution: not written.</p>
+
+<p>Hashset code:</p>
+
+<pre><code>public List&lt;String&gt; solve(String input, int k) {
+    List&lt;String&gt; ans = new ArrayList&lt;String&gt;();
+    HashSet&lt;String&gt; set = new HashSet&lt;String&gt;();
+    for (int i = 0; i &lt;= input.length() - k; i++) {
+        String sub = input.substring(i, i + k);
+        if (set.contains(sub)) {
+            ans.add(sub);
+        }
+        set.add(sub);
+    }
+    return ans;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -768,83 +841,6 @@ i C[0,0,2,0]   N[4, 3, 2, 1]
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/09/big-data-top-k-frequency-3/">[Design] Big Data - Top K Frequency (Hands-on)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-09T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://stackoverflow.com/a/3262855">link</a></p>
-
-<blockquote><p>The input is an endless stream of English words or phrases (we refer them as tokens).</p>
-
-<p>Output top N tokens we have seen so far (from all the tokens we have seen!)</p></blockquote>
-
-<h3>Analysis</h3>
-
-<p>We will discuss the following details of implementation and optimization.</p>
-
-<ol>
-<li>String into Integer</li>
-<li>Data Storage</li>
-<li>Process Incoming Streams</li>
-<li>Save result</li>
-</ol>
-
-
-<h4>1. String into Integer</h4>
-
-<p>This is a nice trick that improves eficiency a lot.</p>
-
-<blockquote><p>Though there is almost infinite possible words on the Internet, but after accumulating a large set of words, the possibility of finding new words becomes lower and lower.</p>
-
-<p>We have already found 4 million different words, and assigned a unique ID for each. This is important, because sorting and comparisons on integers is <strong>much much faster</strong> than on strings.</p></blockquote>
-
-<h4>2. Data Storage</h4>
-
-<blockquote><p>The system keeps archive data for every token. Basically it&rsquo;s pairs of (Token, Frequency).</p>
-
-<p>However, the table that stores the data would be so huge such that we have to partition the table physically. One partition scheme is <strong>based on ngrams</strong> of the token. If the token is a single word, it is 1gram. If the token is two-word phrase, it is 2gram.</p></blockquote>
-
-<p>Of course we can also divide the data by the hash value. For information on <strong>ngrams</strong>, read <strong>[Design] Terminology: n-gram</strong>.</p>
-
-<h4>3. Process Incoming Streams</h4>
-
-<blockquote><p>The system will absorbs incoming sentences until memory becomes fully utilized (Ya, we need a MemoryManager). After taking N sentences and storing in memory, the system pauses, and starts tokenize each sentence into words and phrases. Each token (word or phrase) is counted.</p></blockquote>
-
-<p>This data processing logic runs as a process under Memory-Manager. The next part is another processing running concurrently.</p>
-
-<h4>4. Save result</h4>
-
-<blockquote><p>Meanwhile, there will be another process that is activated once it finds any disk file generated by the system, then start merging it. Since the disk file is sorted, merging would take <strong>a similar process like merge sort</strong>.</p></blockquote>
-
-<p>There is <a href="http://stackoverflow.com/a/3262855">some more steps</a> afterwards, but they&rsquo;re trivial. I have listed out the basic steps for processing large stream of incoming data (as string), and how to find out the Top K keywords.</p>
-
-<p>I suggest you read previous <strong>[Design] Big Data - Top k Frequency</strong> posts before reading this.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/18">&larr; Older</a>
@@ -862,7 +858,7 @@ i C[0,0,2,0]   N[4, 3, 2, 1]
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -885,6 +881,10 @@ i C[0,0,2,0]   N[4, 3, 2, 1]
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -898,10 +898,6 @@ i C[0,0,2,0]   N[4, 3, 2, 1]
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

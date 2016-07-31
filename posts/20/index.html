@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Overview Polymorphism is to use common interface instead of concrete implementation while coding. The most common use of polymorphism in OOP occurs &hellip;">
+  <meta name="description" content="Question link Given an array of positive numbers, find the maximum sum of a subsequence that no 2 numbers should be adjacent. Eg. (3, 2, 7, 10) &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,83 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/12/22/Maximum-sum-no-adjacent/">[Facebook] Maximum Sum Such That No Two Elements Are Adjacent</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-12-22T00:00:00-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.geeksforgeeks.org/maximum-sum-such-that-no-two-elements-are-adjacent/">link</a></p>
+
+<blockquote><p>Given an array of positive numbers, find the maximum sum of a subsequence that no 2 numbers should be adjacent.</p>
+
+<p>Eg. (3, 2, 7, 10) should return 13 (3+10)</p>
+
+<p>Eg. (3, 2, 5, 10, 7) should return 15 (3+5+7).</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>It is an modified version of &ldquo;max sum subsequence&rdquo;. Answer given on <a href="http://www.geeksforgeeks.org/maximum-sum-such-that-no-two-elements-are-adjacent/">gfg</a> is:</p>
+
+<blockquote><p>Loop for all elements in arr[] and maintain two sums &lsquo;incl&rsquo; and &lsquo;excl&rsquo; where:</p>
+
+<p>incl = Max sum including the previous element</p>
+
+<p>excl = Max sum excluding the previous element</p></blockquote>
+
+<h3>Code</h3>
+
+<p><strong>written by me</strong></p>
+
+<pre><code>public int solve(int[] A) {
+    if (A == null || A.length == 0) {
+        return 0;
+    } else if (A.length == 1) {
+        return A[0];
+    } else if (A.length == 2) {
+        return Math.max(A[0], A[1]);
+    }
+
+    // prePreMax is the max non-adjacency sequence ending 2 position ahead
+    // preMax is the max non-adjacency sequence ending 1 position ahead
+    int prePreMax = A[0];
+    int preMax = A[1];
+    int ans = 0;
+
+    for (int i = 2; i &lt; A.length; i++) {
+        ans = Math.max(ans, prePreMax + A[i]);
+        // set the 2 variables: prePreMax, preMax
+        int temp = preMax;
+        preMax = Math.max(0, prePreMax + A[i]);
+        prePreMax = Math.max(prePreMax, temp);
+    }
+    return ans;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -794,127 +871,6 @@ return null;
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/10/08/interleave-positive-negative/">[Question] Interleave Positive and Negative Numbers</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-10-08T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://mp.weixin.qq.com/s?__biz=MzA5MzE4MjgyMw==&amp;mid=200355650&amp;idx=1&amp;sn=f94e87cb391fb12af9531cedb452dba1&amp;key=d232b50733c41de56b96f855d9cdea5824f24c712e158651b45d7fe139a94610a7561da1fab0104e968592b01f2439d4&amp;ascene=7&amp;uin=MzM2NjQyNQ%3D%3D&amp;pass_ticket=i7pJQweQbuRdnUFUt5cdOmapPc%2FDW6Xk40U7%2Bcg%2F0o8%3D">link</a></p>
-
-<blockquote><p>给一个包含正负整数的数组，要求对这个数组中的数进行重新排列，使得其正负交替出现。首先出现负数，然后是正数，然后是负数。有多余的数的一方，就放在末尾。</p>
-
-<p>如 [1, 2, 3, -4]->[-4, 1, 2, 3]，[1,-3,2,-4,-5]->[-3,1,-4,2,-5]. 要求使用O(1)的额外空间。</p>
-
-<p>如果需要保持正数序列和负数序列各自原来的顺序，如何做？</p>
-
-<p>如果不需要保持正数序列和负数序列各自原来的顺序，如何做？</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>I only solve this question if we <strong>do not have to keep the original ordering</strong>.</p>
-
-<p>Basically, 2 pointers search from beginning to end. If there&rsquo;re more + than -, move the extra positive values to the back of the array. Vice versa.</p>
-
-<h3>Code</h3>
-
-<p><strong>written by me</strong></p>
-
-<pre><code>public void solve(int[] A) {
-    int len = A.length;
-    int neg = 0;
-    int pos = 1;
-    while (neg &lt; len || pos &lt; len) {
-
-        while (neg &lt; len &amp;&amp; A[neg] &lt; 0) {
-            neg += 2;
-        }
-        while (pos &lt; len &amp;&amp; A[pos] &gt; 0) {
-            pos += 2;
-        }
-        // neg points to a positive value
-        // pos points to a negative value
-        // swap them (if they're valid position)
-        if (neg &gt;= len &amp;&amp; pos &gt;= len) {
-            return;
-        } else if (neg &gt;= len) {
-            // neg is done, there's more - then +
-            // put all negative values pointed by pos to the back
-            int right = len - 1;
-            if (right % 2 == 0) {
-                right--;
-            }
-            while (pos &lt; right) {
-                while (pos &lt; len &amp;&amp; A[pos] &gt; 0) {
-                    pos += 2;
-                }
-                while (right &gt;= 0 &amp;&amp; A[right] &lt; 0) {
-                    right -= 2;
-                }
-                // pos point to a negative value, right to positive value
-                if (pos &gt; right) {
-                    break;
-                } else {
-                    swap(A, pos, right);
-                }
-            }
-            return;
-        } else if (pos &gt;= len) {
-            // pos is done, there's more + then -
-            int right = len - 1;
-            if (right % 2 == 1) {
-                right--;
-            }
-            while (neg &lt; right) {
-                while (neg &lt; len &amp;&amp; A[neg] &lt; 0) {
-                    neg += 2;
-                }
-                while (right &gt;= 0 &amp;&amp; A[right] &gt; 0) {
-                    right -= 2;
-                }
-                if (neg &gt; right) {
-                    break;
-                } else {
-                    swap(A, neg, right);
-                }
-            }
-            return;
-        } else {
-            swap(A, neg, pos);
-        }
-    }
-}
-
-private void swap(int[] array, int a, int b) {
-    int temp = array[a];
-    array[a] = array[b];
-    array[b] = temp;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/21">&larr; Older</a>
@@ -932,7 +888,7 @@ private void swap(int[] array, int a, int b) {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -955,6 +911,10 @@ private void swap(int[] array, int a, int b) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -968,10 +928,6 @@ private void swap(int[] array, int a, int b) {
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

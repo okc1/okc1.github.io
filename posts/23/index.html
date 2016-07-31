@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question Implement a stack. Solution Stack uses LinkedNode to implement. Code public class MyStack { Node top; public int pop() { if (top == null) { &hellip;">
+  <meta name="description" content="Question Implement a function to check if a linked list is a palindrome. Solution There are multiple solutions for this question. First, maybe the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,101 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/15/linked-list-palindrome/">[CC150v5] 2.7 Linked List Palindrome</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-15T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Implement a function to check if a linked list is a palindrome.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>There are multiple solutions for this question.</p>
+
+<p><strong>First, maybe the simplest solution of all</strong>, is to compare the list with the reversed list (compare first half would be enough). This is a very nice idea.</p>
+
+<p><strong>Second solution is iterative approach to use a Stack</strong>. Alternatively, we can also use <strong>fast/slow pointer</strong> to find the mid point.</p>
+
+<p><strong>Third solution is recursive</strong>. We basically uses a public pointer to:</p>
+
+<ol>
+<li>get starting value</li>
+<li>check middle parts</li>
+<li>get ending value</li>
+<li>if starting == ending and middle part is valid, then true.</li>
+</ol>
+
+
+<p>This code is pretty hard to think. Read it below.</p>
+
+<h3>Code</h3>
+
+<p>Recursive</p>
+
+<pre><code>private static LinkedListNode p;
+
+public static boolean isPalindromeRecursive(LinkedListNode head) {
+    p = head;
+    int len = getListLength(head);
+    return recursiveHelper(0, len - 1);
+}
+
+private static int getListLength(LinkedListNode node) {
+    int count = 0;
+    while (node != null) {
+        count++;
+        node = node.next;
+    }
+    return count;
+}
+
+public static boolean recursiveHelper(int from, int to) {
+    if (from &gt; to) {
+        return true;
+    } else if (from == to) {
+        p = p.next;
+        return true;
+    } else {
+        // first get fromVal, then check middle part, last, get toVal
+        int fromVal = p.data;
+        p = p.next;
+        if (!recursiveHelper(from + 1, to - 1)) {
+            return false;
+        }
+        int toVal = p.data;
+        p = p.next;
+        if (fromVal != toVal) {
+            return false;
+        }
+    }
+    return true;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -606,61 +701,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/10/generate-m-from-array-of-n/">[CC150v4] 20.3 Generate M Int From Array of Size N</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-09-10T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<blockquote><p>Write a method to randomly generate a set of m integers from an array of size n. Each element must have equal probability of being chosen.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>This is very similar to another post I wrote: <strong>[Question] Shuffle An Array (Fisher–Yates)</strong>.</p>
-
-<p>The basic idea is to choose element one by one using RNG. After choosing an int, swap it to top and <strong>then mark this element as &lsquo;dead&rsquo;</strong>. Next time, the RNG will not touch on the &lsquo;dead&rsquo; elements.</p>
-
-<p><strong>Very similar to Fisher–Yates Shuffle</strong>, and the code below is written by me.</p>
-
-<h3>Code</h3>
-
-<pre><code>public static int[] pickMRandomly(int[] original, int m) {
-    int[] ans = new int[m];
-    for (int i = 0; i &lt; m; i++) {
-        int rand = Question.listRand.get(i);
-        // note: rand is RN in the range [i, max]
-        ans[i] = original[rand];
-        original[rand] = original[i];
-        // now (i)th position in original is dead
-        // no one cares what value is at original[i]
-    }
-    return ans;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/24">&larr; Older</a>
@@ -678,7 +718,7 @@
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -701,6 +741,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -714,10 +758,6 @@
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

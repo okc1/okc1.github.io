@@ -9,8 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Difference Vectors are synchronized, ArrayLists are not.
-Data Growth Methods A Vector defaults to doubling the size of its array, while the ArrayList &hellip;">
+  <meta name="description" content="Question link 给定两个数组A，B，长度均为n，求A[0]+B[0],…,A[0]+B[n-1],…,A[n-1]+B[0],…,A[n-1]+B[n]总共n2个数的最大的n个值。 Solution Use a Heap and then iteratively pop 1 and &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,87 @@ Data Growth Methods A Vector defaults to doubling the size of its array, while t
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/20/top-n-from-sum-2-array/">[Google] Top N Values From Sum of 2 Arrays</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-20T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=3213705">link</a></p>
+
+<blockquote><p>给定两个数组A，B，长度均为n，求A[0]+B[0],…,A[0]+B[n-1],…,A[n-1]+B[0],…,A[n-1]+B[n]总共n<sup>2</sup>个数的最大的n个值。</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Use a Heap and then iteratively pop 1 and push 2 elements. Until n values has been filled.</p>
+
+<h3>Code</h3>
+
+<pre><code>public int[] topN(int[] arr1, int[] arr2, int n) {
+    int[] ans = new int[n];
+    int index = n - 1;
+
+    PriorityQueue&lt;Pair&gt; heap = new PriorityQueue&lt;Pair&gt;(n,
+            new SpecialComparator(arr1, arr2));
+    Arrays.sort(arr1);
+    Arrays.sort(arr2);
+
+    Pair maxPair = new Pair(n - 1, n - 1);
+    heap.add(maxPair);
+
+    for (int i = 0; i &lt; n; i++) {
+        Pair next = heap.poll();
+        ans[index--] = arr1[next.x] + arr2[next.y];
+        if (next.y - 1 &gt;= 0) {
+            heap.add(new Pair(next.x, next.y - 1));
+        }
+        if (next.x - 1 &gt;= 0) {
+            heap.add(new Pair(next.x - 1, next.y));
+        }
+    }
+    return ans;
+}
+
+class SpecialComparator implements Comparator&lt;Pair&gt; {
+
+    int[] arr1, arr2;
+
+    public SpecialComparator(int[] a1, int[] a2) {
+        arr1 = a1;
+        arr2 = a2;
+    }
+
+    @Override
+    public int compare(Pair p1, Pair p2) {
+        // note that larger value shall go up top of the heap, so -1 * ...
+        return -1 * (arr1[p1.x] + arr2[p1.y] - arr1[p2.x] - arr2[p2.y]);
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1088,80 +1168,6 @@ public void buildGraph(String[] dict, HashMap&lt;Character, Integer&gt; incount,
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/18/Lexicographic-rank-of-string/">[Amazon] Lexicographic Rank of a String</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-18T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.geeksforgeeks.org/lexicographic-rank-of-a-string/">link</a></p>
-
-<blockquote><p>Given a string, find its rank among all its permutations sorted lexicographically.</p>
-
-<p>For example, rank of “abc” is 1, rank of “acb” is 2, and rank of “cba” is 6.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>Let the given string be “<strong>STRG</strong>”. In the input string, ‘S’ is the first character. There are total 4 characters and <strong>2 of them are smaller than ‘S’</strong>. So there can be <strong>2 * 3!</strong> smaller strings where first character is smaller than ‘S’, like following:</p>
-
-<pre><code>G X X X
-R X X X
-</code></pre>
-
-<p>Repeat the same process for T, and we get:</p>
-
-<pre><code>Rank = 2*3! + 2*2! + 1*1! + 0*0! = 17
-</code></pre>
-
-<h3>Code</h3>
-
-<pre><code>public int getRank(String input) {
-    if (input == null || input.length() == 0) {
-        return 0;
-    }
-    input = input.toUpperCase();
-    return helper(input) + 1;
-}
-
-public int helper(String input) {
-    if (input == null || input.length() == 0) {
-        return 0;
-    }
-    char headChar = input.charAt(0);
-    int countSmallerThanHead = 0;
-    for (char ch : input.toCharArray()) {
-        if (ch &lt; headChar) {
-            countSmallerThanHead++;
-        }
-    }
-    return countSmallerThanHead * Common.factorial(input.length() - 1)
-            + helper(input.substring(1));
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/16">&larr; Older</a>
@@ -1179,7 +1185,7 @@ public int helper(String input) {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -1202,6 +1208,10 @@ public int helper(String input) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -1215,10 +1225,6 @@ public int helper(String input) {
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

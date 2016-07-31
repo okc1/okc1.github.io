@@ -9,8 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question Get GCD in more efficient code Code this is 掉渣天。 public int gcd(int a, int b) { return b == 0 ? a : gcd(b, a % b);
-} ">
+  <meta name="description" content="Question link 有一个无限大的棋盘，棋盘上有一匹马，马可以从长宽分别为p和q的矩形一个角移动到对角。即假设马当前的位置为(x,y)，那么下一步可以移动到(x+p,y+q)，(x+p,y-q)，(x-p,y+q)，(x-p,y-q)，(x+q,y+p)，(x+q,y-p)，(x-q,y+ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,91 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/15/Knight-tour-jumpable-question/">[ItInt5] 跳马问题加强版</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-15T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.itint5.com/oj/#12">link</a></p>
+
+<blockquote><p>有一个无限大的棋盘，棋盘上有一匹马，马可以从长宽分别为p和q的矩形一个角移动到对角。即假设马当前的位置为(x,y)，那么下一步可以移动到(x+p,y+q)，(x+p,y-q)，(x-p,y+q)，(x-p,y-q)，(x+q,y+p)，(x+q,y-p)，(x-q,y+p)或者(x-q,y-p)这8个位置。</p>
+
+<p>问马是否能从坐标(x,y)按照上述移动规则移动到坐标(x2,y2)。</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><a href="http://www.itint5.com/discuss/16/%E8%B7%B3%E9%A9%AC%E9%97%AE%E9%A2%98%E5%8A%A0%E5%BC%BA%E7%89%88">ref</a></p>
+
+<ol>
+<li>计算dx=x-x2,dy=y-y2。</li>
+<li>求出p,q的最大公约数g，如果dx或者dy不能被g整除，那么很显然无解。</li>
+<li>将p,q,dx,dy都除以g，现在p和q互质了。</li>
+<li>注意到马可以跳到点(0,2p)（先(p,q)跳一下，然后(p,-q)跳一下），重复这个过程，马可以跳到任意(0,2kp)的点，由于对称性，也可以跳到任意(2kp,0)的点。
+5.下面这一步很关键，由于p,q互质，那么存在x,y满足px+qy=1（扩展欧几里德定理）。这样，马可以跳到(0,2)和和(2,0)，由于对称性，马可以跳到任意坐标都为偶数点。</li>
+<li>有了上面的结论，其实只用考虑(0,0),(0,1),(1,0),(1,1)这4个点是否可达。(0,0)是可达的，(0,1)和(1,0)由于对称性只用考虑(0,1)。</li>
+<li>对于(1,1)，其实是永远可达的。如果q,p都为奇数，可以先跳到(1+p,1+q)的点（利用5中的结论，可以跳到都是偶数的点），然后(-p,-q)跳到(1,1)。如果p,q一奇一偶，可以先跳到(1+p+q,1+q+p)的点（利用5中的结论），然后(-p,-q),(-q,-p)两步跳到(1,1)。</li>
+<li>对于(0,1)，如果p,q一奇一偶，那么也是永远可达的（同7可证）。如果p,q都是奇数，那么是不可能跳到(0,1)的，因为两个奇数不管怎么加减交替运算都不可能变成一奇一偶。</li>
+</ol>
+
+
+<p>所以最后的结论就是：<strong>第3步之后，如果p,q一奇一偶，那么可达。否则dx,dy同奇或同偶才可达</strong>。</p>
+
+<p>gcd的代码 (concise version):</p>
+
+<pre><code>int gcd(int a, int b) {
+    return b ? gcd(b, a % b) : a;
+}
+</code></pre>
+
+<h3>Code</h3>
+
+<p><strong>not written by me</strong></p>
+
+<pre><code>int gcd(int a, int b){
+    return b? gcd(b, a%b) : a;
+}
+
+bool canJump(int p, int q, int x, int y, int x2, int y2) {
+    if(p==0 &amp;&amp; q==0) return (x==x2)&amp;&amp;(y==y2);
+    int xDist = x2 - x, yDist = y2 - y;
+    int g1 = gcd(p, q);
+    if( xDist % g1 || yDist % g1) 
+        return false;
+    p = p/g1;
+    q = q/g1;
+    xDist = xDist/g1;
+    yDist = yDist/g1;
+    if((p-q)%2 ) 
+        return true;
+    else 
+        return (xDist-yDist)%2 == 0;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -723,53 +807,6 @@ k: number of hash functions
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/10/big-data-find-median/">[Design] Big Data - Find Median Numbers</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-08-10T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://blog.csdn.net/v_july_v/article/details/7382693">link</a></p>
-
-<blockquote><p>5亿个int找它们的中位数.</p></blockquote>
-
-<h3>Analysis</h3>
-
-<p>Categorized under <strong>双层桶划分</strong>.</p>
-
-<p>Idea: 首先我们将int划分为2<sup>16</sup>个区域，然后读取数据统计落到各个区域里的数的个数，之后我们根据统计结果就可以判断中位数落到那个区域，同时知道这个区域中的第几大数刚好是中位数。然后第二次扫描我们只统计落在这个区域中的那些数就可以了。</p>
-
-<h3>Details</h3>
-
-<p>开一个大小为65536的Int数组，第一遍读取，统计Int32的高16位的情况(就相当于用该数除以65536)。每读取一个数，数组中对应的计数+1。第一遍统计之后，遍历数组，逐个累加统计，看中位数处于哪个区间。</p>
-
-<p>第二遍统计同上面的方法类似，但这次只统计处于区间k的情况，这次计数之后，再统计一下，看中位数所处的区间，最后将高位和低位组合一下就是结果了。</p>
-
-<p>And this can be done more than 2 times, depending on the input size (eg. if input is int64, then do 24/20/20 bits).</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/33">&larr; Older</a>
@@ -787,7 +824,7 @@ k: number of hash functions
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -810,6 +847,10 @@ k: number of hash functions
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -823,10 +864,6 @@ k: number of hash functions
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question Given a list of words, write a program to find the longest word made of other words in the list. EXAMPLE Input: cat, banana, dog, nana, walk &hellip;">
+  <meta name="description" content="Question link 给一个包含正负整数的数组，要求对这个数组中的数进行重新排列，使得其正负交替出现。首先出现负数，然后是正数，然后是负数。有多余的数的一方，就放在末尾。 如 [1, 2, 3, -4]->[-4, 1, 2, 3]，[1,-3,2,-4,-5]->[-3,1,-4,2,-5 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,127 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/10/08/interleave-positive-negative/">[Question] Interleave Positive and Negative Numbers</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-10-08T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzA5MzE4MjgyMw==&amp;mid=200355650&amp;idx=1&amp;sn=f94e87cb391fb12af9531cedb452dba1&amp;key=d232b50733c41de56b96f855d9cdea5824f24c712e158651b45d7fe139a94610a7561da1fab0104e968592b01f2439d4&amp;ascene=7&amp;uin=MzM2NjQyNQ%3D%3D&amp;pass_ticket=i7pJQweQbuRdnUFUt5cdOmapPc%2FDW6Xk40U7%2Bcg%2F0o8%3D">link</a></p>
+
+<blockquote><p>给一个包含正负整数的数组，要求对这个数组中的数进行重新排列，使得其正负交替出现。首先出现负数，然后是正数，然后是负数。有多余的数的一方，就放在末尾。</p>
+
+<p>如 [1, 2, 3, -4]->[-4, 1, 2, 3]，[1,-3,2,-4,-5]->[-3,1,-4,2,-5]. 要求使用O(1)的额外空间。</p>
+
+<p>如果需要保持正数序列和负数序列各自原来的顺序，如何做？</p>
+
+<p>如果不需要保持正数序列和负数序列各自原来的顺序，如何做？</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>I only solve this question if we <strong>do not have to keep the original ordering</strong>.</p>
+
+<p>Basically, 2 pointers search from beginning to end. If there&rsquo;re more + than -, move the extra positive values to the back of the array. Vice versa.</p>
+
+<h3>Code</h3>
+
+<p><strong>written by me</strong></p>
+
+<pre><code>public void solve(int[] A) {
+    int len = A.length;
+    int neg = 0;
+    int pos = 1;
+    while (neg &lt; len || pos &lt; len) {
+
+        while (neg &lt; len &amp;&amp; A[neg] &lt; 0) {
+            neg += 2;
+        }
+        while (pos &lt; len &amp;&amp; A[pos] &gt; 0) {
+            pos += 2;
+        }
+        // neg points to a positive value
+        // pos points to a negative value
+        // swap them (if they're valid position)
+        if (neg &gt;= len &amp;&amp; pos &gt;= len) {
+            return;
+        } else if (neg &gt;= len) {
+            // neg is done, there's more - then +
+            // put all negative values pointed by pos to the back
+            int right = len - 1;
+            if (right % 2 == 0) {
+                right--;
+            }
+            while (pos &lt; right) {
+                while (pos &lt; len &amp;&amp; A[pos] &gt; 0) {
+                    pos += 2;
+                }
+                while (right &gt;= 0 &amp;&amp; A[right] &lt; 0) {
+                    right -= 2;
+                }
+                // pos point to a negative value, right to positive value
+                if (pos &gt; right) {
+                    break;
+                } else {
+                    swap(A, pos, right);
+                }
+            }
+            return;
+        } else if (pos &gt;= len) {
+            // pos is done, there's more + then -
+            int right = len - 1;
+            if (right % 2 == 1) {
+                right--;
+            }
+            while (neg &lt; right) {
+                while (neg &lt; len &amp;&amp; A[neg] &lt; 0) {
+                    neg += 2;
+                }
+                while (right &gt;= 0 &amp;&amp; A[right] &gt; 0) {
+                    right -= 2;
+                }
+                if (neg &gt; right) {
+                    break;
+                } else {
+                    swap(A, neg, right);
+                }
+            }
+            return;
+        } else {
+            swap(A, neg, pos);
+        }
+    }
+}
+
+private void swap(int[] array, int a, int b) {
+    int temp = array[a];
+    array[a] = array[b];
+    array[b] = temp;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -872,115 +993,6 @@ My solution is         370ms
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/17/parenthesize-expression/">[CC150v5] 9.11 Parenthesize the Expression</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-09-17T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<blockquote><p>Given a boolean expression consisting of the symbols 0, 1, &lsquo;&amp;&rsquo;, &lsquo;|&rsquo;, and &lsquo;^&rsquo;, and a desired boolean result value &lsquo;result&rsquo;.</p>
-
-<p>Now implement a function to count the number of ways of <strong>parenthesizing the expression</strong> such that it evaluates to &lsquo;result&rsquo;.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p><strong>This is a difficult question</strong>.</p>
-
-<blockquote><p>Each parenthesized expression must have an outermost pair of
-parentheses.</p>
-
-<p>That is, we can iterate through the expression, treating each operator as the first operator to be parenthesized.</p></blockquote>
-
-<p>Nice idea suggested in the book! So <strong>for each operator, we consider is as first operator (to evaluate)</strong>, and then we shall if the total possible count.</p>
-
-<p>(Note that while coding, we DO NOT WRITE {if-else if-else&hellip;} but instead use {if&hellip; if&hellip; if&hellip;} in order to get the total count. )</p>
-
-<p>DP is more time-efficient.</p>
-
-<p><strong>Like CC150v5 Q9.10, the code given in the book is very hard to read</strong>. I have my own code posted below.</p>
-
-<h3>Code</h3>
-
-<pre><code>public static int countMyAnswer(String exp, boolean result) {
-    if (exp.length() == 1) {
-        return convertIntToBool(exp.charAt(0)) == result ? 1 : 0;
-    }
-    // eg. 1^0|0|1
-    // result: true
-    int totalCount = 0;
-    for (int i = 1; i &lt; exp.length(); i += 2) {
-
-        char op = exp.charAt(i);
-        String firstHalf = exp.substring(0, i);
-        String secondHalf = exp.substring(i + 1);
-
-        int firstHalfTrue = countMyAnswer(firstHalf, true);
-        int firstHalfFalse = countMyAnswer(firstHalf, false);
-        int secondHalfTrue = countMyAnswer(secondHalf, true);
-        int secondHalfFalse = countMyAnswer(secondHalf, false);
-
-        if (evaluate('0', op, '0') == result) {
-            totalCount += firstHalfFalse * secondHalfFalse;
-        }
-        if (evaluate('0', op, '1') == result) {
-            totalCount += firstHalfFalse * secondHalfTrue;
-        }
-        if (evaluate('1', op, '0') == result) {
-            totalCount += firstHalfTrue * secondHalfFalse;
-        }
-        if (evaluate('1', op, '1') == result) {
-            totalCount += firstHalfTrue * secondHalfTrue;
-        }
-    }
-    return totalCount;
-}
-
-private static boolean convertIntToBool(char num) {
-    if (num == '1') {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-private static boolean evaluate(char num1, char op, char num2) {
-    boolean b1 = convertIntToBool(num1);
-    boolean b2 = convertIntToBool(num2);
-    if (op == '&amp;') {
-        return b1 &amp; b2;
-    } else if (op == '|') {
-        return b1 | b2;
-    } else if (op == '^') {
-        return b1 ^ b2;
-    }
-    System.out.println("Did not found operator " + op);
-    return false;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/22">&larr; Older</a>
@@ -998,7 +1010,7 @@ private static boolean evaluate(char num1, char op, char num2) {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -1021,6 +1033,10 @@ private static boolean evaluate(char num1, char op, char num2) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -1034,10 +1050,6 @@ private static boolean evaluate(char num1, char op, char num2) {
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

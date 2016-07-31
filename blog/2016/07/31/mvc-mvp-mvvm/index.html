@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Design] MVC, MVP and MVVM - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="MVC Pattern Model-View-Controller. The model and controller logic are decoupled from user interface (view). Model business model + data access &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2016/07/31/mvc-mvp-mvvm/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Design] MVC, MVP and MVVM</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-07-31T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>31</span><span class='date-suffix'>st</span>, <span class='date-year'>2016</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1>MVC Pattern</h1>
+
+<p>Model-View-Controller.</p>
+
+<p>The model and controller logic are <strong>decoupled from user interface (view)</strong>.</p>
+
+<p><img class="middle" src="/assets/images/mvc-pattern.png"></p>
+
+<ol>
+<li><p>Model</p>
+
+<p> business model + <strong>data access operations</strong> (i.e. data model)</p></li>
+<li><p>View</p>
+
+<p> <strong>only for displaying data</strong> (received from the controller, transforms the model into UI)</p></li>
+<li><p>Controller <strong>(IMPORTANT)</strong></p>
+
+<p> <strong>process incoming requests</strong>. It receives input from users via the View, then process the user&rsquo;s data with the help of Model and passing the results back to the View. Typically, it acts as the coordinator between the View and the Model.</p></li>
+</ol>
+
+
+<h2>example</h2>
+
+<p>Ruby on Rails, Spring Framework, Apple iOS Development and ASP.NET MVC.</p>
+
+<p>Softwares (not web apps).</p>
+
+<h1>MVP pattern</h1>
+
+<p>separate the presentation layer from the logic</p>
+
+<p>The Presenter is responsible for handling all UI events on behalf of the view.</p>
+
+<p><img class="middle" src="/assets/images/mvp-pattern.png"></p>
+
+<p>Unlike view and controller, view and presenter are completely decoupled from each other’s and communicate to each other’s by an interface.</p>
+
+<p>Also, presenter does not manage the incoming request traffic as controller.</p>
+
+<h2>Key Points about MVP</h2>
+
+<ol>
+<li><p>User interacts with the View.</p></li>
+<li><p>There is one-to-one relationship between View and Presenter means one View is mapped to only one Presenter.</p></li>
+<li><p>View has a reference to Presenter but View has not reference to Model.</p></li>
+<li><p>Provides two way communication between View and Presenter.</p></li>
+</ol>
+
+
+<h2>example</h2>
+
+<p>Android, ASP.NET Web Forms applications</p>
+
+<h1>MVVM pattern</h1>
+
+<p>This pattern supports two-way data binding between view and View model.</p>
+
+<p>This enables automatic propagation of changes, within the state of view model to the View.</p>
+
+<p>Typically, <strong>the view model uses the observer pattern</strong> to notify changes in the view model to model.</p>
+
+<p><img class="middle" src="/assets/images/mvvm-pattern.png"></p>
+
+<h2>details</h2>
+
+<p>The View Model is responsible for exposing methods, commands, and other properties that helps to maintain the state of the view, manipulate the model as the result of actions on the view, and trigger events in the view itself.</p>
+
+<h2>Key Points about MVVM</h2>
+
+<ol>
+<li><p>User interacts with the View.</p></li>
+<li><p>There is many-to-one relationship between View and ViewModel means many View can be mapped to one ViewModel.</p></li>
+<li><p>View has a reference to ViewModel but View Model has no information about the View.</p></li>
+<li><p>Supports two-way data binding between View and ViewModel.</p></li>
+</ol>
+
+
+<h2>example</h2>
+
+<p>Ember.js, WPF, Silverlight</p>
+
+<h1>Ref</h1>
+
+<p>Main: <a href="http://www.dotnet-tricks.com/Tutorial/designpatterns/2FMM060314-Understanding-MVC,-MVP-and-MVVM-Design-Patterns.html">http://www.dotnet-tricks.com/Tutorial/designpatterns/2FMM060314-Understanding-MVC,-MVP-and-MVVM-Design-Patterns.html</a></p>
+
+<p>TLDR: <a href="http://www.beyondjava.net/blog/model-view-whatever/">http://www.beyondjava.net/blog/model-view-whatever/</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2016-07-31T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>31</span><span class='date-suffix'>st</span>, <span class='date-year'>2016</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/design/'>design</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2016/07/31/mvc-mvp-mvvm/" data-via="" data-counturl="http://okc1.github.io/blog/2016/07/31/mvc-mvp-mvvm/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2016/07/11/design-twitter/" title="Previous Post: [Design] Design Twitter">&laquo; [Design] Design Twitter</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

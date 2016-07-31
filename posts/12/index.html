@@ -9,8 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Give a list of documents, find the minimal document set that can
-cover all the characters in all the documents. eg. “a b c h j”, "c d &hellip;">
+  <meta name="description" content="Question We have a history of match result of pingpong games, assume each match is &lt;player1, player2, result, timestamp>, player1 and player2 are &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,75 @@ cover all the characters in all the documents. eg. “a b c h j”, "c d &hellip
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/05/winning-game-rank-pagerank/">[Design] Winning Games Rank (Pagerank)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-05T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>We have a history of match result of pingpong games, assume each match is &lt;player1, player2, result, timestamp>, player1 and player2 are long type, result is a bit value (1 means player1 win).</p>
+
+<p>design a algorithm to sort the players by their possibility to win future games.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>For each play,</p>
+
+<blockquote><p>winning score = score_diff * {delay factor<sup>current time - winning time</sup>};</p></blockquote>
+
+<h3>Pagerank</h3>
+
+<p><a href="http://google.about.com/od/searchengineoptimization/a/pagerankexplain.htm">PageRank</a> is what Google uses to <strong>determine the importance of a web page</strong>.</p>
+
+<p>It determines which pages appear in search results.</p>
+
+<p>Named after Larry Page.</p>
+
+<h4>Details</h4>
+
+<ol>
+<li><p>PageRank thinks of links as votes to another page.</p></li>
+<li><p>It also looks at the importance of the page that contains the link.</p>
+
+<ol>
+<li><p>Pages with <strong>higher PageRank</strong> have more weight in &ldquo;voting&rdquo;.</p></li>
+<li><p>Pages with <strong>smaller total number of links</strong> on the page have more weight.</p></li>
+</ol>
+</li>
+</ol>
+
+
+<h4>Increase your PageRank?</h4>
+
+<p>If you&rsquo;d like to increase your PageRank, you need to have &ldquo;back-links,&rdquo; or other people linking to your website. You can <strong>trade links</strong> with other people, but make sure you only trade relevant links, and make sure you&rsquo;re not trading links with a <strong>link farm</strong>.</p>
+
+<p>You can register your website with directories, such as the <strong>Open Directory Project</strong>, but use directories with high PageRank whenever possible.</p>
+
+<p>You can create some of <strong>your own back-links</strong> by linking to relevant pages <strong>within</strong> your own website. However, remember that the number of links you create counts into the equation. Don&rsquo;t overdo it.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -858,100 +926,6 @@ You ultimately end up with 1.
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/02/03/monitor-request-per-second/">[Design] Monitor Rps for Past Sec/min/hr</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-02-03T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.careercup.com/question?id=6005446611566592">link</a></p>
-
-<blockquote><p>Given a server that has requests coming in.</p>
-
-<p>Design a data structure such that you can fetch the count of the number requests in the last second, minute and hour.</p></blockquote>
-
-<h3>Solution 1</h3>
-
-<p><strong>Keep a record of all request timestamps</strong>, suggested by the top answer by <a href="http://www.careercup.com/question?id=6005446611566592">whatevva</a>:</p>
-
-<ol>
-<li><p>Use a queue implemented as a resizable array to store the timestamps of all new requests</p></li>
-<li><p>maintain head/tail pointers as usual</p></li>
-<li><p>Also maintain three pointers, for past sec, past min and past hr.</p></li>
-</ol>
-
-
-<p>Whenever a request comes in, update 3 pointers. Then in the for-loop of the thread, remove old entries and also update 3 pointers.</p>
-
-<p>Print Rps in real time. I posted my code below (the code is without thread-safety consideration).</p>
-
-<h3>Solution 2</h3>
-
-<p>This solution does not store all timestamps, and it does not generate real-time Rps data. But it&rsquo;s good enough because result is only updated every 1 second, so its performance is better.</p>
-
-<p>Keep an array of int of size 60 * 60. Each second, use the <strong>number of request in the past second</strong> to update the array values <strong>in a rolling way</strong>.</p>
-
-<h3>Code</h3>
-
-<p>Solution 1. this is my code so please correct me!</p>
-
-<pre><code>public class SetRps {
-
-    AtomicInteger count = new AtomicInteger(0);
-    int limit = -1;
-    int printIndex = 1;
-    long startTimestamp = -1;
-
-    void setRPS(int num) {
-        limit = num;
-    }
-
-    boolean process(long timestamp) {
-        // suppose timestamp is ms
-        synchronized (this) {
-            if (count.get() &lt; limit) {
-                // can process
-                count.incrementAndGet();
-                System.out.println(printIndex++ + ". processing request "
-                        + timestamp % 100000 / 1000 + "," + timestamp % 1000);
-                return true;
-            }
-            if (timestamp - startTimestamp &gt;= 1000) {
-                // every 1 seconds, reset
-                count.set(0);
-                startTimestamp = timestamp;
-                System.out.println("clear!");
-                return true;
-            }
-        }
-        return false;
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/13">&larr; Older</a>
@@ -969,7 +943,7 @@ You ultimately end up with 1.
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -992,6 +966,10 @@ You ultimately end up with 1.
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -1005,10 +983,6 @@ You ultimately end up with 1.
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

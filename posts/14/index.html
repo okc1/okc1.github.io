@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="ref Suffix tree Both KMP Algorithm and Rabin Karp Algorithm pre-process the pattern to make the pattern searching faster. The best time complexity &hellip;">
+  <meta name="description" content="Trie Node public class TrieNode { boolean isLeaf; TrieNode[] child; public TrieNode(boolean isLeaf) { this.isLeaf = isLeaf; this.child = new TrieNode &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,123 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/28/implement-trie-suffix-tree/">[Fundamental] Implement Trie and Suffix Tree</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-28T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Trie Node</h3>
+
+<pre><code>public class TrieNode {
+    boolean isLeaf;
+    TrieNode[] child;
+
+    public TrieNode(boolean isLeaf) {
+        this.isLeaf = isLeaf;
+        this.child = new TrieNode[26];
+    }
+
+    public void insert(String str) {
+        if (str == null || str.length() == 0) {
+            this.isLeaf = true;
+            return;
+        }
+        char cur = str.charAt(0);
+        if (child[cur - 'a'] == null) {
+            child[cur - 'a'] = new TrieNode(str.length() == 1);
+        }
+        child[cur - 'a'].insert(str.substring(1));
+    }
+
+    public boolean trieSearch(String str) {
+        // have to consider leaf node
+        if (str == null || str.length() == 0) {
+            return isLeaf;
+        }
+        char cur = str.charAt(0);
+        if (child[cur - 'a'] == null) {
+            return false;
+        }
+        return child[cur - 'a'].trieSearch(str.substring(1));
+    }
+
+    public boolean suffixTreeSearch(String str) {
+        // suffixTreeSearch don't consider leaf node
+        // cuz we search for prefix of suffixes
+        if (str == null || str.length() == 0) {
+            return true;
+        }
+        char cur = str.charAt(0);
+        if (child[cur - 'a'] == null) {
+            return false;
+        }
+        return child[cur - 'a'].suffixTreeSearch(str.substring(1));
+    }
+}
+</code></pre>
+
+<h3>Trie</h3>
+
+<pre><code>public class Trie {
+    TrieNode root;
+
+    public Trie(String[] input) {
+        root = new TrieNode(false);
+
+        for (String str : input) {
+            root.insert(str);
+        }
+    }
+
+    public boolean search(String query) {
+        return root.trieSearch(query);
+    }
+}
+</code></pre>
+
+<h4>Suffix Tree</h4>
+
+<p>Suffix tree might also consider the <strong>List of indexes</strong> thing, which I do not take into consideration in my code.</p>
+
+<pre><code>public class SuffixTree {
+    TrieNode root;
+
+    public SuffixTree(String input) {
+        root = new TrieNode(false);
+
+        for (int i = 0; i &lt; input.length(); i++) {
+            root.insert(input.substring(i));
+        }
+    }
+
+    public boolean search(String query) {
+        return root.suffixTreeSearch(query);
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -739,87 +856,6 @@ Pop X
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/20/top-n-from-sum-2-array/">[Google] Top N Values From Sum of 2 Arrays</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-20T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.careercup.com/question?id=3213705">link</a></p>
-
-<blockquote><p>给定两个数组A，B，长度均为n，求A[0]+B[0],…,A[0]+B[n-1],…,A[n-1]+B[0],…,A[n-1]+B[n]总共n<sup>2</sup>个数的最大的n个值。</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>Use a Heap and then iteratively pop 1 and push 2 elements. Until n values has been filled.</p>
-
-<h3>Code</h3>
-
-<pre><code>public int[] topN(int[] arr1, int[] arr2, int n) {
-    int[] ans = new int[n];
-    int index = n - 1;
-
-    PriorityQueue&lt;Pair&gt; heap = new PriorityQueue&lt;Pair&gt;(n,
-            new SpecialComparator(arr1, arr2));
-    Arrays.sort(arr1);
-    Arrays.sort(arr2);
-
-    Pair maxPair = new Pair(n - 1, n - 1);
-    heap.add(maxPair);
-
-    for (int i = 0; i &lt; n; i++) {
-        Pair next = heap.poll();
-        ans[index--] = arr1[next.x] + arr2[next.y];
-        if (next.y - 1 &gt;= 0) {
-            heap.add(new Pair(next.x, next.y - 1));
-        }
-        if (next.x - 1 &gt;= 0) {
-            heap.add(new Pair(next.x - 1, next.y));
-        }
-    }
-    return ans;
-}
-
-class SpecialComparator implements Comparator&lt;Pair&gt; {
-
-    int[] arr1, arr2;
-
-    public SpecialComparator(int[] a1, int[] a2) {
-        arr1 = a1;
-        arr2 = a2;
-    }
-
-    @Override
-    public int compare(Pair p1, Pair p2) {
-        // note that larger value shall go up top of the heap, so -1 * ...
-        return -1 * (arr1[p1.x] + arr2[p1.y] - arr1[p2.x] - arr2[p2.y]);
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/15">&larr; Older</a>
@@ -837,7 +873,7 @@ class SpecialComparator implements Comparator&lt;Pair&gt; {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -860,6 +896,10 @@ class SpecialComparator implements Comparator&lt;Pair&gt; {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -873,10 +913,6 @@ class SpecialComparator implements Comparator&lt;Pair&gt; {
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Nested classes Both Static class and Inner class are called nested class. The purpose of a nested class is to clearly group the nested class with its &hellip;">
+  <meta name="description" content="Overview Resizable-array implementation of the List interface. (it&rsquo;s actually an array of Object) It&rsquo;s not synced. Underlying design &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,50 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/28/arraylist-implementation/">[Java OOP] Java ArrayList Implementation</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-10-28T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Overview</h1>
+
+<p><strong><a href="http://docs.oracle.com/javase/7/docs/api/java/util/ArrayList.html">Resizable-array</a></strong> implementation of the List interface. (it&rsquo;s actually an <a href="http://stackoverflow.com/a/7382507">array of Object</a>)</p>
+
+<p>It&rsquo;s not synced.</p>
+
+<h2>Underlying design</h2>
+
+<ol>
+<li><p><strong>Random access</strong> – no need to traverse thru all nodes.</p></li>
+<li><p><strong>Circular array</strong> - Array size is pre-defined. Use head and tail to keep track of list position.</p></li>
+<li><p><strong>Insertion and deletion</strong> - Implement <strong>shiftRight()</strong> and shiftLeft() methods.</p></li>
+</ol>
+
+
+<p>Actual code will come later&hellip;</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -680,81 +724,6 @@ color is colored
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/10/13/Segment-Tree-Query-II/">[LintCode] Segment Tree Query II</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-10-13T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.lintcode.com/en/problem/segment-tree-query-ii/">link</a></p>
-
-<blockquote><p>For an array, we can build a SegmentTree for it, each node stores an extra attribute count to denote the number of elements in the the array which value is between interval start and end. (The array may not fully filled by elements)</p>
-
-<p>Design a query method with three parameters root, start and end, find the number of elements in the in array&rsquo;s interval [start, end] by the given root of value SegmentTree.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>Similar.</p>
-
-<h3>Code</h3>
-
-<pre><code>/**
- * Definition of SegmentTreeNode:
- * public class SegmentTreeNode {
- *     public int start, end, count;
- *     public SegmentTreeNode left, right;
- *     public SegmentTreeNode(int start, int end, int count) {
- *         this.start = start;
- *         this.end = end;
- *         this.count = count;
- *         this.left = this.right = null;
- *     }
- * }
- */
-public class Solution {
-    /**
-     *@param root, start, end: The root of segment tree and 
-     *                         an segment / interval
-     *@return: The count number in the interval [start, end]
-     */
-    public int query(SegmentTreeNode root, int start, int end) {
-        if (root == null || start &gt; end) {
-            return 0;
-        } else if (root.start &gt; end || root.end &lt; start) {
-            return 0;
-        } else if (start &lt;= root.start &amp;&amp; root.end &lt;= end) {
-            return root.count;
-        }
-        int mid = (root.start + root.end) / 2;
-        return query(root.left, start, Math.min(mid, end)) + 
-                query(root.right, Math.max(mid + 1, start), end);
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/3">&larr; Older</a>
@@ -772,7 +741,7 @@ public class Solution {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -795,6 +764,10 @@ public class Solution {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -808,10 +781,6 @@ public class Solution {
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

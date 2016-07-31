@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Spanner Spanner is Google&rsquo;s globally distributed NewSQL database, the successor to BigTable. Google describes Spanner as not a pure relational &hellip;">
+  <meta name="description" content="Question link Calculate the number of slices. Slice means that the difference between the maximum and minimum in the slice &lt;= 2. eg. Given array 3 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,67 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/09/number-of-slices/">[Google] Number of Slices</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-09T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=5090693043191808">link</a></p>
+
+<blockquote><p>Calculate the number of slices. Slice means that the difference between the maximum and minimum in the slice &lt;= 2.</p>
+
+<p>eg. Given array 3 5 7 6 3.</p>
+
+<p>There&rsquo;re 10: (0,0) (1,1) (2,2) (3,3) (4,4) (5,5) (0,1) (1,2) (1,3) (2,3).</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>If only asked to output the total number of such slices, we can do it in <strong>O(n) using sliding-window-like algorithm</strong>, with the help of addtional queue-like data structure.</p>
+
+<p>This is <strong>a very difficult question</strong>! Quoted from the <a href="http://www.careercup.com/question?id=5090693043191808">top answer</a>:</p>
+
+<blockquote><p>The basic idea is that you can start with arr[0] and then see <strong>how many more elements you can include before you violate the max -min &lt;= K constraint</strong>. When you reach some index j you can no longer include, you know the maximum subarray starting at index 0 is arr[0&hellip;j-1], and you can count j different subarrays there.</p>
+
+<p>&hellip; you then start with a[1]. Now [1&hellip;j-1] has to be valid, so you try to advance the right boundary again (try arr[1&hellip;j], then arr[1&hellip;j+1]) and so on until again you reach a point past which you can&rsquo;t advance. Then you&rsquo;ll try string at a[2], and so on. This is what they mean when they talk about <strong>&ldquo;crawling&rdquo; over the array</strong>.</p>
+
+<p>The key issue here is how you will check whether a particular subarray is valid efficiently&hellip;</p></blockquote>
+
+<p>Sliding window is explained above. Now, <strong>the minMaxQueue</strong> explain in <a href="https://codility.com/media/train/solution-count-bounded-slices.pdf">this pdf</a>:</p>
+
+<blockquote><p>The PDF &hellip; have <strong>1 queue each</strong> (i.e. 2 queues in total) for min and max (the min is treated analogous to the max case).</p>
+
+<p>For maxQueue, whenever a new value comes in the max queue, they remove all values less than the value, since those <strong>can never be the max</strong>. For that reason the queue&rsquo;s values are in descending order. And the max at any given time is the first element.</p></blockquote>
+
+<p>In this way, getting min/max is O(1), thus entire solution is O(n). Nice question!</p>
+
+<h3>Code</h3>
+
+<p>Not written.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -610,47 +671,6 @@ boolean RNG()
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/02/08/find-similar-library-books/">[Design] Find Similar Library Books</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-02-08T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.mitbbs.com/article_t/Recommend/31401087.html">link</a></p>
-
-<p>有很大一个电子图书馆，里面每本书的每一页都是OCR转换出来的text，所有每页大
-约有5%的error（转换错误，错误分割单词，跳脱。。。）。设计一个方法判定图书馆
-里是否有完全一样的书（duplicate），或者将来有书进来时判定同样的书是否已存在。</p>
-
-<h3>Solution</h3>
-
-<p>Very large string matching, we mush use <strong>hashing or similar technique</strong>. Since books have error, we need to do <strong>fuzzy search/matching</strong>. Bloom filter is designed to do this!</p>
-
-<p>Refer to <strong>[Design] Big Data - Fuzzy Search Url (Bloom Filter)</strong>.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/11">&larr; Older</a>
@@ -668,7 +688,7 @@ boolean RNG()
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -691,6 +711,10 @@ boolean RNG()
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -704,10 +728,6 @@ boolean RNG()
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

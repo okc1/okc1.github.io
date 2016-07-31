@@ -9,7 +9,9 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Internet The Internet is a massive network of networks, a networking infrastructure. It connects millions of computers together globally, and &hellip;">
+  <meta name="description" content="Question link 有很大一个电子图书馆，里面每本书的每一页都是OCR转换出来的text，所有每页大
+约有5%的error（转换错误，错误分割单词，跳脱。。。）。设计一个方法判定图书馆
+里是否有完全一样的书（duplicate），或者将来有书进来时判定同样的书是否已存在。 Solution &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +67,47 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/08/find-similar-library-books/">[Design] Find Similar Library Books</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-08T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.mitbbs.com/article_t/Recommend/31401087.html">link</a></p>
+
+<p>有很大一个电子图书馆，里面每本书的每一页都是OCR转换出来的text，所有每页大
+约有5%的error（转换错误，错误分割单词，跳脱。。。）。设计一个方法判定图书馆
+里是否有完全一样的书（duplicate），或者将来有书进来时判定同样的书是否已存在。</p>
+
+<h3>Solution</h3>
+
+<p>Very large string matching, we mush use <strong>hashing or similar technique</strong>. Since books have error, we need to do <strong>fuzzy search/matching</strong>. Bloom filter is designed to do this!</p>
+
+<p>Refer to <strong>[Design] Big Data - Fuzzy Search Url (Bloom Filter)</strong>.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -734,75 +777,6 @@ private boolean check(int[][] originalMap, Pair p, int m, int n) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/02/05/winning-game-rank-pagerank/">[Design] Winning Games Rank (Pagerank)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-02-05T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<blockquote><p>We have a history of match result of pingpong games, assume each match is &lt;player1, player2, result, timestamp>, player1 and player2 are long type, result is a bit value (1 means player1 win).</p>
-
-<p>design a algorithm to sort the players by their possibility to win future games.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>For each play,</p>
-
-<blockquote><p>winning score = score_diff * {delay factor<sup>current time - winning time</sup>};</p></blockquote>
-
-<h3>Pagerank</h3>
-
-<p><a href="http://google.about.com/od/searchengineoptimization/a/pagerankexplain.htm">PageRank</a> is what Google uses to <strong>determine the importance of a web page</strong>.</p>
-
-<p>It determines which pages appear in search results.</p>
-
-<p>Named after Larry Page.</p>
-
-<h4>Details</h4>
-
-<ol>
-<li><p>PageRank thinks of links as votes to another page.</p></li>
-<li><p>It also looks at the importance of the page that contains the link.</p>
-
-<ol>
-<li><p>Pages with <strong>higher PageRank</strong> have more weight in &ldquo;voting&rdquo;.</p></li>
-<li><p>Pages with <strong>smaller total number of links</strong> on the page have more weight.</p></li>
-</ol>
-</li>
-</ol>
-
-
-<h4>Increase your PageRank?</h4>
-
-<p>If you&rsquo;d like to increase your PageRank, you need to have &ldquo;back-links,&rdquo; or other people linking to your website. You can <strong>trade links</strong> with other people, but make sure you only trade relevant links, and make sure you&rsquo;re not trading links with a <strong>link farm</strong>.</p>
-
-<p>You can register your website with directories, such as the <strong>Open Directory Project</strong>, but use directories with high PageRank whenever possible.</p>
-
-<p>You can create some of <strong>your own back-links</strong> by linking to relevant pages <strong>within</strong> your own website. However, remember that the number of links you create counts into the equation. Don&rsquo;t overdo it.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/12">&larr; Older</a>
@@ -820,7 +794,7 @@ private boolean check(int[][] originalMap, Pair p, int m, int n) {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -843,6 +817,10 @@ private boolean check(int[][] originalMap, Pair p, int m, int n) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -856,10 +834,6 @@ private boolean check(int[][] originalMap, Pair p, int m, int n) {
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

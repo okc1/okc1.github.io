@@ -9,11 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="System design evaluation form work solution
-special cases
-analysis
-trade off
-knowledge base Design guideline: 4S Scenario ask, features, qps, DAU, &hellip;">
+  <meta name="description" content="MVC Pattern Model-View-Controller. The model and controller logic are decoupled from user interface (view). Model business model + data access &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -69,6 +65,120 @@ knowledge base Design guideline: 4S Scenario ask, features, qps, DAU, &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-07-31T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>31</span><span class='date-suffix'>st</span>, <span class='date-year'>2016</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>MVC Pattern</h1>
+
+<p>Model-View-Controller.</p>
+
+<p>The model and controller logic are <strong>decoupled from user interface (view)</strong>.</p>
+
+<p><img class="middle" src="/assets/images/mvc-pattern.png"></p>
+
+<ol>
+<li><p>Model</p>
+
+<p> business model + <strong>data access operations</strong> (i.e. data model)</p></li>
+<li><p>View</p>
+
+<p> <strong>only for displaying data</strong> (received from the controller, transforms the model into UI)</p></li>
+<li><p>Controller <strong>(IMPORTANT)</strong></p>
+
+<p> <strong>process incoming requests</strong>. It receives input from users via the View, then process the user&rsquo;s data with the help of Model and passing the results back to the View. Typically, it acts as the coordinator between the View and the Model.</p></li>
+</ol>
+
+
+<h2>example</h2>
+
+<p>Ruby on Rails, Spring Framework, Apple iOS Development and ASP.NET MVC.</p>
+
+<p>Softwares (not web apps).</p>
+
+<h1>MVP pattern</h1>
+
+<p>separate the presentation layer from the logic</p>
+
+<p>The Presenter is responsible for handling all UI events on behalf of the view.</p>
+
+<p><img class="middle" src="/assets/images/mvp-pattern.png"></p>
+
+<p>Unlike view and controller, view and presenter are completely decoupled from each other’s and communicate to each other’s by an interface.</p>
+
+<p>Also, presenter does not manage the incoming request traffic as controller.</p>
+
+<h2>Key Points about MVP</h2>
+
+<ol>
+<li><p>User interacts with the View.</p></li>
+<li><p>There is one-to-one relationship between View and Presenter means one View is mapped to only one Presenter.</p></li>
+<li><p>View has a reference to Presenter but View has not reference to Model.</p></li>
+<li><p>Provides two way communication between View and Presenter.</p></li>
+</ol>
+
+
+<h2>example</h2>
+
+<p>Android, ASP.NET Web Forms applications</p>
+
+<h1>MVVM pattern</h1>
+
+<p>This pattern supports two-way data binding between view and View model.</p>
+
+<p>This enables automatic propagation of changes, within the state of view model to the View.</p>
+
+<p>Typically, <strong>the view model uses the observer pattern</strong> to notify changes in the view model to model.</p>
+
+<p><img class="middle" src="/assets/images/mvvm-pattern.png"></p>
+
+<h2>details</h2>
+
+<p>The View Model is responsible for exposing methods, commands, and other properties that helps to maintain the state of the view, manipulate the model as the result of actions on the view, and trigger events in the view itself.</p>
+
+<h2>Key Points about MVVM</h2>
+
+<ol>
+<li><p>User interacts with the View.</p></li>
+<li><p>There is many-to-one relationship between View and ViewModel means many View can be mapped to one ViewModel.</p></li>
+<li><p>View has a reference to ViewModel but View Model has no information about the View.</p></li>
+<li><p>Supports two-way data binding between View and ViewModel.</p></li>
+</ol>
+
+
+<h2>example</h2>
+
+<p>Ember.js, WPF, Silverlight</p>
+
+<h1>Ref</h1>
+
+<p>Main: <a href="http://www.dotnet-tricks.com/Tutorial/designpatterns/2FMM060314-Understanding-MVC,-MVP-and-MVVM-Design-Patterns.html">http://www.dotnet-tricks.com/Tutorial/designpatterns/2FMM060314-Understanding-MVC,-MVP-and-MVVM-Design-Patterns.html</a></p>
+
+<p>TLDR: <a href="http://www.beyondjava.net/blog/model-view-whatever/">http://www.beyondjava.net/blog/model-view-whatever/</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -322,11 +432,11 @@ knowledge base Design guideline: 4S Scenario ask, features, qps, DAU, &hellip;">
 
 <p>Solution: 1. use atomic operation 2. every day, schedule to update this number.</p>
 
-<h2>optimize thundering hert problem</h2>
+<h2>optimize thundering herd problem</h2>
 
 <p>When cache fails, all DB query will go to DB. This results in DB crash.</p>
 
-<p>Hot spot (thundering hert)</p>
+<p>Hot spot (thundering herd)</p>
 
 <p><img class="middle" src="/assets/images/jiuzhang-thundering-herd.png"></p>
 
@@ -1000,50 +1110,6 @@ You may not engage in multiple transactions at the same time (ie, you must sell 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/10/28/arraylist-implementation/">[Java OOP] Java ArrayList Implementation</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-10-28T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1>Overview</h1>
-
-<p><strong><a href="http://docs.oracle.com/javase/7/docs/api/java/util/ArrayList.html">Resizable-array</a></strong> implementation of the List interface. (it&rsquo;s actually an <a href="http://stackoverflow.com/a/7382507">array of Object</a>)</p>
-
-<p>It&rsquo;s not synced.</p>
-
-<h2>Underlying design</h2>
-
-<ol>
-<li><p><strong>Random access</strong> – no need to traverse thru all nodes.</p></li>
-<li><p><strong>Circular array</strong> - Array size is pre-defined. Use head and tail to keep track of list position.</p></li>
-<li><p><strong>Insertion and deletion</strong> - Implement <strong>shiftRight()</strong> and shiftLeft() methods.</p></li>
-</ol>
-
-
-<p>Actual code will come later&hellip;</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/2">&larr; Older</a>
@@ -1059,7 +1125,7 @@ You may not engage in multiple transactions at the same time (ie, you must sell 
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -1082,6 +1148,10 @@ You may not engage in multiple transactions at the same time (ie, you must sell 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -1095,10 +1165,6 @@ You may not engage in multiple transactions at the same time (ie, you must sell 
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

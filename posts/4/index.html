@@ -9,7 +9,8 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Stats Facebook has 1.5 billion monthly active users, 970 million daily active users as of June 2015. image from statista.com. In 2009, Facebook &hellip;">
+  <meta name="description" content="Question link 给一个 n*m 的房间，房间里存在各种可能的墙，房间的格子里已经放了 e 个器材，要
+求新放一个器材，放置位置距其它 e 个器材的距离最近。Breadth-first search. Solution 对 e个设备 BFS, 求每个设备到每个可以放新器材的点的距离， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +66,96 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/02/shorest-manhattan-distance/">[Google] Shortest Manhattan Distance</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-10-02T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.mitbbs.com/article_t/JobHunting/33054861.html">link</a></p>
+
+<blockquote><p>给一个 n*m 的房间，房间里存在各种可能的墙，房间的格子里已经放了 e 个器材，要
+求新放一个器材，放置位置距其它 e 个器材的距离最近。Breadth-first search.</p></blockquote>
+
+<h3>Solution</h3>
+
+<blockquote><p>对 e个设备 BFS, 求每个设备到每个可以放新器材的点的距离，然后叠加。</p>
+
+<p>最后O（n<sup>2</sup>）一遍找最小值。复杂度O（e*n<sup>2</sup>）</p></blockquote>
+
+<p>As for whether we choose to check each equipment position, or check each vacant position, it&rsquo;s decided by how many equipment is there. If very little equipments (e is small), then this solution should work.</p>
+
+<p>However, what is there is obstacles in the matrix?</p>
+
+<p>We have to use BFS then. It took more space usage, but the time complexity should be same.</p>
+
+<h3>Code</h3>
+
+<pre><code>public void findCenter(int[][] input, int numberOfEquip) {
+    int m = input.length;
+    int n = input[0].length;
+
+    // there's gonna be m * n positions
+    // we gonna cumulate (numberOfEquip) distances for each position
+    int[] dis = new int[m * n];
+
+    // from the input map, find Equipments
+    for (int i = 0; i &lt; m; i++) {
+        for (int j = 0; j &lt; n; j++) {
+            if (input[i][j] == 1) {
+                // 1 represents equipment
+                // when found, add the distance to every position
+                cumulateDistance(i, j, dis, m, n);
+            }
+        }
+    }
+
+    // find the smallest cumulated distance from dis[].
+    int sIndex = 0;
+    int smallest = dis[0];
+    for (int i = 0; i &lt; m * n; i++) {
+        if (dis[i] &lt; smallest) {
+            smallest = dis[i];
+            sIndex = i;
+        }
+    }
+
+    // index sIndex is the final answer
+    System.out.println("Answer: " + (sIndex / n) + " " + (sIndex % n));
+}
+
+private void cumulateDistance(int x, int y, int[] dis, int m, int n) {
+    for (int i = 0; i &lt; m * n; i++) {
+        int a = i / n;
+        int b = i % n;
+        dis[i] += Math.abs(a - x) + Math.abs(b - y);
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1787,124 +1878,6 @@ class Session extends Row {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/08/23/design-class1-3/">[NineChap System Design] Class 1.3: Improvement</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-08-23T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1>From Level 0 to Level 1</h1>
-
-<p>Refer to the previous question. How can we improve???</p>
-
-<ol>
-<li>performance</li>
-<li>scalability</li>
-<li>robustness</li>
-</ol>
-
-
-<h2>performance</h2>
-
-<p>A better algo: Inverted Index</p>
-
-<p><img class="middle" src="/assets/images/design-class1-reco-2.png"></p>
-
-<p>Avg performance increase to ~ 20ns (with some optimization of MapReduce procedure, discuss later).</p>
-
-<p><strong>Max QPS increase to 50</strong>.</p>
-
-<h2>scalability</h2>
-
-<p>Use a <strong>dispatcher</strong> to re-direct the requests to multiple machines.</p>
-
-<p><img class="middle" src="/assets/images/design-class1-reco-3.png"></p>
-
-<h3>How many machines do we need then?</h3>
-
-<p>Well we need 500 QPS. The algo above achieves ~ 50 QPS. <strong>Should we need 10 machines</strong>?</p>
-
-<p>The answer is NO. A machine with 8 (or 16) core CPU could be able to handle.</p>
-
-<p>We can also have a <strong>hot-standby</strong>, to be safe.</p>
-
-<blockquote><p>hot standby is used as a failover mechanism to provide reliability in system configurations.</p>
-
-<p>When a key component fails, the hot spare is switched into operation.</p></blockquote>
-
-<h2>robustness</h2>
-
-<p>Tips about system design for senior engineers:</p>
-
-<blockquote><p><strong>Draw 1 machine first</strong>. This machine can contains multiple datasets and run multiple processes.</p>
-
-<p>On top of this machine, the interface layer is <strong>one single Manager process</strong>. The Manager is in charge of almost everything: handling data lost, handle high concurrency, copy multiple instance of itself&hellip;</p>
-
-<p>Like this:</p></blockquote>
-
-<p><img class="middle" src="/assets/images/design-class1-reco-6.png"></p>
-
-<h3>Back-end</h3>
-
-<p>Now we need <strong>a cluster of datasets</strong> (which has Manager on top of it), and <strong>a cluster of Recommenders</strong>. Manager is in charge of copying multiple instances.</p>
-
-<p>Dataset can be put in different physical locations. Recommender don&rsquo;t really need, cuz it&rsquo;s only do calculation job.</p>
-
-<h3>Receiving requests</h3>
-
-<p>Just now we used <strong>Receptionist (or Dispatcher)</strong> to handle request. Now we use a <strong>Web service</strong> (eg. Apache). It&rsquo;s not necessary to make it a cluster.</p>
-
-<h3>Big Brother</h3>
-
-<p>We need a <strong>monitor system</strong> to oversee everything.</p>
-
-<p>Also, Big Brother is in charge of heart-beat. If not received, Big Brother have some double-check machanism.</p>
-
-<p><img class="middle" src="/assets/images/design-class1-reco-4.png"></p>
-
-<h3>Connecting the dots</h3>
-
-<p><strong>Dispatcher</strong> is used to connect the 4 components. It&rsquo;s like a messaging queue that collects and distributes jobs among everybody (eg. control and distributed info).</p>
-
-<p>It can be stateful or stateless.</p>
-
-<p>Keep in mind <strong>the connection between Dataset and Recommender</strong> remains. It&rsquo;s slow going thru Dispatcher.</p>
-
-<h3>Distribute it</h3>
-
-<p>During development, the 5 components can be put on same machine. When we deploy distributely, we use <strong>Socket connection (keep alive)</strong> to connect them.</p>
-
-<p>Notice the Web Service is <strong>connection heavy</strong>, which consume large CPU and RAM resource. It&rsquo;s better to seperate to one machine.</p>
-
-<p>Big brother is read/write heavy, so it&rsquo;s OKAY to put on same machine with Dispatcher.</p>
-
-<p>Since Dataset and Recommender have data exchange, it&rsquo;s a good idea to put on same machine.</p>
-
-<h3>Additional questions</h3>
-
-<p>Implement Dispatcher with <strong>consumer-producer</strong> model.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/5">&larr; Older</a>
@@ -1922,7 +1895,7 @@ class Session extends Row {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (81)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -1945,6 +1918,10 @@ class Session extends Row {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
       </li>
     
@@ -1958,10 +1935,6 @@ class Session extends Row {
     
       <li class="post">
         <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a>
       </li>
     
   </ul>

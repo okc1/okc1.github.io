@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ninechap | Woodstock Blog]]></title>
   <link href="http://okc1.github.io/blog/categories/ninechap/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-07-11T01:30:05-07:00</updated>
+  <updated>2016-07-31T02:06:49-07:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -48,7 +48,7 @@ In Today's lecture:
 
     They are in fact, all related to __sorting__. 
 
-<img class="middle" src="/assets/images/design-class4-News-Aggregator.png">
+{% img middle /assets/images/design-class4-News-Aggregator.png %}
 
 ## Step 1, Info collection with crawler
 
@@ -73,7 +73,7 @@ Python:
 
 Use of __socket__. 
 
-<img class="middle" src="/assets/images/design-class4-web-socket-1.png">
+{% img middle /assets/images/design-class4-web-socket-1.png %}
 
 Socket is like the cellphone in the Call Center example. 
 
@@ -83,7 +83,7 @@ Socket is like the cellphone in the Call Center example.
 
 What is socket? Where is it?
 
-<img class="middle" src="/assets/images/design-class4-web-socket-2.png">
+{% img middle /assets/images/design-class4-web-socket-2.png %}
 
 It's in-between __Application Layer__ (HTTP, FTP, DNS) and __Transport layer__ (UDP, TCP). 
 
@@ -97,7 +97,7 @@ Remembering that socket is like a cellphone. It is an __abstraction layer__, tha
 
 [DOM tree](http://www.w3schools.com/js/js_htmldom.asp):
 
-<img class="middle" src="/assets/images/html-dom-tree.gif">
+{% img middle /assets/images/html-dom-tree.gif %}
 
 > [Document Object Model](http://www.w3.org/TR/DOM-Level-2-Core/introduction.html) (DOM) is an application programming interface (API) for valid HTML and well-formed XML documents. It __defines the logical structure of documents__ and the way a document is accessed and manipulated. 
 
@@ -114,7 +114,7 @@ Remembering that socket is like a cellphone. It is an __abstraction layer__, tha
 1. send the new lists to a Scheduler
 1. Scheduler will use crawlers again, to crawl pages. 
 
-<img class="middle" src="/assets/images/design-class4-cralwer-arch-1.png">
+{% img middle /assets/images/design-class4-cralwer-arch-1.png %}
 
 This design is bad, cuz there is crawler waste. How can we __reuse__ these crawlers???
 
@@ -126,7 +126,7 @@ Design crawler that can crawl __both list and pages__ information.
 
 So we pass in all info a crawler task needs. Like: 
 
-<img class="middle" src="/assets/images/design-class4-cralwer-arch-2.png">
+{% img middle /assets/images/design-class4-cralwer-arch-2.png %}
 
 1. we gave __more priority to list pages than content pages__. Otherwise, your content get out of date soon. 
 
@@ -146,7 +146,7 @@ Calculate the similarity between pages. More on this subject later.
 
 ## How to design Scheduler?
 
-<img class="middle" src="/assets/images/design-class4-cralwer-arch-3.png">
+{% img middle /assets/images/design-class4-cralwer-arch-3.png %}
 
 ### Solution with Sleep
 
@@ -210,7 +210,7 @@ What is Conditional Variable:
 >
 > Monitors provide a mechanism for threads to temporarily give up exclusive access in order to wait for some condition to be met, before regaining exclusive access and resuming their task.
 
-<img class="middle" src="/assets/images/design-class4-condition-variable.png">
+{% img middle /assets/images/design-class4-condition-variable.png %}
 
 Look at last 3 lines of code. __Before going to sleep, CV have to release the lock__, so that other threads can access the taskTable. 
 
@@ -355,7 +355,7 @@ __fix MP3 problem__
 
 The process of fetching a MP3 (from CDN):
 
-<img class="middle" src="/assets/images/design-class3-client-request-mp3.png">
+{% img middle /assets/images/design-class3-client-request-mp3.png %}
 
 1. aquire MP3 link, and send request
 1. send request to CDN
@@ -363,7 +363,7 @@ The process of fetching a MP3 (from CDN):
 1. response to client
 1. play the music
 
-<img class="middle" src="/assets/images/design-class3-client-request-mp3-errors.png">
+{% img middle /assets/images/design-class3-client-request-mp3-errors.png %}
 
 Question: in step 2, there's more Network error, but in step 4, there's no Network error, but Timeout. Why?
 
@@ -407,7 +407,7 @@ Solution:
 
 > The goal of a CDN is to serve content to end-users with high availability and high performance.  
 
-<img class="middle" src="/assets/images/design-class3-CDN.png">
+{% img middle /assets/images/design-class3-CDN.png %}
 
 Which CDN should client choose?
 
@@ -441,7 +441,7 @@ We can't use daily active user, cuz it depends on marketing, competitors, and in
 
 __One day retention rate__:
 
-<img class="middle" src="/assets/images/design-class3-user-retention.png">
+{% img middle /assets/images/design-class3-user-retention.png %}
 
 > Today’s visitor = {U1, U3, U7, U9, U10} 
 >
@@ -455,7 +455,7 @@ __One day retention rate__:
 
 Queue A and Queue B
 
-<img class="middle" src="/assets/images/design-class3-miao-sha.png">
+{% img middle /assets/images/design-class3-miao-sha.png %}
 
 ### Queue A
 
@@ -532,7 +532,7 @@ Misson: reduce failure rate.
 
 ## How does server identify a user?
 
-<img class="middle" src="/assets/images/design-class3-http-request-overview.png">
+{% img middle /assets/images/design-class3-http-request-overview.png %}
 
 > If a server uses __Cookie__ to identify unique users, the result might be > real users.
 
@@ -548,7 +548,7 @@ Log:
 1. user send another log after it plays a song
 1. we can identify users who failed to play a song
 
-<img class="middle" src="/assets/images/design-class3-server-failure-rate-1.png">
+{% img middle /assets/images/design-class3-server-failure-rate-1.png %}
 
 > In fact, everything should be logged, including play, pause, switch song, refresh etc.
 
@@ -567,7 +567,7 @@ User login are, in fact, __automatically logged__ when user visits. Thus user ON
 
 __the process of playing music__
 
-<img class="middle" src="/assets/images/design-class3-web-browser-17-steps.png">
+{% img middle /assets/images/design-class3-web-browser-17-steps.png %}
 
 1. Prepare
 2. Send DNS request
@@ -641,13 +641,13 @@ Highest failure rate:
 1. 3pm office hour
 1. 9pm highest bandwidth nation-wide
 
-<img class="middle" src="/assets/images/design-class3-web-failure-graph.png">
+{% img middle /assets/images/design-class3-web-failure-graph.png %}
 
 ## Solution 1, reverse proxy
 
 Reverse proxy w/ more servers. Reverse proxy acts like a load balancer. 
 
-<img class="middle" src="/assets/images/design-class3-reverse-proxly.png">
+{% img middle /assets/images/design-class3-reverse-proxly.png %}
 
 > __[Reverse proxy](https://en.wikipedia.org/wiki/Reverse_proxy)__ is a type of proxy server that retrieves resources on behalf of a client from one or more servers. These resources are then returned to the client as though they originated from the proxy server itself. 
 
@@ -687,7 +687,7 @@ Reverse proxy w/ more servers. Reverse proxy acts like a load balancer.
 
 Caching can happen at place Number 1, 2 and 3:
 
-<img class="middle" src="/assets/images/design-class3-web-hosting-4-layers.png">
+{% img middle /assets/images/design-class3-web-hosting-4-layers.png %}
 
 AT Number 4, we can add __more servers__. Number 3, __reverse proxy__. Number 2 is __caching within the ISP network__, which avoids requesting info again from backend. Number 1 is __front-end browser cache__. 
 
@@ -795,7 +795,7 @@ Solution: duplication.
 
 Data redundancy - Summary:
 
-<img class="middle" src="/assets/images/design-class2-data-redundancy-1.png">
+{% img middle /assets/images/design-class2-data-redundancy-1.png %}
 
 ## Final note: Data inconsistency
 
@@ -826,7 +826,7 @@ __[ACID](https://en.wikipedia.org/wiki/ACID) (Atomicity, Consistency, Isolation,
 
     Q5.4: Server crash
 
-<img class="middle" src="/assets/images/design-class2-summary.png">
+{% img middle /assets/images/design-class2-summary.png %}
 
 Additional Questions:
 
