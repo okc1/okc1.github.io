@@ -9,10 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link A message containing letters from A-Z is being encoded to numbers using the following mapping: 'A' -&gt; 1
-'B' -&gt; 2
-...
-'Z' -&gt; 26 &hellip;">
+  <meta name="description" content="Question link The gray code is a binary numeral system where two successive values differ in only one bit. Given a non-negative integer n &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -68,6 +65,134 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/23/Gray-Code/">[LeetCode 89] Gray Code</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-23T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/gray-code/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>The gray code is a binary numeral system where two successive values differ in only one bit.</p>
+
+<p>Given a non-negative integer <i>n</i> representing the total number of bits in the code, print the sequence of gray code. A gray code sequence must begin with 0.</p>
+
+<p>For example, given <i>n</i> = 2, return <code>[0,1,3,2]</code>. Its gray code sequence is:</p>
+<pre>00 - 0
+01 - 1
+11 - 3
+10 - 2
+</pre>
+
+<p><b>Note:</b><br>
+For a given <i>n</i>, a gray code sequence is not uniquely defined.
+</p>
+<p>For example, <code>[0,2,3,1]</code> is also a valid gray code sequence according to the above definition.</p>
+
+<p>For now, the judge is able to judge based on one instance of gray code sequence. Sorry about that.</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is a qure mathematics question.</strong></p>
+
+<p><a href="http://en.wikipedia.org/wiki/Gray_code">Gray Code</a> is a very classic binary system, and we shall keep in mind clearly of its mathematical solution.</p>
+
+<h3>Solution</h3>
+
+<p><strong>My solution is using recursion</strong>. First get the answer of input value = (n-1), then from that list, generate answer for input = n. <a href="http://fisherlei.blogspot.sg/2012/12/leetcode-gray-code.html">A post</a> talked about this.</p>
+
+<p><strong>The math approach to solve this problem is much more simpler</strong>. The (i)th element of Gray Code is calculated by the following method (I learnt from <a href="http://blog.csdn.net/worldwindjp/article/details/21536103">this blog</a>):</p>
+
+<blockquote><p>binaryToGray = (i >> 1) ^ i;</p></blockquote>
+
+<p>For example,</p>
+
+<blockquote><p>00 -> 00</p>
+
+<p>01 -> 01</p>
+
+<p>10 -> 11</p>
+
+<p>11 -> 10</p></blockquote>
+
+<h3>Code</h3>
+
+<p><strong>First, my solution</strong></p>
+
+<pre><code>public ArrayList&lt;Integer&gt; grayCode(int n) {
+    ArrayList&lt;Integer&gt; ans = new ArrayList&lt;Integer&gt;();
+    if (n == 0) {
+        ans.add(0);
+        return ans;
+    }
+    ArrayList&lt;Integer&gt; half = grayCode(n-1);
+    ans.addAll(half);
+    for (int i = half.size() - 1; i &gt;= 0; i -- ) 
+        ans.add(half.get(i) + (int)Math.pow(2, n-1));
+    return ans;
+}
+</code></pre>
+
+<p><strong>Second, math solution</strong></p>
+
+<pre><code>public ArrayList&lt;Integer&gt; grayCode(int n) {
+    ArrayList&lt;Integer&gt; ans = new ArrayList&lt;Integer&gt;();
+    for (int i = 0; i &lt; 1 &lt;&lt; n; i ++) 
+        ans.add((i &gt;&gt; 1) ^ i);
+    return ans;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1383,146 +1508,6 @@ private boolean search(char[][] board, boolean[][] visited,
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/21/SqrtX/">[LeetCode 69] Sqrt(x)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-05-21T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://oj.leetcode.com/problems/sqrtx/">link</a></p>
-
-<div class="question-content">
-            <p></p><p>Implement <code>int sqrt(int x)</code>.</p>
-
-<p>Compute and return the square root of <i>x</i>.</p><p></p>
-          </div>
-
-
-<h3>Stats</h3>
-
-<table border="2">
-    <tr>
-        <td>Frequency</td>
-        <td bgcolor="red">4</td>
-    </tr>
-    <tr>
-        <td>Difficulty</td>
-        <td bgcolor="red">4</td>
-    </tr>
-    <tr>
-        <td>Adjusted Difficulty</td>
-        <td bgcolor="red">4</td>
-    </tr>
-    <tr>
-        <td>Time to use</td>
-        <td bgcolor="yellow">----------</td>
-    </tr>
-</table>
-
-
-<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
-
-<h3>Analysis</h3>
-
-<p><strong>This is a classic question of math and CS</strong>. It&rsquo;s easy, but there are <strong>a few magical solutions</strong> for this problem.</p>
-
-<h3>Solution</h3>
-
-<p><strong>The most standard solution is using binary search</strong>. I have the code for that.</p>
-
-<p><strong><a href="http://en.wikipedia.org/wiki/Newton's_method">Newton&rsquo;s method</a> is a great way to solve this problem</strong>. It uses derivative to keep finding the next better approximation to the root of the value. There is <a href="http://www.2cto.com/kf/201206/137256.html">a great article</a> on this topic talking about Newton&rsquo;s method, and some even faster implementations.</p>
-
-<p>That article is definitely worth reading. I will quote a small propertion of it.</p>
-
-<blockquote cite="http://www.2cto.com/kf/201206/137256.html">
-    <p>求出根号a的近似值：首先随便猜一个近似值x，然后不断令x等于x和a/x的平均数，迭代个六七次后x的值就已经相当精确了。
-        <br>例如，我想求根号2等于多少。假如我猜测的结果为4，虽然错的离谱，但你可以看到使用牛顿迭代法后这个值很快就趋近于根号2了：
-        <br>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4&nbsp; + 2/4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ) / 2 = 2.25
-        <br>(&nbsp;&nbsp;&nbsp;&nbsp; 2.25 + 2/2.25&nbsp;&nbsp;&nbsp;&nbsp; ) / 2 = 1.56944..
-        <br>( 1.56944..+ 2/1.56944..) / 2 = 1.42189..
-        <br>( 1.42189..+ 2/1.42189..) / 2 = 1.41423..
-        <br>....
-        <img alt="\" src="http://up.2cto.com/2012/0626/20120626085529128.gif" style="width: 376px; height: 288px;">
-        <br>这种算法的原理很简单，我们仅仅是不断用(x,f(x))的切线来逼近方程x^2-a=0的根。根号a实际上就是x^2-a=0的一个正实根，这个函数的导数是2x。也就是说，函数上任一点(x,f(x))处的切线斜率是2x。那么，x-f(x)/(2x)就是一个比x更接近的近似值。代入 f(x)=x^2-a得到x-(x^2-a)/(2x)，也就是(x+a/x)/2。</p>
-    <p>相关的代码如下：</p>
-    <p>float SqrtByNewton(float x)
-        <br>{
-        <br>&nbsp;float val = x;//最终
-        <br>&nbsp;float last;//保存上一个计算的值
-        <br>&nbsp;do
-        <br>&nbsp;{
-        <br>&nbsp;&nbsp;last = val;
-        <br>&nbsp;&nbsp;val =(val + x/val) / 2;
-        <br>&nbsp;}while(abs(val-last) &gt; eps);
-        <br>&nbsp;return val;
-        <br>}然后我们再来看下性能测试：
-    </p>
-    <p>&nbsp;
-        <img alt="\" src="http://up.2cto.com/2012/0626/20120626085547902.png" style="width: 375px; height: 180px;">
-    </p>
-    <p>哇塞，性能提高了很多</p>
-</blockquote>
-
-
-<h3>My code</h3>
-
-<p><strong>Binary search</strong>.</p>
-
-<pre><code>public int sqrt(int x) {
-    if (x &lt;= 1)
-        return x;
-    long left = 1, right = x;
-    long mid, square;
-    while (right - left &gt; 1) {
-        mid = (left + right) / 2;
-        square = mid * mid;
-        if (square == x)
-            return (int) mid;
-        else if (square &gt; x)
-            right = mid;
-        else if (square &lt; x)
-            left = mid;
-    }
-    return (int) left;
-}
-</code></pre>
-
-<p><strong>Newton&rsquo;s method, code from <a href="http://www.cnblogs.com/AnnieKim/archive/2013/04/18/3028607.html">this blog</a></strong>.</p>
-
-<pre><code>public int sqrt(int x) {
-    if (x == 0) return 0;
-    double last = 0, res = 1;
-    while (res != last) {
-        last = res;
-        res = (res + x / res) / 2;
-    }
-    return (int) res;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/56">&larr; Older</a>
@@ -1540,7 +1525,7 @@ private boolean search(char[][] board, boolean[][] visited,
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -1563,6 +1548,10 @@ private boolean search(char[][] board, boolean[][] visited,
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
       </li>
     
@@ -1576,10 +1565,6 @@ private boolean search(char[][] board, boolean[][] visited,
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
       </li>
     
   </ul>

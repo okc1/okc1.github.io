@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link The input is an endless stream of English words or phrases (we refer them as tokens). Output top N tokens we have seen so far (from all &hellip;">
+  <meta name="description" content="Question link Find the substring of length 3 which is present in the reverse order from the string. Ex: if the string is abcdcba (cba is the reverse &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,52 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/09/match-triplet-with-reverse-order/">[Amazon] Match Triplet With Reverse Order</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-09T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=11655778">link</a></p>
+
+<blockquote><p>Find the substring of length 3 which is present in the reverse order from the string.</p>
+
+<p>Ex: if the string is abcdcba (cba is the reverse of abc) so we should return cba.</p></blockquote>
+
+<h3>Solution</h3>
+
+<ol>
+<li><p><strong>HashMap (recommended)</strong>. Hash all substrings of length 3. O(n). Look up all reverse substrings of length 3 in this hash set. O(n) time and O(n) space.</p></li>
+<li><p><strong>KMP Algo</strong>. Take every substring of length 3. Reverse it and find it in the input using KMP. O(n<sup>2</sup>) time and O(1) space.</p></li>
+<li><p><strong>Build suffix tree</strong> of height 3. Then in reverse order, check triplets.</p></li>
+</ol>
+
+
+<p>The 3 solutions above all work well. Pick the one you love.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1012,57 +1058,6 @@ private int findNextJob(Job[] jobs, int k) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/06/big-data-storage/">[Design] Big Data Storage</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-06T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://www.mitbbs.com/article/JobHunting/32580869_0.html">ref</a></p>
-
-<h3>Question</h3>
-
-<p><strong>Given 1 trillion messages</strong> on fb and each message has at max 10 words.</p>
-
-<p>How do you build the <strong>index table</strong> and how many machines do you need on the <strong>cluster</strong> to store the index table?</p>
-
-<h3>One possible answer</h3>
-
-<p>Total data = 1 trillion * 10 words * 6 bytes / word = 60TB = one small NetApp box</p>
-
-<p><strong>Index by hashed userid</strong>; will distribute traffic effectively across servers; cache active users recent messages in memory.</p>
-
-<p><a href="http://www.glassdoor.com/Interview/Given-a-set-of-n-jobs-with-start-time-end-time-cost-find-a-subset-so-that-no-2-jobs-overlap-and-the-cost-is-maximum-QTN_440168.htm">Cannot use Netapp box</a>. From what I read in FB engg blog, they have all the info in main memory of server.</p>
-
-<p>Total data = 1 trillion * 10 words * 6 bytes / word = 60TB + 1TB for Indexes.</p>
-
-<p>Considering servers have 64 GB ram. 61 GB usable to store index, 1000 servers.</p>
-
-<h4>For more information</h4>
-
-<p>Read 2 other posts: <strong>[Design] Distributed hash table</strong> and <strong>[Design] Cloud, Grid and Cluster</strong>.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/19">&larr; Older</a>
@@ -1080,7 +1075,7 @@ private int findNextJob(Job[] jobs, int k) {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -1103,6 +1098,10 @@ private int findNextJob(Job[] jobs, int k) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
       </li>
     
@@ -1116,10 +1115,6 @@ private int findNextJob(Job[] jobs, int k) {
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given two words (start and end), and a dictionary, find all shortest transformation sequence(s) from start to end, such that: Only one &hellip;">
+  <meta name="description" content="Question link There are N children standing in a line. Each child is assigned a rating value. You are giving candies to these children subjected to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,118 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/31/Candy/">[LeetCode 135] Candy</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-31T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>31</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/candy/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>
+There are <i>N</i> children standing in a line. Each child is assigned a rating value. 
+</p>
+<p>
+You are giving candies to these children subjected to the following requirements:
+</p>
+<ul>
+<li>Each child must have at least one candy.</li>
+<li>Children with a higher rating get more candies than their neighbors.</li>
+</ul>
+<p>
+What is the minimum candies you must give?
+</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="red">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is a difficult question</strong>.</p>
+
+<p>Directly doing it will result in a lot of trace-backs. The following picture gives a clear idea of what the problem is:</p>
+
+<p><img class="middle" src="/assets/images/candy.png"></p>
+
+<p>When traversing from low to high (upward sloping), just increase candy, that&rsquo;s fine. But when sloping down, we would have no idea what value to set until we reach the min point. <strong><a href="http://fisherlei.blogspot.sg/2013/11/leetcode-candy-solution.html">Fish Lei</a> have a good solution of &ldquo;trace-back algorithm&rdquo;</strong> to re-adjust the values by traversing back to the top again.</p>
+
+<p>However, I personally think the 2nd solution is way more splendid, that I will not cover 1st solution in detail.</p>
+
+<h3>Solution</h3>
+
+<p><strong>The 2nd solution is very similar to &ldquo;Trapping Rain Water&rdquo;</strong>. <a href="http://zhaohongze.com/wordpress/2013/12/10/leetcode-candy/">This blog</a> is the best explanation I found from Internet.</p>
+
+<blockquote><ol>
+<li>For the first time, scan from left to right. If current rating is larger than the left one, give one more candy to current child than the left one.</li>
+<li>For the second time, scan from right to left. If current rating is larger than the right one, give one more candy to current child than the right one.</li>
+</ol>
+
+
+<p>We consider the policy as two folds, left policy and right policy. Left policy means a child has more candies than his left one if his rating is higher than his left one. The first scan ensures that the distribution meets left policy. The second scan ensures that the distribution meets right policy. However, it will not violate left policy.</p></blockquote>
+
+<h3>Code</h3>
+
+<p><strong>2nd solution</strong></p>
+
+<pre><code>public int candy(int[] ratings) {
+    int len = ratings.length;
+    if (len &lt;= 1) return len;
+    int[] candy = new int[len];
+    candy[0] = candy[len-1] = 1;
+    for (int i = 1; i &lt; len; i ++) {
+        if (ratings[i] &gt; ratings[i-1])
+            candy[i] = candy[i-1] + 1;
+        else candy[i] = 1;
+    }
+    for (int i = len-2; i &gt;= 0; i --) {
+        if (ratings[i] &gt; ratings[i+1])
+            candy[i] = Math.max(candy[i], candy[i+1] + 1);
+    }
+    int sum = 0;
+    for (int i = 0; i &lt; len; i ++) sum += candy[i];
+    return sum;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1481,61 +1593,6 @@ Your algorithm should run in O(<i>n</i>) complexity.
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/29/DFS-BFS-space-efficiency/">[Design] DFS, BFS and Space Efficiency</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-05-29T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>29</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>First Word</h3>
-
-<p>This post talks about BFS, DFS and space efficiency.</p>
-
-<h3>Analysis</h3>
-
-<p><strong>For BFS</strong> it&rsquo;s easy to understand. It is implemented with a queue. <strong>Space usage is O(width)</strong></p>
-
-<p><strong>For DFS</strong>, there are 2 types: true DFS and pseudo-DFS. True DFS space usage is <strong>O(depth)</strong>, while psudo-DFS is <strong>O(depth x <a href="http://en.wikipedia.org/wiki/Branching_factor">branching factor</a>)</strong>.</p>
-
-<blockquote><p><strong>branching factor</strong> is the number of children at each node, the outdegree.</p></blockquote>
-
-<p>Pseudo-DFS is implemented by <strong>simply take the BFS implementation and replace the Queue with Stack</strong>. But true-DFS is a very different algorithm where the <strong>stack is use for backtracking only</strong>. <a href="http://stackoverflow.com/a/20429574">This</a> is a great article talking about this topic.</p>
-
-<blockquote><p>the true classic DFS cannot be obtained from BFS by such queue-to-stack replacement. The classic DFS is a completely different algorithm with significantly different inner structure. True DFS is a genuinely recursive algorithm that uses stack for backtracking purposes, not for storing the vertex discovery &ldquo;front&rdquo; (as is the case in BFS)</p></blockquote>
-
-<p><strong>The following quoted texts are also worth-reading</strong>.</p>
-
-<blockquote><p>Something worth noting - Pseudo-DFS should give you O(depth * branching factor) space, as opposed to O(depth) for proper DFS, which is still better than O(width).</p>
-
-<p>The defining characteristic that separates true DFS and what you call pseudo DFS is how they use the stack. True DFS use it to store backtracking information in contrast to pseudo DFS which used the stack to store the vertex discovery front.</p></blockquote>
-
-<h3>Examples</h3>
-
-<p><strong>Given a perfect binary search tree of 4 levels</strong>. BFS would require 8 space, while DFS requires only 4 space. The branching factor is 2, so true and pseudo DFS use same amount of space.</p>
-
-<p><strong>Given a star graph</strong>: a single central vertex surrounded by 1000 peripheral vertices, with each connected to the central vertex. If we run BFS on this graph, the queue size will immediately jump to 1000. The same thing happens for pseudo-DFS. But classic DFS algorithm will need stack depth of only 1 (!) to traverse this entire graph.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/51">&larr; Older</a>
@@ -1553,7 +1610,7 @@ Your algorithm should run in O(<i>n</i>) complexity.
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -1576,6 +1633,10 @@ Your algorithm should run in O(<i>n</i>) complexity.
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
       </li>
     
@@ -1589,10 +1650,6 @@ Your algorithm should run in O(<i>n</i>) complexity.
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
       </li>
     
   </ul>

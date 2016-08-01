@@ -9,11 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given a wordlist like this: 1. ccaa
-1. baca
-1. baaa
-1. bbbb and a Grid like this: X X XXXX
-X X XXXX Now solve this crossword. One &hellip;">
+  <meta name="description" content="Question link Hamming distance between two strings of equal length is the number of positions at which the corresponding symbols are different. Write &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -69,6 +65,82 @@ X X XXXX Now solve this crossword. One &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/01/Hamming-distance-of-array/">[Facebook] Hamming Distance of Array</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-01T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.glassdoor.com/Interview/-a-first-write-a-function-to-calculate-the-hamming-distance-between-two-binary-numbers-b-write-a-function-that-takes-QTN_450885.htm">link</a></p>
+
+<blockquote><p><a href="http://en.wikipedia.org/wiki/Hamming_distance">Hamming distance</a> between two strings of equal length is the number of positions at which the corresponding symbols are different.</p>
+
+<p>Write a function that takes a list of binary numbers and returns the sum of the hamming distances for each pair.</p>
+
+<p>Do it in O(n) time.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>The naive solution is O(n<sup>2</sup>), so we simplify this question by using {0,0,0,1,1} as input. The output in this case would be 6. Why? Because 3 x 2 = 6.</p>
+
+<p>So the equation for solution would be:</p>
+
+<blockquote><p>distance (for a bit) = number of &lsquo;1&rsquo;s * number of '0&rsquo;s</p></blockquote>
+
+<p>The final answer would be the sum of distances for all bits. The solution is from <a href="http://se7so.blogspot.sg/2014/02/how-to-prepare-for-interview-9.html">this blog</a>.</p>
+
+<h3>Code</h3>
+
+<p>Great solution, <strong>not written by me</strong></p>
+
+<pre><code>int hammingDist(int[] nums) {
+
+    int[] bits = new int[32];
+
+    for (int i = 0; i &lt; nums.length; i++) {
+        int one = 1;
+        int j = 0;
+
+        while (nums[i] != 0) {
+            if ((nums[i] &amp; one) != 0)
+                bits[j]++;
+            j++;
+            nums[i] = nums[i] &gt;&gt; 1;
+        }
+    }
+
+    int ans = 0;
+    for (int i = 0; i &lt; 32; i++) {
+        ans += bits[i] * (nums.length - bits[i]);
+    }
+
+    return ans;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -940,59 +1012,6 @@ A S T U
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/27/largest-cycle-in-permutation/">[Twitter] Largest Cycle in Permutation</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-08-27T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://get-that-job-at-google.blogspot.sg/2013/01/twitter-programming-test.html">link</a></p>
-
-<blockquote><p>Given a permutation which contains numbers in the range [1, N], return the length of the largest cycle in the permutation.</p>
-
-<p>A <a href="http://mathworld.wolfram.com/PermutationCycle.html">permutation cycle</a> is a subset of a permutation whose elements trade places with one another.</p>
-
-<p>Sample Testcases:</p>
-
-<p>a) longestCycle([2 3 1]) returns 3, since only cycle is (1 2 3) whose length is 3</p>
-
-<p>b) longestCycle([5 4 3 2 1]) returns 2, since the permutation can be decomposed into (1 5), (2 4), (3)</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>This is just an idea.</p>
-
-<p>Now first of all, its important to understand <strong>what is a cycle in permutation</strong>.</p>
-
-<p>Keeping that in mind, I take (5,4,3,2,1) as an example. First, we fetch 5, and we swap number 5 with the 5th element of the array (which is 1). After this swap, value 1 is in the 1st position, so this cycle is done, the length is 2.</p>
-
-<p>We continue doing this until <strong>all numbers of value v is in the (v)th position</strong>, we should know the largest length of cycle during this process.</p>
-
-<p>I did not write code, and I found very little relevant resources. If you did, please leave a comment below.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/29">&larr; Older</a>
@@ -1010,7 +1029,7 @@ A S T U
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -1033,6 +1052,10 @@ A S T U
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
       </li>
     
@@ -1046,10 +1069,6 @@ A S T U
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
       </li>
     
   </ul>

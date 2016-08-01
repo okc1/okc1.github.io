@@ -9,8 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link 给一个 n*m 的房间，房间里存在各种可能的墙，房间的格子里已经放了 e 个器材，要
-求新放一个器材，放置位置距其它 e 个器材的距离最近。Breadth-first search. Solution 对 e个设备 BFS, 求每个设备到每个可以放新器材的点的距离， &hellip;">
+  <meta name="description" content="Overview In East Prussia(普鲁士), people try to walk all 7 bridges w/o crossing a bridge twice. Leonhard Euler (pronounced &ldquo;oiler&rdquo;) – Swiss &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,61 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/04/seven-bridge/">[Fundamental] the 7 Bridges Problem</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-10-04T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Overview</h1>
+
+<p>In East Prussia(普鲁士), people try to walk all <a href="https://en.wikipedia.org/wiki/Seven_Bridges_of_K%C3%B6nigsberg">7 bridges</a> w/o crossing a bridge twice.</p>
+
+<p>Leonhard Euler (pronounced &ldquo;oiler&rdquo;) – Swiss</p>
+
+<h1>Euler path</h1>
+
+<p>An Euler path, also called an Eulerian trail, is a walk on the graph edges of a graph which uses each graph edge in the original graph exactly once.</p>
+
+<h2>Degree</h2>
+
+<p>Node degree of a vertex: the number of edges incident with it.</p>
+
+<h2>Euler Theorem</h2>
+
+<p>A graph contains an euler path iffeither of the following cases hold:</p>
+
+<ol>
+<li>All except for two nodes have even degrees – the 2 odd-degree nodes must be start and end points</li>
+<li>all nodes have even degrees.</li>
+</ol>
+
+
+<h1>Application</h1>
+
+<p>networks, distributed systems, coding theory</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1821,63 +1875,6 @@ class Session extends Row {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/08/24/three-property-object/">[Java OOP] Three Properties of Class/Object</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-08-24T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1>Objects</h1>
-
-<p>Much of the power and flexibility of modern software analysis and design derives from its use of objects.</p>
-
-<h1>Classes</h1>
-
-<p>Classes create an abstract representation of the world, letting you discard unnecessary details.</p>
-
-<h1>The 3 properties</h1>
-
-<h2>Class</h2>
-
-<ol>
-<li><p>properties</p></li>
-<li><p><strong>behavior</strong></p></li>
-<li><p>relationships to other objects</p></li>
-</ol>
-
-
-<h2>Object</h2>
-
-<ol>
-<li><p>state</p></li>
-<li><p><strong>behavior</strong></p></li>
-<li><p>identity</p></li>
-</ol>
-
-
-<p>Ref: <a href="http://javadevwannabe.blogspot.sg/2012/02/state-behavior-and-identity.html?m=1">http://javadevwannabe.blogspot.sg/2012/02/state-behavior-and-identity.html?m=1</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/5">&larr; Older</a>
@@ -1895,7 +1892,7 @@ class Session extends Row {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -1918,6 +1915,10 @@ class Session extends Row {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
       </li>
     
@@ -1931,10 +1932,6 @@ class Session extends Row {
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
       </li>
     
   </ul>

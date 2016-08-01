@@ -9,9 +9,9 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link N块石头排成一行，两个玩家依次取石头，每个玩家可以取其中任意一块或者相邻的两块，最后能将剩下的石头一次取光的玩家获胜。 Solution when n = 1, first move wins
-when n = 2, first move wins
-when n = 3 &hellip;">
+  <meta name="description" content="Question link There is a pile of n wooden sticks. The length and weight of
+each stick are known in advance. The sticks are
+to be processed by a &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +67,187 @@ when n = 3 &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/14/wooden-stick/">[UVa] Wooden Sticks</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-14T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://icpcarchive.ecs.baylor.edu/index.php?option=com_onlinejudge&amp;Itemid=8&amp;page=show_problem&amp;problem=323">link</a></p>
+
+<p><body>There is a pile of <i>n </i>wooden sticks. The length and weight of
+each stick are known in advance. The sticks are
+to be processed by a woodworking machine in one by one fashion. It
+needs some time, called setup time, for
+the machine to prepare processing a stick. The setup times are
+associated with cleaning operations and
+changing tools and shapes in the machine. The setup times of the
+woodworking machine are given as follows:</p>
+
+<ul>
+<li>The setup time for the first wooden
+stick is 1 minute.</li>
+<li>
+Right after processing a stick of length <i>l </i>and weight <i>w
+</i>, the machine will need no setup time for a stick
+of length <i>l</i>' and weight <i>w</i>' if <i>l </i>&lt;=<i>l</i>'
+and <i>w </i>&lt;=<i>w</i>' . </li>
+</ul>
+
+
+<p>Otherwise, it will need 1 minute for setup.<br>
+You are to find the minimum setup time to process a given pile of <i>n
+</i>wooden sticks. For example, if you have
+five sticks whose pairs of length and weight are (4,9), (5,2), (2,1), (3,5),
+and (1,4) then the minimum setup
+time should be 2 minutes since there is a sequence of pairs (1,4),
+(3,5), (4,9), (2,1), (5,2).</p>
+
+<h2><font size="4" color="#ff0000"><a name="SECTION0001001000000000000000">Input</a> <br>
+</font></h2>
+
+
+<p>The input consists of <i>T</i> test cases. The number of test cases (<i>T</i>) is given in the first line of the input file. Each
+test case consists of two lines: The first line has an integer <i>n</i>,
+1&lt;=<i>n&lt;=</i>5000, that represents the number of
+wooden sticks in the test case, and the second line contains 2<i>n </i>positive
+integers <i>l<sub>1</sub></i>, <i>w<sub>1</sub></i>, <i>l<sub>2</sub></i>,
+<i>w<sub>2</sub></i>, &hellip;, <i>l<sub>n</sub></i>, <i>w<sub>n</sub></i>,
+each of magnitude at most 10000, where <i>l<sub>i</sub> </i>and <i>w<sub>i</sub>
+</i>are the length and weight of the <i>i </i>th wooden stick,
+respectively. The 2<i>n </i>integers are delimited by one or
+more spaces.</p>
+
+<h2><font size="4" color="#ff0000"><a name="SECTION0001002000000000000000">Output</a>&nbsp;</font>
+</h2>
+
+
+<p>The output should contain the minimum setup time in minutes, one per
+line.</p>
+
+<h2><font size="4" color="#ff0000"><a name="SECTION0001003000000000000000">Sample Input</a> <br>
+</font></h2>
+
+
+
+
+<pre>3
+5
+4 9 5 2 2 1 3 5 1 4
+3
+2 2 1 1 2 2
+3
+1 3 2 2 3 1
+</pre>
+
+
+
+
+<h2><font size="4" color="#ff0000"><a name="SECTION000
+1004000000000000000">Sample Output</a>&nbsp;</font>
+</h2>
+
+
+
+
+<pre>2
+1
+3
+</pre>
+
+
+<p></body></p>
+
+<h3>Analysis</h3>
+
+<p>This question is a little similar to <a href="/blog/2014/09/17/stack-up-boxes/">[CC150v5] 9.10 Stack Up the Boxes</a>, yet different.</p>
+
+<h3>Solution</h3>
+
+<p>Solution quoted from <a href="http://www.csdn123.com/html/blogs/20130823/58042.htm">脚本百事通</a>:</p>
+
+<blockquote><p>按长度从小到大排序, 若长度相同, 则按重量从小到大排序(先按重量再按长度也行)</p>
+
+<p>然后, 我们针对当前木棍, 与剩下的木棍比较, 满足 w1 &lt;= w2 &amp;&amp; l1 &lt;= l2 的, 就更新一下当前棍, 并标记~</p>
+
+<p>当所有木棍都被编组后 输出到底设置了几次~</p></blockquote>
+
+<p><a href="http://www.android100.org/html/201502/03/109926.html">ref1</a>, <a href="http://blog.csdn.net/keshuai19940722/article/details/10735689">ref2</a></p>
+
+<h3>Code</h3>
+
+<p>The following Java code is written by me</p>
+
+<pre><code>public int count(Pair[] points) {
+    Arrays.sort(points, new PointComparator());
+    // now the array is sorted with Point.x
+    int total = 0;
+    int p = 0;
+    int len = points.length;
+
+    while (p &lt; len) {
+        // find the next non-null point
+        while (p &lt; len &amp;&amp; points[p] == null) {
+            p++;
+        }
+        if (p == len) {
+            break;
+        }
+        // use points[p] as the first elements in the queue
+        Pair temp = copy(points[p]);
+        points[p] = null;
+        total++;
+
+        // then mark all elements that follow points[p]
+        for (int k = p + 1; k &lt; len; k++) {
+            if (points[k] == null || points[k].y &lt; temp.y) {
+                continue;
+            }
+            temp = copy(points[k]);
+            points[k] = null;
+        }
+        p++;
+    }
+    return total;
+}
+
+Pair copy(Pair p) {
+    Pair newP = new Pair(p.x, p.y);
+    return newP;
+}
+
+class PointComparator implements Comparator&lt;Pair&gt; {
+
+    @Override
+    public int compare(Pair p1, Pair p2) {
+        return p1.x - p2.x;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -874,117 +1055,6 @@ public class ValueNode {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/04/12/Compare-Version-Numbers/">[LeetCode 165] Compare Version Numbers</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-04-12T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="https://leetcode.com/problems/compare-version-numbers/">link</a></p>
-
-<div class="question-content">
-              <p></p><p>Compare two version numbers <i>version1</i> and <i>version2</i>.<br>
-If <i>version1</i> &gt; <i>version2</i> return 1, if <i>version1</i> &lt; <i>version2</i> return -1, otherwise return 0.</p>
-
-<p>You may assume that the version strings are non-empty and contain only digits and the <code>.</code> character.<br>
-The <code>.</code> character does not represent a decimal point and is used to separate number sequences.<br>
-For instance, <code>2.5</code> is not "two and a half" or "half way to version three", it is the fifth second-level revision of the second first-level revision.</p>
-
-<p>Here is an example of version numbers ordering:</p>
-<pre>0.1 &lt; 1.1 &lt; 1.2 &lt; 13.37</pre>
-
-<p><b>Credits:</b><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/ts">@ts</a> for adding this problem and creating all test cases.</p><p></p>
-              
-                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
-                <span class="hide">
-                  
-                  <a class="btn btn-xs btn-primary" href="/tag/string/">String</a>
-                  
-                </span>
-              
-            </div>
-
-
-<h3>Analysis</h3>
-
-<p>I&rsquo;ve seen a couple of interesting ideas on other people&rsquo;s blogs, including <a href="http://www.programcreek.com/2014/03/leetcode-compare-version-numbers-java/">one</a> that uses String.split() to convert input to an array, and <a href="http://www.meetqun.com/thread-3331-1-1.html">this one</a> which uses 2 pointers to compare.</p>
-
-<p>My solution might seem more intuitive for some. See below for my solution.</p>
-
-<h3>Solution</h3>
-
-<p>The idea is to identify what the current number is (before end of string, or before the next &lsquo;.&rsquo;). If there&rsquo;s no more string, value = 0, so the case of (1.0, 1) essentially equals. Without further ado, let&rsquo;s look at the code.</p>
-
-<h3>Code</h3>
-
-<pre><code>public class Solution {
-    public int compareVersion(String version1, String version2) {
-        if (version1 == null || version2 == null) {
-            return 0;
-        }
-        return helper(version1, version2);
-    }
-
-    private int helper(String v1, String v2) {
-        if (v1.length() == 0 &amp;&amp; v2.length() == 0) {
-            return 0;
-        }
-
-        int num1 = 0;
-        int num2 = 0;
-
-        if (v1.length() != 0) {
-            int p1 = 0;
-            while (p1 &lt; v1.length() &amp;&amp; v1.charAt(p1) != '.') {
-                p1++;
-            }
-            num1 = Integer.parseInt(v1.substring(0, p1));
-            if (p1 &lt; v1.length()) p1++;
-            v1 = v1.substring(p1);
-        }
-
-        if (v2.length() != 0) {
-            int p2 = 0;
-            while (p2 &lt; v2.length() &amp;&amp; v2.charAt(p2) != '.') {
-                p2++;
-            }
-            num2 = Integer.parseInt(v2.substring(0, p2));
-            if (p2 &lt; v2.length()) p2++;
-            v2 = v2.substring(p2);
-        }
-
-        if (num1 != num2) {
-            return (num1 - num2) / Math.abs(num1 - num2);
-        } else {
-            return helper(v1, v2);
-        }
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/8">&larr; Older</a>
@@ -1002,7 +1072,7 @@ For instance, <code>2.5</code> is not "two and a half" or "half way to version t
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -1025,6 +1095,10 @@ For instance, <code>2.5</code> is not "two and a half" or "half way to version t
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
       </li>
     
@@ -1038,10 +1112,6 @@ For instance, <code>2.5</code> is not "two and a half" or "half way to version t
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
       </li>
     
   </ul>

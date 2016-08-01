@@ -9,7 +9,12 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given a string, find its rank among all its permutations sorted lexicographically. For example, rank of “abc” is 1, rank of “acb” is 2 &hellip;">
+  <meta name="description" content="Question link Given set of words that are lexicographically sorted, return lexicographic order. E.g: abc
+acd
+bcc
+bed
+bdc
+dab The order of letters for &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +70,165 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/18/lexicographic-order-from-dict/">[Google] Lexicographic Order (Letter Replacement) of Dictionary</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-18T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=13394663">link</a></p>
+
+<blockquote><p>Given set of words that are lexicographically sorted, return lexicographic order. E.g:</p></blockquote>
+
+<pre><code>abc
+acd
+bcc
+bed
+bdc
+dab
+</code></pre>
+
+<blockquote><p>The order of letters for the given example would be</p></blockquote>
+
+<pre><code>a-&gt;b-&gt;c-&gt;e-&gt;d
+</code></pre>
+
+<h3>Solution</h3>
+
+<blockquote><p>Just form a graph(DAG) and do a topological sort.</p></blockquote>
+
+<p>Start from the first pair in the dictionary. Compare two strings in this pair <strong>till first mismatch</strong>.</p>
+
+<p>Eg: <strong>aad &amp; aab</strong>, in this case create an edge <strong>d -> b</strong>.</p>
+
+<p>More details is available <a href="http://codereview.stackexchange.com/questions/48292/return-the-lexicographic-order">here</a>.</p>
+
+<h4>Variant, and a different solution</h4>
+
+<p>Another way of asking this question, is:</p>
+
+<blockquote><p>有一个字典因为某种原因每个字符都被替换成一个别的字符了（但还是一一对应)，
+但是单词的顺序没有改变，比如</p></blockquote>
+
+<pre><code>cat
+coffee
+common
+
+--&gt; 
+
+dkc
+dbhhzz
+dbllbq
+</code></pre>
+
+<blockquote><p>让找出的这个替换的规则（guaranteed to have a unique one)</p></blockquote>
+
+<p><strong>Alternative solution</strong> is to check according to frequencies.</p>
+
+<h3>Code</h3>
+
+<pre><code>public String lexicoOrder(String[] dict) {
+    String ans = "";
+
+    // for each pair, maintain 2 HashMap
+    HashMap&lt;Character, Integer&gt; incount = new HashMap&lt;Character, Integer&gt;();
+    HashMap&lt;Character, List&lt;Character&gt;&gt; connection = new HashMap&lt;Character, List&lt;Character&gt;&gt;();
+    for (String str : dict) {
+        for (char c : str.toCharArray()) {
+            incount.put(c, 0);
+            connection.put(c, new ArrayList&lt;Character&gt;());
+        }
+    }
+    buildGraph(dict, incount, connection);
+
+    // start topology sorting
+    Queue&lt;Character&gt; temp = new LinkedList&lt;Character&gt;();
+    for (char c : incount.keySet()) {
+        if (incount.get(c) == 0) {
+            temp.offer(c);
+            incount.remove(c);
+            // remove any node whose incount is 0
+        }
+    }
+    while (!temp.isEmpty()) {
+        char top = temp.poll();
+        ans += top;
+        // 'top' is next char in line. remove it and delete connections
+        List&lt;Character&gt; inNodes = connection.get(top);
+        for (char c : inNodes) {
+            // remove incount for all nodes from inNodes
+            incount.put(c, incount.get(c) - 1);
+            if (incount.get(c) == 0) {
+                incount.remove(c);
+                temp.offer(c);
+            }
+        }
+    }
+    if (incount.size() == 0)
+        return ans;
+    else
+        return "unable to find a valid char sequence.";
+}
+
+public void buildGraph(String[] dict, HashMap&lt;Character, Integer&gt; incount,
+        HashMap&lt;Character, List&lt;Character&gt;&gt; connection) {
+    // build the graph map
+    // abc
+    // acd
+    // bcc
+    // bed
+    // bdc
+    // dab
+    for (int i = 0; i &lt; dict.length - 1; i++) {
+        // compare dict[i] and dict[i+1]
+        String str1 = dict[i];
+        String str2 = dict[i + 1];
+        int p = 0;
+        while (p &lt; str1.length() &amp;&amp; p &lt; str2.length()) {
+            if (str1.charAt(p) == str2.charAt(p)) {
+                p++;
+            } else {
+                break;
+            }
+        }
+        if (p == str1.length()) {
+            // this is special case eg. "ab" &amp; "abc"
+            // this will not give up any information about lexico order
+            continue;
+        }
+        char from = str1.charAt(p);
+        char to = str2.charAt(p);
+        // update incount
+        incount.put(to, incount.get(to) + 1);
+        // update connection
+        connection.get(from).add(to);
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1071,79 +1235,6 @@ class Result {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/11/check-if-repeating-subsequence-exist/">[Google] Check if Repeating Subsequence Exists</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-11T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.careercup.com/question?id=5931067269709824">link</a></p>
-
-<blockquote><p>Given a string, find if there is any sub-sequence that repeats itself. Do not reuse any char.</p>
-
-<p>Eg:</p></blockquote>
-
-<pre><code>1. abab &lt;------yes, ab is repeated
-2. abba &lt;---- No, a and b follow different order 
-3. acbdaghfb &lt;-------- yes, a followed by b twice 
-4. abcdacb &lt;----- yes, a followed by b twice 
-</code></pre>
-
-<blockquote><p>Note that no char should be reused. I.e. &ldquo;aab&rdquo; is a false.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>This looks like a question without any clue. However, this actually is a modified version of <strong>[LintCode] Longest Common Subsequence</strong>.</p>
-
-<p>Look at that question: there&rsquo;s 2 input string, and they match char-by-char. For this question, we are simply <strong>matching input string with input string itself</strong>. And chars should be match <strong>ONLY</strong> at different positions, that&rsquo;s the key. As pointed out by the <a href="http://www.careercup.com/question?id=5931067269709824">top comment</a>:</p>
-
-<blockquote><p>Now we can modify the longest_common_subsequence(a, a) to find the value of the longest repeated subsequence in a by excluding the cases when i == j</p></blockquote>
-
-<h3>Code</h3>
-
-<pre><code>public boolean checkRepeatSubseq(String input) {
-    int len = input.length();
-    int[][] dp = new int[len + 1][len + 1];
-    // dp[i][j] denotes the length of subseq between 2 strings:
-    // 1. first i chars of input
-    // 2. first j chars of input
-    for (int i = 1; i &lt;= len; i++) {
-        for (int j = i; j &lt;= len; j++) {
-            if (i != j &amp;&amp; input.charAt(i - 1) == input.charAt(j - 1)) {
-                int temp = Math.max(dp[i - 1][j], dp[i][j - 1]);
-                dp[i][j] = Math.max(temp, dp[i - 1][j - 1] + 1);
-            } else {
-                dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
-            }
-        }
-    }
-    return dp[len][len] &gt;= 2;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/17">&larr; Older</a>
@@ -1161,7 +1252,7 @@ class Result {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -1184,6 +1275,10 @@ class Result {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
       </li>
     
@@ -1197,10 +1292,6 @@ class Result {
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
       </li>
     
   </ul>

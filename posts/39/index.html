@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link There&rsquo;s a elephant, which can carry max 1000 bananas. The elephant eats a banana every 1 Km (both forward and back). Now we want &hellip;">
+  <meta name="description" content="Question link In how many ways can one tile a 2 X N strip of square cells with 1 X 2 dominos? Solution X(n+1) = X(n) + X(n-1) It&rsquo;s a Fibonacci &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,47 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/27/Fit-dominos-in-strip/">[Question] Fit 1*2 Dominos in 2*N Strip</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-27T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://tech-queries.blogspot.sg/2011/07/fit-12-dominos-in-2n-strip.html">link</a></p>
+
+<blockquote><p>In how many ways can one tile a 2 X N strip of square cells with 1 X 2 dominos?</p></blockquote>
+
+<p><img class="middle" src="/assets/images/Dominos.png"></p>
+
+<h3>Solution</h3>
+
+<p><strong>X(n+1) = X(n) + X(n-1)</strong></p>
+
+<p>It&rsquo;s a Fibonacci Series with X(1) = 1 and X(2) = 2.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -791,65 +832,6 @@ private static int partition(int[] list, int left, int right) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/25/Find-10001st-prime/">[Question] Find 10001st Prime (Sieve of E)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-07-25T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://stackoverflow.com/a/2493059">link</a></p>
-
-<blockquote><p>Find 10001st Prime Number</p></blockquote>
-
-<h3>Analysis</h3>
-
-<p><strong>Use <a href="http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes">Sieve of Eratosthenes</a>, or 埃氏筛</strong>.</p>
-
-<h3>Code</h3>
-
-<pre><code>private static final int INDEX = 10001;
-private static final int LIMIT = 1000000;
-
-private static int get10001stPrime() {
-    boolean[] sieveArray = new boolean[LIMIT];
-    int primeCount = 0;
-    int currentNum = 2;
-    while (primeCount &lt; INDEX) {
-        if (!sieveArray[currentNum]) {
-            primeCount++;
-            for (int i = currentNum; i &lt; LIMIT; i += currentNum) {
-                sieveArray[i] = true;
-            }
-        }
-        currentNum++;
-    }
-    return currentNum - 1;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/40">&larr; Older</a>
@@ -867,7 +849,7 @@ private static int get10001stPrime() {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -890,6 +872,10 @@ private static int get10001stPrime() {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
       </li>
     
@@ -903,10 +889,6 @@ private static int get10001stPrime() {
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
       </li>
     
   </ul>

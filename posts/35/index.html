@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Overview HTTP is an Application Layer protocol which stands for &ldquo;Hypertext Transfer Protocol&rdquo;. The entire World Wide Web uses it. There& &hellip;">
+  <meta name="description" content="Overview Internet protocol suite is a networking model and communications protocols used by the Internet. It is commonly known as TCP/IP. Four &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,112 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/06/Networks-and-TCP-IP/">[Design] Networks and TCP/IP</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-06T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Overview</h2>
+
+<p><strong><a href="http://en.wikipedia.org/wiki/Internet_protocol_suite">Internet protocol suite</a></strong> is a networking model and communications protocols used by the Internet. It is commonly known as <strong>TCP/IP</strong>.</p>
+
+<p>Four abstraction layers:</p>
+
+<ol>
+<li>Application layer</li>
+<li>Transport layer</li>
+<li>Internet layer</li>
+<li>Link layer</li>
+</ol>
+
+
+<p><img class="middle" src="/assets/images/network-layers-connected.png"></p>
+
+<p>The protocols are maintained by the <strong>Internet Engineering Task Force</strong> (IETF).</p>
+
+<h3>A summary of four-layer model</h3>
+
+<ol>
+<li>Application: authentication, compression, and end user services</li>
+<li>Transport: handles the flow of data between systems and provides access to the network for applications via the BSD socket library</li>
+<li>Network: packet routing</li>
+<li>Link: Kernel OS/device driver interface to the network interface on the computer.</li>
+</ol>
+
+
+<p><a href="http://searchnetworking.techtarget.com/news/851291/TCP-Internet-Protocol-and-OSI">source</a></p>
+
+<h3>More details</h3>
+
+<p><strong>The Application layer</strong>:</p>
+
+<ol>
+<li>where applications create user data and communicate with other applications on another host (make use of Transport Layer to provide reliable or unreliable pipes to other processes).</li>
+<li>different application architecture, such as the client-server model and peer-to-peer.</li>
+<li>SMTP, FTP, SSH, HTTP all operate above this layer.</li>
+<li>processes are addressed via ports.</li>
+</ol>
+
+
+<p><img class="middle" src="/assets/images/network-ports.gif"></p>
+
+<blockquote><p>Well-known official port numbers are in the range of 0 - 255. Port 256 - 1023 are reserved for other well-known services. 1024 - 65535 are neither in-use nor reserved. They are used when TCP/IP automatically assigns port numbers to client programs.</p></blockquote>
+
+<p><strong>The Transport Layer</strong>:</p>
+
+<ol>
+<li>performs host-to-host communications.</li>
+<li>&ldquo;UDP&rdquo; provides unreliable datagram service.</li>
+<li>&ldquo;<strong>Transmission Control Protocol</strong>&rdquo; provides flow-control, connection establishment, and reliable transmission of data.</li>
+</ol>
+
+
+<p><strong>The Internet layer</strong>:</p>
+
+<ol>
+<li>exchange datagrams across network boundaries.</li>
+<li>establishes internetworking thus establishes the Internet.</li>
+<li>&ldquo;<strong>Internet Protocol</strong>&rdquo;, defines IP addresses and the routing structures used for the TCP/IP protocol suite.</li>
+<li>routing: transport datagrams to the next IP router that has the connectivity to a network closer to the final data destination.</li>
+</ol>
+
+
+<p><strong>The Link layer</strong>:</p>
+
+<ol>
+<li>defines the networking methods within local network link without intervening routers.</li>
+<li>describe local network topology and the interfaces needed to effect transmission of Internet layer datagrams to next-neighbor hosts.</li>
+</ol>
+
+
+<h3>Difference from OSI</h3>
+
+<p>The Internet protocol suite was in use <strong>before the OSI model</strong>, and is well established worldwide.</p>
+
+<p><a href="http://electronicdesign.com/what-s-difference-between/what-s-difference-between-osi-seven-layer-network-model-and-tcpip">The OSI model</a>, however, is a proven concept that is used in all other data communications protocols. It will continue to be used as a guideline for all other communications applications.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -742,83 +848,6 @@ E -&gt; B C D
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/04/Traveller-Path-Problem/">[Google] Traveller Path Problem</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-08-04T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.careercup.com/question?id=5749537700315136">link</a></p>
-
-<blockquote><p>Traveler wants to travel from city “A” to city “D”. There is a path from city “A” to city “D”. Path consists of steps, i.e. travel from city “A” to city “B”. Path is encoded as sequence of steps.</p>
-
-<p>Sequence is in incorrect order. Your task is to restore order of steps in the path.</p>
-
-<p>Input (unordered sequence):</p></blockquote>
-
-<pre><code>C -&gt; D 
-A -&gt; B 
-B -&gt; C 
-</code></pre>
-
-<blockquote><p>Output (Correctly ordered list which represents path):</p></blockquote>
-
-<pre><code>A, B, C, D 
-</code></pre>
-
-<blockquote><p>Implement following API:</p></blockquote>
-
-<pre><code>class Step {
-    String start;
-    String finish;
-};
-
-class Node {
-    String value;
-    Node next;
-}
-
-List&lt;String&gt; findPath(List&lt;Step&gt; steps) {
-}
-</code></pre>
-
-<h3>Solution</h3>
-
-<p>This question is not stated clear enough. I found one tentative algorithm:</p>
-
-<blockquote><p>First, initialize a result - sortedPath, and build 2 maps (String to String) - startsToFinishes and finishesToStarts (O(N))</p>
-
-<p>Then, find the one key on startsToFinishes, that is not a key in finishesToStarts - this is the city from which the path begins. (O(N))</p>
-
-<p>Then, iteratively, city by city, build the path.</p></blockquote>
-
-<p><strong>Follow up on Sep 2nd, 2014</strong>:</p>
-
-<p><a href="http://www.mitbbs.com/article_t/JobHunting/32772275.html">This post</a> talks about this question. The answer would be similar to what&rsquo;s writtne above.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/36">&larr; Older</a>
@@ -836,7 +865,7 @@ List&lt;String&gt; findPath(List&lt;Step&gt; steps) {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -859,6 +888,10 @@ List&lt;String&gt; findPath(List&lt;Step&gt; steps) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
       </li>
     
@@ -872,10 +905,6 @@ List&lt;String&gt; findPath(List&lt;Step&gt; steps) {
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
       </li>
     
   </ul>

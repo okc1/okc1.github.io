@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question We have a history of match result of pingpong games, assume each match is &lt;player1, player2, result, timestamp>, player1 and player2 are &hellip;">
+  <meta name="description" content="Question RT. This is a very very common requirements in the area of string manipulation. We want it to be done very efficiently. Solution Normally, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,45 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/07/check-string-no-common-char/">[Question] Check String With No Common Letters (Bitmask)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-07T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p>RT. This is a very very common requirements in the area of string manipulation. We want it to be done very efficiently.</p>
+
+<h3>Solution</h3>
+
+<p>Normally, we would use a hashmap. However, we can also use <strong>bitmask</strong> or bitmap.</p>
+
+<p>Work for a-z only, we use 1 integer to represent each letter, and set an integer for each string.</p>
+
+<p>We do (mask1 &amp; mask2 == 0) to find no common letters. Read more at this question, <strong>[Google] Max prodcut of strings that have no common char</strong>.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -832,100 +871,6 @@ Total time = 0.006
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/02/04/Collatz-Conjecture-oneness/">[Google] Collatz Conjecture (Oneness Property)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-02-04T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Collatz Conjecture</h3>
-
-<p>The <a href="http://en.wikipedia.org/wiki/Collatz_conjecture">Collatz conjecture</a> is a conjecture in mathematics known as the 3n + 1 conjecture.</p>
-
-<p>Take any natural number n.</p>
-
-<ol>
-<li>If n is even, divide it by 2 to get n / 2.</li>
-<li>If n is odd, multiply it by 3 and add 1 to obtain 3n + 1.</li>
-</ol>
-
-
-<p>Repeat the process (which has been called &ldquo;Half Or Triple Plus One&rdquo;, or HOTPO) indefinitely. The conjecture is that no matter what number you start with, <strong>you will always eventually reach 1</strong>.</p>
-
-<p>The property has also been called <strong>oneness</strong>.</p>
-
-<h3>Question</h3>
-
-<p><a href="http://stackoverflow.com/questions/5437445/collatz-conjecture-related-interview">link</a></p>
-
-<blockquote><p>Collatz conjecture says that if you do the following</p></blockquote>
-
-<pre><code>If n is even, replace n by n/2.
-If n is odd, replace n by 3n+1.
-You ultimately end up with 1.
-</code></pre>
-
-<blockquote><p>For instance, 5 -> 16 -> 8 -> 4 -> 2 -> 1</p>
-
-<p>Chain length is the number of steps required to get to 1. (The chain length of 1 is 0).</p>
-
-<p>Now, the problem is given natural numbers n and k, find all numbers between 1 and n, such that the chain length is &lt;= k.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>Generate all numbers in backwards fashion, suggest by <a href="http://stackoverflow.com/a/5437672">templatetypedef</a>:</p>
-
-<pre><code>                  1
-                  |
-                  2
-                  |
-                  4
-                  |
-                  8
-                  |
-                  16
-                  | \
-                  32 \
-                  |   5
-                  64  |
-                 /|   10
-                / 128 | \
-               21     20 3
-</code></pre>
-
-<p><strong>Implementation</strong>: using a queue and keep appending numbers.</p>
-
-<p><strong>Duplication handling</strong>?</p>
-
-<blockquote><p>Assuming that the Collatz conjecture holds true, we&rsquo;ll never get any duplicates this way.</p></blockquote>
-
-<p><strong>Time complexity</strong> is O(S) time, where S is the number of numbers we need to output.</p>
-
-<h3>Code</h3>
-
-<p>not written</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/13">&larr; Older</a>
@@ -943,7 +888,7 @@ You ultimately end up with 1.
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -966,6 +911,10 @@ You ultimately end up with 1.
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
       </li>
     
@@ -979,10 +928,6 @@ You ultimately end up with 1.
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
       </li>
     
   </ul>

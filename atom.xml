@@ -4,7 +4,7 @@
   <title><![CDATA[Woodstock Blog]]></title>
   <link href="http://okc1.github.io/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-07-31T02:06:22-07:00</updated>
+  <updated>2016-08-01T01:46:43-07:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -12,6 +12,39 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[[Design] How to Design Logging]]></title>
+    <link href="http://okc1.github.io/blog/2016/08/01/how-to-design-logging/"/>
+    <updated>2016-08-01T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2016/08/01/how-to-design-logging</id>
+    <content type="html"><![CDATA[<h1>Logging</h1>
+
+<p>Conecting between <strong>information</strong> and <strong>knowledge</strong>.</p>
+
+<ol>
+<li>Information: it&rsquo;s just bits</li>
+<li>Knowledge: drives product direction</li>
+</ol>
+
+
+<h2>Logging is all about Event</h2>
+
+<p>Q1. shall we log it live? what should we log? how to do it (on different platforms)?</p>
+
+<p>Not live. Do it post hoc.</p>
+
+<p>The demand and product design drives logging.</p>
+
+<p>Logs represent event, so all your logging should be based around the events.</p>
+
+<blockquote><p>eg. who click the button, the user ID, but do not log the age, because you can find it somewhere else!</p></blockquote>
+
+<h2>Think about &ldquo;what&rdquo; to log and &ldquo;why&rdquo;</h2>
+
+<p>&ldquo;How&rdquo; is just coding. Happy Logging!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[[Design] MVC, MVP and MVVM]]></title>
@@ -1293,25 +1326,6 @@ color is colored
 </code></pre>
 
 <p>The code shows how <strong>ClassB</strong> is able to access 1 <strong>protected variable</strong> and 1 <strong>protected method</strong>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[[Fundamental] UML Class Diagrams]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/14/UML-diagrams/"/>
-    <updated>2015-10-14T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/14/UML-diagrams</id>
-    <content type="html"><![CDATA[<h1>Overview</h1>
-
-<p>A UML class diagram describes the object and information structures used by your application, both internally and in communication with its users.</p>
-
-<h2>example</h2>
-
-<p>Taken from <a href="https://msdn.microsoft.com/en-us/library/dd409437.aspx">here</a>.</p>
-
-<p><img class="middle" src="http://okc1.github.io/assets/images/IC315445.png"></p>
-
-<p><tbody><tr><th><p><span class="label">Shape</span></p></th><th><p><span class="label">Element</span></p></th><th><p><span class="label">Description</span></p></th></tr><tr><td><p>1</p></td><td><p><strong>Class</strong></p></td><td><p>A definition of objects that share given structural or behavioral characteristics. For more information, see <a href="https://msdn.microsoft.com/en-us/library/dd323860.aspx">Properties of types on UML class diagrams</a>.</p></td></tr><tr><td><p>1</p></td><td><p>Classifier</p></td><td><p>The general name for a class, interface, or enumeration. Components, use cases, and actors are also classifiers.</p></td></tr><tr><td><p>2</p></td><td><p>Collapse/ Expand control</p></td><td><p>If you cannot see the details of a classifier, click the expander at upper-left of the classifier. You might also have to click the [+] on each segment.</p></td></tr><tr><td><p>3</p></td><td><p><strong>Attribute</strong></p></td><td><p>A typed value attached to each instance of a classifier. </p><p>To add an attribute, click the <strong>Attributes</strong> section and then press <strong>ENTER</strong>. Type the signature of the attribute. For more information, see <a href="https://msdn.microsoft.com/en-us/library/dd323861.aspx">Properties of attributes on UML class diagrams</a>.</p></td></tr><tr><td><p>4</p></td><td><p><strong>Operation</strong></p></td><td><p>A method or function that can be performed by instances of a classifier. To add an operation, click the <strong>Operations</strong> section and then press <strong>ENTER</strong>. Type the signature of the operation. For more information, see <a href="https://msdn.microsoft.com/en-us/library/dd323859.aspx">Properties of operations on UML class diagrams</a>. </p></td></tr><tr><td><p>5</p></td><td><p><strong>Association</strong></p></td><td><p>A relationship between the members of two classifiers. For more information, see <a href="https://msdn.microsoft.com/en-us/library/dd323862.aspx">Properties of associations on UML class diagrams</a>. </p></td></tr><tr><td><p>5a</p></td><td><p><strong>Aggregation</strong></p></td><td><p>An association representing a shared ownership relationship. The <strong>Aggregation</strong> property of the owner role is set to <strong>Shared</strong>.</p></td></tr><tr><td><p>5b</p></td><td><p><strong>Composition</strong></p></td><td><p>An Association representing a whole-part relationship. The <strong>Aggregation</strong> property of the owner role is set to <strong>Composite</strong>.</p></td></tr><tr><td><p>6</p></td><td><p><strong>Association Name</strong></p></td><td><p>The name of an association. The name can be left empty.</p></td></tr><tr><td><p>7</p></td><td><p><strong>Role Name</strong></p></td><td><p>The name of a role, that is, one end of an association. Can be used to refer to the associated object. In the previous illustration, for any Order <span class="code">O</span>, <span class="code">O.ChosenMenu</span> is its associated Menu.</p><p>Each role has its own properties, listed under the properties of the association.</p></td></tr><tr><td><p>8</p></td><td><p><strong>Multiplicity</strong></p></td><td><p>Indicates how many of the objects at this end can be linked to each object at the other. In the example, each Order must be linked to exactly one Menu. </p><p><strong>*</strong> means that there is no upper limit to the number of links that can be made.</p></td></tr><tr><td><p>9</p></td><td><p><strong>Generalization</strong></p></td><td><p>The <em>specific</em> classifier inherits part of its definition from the <em>general</em> classifier. The general classifier is at the arrow end of the connector. Attributes, associations, and operations are inherited by the specific classifier.</p><p>Use the <strong>Inheritance</strong> tool to create a generalization between two classifiers.</p></td></tr></tbody></p>
 ]]></content>
   </entry>
   

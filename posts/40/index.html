@@ -9,8 +9,8 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Predict the output of following program. public static void main(String[] args) { int a = 012; System.out.println("a is " + a);
-} &hellip;">
+  <meta name="description" content="Question link Find 10001st Prime Number Analysis Use Sieve of Eratosthenes, or 埃氏筛. Code private static final int INDEX = 10001;
+private static final &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +66,65 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/25/Find-10001st-prime/">[Question] Find 10001st Prime (Sieve of E)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-25T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://stackoverflow.com/a/2493059">link</a></p>
+
+<blockquote><p>Find 10001st Prime Number</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p><strong>Use <a href="http://en.wikipedia.org/wiki/Sieve_of_Eratosthenes">Sieve of Eratosthenes</a>, or 埃氏筛</strong>.</p>
+
+<h3>Code</h3>
+
+<pre><code>private static final int INDEX = 10001;
+private static final int LIMIT = 1000000;
+
+private static int get10001stPrime() {
+    boolean[] sieveArray = new boolean[LIMIT];
+    int primeCount = 0;
+    int currentNum = 2;
+    while (primeCount &lt; INDEX) {
+        if (!sieveArray[currentNum]) {
+            primeCount++;
+            for (int i = currentNum; i &lt; LIMIT; i += currentNum) {
+                sieveArray[i] = true;
+            }
+        }
+        currentNum++;
+    }
+    return currentNum - 1;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -878,72 +937,6 @@ private static String removeDigit(String number, int digitIndex) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/21/Quick-Sort/">[Question] Quick Sort</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-07-21T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.programcreek.com/2012/11/quicksort-array-in-java/">link</a></p>
-
-<blockquote><p>Quicksort is a divide and conquer algorithm. It first divides a large list into two smaller sub-lists and then recursively sort the two sub-lists. If we want to sort an array without any extra space, Quicksort is a good option. On average, time complexity is O(n log(n)).</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>This question is not easy. Practise more!</p>
-
-<h3>Code</h3>
-
-<pre><code>public static void quickSortRan(int[] arr, int low, int high) {
-    if (low &gt;= high) {
-        return;
-    }
-    int pivot = arr[low + (high - low) / 2];
-    int left = low;
-    int right = high;
-    while (left &lt; right) {
-        while (arr[left] &lt; pivot) {
-            left++;
-        }
-        while (arr[right] &gt; pivot) {
-            right--;
-        }
-        if (left &lt;= right) {
-            int temp = arr[left];
-            arr[left] = arr[right];
-            arr[right] = temp;
-            left++;
-            right--;
-        }
-    }
-    quickSortRan(arr, low, right);
-    quickSortRan(arr, left, high);
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/41">&larr; Older</a>
@@ -961,7 +954,7 @@ private static String removeDigit(String number, int digitIndex) {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -984,6 +977,10 @@ private static String removeDigit(String number, int digitIndex) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
       </li>
     
@@ -997,10 +994,6 @@ private static String removeDigit(String number, int digitIndex) {
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
       </li>
     
   </ul>

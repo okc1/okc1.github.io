@@ -9,7 +9,8 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link 给一个包含正负整数的数组，要求对这个数组中的数进行重新排列，使得其正负交替出现。首先出现负数，然后是正数，然后是负数。有多余的数的一方，就放在末尾。 如 [1, 2, 3, -4]->[-4, 1, 2, 3]，[1,-3,2,-4,-5]->[-3,1,-4,2,-5 &hellip;">
+  <meta name="description" content="Question link Given a 2D array with only 1s and 0s, where each row is sorted. Find the row with the maximum number of 1s. Input matrix: 0 1 1 1
+0 0 1 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +66,104 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/11/01/Find-row-with-most-1s/">[Question] Find Row With Most 1s</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-11-01T00:00:00-07:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.geeksforgeeks.org/find-the-row-with-maximum-number-1s/">link</a></p>
+
+<blockquote><p>Given a 2D array with only 1s and 0s, where each row is sorted.</p>
+
+<p>Find the row with the maximum number of 1s. Input matrix:</p></blockquote>
+
+<pre><code>0 1 1 1
+0 0 1 1
+1 1 1 1  // this row has maximum 1s
+0 0 0 0
+</code></pre>
+
+<blockquote><p>Output: 2</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>By using a modified version of binary search, we can achieve <strong><a href="http://www.geeksforgeeks.org/find-the-row-with-maximum-number-1s/">a O(mLogn) solution</a></strong> where m is number of rows and n is number of columns in matrix.</p>
+
+<p><strong>However, there&rsquo;s better solution that works in linear time</strong>!</p>
+
+<h3>Solution</h3>
+
+<ol>
+<li><p>Get the index of first (or leftmost) 1 in the first row.</p></li>
+<li><p>Do following for every row after the first row:</p>
+
+<ol>
+<li><p>IF the element on left of previous leftmost 1 is 0, ignore this row.</p></li>
+<li><p>ELSE Move left until a 0 is found. Update the leftmost index to this index and max_row_index to be the current row.</p></li>
+</ol>
+</li>
+</ol>
+
+
+<p>The time complexity is O(m+n).</p>
+
+<h3>Code</h3>
+
+<p><strong>written by me</strong></p>
+
+<pre><code>public int solution(int[][] matrix) {
+    int m = matrix.length;
+    int n = matrix[0].length;
+    int p = n;
+    int row = -1;
+    for (int i = 0; i &lt; m; i++) {
+        // now p is larger than 0, otherwise it's already terminated
+        if (matrix[i][p - 1] == 0) {
+            continue;
+        }
+        // p points to a 1, now search to the left direction
+        for (int j = p - 1; j &gt;= 0; j--) {
+            if (matrix[i][j] == 1) {
+                p = j;
+            } else {
+                break;
+            }
+        }
+        // p have a new value now
+        if (p == 0) {
+            return i;
+        } else {
+            row = i;
+        }
+    }
+    return row;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -909,90 +1008,6 @@ public Iterator&lt;T&gt; iterator() {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/17/stack-up-boxes/">[CC150v5] 9.10 Stack Up the Boxes</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-09-17T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<blockquote><p>You have a stack of n boxes, with widths w., heights h, and depths d. The boxes can only be stacked on top of one another if each box is strictly larger than the box above it in width, height, and depth.</p>
-
-<p>Implement a method to build the tallest stack possible, where the height of a stack is the sum of the heights of each box.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>This is appearantly a DP question. I did it in the normal way, and the solution turns out to be very good:</p>
-
-<pre><code>DP solution is        2638ms
-Recursive solution is 1322ms
-My solution is         370ms
-</code></pre>
-
-<p>I could not understand the 2 solutions given in the book. Sorry.</p>
-
-<p>The coding is a bit lengthy, and we keeps 2 DP arrays. <strong>Not an easy question of course</strong>, but the solution is actually standard.</p>
-
-<h3>Code</h3>
-
-<pre><code>public static ArrayList&lt;Box&gt; createStack(Box[] boxes) {
-    ArrayList&lt;Box&gt; ans = new ArrayList&lt;Box&gt;();
-    int len = boxes.length;
-    int[] heights = new int[len];
-    int[] preMap = new int[len];
-    int maxIndex = 0;
-
-    // start DP
-    for (int i = 0; i &lt; len; i++) {
-        heights[i] = boxes[i].height;
-        preMap[i] = -1;
-        for (int j = 0; j &lt; i; j++) {
-            if (boxes[j].canBeAbove(boxes[i])) {
-                int newHeight = heights[j] + boxes[i].height;
-                if (newHeight &gt; heights[i]) {
-                    heights[i] = newHeight;
-                    preMap[i] = j;
-                }
-            }
-        }
-        // now updated maxIndex
-        if (heights[i] &gt; heights[maxIndex]) {
-            maxIndex = i;
-        }
-    }
-
-    // print from maxIndex all the way backwards
-    while (maxIndex != -1) {
-        ans.add(boxes[maxIndex]);
-        // the print order is reversed, so...
-        maxIndex = preMap[maxIndex];
-    }
-    return ans;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/22">&larr; Older</a>
@@ -1010,7 +1025,7 @@ My solution is         370ms
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -1033,6 +1048,10 @@ My solution is         370ms
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
       </li>
     
@@ -1046,10 +1065,6 @@ My solution is         370ms
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
       </li>
     
   </ul>

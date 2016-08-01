@@ -9,8 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases. For example,
-"A man, a &hellip;">
+  <meta name="description" content="First Word This post talks about BFS, DFS and space efficiency. Analysis For BFS it&rsquo;s easy to understand. It is implemented with a queue. Space &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,61 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/29/DFS-BFS-space-efficiency/">[Design] DFS, BFS and Space Efficiency</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-29T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>29</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>First Word</h3>
+
+<p>This post talks about BFS, DFS and space efficiency.</p>
+
+<h3>Analysis</h3>
+
+<p><strong>For BFS</strong> it&rsquo;s easy to understand. It is implemented with a queue. <strong>Space usage is O(width)</strong></p>
+
+<p><strong>For DFS</strong>, there are 2 types: true DFS and pseudo-DFS. True DFS space usage is <strong>O(depth)</strong>, while psudo-DFS is <strong>O(depth x <a href="http://en.wikipedia.org/wiki/Branching_factor">branching factor</a>)</strong>.</p>
+
+<blockquote><p><strong>branching factor</strong> is the number of children at each node, the outdegree.</p></blockquote>
+
+<p>Pseudo-DFS is implemented by <strong>simply take the BFS implementation and replace the Queue with Stack</strong>. But true-DFS is a very different algorithm where the <strong>stack is use for backtracking only</strong>. <a href="http://stackoverflow.com/a/20429574">This</a> is a great article talking about this topic.</p>
+
+<blockquote><p>the true classic DFS cannot be obtained from BFS by such queue-to-stack replacement. The classic DFS is a completely different algorithm with significantly different inner structure. True DFS is a genuinely recursive algorithm that uses stack for backtracking purposes, not for storing the vertex discovery &ldquo;front&rdquo; (as is the case in BFS)</p></blockquote>
+
+<p><strong>The following quoted texts are also worth-reading</strong>.</p>
+
+<blockquote><p>Something worth noting - Pseudo-DFS should give you O(depth * branching factor) space, as opposed to O(depth) for proper DFS, which is still better than O(width).</p>
+
+<p>The defining characteristic that separates true DFS and what you call pseudo DFS is how they use the stack. True DFS use it to store backtracking information in contrast to pseudo DFS which used the stack to store the vertex discovery front.</p></blockquote>
+
+<h3>Examples</h3>
+
+<p><strong>Given a perfect binary search tree of 4 levels</strong>. BFS would require 8 space, while DFS requires only 4 space. The branching factor is 2, so true and pseudo DFS use same amount of space.</p>
+
+<p><strong>Given a star graph</strong>: a single central vertex surrounded by 1000 peripheral vertices, with each connected to the central vertex. If we run BFS on this graph, the queue size will immediately jump to 1000. The same thing happens for pseudo-DFS. But classic DFS algorithm will need stack depth of only 1 (!) to traverse this entire graph.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1301,118 +1355,6 @@ private void link(TreeLinkNode node, TreeLinkNode rr){
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/27/Path-Sum-II/">[LeetCode 113] Path Sum II</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-05-27T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="https://oj.leetcode.com/problems/path-sum-ii/">link</a></p>
-
-<div class="question-content">
-            <p></p><p>
-Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
-</p>
-
-For example:<br>
-Given the below binary tree and <code>sum = 22</code>,
-<pre>              5
-             / \
-            4   8
-           /   / \
-          11  13  4
-         /  \    / \
-        7    2  5   1
-</pre>
-
-<p>
-return<br>
-</p><pre>[
-   [5,4,11,2],
-   [5,8,4,5]
-]
-</pre>
-<p></p><p></p>
-          </div>
-
-
-<h3>Stats</h3>
-
-<table border="2">
-    <tr>
-        <td>Frequency</td>
-        <td bgcolor="lime">2</td>
-    </tr>
-    <tr>
-        <td>Difficulty</td>
-        <td bgcolor="lime">2</td>
-    </tr>
-    <tr>
-        <td>Adjusted Difficulty</td>
-        <td bgcolor="yellow">3</td>
-    </tr>
-    <tr>
-        <td>Time to use</td>
-        <td bgcolor="lime">--------</td>
-    </tr>
-</table>
-
-
-<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
-
-<h3>Analysis</h3>
-
-<p><strong>This is a standard question</strong></p>
-
-<h3>Solution</h3>
-
-<p>My code is simple DFS. However, the coding part is not easy. Note that value can be negative, and think about when to add result into list.</p>
-
-<p>Just write it by hand and get an idea of it.</p>
-
-<h3>Code</h3>
-
-<pre><code>public ArrayList&lt;ArrayList&lt;Integer&gt;&gt; pathSum(TreeNode root, int sum) {
-    ArrayList&lt;ArrayList&lt;Integer&gt;&gt; ans = new ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();
-    helper(root, sum, new ArrayList&lt;Integer&gt;(), ans);
-    return ans;
-}
-
-private void helper(TreeNode node, int total, ArrayList&lt;Integer&gt; list, 
-                    ArrayList&lt;ArrayList&lt;Integer&gt;&gt; ans) {
-    if (node == null) return;
-    list.add(node.val);
-    if (node.val == total &amp;&amp; node.left == null &amp;&amp; node.right == null)
-        ans.add(new ArrayList(list));
-    helper(node.left, total - node.val, list, ans);
-    helper(node.right, total - node.val, list, ans);
-    list.remove(list.size() - 1);
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/52">&larr; Older</a>
@@ -1430,7 +1372,7 @@ private void helper(TreeNode node, int total, ArrayList&lt;Integer&gt; list,
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -1453,6 +1395,10 @@ private void helper(TreeNode node, int total, ArrayList&lt;Integer&gt; list,
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
       </li>
     
@@ -1466,10 +1412,6 @@ private void helper(TreeNode node, int total, ArrayList&lt;Integer&gt; list,
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
       </li>
     
   </ul>

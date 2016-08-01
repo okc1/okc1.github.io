@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link UTF-8 is a variable-length encoding of letters or runes. If the most significant bit of the first byte is 0, the letter is 1 byte long &hellip;">
+  <meta name="description" content="Question link Given a string, convert it into a palindrome with the lease number of insertions possible. Solution This is a DP question. There&rsquo; &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,107 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/06/Form-palindrome-with-insertion/">[Google] Form a Palindrome With Insertion</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-06T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.glassdoor.com/Interview/Given-a-string-convert-it-into-a-palindrome-with-the-lease-number-of-insertions-possible-QTN_729122.htm">link</a></p>
+
+<blockquote><p>Given a string, convert it into a palindrome with the lease number of insertions possible.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>This is a DP question. There&rsquo;re 2 approaches.</p>
+
+<p><strong>First, is direct DP</strong>. This is the nicest solution, not intuitive at first, but actually good.</p>
+
+<blockquote><p>P[i, j] = P[i+1, j-1], if S[i] = S[j]</p>
+
+<p>P[i, j] = 1 + min(P[i,j-1], P[i+1,j]), otherwise</p></blockquote>
+
+<p>contributed by <a href="http://stackoverflow.com/a/10732879">this guy</a>.</p>
+
+<p><strong>Second approach is to calculate the longest palindrome subsequence</strong>, and the answer would be string length minus this value.</p>
+
+<p>I wrote code for both apporaches.</p>
+
+<p>According to <a href="http://www.geeksforgeeks.org/dynamic-programming-set-28-minimum-insertions-to-form-a-palindrome/">G4G</a>, we can actually calculate the <strong>Longest Common Subsequence of the string and its reverse</strong>, and this value shall be same as the longest palindrome subsequence that we got in second approach. It&rsquo;s nice to know this idea.</p>
+
+<h3>Code</h3>
+
+<p><strong>direct</strong></p>
+
+<pre><code>public int solve1(String str) {
+    // direct dp
+    if (str == null)
+        return 0;
+    int len = str.length();
+    int[][] dp = new int[len][len];
+    for (int i = len - 1; i &gt;= 0; i--) {
+        for (int j = i; j &lt; len; j++) {
+            if (i == j) {
+                dp[i][j] = 0;
+            } else if (i + 1 == j) {
+                dp[i][j] = str.charAt(i) == str.charAt(j) ? 0 : 1;
+            } else {
+                dp[i][j] = str.charAt(i) == str.charAt(j) ? dp[i + 1][j - 1]
+                        : 1 + Math.min(dp[i + 1][j], dp[i][j - 1]);
+            }
+        }
+    }
+    return dp[0][len - 1];
+}
+</code></pre>
+
+<p><strong>longest palindrome subsequence</strong></p>
+
+<pre><code>public int solve2(String str) {
+    // longest palindrome subsequence
+    if (str == null)
+        return 0;
+    int len = str.length();
+    int[][] dp = new int[len][len];
+    for (int i = len - 1; i &gt;= 0; i--) {
+        for (int j = i; j &lt; len; j++) {
+            if (i == j) {
+                dp[i][j] = 1;
+            } else if (i + 1 == j) {
+                dp[i][j] = str.charAt(i) == str.charAt(j) ? 2 : 1;
+            } else {
+                dp[i][j] = str.charAt(i) == str.charAt(j) ? 2 + dp[i + 1][j - 1]
+                        : Math.max(dp[i + 1][j], dp[i][j - 1]);
+            }
+        }
+    }
+    return len - dp[0][len - 1];
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -663,82 +764,6 @@ public void printAnagrams(String word) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/01/Hamming-distance-of-array/">[Facebook] Hamming Distance of Array</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-09-01T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.glassdoor.com/Interview/-a-first-write-a-function-to-calculate-the-hamming-distance-between-two-binary-numbers-b-write-a-function-that-takes-QTN_450885.htm">link</a></p>
-
-<blockquote><p><a href="http://en.wikipedia.org/wiki/Hamming_distance">Hamming distance</a> between two strings of equal length is the number of positions at which the corresponding symbols are different.</p>
-
-<p>Write a function that takes a list of binary numbers and returns the sum of the hamming distances for each pair.</p>
-
-<p>Do it in O(n) time.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>The naive solution is O(n<sup>2</sup>), so we simplify this question by using {0,0,0,1,1} as input. The output in this case would be 6. Why? Because 3 x 2 = 6.</p>
-
-<p>So the equation for solution would be:</p>
-
-<blockquote><p>distance (for a bit) = number of &lsquo;1&rsquo;s * number of '0&rsquo;s</p></blockquote>
-
-<p>The final answer would be the sum of distances for all bits. The solution is from <a href="http://se7so.blogspot.sg/2014/02/how-to-prepare-for-interview-9.html">this blog</a>.</p>
-
-<h3>Code</h3>
-
-<p>Great solution, <strong>not written by me</strong></p>
-
-<pre><code>int hammingDist(int[] nums) {
-
-    int[] bits = new int[32];
-
-    for (int i = 0; i &lt; nums.length; i++) {
-        int one = 1;
-        int j = 0;
-
-        while (nums[i] != 0) {
-            if ((nums[i] &amp; one) != 0)
-                bits[j]++;
-            j++;
-            nums[i] = nums[i] &gt;&gt; 1;
-        }
-    }
-
-    int ans = 0;
-    for (int i = 0; i &lt; 32; i++) {
-        ans += bits[i] * (nums.length - bits[i]);
-    }
-
-    return ans;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/28">&larr; Older</a>
@@ -756,7 +781,7 @@ public void printAnagrams(String word) {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -779,6 +804,10 @@ public void printAnagrams(String word) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
       </li>
     
@@ -792,10 +821,6 @@ public void printAnagrams(String word) {
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
       </li>
     
   </ul>

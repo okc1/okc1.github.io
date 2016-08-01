@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Design | Woodstock Blog]]></title>
   <link href="http://okc1.github.io/blog/categories/design/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-07-31T02:06:49-07:00</updated>
+  <updated>2016-08-01T01:47:10-07:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -12,6 +12,35 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[[Design] How to Design Logging]]></title>
+    <link href="http://okc1.github.io/blog/2016/08/01/how-to-design-logging/"/>
+    <updated>2016-08-01T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2016/08/01/how-to-design-logging</id>
+    <content type="html"><![CDATA[# Logging
+
+Conecting between __information__ and __knowledge__. 
+
+1. Information: it's just bits
+2. __Knowledge__: drives product direction
+
+## Logging is all about Event
+
+Q1. shall we log it live? what should we log? how to do it (on different platforms)?
+
+Not live. Do it post hoc.
+
+The demand and product design drives logging. 
+
+Logs represent event, so all your logging should be __based around the events__.
+
+> eg. who click the button, the user ID, but do not log the age, because you can find it somewhere else!
+
+## Think about "what" to log and "why"
+
+__"How" is just coding__. Happy Logging! ]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[[Design] MVC, MVP and MVVM]]></title>
@@ -471,51 +500,6 @@ Make your spider better!
 
 how? (todo)
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[[Design] How to Generate Maze]]></title>
-    <link href="http://okc1.github.io/blog/2015/11/21/generate-maze/"/>
-    <updated>2015-11-21T00:00:00-08:00</updated>
-    <id>http://okc1.github.io/blog/2015/11/21/generate-maze</id>
-    <content type="html"><![CDATA[# Question
-
-[link](http://www.glassdoor.com/Interview/Design-a-2D-dungeon-crawling-game-It-must-allow-for-various-items-in-the-maze-walls-objects-and-computer-controlled-c-QTN_57.htm)
-
-> Design a 2D dungeon crawling game. It must allow for   various items in the maze - walls, objects, and computer-controlled characters.
-
-# Part 1: API design
-
-Serialize:
-
-> [if a certain cell has a wall](http://qr.ae/RbRhHv) to the North and West but not to the South or East, it would be represented as 1001, or 9... (e.g., "9,6,11,12\n3,10,10,4\n13,9,12,5\n3,6,1,6" in a 4x4 maze)
-
-Design API~
-
-# Part 2: Algorithm
-
-## Depth-first search 
-
-This is most common and [one of the simplest ways to generate a maze using a computer](https://en.wikipedia.org/wiki/Maze_generation_algorithm#Depth-first_search). It's commonly implemented using __[Recursive backtrack](https://en.wikipedia.org/wiki/Maze_generation_algorithm#Recursive_backtracker)__. 
-
-1. from a random cell, select a random neighbour that hasn't been visited. 
-
-1. removes the 'wall' and adds the new cell to a stack. 
-
-1. a cell with no unvisited neighbours is considered __dead-end__. 
-
-1. When at a dead-end it backtracks through the path until it reaches a cell with unvisited neighbours, continuing from there. 
-
-1. until every cell has been visited, the computer would backtrack all the way to the beginning cell. 
-
-1. Entire maze space is guaranted a complete visit.
-
-### side note
-
-> To add difficulty and a fun factor to the DFS, you can __influence the likelihood of which neighbor you should visit__, instead of completely random. 
-
-> By making it more likely to visit neighbors to your sides, you can have a more horizontal maze generation.  
 ]]></content>
   </entry>
   

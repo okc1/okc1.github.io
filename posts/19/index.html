@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Input: {&ldquo;firstName&rdquo;:&ldquo;John&rdquo;,&ldquo;lastName&rdquo;:&ldquo;Smith&rdquo;,&ldquo;isAlive&rdquo;:true,&ldquo;age& &hellip;">
+  <meta name="description" content="ref Question Given 1 trillion messages on fb and each message has at max 10 words. How do you build the index table and how many machines do you need &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,57 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/06/big-data-storage/">[Design] Big Data Storage</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-06T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.mitbbs.com/article/JobHunting/32580869_0.html">ref</a></p>
+
+<h3>Question</h3>
+
+<p><strong>Given 1 trillion messages</strong> on fb and each message has at max 10 words.</p>
+
+<p>How do you build the <strong>index table</strong> and how many machines do you need on the <strong>cluster</strong> to store the index table?</p>
+
+<h3>One possible answer</h3>
+
+<p>Total data = 1 trillion * 10 words * 6 bytes / word = 60TB = one small NetApp box</p>
+
+<p><strong>Index by hashed userid</strong>; will distribute traffic effectively across servers; cache active users recent messages in memory.</p>
+
+<p><a href="http://www.glassdoor.com/Interview/Given-a-set-of-n-jobs-with-start-time-end-time-cost-find-a-subset-so-that-no-2-jobs-overlap-and-the-cost-is-maximum-QTN_440168.htm">Cannot use Netapp box</a>. From what I read in FB engg blog, they have all the info in main memory of server.</p>
+
+<p>Total data = 1 trillion * 10 words * 6 bytes / word = 60TB + 1TB for Indexes.</p>
+
+<p>Considering servers have 64 GB ram. 61 GB usable to store index, 1000 servers.</p>
+
+<h4>For more information</h4>
+
+<p>Read 2 other posts: <strong>[Design] Distributed hash table</strong> and <strong>[Design] Cloud, Grid and Cluster</strong>.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -923,115 +974,6 @@ class C implements A, B
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/12/22/RubyGems-gem-other/">[Ruby] RubyGems, Gem, Gemfile and Bundler</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-12-22T00:00:00-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Sometme I found the different concepts in Ruby very confusing for beginners. So I write this post to explain some terminologies in ruby setup.</p>
-
-<h3>RubyGems (tool)</h3>
-
-<p><strong><a href="http://en.wikipedia.org/wiki/RubyGems">RubyGems</a></strong> is a package manager for the Ruby programming language.</p>
-
-<p>It is a tool to manage the installation of gems, and a server for distributing them.</p>
-
-<p>RubyGems is very similar to apt-get, portage, and yum in functionality.</p>
-
-<h3>gem (command)</h3>
-
-<p>&lsquo;gem&rsquo; command allows you to interact with RubyGems. It is used build, upload, download, and install Gem packages.</p>
-
-<p>Installation:</p>
-
-<pre><code>gem install mygem
-</code></pre>
-
-<p>Uninstallation:</p>
-
-<pre><code>gem uninstall mygem
-</code></pre>
-
-<p>Listing installed gems:</p>
-
-<pre><code>gem list --local
-</code></pre>
-
-<p>Listing available gems, e.g.:</p>
-
-<pre><code>gem list --remote
-</code></pre>
-
-<h3>Gemfile (text file)</h3>
-
-<p><a href="http://bundler.io/man/gemfile.5.html">A Gemfile</a> describes the gem dependencies required to execute associated Ruby code.</p>
-
-<p>It is placed in the root of the directory containing the associated code.</p>
-
-<p>A Gemfile is evaluated as Ruby code, in a context which makes available a number of methods used to describe the gem requirements.</p>
-
-<h3>gem (program)</h3>
-
-<p><a href="http://stackoverflow.com/questions/5233924/what-is-a-ruby-gem">ref1</a>, <a href="http://guides.rubygems.org/what-is-a-gem/">ref2</a></p>
-
-<p>A gem is a module/Library that you can install and use in every project on your server.</p>
-
-<p>Each gem has a <strong>name, version, and platform</strong>. For example, <strong>rake gem</strong> has a 10.3.2 version on platform Ruby.</p>
-
-<p>Inside a gems are the following components:</p>
-
-<ol>
-<li>Code (including tests and supporting utilities)</li>
-<li>Documentation</li>
-<li>gemspec</li>
-</ol>
-
-
-<p>Standard code structure:</p>
-
-<pre><code>% tree freewill
-freewill/
-├── bin/
-│   └── freewill
-├── lib/
-│   └── freewill.rb
-├── test/
-│   └── test_freewill.rb
-├── README
-├── Rakefile
-└── freewill.gemspec
-</code></pre>
-
-<h3>Bundler (dependency manager)</h3>
-
-<p><a href="http://bundler.io/">ref</a></p>
-
-<p>Bundler manages an application&rsquo;s dependencies.</p>
-
-<p>Bundler provides a consistent environment for Ruby projects by tracking and installing the exact gems and versions that are needed.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/20">&larr; Older</a>
@@ -1049,7 +991,7 @@ freewill/
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -1072,6 +1014,10 @@ freewill/
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
       </li>
     
@@ -1085,10 +1031,6 @@ freewill/
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
       </li>
     
   </ul>

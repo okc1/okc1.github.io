@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given an array of positive numbers, find the maximum sum of a subsequence that no 2 numbers should be adjacent. Eg. (3, 2, 7, 10) &hellip;">
+  <meta name="description" content="Sometme I found the different concepts in Ruby very confusing for beginners. So I write this post to explain some terminologies in ruby setup. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,115 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/12/22/RubyGems-gem-other/">[Ruby] RubyGems, Gem, Gemfile and Bundler</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-12-22T00:00:00-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Sometme I found the different concepts in Ruby very confusing for beginners. So I write this post to explain some terminologies in ruby setup.</p>
+
+<h3>RubyGems (tool)</h3>
+
+<p><strong><a href="http://en.wikipedia.org/wiki/RubyGems">RubyGems</a></strong> is a package manager for the Ruby programming language.</p>
+
+<p>It is a tool to manage the installation of gems, and a server for distributing them.</p>
+
+<p>RubyGems is very similar to apt-get, portage, and yum in functionality.</p>
+
+<h3>gem (command)</h3>
+
+<p>&lsquo;gem&rsquo; command allows you to interact with RubyGems. It is used build, upload, download, and install Gem packages.</p>
+
+<p>Installation:</p>
+
+<pre><code>gem install mygem
+</code></pre>
+
+<p>Uninstallation:</p>
+
+<pre><code>gem uninstall mygem
+</code></pre>
+
+<p>Listing installed gems:</p>
+
+<pre><code>gem list --local
+</code></pre>
+
+<p>Listing available gems, e.g.:</p>
+
+<pre><code>gem list --remote
+</code></pre>
+
+<h3>Gemfile (text file)</h3>
+
+<p><a href="http://bundler.io/man/gemfile.5.html">A Gemfile</a> describes the gem dependencies required to execute associated Ruby code.</p>
+
+<p>It is placed in the root of the directory containing the associated code.</p>
+
+<p>A Gemfile is evaluated as Ruby code, in a context which makes available a number of methods used to describe the gem requirements.</p>
+
+<h3>gem (program)</h3>
+
+<p><a href="http://stackoverflow.com/questions/5233924/what-is-a-ruby-gem">ref1</a>, <a href="http://guides.rubygems.org/what-is-a-gem/">ref2</a></p>
+
+<p>A gem is a module/Library that you can install and use in every project on your server.</p>
+
+<p>Each gem has a <strong>name, version, and platform</strong>. For example, <strong>rake gem</strong> has a 10.3.2 version on platform Ruby.</p>
+
+<p>Inside a gems are the following components:</p>
+
+<ol>
+<li>Code (including tests and supporting utilities)</li>
+<li>Documentation</li>
+<li>gemspec</li>
+</ol>
+
+
+<p>Standard code structure:</p>
+
+<pre><code>% tree freewill
+freewill/
+├── bin/
+│   └── freewill
+├── lib/
+│   └── freewill.rb
+├── test/
+│   └── test_freewill.rb
+├── README
+├── Rakefile
+└── freewill.gemspec
+</code></pre>
+
+<h3>Bundler (dependency manager)</h3>
+
+<p><a href="http://bundler.io/">ref</a></p>
+
+<p>Bundler manages an application&rsquo;s dependencies.</p>
+
+<p>Bundler provides a consistent environment for Ruby projects by tracking and installing the exact gems and versions that are needed.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -773,104 +882,6 @@ return null;
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/11/01/Find-row-with-most-1s/">[Question] Find Row With Most 1s</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-11-01T00:00:00-07:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.geeksforgeeks.org/find-the-row-with-maximum-number-1s/">link</a></p>
-
-<blockquote><p>Given a 2D array with only 1s and 0s, where each row is sorted.</p>
-
-<p>Find the row with the maximum number of 1s. Input matrix:</p></blockquote>
-
-<pre><code>0 1 1 1
-0 0 1 1
-1 1 1 1  // this row has maximum 1s
-0 0 0 0
-</code></pre>
-
-<blockquote><p>Output: 2</p></blockquote>
-
-<h3>Analysis</h3>
-
-<p>By using a modified version of binary search, we can achieve <strong><a href="http://www.geeksforgeeks.org/find-the-row-with-maximum-number-1s/">a O(mLogn) solution</a></strong> where m is number of rows and n is number of columns in matrix.</p>
-
-<p><strong>However, there&rsquo;s better solution that works in linear time</strong>!</p>
-
-<h3>Solution</h3>
-
-<ol>
-<li><p>Get the index of first (or leftmost) 1 in the first row.</p></li>
-<li><p>Do following for every row after the first row:</p>
-
-<ol>
-<li><p>IF the element on left of previous leftmost 1 is 0, ignore this row.</p></li>
-<li><p>ELSE Move left until a 0 is found. Update the leftmost index to this index and max_row_index to be the current row.</p></li>
-</ol>
-</li>
-</ol>
-
-
-<p>The time complexity is O(m+n).</p>
-
-<h3>Code</h3>
-
-<p><strong>written by me</strong></p>
-
-<pre><code>public int solution(int[][] matrix) {
-    int m = matrix.length;
-    int n = matrix[0].length;
-    int p = n;
-    int row = -1;
-    for (int i = 0; i &lt; m; i++) {
-        // now p is larger than 0, otherwise it's already terminated
-        if (matrix[i][p - 1] == 0) {
-            continue;
-        }
-        // p points to a 1, now search to the left direction
-        for (int j = p - 1; j &gt;= 0; j--) {
-            if (matrix[i][j] == 1) {
-                p = j;
-            } else {
-                break;
-            }
-        }
-        // p have a new value now
-        if (p == 0) {
-            return i;
-        } else {
-            row = i;
-        }
-    }
-    return row;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/21">&larr; Older</a>
@@ -888,7 +899,7 @@ return null;
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -911,6 +922,10 @@ return null;
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
       </li>
     
@@ -924,10 +939,6 @@ return null;
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
       </li>
     
   </ul>

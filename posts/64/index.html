@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link 两个人（A，B）参与一个游戏，规则如下： 1）一个随机的整数数列有偶数个数,a1,a2,&hellip;a2n 2）A 先从数列取数，但只能从两头取,a1 or a2n 3)然后Ｂ取数，也是只能从剩下的两头取，依此类推，两个人轮流，都只能从两头取 Output the &hellip;">
+  <meta name="description" content="Question link Given a string of numbers, eg. &ldquo;43868643&rdquo;. Put &lsquo;+&rsquo; and &lsquo;-&rsquo; in between, and build an expression. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,131 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/11/21/insert-plus-and-minus/">[Question] Insert Plus and Minus to Complete Expression</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-11-21T00:00:00-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2013</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Question</h1>
+
+<p><a href="http://www.1point3acres.com/bbs/thread-148692-1-1.html">link</a></p>
+
+<blockquote><p>Given a string of numbers, eg. &ldquo;43868643&rdquo;. Put &lsquo;+&rsquo; and &lsquo;-&rsquo; in between, and build an expression.</p></blockquote>
+
+<h1>Solution</h1>
+
+<p>Iterate thru the input string and do DFS recrusively.</p>
+
+<p>At each position, there&rsquo;s 3 possibilities: plus, minus or do not skip.</p>
+
+<h1>Code</h1>
+
+<pre><code>public List&lt;String&gt; solve(String str) {
+    if (str == null || str.length() == 0) {
+        return null;
+    }
+    List&lt;String&gt; result = new ArrayList&lt;String&gt;();
+    helper(result, "", 0, str);
+    Collections.sort(result);
+    return result;
+}
+
+private void helper(List&lt;String&gt; result, String curExp, int curVal, String remain) {
+    if (curVal == Integer.parseInt(remain)) {
+        result.add(curExp + "=" + remain);
+    } else if (curVal + Integer.parseInt(remain) == 0) {
+        result.add(curExp + "=-" + remain);
+    }
+    for (int i = 1; i &lt; remain.length(); i++) {
+        String nextStr = remain.substring(0, i);
+        int nextNum = Integer.parseInt(nextStr);
+
+        // case 1: add a + between curExp and nextStr
+        String newExp = curExp + "+" + nextStr;
+        int newVal = curVal + nextNum;
+        helper(result, newExp, newVal, remain.substring(i));
+
+        // case 2: '-' sign
+        newExp = curExp + "-" + nextStr;
+        newVal = curVal - nextNum;
+        helper(result, newExp, newVal, remain.substring(i));
+    }
+}
+</code></pre>
+
+<h1>Testing</h1>
+
+<pre><code>Input is 4312
+Print the list: 
++4-3+1=2
+-4+3-1=-2
+
+Input is 43868643
+Print the list: 
++4+3+8+6-8-6-4=3
++4+3+8-6-8+6-4=3
++4+3+86-86-4=3
++4+3-8+6+8-6-4=3
++4+3-8+68-64=3
++4+3-8-6+8+6-4=3
++4+3-86+86-4=3
++4-3+8+6-8-6-4=-3
++4-3+8-6-8+6-4=-3
++4-3+86-86-4=-3
++4-3-8+6+8-6-4=-3
++4-3-8+68-64=-3
++4-3-8-6+8+6-4=-3
++4-3-86+86-4=-3
++43+8+6-8-6=43
++43+8-6-8+6=43
++43+86-86=43
++43-8+6+8-6=43
++43-8-6+8+6=43
++43-86+86=43
+-4+3+8+6-8-6+4=3
+-4+3+8-6-8+6+4=3
+-4+3+8-68+64=3
+-4+3+86-86+4=3
+-4+3-8+6+8-6+4=3
+-4+3-8-6+8+6+4=3
+-4+3-86+86+4=3
+-4-3+8+6-8-6+4=-3
+-4-3+8-6-8+6+4=-3
+-4-3+8-68+64=-3
+-4-3+86-86+4=-3
+-4-3-8+6+8-6+4=-3
+-4-3-8-6+8+6+4=-3
+-4-3-86+86+4=-3
+-43+8+6-8-6=-43
+-43+8-6-8+6=-43
+-43+86-86=-43
+-43-8+6+8-6=-43
+-43-8-6+8+6=-43
+-43-86+86=-43
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -591,7 +716,7 @@ class Meeting {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -614,6 +739,10 @@ class Meeting {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
       </li>
     
@@ -627,10 +756,6 @@ class Meeting {
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
       </li>
     
   </ul>

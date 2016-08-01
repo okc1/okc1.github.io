@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Trie Node public class TrieNode { boolean isLeaf; TrieNode[] child; public TrieNode(boolean isLeaf) { this.isLeaf = isLeaf; this.child = new TrieNode &hellip;">
+  <meta name="description" content="Question link 给定n种物品和一背包。物品i的重量是wi，体积是bi，其价值为vi，背包的容量为C，容积为D。问应如何选择装入背包中的物品，使得装入背包中物品的总价值最大？ 在选择装入背包的物品时，对每种物品i只有两种选择，即装入背包或者不装入背包。不能将物品i装入背包多次， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,108 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/28/two-dimensional-knapsack-problem/">[Question] Two Dimensional Knapsack Problem</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-28T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://blog.sina.com.cn/s/blog_8a24b3a3010190ak.html">link</a></p>
+
+<blockquote><p>给定n种物品和一背包。物品i的重量是wi，体积是bi，其价值为vi，背包的容量为C，容积为D。问应如何选择装入背包中的物品，使得装入背包中物品的总价值最大？</p>
+
+<p>在选择装入背包的物品时，对每种物品i只有两种选择，即装入背包或者不装入背包。不能将物品i装入背包多次，也不能只装入部分的物品i。试设计一个解此问题的动态规划算法，并分析算法的计算复杂性。</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>This is a extended question from <strong>[Question] 0-1 Knapsack Problem</strong>.</p>
+
+<p>Same solution, just use 3D-array for DP.</p>
+
+<h3>Solution</h3>
+
+<p>First of all, define a 2D array, Knapsack(n,W) denotes getting &lsquo;n'th item, with weight 'W&rsquo;. When n == 0 or W = 0, dp value is 0.</p>
+
+<blockquote><p>int[][][] dp = new int[n + 1][W + 1][B + 1];</p></blockquote>
+
+<p>Now if item &lsquo;n&rsquo; is able to fit in:</p>
+
+<blockquote><p>dp[i][j][k] = max(dp[i-1][j][k] , dp[i-1][j-w[i]][k-b[i]] + v[i]);</p></blockquote>
+
+<p>If not able to fit in:</p>
+
+<blockquote><p>dp[i][j][k] = dp[i-1][j][k];</p></blockquote>
+
+<h3>Code</h3>
+
+<p>Code from <a href="http://blog.sina.com.cn/s/blog_8a24b3a3010190ak.html">绝对快乐一生</a>:</p>
+
+<pre><code>int main()
+{
+   int i,j,k;
+   int n,c,d;
+   int w[MAX] = {0};   //重量
+   int b[MAX] = {0};   //体积
+   int v[MAX] = {0};   //价值
+   cout&lt;&lt;"请输入物品个数:";
+   cin&gt;&gt;n;
+   cout&lt;&lt;"请输入背包的容量及容积:";
+   cin&gt;&gt;c&gt;&gt;d;
+   cout&lt;&lt;"请依次输入各个物品的重量,体积,价值:(共"&lt;&lt;n&lt;&lt;"个)"&lt;&lt;endl;
+   for(i =1;i&lt;n+1;i++)
+   {
+       cin&gt;&gt;w[i]&gt;&gt;b[i]&gt;&gt;v[i];
+   }
+
+   int dp[50][50][50]={0}; 
+   //dp[i][j][k] i代表着第1到第i个物品，j代表的是重量，k代表的是容积，dp为最优价值
+
+   for(i=1;i&lt;n+1;i++)
+       for(j =1;j &lt;=c;j++)
+           for(k = 1 ;k &lt;= d ; k++)
+           {
+               if(w[i]&lt;=j&amp;&amp;b[i]&lt;=k)  
+               //当前物品重量小于当前容量，且体积小于容积时 ，才可以考虑装入物品的问题
+                   dp[i][j][k] = max(dp[i-1][j][k] , dp[i-1][j-w[i]][k-b[i]] + v[i]);
+               else dp[i][j][k] = dp[i-1][j][k];
+           }
+   cout&lt;&lt;"背包能放物品的最大价值为:"&lt;&lt;dp[n][c][d]&lt;&lt;endl;
+  int x[MAX] ={0};   //记录是否被选中
+  for(i =n;i&gt;1;i--)
+       if(dp[i][c][d]==dp[i-1][c][d])x[i] =0;
+      else {x[i]=1;c -= w[i];d -= b[i];}
+   x[1]=(dp[1][c][d])?1:0;
+   cout&lt;&lt;"被选入背包的物品的编号,质量和体积,价值分别是:"&lt;&lt;endl;
+   for(i=1;i&lt;&lt;/span&gt;n+1;i++)
+       if(x[i]==1)
+           cout&lt;&lt;"第"&lt;&lt;i&lt;&lt;"个物品: "&lt;&lt;w[i]&lt;&lt;"  "&lt;&lt;b[i]&lt;&lt;"  "&lt;&lt;v[i]&lt;&lt;endl;
+
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -807,55 +909,6 @@ Pop X
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/24/design-google-suggest-autocomplete/">[Design] Design Google Suggest (Autocomplete)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-24T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Overview</h3>
-
-<p><strong>Google Suggest</strong> was <a href="http://googleblog.blogspot.sg/2004/12/ive-got-suggestion.html">launched in 2004</a> as a 20% time project from Google engineer Kevin Gibbs. He developed the idea on a <a href="http://www.theatlantic.com/technology/archive/2013/08/how-googles-autocomplete-was-created-invented-born/278991/">Google shuttle bus</a>.</p>
-
-<h3>Design</h3>
-
-<ol>
-<li>Use trie.</li>
-<li>Use cache (distributed cache)</li>
-</ol>
-
-
-<h4>Trie</h4>
-
-<p>Just make use of all keywords (including space) and build a trie out of it. Then you are good to go just search in Trie.</p>
-
-<p>A comparison of speed between DB, Set and Trie can be found <a href="http://sujitpal.blogspot.sg/2007/02/three-autocomplete-implementations.html">here</a>. A lot of implementation code can be found <a href="http://stackoverflow.com/questions/7058724/how-to-create-an-efficient-auto-complete">here</a>.</p>
-
-<h4>Memcached</h4>
-
-<p>Distributed caching + LRU replacement algorithm. Refer to <strong>[Design] Distributed Caching - memcached</strong> for more.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/15">&larr; Older</a>
@@ -873,7 +926,7 @@ Pop X
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -896,6 +949,10 @@ Pop X
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
       </li>
     
@@ -909,10 +966,6 @@ Pop X
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Output top N positive integer in string comparison order. For example, let&rsquo;s say N=1000, then you need to output in string &hellip;">
+  <meta name="description" content="Question link Given a NxN matrix which contains all distinct 1 to n2 numbers, write code to print sequence of increasing adjacent sequential numbers &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,59 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/02/Special-increasing-adjacent-sequence/">[Google] Special Increasing Adjacent Sequence</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-02T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=5147801809846272">link</a></p>
+
+<blockquote><p>Given a NxN matrix which contains all distinct 1 to n<sup>2</sup> numbers, write code to print sequence of increasing adjacent sequential numbers.</p></blockquote>
+
+<pre><code>ex: 
+1 5 9 
+2 3 8 
+4 6 7 
+</code></pre>
+
+<blockquote><p>should print: 6 7 8 9</p></blockquote>
+
+<h3>Solution</h3>
+
+<blockquote><p>Make an array of booleans (or bits) of same size as the input, where arr[i-1] indicates whether i is adjacent to i+1. Then, iterate over the matrix, checking for each cell the four neighbors and populating the relevant entry in the boolean array.</p></blockquote>
+
+<p>Last, look for the longest run of &ldquo;true&rdquo; values in the boolean array, which can be done with one pass. O(n) time.</p>
+
+<p><strong>Note that this algorithm is valid only if input integers are distinct</strong>, which is true here.</p>
+
+<h3>Code</h3>
+
+<p><strong>not written</strong></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -810,65 +863,6 @@ private void printNode(TreeNode root) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/30/Nth-Fibonacci-Number-In-LogN/">[Question] Nth Fibonacci Number in O(LogN)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-07-30T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://tech-queries.blogspot.sg/2010/09/nth-fibbonacci-number-in-ologn.html">link</a></p>
-
-<blockquote><p>Find Nth fibonacci number in O(logN) time complexity.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p><img class="middle" src="/assets/images/fibonacci_matrix.png"></p>
-
-<p>It&rsquo;s a recursive sequence, where we can get the following equation:</p>
-
-<pre><code>A* [ F(1) F(0) ] = [ F(2) F(1) ]
-A* [ F(2) F(1) ] = [ F(3) F(2) ] = A^2 * [ F(1) F(0) ]
-A* [ F(3) F(2) ] = [ F(4) F(3) ] = A^3 * [ F(1) F(0) ]
-..
-..
-..
-..
-A* [ F(n) F(n-1) ] = [ F(n+1) F(n) ] = A^n * [ F(1) F(0) ]
-</code></pre>
-
-<p>Which means:</p>
-
-<p><img class="middle" src="/assets/images/fibonacci_equation.png"></p>
-
-<p>So all that is left is finding the nth power of the matrix A. Well, this can be computed in O(log n) time, by recursive doubling. For more, see question post or <a href="http://www.codechef.com/wiki/tutorial-dynamic-programming#Finding_nth_Finobacci_number_in_Olog_n">here</a>.</p>
-
-<h3>Code</h3>
-
-<p><strong>not written</strong></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/38">&larr; Older</a>
@@ -886,7 +880,7 @@ A* [ F(n) F(n-1) ] = [ F(n+1) F(n) ] = A^n * [ F(1) F(0) ]
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -909,6 +903,10 @@ A* [ F(n) F(n-1) ] = [ F(n+1) F(n) ] = A^n * [ F(1) F(0) ]
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
       </li>
     
@@ -922,10 +920,6 @@ A* [ F(n) F(n-1) ] = [ F(n+1) F(n) ] = A^n * [ F(1) F(0) ]
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
       </li>
     
   </ul>

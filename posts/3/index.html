@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link For an array, we can build a SegmentTree for it, each node stores an extra attribute count to denote the number of elements in the the &hellip;">
+  <meta name="description" content="Overview A UML class diagram describes the object and information structures used by your application, both internally and in communication with its &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,45 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/14/UML-diagrams/">[Fundamental] UML Class Diagrams</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-10-14T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Overview</h1>
+
+<p>A UML class diagram describes the object and information structures used by your application, both internally and in communication with its users.</p>
+
+<h2>example</h2>
+
+<p>Taken from <a href="https://msdn.microsoft.com/en-us/library/dd409437.aspx">here</a>.</p>
+
+<p><img class="middle" src="/assets/images/IC315445.png"></p>
+
+<p><tbody><tr><th><p><span class="label">Shape</span></p></th><th><p><span class="label">Element</span></p></th><th><p><span class="label">Description</span></p></th></tr><tr><td><p>1</p></td><td><p><strong>Class</strong></p></td><td><p>A definition of objects that share given structural or behavioral characteristics. For more information, see <a href="https://msdn.microsoft.com/en-us/library/dd323860.aspx">Properties of types on UML class diagrams</a>.</p></td></tr><tr><td><p>1</p></td><td><p>Classifier</p></td><td><p>The general name for a class, interface, or enumeration. Components, use cases, and actors are also classifiers.</p></td></tr><tr><td><p>2</p></td><td><p>Collapse/ Expand control</p></td><td><p>If you cannot see the details of a classifier, click the expander at upper-left of the classifier. You might also have to click the [+] on each segment.</p></td></tr><tr><td><p>3</p></td><td><p><strong>Attribute</strong></p></td><td><p>A typed value attached to each instance of a classifier. </p><p>To add an attribute, click the <strong>Attributes</strong> section and then press <strong>ENTER</strong>. Type the signature of the attribute. For more information, see <a href="https://msdn.microsoft.com/en-us/library/dd323861.aspx">Properties of attributes on UML class diagrams</a>.</p></td></tr><tr><td><p>4</p></td><td><p><strong>Operation</strong></p></td><td><p>A method or function that can be performed by instances of a classifier. To add an operation, click the <strong>Operations</strong> section and then press <strong>ENTER</strong>. Type the signature of the operation. For more information, see <a href="https://msdn.microsoft.com/en-us/library/dd323859.aspx">Properties of operations on UML class diagrams</a>. </p></td></tr><tr><td><p>5</p></td><td><p><strong>Association</strong></p></td><td><p>A relationship between the members of two classifiers. For more information, see <a href="https://msdn.microsoft.com/en-us/library/dd323862.aspx">Properties of associations on UML class diagrams</a>. </p></td></tr><tr><td><p>5a</p></td><td><p><strong>Aggregation</strong></p></td><td><p>An association representing a shared ownership relationship. The <strong>Aggregation</strong> property of the owner role is set to <strong>Shared</strong>.</p></td></tr><tr><td><p>5b</p></td><td><p><strong>Composition</strong></p></td><td><p>An Association representing a whole-part relationship. The <strong>Aggregation</strong> property of the owner role is set to <strong>Composite</strong>.</p></td></tr><tr><td><p>6</p></td><td><p><strong>Association Name</strong></p></td><td><p>The name of an association. The name can be left empty.</p></td></tr><tr><td><p>7</p></td><td><p><strong>Role Name</strong></p></td><td><p>The name of a role, that is, one end of an association. Can be used to refer to the associated object. In the previous illustration, for any Order <span class="code">O</span>, <span class="code">O.ChosenMenu</span> is its associated Menu.</p><p>Each role has its own properties, listed under the properties of the association.</p></td></tr><tr><td><p>8</p></td><td><p><strong>Multiplicity</strong></p></td><td><p>Indicates how many of the objects at this end can be linked to each object at the other. In the example, each Order must be linked to exactly one Menu. </p><p><strong>*</strong> means that there is no upper limit to the number of links that can be made.</p></td></tr><tr><td><p>9</p></td><td><p><strong>Generalization</strong></p></td><td><p>The <em>specific</em> classifier inherits part of its definition from the <em>general</em> classifier. The general classifier is at the arrow end of the connector. Attributes, associations, and operations are inherited by the specific classifier.</p><p>Use the <strong>Inheritance</strong> tool to create a generalization between two classifiers.</p></td></tr></tbody></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -866,61 +905,6 @@ private void helper(String s, int p) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/10/04/seven-bridge/">[Fundamental] the 7 Bridges Problem</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-10-04T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1>Overview</h1>
-
-<p>In East Prussia(普鲁士), people try to walk all <a href="https://en.wikipedia.org/wiki/Seven_Bridges_of_K%C3%B6nigsberg">7 bridges</a> w/o crossing a bridge twice.</p>
-
-<p>Leonhard Euler (pronounced &ldquo;oiler&rdquo;) – Swiss</p>
-
-<h1>Euler path</h1>
-
-<p>An Euler path, also called an Eulerian trail, is a walk on the graph edges of a graph which uses each graph edge in the original graph exactly once.</p>
-
-<h2>Degree</h2>
-
-<p>Node degree of a vertex: the number of edges incident with it.</p>
-
-<h2>Euler Theorem</h2>
-
-<p>A graph contains an euler path iffeither of the following cases hold:</p>
-
-<ol>
-<li>All except for two nodes have even degrees – the 2 odd-degree nodes must be start and end points</li>
-<li>all nodes have even degrees.</li>
-</ol>
-
-
-<h1>Application</h1>
-
-<p>networks, distributed systems, coding theory</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/4">&larr; Older</a>
@@ -938,7 +922,7 @@ private void helper(String s, int p) {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -961,6 +945,10 @@ private void helper(String s, int p) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
       </li>
     
@@ -974,10 +962,6 @@ private void helper(String s, int p) {
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
       </li>
     
   </ul>

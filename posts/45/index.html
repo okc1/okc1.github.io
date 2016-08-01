@@ -9,10 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question list Union and Intersection of two Linked Lists
-Insertion Sort List - difficult
-Flatten Binary Tree to Linked List
-Convert Sorted List to &hellip;">
+  <meta name="description" content="Question link 定义一个数字有以下的特征, 它可以被分成几个部分,而前面的部分相加起来的和是后面的部分.举例来说 1235813, 1+2=3; 2+3=5;3+5=8; 5+8=13; 112112224, 112+112=224; 1981100, 19+81=100; &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -68,6 +65,87 @@ Convert Sorted List to &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/18/Number-sum-sequence/">[Question] Number Sum Sequence</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-18T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://bbs.csdn.net/topics/390332954">link</a></p>
+
+<blockquote><p>定义一个数字有以下的特征, 它可以被分成几个部分,而前面的部分相加起来的和是后面的部分.举例来说</p>
+
+<p>1235813,       1+2=3; 2+3=5;3+5=8; 5+8=13;</p>
+
+<p>112112224,     112+112=224;</p>
+
+<p>1981100,       19+81=100;</p>
+
+<p>122436,        12+24=36;</p>
+
+<p>1299111210,    12+99=111,99+111=210;</p>
+
+<p>要求写出一个函数,输入一个数字,判断这个数字是不是要求的这个数。</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p><strong>This is a difficult DFS search question</strong>. Basic idea from <a href="http://bbs.csdn.net/topics/390332954">this blog</a>:</p>
+
+<blockquote><p>取前i位为a1,第i+1到j位为a2,检测n是否由a1和a2生成的序列组成。</p>
+
+<p>时间复杂度为O(n<sup>3</sup>)（或O(n<sup>2</sup>)).</p></blockquote>
+
+<h3>Code</h3>
+
+<p>The code is surprisingly very short.</p>
+
+<p>I have yet to prove whether this code works.</p>
+
+<pre><code>def isLegal(n, i, j):
+    """取前i位为a1,第i+1到j位为a2,检测n是否由a1和a2生成的序列组成。"""
+    nextDigit = j
+    a1 = int(n[:i])
+    a2 = int(n[i:j])
+    while nextDigit&lt;len(n): # n还有数字可用
+        a2, a1 = a1+a2, a2
+        s2 = str(a2)
+        if n.startswith(s2, nextDigit): #从n的第nextDigit位开始，与s2比较
+            nextDigit += len(s2)
+        else:
+            return False
+    return True
+
+def test(n):
+    for i in range(1, len(n)-1):
+        for j in range(i+1, len(n)-1):
+            if isLegal(n, i, j):
+                return True
+    return False
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1498,122 +1576,6 @@ private boolean mirror(TreeNode left, TreeNode right) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/14/Java-modifier-and-access-level/">[Java OOP] Java Modifier and Access Level</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-06-14T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>4 Types of Access Level</h2>
-
-<h4>Private</h4>
-
-<p>Like you&rsquo;d think, only the class in which it is declared can see it.</p>
-
-<h4>Package Private (default)</h4>
-
-<p>Can only be seen and used by the package in which it was declared.</p>
-
-<p>This is the default in Java (which some see as a mistake).</p>
-
-<h4>Protected</h4>
-
-<p>Package Private, plus can be seen by subclasses.</p>
-
-<h4>Public</h4>
-
-<p>Everyone can see it.</p>
-
-<h2>Differences</h2>
-
-<p><img class="middle" src="/assets/images/java-access-level-table.png"></p>
-
-<p><strong>Note</strong>: Java default access setting is &lsquo;No modifier&rsquo;, which is also called &lsquo;<strong>Package Private</strong>&rsquo;.</p>
-
-<p><strong>Another note</strong>: by saying &lsquo;subclass&rsquo;, it means subclass declared in <strong>another package</strong>.</p>
-
-<h4>Example</h4>
-
-<p>Class structure:</p>
-
-<p><img class="middle" src="/assets/images/java-classes-access-level.gif"></p>
-
-<p>For the methods of &lsquo;Alpha&rsquo; class, the visibility is listed below.</p>
-
-<p>For example, Gamma can only access public methods in Alpha.</p>
-
-<table class="tg">
-  <tr>
-    <th class="tg-031e">Modifier</th>
-    <th class="tg-031e">Alpha</th>
-    <th class="tg-031e">Beta</th>
-    <th class="tg-031e">Alphasub</th>
-    <th class="tg-031e">Gamma</th>
-  </tr>
-  <tr>
-    <td class="tg-031e">public</td>
-    <td class="tg-031e">Y</td>
-    <td class="tg-031e">Y</td>
-    <td class="tg-031e">Y</td>
-    <td class="tg-031e">Y</td>
-  </tr>
-  <tr>
-    <td class="tg-031e">protected</td>
-    <td class="tg-031e">Y</td>
-    <td class="tg-031e">Y</td>
-    <td class="tg-031e">Y</td>
-    <td class="tg-031e">N</td>
-  </tr>
-  <tr>
-    <td class="tg-031e">no modifier</td>
-    <td class="tg-031e">Y</td>
-    <td class="tg-031e">Y</td>
-    <td class="tg-031e">N</td>
-    <td class="tg-031e">N</td>
-  </tr>
-  <tr>
-    <td class="tg-031e">private</td>
-    <td class="tg-031e">Y</td>
-    <td class="tg-031e">N</td>
-    <td class="tg-031e">N</td>
-    <td class="tg-031e">N</td>
-  </tr>
-</table>
-
-
-<p><br /></p>
-
-<h2>Additional question</h2>
-
-<h4>Can we declare a top-level class as private?</h4>
-
-<p>Answer: No, Java does not allow top-level private class. Think about it, a top-level class as private would be useless because nothing could access it.</p>
-
-<p>If you really want, you can use inner or nested classes. If you have a private inner or nested class, then access is restricted to the scope of that outer class.</p>
-
-<p><a href="http://stackoverflow.com/questions/1913863/java-why-can-we-define-a-top-level-class-as-private">link</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/46">&larr; Older</a>
@@ -1631,7 +1593,7 @@ private boolean mirror(TreeNode left, TreeNode right) {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -1654,6 +1616,10 @@ private boolean mirror(TreeNode left, TreeNode right) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
       </li>
     
@@ -1667,10 +1633,6 @@ private boolean mirror(TreeNode left, TreeNode right) {
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
       </li>
     
   </ul>

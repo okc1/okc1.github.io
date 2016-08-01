@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question You are given the source to an application which crashes when it is run After running it ten times in a debugger, you find it never crashes &hellip;">
+  <meta name="description" content="Question Write a method to find the number of employees in each department. Answer select Dept_Name, Departments.Dept_ID, count(*) as ‘num_employees &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,53 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/08/sql-count-group-by/">[CC150v4] 15.1 SQL Count and Group by Statement</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-08T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Write a method to find the number of employees in each department.</p></blockquote>
+
+<h3>Answer</h3>
+
+<pre><code>select 
+    Dept_Name, 
+    Departments.Dept_ID, 
+    count(*) as ‘num_employees’
+from 
+    Departments
+left join 
+    Employees
+on 
+    Employees.Dept_ID = Departments.Dept_ID
+group by 
+    Departments.Dept_ID, Dept_Name
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -709,95 +756,6 @@ public boolean equals(Object o) {}
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/07/search-array-containing-empty-string/">[CC150v4] 9.5 Search Array Containing Empty String</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-09-07T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<blockquote><p>Given a sorted array of strings which is interspersed with empty strings, write a method to find the location of a given string.</p>
-
-<p>Example: find “ball” in [“at”, “”, “”, “”, “ball”, “”, “”, “car”, “”, “”, “dad”, “”, “”] will return 4</p>
-
-<p>Example: find “ballcar” in [“at”, “”, “”, “”, “”, “ball”, “car”, “”, “”, “dad”, “”, “”] will return -1</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>The solution is binary search, but when reads empty, <strong>advance to the next non-empty string</strong>.</p>
-
-<p>But wait, <strong>there can be a very big problem that causes looping forever</strong>. Eg.</p>
-
-<blockquote><p>&ldquo;a&rdquo;, &ldquo;&rdquo;, &ldquo;&rdquo;, &ldquo;&rdquo;, &ldquo;c&rdquo; (5 items), look for &ldquo;b&rdquo;</p>
-
-<p>Now &lsquo;left&rsquo; points to 1st string(&ldquo;a&rdquo;) and &lsquo;right&rsquo; points to 4th(&ldquo;&rdquo;). If we read read &lsquo;mid&rsquo; value and advance to the next non-empty string, it&rsquo;ll be &ldquo;c&rdquo;.</p>
-
-<p>since &ldquo;c&rdquo; is large than &ldquo;b&rdquo;, &lsquo;right&rsquo; is set to the 4th index. It&rsquo;s a endless loop!</p></blockquote>
-
-<p>There&rsquo;re various ways to solve this. The book suggests <strong>locate &lsquo;right&rsquo; pointer at non-empty string</strong> by moving left, and then <strong>locate &lsquo;mid&rsquo; pointer at non-empty</strong> by moving right. This avoids endless loop.</p>
-
-<p>My approach is to use 2 instances of &lsquo;mid&rsquo;:</p>
-
-<ol>
-<li>calculatedMid</li>
-<li>comparisonMid</li>
-</ol>
-
-
-<p>Both ways are fine.</p>
-
-<h3>Code</h3>
-
-<pre><code>public static int search(String[] input, String target) {
-    if (target == null || target.length() == 0) {
-        return -1;
-    }
-    int len = input.length;
-    int left = 0, right = len - 1;
-    while (left &lt; right) {
-        int calculatedMid = left + (right - left) / 2;
-        int comparisonMid = calculatedMid;
-        while (comparisonMid &lt; len &amp;&amp; input[comparisonMid].length() == 0) {
-            comparisonMid++;
-        }
-        if (input[comparisonMid].equals(target)) {
-            return comparisonMid;
-        } else if (input[comparisonMid].compareTo(target) &lt; 0) {
-            left = comparisonMid + 1;
-        } else {
-            right = calculatedMid - 1;
-        }
-    }
-    if (left &lt; len &amp;&amp; input[left].equals(target)) {
-        return left;
-    } else {
-        return -1;
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/26">&larr; Older</a>
@@ -815,7 +773,7 @@ public boolean equals(Object o) {}
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -838,6 +796,10 @@ public boolean equals(Object o) {}
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
       </li>
     
@@ -851,10 +813,6 @@ public boolean equals(Object o) {}
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
       </li>
     
   </ul>

@@ -9,10 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question list BST Validate Binary Search Tree
-Insert a Node in Binary Search Tree
-Delete a Node in Binary Search Tree
-Search Range in a Binary Search &hellip;">
+  <meta name="description" content="Template (BFS) BFS can be implemented using either 2 queues (replacing) or 1 queue. Of course 1 queue is better. link public ArrayList&lt;ArrayList& &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -68,6 +65,179 @@ Search Range in a Binary Search &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/10/NineChap-Binary-Tree-BFS/">[NineChap 3.2] Binary Tree BFS</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-10T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Template (BFS)</h2>
+
+<p>BFS can be implemented using either 2 queues (replacing) or 1 queue. Of course 1 queue is better.</p>
+
+<p><a href="http://answer.ninechapter.com/solutions/bfs-template/">link</a></p>
+
+<pre><code>public ArrayList&lt;ArrayList&lt;Integer&gt;&gt; levelOrder(TreeNode root) {
+    ArrayList result = new ArrayList();
+
+    if (root == null)
+        return result;
+
+    Queue&lt;TreeNode&gt; queue = new LinkedList&lt;TreeNode&gt;();
+    queue.offer(root);
+
+    while (!queue.isEmpty()) {
+        ArrayList&lt;Integer&gt; level = new ArrayList&lt;Integer&gt;(); // important
+        int size = queue.size();
+        for (int i = 0; i &lt; size; i++) {
+            TreeNode head = queue.poll();
+            level.add(head.val);
+            if (head.left != null)
+                queue.offer(head.left);
+            if (head.right != null)
+                queue.offer(head.right);
+        }
+        result.add(level); // important
+    }
+
+    return result;
+}
+</code></pre>
+
+<h2>Question list</h2>
+
+<p><strong>BFS</strong></p>
+
+<ol>
+<li><p><strong><a href="/blog/2014/05/25/Binary-Tree-Level-Order-Traversal/">Binary Tree Level Order Traversal</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/25/Binary-Tree-Level-Order-Traversal-II/">Binary Tree Level Order Traversal II</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/25/Binary-Tree-Zigzag-Level-Order-Traversal/">Binary Tree Zigzag Level Order Traversal</a></strong></p></li>
+</ol>
+
+
+<p><strong>Additional</strong></p>
+
+<ol>
+<li><p><strong><a href="/blog/2014/05/27/Construct-Binary-Tree-from-Preorder-and-Inorder/">Construct Binary Tree from Preorder and Inorder</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/27/Construct-Binary-Tree-from-Inorder-and-Postorder/">Construct Binary Tree from Inorder and Postorder</a></strong></p></li>
+</ol>
+
+
+<h2>Code</h2>
+
+<p>First 3 questions are basically same. Below code is for question 1. There is no &lsquo;catch-ya&rsquo;, it&rsquo;s very standard code.</p>
+
+<pre><code>public List&lt;List&lt;Integer&gt;&gt; levelOrder(TreeNode root) {
+    List&lt;List&lt;Integer&gt;&gt; ans = new LinkedList&lt;List&lt;Integer&gt;&gt;();
+    if (root == null) {
+        return ans;
+    }
+    Queue&lt;TreeNode&gt; q = new LinkedList&lt;TreeNode&gt;();
+    q.offer(root);
+    while(!q.isEmpty()) {
+        int size = q.size();
+        List&lt;Integer&gt; level = new LinkedList&lt;Integer&gt;();
+        for (int i = 0; i &lt; size; i ++) {
+            TreeNode node = q.poll();
+            level.add(node.val);
+            if (node.left != null) {
+                q.offer(node.left);
+            }
+            if (node.right != null) {
+                q.offer(node.right);
+            }
+        }
+        ans.add(level);
+    }
+    return ans;
+}
+</code></pre>
+
+<p><strong>Construct Binary Tree from Preorder and Inorder</strong> - written by me</p>
+
+<pre><code>public TreeNode buildTree(int[] preorder, int[] inorder) {
+    if (preorder == null || inorder == null || preorder.length != inorder.length) {
+        return null;
+    }
+    return helper(preorder, 0, preorder.length-1, inorder, 0, inorder.length-1);
+}
+
+private TreeNode helper(int[] preorder, int a, int b, int[] inorder, int c, int d) {
+    if (a &gt; b) {
+        return null;
+    }
+    int headVal = preorder[a];
+    TreeNode head = new TreeNode(headVal);
+    int p = c;
+    while (p &lt;= d) {
+        if (inorder[p] == headVal) {
+            break;
+        }
+        p ++;
+    }
+    head.left = helper(preorder, a+1, a+p-c, inorder, c, p-1);
+    head.right = helper(preorder, b-d+p+1, b, inorder, p+1, d);
+    return head;
+}
+</code></pre>
+
+<p><strong>Construct Binary Tree from Inorder and Postorder</strong> - similar to previous code, copied from <a href="http://answer.ninechapter.com/solutions/construct-binary-tree-from-inorder-and-postorder-traversal/">ninechap</a></p>
+
+<pre><code>private int findPosition(int[] arr, int start, int end, int key) {
+    int i;
+    for (i = start; i &lt;= end; i++) {
+        if (arr[i] == key) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+private TreeNode myBuildTree(int[] inorder, int instart, int inend,
+        int[] postorder, int poststart, int postend) {
+    if (instart &gt; inend) {
+        return null;
+    }
+
+    TreeNode root = new TreeNode(postorder[postend]);
+    int position = findPosition(inorder, instart, inend, postorder[postend]);
+
+    root.left = myBuildTree(inorder, instart, position - 1,
+            postorder, poststart, poststart + position - instart - 1);
+    root.right = myBuildTree(inorder, position + 1, inend,
+            postorder, poststart + position - instart, postend - 1);
+    return root;
+}
+
+public TreeNode buildTree(int[] inorder, int[] postorder) {
+    if (inorder.length != postorder.length) {
+        return null;
+    }
+    return myBuildTree(inorder, 0, inorder.length - 1, postorder, 0, postorder.length - 1);
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1337,183 +1507,6 @@ private void inPlaceRotate(ArrayList&lt;Integer&gt; nums, int left, int right) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/04/Unicode-Utf8/">[Question] ASCII, Utf-8, Utf-16 and Unicode</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-06-04T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>First Word</h2>
-
-<p><strong>ASCII, UTF-? are encoding schemes. Unicode is character set</strong>.</p>
-
-<p>Or in other words, UTF-8 is an encoding used to translate binary data into numbers. Unicode is a character set used to translate numbers into characters.</p>
-
-<h2>ASCII</h2>
-
-<p><strong><a href="http://en.wikipedia.org/wiki/ASCII">ASCII</a></strong> is a character-encoding scheme based on the English alphabet. It encodes 128 characters into 7-bit integers.</p>
-
-<p>ASCII was the most commonly used character encoding on the World Wide Web until December 2007, when it was surpassed by UTF-8, which includes ASCII as a subset.</p>
-
-<h2>UTF-8</h2>
-
-<p>UCS Transformation Format—8-bit</p>
-
-<p><strong><a href="http://en.wikipedia.org/wiki/Utf_8">UTF-8</a></strong> is a variable-width encoding that can represent every character in the Unicode character set. It uses 1 byte for ASCII characters, and up to 4 bytes for others.</p>
-
-<p><strong>UTF-8 is the dominant character encoding for the World Wide Web</strong>, accounting for more than half of all Web pages.</p>
-
-<p>Utf-8 is good because:</p>
-
-<ol>
-<li><p>backward compatibility with ASCII</p></li>
-<li><p>avoid the complications of endianness and byte order marks in UTF-16 and UTF-32</p></li>
-</ol>
-
-
-<p>UTF-8 has become the dominant character encoding for the World Wide Web, accounting for more than half of all Web pages</p>
-
-<h2>UTF-16 and UTF-32</h2>
-
-<p><strong>UTF-16 is used for text in the OS API in Microsoft Windows 2000/XP/2003/Vista/7/8/CE</strong>. The word &ldquo;Unicode&rdquo; means something else according to <a href="http://stackoverflow.com/a/3951826">this person</a>:</p>
-
-<blockquote><p>Windows uses UTF-16LE encoding internally as the memory storage format for Unicode strings, it considers this to be the natural encoding of Unicode text. In the Windows world, there are ANSI strings and there are Unicode strings (stored internally as UTF-16LE).</p>
-
-<p>This was all devised in the early days of Unicode, before UTF-8 was invented. This is why Windows&rsquo;s support for UTF-8 is all-round poor.</p></blockquote>
-
-<h4>UTF-8: &ldquo;size optimize&rdquo;:</h4>
-
-<p>Best suited for Latin character based data (or ASCII), it takes only 1 byte.</p>
-
-<h4>UTF-16: &ldquo;balance&rdquo;</h4>
-
-<p>It takes minimum 2 bytes per character which is enough for existing set of the mainstream languages with having fixed size on it to ease character handling, but size is still variable and can grow up to 4 bytes per character.</p>
-
-<h4>UTF-32: &ldquo;performance&rdquo;</h4>
-
-<p>Allows using of simple algorithms as result of fixed size characters (4 bytes) but with memory disadvantage</p>
-
-<h2>Unicode</h2>
-
-<p><a href="http://en.wikipedia.org/wiki/Unicode">Unicode</a> is a computing industry standard for the consistent encoding. It expresses most of world&rsquo;s writing systems with more than 110,000 characters covering 100 scripts and symbols.</p>
-
-<p>Unicode can be implemented by Utf-8, Utf-16 and now-obsolete Ucs-2. When unicode is encoded with UTF-8, its code value is same as ASCII.</p>
-
-<h2>Table of the scheme</h2>
-
-<table class="wikitable">
-<tbody><tr>
-<th class="bg-color bg-img font-color">Bits of<br>
-code point</th>
-<th class="bg-color bg-img font-color">First<br>
-code point</th>
-<th class="bg-color bg-img font-color">Last<br>
-code point</th>
-<th class="bg-color bg-img font-color">Bytes in<br>
-sequence</th>
-<th class="bg-color bg-img font-color">Byte 1</th>
-<th class="bg-color bg-img font-color">Byte 2</th>
-<th class="bg-color bg-img font-color">Byte 3</th>
-<th class="bg-color bg-img font-color">Byte 4</th>
-<th class="bg-color bg-img font-color">Byte 5</th>
-<th class="bg-color bg-img font-color">Byte 6</th>
-</tr>
-<tr>
-<th class="bg-color bg-img font-color">&nbsp;&nbsp;7</th>
-<td class="bg-color bg-img font-color">U+0000</td>
-<td class="bg-color bg-img font-color">U+007F</td>
-<td style="text-align: center;" class="bg-color bg-img font-color">1</td>
-<td class="bg-color bg-img font-color"><code>0xxxxxxx</code></td>
-</tr>
-<tr>
-<th class="bg-color bg-img font-color">11</th>
-<td class="bg-color bg-img font-color">U+0080</td>
-<td class="bg-color bg-img font-color">U+07FF</td>
-<td style="text-align: center;" class="bg-color bg-img font-color">2</td>
-<td class="bg-color bg-img font-color"><code>110xxxxx</code></td>
-<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
-</tr>
-<tr class="bg-color bg-img font-color">
-<th class="bg-color bg-img font-color">16</th>
-<td class="bg-color bg-img font-color">U+0800</td>
-<td class="bg-color bg-img font-color">U+FFFF</td>
-<td style="text-align: center;" class="bg-color bg-img font-color">3</td>
-<td class="bg-color bg-img font-color"><code class="bg-color bg-img font-color">1110xxxx</code></td>
-<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
-<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
-</tr>
-<tr>
-<th class="bg-color bg-img font-color">21</th>
-<td class="bg-color bg-img font-color">U+10000</td>
-<td class="bg-color bg-img font-color">U+1FFFFF</td>
-<td style="text-align: center;" class="bg-color bg-img font-color">4</td>
-<td class="bg-color bg-img font-color"><code>11110xxx</code></td>
-<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
-<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
-<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
-</tr>
-<tr>
-<th class="bg-color bg-img font-color">26</th>
-<td class="bg-color bg-img font-color">U+200000</td>
-<td class="bg-color bg-img font-color">U+3FFFFFF</td>
-<td style="text-align: center;" class="bg-color bg-img font-color">5</td>
-<td class="bg-color bg-img font-color"><code>111110xx</code></td>
-<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
-<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
-<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
-<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
-</tr>
-<tr>
-<th class="bg-color bg-img font-color">31</th>
-<td class="bg-color bg-img font-color">U+4000000</td>
-<td class="bg-color bg-img font-color">U+7FFFFFFF</td>
-<td style="text-align: center;" class="bg-color bg-img font-color">6</td>
-<td class="bg-color bg-img font-color"><code>1111110x</code></td>
-<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
-<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
-<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
-<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
-<td class="bg-color bg-img font-color"><code>10xxxxxx</code></td>
-</tr>
-</tbody></table>
-
-
-<h2>Example</h2>
-
-<p>Translate &lsquo;€&rsquo; into binary Utf-8.</p>
-
-<ol>
-<li><p>The Unicode code point for &ldquo;€&rdquo; is U+20AC.</p></li>
-<li><p>According to the scheme table above, this will take 3 bytes (16 bits).</p></li>
-<li><p>Convert hexadecimal 20AC into a 16-bit binary 0010000010101100.</p></li>
-<li><p>Fill in the 16 bits into: 1110xxxx   10xxxxxx    10xxxxxx, we got 11100010 10000010 10101100</p></li>
-<li><p>Almost done. The result can be concisely written in hexadecimal, as E2 82 AC.</p></li>
-</ol>
-
-
-<p>Note that the last byte of any encoding starts with &lsquo;0&rsquo;, in this way computer can easily identify the encoding length of every character. Also <strong>note that ASCII code is natively supported by Utf-8</strong>.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/48">&larr; Older</a>
@@ -1531,7 +1524,7 @@ sequence</th>
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -1554,6 +1547,10 @@ sequence</th>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
       </li>
     
@@ -1567,10 +1564,6 @@ sequence</th>
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
       </li>
     
   </ul>

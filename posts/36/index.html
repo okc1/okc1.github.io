@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="link Traditional RDBMS Data is organized in a highly-structured manner, following the relational model. The need for the data to be well-structured &hellip;">
+  <meta name="description" content="Question link Traveler wants to travel from city “A” to city “D”. There is a path from city “A” to city “D”. Path consists of steps, i.e. travel from &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,83 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/04/Traveller-Path-Problem/">[Google] Traveller Path Problem</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-04T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=5749537700315136">link</a></p>
+
+<blockquote><p>Traveler wants to travel from city “A” to city “D”. There is a path from city “A” to city “D”. Path consists of steps, i.e. travel from city “A” to city “B”. Path is encoded as sequence of steps.</p>
+
+<p>Sequence is in incorrect order. Your task is to restore order of steps in the path.</p>
+
+<p>Input (unordered sequence):</p></blockquote>
+
+<pre><code>C -&gt; D 
+A -&gt; B 
+B -&gt; C 
+</code></pre>
+
+<blockquote><p>Output (Correctly ordered list which represents path):</p></blockquote>
+
+<pre><code>A, B, C, D 
+</code></pre>
+
+<blockquote><p>Implement following API:</p></blockquote>
+
+<pre><code>class Step {
+    String start;
+    String finish;
+};
+
+class Node {
+    String value;
+    Node next;
+}
+
+List&lt;String&gt; findPath(List&lt;Step&gt; steps) {
+}
+</code></pre>
+
+<h3>Solution</h3>
+
+<p>This question is not stated clear enough. I found one tentative algorithm:</p>
+
+<blockquote><p>First, initialize a result - sortedPath, and build 2 maps (String to String) - startsToFinishes and finishesToStarts (O(N))</p>
+
+<p>Then, find the one key on startsToFinishes, that is not a key in finishesToStarts - this is the city from which the path begins. (O(N))</p>
+
+<p>Then, iteratively, city by city, build the path.</p></blockquote>
+
+<p><strong>Follow up on Sep 2nd, 2014</strong>:</p>
+
+<p><a href="http://www.mitbbs.com/article_t/JobHunting/32772275.html">This post</a> talks about this question. The answer would be similar to what&rsquo;s writtne above.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -700,59 +777,6 @@ public static int main(String[] args) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/02/Special-increasing-adjacent-sequence/">[Google] Special Increasing Adjacent Sequence</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-08-02T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.careercup.com/question?id=5147801809846272">link</a></p>
-
-<blockquote><p>Given a NxN matrix which contains all distinct 1 to n<sup>2</sup> numbers, write code to print sequence of increasing adjacent sequential numbers.</p></blockquote>
-
-<pre><code>ex: 
-1 5 9 
-2 3 8 
-4 6 7 
-</code></pre>
-
-<blockquote><p>should print: 6 7 8 9</p></blockquote>
-
-<h3>Solution</h3>
-
-<blockquote><p>Make an array of booleans (or bits) of same size as the input, where arr[i-1] indicates whether i is adjacent to i+1. Then, iterate over the matrix, checking for each cell the four neighbors and populating the relevant entry in the boolean array.</p></blockquote>
-
-<p>Last, look for the longest run of &ldquo;true&rdquo; values in the boolean array, which can be done with one pass. O(n) time.</p>
-
-<p><strong>Note that this algorithm is valid only if input integers are distinct</strong>, which is true here.</p>
-
-<h3>Code</h3>
-
-<p><strong>not written</strong></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/37">&larr; Older</a>
@@ -770,7 +794,7 @@ public static int main(String[] args) {
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
 <li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
-<li class='category'><a href='/blog/categories/design/'>design (82)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
 <li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
 <li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
 <li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
@@ -793,6 +817,10 @@ public static int main(String[] args) {
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
       </li>
     
@@ -806,10 +834,6 @@ public static int main(String[] args) {
     
       <li class="post">
         <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Technical Challenges of Writing a Web Crawler</a>
       </li>
     
   </ul>
