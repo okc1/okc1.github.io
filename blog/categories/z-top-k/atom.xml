@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Z-top-k | Woodstock Blog]]></title>
   <link href="http://okc1.github.io/blog/categories/z-top-k/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-08-01T01:47:10-07:00</updated>
+  <updated>2016-09-10T23:05:54+08:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[[Design] Big Data - Top K Frequency (Hands-on)]]></title>
     <link href="http://okc1.github.io/blog/2015/01/09/big-data-top-k-frequency-3/"/>
-    <updated>2015-01-09T00:00:00-08:00</updated>
+    <updated>2015-01-09T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2015/01/09/big-data-top-k-frequency-3</id>
     <content type="html"><![CDATA[### Question 
 
@@ -70,7 +70,7 @@ I suggest you read previous __[Design] Big Data - Top k Frequency__ posts before
   <entry>
     <title type="html"><![CDATA[[Design] Real Time Top K]]></title>
     <link href="http://okc1.github.io/blog/2015/01/09/big-data-real-time-top-k/"/>
-    <updated>2015-01-09T00:00:00-08:00</updated>
+    <updated>2015-01-09T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2015/01/09/big-data-real-time-top-k</id>
     <content type="html"><![CDATA[### Question 
 
@@ -132,7 +132,7 @@ This is a very good solution, which I would recommend as the standard solution t
   <entry>
     <title type="html"><![CDATA[[CC150v4] 20.6 Top Million From Billion]]></title>
     <link href="http://okc1.github.io/blog/2014/09/10/top-million-from-billion/"/>
-    <updated>2014-09-10T00:00:00-07:00</updated>
+    <updated>2014-09-10T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2014/09/10/top-million-from-billion</id>
     <content type="html"><![CDATA[### Question
 
@@ -155,7 +155,7 @@ There're enough discussion on __Top K problems__ so far in this blog. The sugges
   <entry>
     <title type="html"><![CDATA[[Design] Big Data - Top K Frequency (Case Analysis)]]></title>
     <link href="http://okc1.github.io/blog/2014/08/10/big-data-Top-k-freq-case-analysis/"/>
-    <updated>2014-08-10T00:00:00-07:00</updated>
+    <updated>2014-08-10T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2014/08/10/big-data-Top-k-freq-case-analysis</id>
     <content type="html"><![CDATA[### Question 
 
@@ -168,7 +168,7 @@ There're enough discussion on __Top K problems__ so far in this blog. The sugges
 
 ### Analysis
 
-__Standard solution__ is 【分治+trie树/hash+小顶堆/quickselect】, which I covered in another post [Big Data - Top k Frequency]({% post_url /design/2014-07-25-big-data-Top-k-frequency %}). Briefly it is 3 steps: 
+__Standard solution__ is 【分治+trie树/hash+小顶堆/quickselect】, which I covered in another post [Big Data - Top k Frequency](/blog/2014/07/25/big-data-Top-k-frequency/). Briefly it is 3 steps: 
 
 1. 先将数据集按照hash方法分解成多个小数据集，
 1. 使用trie树或者hash统计每个小数据集中的query词频，
@@ -219,7 +219,7 @@ A map function. 对于map函数，采用hash算法，将hash值相同的数据�
   <entry>
     <title type="html"><![CDATA[[Design] Big Data - Top K Frequency]]></title>
     <link href="http://okc1.github.io/blog/2014/07/25/big-data-Top-k-frequency/"/>
-    <updated>2014-07-25T00:00:00-07:00</updated>
+    <updated>2014-07-25T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2014/07/25/big-data-Top-k-frequency</id>
     <content type="html"><![CDATA[### Question 
 

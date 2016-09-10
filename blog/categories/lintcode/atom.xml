@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Lintcode | Woodstock Blog]]></title>
   <link href="http://okc1.github.io/blog/categories/lintcode/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-08-01T01:47:10-07:00</updated>
+  <updated>2016-09-10T23:05:54+08:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[[LintCode] Segment Tree Query II]]></title>
     <link href="http://okc1.github.io/blog/2015/10/13/Segment-Tree-Query-II/"/>
-    <updated>2015-10-13T00:00:00-07:00</updated>
+    <updated>2015-10-13T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2015/10/13/Segment-Tree-Query-II</id>
     <content type="html"><![CDATA[### Question 
 
@@ -70,7 +70,7 @@ Similar.
   <entry>
     <title type="html"><![CDATA[[LintCode] Segment Tree Query]]></title>
     <link href="http://okc1.github.io/blog/2015/10/13/Segment-Tree-Query/"/>
-    <updated>2015-10-13T00:00:00-07:00</updated>
+    <updated>2015-10-13T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2015/10/13/Segment-Tree-Query</id>
     <content type="html"><![CDATA[### Question 
 
@@ -129,7 +129,7 @@ Slightly difficult as we need to keep in mind the following:
   <entry>
     <title type="html"><![CDATA[[LintCode] Segment Tree Modify]]></title>
     <link href="http://okc1.github.io/blog/2015/10/13/Segment-Tree-Modify/"/>
-    <updated>2015-10-13T00:00:00-07:00</updated>
+    <updated>2015-10-13T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2015/10/13/Segment-Tree-Modify</id>
     <content type="html"><![CDATA[### Question 
 
@@ -189,7 +189,7 @@ It's very similar to __Segment Tree Modify/search__.
   <entry>
     <title type="html"><![CDATA[[LintCode] Segment Tree Build II]]></title>
     <link href="http://okc1.github.io/blog/2015/10/13/Segment-Tree-Build-II/"/>
-    <updated>2015-10-13T00:00:00-07:00</updated>
+    <updated>2015-10-13T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2015/10/13/Segment-Tree-Build-II</id>
     <content type="html"><![CDATA[### Question 
 
@@ -263,7 +263,7 @@ Similar.
   <entry>
     <title type="html"><![CDATA[[LintCode] Segment Tree Build]]></title>
     <link href="http://okc1.github.io/blog/2015/10/13/Segment-Tree-Build/"/>
-    <updated>2015-10-13T00:00:00-07:00</updated>
+    <updated>2015-10-13T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2015/10/13/Segment-Tree-Build</id>
     <content type="html"><![CDATA[### Question 
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Cc150v4 | Woodstock Blog]]></title>
   <link href="http://okc1.github.io/blog/categories/cc150v4/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-08-01T01:47:10-07:00</updated>
+  <updated>2016-09-10T23:05:54+08:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[[CC150v4] 20.6 Top Million From Billion]]></title>
     <link href="http://okc1.github.io/blog/2014/09/10/top-million-from-billion/"/>
-    <updated>2014-09-10T00:00:00-07:00</updated>
+    <updated>2014-09-10T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2014/09/10/top-million-from-billion</id>
     <content type="html"><![CDATA[### Question
 
@@ -39,7 +39,7 @@ There're enough discussion on __Top K problems__ so far in this blog. The sugges
   <entry>
     <title type="html"><![CDATA[[CC150v4] 20.12 Sub-matrix With Largest Sum]]></title>
     <link href="http://okc1.github.io/blog/2014/09/10/submatrix-with-largest-sum/"/>
-    <updated>2014-09-10T00:00:00-07:00</updated>
+    <updated>2014-09-10T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2014/09/10/submatrix-with-largest-sum</id>
     <content type="html"><![CDATA[### Question
 
@@ -61,7 +61,7 @@ Please refer to the other post for more detail.
   <entry>
     <title type="html"><![CDATA[[CC150v4] 20.3 Generate M Int From Array of Size N]]></title>
     <link href="http://okc1.github.io/blog/2014/09/10/generate-m-from-array-of-n/"/>
-    <updated>2014-09-10T00:00:00-07:00</updated>
+    <updated>2014-09-10T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2014/09/10/generate-m-from-array-of-n</id>
     <content type="html"><![CDATA[### Question
 
@@ -95,7 +95,7 @@ __Very similar to Fisher–Yates Shuffle__, and the code below is written by me.
   <entry>
     <title type="html"><![CDATA[[CC150v4] 20.8 Full Text Search (Suffix Tree)]]></title>
     <link href="http://okc1.github.io/blog/2014/09/10/full-text-search/"/>
-    <updated>2014-09-10T00:00:00-07:00</updated>
+    <updated>2014-09-10T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2014/09/10/full-text-search</id>
     <content type="html"><![CDATA[### Question
 
@@ -107,7 +107,7 @@ __This is a very classic question of string search__, favored by Google and Face
 
 The solution is __suffix tree__ (to be distinguished from __trie__, or prefix tree, which searched word by its prefix). Suffix tree is good for search a proportion of a long string. For example, using "bibs" to build a suffix tree like this: 
 
-{% img middle /assets/images/suffix-tree-example-bibs.png %}
+<img class="middle" src="/assets/images/suffix-tree-example-bibs.png">
 
 The building of suffix tree and searching is not a very lengthy code. It's posted below and it's not written by me. 
 
@@ -194,7 +194,7 @@ SuffixTreeNode.java
   <entry>
     <title type="html"><![CDATA[[CC150v4] 20.11 Find Subsquare With Black Border]]></title>
     <link href="http://okc1.github.io/blog/2014/09/10/find-subsquare-with-black-border/"/>
-    <updated>2014-09-10T00:00:00-07:00</updated>
+    <updated>2014-09-10T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2014/09/10/find-subsquare-with-black-border</id>
     <content type="html"><![CDATA[### Question
 

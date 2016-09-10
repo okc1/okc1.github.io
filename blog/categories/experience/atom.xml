@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Experience | Woodstock Blog]]></title>
   <link href="http://okc1.github.io/blog/categories/experience/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-08-01T01:47:10-07:00</updated>
+  <updated>2016-09-10T23:05:54+08:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[[Octopress] Add Aside Content to Octopress]]></title>
     <link href="http://okc1.github.io/blog/2016/06/11/add-aside-content-octopress/"/>
-    <updated>2016-06-11T00:00:00-07:00</updated>
+    <updated>2016-06-11T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2016/06/11/add-aside-content-octopress</id>
     <content type="html"><![CDATA[# Aside
 
@@ -64,7 +64,7 @@ Example of this is the 'categories' list on the right hand side of the blog page
   <entry>
     <title type="html"><![CDATA[[Octopress] Add Google AdSense to Octopress]]></title>
     <link href="http://okc1.github.io/blog/2015/04/07/add-adsense-octopress/"/>
-    <updated>2015-04-07T00:00:00-07:00</updated>
+    <updated>2015-04-07T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2015/04/07/add-adsense-octopress</id>
     <content type="html"><![CDATA[## Apply for Google AdSense
 
@@ -118,14 +118,14 @@ Apr 9th update: my re-submission of Google AdSense is not approached, because of
 
 Apr 11th update: For the first time ever, my blog has more than 1,000 visit per day. 
 
-{% img middle /assets/images/google-analytics-20150411.png %}
+<img class="middle" src="/assets/images/google-analytics-20150411.png">
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[[Ruby] Endless Error With Gem Dependencies]]></title>
     <link href="http://okc1.github.io/blog/2014/12/23/Endless-error-gem-dependencies/"/>
-    <updated>2014-12-23T00:00:00-08:00</updated>
+    <updated>2014-12-23T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2014/12/23/Endless-error-gem-dependencies</id>
     <content type="html"><![CDATA[### The problem
 
@@ -280,7 +280,7 @@ I guess this is because my network security settings, but I do not know. If you 
   <entry>
     <title type="html"><![CDATA[[Ruby] RubyGems, Gem, Gemfile and Bundler]]></title>
     <link href="http://okc1.github.io/blog/2014/12/22/RubyGems-gem-other/"/>
-    <updated>2014-12-22T00:00:00-08:00</updated>
+    <updated>2014-12-22T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2014/12/22/RubyGems-gem-other</id>
     <content type="html"><![CDATA[Sometme I found the different concepts in Ruby very confusing for beginners. So I write this post to explain some terminologies in ruby setup. 
 
@@ -361,7 +361,7 @@ Bundler provides a consistent environment for Ruby projects by tracking and inst
   <entry>
     <title type="html"><![CDATA[[Octopress] Clone Octopress Blog From a Different Computer]]></title>
     <link href="http://okc1.github.io/blog/2014/07/21/Clone-octopress-blog-from-a-different-computer/"/>
-    <updated>2014-07-21T00:00:00-07:00</updated>
+    <updated>2014-07-21T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2014/07/21/Clone-octopress-blog-from-a-different-computer</id>
     <content type="html"><![CDATA[__Ruby/gem/bundler setup (on a new machine) has always been a hassle to me__. Not only that, I've had some confusions about developing Octopress blog on 2 different computers.
 
@@ -376,7 +376,7 @@ Well first of all, we must install __Ruby__ and __Development Kit__. Simply go t
 
 __Installing Ruby__ is straight-forward, only remember to check "Add Ruby to your PATH". Otherwise you need to manually set the __Ruby directory__ (eg. C:\Ruby193\bin) in __System Variables Settings__.
 
-{% img middle /assets/images/install-ruby-193.png %}
+<img class="middle" src="/assets/images/install-ruby-193.png">
 
 __Ruby DevKit is a self-extracting archive__. After extracting the files, we should [initialize the DevKit](http://jekyll-windows.juthilo.com/1-ruby-and-devkit/) like this:
 
@@ -411,9 +411,9 @@ Follow [this instruction](http://www.techelex.org/setup-octopress-windows7/) and
     rbenv rehash    # generally optional, unless you are using rbenv
     bundle install
 
-If you see endless dependency errors here, please refer to my other post: __[[Ruby] Endless error with gem dependencies]({% post_url /experience/2014-12-23-Endless-error-gem-dependencies %})__.
+If you see endless dependency errors here, please refer to my other post: __[[Ruby] Endless error with gem dependencies](/blog/2014/12/23/Endless-error-gem-dependencies/)__.
 
-If you are confused with some concepts in Ruby, read __[[Ruby] RubyGems, gem, Gemfile and Bundler]({% post_url /experience/2014-12-22-RubyGems-gem-other %})__.
+If you are confused with some concepts in Ruby, read __[[Ruby] RubyGems, gem, Gemfile and Bundler](/blog/2014/12/22/RubyGems-gem-other/)__.
 
 ### Now, start octopress
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Z-string-search | Woodstock Blog]]></title>
   <link href="http://okc1.github.io/blog/categories/z-string-search/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-08-01T01:47:10-07:00</updated>
+  <updated>2016-09-10T23:05:54+08:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[[Fundamental] Implement Trie and Suffix Tree]]></title>
     <link href="http://okc1.github.io/blog/2015/01/28/implement-trie-suffix-tree/"/>
-    <updated>2015-01-28T00:00:00-08:00</updated>
+    <updated>2015-01-28T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2015/01/28/implement-trie-suffix-tree</id>
     <content type="html"><![CDATA[### Trie Node
 
@@ -110,7 +110,7 @@ Suffix tree might also consider the __List of indexes__ thing, which I do not ta
   <entry>
     <title type="html"><![CDATA[[Fundamental] Suffix Tree]]></title>
     <link href="http://okc1.github.io/blog/2015/01/27/suffix-tree/"/>
-    <updated>2015-01-27T00:00:00-08:00</updated>
+    <updated>2015-01-27T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2015/01/27/suffix-tree</id>
     <content type="html"><![CDATA[[ref](http://www.geeksforgeeks.org/pattern-searching-set-8-suffix-tree-introduction/)
 
@@ -132,11 +132,11 @@ __A Compressed Trie__ is obtained from standard trie by joining chains of single
 
 Example, a standard trie: 
 
-{% img middle /assets/images/standardtrieNew.png %}
+<img class="middle" src="/assets/images/standardtrieNew.png">
 
 A Compressed Trie: 
 
-{% img middle /assets/images/CompressedTrieNew.png %}
+<img class="middle" src="/assets/images/CompressedTrieNew.png">
 
 #### build a Suffix Tree
 
@@ -160,7 +160,7 @@ Example question: __[CC150v4] 20.8 Full Text Search (Suffix Tree)__
   <entry>
     <title type="html"><![CDATA[[Fundamental] Suffix Array]]></title>
     <link href="http://okc1.github.io/blog/2015/01/27/suffix-array/"/>
-    <updated>2015-01-27T00:00:00-08:00</updated>
+    <updated>2015-01-27T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2015/01/27/suffix-array</id>
     <content type="html"><![CDATA[[ref](http://www.geeksforgeeks.org/suffix-array-set-1-introduction/)
 
@@ -181,7 +181,7 @@ Example question: __[Facebook] Query Search (HashMap, suffix array)__.
   <entry>
     <title type="html"><![CDATA[[Fundamental] Prefix Tree]]></title>
     <link href="http://okc1.github.io/blog/2015/01/27/prefix-tree/"/>
-    <updated>2015-01-27T00:00:00-08:00</updated>
+    <updated>2015-01-27T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2015/01/27/prefix-tree</id>
     <content type="html"><![CDATA[[ref](http://www.geeksforgeeks.org/trie-insert-and-search/)
 
@@ -230,7 +230,7 @@ __Compressed trie__, ternary search tree, etc. can be used to minimize memory re
   <entry>
     <title type="html"><![CDATA[[Fundamental] Pattern Searching Algorithms]]></title>
     <link href="http://okc1.github.io/blog/2015/01/27/pattern-searching-algorithms/"/>
-    <updated>2015-01-27T00:00:00-08:00</updated>
+    <updated>2015-01-27T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2015/01/27/pattern-searching-algorithms</id>
     <content type="html"><![CDATA[[ref](http://www.geeksforgeeks.org/tag/pattern-searching/page/2/)
 

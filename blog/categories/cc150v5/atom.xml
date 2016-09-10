@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Cc150v5 | Woodstock Blog]]></title>
   <link href="http://okc1.github.io/blog/categories/cc150v5/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-08-01T01:47:10-07:00</updated>
+  <updated>2016-09-10T23:05:54+08:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[[CC150v5] 18.7 Longest Word Made From Other Words]]></title>
     <link href="http://okc1.github.io/blog/2014/10/02/longest-word-made-from-other/"/>
-    <updated>2014-10-02T00:00:00-07:00</updated>
+    <updated>2014-10-02T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2014/10/02/longest-word-made-from-other</id>
     <content type="html"><![CDATA[### Question
 
@@ -74,7 +74,7 @@ This question might look difficult at first, it's actually a very classical recu
   <entry>
     <title type="html"><![CDATA[[CC150v5] 17.14 Optimal Way to Unconcatenate Doc]]></title>
     <link href="http://okc1.github.io/blog/2014/10/01/optimal-unconcatenate-doc/"/>
-    <updated>2014-10-01T00:00:00-07:00</updated>
+    <updated>2014-10-01T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2014/10/01/optimal-unconcatenate-doc</id>
     <content type="html"><![CDATA[### Question
 
@@ -123,7 +123,7 @@ The code is concise and easy to read.
   <entry>
     <title type="html"><![CDATA[[CC150v5] 17.13 Convert BST to DLL]]></title>
     <link href="http://okc1.github.io/blog/2014/09/30/convert-bst-to-dll/"/>
-    <updated>2014-09-30T00:00:00-07:00</updated>
+    <updated>2014-09-30T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2014/09/30/convert-bst-to-dll</id>
     <content type="html"><![CDATA[### Question
 
@@ -235,7 +235,7 @@ __Approach 2__
   <entry>
     <title type="html"><![CDATA[[CC150v5] 11.8 Get Rank in Stream of Integers]]></title>
     <link href="http://okc1.github.io/blog/2014/09/28/get-rank-stream-integers/"/>
-    <updated>2014-09-28T00:00:00-07:00</updated>
+    <updated>2014-09-28T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2014/09/28/get-rank-stream-integers</id>
     <content type="html"><![CDATA[### Question
 
@@ -249,7 +249,7 @@ __This question requires a special type of Data Structure__. It basically is a m
 
 > The tree node stores both number value and the __count of node on left subtree__
 
-{% img middle /assets/images/get-rank-number-stream.png %}
+<img class="middle" src="/assets/images/get-rank-number-stream.png">
 
 Suppose we want to find the rank of 24 in the tree above. We would compare 24 with the root, 20, and find that 24 must reside on the right. The root has 4 nodes in its left subtree, and when we include the root itself, this gives us five total nodes smaller than 24. We set counter to 5.
 
@@ -268,7 +268,7 @@ Refer to another post __[Question] Stock Span Problem__.
   <entry>
     <title type="html"><![CDATA[[CC150v5] 17.6 Order an Array by Sorting Middle]]></title>
     <link href="http://okc1.github.io/blog/2014/09/27/Order-array-by-sorting-middle/"/>
-    <updated>2014-09-27T00:00:00-07:00</updated>
+    <updated>2014-09-27T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2014/09/27/Order-array-by-sorting-middle</id>
     <content type="html"><![CDATA[### Question
 

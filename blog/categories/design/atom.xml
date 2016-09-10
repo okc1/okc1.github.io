@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Design | Woodstock Blog]]></title>
   <link href="http://okc1.github.io/blog/categories/design/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-08-01T01:47:10-07:00</updated>
+  <updated>2016-09-10T23:05:54+08:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[[Design] How to Design Logging]]></title>
     <link href="http://okc1.github.io/blog/2016/08/01/how-to-design-logging/"/>
-    <updated>2016-08-01T00:00:00-07:00</updated>
+    <updated>2016-08-01T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2016/08/01/how-to-design-logging</id>
     <content type="html"><![CDATA[# Logging
 
@@ -45,7 +45,7 @@ __"How" is just coding__. Happy Logging! ]]></content>
   <entry>
     <title type="html"><![CDATA[[Design] MVC, MVP and MVVM]]></title>
     <link href="http://okc1.github.io/blog/2016/07/31/mvc-mvp-mvvm/"/>
-    <updated>2016-07-31T00:00:00-07:00</updated>
+    <updated>2016-07-31T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2016/07/31/mvc-mvp-mvvm</id>
     <content type="html"><![CDATA[# MVC Pattern
 
@@ -53,7 +53,7 @@ Model-View-Controller.
 
 The model and controller logic are __decoupled from user interface (view)__. 
 
-{% img middle /assets/images/mvc-pattern.png %}
+<img class="middle" src="/assets/images/mvc-pattern.png">
 
 1. Model
 
@@ -79,7 +79,7 @@ separate the presentation layer from the logic
 
 The Presenter is responsible for handling all UI events on behalf of the view. 
 
-{% img middle /assets/images/mvp-pattern.png %}
+<img class="middle" src="/assets/images/mvp-pattern.png">
 
 Unlike view and controller, view and presenter are completely decoupled from each other’s and communicate to each other’s by an interface.
 
@@ -107,7 +107,7 @@ This enables automatic propagation of changes, within the state of view model to
 
 Typically, __the view model uses the observer pattern__ to notify changes in the view model to model.
 
-{% img middle /assets/images/mvvm-pattern.png %}
+<img class="middle" src="/assets/images/mvvm-pattern.png">
 
 ## details
 
@@ -138,7 +138,7 @@ TLDR: http://www.beyondjava.net/blog/model-view-whatever/
   <entry>
     <title type="html"><![CDATA[[Design] Design Twitter]]></title>
     <link href="http://okc1.github.io/blog/2016/07/11/design-twitter/"/>
-    <updated>2016-07-11T00:00:00-07:00</updated>
+    <updated>2016-07-11T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2016/07/11/design-twitter</id>
     <content type="html"><![CDATA[# System design evaluation form
 
@@ -205,7 +205,7 @@ On average, __a web server support around 1000 QPS__, thus in this case, we need
 
 ## 4 services for Twitter
 
-{% img middle /assets/images/jiuzhang-four-service.png %}
+<img class="middle" src="/assets/images/jiuzhang-four-service.png">
 
 1. user service
     1. register
@@ -241,7 +241,7 @@ On average, __a web server support around 1000 QPS__, thus in this case, we need
 
 ## Select the right DB
 
-{% img middle /assets/images/jiuzhang-db-selection.png %}
+<img class="middle" src="/assets/images/jiuzhang-db-selection.png">
 
 __Question: can we use file system for tweets__?
 
@@ -255,7 +255,7 @@ No, it's hard to query. Eg. query all tweets of my friends.
 2. tweet table
 3. friendship table: this is not as straight forward, as it shall contain double directions info
 
-{% img middle /assets/images/jiuzhang-data-schema.png %}
+<img class="middle" src="/assets/images/jiuzhang-data-schema.png">
 
 # Important: News Feed
 
@@ -267,9 +267,9 @@ Post tweet is simple 1 DB write.
 
 __This design is bad, because file-system/DB read is slow__. If you have N friends, you query O(N) DB queries. __It's too slow (and user is getting sync-blocked, too)__. We should have, ideally, <= 7 DB queries per web page.
 
-{% img middle /assets/images/jiuzhang-pull-diagram.png %}
+<img class="middle" src="/assets/images/jiuzhang-pull-diagram.png">
 
-{% img middle /assets/images/jiuzhang-pull-code.png %}
+<img class="middle" src="/assets/images/jiuzhang-pull-code.png">
 
 ### problem
 
@@ -284,9 +284,9 @@ When I read, I simply read top 100 from the feed list. __So read is 1 DB read__.
 
 Post tweet is N DB writes, which is slow. __However this is done async, so it does not matter__.  
 
-{% img middle /assets/images/jiuzhang-push-diagram.png %}
+<img class="middle" src="/assets/images/jiuzhang-push-diagram.png">
 
-{% img middle /assets/images/jiuzhang-push-code.png %}
+<img class="middle" src="/assets/images/jiuzhang-push-code.png">
 
 One example of async implementation: __RabbitMQ__
 
@@ -318,7 +318,7 @@ In tweet table, if we need to count(user) who liked, it's gonna take forever.
 
 __We must denormalize this data__!
 
-{% img middle /assets/images/jiuzhang-denormalize.png %}
+<img class="middle" src="/assets/images/jiuzhang-denormalize.png">
 
 Denormalize: it's duplicate info but we store in table, because of performance improvement. 
 
@@ -335,7 +335,7 @@ When cache fails, all DB query will go to DB. This results in DB crash.
 
 Hot spot (thundering herd)
 
-{% img middle /assets/images/jiuzhang-thundering-herd.png %}
+<img class="middle" src="/assets/images/jiuzhang-thundering-herd.png">
 
 Solution: hold all incoming queries (who fails cache), and only send 1 DB query. When result is returned, return to every query. 
 ]]></content>
@@ -344,7 +344,7 @@ Solution: hold all incoming queries (who fails cache), and only send 1 DB query.
   <entry>
     <title type="html"><![CDATA[[Design] User Registry Table Design]]></title>
     <link href="http://okc1.github.io/blog/2016/05/08/user-registry-table-design/"/>
-    <updated>2016-05-08T00:00:00-07:00</updated>
+    <updated>2016-05-08T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2016/05/08/user-registry-table-design</id>
     <content type="html"><![CDATA[# First word 
 
@@ -356,14 +356,14 @@ The tables, __we must use RDBMS__, as it's more reliable.
 
 __Friendship table__ is important:
 
-{% img middle /assets/images/design-user-registry-tables.png %}
+<img class="middle" src="/assets/images/design-user-registry-tables.png">
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[[Design] Technical Challenges of Writing a Web Crawler]]></title>
     <link href="http://okc1.github.io/blog/2015/11/22/challenges-writing-crawler/"/>
-    <updated>2015-11-22T00:00:00-08:00</updated>
+    <updated>2015-11-22T00:00:00+08:00</updated>
     <id>http://okc1.github.io/blog/2015/11/22/challenges-writing-crawler</id>
     <content type="html"><![CDATA[# 1. Choose a framework
 
@@ -408,7 +408,7 @@ Following the spirit of other don’t repeat yourself frameworks, such as Django
 
 For more, read [Scrapy Architecture ](http://doc.scrapy.org/en/latest/topics/architecture.html).
 
-{% img middle /assets/images/scrapy_architecture.png %}
+<img class="middle" src="/assets/images/scrapy_architecture.png">
 
 1. Scrapy Engine 
 
