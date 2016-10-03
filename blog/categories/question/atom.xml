@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Question | Woodstock Blog]]></title>
   <link href="http://okc1.github.io/blog/categories/question/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-09-10T23:05:54+08:00</updated>
+  <updated>2016-10-03T01:05:33-07:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[[Question] Swizzle Sort]]></title>
     <link href="http://okc1.github.io/blog/2015/11/21/swizzle-sort/"/>
-    <updated>2015-11-21T00:00:00+08:00</updated>
+    <updated>2015-11-21T00:00:00-08:00</updated>
     <id>http://okc1.github.io/blog/2015/11/21/swizzle-sort</id>
     <content type="html"><![CDATA[# Question
 
@@ -49,7 +49,7 @@
   <entry>
     <title type="html"><![CDATA[[Question] Partition Problem (Divide Array Into Halves)]]></title>
     <link href="http://okc1.github.io/blog/2015/11/15/partition-problem/"/>
-    <updated>2015-11-15T00:00:00+08:00</updated>
+    <updated>2015-11-15T00:00:00-08:00</updated>
     <id>http://okc1.github.io/blog/2015/11/15/partition-problem</id>
     <content type="html"><![CDATA[# Question
 
@@ -90,7 +90,7 @@ Example DP array for input "3,1,1,2,2,1":
   <entry>
     <title type="html"><![CDATA[[Question] Largest Sub-square With Edges Filled]]></title>
     <link href="http://okc1.github.io/blog/2015/10/07/largest-subsquare-with-edge-filled/"/>
-    <updated>2015-10-07T00:00:00+08:00</updated>
+    <updated>2015-10-07T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2015/10/07/largest-subsquare-with-edge-filled</id>
     <content type="html"><![CDATA[### Question
 
@@ -222,7 +222,7 @@ C++ code provided by [G4G](www.geeksforgeeks.org/given-matrix-o-x-find-largest-s
   <entry>
     <title type="html"><![CDATA[[Question] Find Cloest Leaf in Binary Tree]]></title>
     <link href="http://okc1.github.io/blog/2015/10/07/closest-leaf-binary-tree/"/>
-    <updated>2015-10-07T00:00:00+08:00</updated>
+    <updated>2015-10-07T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2015/10/07/closest-leaf-binary-tree</id>
     <content type="html"><![CDATA[### Question
 
@@ -308,7 +308,7 @@ Inspired by the code from [G4G](www.geeksforgeeks.org/find-closest-leaf-binary-t
   <entry>
     <title type="html"><![CDATA[[Amazon] All Strings by Placing Spaces]]></title>
     <link href="http://okc1.github.io/blog/2015/10/07/all-string-placing-space/"/>
-    <updated>2015-10-07T00:00:00+08:00</updated>
+    <updated>2015-10-07T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2015/10/07/all-string-placing-space</id>
     <content type="html"><![CDATA[### Question
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Leetcode_plus | Woodstock Blog]]></title>
   <link href="http://okc1.github.io/blog/categories/leetcode-plus/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-09-10T23:05:54+08:00</updated>
+  <updated>2016-10-03T01:05:33-07:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[[LeetCode Plus] Sliding Window Maximum]]></title>
     <link href="http://okc1.github.io/blog/2014/07/27/Sliding-Window-Maximum/"/>
-    <updated>2014-07-27T00:00:00+08:00</updated>
+    <updated>2014-07-27T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2014/07/27/Sliding-Window-Maximum</id>
     <content type="html"><![CDATA[### Question 
 
@@ -88,7 +88,7 @@ written by me
   <entry>
     <title type="html"><![CDATA[[LeetCode Plus] Coins in a Line]]></title>
     <link href="http://okc1.github.io/blog/2014/07/27/Coins-in-Line/"/>
-    <updated>2014-07-27T00:00:00+08:00</updated>
+    <updated>2014-07-27T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2014/07/27/Coins-in-Line</id>
     <content type="html"><![CDATA[### Question 
 
@@ -150,7 +150,7 @@ If interested, read __[Fundamental] Min-Max Algorithm__ for more.
   <entry>
     <title type="html"><![CDATA[[LeetCode Plus] Convert BST to Circular DLL]]></title>
     <link href="http://okc1.github.io/blog/2014/07/24/Convert-BST-To-Circular-DLL/"/>
-    <updated>2014-07-24T00:00:00+08:00</updated>
+    <updated>2014-07-24T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2014/07/24/Convert-BST-To-Circular-DLL</id>
     <content type="html"><![CDATA[### Question 
 
@@ -245,7 +245,7 @@ The Java code is posted below. [source](http://cslibrary.stanford.edu/109/TreeLi
   <entry>
     <title type="html"><![CDATA[[LeetCode Plus] Reverse Linked List Iteratively and Recursively]]></title>
     <link href="http://okc1.github.io/blog/2014/06/17/Reverse-linkedlist-recursively/"/>
-    <updated>2014-06-17T00:00:00+08:00</updated>
+    <updated>2014-06-17T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2014/06/17/Reverse-linkedlist-recursively</id>
     <content type="html"><![CDATA[### Question 
 
@@ -309,7 +309,7 @@ A good solution suggest by [this answer](http://stackoverflow.com/a/354937):
   <entry>
     <title type="html"><![CDATA[[LeetCode Plus] Binary Tree Serialize and Deserialize]]></title>
     <link href="http://okc1.github.io/blog/2014/06/16/Binary-tree-serialize-deserialize/"/>
-    <updated>2014-06-16T00:00:00+08:00</updated>
+    <updated>2014-06-16T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2014/06/16/Binary-tree-serialize-deserialize</id>
     <content type="html"><![CDATA[### Question 
 

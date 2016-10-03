@@ -4,7 +4,7 @@
   <title><![CDATA[Woodstock Blog]]></title>
   <link href="http://okc1.github.io/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-09-10T23:05:54+08:00</updated>
+  <updated>2016-10-03T01:05:33-07:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[[Design] How to Design Logging]]></title>
     <link href="http://okc1.github.io/blog/2016/08/01/how-to-design-logging/"/>
-    <updated>2016-08-01T00:00:00+08:00</updated>
+    <updated>2016-08-01T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2016/08/01/how-to-design-logging</id>
     <content type="html"><![CDATA[<h1>Logging</h1>
 
@@ -49,7 +49,7 @@
   <entry>
     <title type="html"><![CDATA[[Design] MVC, MVP and MVVM]]></title>
     <link href="http://okc1.github.io/blog/2016/07/31/mvc-mvp-mvvm/"/>
-    <updated>2016-07-31T00:00:00+08:00</updated>
+    <updated>2016-07-31T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2016/07/31/mvc-mvp-mvvm</id>
     <content type="html"><![CDATA[<h1>MVC Pattern</h1>
 
@@ -143,7 +143,7 @@
   <entry>
     <title type="html"><![CDATA[[Design] Design Twitter]]></title>
     <link href="http://okc1.github.io/blog/2016/07/11/design-twitter/"/>
-    <updated>2016-07-11T00:00:00+08:00</updated>
+    <updated>2016-07-11T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2016/07/11/design-twitter</id>
     <content type="html"><![CDATA[<h1>System design evaluation form</h1>
 
@@ -391,7 +391,7 @@
   <entry>
     <title type="html"><![CDATA[[Octopress] Add Aside Content to Octopress]]></title>
     <link href="http://okc1.github.io/blog/2016/06/11/add-aside-content-octopress/"/>
-    <updated>2016-06-11T00:00:00+08:00</updated>
+    <updated>2016-06-11T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2016/06/11/add-aside-content-octopress</id>
     <content type="html"><![CDATA[<h1>Aside</h1>
 
@@ -442,7 +442,7 @@
   <entry>
     <title type="html"><![CDATA[[Design] User Registry Table Design]]></title>
     <link href="http://okc1.github.io/blog/2016/05/08/user-registry-table-design/"/>
-    <updated>2016-05-08T00:00:00+08:00</updated>
+    <updated>2016-05-08T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2016/05/08/user-registry-table-design</id>
     <content type="html"><![CDATA[<h1>First word</h1>
 
@@ -461,7 +461,7 @@
   <entry>
     <title type="html"><![CDATA[[Design] Technical Challenges of Writing a Web Crawler]]></title>
     <link href="http://okc1.github.io/blog/2015/11/22/challenges-writing-crawler/"/>
-    <updated>2015-11-22T00:00:00+08:00</updated>
+    <updated>2015-11-22T00:00:00-08:00</updated>
     <id>http://okc1.github.io/blog/2015/11/22/challenges-writing-crawler</id>
     <content type="html"><![CDATA[<h1>1. Choose a framework</h1>
 
@@ -607,7 +607,7 @@ textfile.close()
   <entry>
     <title type="html"><![CDATA[[Question] Swizzle Sort]]></title>
     <link href="http://okc1.github.io/blog/2015/11/21/swizzle-sort/"/>
-    <updated>2015-11-21T00:00:00+08:00</updated>
+    <updated>2015-11-21T00:00:00-08:00</updated>
     <id>http://okc1.github.io/blog/2015/11/21/swizzle-sort</id>
     <content type="html"><![CDATA[<h1>Question</h1>
 
@@ -641,7 +641,7 @@ textfile.close()
   <entry>
     <title type="html"><![CDATA[[Design] How to Generate Maze]]></title>
     <link href="http://okc1.github.io/blog/2015/11/21/generate-maze/"/>
-    <updated>2015-11-21T00:00:00+08:00</updated>
+    <updated>2015-11-21T00:00:00-08:00</updated>
     <id>http://okc1.github.io/blog/2015/11/21/generate-maze</id>
     <content type="html"><![CDATA[<h1>Question</h1>
 
@@ -684,7 +684,7 @@ textfile.close()
   <entry>
     <title type="html"><![CDATA[[Design] Strategy Design Pattern]]></title>
     <link href="http://okc1.github.io/blog/2015/11/18/strategy-pattern/"/>
-    <updated>2015-11-18T00:00:00+08:00</updated>
+    <updated>2015-11-18T00:00:00-08:00</updated>
     <id>http://okc1.github.io/blog/2015/11/18/strategy-pattern</id>
     <content type="html"><![CDATA[<h1>Overview</h1>
 
@@ -779,7 +779,7 @@ public class CarExample {
   <entry>
     <title type="html"><![CDATA[[Question] Partition Problem (Divide Array Into Halves)]]></title>
     <link href="http://okc1.github.io/blog/2015/11/15/partition-problem/"/>
-    <updated>2015-11-15T00:00:00+08:00</updated>
+    <updated>2015-11-15T00:00:00-08:00</updated>
     <id>http://okc1.github.io/blog/2015/11/15/partition-problem</id>
     <content type="html"><![CDATA[<h1>Question</h1>
 
@@ -822,7 +822,7 @@ The array cannot be partitioned into equal sum sets.
   <entry>
     <title type="html"><![CDATA[[LeetCode 188] Best Time to Buy and Sell Stock IV]]></title>
     <link href="http://okc1.github.io/blog/2015/11/04/Best-Time-to-Buy-and-Sell-Stock-IV/"/>
-    <updated>2015-11-04T00:00:00+08:00</updated>
+    <updated>2015-11-04T00:00:00-08:00</updated>
     <id>http://okc1.github.io/blog/2015/11/04/Best-Time-to-Buy-and-Sell-Stock-IV</id>
     <content type="html"><![CDATA[<h3>Question</h3>
 
@@ -893,7 +893,7 @@ You may not engage in multiple transactions at the same time (ie, you must sell 
   <entry>
     <title type="html"><![CDATA[[Java OOP] Java ArrayList Implementation]]></title>
     <link href="http://okc1.github.io/blog/2015/10/28/arraylist-implementation/"/>
-    <updated>2015-10-28T00:00:00+08:00</updated>
+    <updated>2015-10-28T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2015/10/28/arraylist-implementation</id>
     <content type="html"><![CDATA[<h1>Overview</h1>
 
@@ -917,7 +917,7 @@ You may not engage in multiple transactions at the same time (ie, you must sell 
   <entry>
     <title type="html"><![CDATA[[Java OOP] Static Class and Inner Class]]></title>
     <link href="http://okc1.github.io/blog/2015/10/23/static-class-inner-class/"/>
-    <updated>2015-10-23T00:00:00+08:00</updated>
+    <updated>2015-10-23T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2015/10/23/static-class-inner-class</id>
     <content type="html"><![CDATA[<h1>Nested classes</h1>
 
@@ -1001,7 +1001,7 @@ Outer.Inner inner = outer.new Inner();
   <entry>
     <title type="html"><![CDATA[[Java OOP] What Is Java Exception]]></title>
     <link href="http://okc1.github.io/blog/2015/10/23/java-what-is-exception/"/>
-    <updated>2015-10-23T00:00:00+08:00</updated>
+    <updated>2015-10-23T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2015/10/23/java-what-is-exception</id>
     <content type="html"><![CDATA[<h1>The class</h1>
 
@@ -1024,7 +1024,7 @@ Outer.Inner inner = outer.new Inner();
   <entry>
     <title type="html"><![CDATA[[Java OOP] Java Vector and ArrayList]]></title>
     <link href="http://okc1.github.io/blog/2015/10/23/java-vector-arraylist/"/>
-    <updated>2015-10-23T00:00:00+08:00</updated>
+    <updated>2015-10-23T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2015/10/23/java-vector-arraylist</id>
     <content type="html"><![CDATA[<h1>Vector in Java</h1>
 
@@ -1051,7 +1051,7 @@ Outer.Inner inner = outer.new Inner();
   <entry>
     <title type="html"><![CDATA[[Java OOP] Template Method Pattern (Abstract Class)]]></title>
     <link href="http://okc1.github.io/blog/2015/10/23/Template-method-pattern/"/>
-    <updated>2015-10-23T00:00:00+08:00</updated>
+    <updated>2015-10-23T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2015/10/23/Template-method-pattern</id>
     <content type="html"><![CDATA[<h1>Overview</h1>
 
@@ -1147,7 +1147,7 @@ class Chess extends Game {
   <entry>
     <title type="html"><![CDATA[[Fundamental] Reflexive, Symmetric and Transitive Rules]]></title>
     <link href="http://okc1.github.io/blog/2015/10/22/reflexive-symmetric-transitive/"/>
-    <updated>2015-10-22T00:00:00+08:00</updated>
+    <updated>2015-10-22T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2015/10/22/reflexive-symmetric-transitive</id>
     <content type="html"><![CDATA[<h1>Overview</h1>
 
@@ -1174,7 +1174,7 @@ class Chess extends Game {
   <entry>
     <title type="html"><![CDATA[[Fundamental] Polynomial, Quadratic, Cubic and Exponential]]></title>
     <link href="http://okc1.github.io/blog/2015/10/22/polynomial-quadratic-cubic-exponential/"/>
-    <updated>2015-10-22T00:00:00+08:00</updated>
+    <updated>2015-10-22T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2015/10/22/polynomial-quadratic-cubic-exponential</id>
     <content type="html"><![CDATA[<h1>Overview</h1>
 
@@ -1189,7 +1189,7 @@ class Chess extends Game {
   <entry>
     <title type="html"><![CDATA[[Fundamental] What Is a Literal?]]></title>
     <link href="http://okc1.github.io/blog/2015/10/22/literals/"/>
-    <updated>2015-10-22T00:00:00+08:00</updated>
+    <updated>2015-10-22T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2015/10/22/literals</id>
     <content type="html"><![CDATA[<h1>Overview</h1>
 
@@ -1212,7 +1212,7 @@ String s = "cat";
   <entry>
     <title type="html"><![CDATA[[Java OOP] Why Avoid Using Protected?]]></title>
     <link href="http://okc1.github.io/blog/2015/10/22/avoid-protected/"/>
-    <updated>2015-10-22T00:00:00+08:00</updated>
+    <updated>2015-10-22T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2015/10/22/avoid-protected</id>
     <content type="html"><![CDATA[<h1>Overview</h1>
 

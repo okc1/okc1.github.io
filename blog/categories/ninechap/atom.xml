@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ninechap | Woodstock Blog]]></title>
   <link href="http://okc1.github.io/blog/categories/ninechap/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-09-10T23:05:54+08:00</updated>
+  <updated>2016-10-03T01:05:33-07:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[[NineChap System Design] Class 4.2: Search Engine]]></title>
     <link href="http://okc1.github.io/blog/2015/08/30/design-class4-2/"/>
-    <updated>2015-08-30T00:00:00+08:00</updated>
+    <updated>2015-08-30T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2015/08/30/design-class4-2</id>
     <content type="html"><![CDATA[]]></content>
   </entry>
@@ -24,7 +24,7 @@
   <entry>
     <title type="html"><![CDATA[[NineChap System Design] Class 4.1: Crawler]]></title>
     <link href="http://okc1.github.io/blog/2015/08/30/design-class4-1/"/>
-    <updated>2015-08-30T00:00:00+08:00</updated>
+    <updated>2015-08-30T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2015/08/30/design-class4-1</id>
     <content type="html"><![CDATA[# Overview
 
@@ -347,7 +347,7 @@ Stay tuned for future post.
   <entry>
     <title type="html"><![CDATA[[NineChap System Design] Class 3.2: Web Service]]></title>
     <link href="http://okc1.github.io/blog/2015/08/28/design-class3-2/"/>
-    <updated>2015-08-28T00:00:00+08:00</updated>
+    <updated>2015-08-28T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2015/08/28/design-class3-2</id>
     <content type="html"><![CDATA[# Question 4
 
@@ -507,7 +507,7 @@ How to design 12306 (support several million QPS)
   <entry>
     <title type="html"><![CDATA[[NineChap System Design] Class 3.1: Web Service]]></title>
     <link href="http://okc1.github.io/blog/2015/08/28/design-class3-1/"/>
-    <updated>2015-08-28T00:00:00+08:00</updated>
+    <updated>2015-08-28T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2015/08/28/design-class3-1</id>
     <content type="html"><![CDATA[# Overview
 
@@ -698,7 +698,7 @@ After this step, Web failure rate fall from 7% to 4%. Why still 4%? Well, these 
   <entry>
     <title type="html"><![CDATA[[NineChap System Design] Class 2.2: Database]]></title>
     <link href="http://okc1.github.io/blog/2015/08/26/design-class2-2/"/>
-    <updated>2015-08-26T00:00:00+08:00</updated>
+    <updated>2015-08-26T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2015/08/26/design-class2-2</id>
     <content type="html"><![CDATA[# Question 5
 

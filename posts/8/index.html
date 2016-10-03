@@ -81,7 +81,7 @@ If version1 &gt; version2 return 1, if version1 &lt; version2 return -1, otherwi
 
 
 
-<time class='entry-date' datetime='2015-04-12T00:00:00+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+<time class='entry-date' datetime='2015-04-12T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
         
       </p>
     
@@ -192,7 +192,7 @@ For instance, <code>2.5</code> is not "two and a half" or "half way to version t
 
 
 
-<time class='entry-date' datetime='2015-04-11T00:00:00+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+<time class='entry-date' datetime='2015-04-11T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
         
       </p>
     
@@ -372,7 +372,7 @@ For example,
 
 
 
-<time class='entry-date' datetime='2015-04-08T00:00:00+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+<time class='entry-date' datetime='2015-04-08T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
         
       </p>
     
@@ -498,7 +498,7 @@ public class Solution {
 
 
 
-<time class='entry-date' datetime='2015-04-07T00:00:00+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+<time class='entry-date' datetime='2015-04-07T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
         
       </p>
     
@@ -533,14 +533,16 @@ public class Solution {
  (adsbygoogle = window.adsbygoogle || []).push({});
  &lt;/script&gt;
 </code></pre></li>
-<li><p>Go to _config.yml, and look for &ldquo;default_asides&rdquo;, then add &ldquo;asides/advertise.html, &rdquo; in the beginning of the array</p>
+<li><p>Go to <strong>_config.yml</strong>, and look for &ldquo;default_asides&rdquo;, then add &ldquo;asides/advertise.html, &rdquo; in the beginning of the array</p>
 
-<p> default_asides: [asides/advertise.html, asides/category_list.html, asides/recent_posts.html, asides/github.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html]</p></li>
+<pre><code> default_asides: [asides/advertise.html, asides/category_list.html, asides/recent_posts.html, asides/github.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html]
+</code></pre></li>
 <li><p>Now you&rsquo;ve added advertisement in your side menu.</p></li>
-<li><p>Go to source/_layouts/post.html and look for:</p>
+<li><p>Go to <strong>source/_layouts/post.html</strong> and look for:</p>
 
-<p> \&lt;h1>Comments\&lt;/h1></p></li>
-<li><p>Below the h1 tag, add your AdSense code, again.</p></li>
+<pre><code> if site.disqus_short_name and page.comments
+</code></pre></li>
+<li><p>Right <strong>below the article</strong>, and <strong>above the comments</strong>, add your AdSense code, again.</p></li>
 <li><p>Now you&rsquo;ve added advertisement above your comment area.</p></li>
 </ol>
 
@@ -575,7 +577,7 @@ public class Solution {
 
 
 
-<time class='entry-date' datetime='2015-04-07T00:00:00+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+<time class='entry-date' datetime='2015-04-07T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
         
       </p>
     
@@ -680,7 +682,7 @@ getMin() -- Retrieve the minimum element in the stack.
 
 
 
-<time class='entry-date' datetime='2015-04-07T00:00:00+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+<time class='entry-date' datetime='2015-04-07T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
         
       </p>
     
@@ -769,7 +771,7 @@ the contiguous subarray <code>[2,3]</code> has the largest product = <code>6</co
 
 
 
-<time class='entry-date' datetime='2015-04-07T00:00:00+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+<time class='entry-date' datetime='2015-04-07T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
         
       </p>
     
@@ -860,7 +862,7 @@ What if <i>duplicates</i> are allowed?</p>
 
 
 
-<time class='entry-date' datetime='2015-04-07T00:00:00+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+<time class='entry-date' datetime='2015-04-07T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
         
       </p>
     
@@ -946,7 +948,7 @@ What if <i>duplicates</i> are allowed?</p>
 
 
 
-<time class='entry-date' datetime='2015-02-15T00:00:00+08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+<time class='entry-date' datetime='2015-02-15T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
         
       </p>
     
@@ -1014,7 +1016,7 @@ What if <i>duplicates</i> are allowed?</p>
 
 
 
-<time class='entry-date' datetime='2015-02-14T00:00:00+08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+<time class='entry-date' datetime='2015-02-14T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
         
       </p>
     
@@ -1097,7 +1099,8 @@ What if <i>duplicates</i> are allowed?</p>
 </div>
 <aside class="sidebar">
   
-    <section class="well">
+    iiiii 2354342543
+<section class="well">
   <h1>Categories</h1>
   <ul id="categories" class="nav nav-list">
     <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Leetcode | Woodstock Blog]]></title>
   <link href="http://okc1.github.io/blog/categories/leetcode/atom.xml" rel="self"/>
   <link href="http://okc1.github.io/"/>
-  <updated>2016-09-10T23:05:54+08:00</updated>
+  <updated>2016-10-03T01:05:33-07:00</updated>
   <id>http://okc1.github.io/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[[LeetCode 188] Best Time to Buy and Sell Stock IV]]></title>
     <link href="http://okc1.github.io/blog/2015/11/04/Best-Time-to-Buy-and-Sell-Stock-IV/"/>
-    <updated>2015-11-04T00:00:00+08:00</updated>
+    <updated>2015-11-04T00:00:00-08:00</updated>
     <id>http://okc1.github.io/blog/2015/11/04/Best-Time-to-Buy-and-Sell-Stock-IV</id>
     <content type="html"><![CDATA[### Question 
 
@@ -85,7 +85,7 @@ And the final code (by blogger __Code_Ganker__ from the same link) would look li
   <entry>
     <title type="html"><![CDATA[[LeetCode 189] Rotate Array]]></title>
     <link href="http://okc1.github.io/blog/2015/05/10/Rotate-Array/"/>
-    <updated>2015-05-10T00:00:00+08:00</updated>
+    <updated>2015-05-10T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2015/05/10/Rotate-Array</id>
     <content type="html"><![CDATA[### Question 
 
@@ -153,7 +153,7 @@ This question is very standard "rotate 3 times" solution.
   <entry>
     <title type="html"><![CDATA[[LeetCode 190] Reverse Bits]]></title>
     <link href="http://okc1.github.io/blog/2015/05/10/Reverse-Bits/"/>
-    <updated>2015-05-10T00:00:00+08:00</updated>
+    <updated>2015-05-10T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2015/05/10/Reverse-Bits</id>
     <content type="html"><![CDATA[### Question 
 
@@ -263,7 +263,7 @@ Best solution:
   <entry>
     <title type="html"><![CDATA[[LeetCode 200] Number of Islands]]></title>
     <link href="http://okc1.github.io/blog/2015/05/10/Number-of-Islands/"/>
-    <updated>2015-05-10T00:00:00+08:00</updated>
+    <updated>2015-05-10T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2015/05/10/Number-of-Islands</id>
     <content type="html"><![CDATA[### Question 
 
@@ -366,7 +366,7 @@ You might want to come up with your own code. Mine is just for reference. This i
   <entry>
     <title type="html"><![CDATA[[LeetCode 191] Number of 1 Bits]]></title>
     <link href="http://okc1.github.io/blog/2015/05/10/Number-of-1-Bits/"/>
-    <updated>2015-05-10T00:00:00+08:00</updated>
+    <updated>2015-05-10T00:00:00-07:00</updated>
     <id>http://okc1.github.io/blog/2015/05/10/Number-of-1-Bits</id>
     <content type="html"><![CDATA[### Question 
 
