@@ -36,17 +36,17 @@ My first request of AdSense is rejected because of "__Site does not comply with 
         (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
 
-3. Go to _config.yml, and look for "default_asides", then add "asides/advertise.html, " in the beginning of the array
+3. Go to **_config.yml**, and look for "default_asides", then add "asides/advertise.html, " in the beginning of the array
 
-    default_asides: [asides/advertise.html, asides/category_list.html, asides/recent_posts.html, asides/github.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html]
+        default_asides: [asides/advertise.html, asides/category_list.html, asides/recent_posts.html, asides/github.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html]
 
 4. Now you've added advertisement in your side menu.
 
-5. Go to source/_layouts/post.html and look for: 
+5. Go to __source/_layouts/post.html__ and look for:
 
-    \<h1\>Comments\</h1\>
-    
-6. Below the h1 tag, add your AdSense code, again. 
+        if site.disqus_short_name and page.comments
+
+6. Right __below the article__, and __above the comments__, add your AdSense code, again. 
 
 7. Now you've added advertisement above your comment area.
 
