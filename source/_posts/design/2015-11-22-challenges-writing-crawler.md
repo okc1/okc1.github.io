@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Design] Technical Challenges of writing a web crawler "
+title: "[Design] Designing a simple web crawler "
 comments: true
 category: Design
 
