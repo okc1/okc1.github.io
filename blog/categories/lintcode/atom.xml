@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Lintcode | Woodstock Blog]]></title>
-  <link href="http://okc1.github.io/blog/categories/lintcode/atom.xml" rel="self"/>
-  <link href="http://okc1.github.io/"/>
-  <updated>2017-02-20T20:43:48-08:00</updated>
-  <id>http://okc1.github.io/</id>
+  <link href="http://www.shuati123.com/blog/categories/lintcode/atom.xml" rel="self"/>
+  <link href="http://www.shuati123.com/"/>
+  <updated>2017-02-20T20:49:20-08:00</updated>
+  <id>http://www.shuati123.com/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[[LintCode] Segment Tree Query II]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/13/Segment-Tree-Query-II/"/>
+    <link href="http://www.shuati123.com/blog/2015/10/13/Segment-Tree-Query-II/"/>
     <updated>2015-10-13T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/13/Segment-Tree-Query-II</id>
+    <id>http://www.shuati123.com/blog/2015/10/13/Segment-Tree-Query-II</id>
     <content type="html"><![CDATA[### Question 
 
 [link](http://www.lintcode.com/en/problem/segment-tree-query-ii/)
@@ -69,9 +69,9 @@ Similar.
   
   <entry>
     <title type="html"><![CDATA[[LintCode] Segment Tree Query]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/13/Segment-Tree-Query/"/>
+    <link href="http://www.shuati123.com/blog/2015/10/13/Segment-Tree-Query/"/>
     <updated>2015-10-13T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/13/Segment-Tree-Query</id>
+    <id>http://www.shuati123.com/blog/2015/10/13/Segment-Tree-Query</id>
     <content type="html"><![CDATA[### Question 
 
 [link](http://www.lintcode.com/en/problem/segment-tree-query/)
@@ -128,9 +128,9 @@ Slightly difficult as we need to keep in mind the following:
   
   <entry>
     <title type="html"><![CDATA[[LintCode] Segment Tree Modify]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/13/Segment-Tree-Modify/"/>
+    <link href="http://www.shuati123.com/blog/2015/10/13/Segment-Tree-Modify/"/>
     <updated>2015-10-13T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/13/Segment-Tree-Modify</id>
+    <id>http://www.shuati123.com/blog/2015/10/13/Segment-Tree-Modify</id>
     <content type="html"><![CDATA[### Question 
 
 [link](http://www.lintcode.com/en/problem/segment-tree-modify/#)
@@ -188,9 +188,9 @@ It's very similar to __Segment Tree Modify/search__.
   
   <entry>
     <title type="html"><![CDATA[[LintCode] Segment Tree Build II]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/13/Segment-Tree-Build-II/"/>
+    <link href="http://www.shuati123.com/blog/2015/10/13/Segment-Tree-Build-II/"/>
     <updated>2015-10-13T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/13/Segment-Tree-Build-II</id>
+    <id>http://www.shuati123.com/blog/2015/10/13/Segment-Tree-Build-II</id>
     <content type="html"><![CDATA[### Question 
 
 [link](http://www.lintcode.com/en/problem/segmemt-tree-build-ii/)
@@ -262,9 +262,9 @@ Similar.
   
   <entry>
     <title type="html"><![CDATA[[LintCode] Segment Tree Build]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/13/Segment-Tree-Build/"/>
+    <link href="http://www.shuati123.com/blog/2015/10/13/Segment-Tree-Build/"/>
     <updated>2015-10-13T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/13/Segment-Tree-Build</id>
+    <id>http://www.shuati123.com/blog/2015/10/13/Segment-Tree-Build</id>
     <content type="html"><![CDATA[### Question 
 
 [link](http://www.lintcode.com/en/problem/segment-tree-build/)

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Java Oop | Woodstock Blog]]></title>
-  <link href="http://okc1.github.io/blog/categories/java-oop/atom.xml" rel="self"/>
-  <link href="http://okc1.github.io/"/>
-  <updated>2017-02-20T20:43:48-08:00</updated>
-  <id>http://okc1.github.io/</id>
+  <link href="http://www.shuati123.com/blog/categories/java-oop/atom.xml" rel="self"/>
+  <link href="http://www.shuati123.com/"/>
+  <updated>2017-02-20T20:49:20-08:00</updated>
+  <id>http://www.shuati123.com/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[[Java OOP] Java ArrayList Implementation]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/28/arraylist-implementation/"/>
+    <link href="http://www.shuati123.com/blog/2015/10/28/arraylist-implementation/"/>
     <updated>2015-10-28T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/28/arraylist-implementation</id>
+    <id>http://www.shuati123.com/blog/2015/10/28/arraylist-implementation</id>
     <content type="html"><![CDATA[# Overview
 
 __[Resizable-array](http://docs.oracle.com/javase/7/docs/api/java/util/ArrayList.html)__ implementation of the List interface. (it's actually an [array of Object](http://stackoverflow.com/a/7382507))
@@ -38,9 +38,9 @@ Actual code will come later...
   
   <entry>
     <title type="html"><![CDATA[[Java OOP] Static Class and Inner Class]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/23/static-class-inner-class/"/>
+    <link href="http://www.shuati123.com/blog/2015/10/23/static-class-inner-class/"/>
     <updated>2015-10-23T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/23/static-class-inner-class</id>
+    <id>http://www.shuati123.com/blog/2015/10/23/static-class-inner-class</id>
     <content type="html"><![CDATA[# Nested classes 
 
 Both Static class and Inner class are called __nested class__. 
@@ -113,9 +113,9 @@ Java has __[no way of making a top-level class static](http://stackoverflow.com/
   
   <entry>
     <title type="html"><![CDATA[[Java OOP] What Is Java Exception]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/23/java-what-is-exception/"/>
+    <link href="http://www.shuati123.com/blog/2015/10/23/java-what-is-exception/"/>
     <updated>2015-10-23T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/23/java-what-is-exception</id>
+    <id>http://www.shuati123.com/blog/2015/10/23/java-what-is-exception</id>
     <content type="html"><![CDATA[# The class
 
 __[The class Exception](http://docs.oracle.com/javase/7/docs/api/java/lang/Exception.html)__ and its subclasses are a form of __Throwable__ that indicates conditions that a reasonable application might want to catch.
@@ -137,9 +137,9 @@ After a method throws an exception, the runtime system (i.e. __JVM__) attempts t
   
   <entry>
     <title type="html"><![CDATA[[Java OOP] Java Vector and ArrayList]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/23/java-vector-arraylist/"/>
+    <link href="http://www.shuati123.com/blog/2015/10/23/java-vector-arraylist/"/>
     <updated>2015-10-23T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/23/java-vector-arraylist</id>
+    <id>http://www.shuati123.com/blog/2015/10/23/java-vector-arraylist</id>
     <content type="html"><![CDATA[# Vector in Java
 
 Vector class implements a __growable array__ of objects. 
@@ -161,9 +161,9 @@ Usage: [ALWAYS use ArrayLists](http://stackoverflow.com/a/2986307)
   
   <entry>
     <title type="html"><![CDATA[[Java OOP] Template Method Pattern (Abstract Class)]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/23/Template-method-pattern/"/>
+    <link href="http://www.shuati123.com/blog/2015/10/23/Template-method-pattern/"/>
     <updated>2015-10-23T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/23/Template-method-pattern</id>
+    <id>http://www.shuati123.com/blog/2015/10/23/Template-method-pattern</id>
     <content type="html"><![CDATA[# Overview
 
 __[Template method pattern](https://en.wikipedia.org/wiki/Template_method_pattern) is a behavioral design pattern__ that defines the program skeleton of an algorithm in a method, called template method, which __defers some steps to subclasses__. 

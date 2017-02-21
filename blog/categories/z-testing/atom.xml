@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Z-testing | Woodstock Blog]]></title>
-  <link href="http://okc1.github.io/blog/categories/z-testing/atom.xml" rel="self"/>
-  <link href="http://okc1.github.io/"/>
-  <updated>2017-02-20T20:43:48-08:00</updated>
-  <id>http://okc1.github.io/</id>
+  <link href="http://www.shuati123.com/blog/categories/z-testing/atom.xml" rel="self"/>
+  <link href="http://www.shuati123.com/"/>
+  <updated>2017-02-20T20:49:20-08:00</updated>
+  <id>http://www.shuati123.com/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[[CC150v5] 12.0 Example - Troubleshoot Google Chrome]]></title>
-    <link href="http://okc1.github.io/blog/2014/09/24/troubleshoot-google-chrome/"/>
+    <link href="http://www.shuati123.com/blog/2014/09/24/troubleshoot-google-chrome/"/>
     <updated>2014-09-24T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2014/09/24/troubleshoot-google-chrome</id>
+    <id>http://www.shuati123.com/blog/2014/09/24/troubleshoot-google-chrome</id>
     <content type="html"><![CDATA[### Question
 
 > You'reworking on the Google Chrome team when you receivea bug report: Chrome crashes on launch. What would you do? 
@@ -51,9 +51,9 @@ Come up with realistic instructions.
   
   <entry>
     <title type="html"><![CDATA[[CC150v4] 11.2 Random Error Debugging 2]]></title>
-    <link href="http://okc1.github.io/blog/2014/09/08/random-error-debugging-2/"/>
+    <link href="http://www.shuati123.com/blog/2014/09/08/random-error-debugging-2/"/>
     <updated>2014-09-08T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2014/09/08/random-error-debugging-2</id>
+    <id>http://www.shuati123.com/blog/2014/09/08/random-error-debugging-2</id>
     <content type="html"><![CDATA[### Question
 
 > You are given the source to an application which crashes when it is run After running it ten times in a debugger, you find it never crashes in the same place The application is single threaded, and uses only the C standard library What programming errors could be causing this crash? How would you test each one? 

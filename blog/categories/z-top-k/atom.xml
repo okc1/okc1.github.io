@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Z-top-k | Woodstock Blog]]></title>
-  <link href="http://okc1.github.io/blog/categories/z-top-k/atom.xml" rel="self"/>
-  <link href="http://okc1.github.io/"/>
-  <updated>2017-02-20T20:43:48-08:00</updated>
-  <id>http://okc1.github.io/</id>
+  <link href="http://www.shuati123.com/blog/categories/z-top-k/atom.xml" rel="self"/>
+  <link href="http://www.shuati123.com/"/>
+  <updated>2017-02-20T20:49:20-08:00</updated>
+  <id>http://www.shuati123.com/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[[Design] Big Data - Top K Frequency (Hands-on)]]></title>
-    <link href="http://okc1.github.io/blog/2015/01/09/big-data-top-k-frequency-3/"/>
+    <link href="http://www.shuati123.com/blog/2015/01/09/big-data-top-k-frequency-3/"/>
     <updated>2015-01-09T00:00:00-08:00</updated>
-    <id>http://okc1.github.io/blog/2015/01/09/big-data-top-k-frequency-3</id>
+    <id>http://www.shuati123.com/blog/2015/01/09/big-data-top-k-frequency-3</id>
     <content type="html"><![CDATA[### Question 
 
 [link](http://stackoverflow.com/a/3262855)
@@ -69,9 +69,9 @@ I suggest you read previous __[Design] Big Data - Top k Frequency__ posts before
   
   <entry>
     <title type="html"><![CDATA[[Design] Real Time Top K]]></title>
-    <link href="http://okc1.github.io/blog/2015/01/09/big-data-real-time-top-k/"/>
+    <link href="http://www.shuati123.com/blog/2015/01/09/big-data-real-time-top-k/"/>
     <updated>2015-01-09T00:00:00-08:00</updated>
-    <id>http://okc1.github.io/blog/2015/01/09/big-data-real-time-top-k</id>
+    <id>http://www.shuati123.com/blog/2015/01/09/big-data-real-time-top-k</id>
     <content type="html"><![CDATA[### Question 
 
 [link](http://stackoverflow.com/questions/10189685/realtime-tracking-of-top-100-twitter-words-per-min-hour-day)
@@ -131,9 +131,9 @@ This is a very good solution, which I would recommend as the standard solution t
   
   <entry>
     <title type="html"><![CDATA[[CC150v4] 20.6 Top Million From Billion]]></title>
-    <link href="http://okc1.github.io/blog/2014/09/10/top-million-from-billion/"/>
+    <link href="http://www.shuati123.com/blog/2014/09/10/top-million-from-billion/"/>
     <updated>2014-09-10T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2014/09/10/top-million-from-billion</id>
+    <id>http://www.shuati123.com/blog/2014/09/10/top-million-from-billion</id>
     <content type="html"><![CDATA[### Question
 
 > Describe an algorithm to find the largest 1 million numbers in 1 billion numbers. 
@@ -154,9 +154,9 @@ There're enough discussion on __Top K problems__ so far in this blog. The sugges
   
   <entry>
     <title type="html"><![CDATA[[Design] Big Data - Top K Frequency (Case Analysis)]]></title>
-    <link href="http://okc1.github.io/blog/2014/08/10/big-data-Top-k-freq-case-analysis/"/>
+    <link href="http://www.shuati123.com/blog/2014/08/10/big-data-Top-k-freq-case-analysis/"/>
     <updated>2014-08-10T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2014/08/10/big-data-Top-k-freq-case-analysis</id>
+    <id>http://www.shuati123.com/blog/2014/08/10/big-data-Top-k-freq-case-analysis</id>
     <content type="html"><![CDATA[### Question 
 
 [link](http://dongxicheng.org/big-data/select-ten-from-billions/)
@@ -218,9 +218,9 @@ A map function. 对于map函数，采用hash算法，将hash值相同的数据�
   
   <entry>
     <title type="html"><![CDATA[[Design] Big Data - Top K Frequency]]></title>
-    <link href="http://okc1.github.io/blog/2014/07/25/big-data-Top-k-frequency/"/>
+    <link href="http://www.shuati123.com/blog/2014/07/25/big-data-Top-k-frequency/"/>
     <updated>2014-07-25T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2014/07/25/big-data-Top-k-frequency</id>
+    <id>http://www.shuati123.com/blog/2014/07/25/big-data-Top-k-frequency</id>
     <content type="html"><![CDATA[### Question 
 
 [link](http://blog.csdn.net/v_JULY_v/article/details/6256463)

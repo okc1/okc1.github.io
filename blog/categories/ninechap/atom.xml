@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Ninechap | Woodstock Blog]]></title>
-  <link href="http://okc1.github.io/blog/categories/ninechap/atom.xml" rel="self"/>
-  <link href="http://okc1.github.io/"/>
-  <updated>2017-02-20T20:43:48-08:00</updated>
-  <id>http://okc1.github.io/</id>
+  <link href="http://www.shuati123.com/blog/categories/ninechap/atom.xml" rel="self"/>
+  <link href="http://www.shuati123.com/"/>
+  <updated>2017-02-20T20:49:20-08:00</updated>
+  <id>http://www.shuati123.com/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
     
@@ -15,17 +15,17 @@
   
   <entry>
     <title type="html"><![CDATA[[NineChap System Design] Class 4.2: Search Engine]]></title>
-    <link href="http://okc1.github.io/blog/2015/08/30/design-class4-2/"/>
+    <link href="http://www.shuati123.com/blog/2015/08/30/design-class4-2/"/>
     <updated>2015-08-30T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/08/30/design-class4-2</id>
+    <id>http://www.shuati123.com/blog/2015/08/30/design-class4-2</id>
     <content type="html"><![CDATA[]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[[NineChap System Design] Class 4.1: Crawler]]></title>
-    <link href="http://okc1.github.io/blog/2015/08/30/design-class4-1/"/>
+    <link href="http://www.shuati123.com/blog/2015/08/30/design-class4-1/"/>
     <updated>2015-08-30T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/08/30/design-class4-1</id>
+    <id>http://www.shuati123.com/blog/2015/08/30/design-class4-1</id>
     <content type="html"><![CDATA[# Overview
 
 __KISS - Keep It Simple, Sweetie__.
@@ -346,9 +346,9 @@ Stay tuned for future post.
   
   <entry>
     <title type="html"><![CDATA[[NineChap System Design] Class 3.2: Web Service]]></title>
-    <link href="http://okc1.github.io/blog/2015/08/28/design-class3-2/"/>
+    <link href="http://www.shuati123.com/blog/2015/08/28/design-class3-2/"/>
     <updated>2015-08-28T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/08/28/design-class3-2</id>
+    <id>http://www.shuati123.com/blog/2015/08/28/design-class3-2</id>
     <content type="html"><![CDATA[# Question 4
 
 __fix MP3 problem__
@@ -506,9 +506,9 @@ How to design 12306 (support several million QPS)
   
   <entry>
     <title type="html"><![CDATA[[NineChap System Design] Class 3.1: Web Service]]></title>
-    <link href="http://okc1.github.io/blog/2015/08/28/design-class3-1/"/>
+    <link href="http://www.shuati123.com/blog/2015/08/28/design-class3-1/"/>
     <updated>2015-08-28T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/08/28/design-class3-1</id>
+    <id>http://www.shuati123.com/blog/2015/08/28/design-class3-1</id>
     <content type="html"><![CDATA[# Overview
 
 Today we'll look at 6 examples of problems associated with Web Service:
@@ -697,9 +697,9 @@ After this step, Web failure rate fall from 7% to 4%. Why still 4%? Well, these 
   
   <entry>
     <title type="html"><![CDATA[[NineChap System Design] Class 2.2: Database]]></title>
-    <link href="http://okc1.github.io/blog/2015/08/26/design-class2-2/"/>
+    <link href="http://www.shuati123.com/blog/2015/08/26/design-class2-2/"/>
     <updated>2015-08-26T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/08/26/design-class2-2</id>
+    <id>http://www.shuati123.com/blog/2015/08/26/design-class2-2</id>
     <content type="html"><![CDATA[# Question 5
 
 Continue from last post, now let's __support VIP services__. 

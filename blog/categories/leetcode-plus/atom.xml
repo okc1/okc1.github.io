@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Leetcode_plus | Woodstock Blog]]></title>
-  <link href="http://okc1.github.io/blog/categories/leetcode-plus/atom.xml" rel="self"/>
-  <link href="http://okc1.github.io/"/>
-  <updated>2017-02-20T20:43:48-08:00</updated>
-  <id>http://okc1.github.io/</id>
+  <link href="http://www.shuati123.com/blog/categories/leetcode-plus/atom.xml" rel="self"/>
+  <link href="http://www.shuati123.com/"/>
+  <updated>2017-02-20T20:49:20-08:00</updated>
+  <id>http://www.shuati123.com/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[[LeetCode Plus] Sliding Window Maximum]]></title>
-    <link href="http://okc1.github.io/blog/2014/07/27/Sliding-Window-Maximum/"/>
+    <link href="http://www.shuati123.com/blog/2014/07/27/Sliding-Window-Maximum/"/>
     <updated>2014-07-27T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2014/07/27/Sliding-Window-Maximum</id>
+    <id>http://www.shuati123.com/blog/2014/07/27/Sliding-Window-Maximum</id>
     <content type="html"><![CDATA[### Question 
 
 [link](http://leetcode.com/2011/01/sliding-window-maximum.html)
@@ -87,9 +87,9 @@ written by me
   
   <entry>
     <title type="html"><![CDATA[[LeetCode Plus] Coins in a Line]]></title>
-    <link href="http://okc1.github.io/blog/2014/07/27/Coins-in-Line/"/>
+    <link href="http://www.shuati123.com/blog/2014/07/27/Coins-in-Line/"/>
     <updated>2014-07-27T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2014/07/27/Coins-in-Line</id>
+    <id>http://www.shuati123.com/blog/2014/07/27/Coins-in-Line</id>
     <content type="html"><![CDATA[### Question 
 
 [link](http://leetcode.com/2011/02/coins-in-line.html)
@@ -149,9 +149,9 @@ If interested, read __[Fundamental] Min-Max Algorithm__ for more.
   
   <entry>
     <title type="html"><![CDATA[[LeetCode Plus] Convert BST to Circular DLL]]></title>
-    <link href="http://okc1.github.io/blog/2014/07/24/Convert-BST-To-Circular-DLL/"/>
+    <link href="http://www.shuati123.com/blog/2014/07/24/Convert-BST-To-Circular-DLL/"/>
     <updated>2014-07-24T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2014/07/24/Convert-BST-To-Circular-DLL</id>
+    <id>http://www.shuati123.com/blog/2014/07/24/Convert-BST-To-Circular-DLL</id>
     <content type="html"><![CDATA[### Question 
 
 [link](http://leetcode.com/2010/11/convert-binary-search-tree-bst-to.html)
@@ -244,9 +244,9 @@ The Java code is posted below. [source](http://cslibrary.stanford.edu/109/TreeLi
   
   <entry>
     <title type="html"><![CDATA[[LeetCode Plus] Reverse Linked List Iteratively and Recursively]]></title>
-    <link href="http://okc1.github.io/blog/2014/06/17/Reverse-linkedlist-recursively/"/>
+    <link href="http://www.shuati123.com/blog/2014/06/17/Reverse-linkedlist-recursively/"/>
     <updated>2014-06-17T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2014/06/17/Reverse-linkedlist-recursively</id>
+    <id>http://www.shuati123.com/blog/2014/06/17/Reverse-linkedlist-recursively</id>
     <content type="html"><![CDATA[### Question 
 
 [link](http://leetcode.com/2010/04/reversing-linked-list-iteratively-and.html)
@@ -308,9 +308,9 @@ A good solution suggest by [this answer](http://stackoverflow.com/a/354937):
   
   <entry>
     <title type="html"><![CDATA[[LeetCode Plus] Binary Tree Serialize and Deserialize]]></title>
-    <link href="http://okc1.github.io/blog/2014/06/16/Binary-tree-serialize-deserialize/"/>
+    <link href="http://www.shuati123.com/blog/2014/06/16/Binary-tree-serialize-deserialize/"/>
     <updated>2014-06-16T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2014/06/16/Binary-tree-serialize-deserialize</id>
+    <id>http://www.shuati123.com/blog/2014/06/16/Binary-tree-serialize-deserialize</id>
     <content type="html"><![CDATA[### Question 
 
 [link1](http://leetcode.com/2010/09/serializationdeserialization-of-binary.html), [link2](http://leetcode.com/2010/09/saving-binary-search-tree-to-file.html).

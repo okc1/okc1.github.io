@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Fundamental | Woodstock Blog]]></title>
-  <link href="http://okc1.github.io/blog/categories/fundamental/atom.xml" rel="self"/>
-  <link href="http://okc1.github.io/"/>
-  <updated>2017-02-20T20:43:48-08:00</updated>
-  <id>http://okc1.github.io/</id>
+  <link href="http://www.shuati123.com/blog/categories/fundamental/atom.xml" rel="self"/>
+  <link href="http://www.shuati123.com/"/>
+  <updated>2017-02-20T20:49:20-08:00</updated>
+  <id>http://www.shuati123.com/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[[Fundamental] Reflexive, Symmetric and Transitive Rules]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/22/reflexive-symmetric-transitive/"/>
+    <link href="http://www.shuati123.com/blog/2015/10/22/reflexive-symmetric-transitive/"/>
     <updated>2015-10-22T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/22/reflexive-symmetric-transitive</id>
+    <id>http://www.shuati123.com/blog/2015/10/22/reflexive-symmetric-transitive</id>
     <content type="html"><![CDATA[# Overview
 
 O(n) time complexity is both __reflexive, symmetric and transitive__.
@@ -42,9 +42,9 @@ if x = y and y = z, then x = z.
   
   <entry>
     <title type="html"><![CDATA[[Fundamental] Polynomial, Quadratic, Cubic and Exponential]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/22/polynomial-quadratic-cubic-exponential/"/>
+    <link href="http://www.shuati123.com/blog/2015/10/22/polynomial-quadratic-cubic-exponential/"/>
     <updated>2015-10-22T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/22/polynomial-quadratic-cubic-exponential</id>
+    <id>http://www.shuati123.com/blog/2015/10/22/polynomial-quadratic-cubic-exponential</id>
     <content type="html"><![CDATA[# Overview
 
 A comparison of all [different time complexity](http://pages.cpsc.ucalgary.ca/~eharris/past/cpsc319/w12/tut01/):
@@ -58,9 +58,9 @@ Shown above: Constant, __logarithmic__, linear, n-log-n, quadratic, cubic, __exp
   
   <entry>
     <title type="html"><![CDATA[[Fundamental] What Is a Literal?]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/22/literals/"/>
+    <link href="http://www.shuati123.com/blog/2015/10/22/literals/"/>
     <updated>2015-10-22T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/22/literals</id>
+    <id>http://www.shuati123.com/blog/2015/10/22/literals</id>
     <content type="html"><![CDATA[# Overview
 
 [A Literal](https://en.wikipedia.org/wiki/Literal_(computer_programming)) is a notation for __representing a fixed value in source code__. 
@@ -81,9 +81,9 @@ eg.
   
   <entry>
     <title type="html"><![CDATA[[Fundamental] UML Class Diagrams]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/14/UML-diagrams/"/>
+    <link href="http://www.shuati123.com/blog/2015/10/14/UML-diagrams/"/>
     <updated>2015-10-14T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/14/UML-diagrams</id>
+    <id>http://www.shuati123.com/blog/2015/10/14/UML-diagrams</id>
     <content type="html"><![CDATA[# Overview
 
 A UML class diagram describes the object and information structures used by your application, both internally and in communication with its users. 
@@ -100,9 +100,9 @@ Taken from [here](https://msdn.microsoft.com/en-us/library/dd409437.aspx).
   
   <entry>
     <title type="html"><![CDATA[[Fundamental] Segment Tree]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/08/segment-tree/"/>
+    <link href="http://www.shuati123.com/blog/2015/10/08/segment-tree/"/>
     <updated>2015-10-08T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/08/segment-tree</id>
+    <id>http://www.shuati123.com/blog/2015/10/08/segment-tree</id>
     <content type="html"><![CDATA[# Overview
 
 __[Segment tree](https://en.wikipedia.org/wiki/Segment_tree)__ is a tree data structure for storing intervals, or segments. 

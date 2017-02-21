@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Q-google | Woodstock Blog]]></title>
-  <link href="http://okc1.github.io/blog/categories/q-google/atom.xml" rel="self"/>
-  <link href="http://okc1.github.io/"/>
-  <updated>2017-02-20T20:43:48-08:00</updated>
-  <id>http://okc1.github.io/</id>
+  <link href="http://www.shuati123.com/blog/categories/q-google/atom.xml" rel="self"/>
+  <link href="http://www.shuati123.com/"/>
+  <updated>2017-02-20T20:49:20-08:00</updated>
+  <id>http://www.shuati123.com/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[[Google] Shortest Manhattan Distance]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/02/shorest-manhattan-distance/"/>
+    <link href="http://www.shuati123.com/blog/2015/10/02/shorest-manhattan-distance/"/>
     <updated>2015-10-02T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/02/shorest-manhattan-distance</id>
+    <id>http://www.shuati123.com/blog/2015/10/02/shorest-manhattan-distance</id>
     <content type="html"><![CDATA[### Question 
 
 [link](http://www.mitbbs.com/article_t/JobHunting/33054861.html)
@@ -84,9 +84,9 @@ We have to use BFS then. It took more space usage, but the time complexity shoul
   
   <entry>
     <title type="html"><![CDATA[[Google] Minimum Adjustments]]></title>
-    <link href="http://okc1.github.io/blog/2015/02/13/minimum-adjustments/"/>
+    <link href="http://www.shuati123.com/blog/2015/02/13/minimum-adjustments/"/>
     <updated>2015-02-13T00:00:00-08:00</updated>
-    <id>http://okc1.github.io/blog/2015/02/13/minimum-adjustments</id>
+    <id>http://www.shuati123.com/blog/2015/02/13/minimum-adjustments</id>
     <content type="html"><![CDATA[### Question 
 
 [link](http://www.careercup.com/question?id=6212066786410496)
@@ -119,9 +119,9 @@ Available at [OJ](http://lintcode.com/en/problem/minimum-adjustment-cost/#)
   
   <entry>
     <title type="html"><![CDATA[[Google] Number of Slices]]></title>
-    <link href="http://okc1.github.io/blog/2015/02/09/number-of-slices/"/>
+    <link href="http://www.shuati123.com/blog/2015/02/09/number-of-slices/"/>
     <updated>2015-02-09T00:00:00-08:00</updated>
-    <id>http://okc1.github.io/blog/2015/02/09/number-of-slices</id>
+    <id>http://www.shuati123.com/blog/2015/02/09/number-of-slices</id>
     <content type="html"><![CDATA[### Question 
 
 [link](http://www.careercup.com/question?id=5090693043191808)
@@ -160,9 +160,9 @@ Not written.
   
   <entry>
     <title type="html"><![CDATA[[Google] Heap and BST Conversion]]></title>
-    <link href="http://okc1.github.io/blog/2015/02/09/heap-bst-conversion/"/>
+    <link href="http://www.shuati123.com/blog/2015/02/09/heap-bst-conversion/"/>
     <updated>2015-02-09T00:00:00-08:00</updated>
-    <id>http://okc1.github.io/blog/2015/02/09/heap-bst-conversion</id>
+    <id>http://www.shuati123.com/blog/2015/02/09/heap-bst-conversion</id>
     <content type="html"><![CDATA[### Question 1
 
 [link](http://www.careercup.com/question?id=4281027)
@@ -199,9 +199,9 @@ Right way to do, is to repeatedly dequeueing maximum value from the BST, then ge
   
   <entry>
     <title type="html"><![CDATA[[Google] Array Signature]]></title>
-    <link href="http://okc1.github.io/blog/2015/02/09/array-signature/"/>
+    <link href="http://www.shuati123.com/blog/2015/02/09/array-signature/"/>
     <updated>2015-02-09T00:00:00-08:00</updated>
-    <id>http://okc1.github.io/blog/2015/02/09/array-signature</id>
+    <id>http://www.shuati123.com/blog/2015/02/09/array-signature</id>
     <content type="html"><![CDATA[### Question 
 
 [link](http://www.careercup.com/question?id=14912744)

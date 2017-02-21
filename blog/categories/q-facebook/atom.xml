@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Q-facebook | Woodstock Blog]]></title>
-  <link href="http://okc1.github.io/blog/categories/q-facebook/atom.xml" rel="self"/>
-  <link href="http://okc1.github.io/"/>
-  <updated>2017-02-20T20:43:48-08:00</updated>
-  <id>http://okc1.github.io/</id>
+  <link href="http://www.shuati123.com/blog/categories/q-facebook/atom.xml" rel="self"/>
+  <link href="http://www.shuati123.com/"/>
+  <updated>2017-02-20T20:49:20-08:00</updated>
+  <id>http://www.shuati123.com/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[[Facebook] Generate Number With Given Probability]]></title>
-    <link href="http://okc1.github.io/blog/2015/02/08/generate-number-with-given-probability/"/>
+    <link href="http://www.shuati123.com/blog/2015/02/08/generate-number-with-given-probability/"/>
     <updated>2015-02-08T00:00:00-08:00</updated>
-    <id>http://okc1.github.io/blog/2015/02/08/generate-number-with-given-probability</id>
+    <id>http://www.shuati123.com/blog/2015/02/08/generate-number-with-given-probability</id>
     <content type="html"><![CDATA[### Question 
 
 [link](http://blog.sina.com.cn/s/blog_b9285de20101h463.html)
@@ -61,9 +61,9 @@ not my code
   
   <entry>
     <title type="html"><![CDATA[[Facebook] Scheduling Jobs With Max Cost]]></title>
-    <link href="http://okc1.github.io/blog/2015/01/07/scheduling-jobs-with-max-cost/"/>
+    <link href="http://www.shuati123.com/blog/2015/01/07/scheduling-jobs-with-max-cost/"/>
     <updated>2015-01-07T00:00:00-08:00</updated>
-    <id>http://okc1.github.io/blog/2015/01/07/scheduling-jobs-with-max-cost</id>
+    <id>http://www.shuati123.com/blog/2015/01/07/scheduling-jobs-with-max-cost</id>
     <content type="html"><![CDATA[### Question 
 
 [link](http://www.glassdoor.com/Interview/Given-a-set-of-n-jobs-with-start-time-end-time-cost-find-a-subset-so-that-no-2-jobs-overlap-and-the-cost-is-maximum-QTN_440168.htm)
@@ -151,9 +151,9 @@ Recursion
   
   <entry>
     <title type="html"><![CDATA[[Facebook] Write a Json Prettifier]]></title>
-    <link href="http://okc1.github.io/blog/2015/01/06/Json-prettifier/"/>
+    <link href="http://www.shuati123.com/blog/2015/01/06/Json-prettifier/"/>
     <updated>2015-01-06T00:00:00-08:00</updated>
-    <id>http://okc1.github.io/blog/2015/01/06/Json-prettifier</id>
+    <id>http://www.shuati123.com/blog/2015/01/06/Json-prettifier</id>
     <content type="html"><![CDATA[### Question 
 
 [link](http://www.glassdoor.com/Interview/Write-a-function-to-prettify-Json-objects-QTN_151361.htm)
@@ -267,9 +267,9 @@ Since I did not find anything useful online, I spent an hour writing the followi
   
   <entry>
     <title type="html"><![CDATA[[Facebook] Maximum Sum Such That No Two Elements Are Adjacent]]></title>
-    <link href="http://okc1.github.io/blog/2014/12/22/Maximum-sum-no-adjacent/"/>
+    <link href="http://www.shuati123.com/blog/2014/12/22/Maximum-sum-no-adjacent/"/>
     <updated>2014-12-22T00:00:00-08:00</updated>
-    <id>http://okc1.github.io/blog/2014/12/22/Maximum-sum-no-adjacent</id>
+    <id>http://www.shuati123.com/blog/2014/12/22/Maximum-sum-no-adjacent</id>
     <content type="html"><![CDATA[### Question 
 
 [link](http://www.geeksforgeeks.org/maximum-sum-such-that-no-two-elements-are-adjacent/)
@@ -323,9 +323,9 @@ __written by me__
   
   <entry>
     <title type="html"><![CDATA[[Facebook] Binary Search Tree 3Sum]]></title>
-    <link href="http://okc1.github.io/blog/2014/12/18/Binary-Search-Tree-3Sum/"/>
+    <link href="http://www.shuati123.com/blog/2014/12/18/Binary-Search-Tree-3Sum/"/>
     <updated>2014-12-18T00:00:00-08:00</updated>
-    <id>http://okc1.github.io/blog/2014/12/18/Binary-Search-Tree-3Sum</id>
+    <id>http://www.shuati123.com/blog/2014/12/18/Binary-Search-Tree-3Sum</id>
     <content type="html"><![CDATA[### Question 
 
 DLL - [link](http://www.geeksforgeeks.org/find-if-there-is-a-triplet-in-bst-that-adds-to-0/)

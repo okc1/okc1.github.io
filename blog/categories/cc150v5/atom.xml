@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Cc150v5 | Woodstock Blog]]></title>
-  <link href="http://okc1.github.io/blog/categories/cc150v5/atom.xml" rel="self"/>
-  <link href="http://okc1.github.io/"/>
-  <updated>2017-02-20T20:43:48-08:00</updated>
-  <id>http://okc1.github.io/</id>
+  <link href="http://www.shuati123.com/blog/categories/cc150v5/atom.xml" rel="self"/>
+  <link href="http://www.shuati123.com/"/>
+  <updated>2017-02-20T20:49:20-08:00</updated>
+  <id>http://www.shuati123.com/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[[CC150v5] 18.7 Longest Word Made From Other Words]]></title>
-    <link href="http://okc1.github.io/blog/2014/10/02/longest-word-made-from-other/"/>
+    <link href="http://www.shuati123.com/blog/2014/10/02/longest-word-made-from-other/"/>
     <updated>2014-10-02T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2014/10/02/longest-word-made-from-other</id>
+    <id>http://www.shuati123.com/blog/2014/10/02/longest-word-made-from-other</id>
     <content type="html"><![CDATA[### Question
 
 > Given a list of words, write a program to find the longest word made of other words in the list.
@@ -73,9 +73,9 @@ This question might look difficult at first, it's actually a very classical recu
   
   <entry>
     <title type="html"><![CDATA[[CC150v5] 17.14 Optimal Way to Unconcatenate Doc]]></title>
-    <link href="http://okc1.github.io/blog/2014/10/01/optimal-unconcatenate-doc/"/>
+    <link href="http://www.shuati123.com/blog/2014/10/01/optimal-unconcatenate-doc/"/>
     <updated>2014-10-01T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2014/10/01/optimal-unconcatenate-doc</id>
+    <id>http://www.shuati123.com/blog/2014/10/01/optimal-unconcatenate-doc</id>
     <content type="html"><![CDATA[### Question
 
 > Given a lengthy document without spaces, punctuation, and capitalization:
@@ -122,9 +122,9 @@ The code is concise and easy to read.
   
   <entry>
     <title type="html"><![CDATA[[CC150v5] 17.13 Convert BST to DLL]]></title>
-    <link href="http://okc1.github.io/blog/2014/09/30/convert-bst-to-dll/"/>
+    <link href="http://www.shuati123.com/blog/2014/09/30/convert-bst-to-dll/"/>
     <updated>2014-09-30T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2014/09/30/convert-bst-to-dll</id>
+    <id>http://www.shuati123.com/blog/2014/09/30/convert-bst-to-dll</id>
     <content type="html"><![CDATA[### Question
 
 > Consider a simple node-like data structure called BiNode, which has pointers to two other nodes.
@@ -234,9 +234,9 @@ __Approach 2__
   
   <entry>
     <title type="html"><![CDATA[[CC150v5] 11.8 Get Rank in Stream of Integers]]></title>
-    <link href="http://okc1.github.io/blog/2014/09/28/get-rank-stream-integers/"/>
+    <link href="http://www.shuati123.com/blog/2014/09/28/get-rank-stream-integers/"/>
     <updated>2014-09-28T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2014/09/28/get-rank-stream-integers</id>
+    <id>http://www.shuati123.com/blog/2014/09/28/get-rank-stream-integers</id>
     <content type="html"><![CDATA[### Question
 
 > Imagine you are reading in a stream of integers. Periodically, you wish to be able to look up the rank of a number x (the number of values less than or equal to x). 
@@ -267,9 +267,9 @@ Refer to another post __[Question] Stock Span Problem__.
   
   <entry>
     <title type="html"><![CDATA[[CC150v5] 17.6 Order an Array by Sorting Middle]]></title>
-    <link href="http://okc1.github.io/blog/2014/09/27/Order-array-by-sorting-middle/"/>
+    <link href="http://www.shuati123.com/blog/2014/09/27/Order-array-by-sorting-middle/"/>
     <updated>2014-09-27T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2014/09/27/Order-array-by-sorting-middle</id>
+    <id>http://www.shuati123.com/blog/2014/09/27/Order-array-by-sorting-middle</id>
     <content type="html"><![CDATA[### Question
 
 > Given an array of integers, write a method to find indices m and n such that if you sorted elements m through n, the entire array would be sorted. Minimize n-m (that is, find the smallest such sequence).

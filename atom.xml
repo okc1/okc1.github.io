@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Woodstock Blog]]></title>
-  <link href="http://okc1.github.io/atom.xml" rel="self"/>
-  <link href="http://okc1.github.io/"/>
-  <updated>2017-02-20T20:43:48-08:00</updated>
-  <id>http://okc1.github.io/</id>
+  <link href="http://www.shuati123.com/atom.xml" rel="self"/>
+  <link href="http://www.shuati123.com/"/>
+  <updated>2017-02-20T20:49:20-08:00</updated>
+  <id>http://www.shuati123.com/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[[Design] How to Design Logging]]></title>
-    <link href="http://okc1.github.io/blog/2016/08/01/how-to-design-logging/"/>
+    <link href="http://www.shuati123.com/blog/2016/08/01/how-to-design-logging/"/>
     <updated>2016-08-01T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2016/08/01/how-to-design-logging</id>
+    <id>http://www.shuati123.com/blog/2016/08/01/how-to-design-logging</id>
     <content type="html"><![CDATA[<h1>Logging</h1>
 
 <p>Conecting between <strong>information</strong> and <strong>knowledge</strong>.</p>
@@ -48,16 +48,16 @@
   
   <entry>
     <title type="html"><![CDATA[[Design] MVC, MVP and MVVM]]></title>
-    <link href="http://okc1.github.io/blog/2016/07/31/mvc-mvp-mvvm/"/>
+    <link href="http://www.shuati123.com/blog/2016/07/31/mvc-mvp-mvvm/"/>
     <updated>2016-07-31T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2016/07/31/mvc-mvp-mvvm</id>
+    <id>http://www.shuati123.com/blog/2016/07/31/mvc-mvp-mvvm</id>
     <content type="html"><![CDATA[<h1>MVC Pattern</h1>
 
 <p>Model-View-Controller.</p>
 
 <p>The model and controller logic are <strong>decoupled from user interface (view)</strong>.</p>
 
-<p><img class="middle" src="http://okc1.github.io/assets/images/mvc-pattern.png"></p>
+<p><img class="middle" src="http://www.shuati123.com/assets/images/mvc-pattern.png"></p>
 
 <ol>
 <li><p>Model</p>
@@ -84,7 +84,7 @@
 
 <p>The Presenter is responsible for handling all UI events on behalf of the view.</p>
 
-<p><img class="middle" src="http://okc1.github.io/assets/images/mvp-pattern.png"></p>
+<p><img class="middle" src="http://www.shuati123.com/assets/images/mvp-pattern.png"></p>
 
 <p>Unlike view and controller, view and presenter are completely decoupled from each other’s and communicate to each other’s by an interface.</p>
 
@@ -112,7 +112,7 @@
 
 <p>Typically, <strong>the view model uses the observer pattern</strong> to notify changes in the view model to model.</p>
 
-<p><img class="middle" src="http://okc1.github.io/assets/images/mvvm-pattern.png"></p>
+<p><img class="middle" src="http://www.shuati123.com/assets/images/mvvm-pattern.png"></p>
 
 <h2>details</h2>
 
@@ -142,9 +142,9 @@
   
   <entry>
     <title type="html"><![CDATA[[Design] Design Twitter]]></title>
-    <link href="http://okc1.github.io/blog/2016/07/11/design-twitter/"/>
+    <link href="http://www.shuati123.com/blog/2016/07/11/design-twitter/"/>
     <updated>2016-07-11T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2016/07/11/design-twitter</id>
+    <id>http://www.shuati123.com/blog/2016/07/11/design-twitter</id>
     <content type="html"><![CDATA[<h1>System design evaluation form</h1>
 
 <ol>
@@ -218,7 +218,7 @@
 
 <h2>4 services for Twitter</h2>
 
-<p><img class="middle" src="http://okc1.github.io/assets/images/jiuzhang-four-service.png"></p>
+<p><img class="middle" src="http://www.shuati123.com/assets/images/jiuzhang-four-service.png"></p>
 
 <ol>
 <li>user service
@@ -274,7 +274,7 @@
 
 <h2>Select the right DB</h2>
 
-<p><img class="middle" src="http://okc1.github.io/assets/images/jiuzhang-db-selection.png"></p>
+<p><img class="middle" src="http://www.shuati123.com/assets/images/jiuzhang-db-selection.png"></p>
 
 <p><strong>Question: can we use file system for tweets</strong>?</p>
 
@@ -291,7 +291,7 @@
 </ol>
 
 
-<p><img class="middle" src="http://okc1.github.io/assets/images/jiuzhang-data-schema.png"></p>
+<p><img class="middle" src="http://www.shuati123.com/assets/images/jiuzhang-data-schema.png"></p>
 
 <h1>Important: News Feed</h1>
 
@@ -303,9 +303,9 @@
 
 <p><strong>This design is bad, because file-system/DB read is slow</strong>. If you have N friends, you query O(N) DB queries. <strong>It&rsquo;s too slow (and user is getting sync-blocked, too)</strong>. We should have, ideally, &lt;= 7 DB queries per web page.</p>
 
-<p><img class="middle" src="http://okc1.github.io/assets/images/jiuzhang-pull-diagram.png"></p>
+<p><img class="middle" src="http://www.shuati123.com/assets/images/jiuzhang-pull-diagram.png"></p>
 
-<p><img class="middle" src="http://okc1.github.io/assets/images/jiuzhang-pull-code.png"></p>
+<p><img class="middle" src="http://www.shuati123.com/assets/images/jiuzhang-pull-code.png"></p>
 
 <h3>problem</h3>
 
@@ -323,9 +323,9 @@
 
 <p>Post tweet is N DB writes, which is slow. <strong>However this is done async, so it does not matter</strong>.</p>
 
-<p><img class="middle" src="http://okc1.github.io/assets/images/jiuzhang-push-diagram.png"></p>
+<p><img class="middle" src="http://www.shuati123.com/assets/images/jiuzhang-push-diagram.png"></p>
 
-<p><img class="middle" src="http://okc1.github.io/assets/images/jiuzhang-push-code.png"></p>
+<p><img class="middle" src="http://www.shuati123.com/assets/images/jiuzhang-push-code.png"></p>
 
 <p>One example of async implementation: <strong>RabbitMQ</strong></p>
 
@@ -362,7 +362,7 @@
 
 <p><strong>We must denormalize this data</strong>!</p>
 
-<p><img class="middle" src="http://okc1.github.io/assets/images/jiuzhang-denormalize.png"></p>
+<p><img class="middle" src="http://www.shuati123.com/assets/images/jiuzhang-denormalize.png"></p>
 
 <p>Denormalize: it&rsquo;s duplicate info but we store in table, because of performance improvement.</p>
 
@@ -382,7 +382,7 @@
 
 <p>Hot spot (thundering herd)</p>
 
-<p><img class="middle" src="http://okc1.github.io/assets/images/jiuzhang-thundering-herd.png"></p>
+<p><img class="middle" src="http://www.shuati123.com/assets/images/jiuzhang-thundering-herd.png"></p>
 
 <p>Solution: hold all incoming queries (who fails cache), and only send 1 DB query. When result is returned, return to every query.</p>
 ]]></content>
@@ -390,9 +390,9 @@
   
   <entry>
     <title type="html"><![CDATA[[Octopress] Add Aside Content to Octopress]]></title>
-    <link href="http://okc1.github.io/blog/2016/06/11/add-aside-content-octopress/"/>
+    <link href="http://www.shuati123.com/blog/2016/06/11/add-aside-content-octopress/"/>
     <updated>2016-06-11T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2016/06/11/add-aside-content-octopress</id>
+    <id>http://www.shuati123.com/blog/2016/06/11/add-aside-content-octopress</id>
     <content type="html"><![CDATA[<h1>Aside</h1>
 
 <p>Example of this is the &lsquo;categories&rsquo; list on the right hand side of the blog page. It&rsquo;s always pinned on RHS, regardless of page content.</p>
@@ -424,7 +424,7 @@
          posts_in_category = context.registers[:site].categories[category].size
          category_dir = context.registers[:site].config['category_dir']
          category_url = File.join(category_dir, category.gsub(/_|\P{Word}/, '-').gsub(/-{2,}/, '-').downcase)
-         html &lt;&lt; "&lt;li class='category'&gt;&lt;a href='http://okc1.github.io/#{category_url}/'&gt;#{category} (#{posts_in_category})&lt;/a&gt;&lt;/li&gt;\n"
+         html &lt;&lt; "&lt;li class='category'&gt;&lt;a href='http://www.shuati123.com/#{category_url}/'&gt;#{category} (#{posts_in_category})&lt;/a&gt;&lt;/li&gt;\n"
        end
        html
      end
@@ -441,9 +441,9 @@
   
   <entry>
     <title type="html"><![CDATA[[Design] User Registry Table Design]]></title>
-    <link href="http://okc1.github.io/blog/2016/05/08/user-registry-table-design/"/>
+    <link href="http://www.shuati123.com/blog/2016/05/08/user-registry-table-design/"/>
     <updated>2016-05-08T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2016/05/08/user-registry-table-design</id>
+    <id>http://www.shuati123.com/blog/2016/05/08/user-registry-table-design</id>
     <content type="html"><![CDATA[<h1>First word</h1>
 
 <p>Designing a system like twitter, facebook or airbnb, first step is often <strong>User Registry</strong>.</p>
@@ -454,15 +454,15 @@
 
 <p><strong>Friendship table</strong> is important:</p>
 
-<p><img class="middle" src="http://okc1.github.io/assets/images/design-user-registry-tables.png"></p>
+<p><img class="middle" src="http://www.shuati123.com/assets/images/design-user-registry-tables.png"></p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[[Design] Designing a Simple Web Crawler]]></title>
-    <link href="http://okc1.github.io/blog/2015/11/22/challenges-writing-crawler/"/>
+    <link href="http://www.shuati123.com/blog/2015/11/22/challenges-writing-crawler/"/>
     <updated>2015-11-22T00:00:00-08:00</updated>
-    <id>http://okc1.github.io/blog/2015/11/22/challenges-writing-crawler</id>
+    <id>http://www.shuati123.com/blog/2015/11/22/challenges-writing-crawler</id>
     <content type="html"><![CDATA[<h1>1. Choose a framework</h1>
 
 <p>Assuming we use Python to do this.</p>
@@ -511,7 +511,7 @@ textfile.close()
 
 <p>For more, read <a href="http://doc.scrapy.org/en/latest/topics/architecture.html">Scrapy Architecture </a>.</p>
 
-<p><img class="middle" src="http://okc1.github.io/assets/images/scrapy_architecture.png"></p>
+<p><img class="middle" src="http://www.shuati123.com/assets/images/scrapy_architecture.png"></p>
 
 <ol>
 <li><p>Scrapy Engine</p>
@@ -606,9 +606,9 @@ textfile.close()
   
   <entry>
     <title type="html"><![CDATA[[Question] Swizzle Sort]]></title>
-    <link href="http://okc1.github.io/blog/2015/11/21/swizzle-sort/"/>
+    <link href="http://www.shuati123.com/blog/2015/11/21/swizzle-sort/"/>
     <updated>2015-11-21T00:00:00-08:00</updated>
-    <id>http://okc1.github.io/blog/2015/11/21/swizzle-sort</id>
+    <id>http://www.shuati123.com/blog/2015/11/21/swizzle-sort</id>
     <content type="html"><![CDATA[<h1>Question</h1>
 
 <p><a href="http://www.mitbbs.com/article_t/Recommend/31493121.html">link</a></p>
@@ -640,9 +640,9 @@ textfile.close()
   
   <entry>
     <title type="html"><![CDATA[[Design] How to Generate Maze]]></title>
-    <link href="http://okc1.github.io/blog/2015/11/21/generate-maze/"/>
+    <link href="http://www.shuati123.com/blog/2015/11/21/generate-maze/"/>
     <updated>2015-11-21T00:00:00-08:00</updated>
-    <id>http://okc1.github.io/blog/2015/11/21/generate-maze</id>
+    <id>http://www.shuati123.com/blog/2015/11/21/generate-maze</id>
     <content type="html"><![CDATA[<h1>Question</h1>
 
 <p><a href="http://www.glassdoor.com/Interview/Design-a-2D-dungeon-crawling-game-It-must-allow-for-various-items-in-the-maze-walls-objects-and-computer-controlled-c-QTN_57.htm">link</a></p>
@@ -683,9 +683,9 @@ textfile.close()
   
   <entry>
     <title type="html"><![CDATA[[Design] Strategy Design Pattern]]></title>
-    <link href="http://okc1.github.io/blog/2015/11/18/strategy-pattern/"/>
+    <link href="http://www.shuati123.com/blog/2015/11/18/strategy-pattern/"/>
     <updated>2015-11-18T00:00:00-08:00</updated>
-    <id>http://okc1.github.io/blog/2015/11/18/strategy-pattern</id>
+    <id>http://www.shuati123.com/blog/2015/11/18/strategy-pattern</id>
     <content type="html"><![CDATA[<h1>Overview</h1>
 
 <p><strong><a href="https://en.wikipedia.org/wiki/Strategy_pattern">Strategy pattern</a></strong> (also known as the policy pattern) is a design pattern that <strong>enables an algorithm&rsquo;s behavior to be selected</strong> at runtime.</p>
@@ -696,7 +696,7 @@ textfile.close()
 
 <p>Since accelerate and brake behaviors change frequently between models, <strong>a common approach is to implement these behaviors in subclasses</strong>. This approach has significant drawbacks: accelerate and brake behaviors <strong>must be declared in each new Car model</strong>.</p>
 
-<p><img class="middle" src="http://okc1.github.io/assets/images/600px-StrategyPattern_IBrakeBehavior.png"></p>
+<p><img class="middle" src="http://www.shuati123.com/assets/images/600px-StrategyPattern_IBrakeBehavior.png"></p>
 
 <p>The strategy pattern uses <strong>composition</strong> instead of inheritance. This allows:</p>
 
@@ -778,9 +778,9 @@ public class CarExample {
   
   <entry>
     <title type="html"><![CDATA[[Question] Partition Problem (Divide Array Into Halves)]]></title>
-    <link href="http://okc1.github.io/blog/2015/11/15/partition-problem/"/>
+    <link href="http://www.shuati123.com/blog/2015/11/15/partition-problem/"/>
     <updated>2015-11-15T00:00:00-08:00</updated>
-    <id>http://okc1.github.io/blog/2015/11/15/partition-problem</id>
+    <id>http://www.shuati123.com/blog/2015/11/15/partition-problem</id>
     <content type="html"><![CDATA[<h1>Question</h1>
 
 <p><a href="http://www.geeksforgeeks.org/dynamic-programming-set-18-partition-problem/">link</a></p>
@@ -813,7 +813,7 @@ The array cannot be partitioned into equal sum sets.
 
 <p>Example DP array for input &ldquo;3,1,1,2,2,1&rdquo;:</p>
 
-<p><img class="middle" src="http://okc1.github.io/assets/images/partition-problem-dp.jpg"></p>
+<p><img class="middle" src="http://www.shuati123.com/assets/images/partition-problem-dp.jpg"></p>
 
 <h1>Code</h1>
 ]]></content>
@@ -821,9 +821,9 @@ The array cannot be partitioned into equal sum sets.
   
   <entry>
     <title type="html"><![CDATA[[LeetCode 188] Best Time to Buy and Sell Stock IV]]></title>
-    <link href="http://okc1.github.io/blog/2015/11/04/Best-Time-to-Buy-and-Sell-Stock-IV/"/>
+    <link href="http://www.shuati123.com/blog/2015/11/04/Best-Time-to-Buy-and-Sell-Stock-IV/"/>
     <updated>2015-11-04T00:00:00-08:00</updated>
-    <id>http://okc1.github.io/blog/2015/11/04/Best-Time-to-Buy-and-Sell-Stock-IV</id>
+    <id>http://www.shuati123.com/blog/2015/11/04/Best-Time-to-Buy-and-Sell-Stock-IV</id>
     <content type="html"><![CDATA[<h3>Question</h3>
 
 <p><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/">link</a></p>
@@ -841,7 +841,7 @@ You may not engage in multiple transactions at the same time (ie, you must sell 
                 <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
                 <span class="hide">
                   
-                  <a class="btn btn-xs btn-primary" href="http://okc1.github.io/tag/dynamic-programming/">Dynamic Programming</a>
+                  <a class="btn btn-xs btn-primary" href="http://www.shuati123.com/tag/dynamic-programming/">Dynamic Programming</a>
                   
                 </span>
               
@@ -892,9 +892,9 @@ You may not engage in multiple transactions at the same time (ie, you must sell 
   
   <entry>
     <title type="html"><![CDATA[[Java OOP] Java ArrayList Implementation]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/28/arraylist-implementation/"/>
+    <link href="http://www.shuati123.com/blog/2015/10/28/arraylist-implementation/"/>
     <updated>2015-10-28T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/28/arraylist-implementation</id>
+    <id>http://www.shuati123.com/blog/2015/10/28/arraylist-implementation</id>
     <content type="html"><![CDATA[<h1>Overview</h1>
 
 <p><strong><a href="http://docs.oracle.com/javase/7/docs/api/java/util/ArrayList.html">Resizable-array</a></strong> implementation of the List interface. (it&rsquo;s actually an <a href="http://stackoverflow.com/a/7382507">array of Object</a>)</p>
@@ -916,9 +916,9 @@ You may not engage in multiple transactions at the same time (ie, you must sell 
   
   <entry>
     <title type="html"><![CDATA[[Java OOP] Static Class and Inner Class]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/23/static-class-inner-class/"/>
+    <link href="http://www.shuati123.com/blog/2015/10/23/static-class-inner-class/"/>
     <updated>2015-10-23T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/23/static-class-inner-class</id>
+    <id>http://www.shuati123.com/blog/2015/10/23/static-class-inner-class</id>
     <content type="html"><![CDATA[<h1>Nested classes</h1>
 
 <p>Both Static class and Inner class are called <strong>nested class</strong>.</p>
@@ -1000,9 +1000,9 @@ Outer.Inner inner = outer.new Inner();
   
   <entry>
     <title type="html"><![CDATA[[Java OOP] What Is Java Exception]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/23/java-what-is-exception/"/>
+    <link href="http://www.shuati123.com/blog/2015/10/23/java-what-is-exception/"/>
     <updated>2015-10-23T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/23/java-what-is-exception</id>
+    <id>http://www.shuati123.com/blog/2015/10/23/java-what-is-exception</id>
     <content type="html"><![CDATA[<h1>The class</h1>
 
 <p><strong><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Exception.html">The class Exception</a></strong> and its subclasses are a form of <strong>Throwable</strong> that indicates conditions that a reasonable application might want to catch.</p>
@@ -1023,9 +1023,9 @@ Outer.Inner inner = outer.new Inner();
   
   <entry>
     <title type="html"><![CDATA[[Java OOP] Java Vector and ArrayList]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/23/java-vector-arraylist/"/>
+    <link href="http://www.shuati123.com/blog/2015/10/23/java-vector-arraylist/"/>
     <updated>2015-10-23T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/23/java-vector-arraylist</id>
+    <id>http://www.shuati123.com/blog/2015/10/23/java-vector-arraylist</id>
     <content type="html"><![CDATA[<h1>Vector in Java</h1>
 
 <p>Vector class implements a <strong>growable array</strong> of objects.</p>
@@ -1050,9 +1050,9 @@ Outer.Inner inner = outer.new Inner();
   
   <entry>
     <title type="html"><![CDATA[[Java OOP] Template Method Pattern (Abstract Class)]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/23/Template-method-pattern/"/>
+    <link href="http://www.shuati123.com/blog/2015/10/23/Template-method-pattern/"/>
     <updated>2015-10-23T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/23/Template-method-pattern</id>
+    <id>http://www.shuati123.com/blog/2015/10/23/Template-method-pattern</id>
     <content type="html"><![CDATA[<h1>Overview</h1>
 
 <p><strong><a href="https://en.wikipedia.org/wiki/Template_method_pattern">Template method pattern</a> is a behavioral design pattern</strong> that defines the program skeleton of an algorithm in a method, called template method, which <strong>defers some steps to subclasses</strong>.</p>
@@ -1146,9 +1146,9 @@ class Chess extends Game {
   
   <entry>
     <title type="html"><![CDATA[[Fundamental] Reflexive, Symmetric and Transitive Rules]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/22/reflexive-symmetric-transitive/"/>
+    <link href="http://www.shuati123.com/blog/2015/10/22/reflexive-symmetric-transitive/"/>
     <updated>2015-10-22T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/22/reflexive-symmetric-transitive</id>
+    <id>http://www.shuati123.com/blog/2015/10/22/reflexive-symmetric-transitive</id>
     <content type="html"><![CDATA[<h1>Overview</h1>
 
 <p>O(n) time complexity is both <strong>reflexive, symmetric and transitive</strong>.</p>
@@ -1173,14 +1173,14 @@ class Chess extends Game {
   
   <entry>
     <title type="html"><![CDATA[[Fundamental] Polynomial, Quadratic, Cubic and Exponential]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/22/polynomial-quadratic-cubic-exponential/"/>
+    <link href="http://www.shuati123.com/blog/2015/10/22/polynomial-quadratic-cubic-exponential/"/>
     <updated>2015-10-22T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/22/polynomial-quadratic-cubic-exponential</id>
+    <id>http://www.shuati123.com/blog/2015/10/22/polynomial-quadratic-cubic-exponential</id>
     <content type="html"><![CDATA[<h1>Overview</h1>
 
 <p>A comparison of all <a href="http://pages.cpsc.ucalgary.ca/~eharris/past/cpsc319/w12/tut01/">different time complexity</a>:</p>
 
-<p><img class="middle" src="http://okc1.github.io/assets/images/gnuplot0-1500.png"></p>
+<p><img class="middle" src="http://www.shuati123.com/assets/images/gnuplot0-1500.png"></p>
 
 <p>Shown above: Constant, <strong>logarithmic</strong>, linear, n-log-n, quadratic, cubic, <strong>exponential</strong> ( eg. O(2<sup>n</sup>) ).</p>
 ]]></content>
@@ -1188,9 +1188,9 @@ class Chess extends Game {
   
   <entry>
     <title type="html"><![CDATA[[Fundamental] What Is a Literal?]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/22/literals/"/>
+    <link href="http://www.shuati123.com/blog/2015/10/22/literals/"/>
     <updated>2015-10-22T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/22/literals</id>
+    <id>http://www.shuati123.com/blog/2015/10/22/literals</id>
     <content type="html"><![CDATA[<h1>Overview</h1>
 
 <p><a href="https://en.wikipedia.org/wiki/Literal_(computer_programming">A Literal</a>) is a notation for <strong>representing a fixed value in source code</strong>.</p>
@@ -1211,9 +1211,9 @@ String s = "cat";
   
   <entry>
     <title type="html"><![CDATA[[Java OOP] Why Avoid Using Protected?]]></title>
-    <link href="http://okc1.github.io/blog/2015/10/22/avoid-protected/"/>
+    <link href="http://www.shuati123.com/blog/2015/10/22/avoid-protected/"/>
     <updated>2015-10-22T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2015/10/22/avoid-protected</id>
+    <id>http://www.shuati123.com/blog/2015/10/22/avoid-protected</id>
     <content type="html"><![CDATA[<h1>Overview</h1>
 
 <p>Some experienced developers don’t use <strong>protected</strong> since it cannot provide clean data hiding.</p>
@@ -1224,7 +1224,7 @@ String s = "cat";
 
 <p>Remembering in the post <strong>[Java OOP] Java modifier and Access Level</strong>, we got this:</p>
 
-<p><img class="middle" src="http://okc1.github.io/assets/images/java-access-level-table.png"></p>
+<p><img class="middle" src="http://www.shuati123.com/assets/images/java-access-level-table.png"></p>
 
 <p><strong>Note</strong>: Java default access setting is &lsquo;No modifier&rsquo;, which is also called &lsquo;<strong>Package Private</strong>&rsquo;.</p>
 

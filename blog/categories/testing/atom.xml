@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Testing | Woodstock Blog]]></title>
-  <link href="http://okc1.github.io/blog/categories/testing/atom.xml" rel="self"/>
-  <link href="http://okc1.github.io/"/>
-  <updated>2017-02-20T20:43:48-08:00</updated>
-  <id>http://okc1.github.io/</id>
+  <link href="http://www.shuati123.com/blog/categories/testing/atom.xml" rel="self"/>
+  <link href="http://www.shuati123.com/"/>
+  <updated>2017-02-20T20:49:20-08:00</updated>
+  <id>http://www.shuati123.com/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[[Testing] Test hashCode() Function]]></title>
-    <link href="http://okc1.github.io/blog/2014/08/26/Test-hashcode-function/"/>
+    <link href="http://www.shuati123.com/blog/2014/08/26/Test-hashcode-function/"/>
     <updated>2014-08-26T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2014/08/26/Test-hashcode-function</id>
+    <id>http://www.shuati123.com/blog/2014/08/26/Test-hashcode-function</id>
     <content type="html"><![CDATA[### Question
 
 > How to test hashCode() function? Example: 
@@ -48,9 +48,9 @@ Not including 'not equal' test.
   
   <entry>
     <title type="html"><![CDATA[[Testing] Test Command Line Copy]]></title>
-    <link href="http://okc1.github.io/blog/2014/08/09/Test-command-line-copy/"/>
+    <link href="http://www.shuati123.com/blog/2014/08/09/Test-command-line-copy/"/>
     <updated>2014-08-09T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2014/08/09/Test-command-line-copy</id>
+    <id>http://www.shuati123.com/blog/2014/08/09/Test-command-line-copy</id>
     <content type="html"><![CDATA[### Question 
 
 [link](http://stackoverflow.com/questions/6591652/how-do-i-test-the-copy-command-in-the-windows-environment)
@@ -130,9 +130,9 @@ Not including 'not equal' test.
   
   <entry>
     <title type="html"><![CDATA[[Testing] Random Error Debugging 1]]></title>
-    <link href="http://okc1.github.io/blog/2014/08/07/Random-error-debugging-1/"/>
+    <link href="http://www.shuati123.com/blog/2014/08/07/Random-error-debugging-1/"/>
     <updated>2014-08-07T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2014/08/07/Random-error-debugging-1</id>
+    <id>http://www.shuati123.com/blog/2014/08/07/Random-error-debugging-1</id>
     <content type="html"><![CDATA[### Question 
 
 [link](http://stackoverflow.com/questions/4531742/debugging-a-program-that-crashes-10-times-in-different-places)
@@ -157,9 +157,9 @@ Not including 'not equal' test.
   
   <entry>
     <title type="html"><![CDATA[[Testing] Test Number Divisibility]]></title>
-    <link href="http://okc1.github.io/blog/2014/07/26/Test-Number-Divisibility/"/>
+    <link href="http://www.shuati123.com/blog/2014/07/26/Test-Number-Divisibility/"/>
     <updated>2014-07-26T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2014/07/26/Test-Number-Divisibility</id>
+    <id>http://www.shuati123.com/blog/2014/07/26/Test-Number-Divisibility</id>
     <content type="html"><![CDATA[### Question 
 
 [link](http://www.mathsisfun.com/divisibility-rules.html)
@@ -277,9 +277,9 @@ Not including 'not equal' test.
   
   <entry>
     <title type="html"><![CDATA[[Testing] Software Testing]]></title>
-    <link href="http://okc1.github.io/blog/2014/06/05/Software-testing/"/>
+    <link href="http://www.shuati123.com/blog/2014/06/05/Software-testing/"/>
     <updated>2014-06-05T00:00:00-07:00</updated>
-    <id>http://okc1.github.io/blog/2014/06/05/Software-testing</id>
+    <id>http://www.shuati123.com/blog/2014/06/05/Software-testing</id>
     <content type="html"><![CDATA[## First Word
 
 There are generally four levels of tests: unit testing, integration testing, system testing, and acceptance testing.
