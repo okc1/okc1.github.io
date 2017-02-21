@@ -17,9 +17,9 @@ Conecting between __information__ and __knowledge__.
 
 Q1. shall we log it live? what should we log? how to do it (on different platforms)?
 
-Not live. Do it post hoc.
+Not live. Do it asynchronously.
 
-The demand and product design drives logging. 
+__Demand and product design__ drives logging. 
 
 Logs represent event, so all your logging should be __based around the events__.
 
