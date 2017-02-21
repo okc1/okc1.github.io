@@ -1,0 +1,992 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question Count Set Bit in Binary Number. 3 = 00000011 => 2 128 = 10000000 => 1 Solution Bits counting algorithm (Brian Kernighan). Basic idea is &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/31/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/20/Count-set-bit-in-binary-number/">[Question] Count Set Bit in Binary Number</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-20T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Count Set Bit in Binary Number.</p>
+
+<p>3 = 00000011 => 2</p>
+
+<p>128 = 10000000 => 1</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>Bits counting algorithm</strong> (Brian Kernighan). Basic idea is <strong>clear 1 bit at a time</strong>.</p>
+
+<p>This algorithm goes through as many iterations as there are set bits. In the worst case, it will pass once per bit. An integer n has log(n) bits, hence <a href="http://stackoverflow.com/a/12381102">the worst case</a> is O(log(n)).</p>
+
+<h3>Code</h3>
+
+<pre><code>public int countSetBit(String binary) {
+    int num = Integer.parseInt(binary, 2);
+    int count = 0;
+    while (num != 0) {
+        num &amp;= num - 1;
+        count++;
+    }
+    return count;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/19/singleton-pattern/">[Java OOP] Singleton Pattern Introduction</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-19T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Singleton Pattern</h3>
+
+<p><strong>Singleton</strong> design pattern is one of the <strong>2 most frequent topics</strong> for OOD.</p>
+
+<p><strong><a href="http://en.wikipedia.org/wiki/Singleton_pattern">Singleton pattern</a></strong> is a design pattern that restricts the instantiation of a class to one object.</p>
+
+<h4>in Java</h4>
+
+<p>Since Java 5.0, the easiest way to create a Singleton is the <strong><a href="http://en.wikipedia.org/wiki/Singleton_pattern#The_Enum_way">enum type approach</a></strong>. Here the code is not given.</p>
+
+<p>We will instead cover a very popular implementation: <strong><a href="http://en.wikipedia.org/wiki/Singleton_pattern#Lazy_initialization">Lazy initialization</a></strong> using double-checked locking:</p>
+
+<pre><code>public class SingletonDemo {
+    private static volatile SingletonDemo instance = null;
+    private SingletonDemo() { }
+    public static SingletonDemo getInstance() {
+        if (instance == null) {
+            synchronized (SingletonDemo.class) {
+                if (instance == null) {
+                    instance = new SingletonDemo();
+                }
+            }
+        }
+        return instance;
+    }
+}
+</code></pre>
+
+<p>An alternate simpler and cleaner version may be used at the expense of potentially lower concurrency in a multithreaded environment:</p>
+
+<pre><code>public class SingletonDemo {
+    private static SingletonDemo instance = null;
+    private SingletonDemo() { }
+    public static synchronized SingletonDemo getInstance() {
+        if (instance == null) {
+            instance = new SingletonDemo();
+        }
+        return instance;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/19/factory-pattern/">[Java OOP] Factory Pattern</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-19T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Factory Method Pattern</h3>
+
+<p><strong>Factory Method</strong> design pattern is one of the <strong>2 most frequent topics</strong> for OOD.</p>
+
+<p><strong><a href="http://en.wikipedia.org/wiki/Factory_method_pattern">Factory method pattern</a></strong> is a creational pattern which uses <strong>factory methods</strong> to deal with the problem of creating objects without specifying the exact class of object that will be created.</p>
+
+<p>This is done by creating objects via factory method, either:</p>
+
+<ol>
+<li>specified in an interface/abstract class and implemente (differently)</li>
+<li>implemented in a base class, and be overridden in derived classes</li>
+</ol>
+
+
+<h4>in Java</h4>
+
+<p>A normal <a href="http://en.wikipedia.org/wiki/Factory_method_pattern#Java">Maze Game</a>:</p>
+
+<pre><code>public class MazeGame {
+    public MazeGame() {
+        Room room1 = makeRoom();
+        Room room2 = makeRoom();
+        room1.connect(room2);
+        this.addRoom(room1);
+        this.addRoom(room2);
+    }
+
+    protected Room makeRoom() {
+        return new OrdinaryRoom();
+    }
+}
+</code></pre>
+
+<p>A magic game:</p>
+
+<pre><code>public class MagicMazeGame extends MazeGame {
+    @Override
+    protected Room makeRoom() {
+        return new MagicRoom();
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/19/Count-level-in-perfect-BT/">[Question] Count Level in Perfect Binary Tree</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-19T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://stackoverflow.com/questions/10721583/how-can-i-calculate-the-level-of-a-node-in-a-perfect-binary-tree-from-its-depth">link</a></p>
+
+<blockquote><p>A perfect binary tree, i.e. each node in the tree is either a leaf node, or has two children, and all leaf nodes are on the same level. Each node has an index in depth-first order.</p></blockquote>
+
+<pre><code>      0
+    /   \
+  1      4
+ / \    / \
+2   3  5   6
+</code></pre>
+
+<blockquote><p>Given the index (k) of a particular node, calculate its level.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>This is a <a href="http://stackoverflow.com/a/10721897">magical solution</a></strong>.  It divides the tree in the middle with number k decrease by 1 each time.</p>
+
+<p>Beautiful, and hard to understand.</p>
+
+<h3>Code</h3>
+
+<p><strong>not written by me</strong>.</p>
+
+<pre><code>public int countLevel(TreeNode root, int k, int n) {
+    int level = 0;
+    while (k != 0) {
+        k--;
+        n = (n - 1) / 2;
+        k = k % n;
+        level++;
+    }
+    return level + 1;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/17/Numbers-Concatenation-Max/">[ItInt5] Numbers Concatenation Max (Largest Number)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-17T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.itint5.com/oj/#45">link</a></p>
+
+<blockquote><p>数组nums中有n个非负整数（整数用字符串表示），将它们以一定的顺序拼接，得到最大的整数。</p>
+
+<p>样例：</p>
+
+<p>nums: [&ldquo;54&rdquo;, &ldquo;546&rdquo;, &ldquo;548&rdquo;, &ldquo;60&rdquo;]</p>
+
+<p>可以拼接得到的最大整数为"6054854654"，因此函数应该返回"6054854654"。</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>I will first list out 2 special cases</strong>:</p>
+
+<blockquote><p>{40, 20, 201} => 4020201</p>
+
+<p>{40, 20, 203} => 4020320</p></blockquote>
+
+<p>Knowing about this 2 cases helps us to come up with a sorting-based algorithm. We only need to achieve this:</p>
+
+<blockquote><p>201 &lt; 20</p>
+
+<p>20 &lt; 203</p></blockquote>
+
+<p>So the best comparator implementation would be:</p>
+
+<pre><code>String firstNum = s1 + s2;
+String secondNum = s2 + s1;
+return firstNum.compareTo(secondNum);
+</code></pre>
+
+<h3>Code</h3>
+
+<p><strong>written by me</strong>.</p>
+
+<pre><code>public String biggestNum(String[] nums) {
+    Arrays.sort(nums, new SpecialComparator());
+    StringBuilder sb = new StringBuilder();
+    for (int i = nums.length - 1; i &gt;= 0; i--) {
+        sb.append(nums[i]);
+    }
+    return sb.toString();
+}
+
+class SpecialComparator implements Comparator&lt;String&gt; {
+    public int compare(String s1, String s2) {
+        // eg.
+        // 40 &gt; 20
+        // 20 &gt; 201
+        // 203 &gt; 20
+        String firstNum = s1 + s2;
+        String secondNum = s2 + s1;
+        return firstNum.compareTo(secondNum);
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/17/Number-of-tree-given-preorder-postorder/">[ItInt5] Number of Valid Trees Given Preorder and Postorder</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-17T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.itint5.com/oj/#28">link</a></p>
+
+<blockquote><p>对于包含n个结点的二叉树（树中结点编号从1到n），已知前序和后序遍历序列，我们知道不一定能唯一的恢复这棵树。请计算出满足条件的二叉树的总数。</p>
+
+<p>Example</p></blockquote>
+
+<pre><code>前序遍历序列preorder：1 2
+后序遍历序列postorder：2 1
+
+一共有2棵满足条件的二叉树：
+    1       1
+   /         \
+  2           2
+</code></pre>
+
+<h3>Solution</h3>
+
+<blockquote><p>先看两种遍历的性质:</p>
+
+<p>pre-order: root, left *************, right #########</p>
+
+<p>post-order: **************left, ########right, root</p>
+
+<p>所以 pre-order 的第一个元素一定等于 post-order 的最后一个元素. 然后在post-order中由前往后找, 找出等于pre-oder[left]的位置 p.</p>
+
+<ol>
+<li><p>如果 p 位置不是倒数第二个, fine, 对左右子树递归<strong>调用后用乘法原理</strong>.</p></li>
+<li><p>如果 p 是倒数第二个, 说明either left branch or right branch为空, return的值就是 <strong>2 * 递归调用非空子树</strong>.</p></li>
+</ol>
+</blockquote>
+
+<p><a href="http://www.itint5.com/discuss/94/%E8%AF%B7%E5%A4%A7%E5%AE%B6%E6%8F%90%E4%B8%80%E4%BA%9B%E6%94%B9%E8%BF%9B%E6%84%8F%E8%A7%81">ref</a></p>
+
+<h3>Code</h3>
+
+<p><strong>not written by me</strong>. This code is REALLY 叼炸天。</p>
+
+<pre><code>int helper(vector&lt;int&gt;&amp; preorder, vector&lt;int&gt;&amp; posorder, 
+         int i1, int j1, int i2, int j2){
+    if(i1 == j1) return 1;
+    if(preorder[i1+1] == posorder[j2-1]){
+        return 2*helper(preorder, posorder, i1+1, j1, i2, j2-1);
+    }
+    int k = i2;
+    while(posorder[k] != preorder[i1+1]){ k++; }
+    return helper(preorder, posorder, i1+1,i1+1+k-i2 ,i2 , k)
+         * helper(preorder, posorder, i1+2+k-i2, j1, k+1, j2-1);
+}
+
+int countValidTrees(vector&lt;int&gt;&amp; preorder, vector&lt;int&gt;&amp; posorder) {
+    int n = preorder.size();
+    return helper(preorder, posorder, 0, n-1, 0, n-1);
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/17/Expression-evaluation/">[Twitter] Arithmetic Expression Evaluation</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-17T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.itint5.com/oj/#26">link</a></p>
+
+<blockquote><p>给定一个表达式字符串，其中只包含非负整数，加法，减法以及乘法符号，例如7+3<em>4</em>5+2+4-3-1。请写程序计算该表达式的值。</p>
+
+<p>提示：可以尝试使用递归算法，程序将非常简洁易写，很适用于面试场合。</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>Trying to solve this problem iteratively is like suicide</strong>. The code would be lengthy and buggy, and very hard to make it right.</p>
+
+<p><strong>The most important point about this question, is how to handle minus(-) sign</strong>. We know that when we see * and /, we evaluate immediately, and when sees + and -, we postpone it. However this case:</p>
+
+<blockquote><p>1 - 2 - 3</p></blockquote>
+
+<p>If we postpone the first minus sign, we would end up getting:</p>
+
+<blockquote><p>1 - (-1)</p></blockquote>
+
+<p>So it&rsquo;s wrong (outputing 2 in this case).</p>
+
+<p><strong>The solution to this issue is, consider (a - b) as (a + (-b))</strong>. That&rsquo;s why later in the code, you&rsquo;ll see a variable <strong>preNum</strong> being modified.</p>
+
+<p><a href="http://www.itint5.com/discuss/50/case%E9%87%8C%E9%9D%A2%E6%9C%89%E4%B8%80%E4%B8%AA%E5%B8%A6%E8%B4%9F%E6%95%B4%E6%95%B0%E7%9A%84%EF%BC%8C%E5%B9%B6%E6%B1%82%E9%80%92%E5%BD%92%E5%AE%9E%E7%8E%B0">ref</a></p>
+
+<h3>Code</h3>
+
+<p><strong>written by me</strong></p>
+
+<pre><code>int p;
+
+public int evaluate(String expr) {
+    p = 0;
+    int firstNum = getNumber(expr);
+    return helper(firstNum, expr);
+}
+
+private int helper(int preNum, String expr) {
+    // now p points to a operator (or end of string)
+    if (p == expr.length()) {
+        return preNum;
+    }
+    char operator = expr.charAt(p);
+    p++;
+    int nextNum = getNumber(expr);
+    switch (operator) {
+    case '+':
+        return preNum + helper(nextNum, expr);
+    case '-':
+        return preNum + helper(-1 * nextNum, expr);
+    case '*':
+        return helper(preNum * nextNum, expr);
+    default:
+        return helper(preNum / nextNum, expr);
+    }
+}
+
+private int getNumber(String expr) {
+    // now p points to a number
+    int num = 0;
+    while (p &lt; expr.length() &amp;&amp; expr.charAt(p) &gt;= '0'
+            &amp;&amp; expr.charAt(p) &lt;= '9') {
+        num = num * 10 + expr.charAt(p) - '0';
+        p++;
+    }
+    return num;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/16/orthogonal-traverse-map/">[Google] Orthogonal Traverse the Map (`)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-16T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>16</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.itint5.com/oj/#22">link</a></p>
+
+<blockquote><p>有一个n*m（n和m都不超过50）的棋盘，有k个目标格子需要访问。需要访问的格子的横纵坐标存放在数组x[]和y[]中(0&lt;=x[i]&lt;n, 0&lt;=y[i]&lt;m)。</p>
+
+<p>遍历的规则为：</p>
+
+<p>每一步只能从一个目标格子水平或者竖直跳跃移动到另一个目标格子。</p>
+
+<p>连续的两步必须形成直角。即如果前一步是水平移动，那么下一步只能竖直移动。</p>
+
+<p>问是否存在一种遍历顺序，使得每个目标格子有且仅被访问一次。</p>
+
+<p>样例：k=8, x=[0, 0, 0, 0, 2, 2, 4, 4], y=[0, 2, 4, 6, 4, 6, 2, 4],对应于下图中A, B, C, D, F, E, G, H 8个目标格子，存在满足条件的遍历A->D->E->F->C->B->G->H。</p></blockquote>
+
+<p><img class="middle" src="/assets/images/orthogonal-map.jpg"></p>
+
+<h3>Solution</h3>
+
+<blockquote><p>n,m的棋盘，<a href="http://www.itint5.com/discuss/22/%E7%9B%B4%E8%A7%92%E8%B7%AF%E7%BA%BF%E9%81%8D%E5%8E%86%E6%A3%8B%E7%9B%98">建一个包含n+m个顶点的图G</a>（为了方便说明，类似二分图将其分为两列，左边n个顶点，右边m个顶点，分别代表n行和n列）。</p>
+
+<p>对于目标格子(i,j)，左边第i个顶点和右边第j个顶点连一条边。最后的问题其实就是问转换之后的图G是否存在欧拉欧拉回路或者欧拉路径。</p></blockquote>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/16/Excel-decimal-conversion/">[ItInt5] Excel Decimal Conversion</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-16T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>16</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.itint5.com/oj/#23">link</a></p>
+
+<blockquote><p>Excel中的行列数用A~Z 26个字母表示，A, B, C, D, …, Z, AA, AB, …, AZ, BA, BB, … 分别表示10进制数1, 2, 3, 4, …, 26, 27, 28, …, 52, 53, 54…。</p>
+
+<p>请实现2个函数decToExcel和excelToDec，将10进制数转换为Excel数，以及将Excel数转换为10进制数。</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Note the indexing starts from 1, not from 0. This caused some trouble for me.</p>
+
+<h3>Code</h3>
+
+<p><strong>written by me</strong></p>
+
+<pre><code>public String decToExcel(int decNum) {
+    decNum--;
+    int digits = 1;
+    int exponen = 26;
+    while (decNum &gt;= exponen) {
+        decNum -= exponen;
+        exponen *= 26;
+        digits++;
+    }
+    // now we know the total number of digits
+    int num = decNum;
+    int total = exponen / 26;
+    String ans = "";
+    for (int i = 0; i &lt; digits; i++) {
+        ans += (char) (num / total + 'A');
+        num %= total;
+        total /= 26;
+    }
+    return ans;
+}
+
+public int excelToDec(String excelNum) {
+    int digits = excelNum.length();
+    int total = 1;
+    int sum = 1;
+    for (int i = 1; i &lt; digits; i++) {
+        total *= 26;
+        sum += total;
+    }
+    for (int i = 0; i &lt; digits; i++) {
+        sum += (excelNum.charAt(i) - 'A') * total;
+        total /= 26;
+    }
+    return sum;
+}
+</code></pre>
+
+<p><strong>updated code</strong>: we can actually do it recursively. The code is much more concise.</p>
+
+<pre><code>//将十进制数转换为excel数
+public String decToExcel(int decNum) {
+    if (decNum == 0) {
+        return "";
+    }
+    decNum--;
+    char last = (char) ('A' + decNum % 26);
+    return decToExcel(decNum / 26) + last;
+}
+
+//将excel数转换为十进制数
+public int excelToDec(String excelNum) {
+    if (excelNum.equals("")) {
+        return 0;
+    }
+    int len = excelNum.length();
+    int last = 1 + excelNum.charAt(len - 1) - 'A';
+    return excelToDec(excelNum.substring(0, len - 1)) * 26 + last;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/15/Task-scheduling-question/">[Facebook] Task Scheduling Question</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-15T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.itint5.com/oj/#10">link</a></p>
+
+<blockquote><p>有n个任务需要完成（编号1到n），任务之间有一些依赖关系，如果任务a依赖于任务b和c，那么只有当任务b和任务c完成之后才能完成任务a。给定所有的依赖关系，判断这些任务是否能够完成。如果能够完成，请给出一个合法的任务完成序列。</p>
+
+<p>样例：</p>
+
+<p>n=5</p>
+
+<p>1->2,3</p>
+
+<p>3->4</p>
+
+<p>上述样例中任务1依赖于任务2和任务3，任务3依赖于任务4，那么存在合法的任务完成序列4,3,2,1,5</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>Classic topology sorting</strong>, refer to <a href="http://www.itint5.com/discuss/8/%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6java%E7%A8%8B%E5%BA%8F">this nice answer</a>.</p>
+
+<h3>My Code</h3>
+
+<pre><code>public int[] myJobSchedulerWithoutQueue(Map&lt;Integer, List&lt;Integer&gt;&gt; deps,
+        int n) {
+    int[] ans = new int[n];
+
+    int[] depCount = new int[n];
+    // eg. job 1 depends on job 2 and 3, thus depCount[1-1] = 2
+    Map&lt;Integer, List&lt;Integer&gt;&gt; graph = new HashMap&lt;Integer, List&lt;Integer&gt;&gt;();
+    // graph would be reversed version of deps, used for topology sorting
+    // eg. 2 would point to 1, and 3 would points to 1
+    for (int i : deps.keySet()) {
+        depCount[i - 1] = deps.get(i).size();
+        for (int j : deps.get(i)) {
+            // add (j, i) pair into graph
+            if (!graph.containsKey(j)) {
+                graph.put(j, new ArrayList&lt;Integer&gt;());
+            }
+            graph.get(j).add(i);
+        }
+    }
+    // now we got depCount[] and graph ready, let's rock
+    int sorted = 0;
+    while (sorted != n) {
+        // first find a 'p' so that depCount[p] = 0
+        int p = 0;
+        while (p &lt; n &amp;&amp; depCount[p] != 0) {
+            p++;
+        }
+        if (p == n) {
+            // unable to find a new node to sort, sorting failed
+            break;
+        }
+        // remember p is only the index, the value should be +1
+        int val = p + 1;
+        ans[sorted++] = val;
+        depCount[p] = -1;
+        if (graph.containsKey(val)) {
+            for (int i : graph.get(val)) {
+                depCount[i - 1]--;
+            }
+        }
+    }
+    if (sorted == n)
+        return ans; // sort sucess
+    else
+        return null; // sort failed
+}
+</code></pre>
+
+<p>The following is very similar implementation, but using a Queue to store temporary nodes.</p>
+
+<pre><code>public int[] myJobSchedulerWithQueue(Map&lt;Integer, List&lt;Integer&gt;&gt; deps, int n) {
+    int[] ans = new int[n];
+
+    int[] depCount = new int[n];
+    // eg. job 1 depends on job 2 and 3, thus depCount[1-1] = 2
+    Map&lt;Integer, List&lt;Integer&gt;&gt; graph = new HashMap&lt;Integer, List&lt;Integer&gt;&gt;();
+    // graph would be reversed version of deps, used for topology sorting
+    // eg. 2 would point to 1, and 3 would points to 1
+    for (int i : deps.keySet()) {
+        depCount[i - 1] = deps.get(i).size();
+        for (int j : deps.get(i)) {
+            // add (j, i) pair into graph
+            if (!graph.containsKey(j)) {
+                graph.put(j, new ArrayList&lt;Integer&gt;());
+            }
+            graph.get(j).add(i);
+        }
+    }
+    // now we got depCount[] and graph ready, let's rock
+    int sorted = 0;
+    Queue&lt;Integer&gt; queue = new LinkedList&lt;Integer&gt;();
+    while (sorted != n) {
+        for (int i = 0; i &lt; depCount.length; i++) {
+            if (depCount[i] == 0) {
+                queue.offer(i + 1);
+                depCount[i] = -1;
+            }
+        }
+        if (queue.isEmpty()) {
+            break; // sorting failed
+        }
+        int val = queue.poll();
+        ans[sorted++] = val;
+        if (graph.containsKey(val)) {
+            for (int i : graph.get(val)) {
+                depCount[i - 1]--;
+            }
+        }
+    }
+    if (sorted == n)
+        return ans; // sort sucess
+    else
+        return null; // sort failed
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/32">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/30">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_3&size=158x21'></script><section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

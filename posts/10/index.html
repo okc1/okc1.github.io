@@ -1,0 +1,748 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Easy version [Q] Design a layer in front of a system which cache the last n requests and the responses to them from the system. Solution: [a] When a &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/10/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/10/design-cache-system/">[Design] Design Cache System (`)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-10T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Easy version</h3>
+
+<p>[Q] Design a layer <strong>in front of a system</strong> which cache the last n requests and the responses to them from the system.</p>
+
+<p><strong><a href="http://blog.csdn.net/hexinuaa/article/details/6630384">Solution</a></strong>:</p>
+
+<p>[a] When a request comes look it up in the cache and if it hits then return the response from here and do not pass the request to the system</p>
+
+<p>[b] If the request is not found in the cache then pass it on to the system</p>
+
+<p>[c] Since cache can only store the last n requests, Insert the n+1th request in the cache and delete one of the older requests from the cache</p>
+
+<p>[d]Design one cache such that all operations can be done in O(1) – lookup, delete and insert.</p>
+
+<h3>Distributed Cache</h3>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/09/number-of-slices/">[Google] Number of Slices</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-09T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=5090693043191808">link</a></p>
+
+<blockquote><p>Calculate the number of slices. Slice means that the difference between the maximum and minimum in the slice &lt;= 2.</p>
+
+<p>eg. Given array 3 5 7 6 3.</p>
+
+<p>There&rsquo;re 10: (0,0) (1,1) (2,2) (3,3) (4,4) (5,5) (0,1) (1,2) (1,3) (2,3).</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>If only asked to output the total number of such slices, we can do it in <strong>O(n) using sliding-window-like algorithm</strong>, with the help of addtional queue-like data structure.</p>
+
+<p>This is <strong>a very difficult question</strong>! Quoted from the <a href="http://www.careercup.com/question?id=5090693043191808">top answer</a>:</p>
+
+<blockquote><p>The basic idea is that you can start with arr[0] and then see <strong>how many more elements you can include before you violate the max -min &lt;= K constraint</strong>. When you reach some index j you can no longer include, you know the maximum subarray starting at index 0 is arr[0&hellip;j-1], and you can count j different subarrays there.</p>
+
+<p>&hellip; you then start with a[1]. Now [1&hellip;j-1] has to be valid, so you try to advance the right boundary again (try arr[1&hellip;j], then arr[1&hellip;j+1]) and so on until again you reach a point past which you can&rsquo;t advance. Then you&rsquo;ll try string at a[2], and so on. This is what they mean when they talk about <strong>&ldquo;crawling&rdquo; over the array</strong>.</p>
+
+<p>The key issue here is how you will check whether a particular subarray is valid efficiently&hellip;</p></blockquote>
+
+<p>Sliding window is explained above. Now, <strong>the minMaxQueue</strong> explain in <a href="https://codility.com/media/train/solution-count-bounded-slices.pdf">this pdf</a>:</p>
+
+<blockquote><p>The PDF &hellip; have <strong>1 queue each</strong> (i.e. 2 queues in total) for min and max (the min is treated analogous to the max case).</p>
+
+<p>For maxQueue, whenever a new value comes in the max queue, they remove all values less than the value, since those <strong>can never be the max</strong>. For that reason the queue&rsquo;s values are in descending order. And the max at any given time is the first element.</p></blockquote>
+
+<p>In this way, getting min/max is O(1), thus entire solution is O(n). Nice question!</p>
+
+<h3>Code</h3>
+
+<p>Not written.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/09/intro-google-spanner/">[Design] Intro to Google Spanner</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-09T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Spanner</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Spanner_%28database%29">Spanner</a> is Google&rsquo;s globally <strong>distributed NewSQL database, the successor to BigTable</strong>. Google describes Spanner as not a pure relational system because each table must have a primary-key column.</p>
+
+<p>Currently, <strong>F1, Google&rsquo;s advertisement platform</strong>, uses Spanner. Gmail and Google Search will also use it soon.</p>
+
+<h3>NewSQL VS. NoSQL</h3>
+
+<p><strong>NewSQL</strong>, a wholly different database architecture, differentiated from NoSQL, is beginning to emerge.</p>
+
+<h4>NoSQL</h4>
+
+<p>There are many reasons why NoSQL products have been popular. As there are a variety of NoSQL products. As you can see in Hadoop or Cassandra, main advantages of NoSQL is its horizontal scalability.</p>
+
+<p>As these NoSQL products <strong>don&rsquo;t provide Strong Consistency</strong>, they cannot be used where <strong>high-level data consistency</strong> is required.</p>
+
+<h4>NewSQL</h4>
+
+<p>NewSQL has as <strong>excellent scalability</strong> as NoSQL, and at the same time it <strong>guarantees ACID like RDBMS</strong> which is performed in a single node.</p>
+
+<h3>What is Spanner?</h3>
+
+<p>Spanner is <a href="http://www.cubrid.org/blog/dev-platform/spanner-globally-distributed-database-by-google/">a NewSQL created by Google</a>. It is a distributed relational database that can distribute and store data in Google&rsquo;s BigTable storage system in multiple data centers. Spanner meets ACID (of course, it supports transaction) and supports SQL.</p>
+
+<p><strong>Data R/W eff</strong>: When you read data, Spanner connects you to the data center that is geographically closest to you, and when you write data, it distributes and stores it to multiple data centers.</p>
+
+<p><strong>Failure</strong>: If the data center you try to access has a failure, of course, you can read the data from another data center that has a replica of the data (in US, <strong>5 replica</strong>).</p>
+
+<p>The Spanner client automatically <strong>performs a failover between replicas</strong>. When the number of servers storing data is changed or a failure occurs in equipment, Spanner automatically <strong>re-distributes data</strong> through data transfer among the equipments.</p>
+
+<p>More details of Spanner: will come later.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/09/heap-bst-conversion/">[Google] Heap and BST Conversion</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-09T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question 1</h3>
+
+<p><a href="http://www.careercup.com/question?id=4281027">link</a></p>
+
+<blockquote><p>Convert a BST to max heap.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>The <a href="http://www.careercup.com/question?id=4281027">second answer</a>:</p>
+
+<blockquote><p>a simple (reversed) in-order traversal of the BST. It would produce a sorted array which is indeed a max-heap!</p></blockquote>
+
+<h3>Question 2</h3>
+
+<p><a href="http://stackoverflow.com/questions/14106821/converting-a-heap-to-a-bst-in-on-time">link</a></p>
+
+<blockquote><p>Converting a heap to a BST in O(n) time?</p>
+
+<p>possible?</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><a href="http://stackoverflow.com/a/14107362">Impossible</a>. Because otherwise, we can do this:</p>
+
+<ol>
+<li>Take an array and build the heap in O(n) time</li>
+<li>Converting the heap to a BST in O(n) time (assuming)</li>
+<li>Walking the BST in O(n) time to get a sorted sequence.</li>
+</ol>
+
+
+<p>Thus we sort array in O(n) time, it can&rsquo;t happen.</p>
+
+<p>Right way to do, is to repeatedly dequeueing maximum value from the BST, then generate the BST recursively (bottom-up approach).</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/09/count-multiples-of-array/">[Question] Count Multiples of Array</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-09T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.mitbbs.com/article_t/JobHunting/32882735.html">link</a></p>
+
+<blockquote><p>N是一个很大的正整数——可能到10<sup>15</sup>次方，</p>
+
+<p>简单起见，不考虑溢出，或者假设用python</p>
+
+<p>A 是一个array，里面存着一些正整数，up to 1000个</p>
+
+<p>从1 - N这N个数，有多少个数，不能被A中的任何一个数整除的？</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>It&rsquo;s a very difficult question.</p>
+
+<p>We can&rsquo;t do it like a Sieve of Eratosthenes, cuz N is too large. The best solution is at <a href="http://www.mitbbs.com/article_t/JobHunting/32882735.html">this post</a>, level 9:</p>
+
+<p>Consider the simplest case: A={2}, then any odd number below N is OK, so the result would be (N - N/2). Then consider A={2, 3}, any number below N that is not mutiply of 2 or 3 is OK, so the result would be (N - N/2 - N/3 + N/6). Then consider A={2, 3, 5}, <strong>the result would be (N - N/2 - N/3 - N/5 + N/6
++ N/10 + N/15 - N/30)</strong>.</p>
+
+<p>So there is a general rule:</p>
+
+<p>for A={a1, a2, &hellip;, aN}, if ai is not dividable by aj for any i != j, then we could:</p>
+
+<ol>
+<li>for i from 1 to N, calc r1 = N - SUM(N/ai);</li>
+<li>for i, j from 1 to N, i != j, calc r2 = r1 + SUM(N/(ai*aj));</li>
+<li>for i, j, k from 1 to N, i != j != k, calc r3 = r2 - SUM(N/(ai<em>aj</em>ak));</li>
+<li>&hellip;</li>
+<li>until all numbers in A are chosen.</li>
+<li>then the final rN is the result.</li>
+</ol>
+
+
+<p>So for the problem, first we preprocess A to <strong>eliminate any multiplies in A</strong>. For example, A={2, 4, 5}, we can eliminate 4 because it is a mutiply of 2 which is also in A. So A'={2, 5}, then we calc:</p>
+
+<p>r1 = 10 - 10/2 - 10/5 = 10 - 5 - 2 = 3;
+r2 = r1 + 10/10 = 3 + 1 = 4;</p>
+
+<p>then the final result is 4.</p>
+
+<p>Refer to <strong>[Question] Multiples of 3 and 5</strong>.</p>
+
+<h3>Code</h3>
+
+<p>not written</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/09/array-signature/">[Google] Array Signature</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-09T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=14912744">link</a></p>
+
+<blockquote><p>You are given an array of n elements [1,2,&hellip;.n]. For example {3 2 1 4 6 5 7}.</p>
+
+<p>Now we create a signature of this array by comparing every consecutive pair of elements. If they increase, write &ldquo;I&rdquo; else write &ldquo;D&rdquo;.</p>
+
+<p>For example for the above array, the signature would be &ldquo;DDIIDI&rdquo;. The signature thus has a length of N-1.</p>
+
+<p>Now given a signature, compute the lexicographically <strong>smallest permutation</strong> of [1,2,&hellip;.n].</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>A great <a href="http://qr.ae/BPfNw">answer</a>:</p>
+
+<blockquote><p>Take the above case. Signature = DDIIDI.</p>
+
+<p>Take original permutation as 1 2 3 4 5 6 7.</p>
+
+<p>Then for first continuous sequence DD reverse the strip 1 2 3 to 3 2 1 hence sequence becomes 3 2 1 4 5 6 7.</p>
+
+<p>Then for second sequence D reverse strip 5 6 to 6 5 hence sequence becomes 3 2 1 4 6 5 7.</p>
+
+<p>There is no continuous D left we are done and reached the answer.</p></blockquote>
+
+<h3>Code</h3>
+
+<p>Not written.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/09/abstract-class-without-abstract-method/">[Java OOP] Can Abstract Class Have 0 Abstract Method?</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-09T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Definition</h1>
+
+<p><a href="https://docs.oracle.com/javase/tutorial/java/IandI/abstract.html">An abstract class</a> is a class that is declared abstract —it may or may not include abstract methods. Abstract classes cannot be instantiated, but they can be subclassed.</p>
+
+<h2>with NO abstract method?</h2>
+
+<blockquote><p><a href="http://stackoverflow.com/a/2283437">In JDK 1.0 it was</a> indeed necessary to have <strong>at least one abstract method</strong> in an abstract class.</p>
+
+<p>This restriction was removed in JDK 1.1 (1997? (I&rsquo;m old)) and such classes added to the Java library, such as java.awt.event.KeyAdapter.</p></blockquote>
+
+<p><strong>So, no abstract method is fine</strong>. Doing it prevents you from instantiation - you can only inherit.</p>
+
+<p>However, different opinions are:</p>
+
+<blockquote><p><a href="http://stackoverflow.com/a/2283450">is subjective</a> and a matter of style. <strong>Personally I would say yes</strong>. If your intent is to prevent a class (with no abstract methods) from being instantiated, the best way to handle this is with a privateprotected constructor, not by marking it abstract.</p></blockquote>
+
+<h2>how about abstract variable?</h2>
+
+<p>There is no such thing in Java.</p>
+
+<p>For more on abstract class, read <strong>[Java OOP] Template method pattern</strong>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/09/abstract-class-constructor/">[Java OOP] Can Abstract Class Have Constructor</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-09T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>A short answer</h1>
+
+<p>In Java, all classes must have a constructor.</p>
+
+<h2>Can abstract class have constructor</h2>
+
+<p><a href="http://www.mitbbs.com/article_t/JobHunting/32257933.html">Yes, it can</a>. However, if we create an instance using it, it&rsquo;s error.</p>
+
+<p>Consider <a href="http://www.geeksforgeeks.org/abstract-classes-in-java/">this example</a>:</p>
+
+<pre><code>abstract class Base {
+    Base() { System.out.println("Base Constructor Called"); }
+    abstract void fun();
+}
+
+class Derived extends Base {
+    Derived() { System.out.println("Derived Constructor Called"); }
+    void fun() { System.out.println("Derived fun() called"); }
+}
+
+class Main {
+    public static void main(String args[]) { 
+       Derived d = new Derived();
+    }
+}
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>Base Constructor Called
+Derived Constructor Called
+</code></pre>
+
+<h2>More info on constructor:</h2>
+
+<p>The <a href="http://stackoverflow.com/a/261159">constructor in an abstract class</a>:</p>
+
+<ol>
+<li>is used when you want to perform some initialization</li>
+<li>you may define more than one constructor (with different arguments)</li>
+<li>if you don&rsquo;t define a constructor, then the compiler will automatically generate one for you.</li>
+<li>your subclass constructor <strong>have to call a constructor</strong> from the abstract class</li>
+<li>you can define all your constructors protected (cuz making them public is pointless)</li>
+</ol>
+
+
+<p>For more on abstract class, read <strong>[Java OOP] Template method pattern</strong>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/08/unbalanced-tree-into-balanced-tree/">[Google] Transform a Unbalanced Tree Into Balanced Tree</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-08T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.mitbbs.com/article_t/JobHunting/32043661.html">link</a></p>
+
+<blockquote><p>How to transform a unbalanced tree into balanced tree?</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Solution 1, do AVL tree balancing. Refer to <strong>[Design] BST Node Insertion / Deletion</strong>. This is of course, pretty difficult to code.</p>
+
+<p>Best solution is to <strong>convert to DLL and then build a new tree</strong>!</p>
+
+<h3>Code</h3>
+
+<p>not written</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/08/serialize-list-string/">[Google] Transform a Unbalanced Tree Into Balanced Tree</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-08T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=5979667">link</a></p>
+
+<blockquote><p>How to serialize strings and pass it over the network and de-serialize the string?</p>
+
+<p>The string may contain <strong>any possible character</strong> out of 256 valid characters.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>The difficulty is how to <strong>differentiate between data (string) and metadata</strong>. Some interesting ideas:</p>
+
+<ol>
+<li>XML</li>
+<li>message with header + body</li>
+</ol>
+
+
+<p>The best is the <a href="http://www.careercup.com/question?id=5979667">top answer</a>:</p>
+
+<blockquote><p>I think that a good answer is to send the length of the string in bytes (coded for example as a 4 bytes unsigned integer) followed by the list of bytes, one per char.</p>
+
+<p>The receiver reads the first 4 bytes and understand the string length (let says L), then it reads the following L bytes and build the string.</p></blockquote>
+
+<h3>Code</h3>
+
+<p>eg. 5hello 5world 2my 4name 2is</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/11">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/9">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_3&size=158x21'></script><section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,333 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[LeetCode 201] Bitwise and of Numbers Range - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link Given a range [m, n] where 0 &lt;= m &lt;= n &lt;= 2147483647, return the bitwise AND of all numbers in this range, inclusive. For &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2015/05/10/Bitwise-AND-of-Numbers-Range/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[LeetCode 201] Bitwise and of Numbers Range</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-05-10T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/bitwise-and-of-numbers-range/">link</a></p>
+
+<div class="question-content">
+              <p></p><p>Given a range [m, n] where 0 &lt;= m &lt;= n &lt;= 2147483647, return the bitwise AND of all numbers in this range, inclusive.</p>
+
+<p>
+For example, given the range [5, 7], you should return 4.
+</p>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://leetcode.com/discuss/user/amrsaqr">@amrsaqr</a> for adding this problem and creating all test cases.</p><p></p>
+              
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/bit-manipulation/">Bit Manipulation</a>
+                  
+                </span>
+              
+            </div>
+
+
+<h3>Analysis</h3>
+
+<p>This is a pretty interesting mathematics question. Now we take 2 numbers as example:</p>
+
+<blockquote><p>Num1: 110010</p>
+
+<p>Num2: 110111</p>
+
+<p>Result: 110000</p></blockquote>
+
+<p>And:</p>
+
+<blockquote><p>Num1: 0110</p>
+
+<p>Num2: 1100</p>
+
+<p>Result: 0</p></blockquote>
+
+<p>Note that:</p>
+
+<ol>
+<li><p>if the first &lsquo;1&rsquo; bit of the 2 numbers are at different position, the answer should simply be 0.</p></li>
+<li><p>if have same position, then the result would be the continous sequence of 1s, followed by all 0s.</p></li>
+</ol>
+
+
+<h3>Solution</h3>
+
+<p>The 2 best solutions is very well presented by <a href="http://www.cnblogs.com/grandyang/p/4431646.html">Grandyang</a> using bit shifting and masking. Please refer to code 1 and code 2 below.</p>
+
+<p>I found a third solution at <a href="http://www.programcreek.com/2014/04/leetcode-bitwise-and-of-numbers-range-java/">programcreek</a>, which makes use of the fact that m is smaller than n.</p>
+
+<h3>Code</h3>
+
+<p>code 1</p>
+
+<pre><code>class Solution {
+public:
+    int rangeBitwiseAnd(int m, int n) {
+        int d = INT_MAX;
+        while ((m &amp; d) != (n &amp; d)) {
+            d &lt;&lt;= 1;
+        }
+        return m &amp; d;
+    }
+};
+</code></pre>
+
+<p>code 2</p>
+
+<pre><code>class Solution {
+public:
+    int rangeBitwiseAnd(int m, int n) {
+        int i = 0;
+        while (m != n) {
+            m &gt;&gt;= 1;
+            n &gt;&gt;= 1;
+            ++i;
+        }
+        return (m &lt;&lt; i);
+    }
+};
+</code></pre>
+
+<p>code 3</p>
+
+<pre><code>public int rangeBitwiseAnd(int m, int n) {
+     while (n &gt; m) {
+          n = n &amp; n - 1;
+     }
+     return m &amp; n;
+}
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-05-10T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/leetcode/'>leetcode</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2015/05/10/Bitwise-AND-of-Numbers-Range/" data-via="" data-counturl="http://okc1.github.io/blog/2015/05/10/Bitwise-AND-of-Numbers-Range/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/05/10/Binary-Tree-Right-Side-View/" title="Previous Post: [LeetCode 199] Binary Tree Right Side View ">&laquo; [LeetCode 199] Binary Tree Right Side View </a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/05/10/House-Robber/" title="Next Post: [LeetCode 198] House Robber ">[LeetCode 198] House Robber  &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+<!--div>
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_0&type=footer&size=728x90'></script>
+</div>
+<div>
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_1&type=footer&size=728x90'></script>
+</div-->
+    
+<script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_2&type=footer&size=728x90'></script>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_3&size=158x21'></script><section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

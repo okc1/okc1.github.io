@@ -1,0 +1,879 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link Say you have an array for which the ith element is the price of a given stock on day i. Design an algorithm to find the maximum profit &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/2/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/11/04/Best-Time-to-Buy-and-Sell-Stock-IV/">[LeetCode 188] Best Time to Buy and Sell Stock IV</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-11-04T00:00:00-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/">link</a></p>
+
+<div class="question-content">
+              <p></p><p>Say you have an array for which the <i>i</i><sup>th</sup> element is the price of a given stock on day <i>i</i>.</p>
+
+<p>Design an algorithm to find the maximum profit. You may complete at most <b>k</b> transactions.</p>
+
+<p><b>Note:</b><br>
+You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).</p>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/Freezen">@Freezen</a> for adding this problem and creating all test cases.</p><p></p>
+              
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/dynamic-programming/">Dynamic Programming</a>
+                  
+                </span>
+              
+            </div>
+
+
+<h3>Solution</h3>
+
+<p>This question is very difficult. We need to do <strong>DP with 2 DP arrays</strong>, available to read <a href="http://blog.csdn.net/linhuanmars/article/details/23236995">here</a>.</p>
+
+<p>The 2 arrays' definition as follow:</p>
+
+<blockquote><p>global[i][j]=max(local[i][j],global[i-1][j])</p>
+
+<p>当前到达第i天可以最多进行j次交易，最好的利润是多少（global[i][j]）</p>
+
+<p>当前到达第i天，最多可进行j次交易，并且最后一次交易在当天卖出的最好的利润是多少（local[i][j]）</p></blockquote>
+
+<p>And the formula for calculating local[] is:</p>
+
+<blockquote><p>local[i][j]=max(global[i-1][j-1]+max(diff,0),local[i-1][j]+diff)，</p>
+
+<p>第一个是全局到i-1天进行j-1次交易，然后加上今天的交易，如果今天是赚钱的话（也就是前面只要j-1次交易，最后一次交易取当前天），</p>
+
+<p>第二个量则是取local第i-1天j次交易，然后加上今天的差值。</p></blockquote>
+
+<p>And the final code (by blogger <strong>Code_Ganker</strong> from the same link) would look like this:</p>
+
+<pre><code>public int maxProfit(int[] prices) {
+    if(prices==null || prices.length==0)
+        return 0;
+    int[] local = new int[3];
+    int[] global = new int[3];
+    for(int i=0;i&lt;prices.length-1;i++)
+    {
+        int diff = prices[i+1]-prices[i];
+        for(int j=2;j&gt;=1;j--)
+        {
+            local[j] = Math.max(global[j-1]+(diff&gt;0?diff:0), local[j]+diff);
+            global[j] = Math.max(local[j],global[j]);
+        }
+    }
+    return global[2];
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/28/arraylist-implementation/">[Java OOP] Java ArrayList Implementation</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-10-28T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Overview</h1>
+
+<p><strong><a href="http://docs.oracle.com/javase/7/docs/api/java/util/ArrayList.html">Resizable-array</a></strong> implementation of the List interface. (it&rsquo;s actually an <a href="http://stackoverflow.com/a/7382507">array of Object</a>)</p>
+
+<p>It&rsquo;s not synced.</p>
+
+<h2>Underlying design</h2>
+
+<ol>
+<li><p><strong>Random access</strong> – no need to traverse thru all nodes.</p></li>
+<li><p><strong>Circular array</strong> - Array size is pre-defined. Use head and tail to keep track of list position.</p></li>
+<li><p><strong>Insertion and deletion</strong> - Implement <strong>shiftRight()</strong> and shiftLeft() methods.</p></li>
+</ol>
+
+
+<p>Actual code will come later&hellip;</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/23/static-class-inner-class/">[Java OOP] Static Class and Inner Class</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-10-23T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Nested classes</h1>
+
+<p>Both Static class and Inner class are called <strong>nested class</strong>.</p>
+
+<p><a href="http://tutorials.jenkov.com/java/nested-classes.html">The purpose of a nested class</a> is to <strong>clearly group the nested class with its surrounding class</strong>, signaling that these two classes are to be used together.</p>
+
+<p>Now the 2 types:</p>
+
+<ol>
+<li>Static nested classes (also: Static Classes )</li>
+<li>Non-static nested classes (also: Inner Class)</li>
+</ol>
+
+
+<h2>Static Classes</h2>
+
+<p>Declare:</p>
+
+<pre><code>public class Outer {
+    public static class Nested {
+
+    }
+}
+</code></pre>
+
+<p>Instantiate (just like a normal class):</p>
+
+<pre><code>Outer.Nested instance = new Outer.Nested();
+</code></pre>
+
+<h2>Inner Classes</h2>
+
+<pre><code>public class Outer {
+    public class Inner {
+
+    }
+}
+</code></pre>
+
+<p>Instantiate (you MUST have an instance of enclosing class, and look weird the &lsquo;new&rsquo; keyword looks):</p>
+
+<pre><code>Outer outer = new Outer();
+Outer.Inner inner = outer.new Inner();
+</code></pre>
+
+<h1>access level</h1>
+
+<p><strong>Inner class</strong> can access private members in enclosing class (static or non-static).</p>
+
+<pre><code>public class Outer {
+
+    private String text = "I am private!";
+
+    public class Inner {
+
+        public void printText() {
+            System.out.println(text);
+        }
+    }
+}
+</code></pre>
+
+<p><strong>Static class</strong> <a href="http://www.geeksforgeeks.org/static-class-in-java/">cannot access non-static members</a>.</p>
+
+<h1>top-level static class?</h1>
+
+<p>Java has <strong><a href="http://stackoverflow.com/a/7486111">no way of making a top-level class static</a></strong> but you can simulate a static class like this:</p>
+
+<ol>
+<li><p>Declare your class final</p></li>
+<li><p>Make the constructor private</p></li>
+<li><p>Make all the members and functions of the class static</p></li>
+</ol>
+
+
+<p>(this basically is a Singleton)</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/23/java-what-is-exception/">[Java OOP] What Is Java Exception</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-10-23T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>The class</h1>
+
+<p><strong><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Exception.html">The class Exception</a></strong> and its subclasses are a form of <strong>Throwable</strong> that indicates conditions that a reasonable application might want to catch.</p>
+
+<h1>The object</h1>
+
+<p><strong><a href="https://docs.oracle.com/javase/tutorial/essential/exceptions/definition.html">An exception is an event</a></strong>, which occurs during the execution of a program, that disrupts the normal flow of the program&rsquo;s instructions.</p>
+
+<p><strong>When an error occurs</strong> within a method, the method <strong>creates an object and hands it off to the runtime system</strong>. The object, called an <strong>exception object</strong>, contains information about the error(eg. type, state etc).</p>
+
+<h2>throw this object out!</h2>
+
+<p>Creating an exception object and handing it to the runtime system is called <strong>throwing an exception</strong>.</p>
+
+<p>After a method throws an exception, the runtime system (i.e. <strong>JVM</strong>) attempts to find something to handle it. This is <strong>exception handler</strong>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/23/java-vector-arraylist/">[Java OOP] Java Vector and ArrayList</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-10-23T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Vector in Java</h1>
+
+<p>Vector class implements a <strong>growable array</strong> of objects.</p>
+
+<p>It&rsquo;s an array, <strong>not a list</strong>.</p>
+
+<h1>Vector VS ArrayList</h1>
+
+<ol>
+<li>Vectors are synchronized, ArrayLists are not.</li>
+<li>Data Growth Methods (ArrayList grow by &frac12; of its size, while Vector doubles)</li>
+</ol>
+
+
+<p>Usage: <a href="http://stackoverflow.com/a/2986307">ALWAYS use ArrayLists</a></p>
+
+<blockquote><p>The vector was not the part of collection framework, it has been included in collections later. <strong>It can be considered as Legacy code</strong>.</p>
+
+<p>There is nothing about Vector which List collection cannot do. Therefore Vector <strong><a href="http://beginnersbook.com/2013/12/difference-between-arraylist-and-vector-in-java/">should be avoided</a></strong>.</p></blockquote>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/23/Template-method-pattern/">[Java OOP] Template Method Pattern (Abstract Class)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-10-23T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Overview</h1>
+
+<p><strong><a href="https://en.wikipedia.org/wiki/Template_method_pattern">Template method pattern</a> is a behavioral design pattern</strong> that defines the program skeleton of an algorithm in a method, called template method, which <strong>defers some steps to subclasses</strong>.</p>
+
+<p>It lets one <strong>redefine</strong> certain steps of an algorithm without changing the algorithm&rsquo;s structure.</p>
+
+<h2>Usage</h2>
+
+<p>The template method is used in frameworks, where each implements the invariant parts of a domain&rsquo;s architecture.</p>
+
+<h2>Example in Java</h2>
+
+<p>Refer to <a href="https://en.wikipedia.org/wiki/Template_method_pattern#Example_in_Java">code from WIKI</a>:</p>
+
+<pre><code>/**
+ * An abstract class that is common to several games in
+ * which players play against the others, but only one is
+ * playing at a given time.
+ */
+
+abstract class Game {
+ /* Hook methods. Concrete implementation may differ in each subclass*/
+    protected int playersCount;
+    abstract void initializeGame();
+    abstract void makePlay(int player);
+    abstract boolean endOfGame();
+    abstract void printWinner();
+
+    /* A template method : */
+    public final void playOneGame(int playersCount) {
+        this.playersCount = playersCount;
+        initializeGame();
+        int j = 0;
+        while (!endOfGame()) {
+            makePlay(j);
+            j = (j + 1) % playersCount;
+        }
+        printWinner();
+    }
+}
+
+//Now we can extend this class in order 
+//to implement actual games:
+
+class Monopoly extends Game {
+
+    /* Implementation of necessary concrete methods */
+    void initializeGame() {
+        // Initialize players
+        // Initialize money
+    }
+    void makePlay(int player) {
+        // Process one turn of player
+    }
+    boolean endOfGame() {
+        // Return true if game is over 
+        // according to Monopoly rules
+    }
+    void printWinner() {
+        // Display who won
+    }
+    /* Specific declarations for the Monopoly game. */
+
+    // ...
+}
+
+class Chess extends Game {
+
+    /* Implementation of necessary concrete methods */
+    void initializeGame() {
+        // Initialize players
+        // Put the pieces on the board
+    }
+    void makePlay(int player) {
+        // Process a turn for the player
+    }
+    boolean endOfGame() {
+        // Return true if in Checkmate or 
+        // Stalemate has been reached
+    }
+    void printWinner() {
+        // Display the winning player
+    }
+    /* Specific declarations for the chess game. */
+
+    // ...
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/22/reflexive-symmetric-transitive/">[Fundamental] Reflexive, Symmetric and Transitive Rules</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-10-22T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Overview</h1>
+
+<p>O(n) time complexity is both <strong>reflexive, symmetric and transitive</strong>.</p>
+
+<h2>Reflexive Property</h2>
+
+<p>The Reflexive Property states that for every real number x, x = x.</p>
+
+<h2>Symmetric Property</h2>
+
+<p>The Symmetric Property states that for all real numbers x and y,</p>
+
+<p>if x = y, then y = x.</p>
+
+<h2>Transitive Property</h2>
+
+<p>The Transitive Property states that for all real numbers x, y, and z,</p>
+
+<p>if x = y and y = z, then x = z.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/22/polynomial-quadratic-cubic-exponential/">[Fundamental] Polynomial, Quadratic, Cubic and Exponential</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-10-22T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Overview</h1>
+
+<p>A comparison of all <a href="http://pages.cpsc.ucalgary.ca/~eharris/past/cpsc319/w12/tut01/">different time complexity</a>:</p>
+
+<p><img class="middle" src="/assets/images/gnuplot0-1500.png"></p>
+
+<p>Shown above: Constant, <strong>logarithmic</strong>, linear, n-log-n, quadratic, cubic, <strong>exponential</strong> ( eg. O(2<sup>n</sup>) ).</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/22/literals/">[Fundamental] What Is a Literal?</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-10-22T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Overview</h1>
+
+<p><a href="https://en.wikipedia.org/wiki/Literal_(computer_programming">A Literal</a>) is a notation for <strong>representing a fixed value in source code</strong>.</p>
+
+<p>Almost all programming languages have notations for atomic values such as integers, floating-point numbers, and strings.</p>
+
+<p>eg.</p>
+
+<pre><code>int a = 1;
+String s = "cat";
+</code></pre>
+
+<h2>Integer literal</h2>
+
+<p><a href="https://en.wikipedia.org/wiki/Integer_literal">an integer literal</a> is an integer whose value is directly represented in source code.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/22/avoid-protected/">[Java OOP] Why Avoid Using Protected?</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-10-22T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Overview</h1>
+
+<p>Some experienced developers don’t use <strong>protected</strong> since it cannot provide clean data hiding.</p>
+
+<p>Why is that?</p>
+
+<h2>background</h2>
+
+<p>Remembering in the post <strong>[Java OOP] Java modifier and Access Level</strong>, we got this:</p>
+
+<p><img class="middle" src="/assets/images/java-access-level-table.png"></p>
+
+<p><strong>Note</strong>: Java default access setting is &lsquo;No modifier&rsquo;, which is also called &lsquo;<strong>Package Private</strong>&rsquo;.</p>
+
+<p><strong>Another note</strong>: by saying &lsquo;subclass&rsquo;, it means subclass declared in <strong>another package</strong>.</p>
+
+<p>And in <strong>[Design] Composition Over Inheritance</strong>, we know that basically <strong>inheritance breaks encapsulation</strong>.</p>
+
+<h2>the reason</h2>
+
+<ol>
+<li><p>inheritance is seldom the best tool and is not as flexible</p></li>
+<li><p>the protected members form an interface towards subclasses (which is bad)</p></li>
+<li><p>interfaces are tricky to get right and document properly</p></li>
+</ol>
+
+
+<p>So, <a href="http://stackoverflow.com/questions/4913025/reasons-to-use-private-instead-of-protected-for-fields-and-methods">it&rsquo;s better not to make</a> the class inheritable and instead make sure it&rsquo;s as flexible as possible (and no more) by using other means.</p>
+
+<h2>A excellent answer</h2>
+
+<p>A excellent answer <a href="http://programmers.stackexchange.com/questions/162643/why-is-clean-code-suggesting-avoiding-protected-variables">from Sam Brand</a>:</p>
+
+<ol>
+<li><p>They tend to lead to <strong><a href="https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it">YAGNI</a></strong> issues. Unless you have a descendant class that actually does stuff with the protected member, make it private.</p>
+
+<blockquote><p><strong>&ldquo;You aren&rsquo;t gonna need it&rdquo;</strong> (acronym: YAGNI) is a principle of extreme programming (XP) that states a programmer should not add functionality until deemed necessary.</p></blockquote></li>
+<li><p>They tend to lead to <strong><a href="https://en.wikipedia.org/wiki/Liskov_substitution_principle">LSP</a></strong> issues. Protected variables generally have some intrinsic invariance associated with them (or else they&rsquo;d be public). Inheritors then need to maintain those properties, which people can screw up or willfully violate.</p>
+
+<blockquote><p><strong>Substitutability</strong> is a principle in OOP. It states that if S is a subtype of T, then objects of type T may be replaced with objects of type S without altering any of the desirable properties of that program</p>
+
+<p><strong>Liskov substitution principle (LSP)</strong> is a particular definition of a subtyping relation introduced by Barbara Liskov in 1987</p></blockquote></li>
+<li><p>They tend to violate <strong><a href="https://en.wikipedia.org/wiki/Open/closed_principle">OCP</a></strong>. If the base class makes too many assumptions about the protected member, or the inheritor is too flexible with the behavior of the class, it can lead to the base class' behavior being modified by that extension.</p>
+
+<blockquote><p><strong>open/closed principle</strong> states &ldquo;software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification&rdquo;.</p>
+
+<p>That is, such an entity can allow its behaviour to be extended without modifying its source code.</p>
+
+<p>This is especially valuable in a production environment, where changes to source code may necessitate code reviews, unit tests, and other such procedures to qualify it for use in a product</p></blockquote></li>
+<li><p>They tend to lead to inheritance for extension rather than composition. This tends to lead to tighter coupling, more violations of <strong><a href="https://en.wikipedia.org/wiki/Single_responsibility_principle">SRP</a></strong>, more difficult testing, and a slew of other things that fall within the &lsquo;favor composition over inheritance&rsquo; discussion.</p></li>
+</ol>
+
+
+<blockquote><p><strong>single responsibility principle</strong> states that every class should have responsibility over a single part of the functionality provided by the software, and that responsibility should be entirely encapsulated by the class. All its services should be narrowly aligned with that responsibility</p></blockquote>
+
+<h1>An example</h1>
+
+<p>ClassA in packageA:</p>
+
+<pre><code>package packA;
+
+import packB.ClassB;
+
+public class ClassA {
+
+    protected int val = 10;
+
+    protected String getColor() {
+        return "colored";
+    }
+
+    public static void main(String[] args) {
+        ClassA ins = new ClassA();
+        System.out.println("val is " + ins.val);
+        System.out.println("color is " + ins.getColor());
+        System.out.println();
+
+        ClassB ins2 = new ClassB();
+        System.out.println("val is " + ins2.val);
+        System.out.println("color is " + ins2.getColor());
+    }
+}
+</code></pre>
+
+<p>ClassB in packageB:</p>
+
+<pre><code>package packB;
+
+import packA.ClassA;
+
+public class ClassB extends ClassA {
+
+    public ClassB() {
+        val = 5;
+    }
+
+    public String getColor() {
+        return super.getColor();
+    }
+}
+</code></pre>
+
+<p>Execution result:</p>
+
+<pre><code>val is 10
+color is colored
+
+val is 5
+color is colored
+</code></pre>
+
+<p>The code shows how <strong>ClassB</strong> is able to access 1 <strong>protected variable</strong> and 1 <strong>protected method</strong>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/3">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/index.html">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_3&size=158x21'></script><section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

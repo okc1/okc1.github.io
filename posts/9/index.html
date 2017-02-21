@@ -1,0 +1,906 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Website KPI There are 3 interesting phases of a web site from an end-user performance perspective. First Impression
+OnLoad
+Fully Loaded Time. Loading &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/9/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/14/speed-up-web-page-3/">[Design] Speed Up Webpage for Slow Connection (3)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-14T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Website KPI</h3>
+
+<p>There are <a href="https://community.compuwareapm.com/community/display/PUB/Best+Practices+on+Web+Site+Performance+Optimization">3 interesting phases</a> of a web site from an end-user performance perspective.</p>
+
+<ol>
+<li>First Impression</li>
+<li>OnLoad</li>
+<li>Fully Loaded Time.</li>
+</ol>
+
+
+<h3>Loading Time</h3>
+
+<p><strong>Question: what percentage of the time a user spends waiting for your page to load is spent after the HTML comes back to their browser</strong>?</p>
+
+<p>It is typically <strong><a href="http://www.sitepoint.com/seven-mistakes-that-make-websites-slow/">over 90%</a></strong>.</p>
+
+<p>Most of the time users spend waiting on your website is spent after the HTML page has been retrieved by their browser.</p>
+
+<h4>Fetching the HTML is just the beginning</h4>
+
+<p><strong>In a nutshell, browsers parse your page’s HTML, sequentially discovering its assets</strong> (such as scripts, stylesheets, and images), requesting and then either parsing and executing them or displaying them as appropriate.</p>
+
+<p>But these assets are not simply fetched all at once. Instead, the <strong>browser opens a limited number of connections to the server(s)</strong> referenced by the page. There is <strong>overhead involved in establishing TCP and HTTP connections</strong>, and some <strong>unavoidable latency</strong> in pushing the request and response bytes back and forth across the network.</p>
+
+<p>So, in general, round trips between the browser and server are expensive. The structure of the HTML markup, the number and the ordering of its assets, are absolutely critical factors in its performance.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/14/speed-up-web-page-2/">[Design] Speed Up Webpage for Slow Connection (2)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-14T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>(&hellip; continued from last post)</p>
+
+<h4>9. Use a Content Delivery Network (CDN)</h4>
+
+<p>Your site’s speed is greatly affected by where the user’s location is, relative to your web server. The farther away they are, the more distance the data being transmitted has to travel. Having your content cached <strong>across multiple, strategically placed geographical locations</strong> helps take care of this problem.</p>
+
+<p>A CDN will often make your operating cost a little higher, but you definitely gain a speed bonus. Check out MaxCDN or <strong>Amazon Simple Storage Service (Amazon S3)</strong>.</p>
+
+<h4>10. Optimize Web Caching</h4>
+
+<p>Along with using caching systems, you should create websites that utilize <strong>web caching</strong> as much as possible. Web caching is when files are <strong>cached by the web browser</strong> for later use. Things that browsers can cache include CSS files, JavaScript files, and images.</p>
+
+<p>Aside from the basics, such as putting CSS and JavaScript code that are used in multiple pages in external files, there are many ways to make sure that you are caching your files in the most efficient way possible.</p>
+
+<p>For example, you can set HTTP response headers such as Expires and Last-Modified to reduce the need of re-downloading certain files when the user comes back to your site. To learn more, read about <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html">caching in HTTP</a> and <a href="https://developers.google.com/speed/docs/insights/LeverageBrowserCaching?csw=1#LeverageBrowserCaching">leveraging browser caching</a>.</p>
+
+<p>To set up HTTP Expires headers in Apache, read this tutorial on adding future expires headers.</p>
+
+<h4>Other mentions</h4>
+
+<ol>
+<li><p><strong>Avoid Resizing Images in HTML</strong> (using HTML’s width and height attributes), for the sake of smaller file size.</p></li>
+<li><p><strong>Optimize Image Sizes by Using the Correct File Format</strong>. Eg. JPG format often displays photographic images at smaller file sizes than PNG.</p></li>
+<li><p><strong>Optimize the Way You Write Code</strong>. For example, instead of using (h1)(em)Your heading(em)(h1), you can easily use CSS to make your headings italics.</p>
+
+<p> Writing code efficiently not only reduces file sizes of your HTML and CSS documents, but also makes it easier to maintain.</p></li>
+</ol>
+
+
+<p>Ref: <a href="http://sixrevisions.com/web-development/site-speed-performance/">http://sixrevisions.com/web-development/site-speed-performance/</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/14/speed-up-web-page-1/">[Design] Speed Up Webpage for Slow Connection (1)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-14T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="www.geeksforgeeks.org/amazon-interview-set-72-campus-sde-1">ref</a></p>
+
+<h3>Question</h3>
+
+<blockquote><p>Suppose you are handling Amazon website and you have 10 MB size home page. Optimize the homepage for a customer who has 100 kbps internet connection.</p>
+
+<p>Further he asked for the customer who has 100 mbps internet connection.</p></blockquote>
+
+<h3>Reading</h3>
+
+<p><a href="http://sixrevisions.com/web-development/site-speed-performance/">This</a> is a very nice article about website speedup. Below is the full quoted text.</p>
+
+<h4>1. Defer Loading Content When Possible</h4>
+
+<p>Ajax allows us to build web pages that can be <strong>asynchronously updated</strong> at any time. This means that instead of reloading an entire page when a user performs an action, we can simply update parts of that page.</p>
+
+<p>We can use an image gallery as an example. Image files are big and heavy; they can slow down page-loading speeds of web pages. Instead of loading all of the images when a user first visits the web page, we can just display thumbnails of the images and then when the user clicks on them, we can asynchronously request the full-size images from the server and update the page. This way, if a user only wants to see a few pictures, they don’t have to suffer waiting for all of the pictures to download. This development pattern is called <strong>lazy loading</strong>.</p>
+
+<p><strong>Ajax/web development libraries</strong> like jQuery, Prototype, and MooTools can make deferred content-loading easier to implement.</p>
+
+<h4>2. Use External JS and CSS Files</h4>
+
+<p>When the user first loads your web page, the browser will cache external resources like CSS and JavaScript files. Thus, instead of inline JavaScript and CSS files, it’s best to <strong>place them in external files</strong>.</p>
+
+<p>Using inline CSS also increases the rendering time of a web page; having everything defined in your main CSS file lets the browser do less work when rendering the page, since it already knows all the style rules that it needs to apply.</p>
+
+<p><strong>As a bonus</strong>, using external JavaScript and CSS files makes site maintenance easier because you only need to maintain global files instead of code scattered in multiple web pages.</p>
+
+<h4>3. Use Caching Systems</h4>
+
+<p>If you find that your site is connecting to your database in order to create the same content, it’s time to start using a <strong>caching system</strong>. By having a caching system in place, your site will only have to create the content once instead of creating the content every time the page is visited by your users. Don’t worry, caching systems periodically refresh their caches depending on how you set it up — so even constantly-changing web pages (like a blog post with comments) can be cached.</p>
+
+<p><strong>Popular content management systems</strong> like WordPress and Drupal will have <strong>static caching features</strong> that convert dynamically generated pages to static HTML files to reduce unnecessary server processing. For WordPress, check out <a href="https://wordpress.org/plugins/wp-super-cache/">WP Super Cache</a> (one of the six critical WordPress plugins which, claimed by the author, enjoyed a improvement by 259.1% for content-heavy pages). Drupal has a page-caching feature in the core.</p>
+
+<p>There are also <strong>database caching and server-side scripts caching systems</strong> that you can install on your web server (if you have the ability to do so). For example, PHP has extensions called PHP accelerators that optimize performance through caching and various other methods; one example of a <a href="http://en.wikipedia.org/wiki/PHP_accelerator">PHP accelerator</a> is APC. <a href="http://en.wikipedia.org/wiki/Database_caching">Database caching</a> improves performance and scalability of your web applications by reducing the work associated with database read/write/access processes; <strong><a href="http://www.memcached.org/">memcached</a></strong>, for example, caches frequently used database queries.</p>
+
+<h4>8. Load JavaScript at the End of Your Document</h4>
+
+<p>It’s best if you have your scripts loading at the end of the page rather than at the beginning. It allows for the browser to render everything before getting started with the JavaScript. This makes your web pages feel more responsive because the way JavaScript works is that it blocks anything below it from rendering until it has finished downloading. If possible, reference JavaScript right before the closing (body) tag of your HTML documents. To learn more, read about deferring the loading of JavaScript.</p>
+
+<p>(to be continued&hellip;)</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/13/sort-part-and-make-whole-array-sorted/">[LinkedIn] Sort Part to Make Entire Array Sorted</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-13T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.geeksforgeeks.org/minimum-length-unsorted-subarray-sorting-which-makes-the-complete-array-sorted/">link</a></p>
+
+<blockquote><p>Given an unsorted array arr[0..n-1] of size n, find the minimum length subarray arr[s..e] such that sorting this subarray makes the whole array sorted.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>The solution from <a href="http://www.geeksforgeeks.org/minimum-length-unsorted-subarray-sorting-which-makes-the-complete-array-sorted/">gfg</a> is definitely good, but I find <a href="http://stackoverflow.com/a/15855670">this graphic explanation</a> a really great resource.</p>
+
+<p>The idea is, find min and max in the unsorted proportion, and trim the original array.</p>
+
+<h3>Code</h3>
+
+<p>not written.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/13/minimum-adjustments/">[Google] Minimum Adjustments</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-13T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=6212066786410496">link</a></p>
+
+<blockquote><p>Given an integer array, adjust each integers so that the difference of every adjacent integers are not greater than a given number target.</p>
+
+<p>If the array before adjustment is A, the array after adjustment is B, you should minimize the sum of |A[i]-B[i]|</p>
+
+<p>Given [1,4,2,3] and target=1, one of the solutions is [2,3,2,3], the minimal adjustment cost is 2.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>This is a difficult DP. Now we define 2D array like this:</p>
+
+<blockquote><p>dp[i][j]: the minimal adjust cost on changing A[i] to j</p></blockquote>
+
+<p>And the equation:</p>
+
+<blockquote><p>dp[i][j] = min{dp[i-1][k] + |j-A[i]|} s.t. |k-j| &lt;= target</p></blockquote>
+
+<p>Refer to the post by <a href="http://www.careercup.com/question?id=6212066786410496">simon.zhangsm</a></p>
+
+<h3>Code</h3>
+
+<p>Not written.</p>
+
+<p>Available at <a href="http://lintcode.com/en/problem/minimum-adjustment-cost/#">OJ</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/13/combination-of-factors/">[LinkedIn] Unique Combination of Factors (因式分解)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-13T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.mitbbs.com/article_t1/JobHunting/32803907_0_1.html">link</a></p>
+
+<blockquote><p>A question by dongfeiwww:</p>
+
+<p>打印一个数的所有乘数组合，从大到小，不要有重复</p>
+
+<p>Print all unique combinations of factors of a positive integer. For example given 24:</p></blockquote>
+
+<pre><code>24*1
+12*2
+8*3
+6*4
+6*2*2
+4*3*2
+3*2*2*2
+</code></pre>
+
+<h3>Solution</h3>
+
+<p>Simple DFS.</p>
+
+<h3>Code</h3>
+
+<pre><code>public List&lt;List&lt;Integer&gt;&gt; factorCombinations(int n) {
+    List&lt;List&lt;Integer&gt;&gt; ans = new ArrayList&lt;List&lt;Integer&gt;&gt;();
+    helper(ans, n, n / 2, new ArrayList&lt;Integer&gt;());
+    return ans;
+}
+
+private void helper(List&lt;List&lt;Integer&gt;&gt; ans, int num, int largestFactor,
+        List&lt;Integer&gt; path) {
+    if (num == 1) {
+        ans.add(new ArrayList&lt;Integer&gt;(path));
+        return;
+    }
+    for (int i = largestFactor; i &gt; 1; i--) {
+        if (num % i == 0) {
+            path.add(i);
+            helper(ans, num / i, i, path);
+            path.remove(path.size() - 1);
+        }
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/13/Sum-integer-weighted-by-depth/">[LinkedIn] Sum of Integer Weighted by Depth</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-13T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=5139875124740096">link</a></p>
+
+<pre><code>/** 
+* Given a nested list of integers, returns the sum of all integers in the list weighted by their depth 
+* For example, given the list {(1,1),2,(1,10)} the function should return 10 (four 1's at depth 2, one 2 at depth 1) 
+* Given the list {1,{4,{6}}} the function should return 27 (one 1 at depth 1, one 4 at depth 2, and one 6 at depth 3) 
+*/ 
+public int depthSum (List&lt;NestedInteger&gt; input) 
+{ // ur implementation here} 
+
+
+** 
+* This is the interface that represents nested lists. 
+* You should not implement it, or speculate about its implementation. 
+*/ 
+public interface NestedInteger 
+{ 
+/** @return true if this NestedInteger holds a single integer, rather than a nested list */ 
+boolean isInteger(); 
+
+/** @return the single integer that this NestedInteger holds, if it holds a single integer 
+* Return null if this NestedInteger holds a nested list */ 
+Integer getInteger(); 
+
+/** @return the nested list that this NestedInteger holds, if it holds a nested list 
+* Return null if this NestedInteger holds a single integer */ 
+List&lt;NestedInteger&gt; getList(); 
+}
+</code></pre>
+
+<h3>Solution</h3>
+
+<p>DFS recurse.</p>
+
+<h3>Code</h3>
+
+<p>The algo:</p>
+
+<pre><code>public int depthSum(List&lt;NestedInteger&gt; input, int weight) {
+    // ur implementation here
+    int sum = 0;
+    for (NestedInteger ni : input) {
+        if (ni.isInteger()) {
+            sum += ni.getInteger() * weight;
+        } else {
+            sum += depthSum(ni.getList(), weight + 1);
+        }
+    }
+    return sum;
+}
+</code></pre>
+
+<p>Interface and Impl:</p>
+
+<pre><code>/*
+ * This is the interface that represents nested lists. You should not implement
+ * it, or speculate about its implementation.
+ */
+interface NestedInteger {
+    /**
+     * @return true if this NestedInteger holds a single integer, rather than a
+     *         nested list
+     */
+    boolean isInteger();
+
+    /**
+     * @return the single integer that this NestedInteger holds, if it holds a
+     *         single integer Return null if this NestedInteger holds a nested
+     *         list
+     */
+    Integer getInteger();
+
+    /**
+     * @return the nested list that this NestedInteger holds, if it holds a
+     *         nested list Return null if this NestedInteger holds a single
+     *         integer
+     */
+    List&lt;NestedInteger&gt; getList();
+}
+
+class NestedIntegerImpl implements NestedInteger {
+
+    int num;
+    List&lt;NestedInteger&gt; list = new ArrayList&lt;NestedInteger&gt;();
+
+    public NestedIntegerImpl(int number) {
+        num = number;
+        list = null;
+    }
+
+    public NestedIntegerImpl(List&lt;NestedInteger&gt; inputList) {
+        num = -1;
+        list = inputList;
+    }
+
+    @Override
+    public boolean isInteger() {
+        return list == null;
+    }
+
+    @Override
+    public Integer getInteger() {
+        if (isInteger()) {
+            return num;
+        }
+        return -1;
+    }
+
+    @Override
+    public List&lt;NestedInteger&gt; getList() {
+        return list;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/12/executives-schedule/">[LinkedIn] Executive's Schedule</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-12T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.mitbbs.com/article_t/JobHunting/32884889.html">link</a></p>
+
+<blockquote><p>Develop an algorithm to schedule an executive&rsquo;s day, given a list of people
+the executive has to meet with, the amount of time they request to see the
+executive, and the priority of the meeting.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Refer to <strong>[Question] 0-1 Knapsack Problem</strong>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/11/isomorphic-strings/">[LinkedIn] Isomorphic Strings</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-11T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=5389627422670848">link</a></p>
+
+<blockquote><p>Given two (dictionary) words as Strings, determine if they are isomorphic.</p>
+
+<p>Two words are called isomorphic if the letters in one word can be remapped to get the second word. Remapping a letter means replacing all occurrences of it with another letter while the ordering of the letters remains unchanged. No two letters may map to the same letter, but a letter may map to itself.</p>
+
+<p>Example:</p></blockquote>
+
+<pre><code>given "foo", "app"; returns true 
+we can map 'f' -&gt; 'a' and 'o' -&gt; 'p' 
+
+given "bar", "foo"; returns false 
+we can't map both 'a' and 'r' to 'o' 
+
+given "turtle", "tletur"; returns true 
+we can map 't' -&gt; 't', 'u' -&gt; 'l', 'r' -&gt; 'e', 'l' -&gt; 'u', 'e' -'r' 
+
+given "ab", "ca"; returns true 
+we can map 'a' -&gt; 'c', 'b'
+</code></pre>
+
+<h3>Solution</h3>
+
+<p>My first thought was: map char to char, then check in the hashmap. However, <strong>this will not work</strong>!</p>
+
+<pre><code>input: abc, pzz
+check a -&gt; p
+check b -&gt; z
+check c -&gt; z
+</code></pre>
+
+<p>Using a hashmap <strong> does not show us </strong>whether 2 chars match to the same char__. In above example, b and c both match to z.</p>
+
+<p><strong>Best Solution</strong>, suggested by <a href="http://www.careercup.com/question?id=5389627422670848">urik</a>:</p>
+
+<blockquote><p>HashMap (char, firstSeenIndice) for each string. The encoding of firstSeenIndices shud match.</p>
+
+<p>E.g. Foo and app both encode to 011</p>
+
+<p>Abcd and hole both encode to 0123</p></blockquote>
+
+<h3>Code</h3>
+
+<pre><code>public boolean isomorphic(String s, String t) {
+    if (s.length() != t.length()) {
+        return false;
+    }
+    return (sequence(s).equals(sequence(t)));
+}
+
+private String sequence(String s) {
+    HashMap&lt;Character, Integer&gt; map = new HashMap&lt;Character, Integer&gt;();
+    StringBuilder sb = new StringBuilder();
+
+    for (int i = 0; i &lt; s.length(); i++) {
+        if (map.containsKey(s.charAt(i))) {
+            sb.append(map.get(s.charAt(i)));
+        } else {
+            map.put(s.charAt(i), i);
+        }
+    }
+    return sb.toString();
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/11/Web-server-application-server/">[Design] Application Server vs. Web Server</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-11T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Overview</h2>
+
+<p>A Web server <strong>exclusively handles HTTP requests</strong>, whereas an application server <strong>serves business logic</strong> to application programs through any number of protocols (including HTTP).</p>
+
+<h4>Example: Apache Tomcat</h4>
+
+<p>web server + servlet container</p>
+
+<h4>Example: Glassfish</h4>
+
+<p><strong>application server</strong> (that supports EJB, JSF, JSP and servlets)</p>
+
+<h3>Apache Tomcat</h3>
+
+<p>Apache Tomcat is <a href="http://stackoverflow.com/a/2469984">a web server and</a> a Web container/Servlet container/JSP container (having all these names). It is used for strictly web-based applications but does not include the entire suite of capabilities of Java EE, thus not application server.</p>
+
+<p>Note: <strong>Tomcat is <a href="http://okckd.github.io/blog/2014/08/05/Web-server-application-server/">web container</a></strong> where as Apache is web server.</p>
+
+<h3>Servlet</h3>
+
+<p><a href="https://tomcat.apache.org/tomcat-5.5-doc/servletapi/javax/servlet/Servlet.html">A servlet</a> is <strong>a small Java program that runs within a Web server</strong>. Servlets receive and respond to requests from Web clients, usually across HTTP.</p>
+
+<h3>Glassfish</h3>
+
+<p>Tomcat is not Java EE container, but only a servlet container. <a href="http://stackoverflow.com/a/23563455">If you plan to</a> use full Java EE (which includes security and many other things), you have to switch from Tomcat to some of <strong>full Java EE application servers</strong>. Glassfish is one of them, others are TomEE, WildFly, IBM Websphere, Oracle Weblogic etc.</p>
+
+<h3>Web application</h3>
+
+<p><a href="http://www.service-architecture.com/articles/application-servers/j2ee_web_server_or_container.html">A Web application</a> runs within a <strong>Web container</strong> of a <strong>Web server</strong>. The Web container provides the runtime environment through components that provide naming context and life cycle management. A Web server <strong>may</strong> work with an EJB server to provide some of those services.</p>
+
+<p>Web applications are composed of web components and other data such as HTML pages. Web components can be <strong>servlets, JSP pages</strong> created with the JavaServer Pages™ technology, web filters, and web event listeners. These components execute in a web server and may respond to HTTP requests from web clients.</p>
+
+<h3>Application server VS. Web server, in short</h3>
+
+<p><strong>Web server</strong> just serves the web pages and it cannot enforce any application logic.</p>
+
+<p><strong>Application server</strong> maintains the application logic and serves the web pages in response to user request.</p>
+
+<p>That means application server can do both application logic maintanence and web page serving.</p>
+
+<p><strong>Final conclusion</strong>: Application server also contains the web server.</p>
+
+<blockquote><p>Application server = Web Server + EJB container.</p></blockquote>
+
+<h3>Web server Detail</h3>
+
+<p>A <a href="http://www.javaworld.com/article/2077354/learn-java/app-server-web-server-what-s-the-difference.html">Web server</a> <strong>handles the HTTP protocol</strong>. When the Web server receives an HTTP request, it responds with an HTTP response, such as sending back an HTML page.</p>
+
+<p>To process a request, a Web server may <strong>respond with a static HTML page</strong>, or delegate the <strong>dynamic response</strong> such as CGI scripts, JSPs (JavaServer Pages), servlets, ASPs (Active Server Pages), server-side JavaScripts, or some other server-side technology.</p>
+
+<p>Web server is used only for Jsp and Servlets and static functionality. It doesn’t support EJB and JMS and JAAS.</p>
+
+<h3>Application server Detail</h3>
+
+<p>An <a href="http://www.javaworld.com/article/2077354/learn-java/app-server-web-server-what-s-the-difference.html">Application server</a> <strong>exposes business logic to client applications</strong> through various protocols, possibly including HTTP. The clients can include GUIs (graphical user interface) running on a PC, a Web server, or even other application servers.</p>
+
+<p>In most cases, the server exposes this business logic through a component API, such as the EJB (Enterprise JavaBean) component model found on J2EE (Java 2 Platform, Enterprise Edition) application servers.</p>
+
+<h3>Example</h3>
+
+<p>There&rsquo;s <a href="http://www.javaworld.com/article/2077354/learn-java/app-server-web-server-what-s-the-difference.html">a nice example</a>: online store that provides real-time pricing.</p>
+
+<h4>Scenario 1: Web server</h4>
+
+<p>The Web server takes your request, then passes it to a server-side program able to handle the request. The server-side program looks up the pricing information from a database or a flat file. Once retrieved, the server-side program uses the information to formulate the HTML response, then the Web server sends it back to your Web browser.</p>
+
+<p>To summarize, a Web server simply processes HTTP requests <strong>by responding with HTML pages</strong>.</p>
+
+<h4>Scenario 2: Web server with an application server</h4>
+
+<p>Scenario 2 resembles Scenario 1 in that the Web server still delegates the response generation to a script. However, you can now put the business logic for the pricing lookup onto an application server.</p>
+
+<p>With that change, instead of the script knowing how to look up the data and formulate a response, the script can simply call the application server&rsquo;s lookup service. The script can then use the service&rsquo;s result when the script generates its HTML response.</p>
+
+<p>In this scenario, the application server serves the business logic for looking up a product&rsquo;s pricing information. That functionality doesn&rsquo;t say anything about display or how the client must use the information. Instead, the client and application server send data back and forth. When a client calls the application server&rsquo;s lookup service, the service simply looks up the information and returns it to the client.</p>
+
+<p>By separating the pricing logic from the HTML response-generating code, the pricing logic becomes far more reusable between applications. A second client, such as a cash register, could also call the same service as a clerk checks out a customer. In contrast, in Scenario 1 the pricing lookup service is not reusable because the information is embedded within the HTML page. To summarize, in Scenario 2&rsquo;s model, the Web server handles HTTP requests by replying with an HTML page while the application server serves application logic by processing pricing and availability requests.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/10">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/8">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_3&size=158x21'></script><section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

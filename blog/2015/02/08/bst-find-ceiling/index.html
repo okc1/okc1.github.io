@@ -1,0 +1,388 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Google] BST Find Ceiling - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link A binary search tree is given. Find the ceiling of given key. Eg. 8 3 12 2 6 10 15 4 Ceiling is defined as: Ceil Value Node: Node with &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2015/02/08/bst-find-ceiling/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Google] BST Find Ceiling</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-08T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=20229674">link</a></p>
+
+<blockquote><p>A binary search tree is given. Find the ceiling of given key. Eg.</p></blockquote>
+
+<pre><code>                    8
+               3          12
+           2      6    10    15
+                4
+</code></pre>
+
+<blockquote><p>Ceiling is <a href="http://www.geeksforgeeks.org/floor-and-ceil-from-a-bst/">defined</a> as:</p>
+
+<p>Ceil Value Node: Node with smallest data larger than the key value.</p>
+
+<p>Testing:</p></blockquote>
+
+<pre><code>key - 13 =&gt; 15 
+key - 4 =&gt;6 
+key - 8 =&gt;10
+</code></pre>
+
+<h3>Solution</h3>
+
+<p><strong>A really interesting idea</strong> is to go top-to-bottom, and update value in every <strong>left turn only</strong>. Suggested by the <a href="http://www.careercup.com/question?id=20229674">top answer</a>.</p>
+
+<p>It&rsquo;s a very very tricky solution. I&rsquo;ve never seen this b4.</p>
+
+<h3>Code</h3>
+
+<p>Not my code.</p>
+
+<pre><code>public int findCeil(TreeNode node, int num, int found) {
+    if (node != null) {
+        if (num &gt;= node.val)
+            return findCeil(node.right, num, found);
+        else
+            return findCeil(node.left, num, node.val);
+    } else
+        return found;
+}
+</code></pre>
+
+<p>Now input:</p>
+
+<blockquote><p>TreeNode tree = Common.constructBstFromPreorder(new int[] { 40, 20, 10, 30, 60, 50, 70 });</p></blockquote>
+
+<p>Output:</p>
+
+<pre><code>The ceiling of 0 is  10
+The ceiling of 1 is  10
+The ceiling of 2 is  10
+The ceiling of 3 is  10
+The ceiling of 4 is  10
+The ceiling of 5 is  10
+The ceiling of 6 is  10
+The ceiling of 7 is  10
+The ceiling of 8 is  10
+The ceiling of 9 is  10
+The ceiling of 10 is  20
+The ceiling of 11 is  20
+The ceiling of 12 is  20
+The ceiling of 13 is  20
+The ceiling of 14 is  20
+The ceiling of 15 is  20
+The ceiling of 16 is  20
+The ceiling of 17 is  20
+The ceiling of 18 is  20
+The ceiling of 19 is  20
+The ceiling of 20 is  30
+The ceiling of 21 is  30
+The ceiling of 22 is  30
+The ceiling of 23 is  30
+The ceiling of 24 is  30
+The ceiling of 25 is  30
+The ceiling of 26 is  30
+The ceiling of 27 is  30
+The ceiling of 28 is  30
+The ceiling of 29 is  30
+The ceiling of 30 is  40
+The ceiling of 31 is  40
+The ceiling of 32 is  40
+The ceiling of 33 is  40
+The ceiling of 34 is  40
+The ceiling of 35 is  40
+The ceiling of 36 is  40
+The ceiling of 37 is  40
+The ceiling of 38 is  40
+The ceiling of 39 is  40
+The ceiling of 40 is  50
+The ceiling of 41 is  50
+The ceiling of 42 is  50
+The ceiling of 43 is  50
+The ceiling of 44 is  50
+The ceiling of 45 is  50
+The ceiling of 46 is  50
+The ceiling of 47 is  50
+The ceiling of 48 is  50
+The ceiling of 49 is  50
+The ceiling of 50 is  60
+The ceiling of 51 is  60
+The ceiling of 52 is  60
+The ceiling of 53 is  60
+The ceiling of 54 is  60
+The ceiling of 55 is  60
+The ceiling of 56 is  60
+The ceiling of 57 is  60
+The ceiling of 58 is  60
+The ceiling of 59 is  60
+The ceiling of 60 is  70
+The ceiling of 61 is  70
+The ceiling of 62 is  70
+The ceiling of 63 is  70
+The ceiling of 64 is  70
+The ceiling of 65 is  70
+The ceiling of 66 is  70
+The ceiling of 67 is  70
+The ceiling of 68 is  70
+The ceiling of 69 is  70
+The ceiling of 70 is  2147483647
+The ceiling of 71 is  2147483647
+The ceiling of 72 is  2147483647
+The ceiling of 73 is  2147483647
+The ceiling of 74 is  2147483647
+The ceiling of 75 is  2147483647
+The ceiling of 76 is  2147483647
+The ceiling of 77 is  2147483647
+The ceiling of 78 is  2147483647
+The ceiling of 79 is  2147483647
+The ceiling of 80 is  2147483647
+The ceiling of 81 is  2147483647
+The ceiling of 82 is  2147483647
+The ceiling of 83 is  2147483647
+The ceiling of 84 is  2147483647
+The ceiling of 85 is  2147483647
+The ceiling of 86 is  2147483647
+The ceiling of 87 is  2147483647
+The ceiling of 88 is  2147483647
+The ceiling of 89 is  2147483647
+The ceiling of 90 is  2147483647
+The ceiling of 91 is  2147483647
+The ceiling of 92 is  2147483647
+The ceiling of 93 is  2147483647
+The ceiling of 94 is  2147483647
+The ceiling of 95 is  2147483647
+The ceiling of 96 is  2147483647
+The ceiling of 97 is  2147483647
+The ceiling of 98 is  2147483647
+The ceiling of 99 is  2147483647
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-02-08T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/q-google/'>q-google</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2015/02/08/bst-find-ceiling/" data-via="" data-counturl="http://okc1.github.io/blog/2015/02/08/bst-find-ceiling/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/02/08/bg-data-common-elements-lists/" title="Previous Post: [Design] Big Data - Find Common Elements in 2 Lists ">&laquo; [Design] Big Data - Find Common Elements in 2 Lists </a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/02/08/difference-internet-and-www/" title="Next Post: [Design] Difference: Internet and the Web ">[Design] Difference: Internet and the Web  &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+<!--div>
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_0&type=footer&size=728x90'></script>
+</div>
+<div>
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_1&type=footer&size=728x90'></script>
+</div-->
+    
+<script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_2&type=footer&size=728x90'></script>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_3&size=158x21'></script><section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

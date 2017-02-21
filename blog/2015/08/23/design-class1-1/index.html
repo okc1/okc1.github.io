@@ -1,0 +1,392 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[NineChap System Design] Class 1.1: Overview - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Overview defination the process of defining the architecture, components, modules, interfaces and data to satisfy specified requirements. conceptual &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2015/08/23/design-class1-1/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[NineChap System Design] Class 1.1: Overview</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-08-23T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1>Overview</h1>
+
+<h2>defination</h2>
+
+<p>the process of defining the <strong>architecture, components, modules, interfaces and data</strong> to satisfy specified <strong>requirements</strong>.</p>
+
+<ol>
+<li>conceptual design (macro)</li>
+<li>logical design</li>
+<li>physical design (micro)</li>
+</ol>
+
+
+<h3>Top-down design</h3>
+
+<p>Eg. MS Office, Huawei Security System</p>
+
+<h3>Bottom-up design</h3>
+
+<p>Most start-up use, MVP first using Medetor + MongoDb.</p>
+
+<h2>5 steps (SNAKE Principle):</h2>
+
+<ol>
+<li><strong>Scenario</strong>: case/interface - input</li>
+<li><strong>Necessary</strong>: constrain/hypothesis - input</li>
+<li><strong>Application</strong>: service/algorithm - output</li>
+<li><strong>Kilobit</strong>: data - output</li>
+<li><strong>Evolve</strong> - solution</li>
+</ol>
+
+
+<h1>A top-down example</h1>
+
+<p>Example one: <strong>design a radio</strong></p>
+
+<h2>Step One, Scenario</h2>
+
+<ol>
+<li><p>brain storm</p>
+
+<ol>
+<li>register/log in</li>
+<li>play music</li>
+<li>recommendation</li>
+</ol>
+</li>
+<li><p>prioritize</p>
+
+<ol>
+<li>play music
+
+<ol>
+<li>Get channel</li>
+<li>select a channel</li>
+<li>play</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+
+
+<h2>Step Two, Necessary</h2>
+
+<ol>
+<li><p>ask</p>
+
+<ol>
+<li>total user - 100,000,000</li>
+<li><strong>daily users - 1,000,000</strong></li>
+</ol>
+</li>
+<li><p>predict</p>
+
+<ol>
+<li>user analysis</li>
+<li>Traffic analysis</li>
+<li>Memory analysis</li>
+<li>QPS</li>
+</ol>
+</li>
+</ol>
+
+
+<p>Details:</p>
+
+<ol>
+<li><p>user analysis</p>
+
+<blockquote><p>Avg Concurrent users = daily users <strong>/ 5</strong> = 200,000</p>
+
+<p>Peak Concurrent users = concurrent user <strong>* 3</strong> = 600,000</p></blockquote>
+
+<p> considering your product may grow in the next 3 month:</p>
+
+<blockquote><p>Max Peak users in 3 month = Peak users <strong>* 10</strong> = 6,000,000</p></blockquote></li>
+<li><p>Traffic analysis</p>
+
+<blockquote><p>Request of new music per user: 1 music/min</p>
+
+<p>Music size = 3MB</p>
+
+<p>Max peak traffic (in 3 months) = 6,000,000 * 3MB / 60 = 300GB/s</p></blockquote></li>
+<li><p>Memory analysis</p>
+
+<blockquote><p>Memory per user (metadata) = 10KB</p>
+
+<p>Max daily memory = 1,000,000 * 10 * 10 = 100 million KB = 100GB</p>
+
+<p>(10 times of avg daily user)</p></blockquote></li>
+</ol>
+
+
+<h2>Step Three, Application</h2>
+
+<ol>
+<li>Replay the case, one service for each</li>
+<li>Merge the services</li>
+</ol>
+
+
+<p><img class="middle" src="/assets/images/design-class1-basic-receptionist.png"></p>
+
+<h2>Step Four, Kilobit: data</h2>
+
+<ol>
+<li><p>Append 1 dataset for each service</p>
+
+<p> Eg. User service: stability, more addition, less modify and deletion.</p>
+
+<p> Eg. Channel Service: high concurrency, MongoDB</p>
+
+<p> Eg. Music Service: MP3 File Systems</p></li>
+</ol>
+
+
+<p><img class="middle" src="/assets/images/design-class1-reco-5.png"></p>
+
+<h2>Last Step, Evolve</h2>
+
+<ol>
+<li><p>Better: constrains</p>
+
+<p> eg. able to handle 300GB/s traffic?</p></li>
+<li><p>Broader: new cases</p>
+
+<p> share music? delete user account?</p></li>
+<li><p>Deeper: details design</p></li>
+</ol>
+
+
+<p>From views of <strong>Performance, Scalability and Robustness</strong>.</p>
+
+<p><img class="middle" src="/assets/images/design-class1-snake.jpg"></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-08-23T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ninechap/'>ninechap</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2015/08/23/design-class1-1/" data-via="" data-counturl="http://okc1.github.io/blog/2015/08/23/design-class1-1/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/07/23/how-is-pipe-implemented-unix/" title="Previous Post: [Design] How is Pipe implemented in Unix/Linux ">&laquo; [Design] How is Pipe implemented in Unix/Linux </a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/08/23/design-class1-2/" title="Next Post: [NineChap System Design] Class 1.2: An Example ">[NineChap System Design] Class 1.2: An Example  &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+<!--div>
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_0&type=footer&size=728x90'></script>
+</div>
+<div>
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_1&type=footer&size=728x90'></script>
+</div-->
+    
+<script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_2&type=footer&size=728x90'></script>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_3&size=158x21'></script><section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

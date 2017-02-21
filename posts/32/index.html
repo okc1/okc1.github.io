@@ -1,0 +1,906 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link 给定一个非负整数a（不超过106），是否存在整数b，使得a和b的乘积全为1。如果存在，返回最小的乘积的位数。如果不存在，返回-1。 样例：a=3，存在b=37，使得3*37=111，则函数应返回3（111的位数）。 Solution There&rsquo;s 1 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/32/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/15/Product-all-ones/">[Google] Product All 1s</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-15T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.itint5.com/oj/#18">link</a></p>
+
+<blockquote><p>给定一个非负整数a（不超过10<sup>6</sup>），是否存在整数b，使得a和b的乘积全为1。如果存在，返回最小的乘积的位数。如果不存在，返回-1。</p>
+
+<p>样例：a=3，存在b=37，使得3*37=111，则函数应返回3（111的位数）。</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>There&rsquo;s 1 equation of mod operation, which is helpful:</p>
+
+<blockquote><p>(a * b) mod x = ((mx+a') * (nx+b')) mod x = (a' mod x) * (b' mod x) = (a mod x) * (b mod x)</p>
+
+<p>i.e.  (a * b) mod x = (a mod x) * (b mod x)</p></blockquote>
+
+<p>Altough <a href="http://www.itint5.com/discuss/136/%E8%BF%99%E9%A2%98%E6%88%91%E8%B6%85%E6%97%B6%E4%BA%86%EF%BC%8C%E8%AF%B7%E9%97%AE%E5%A6%82%E4%BD%95%E7%BC%A9%E7%9F%AD%E5%A4%84%E7%90%86%E6%97%B6%E9%97%B4">I don&rsquo;t understand why</a> does it contribute to the incredibly short solution code posted below. I can&rsquo;t solve this question, frankly speaking.</p>
+
+<h3>Code</h3>
+
+<pre><code>int findMinAllOne(int a) {
+    if (a &lt; 0 || (a % 10) % 2 == 0 || a % 10 == 5)
+        return -1;
+
+    int ans = 1;
+    for (int p = 1; p != 0; p %= a) {
+        p = 10 * p + 1;
+        ++ans;
+    }
+    return a == 1 ? ans - 1 : ans;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/15/Knight-tour-jumpable-question/">[ItInt5] 跳马问题加强版</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-15T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.itint5.com/oj/#12">link</a></p>
+
+<blockquote><p>有一个无限大的棋盘，棋盘上有一匹马，马可以从长宽分别为p和q的矩形一个角移动到对角。即假设马当前的位置为(x,y)，那么下一步可以移动到(x+p,y+q)，(x+p,y-q)，(x-p,y+q)，(x-p,y-q)，(x+q,y+p)，(x+q,y-p)，(x-q,y+p)或者(x-q,y-p)这8个位置。</p>
+
+<p>问马是否能从坐标(x,y)按照上述移动规则移动到坐标(x2,y2)。</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><a href="http://www.itint5.com/discuss/16/%E8%B7%B3%E9%A9%AC%E9%97%AE%E9%A2%98%E5%8A%A0%E5%BC%BA%E7%89%88">ref</a></p>
+
+<ol>
+<li>计算dx=x-x2,dy=y-y2。</li>
+<li>求出p,q的最大公约数g，如果dx或者dy不能被g整除，那么很显然无解。</li>
+<li>将p,q,dx,dy都除以g，现在p和q互质了。</li>
+<li>注意到马可以跳到点(0,2p)（先(p,q)跳一下，然后(p,-q)跳一下），重复这个过程，马可以跳到任意(0,2kp)的点，由于对称性，也可以跳到任意(2kp,0)的点。
+5.下面这一步很关键，由于p,q互质，那么存在x,y满足px+qy=1（扩展欧几里德定理）。这样，马可以跳到(0,2)和和(2,0)，由于对称性，马可以跳到任意坐标都为偶数点。</li>
+<li>有了上面的结论，其实只用考虑(0,0),(0,1),(1,0),(1,1)这4个点是否可达。(0,0)是可达的，(0,1)和(1,0)由于对称性只用考虑(0,1)。</li>
+<li>对于(1,1)，其实是永远可达的。如果q,p都为奇数，可以先跳到(1+p,1+q)的点（利用5中的结论，可以跳到都是偶数的点），然后(-p,-q)跳到(1,1)。如果p,q一奇一偶，可以先跳到(1+p+q,1+q+p)的点（利用5中的结论），然后(-p,-q),(-q,-p)两步跳到(1,1)。</li>
+<li>对于(0,1)，如果p,q一奇一偶，那么也是永远可达的（同7可证）。如果p,q都是奇数，那么是不可能跳到(0,1)的，因为两个奇数不管怎么加减交替运算都不可能变成一奇一偶。</li>
+</ol>
+
+
+<p>所以最后的结论就是：<strong>第3步之后，如果p,q一奇一偶，那么可达。否则dx,dy同奇或同偶才可达</strong>。</p>
+
+<p>gcd的代码 (concise version):</p>
+
+<pre><code>int gcd(int a, int b) {
+    return b ? gcd(b, a % b) : a;
+}
+</code></pre>
+
+<h3>Code</h3>
+
+<p><strong>not written by me</strong></p>
+
+<pre><code>int gcd(int a, int b){
+    return b? gcd(b, a%b) : a;
+}
+
+bool canJump(int p, int q, int x, int y, int x2, int y2) {
+    if(p==0 &amp;&amp; q==0) return (x==x2)&amp;&amp;(y==y2);
+    int xDist = x2 - x, yDist = y2 - y;
+    int g1 = gcd(p, q);
+    if( xDist % g1 || yDist % g1) 
+        return false;
+    p = p/g1;
+    q = q/g1;
+    xDist = xDist/g1;
+    yDist = yDist/g1;
+    if((p-q)%2 ) 
+        return true;
+    else 
+        return (xDist-yDist)%2 == 0;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/15/Greatest-common-divisor/">[Question] Greatest Common Divisor</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-15T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Get GCD in more efficient code</p></blockquote>
+
+<h3>Code</h3>
+
+<p>this is 掉渣天。</p>
+
+<pre><code>public int gcd(int a, int b) {
+    return b == 0 ? a : gcd(b, a % b);
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/15/Alphabet-table/">[Google] Alphabet Table (`)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-15T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://blog.sina.com.cn/s/blog_979956cc0101i67x.html">link</a></p>
+
+<blockquote><p>每一种语言，都有自己的字母表，类似英文的a-z，但是顺序不相同。例如，有的语言可能是z是第一个之类的。现在给定这个语言的字典，请分析这个字典，得到这个语言的字母表的顺序。</p>
+
+<p>例如：有如下的字母：C CAC CB BCC BA。 经过分析，得到字母表为C->A->B。</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><a href="http://page.renren.com/601882592/channel-noteshow-927705419">http://page.renren.com/601882592/channel-noteshow-927705419</a></p>
+
+<ol>
+<li>C 2. CAC 3. CB 4. BCC 5. BA 经过分析，得到字母表为C->A->B。</li>
+</ol>
+
+
+<p>分析 字典序相邻的位置的字符串，只会有如下两种情况：</p>
+
+<p>（1）排在前面的字符串是下一个串的子串，如C与CAC</p>
+
+<p>（2）两个字符串具有第一对不相同的字符对，如CAC和CBB，第一个不相同的字符对为（A，B），这是就要求A在字母表中的顺序在B前面。对于后面字符并没有要求，如并不要求第二个不相同的字符对（C，B）中的C在字母表中的顺序在B前面。</p>
+
+<p>所以按照第（2）种情况建图，然后对该有向无环图求拓扑排序即可。</p>
+
+<p>So this becomes a Topology Sorting question.</p>
+
+<h3>Code</h3>
+
+<p><strong>not written by me</strong></p>
+
+<pre><code>pair&lt;char,char&gt;  constructEdge(const string &amp; src1, const string &amp; src2)
+{
+     int min_len = min(src1.length(), src2.length());
+     int i = 0;
+     while(i &lt; min_len &amp;&amp; src1[i] == src2[i]){
+           i++;
+     }
+     if(i &lt; min_len){
+           return  make_pair(src1[i], src2[i]);
+     }else{
+           return  make_pair('\0','\0');
+     }
+}
+//-1, 0, 1
+int  alphaTable(const vector&lt;string&gt; &amp;  dict, vector&lt;char&gt; &amp; alpha_table)
+{
+     unordered_map&lt;char,set&lt;char&gt; &gt;  edges;
+     set&lt;char&gt; nodes;
+     for(const string &amp; word : dict){
+          for(char c : word){
+              nodes.insert(c);
+          }
+     }
+     unordered_map&lt;char,int&gt;  in_degree;
+     for(int i = 1; i &lt; dict.length(); i++){
+          pair edge = constructEdge(dict[i-1],dict[i]);
+          if(edge.first != '\0'){
+              edges[edge.first].insert(edge.second);
+              in_degree[edge.second]++;
+          }
+     }
+     queue&lt;char&gt;  q;
+     for(char node : nodes){
+         if(in_degree[node] == 0){
+              q.push(node);
+         }
+     }
+     alpha_table.clear();
+     int result = 0;
+     while(!q.empty()){
+        if(q.size() &gt; 1){
+            result = 1;
+        }
+        char  c = q.front();
+        q.pop();
+        alpha_table.push_back(c);
+        for(char node : edges[c]){
+             in_degree[node] --;
+             if(in_degree[node] == 0){
+                  q.push(node);
+             }
+         }
+     }//while
+     if(alpha_table.size() &lt; nodes.size()){
+         result = -1;
+     }
+     return result;    
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/14/Large-string-find-substring/">[Facebook] Query Search (HashMap, Suffix Array)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-14T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.itint5.com/oj/#15">link</a></p>
+
+<blockquote><p>有一个长度为n的字符串str，有非常多的关键字query（长度不超过10），需要判断每个关键字是否是str的子串。</p>
+
+<p>注意：query是动态的输入进行查询的，预先并不知道所有的query。</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>Best idea of the solution is to use Suffix Tree</strong> and similar alternatives.</p>
+
+<p><strong>Solution 1</strong> is <a href="http://www.itint5.com/discuss/27/%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E9%A2%84%E5%A4%84%E7%90%86">an nice idea using HashMap</a>.</p>
+
+<blockquote><p>我是把所有长度&lt; =10的子串，哈希一下存放到10个哈希表中。</p>
+
+<p>至于哈希函数的选取，随便选一个应该都不会超时。</p></blockquote>
+
+<p><strong>Solution 2</strong> is using &lsquo;<strong>suffix array</strong>&rsquo;. The most important point of this idea is to only make a substring instance <strong>for every 10 characters</strong>.</p>
+
+<blockquote><p>只用=10的子串。然后二分查找</p>
+
+<p>用=10的字串排序即可，如包含更短的串会使得预处理变成O(10nlg(10n))。 查找的复杂度可能没什么变化，使用&lt;=10会是O(lg(10n))，而只使用=10子串初始化的话，因为可能还要进行短query跟长子串间的前缀比较，复杂度会是O(10lgn)，稍微有点提高。</p></blockquote>
+
+<p>Which is to say, using substring length == 10, we comsume <strong>less time for pre-processing</strong>, and a little <strong>more time when querying</strong>.</p>
+
+<h3>Code</h3>
+
+<p><strong>Suffix tree solution from <a href="http://www.itint5.com/discuss/203/%E8%B6%85%E7%AE%80%E5%8D%95%E7%9A%84prefix-array-java-code">here</a></strong>, note written by me</p>
+
+<pre><code>private List&lt;String&gt; prefixList;
+
+// pre-process the large string
+public void initWithString(String str) {
+    Set&lt;String&gt; strs = new HashSet&lt;String&gt;();
+
+    for(int i = 0; i &lt; str.length(); ++i) {
+        strs.add(str.substring(i, Math.min(str.length(), i + 10)));
+    }
+    prefixList = new ArrayList&lt;String&gt;(strs);
+    Collections.sort(prefixList);
+}
+
+// find the query substring
+public boolean existSubString(String query) {
+    int low = 0;
+    int high = prefixList.size() - 1;
+    while(low &lt;= high) {
+        int mid = (low + high) / 2;
+        int comp = prefixList.get(mid).compareTo(query);
+        if(comp == 0)  {
+            return true;
+        }
+        if(prefixList.get(mid).startsWith(query)) {
+            return true;
+        }
+        if(comp &gt; 0) //mid &gt; query
+        {
+            high = mid - 1;
+        }else{
+            low = mid + 1;
+        }
+    }
+    return false;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/12/circus-man-ordering/">[CC150v4] 9.7 Circus Tower Routine</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-12T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>A circus is designing a tower routine consisting of people standing atop one another’s shoulders. For practical and aesthetic reasons, each person must be both shorter and lighter than the person below him or her. Given the heights and weights of each person in the circus, write a method to compute the largest possible number of people in such a tower.</p>
+
+<p>EXAMPLE:</p>
+
+<p>Input: (ht, wt): (65, 100) (70, 150) (56, 90) (75, 190) (60, 95) (68, 110)</p>
+
+<p>Output: The longest tower is length 6 and includes from top to bottom: (56, 90) (60,95) (65,100) (68,110) (70,150) (75,190)</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>The solution given in the book is unclear, but it&rsquo;s a very simple idea which is pointed out <a href="http://www.careercup.com/question?id=9339758">here</a> and <a href="http://hawstein.com/posts/9.7.html">here</a>.</p>
+
+<ol>
+<li>sort the input persons by &lsquo;height&rsquo;. O(nlogn)</li>
+<li>find the longest increasing &lsquo;weight&rsquo; sequence in the sorted list. This can be done in O(nlogn) with DP.</li>
+</ol>
+
+
+<h3>Code</h3>
+
+<p><strong>written by me</strong></p>
+
+<pre><code>public int longestTower(List&lt;Man&gt; list) {
+    Collections.sort(list, new ManComparator());
+    // now find the longest increasing sequence of 'weight' property
+    int len = list.size();
+    int maxLen = 1;
+    int[] dp = new int[len];
+    for (int i = 1; i &lt; len; i++) {
+        dp[i] = 1;
+        for (int j = 0; j &lt; i; j++) {
+            if (list.get(i).weight &gt; list.get(j).weight) {
+                dp[i] = Math.max(dp[i], dp[j] + 1);
+            }
+        }
+        maxLen = Math.max(maxLen, dp[i]);
+    }
+    return maxLen;
+}
+
+class ManComparator implements Comparator&lt;Man&gt; {
+    @Override
+    public int compare(Man o1, Man o2) {
+        return o1.height - o2.height;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/12/From-ClientServer-to-Multi-Tier/">[Design] From Client/Server to Multi-Tier</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-12T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Client/Server</h3>
+
+<p><a href="http://wiki.remobjects.com/wiki/From_Client/Server_to_Multi-Tier">link</a></p>
+
+<p>Client have <strong>direct and full access to the physical database</strong> based on their login string. This is the major weakness of the Client/Server paradigm. The system is vulnerable to attacks.</p>
+
+<p>Because all business logic was <strong>implemented on the client application</strong>, changes to business logic means redeploying new client software to all users again.</p>
+
+<p>Another drawback is that the network interface provided by most back-end database systems has been designed for access over the local network, using fast connections and no firewalls. Nowadays, many clients’ software needs to run from employee&rsquo;s home offices or from airport lounges. In many cases such connections <strong>will be unreliable or inefficient</strong> to work on.</p>
+
+<h3>Multi-Tier</h3>
+
+<p>The communication between clients and middle-tier server is <strong>no longer tied to a protocol dictated by the database</strong> (no database drivers or connection string on the client). Client applications can authenticate with <strong>a username and password (compare to login string)</strong>.</p>
+
+<p>Communication can be done via HTTP or HTTPS, alternatively or additionally, open standards such as <strong>SOAP, OData and JSON can be used to expose a middle tier</strong> to different clients using protocols that are widely understood.</p>
+
+<p>Biggest advantage is that <strong>all the business logic is transferred from client application into the middle tier</strong>. And the middle tier holds the final control over what data goes in or out.</p>
+
+<p>Still, there&rsquo;re still some business logic on the client tier as well. But it only <strong>complement the rules</strong> that are enforced on the server. Eg. Twitter enforce the 140 character limit locally, and stop you from sending a tweet that is too long (by graying out the Send button).</p>
+
+<p>That means, client side checks are for convenience, and for convenience only; the middle tier server is and must be authoritative for what is allowed and what is not.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/11/max-circular-subarray/">[ItInt5] Maximum Circular Subarray Sum</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-11T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.itint5.com/oj/#9">link</a></p>
+
+<blockquote><p>Given n numbers (both +ve and -ve), arranged in a circle, fnd the maximum sum of consecutive number</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>First pass: find max subarray sum.</p>
+
+<p>Second pass: find min subarray sum, and subtract it from total sum.</p>
+
+<p>Suggested on <a href="http://www.geeksforgeeks.org/maximum-contiguous-circular-sum/">G4G</a></p>
+
+<h3>Code</h3>
+
+<p><strong>written by me</strong></p>
+
+<pre><code>public int maxConsSum2(int[] arr) {
+    if (arr == null || arr.length == 0) {
+        return 0;
+    }
+    int soFar = 0;
+    int max = 0;
+    int totalSum = 0;
+    for (Integer i: arr) {
+        totalSum += i;
+        // totalSum is used in next step
+        soFar += i;
+        soFar = Math.max(soFar, 0);
+        max = Math.max(max, soFar);
+    }
+    int min = 0;
+    // calculate the min subarray
+    for (Integer i: arr) {
+        soFar += i;
+        soFar = Math.min(soFar, 0);
+        min = Math.min(min, soFar);
+    }
+    return Math.max(max, totalSum - min);
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/11/Tcp-3way-handshake/">[Design] TCP 3-Way Handshake</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-11T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Handshaking</h3>
+
+<p><strong><a href="http://en.wikipedia.org/wiki/Handshaking">Handshaking</a> is an automated process of negotiation</strong> that dynamically sets parameters of a communications channel established between two entities before normal communication over the channel begins.</p>
+
+<p>It is usually a process that takes place when a computer is about to communicate with a foreign device to establish rules for communication.</p>
+
+<h3>TCP three-way handshake</h3>
+
+<p><strong><a href="http://www.inetdaemon.com/tutorials/internet/tcp/3-way_handshake.shtml">TCP three-way handshake</a></strong> is the method used by TCP set up a TCP/IP connection over an Internet Protocol based network.</p>
+
+<p>It&rsquo;s commonly referred to as &ldquo;<strong>SYN-SYN-ACK</strong>&rdquo;.</p>
+
+<p><img class="middle" src="/assets/images/3way-Tcp-handshake.png"></p>
+
+<h3>Process</h3>
+
+<ol>
+<li>Host A sends a TCP <strong>SYN</strong>chronize packet to Host B</li>
+<li>Host B receives A&rsquo;s SYN</li>
+<li>Host B sends a <strong>SYN</strong>chronize-<strong>ACK</strong>nowledgement</li>
+<li>Host A receives B&rsquo;s SYN-ACK</li>
+<li>Host A sends <strong>ACK</strong>nowledge</li>
+<li>Host B receives ACK.</li>
+<li>TCP socket connection is ESTABLISHED.</li>
+</ol>
+
+
+<p>Alternatively, there&rsquo;s a good illustration on <a href="http://en.wikipedia.org/wiki/Handshaking">wiki</a>:</p>
+
+<blockquote><p>Establishing a normal TCP connection requires three separate steps:</p>
+
+<ol>
+<li><p>The first host (Alice) sends the second host (Bob) a &ldquo;synchronize&rdquo; (SYN) message with its own sequence number x, which Bob receives.</p></li>
+<li><p>Bob replies with a synchronize-acknowledgment (SYN-ACK) message with its own sequence number y and acknowledgement number x + 1, which Alice receives.</p></li>
+<li><p>Alice replies with an acknowledgment message with acknowledgement number y + 1, which Bob receives and to which he doesn&rsquo;t need to reply.</p></li>
+</ol>
+</blockquote>
+
+<h3>Two more thing</h3>
+
+<p>Note that <strong>FTP, Telnet, HTTP, HTTPS, SMTP, POP3, IMAP, SSH</strong> and any other protocol that rides over TCP <strong>also has a three way handshake</strong> performed as connection is opened.</p>
+
+<p>TCP &lsquo;rides&rsquo; on top of Internet Protocol (IP) in the protocol stack. IP handles <strong>IP addressing and routing</strong> and gets the packets from one place to another, but TCP manages the <strong>actual communication sockets</strong> between endpoints.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/11/Count-complete-binary-tree/">[Google] Count Complete Binary Tree</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-11T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.itint5.com/oj/#4">link</a></p>
+
+<blockquote><p>给定一棵<a href="http://baike.baidu.com/view/427107.htm">完全二叉树</a>（complete binary tree）的根结点，统计该树的结点总数。</p>
+
+<p>提示：使用O(n)的递归算法统计二叉树的结点数是一种显而易见的方法，此题中请利用完全二叉树的性质，想出效率更高的算法。</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Similar to binary search, O(lgn) complexity.</p>
+
+<p>The idea is, sum up 1 branch of nodes at a time. Do it recursively. The following code is refactored and written by me.</p>
+
+<h3>Code</h3>
+
+<p><strong>read it from <a href="http://www.itint5.com/discuss/125/%E5%A4%A7%E7%89%9B%E8%AF%B7%E6%8C%87%E7%82%B9%EF%BC%8C%E6%95%B0%E6%8D%AE37%E8%BF%90%E8%A1%8C%E8%B6%85%E6%97%B6%EF%BC%88%E9%99%84%E4%BB%A3%E7%A0%81%EF%BC%89">here</a></strong></p>
+
+<pre><code>//使用TreeNodeUtil.getLeftChildNode(TreeNode)获得左儿子结点
+//使用TreeNodeUtil.getRightChildNode(TreeNode)获得右儿子结点
+//使用TreeNodeUtil.isNullNode(TreeNode)判断结点是否为空
+public class CountCompleteBinayTreeNodes {
+    public int countNodes(TreeNode root) {
+        if (TreeNodeUtil.isNullNode(root)) {
+            return 0;
+        }
+        int hl = height(TreeNodeUtil.getLeftChildNode(root));
+        int hr = height(TreeNodeUtil.getRightChildNode(root));
+        if (hl == hr) {
+            return (int) Math.pow(2, hl) + countNodes(TreeNodeUtil.getRightChildNode(root));
+        } else {
+            return (int) Math.pow(2, hr) + countNodes(TreeNodeUtil.getLeftChildNode(root));
+        }
+    }
+
+    private int height(TreeNode root) {
+        int count = 0;
+        while (!TreeNodeUtil.isNullNode(root)) {
+            root = TreeNodeUtil.getLeftChildNode(root);
+            count++;
+        }
+        return count;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/33">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/31">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_3&size=158x21'></script><section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

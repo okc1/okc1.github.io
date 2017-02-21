@@ -1,0 +1,1190 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link Compare two version numbers version1 and version2.
+If version1 &gt; version2 return 1, if version1 &lt; version2 return -1, otherwise &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/8/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/12/Compare-Version-Numbers/">[LeetCode 165] Compare Version Numbers</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-12T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/compare-version-numbers/">link</a></p>
+
+<div class="question-content">
+              <p></p><p>Compare two version numbers <i>version1</i> and <i>version2</i>.<br>
+If <i>version1</i> &gt; <i>version2</i> return 1, if <i>version1</i> &lt; <i>version2</i> return -1, otherwise return 0.</p>
+
+<p>You may assume that the version strings are non-empty and contain only digits and the <code>.</code> character.<br>
+The <code>.</code> character does not represent a decimal point and is used to separate number sequences.<br>
+For instance, <code>2.5</code> is not "two and a half" or "half way to version three", it is the fifth second-level revision of the second first-level revision.</p>
+
+<p>Here is an example of version numbers ordering:</p>
+<pre>0.1 &lt; 1.1 &lt; 1.2 &lt; 13.37</pre>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/ts">@ts</a> for adding this problem and creating all test cases.</p><p></p>
+              
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/string/">String</a>
+                  
+                </span>
+              
+            </div>
+
+
+<h3>Analysis</h3>
+
+<p>I&rsquo;ve seen a couple of interesting ideas on other people&rsquo;s blogs, including <a href="http://www.programcreek.com/2014/03/leetcode-compare-version-numbers-java/">one</a> that uses String.split() to convert input to an array, and <a href="http://www.meetqun.com/thread-3331-1-1.html">this one</a> which uses 2 pointers to compare.</p>
+
+<p>My solution might seem more intuitive for some. See below for my solution.</p>
+
+<h3>Solution</h3>
+
+<p>The idea is to identify what the current number is (before end of string, or before the next &lsquo;.&rsquo;). If there&rsquo;s no more string, value = 0, so the case of (1.0, 1) essentially equals. Without further ado, let&rsquo;s look at the code.</p>
+
+<h3>Code</h3>
+
+<pre><code>public class Solution {
+    public int compareVersion(String version1, String version2) {
+        if (version1 == null || version2 == null) {
+            return 0;
+        }
+        return helper(version1, version2);
+    }
+
+    private int helper(String v1, String v2) {
+        if (v1.length() == 0 &amp;&amp; v2.length() == 0) {
+            return 0;
+        }
+
+        int num1 = 0;
+        int num2 = 0;
+
+        if (v1.length() != 0) {
+            int p1 = 0;
+            while (p1 &lt; v1.length() &amp;&amp; v1.charAt(p1) != '.') {
+                p1++;
+            }
+            num1 = Integer.parseInt(v1.substring(0, p1));
+            if (p1 &lt; v1.length()) p1++;
+            v1 = v1.substring(p1);
+        }
+
+        if (v2.length() != 0) {
+            int p2 = 0;
+            while (p2 &lt; v2.length() &amp;&amp; v2.charAt(p2) != '.') {
+                p2++;
+            }
+            num2 = Integer.parseInt(v2.substring(0, p2));
+            if (p2 &lt; v2.length()) p2++;
+            v2 = v2.substring(p2);
+        }
+
+        if (num1 != num2) {
+            return (num1 - num2) / Math.abs(num1 - num2);
+        } else {
+            return helper(v1, v2);
+        }
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/11/Fraction-to-Recurring-Decimal/">[LeetCode 166] Fraction to Recurring Decimal</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-11T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/fraction-to-recurring-decimal/">link</a></p>
+
+<div class="question-content">
+              <p></p><p>Given two integers representing the numerator and denominator of a fraction, return the fraction in string format.</p>
+
+<p>If the fractional part is repeating, enclose the repeating part in parentheses.</p>
+<p>
+For example,
+</p><ul>
+<li>Given numerator = 1, denominator = 2, return "0.5".</li>
+<li>Given numerator = 2, denominator = 1, return "2".</li>
+<li>Given numerator = 2, denominator = 3, return "0.(6)".</li>
+</ul>
+<p></p>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/Shangrila">@Shangrila</a> for adding this problem and creating all test cases.</p><p></p>
+              
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/hash-table/">Hash Table</a>
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/math/">Math</a>
+                  
+                </span>
+</div>
+
+
+<h3>Analysis</h3>
+
+<p>Wow, this is just another incredible question on Leetcode. Quite a few difficult corner cases in the OJ.</p>
+
+<p>Current AC rate is first lowest at 12.4%.</p>
+
+<h3>Solution</h3>
+
+<p>There&rsquo;re 3 things that we must take note:</p>
+
+<ol>
+<li>Handle positive/nagetive cases well. Note that both numerator and denominator can be negative number. And there&rsquo;re also case like:</li>
+</ol>
+
+
+<blockquote><p>1 / -3 = -0.(3)</p></blockquote>
+
+<ol>
+<li>Note that we have to match the repetation of the actual numerator. Not the quotient. What do I mean by that?</li>
+</ol>
+
+
+<blockquote><p>1 / 6 = 0.1(6)</p>
+
+<p>1 / 333 = 0.(003)</p></blockquote>
+
+<ol>
+<li><p>Note below is <strong>how to override the equals() method</strong> (first one is wrong and second is right):</p>
+
+<p> public boolean equals(Pair p) {</p>
+
+<p> }</p>
+
+<p> public boolean equals(Object obj) {</p>
+
+<p> }</p></li>
+</ol>
+
+
+<p><strong>One more thing</strong>: Most other guys' solutions like <a href="http://www.programcreek.com/2014/03/leetcode-fraction-to-recurring-decimal-java/">this</a>, <a href="http://blog.csdn.net/ljiabin/article/details/42025037">this</a> and <a href="http://yuanhsh.iteye.com/blog/2176178">this</a> are using Hashing. It&rsquo;s fine and definitely good. I used linearly search though, which is a small time compromise. I am presenting my code below and please just consider it as something different. Keep in mind it&rsquo;s not the optimized solution.</p>
+
+<h3>Code</h3>
+
+<pre><code>public class Solution {
+    public String fractionToDecimal(int numerator, int denominator) {
+        long quotient = (long) numerator / denominator;
+        long reminder = (long) numerator % denominator;
+        if (reminder == 0) {
+            return String.valueOf(quotient);
+        }
+
+        // The result has 3 parts: sign, integer part, and fraction part
+        // eg. -4 / 3 = -1 and the result of (1/3) = (3)
+        String sign = ((long) numerator * denominator &gt;= 0) ? "" : "-";
+        long integer = Math.abs(quotient);
+        String fraction = fraction(Math.abs((long)reminder), Math.abs((long)denominator));
+
+        // why do we have to seperate sign from integer?
+        // cuz 1 / -3 = -0.(3), while quotient is 0. 
+        // So, we can't simply concatenate quotient with fraction
+        return sign + integer + "." + fraction;
+    }
+
+    String fraction(long num, long denum) {
+        // eg. num = 1, denum = 4, should return "25"
+
+        List&lt;Pair&gt; list = new ArrayList&lt;Pair&gt;();
+        String result = "";
+        while (num != 0) {
+            num *= 10;
+            long digit = num / denum;
+
+            // eg. 1 / 333 = (003), so the pairs would be like this:
+            // {10, 0}, {100, 0}, {1000, 3}, {10, 0}...
+            Pair cur = new Pair(num, digit);
+            num %= denum;
+
+            // now add cur Pair to the list
+            if (list.indexOf(cur) == -1) {
+                list.add(cur);
+            } else {
+                // found a recurring dicimal in the previous output stream
+                int pos = list.indexOf(cur);
+                for (int i = 0; i &lt; pos; i++) {
+                    result += list.get(i).digit;
+                }
+                result += "(";
+                for (int i = pos; i &lt; list.size(); i++) {
+                    result += list.get(i).digit;
+                }
+                result += ")";
+                break;
+            }
+        }
+
+        // if there is recurring digit, the result should have already been generated
+        if (result.length() == 0) {
+            for (Pair p: list) {
+                result += p.digit;
+            }
+        }
+        return result;
+    }
+
+    class Pair {
+        long num;
+        long digit;
+
+        public Pair(long a, long b) {
+            num = a;
+            digit = b;
+        }
+
+        public boolean equals(Object obj) {
+            // note the equals interface passes in (Object obj)
+            // instead of a Pair object
+            Pair p = (Pair) obj;
+            return this.num == p.num &amp;&amp; this.digit == p.digit;
+        }
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/08/Intersection-of-Two-Linked-Lists/">[LeetCode 160] Intersection of Two Linked Lists</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-08T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/intersection-of-two-linked-lists/">link</a></p>
+
+<div class="question-content">
+              <p></p><p>Write a program to find the node at which the intersection of two singly linked lists begins.</p>
+<br>
+<p>For example, the following two linked lists: </p>
+<pre>A:          a1 ? a2
+                   ?
+                     c1 ? c2 ? c3
+                   ?            
+B:     b1 ? b2 ? b3
+</pre>
+<p>begin to intersect at node c1.</p>
+<br>
+<p><b>Notes:</b>
+</p><ul>
+<li>If the two linked lists have no intersection at all, return <code>null</code>.</li>
+<li>The linked lists must retain their original structure after the function returns. </li>
+<li>You may assume there are no cycles anywhere in the entire linked structure.</li>
+<li>Your code should preferably run in O(n) time and use only O(1) memory.</li>
+</ul>
+<p></p>
+
+<p><b>Credits:</b><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/stellari">@stellari</a> for adding this problem and creating all test cases.</p><p></p>
+              
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/linked-list/">Linked List</a>
+                  
+                </span>
+              
+            </div>
+
+
+<h3>Analysis</h3>
+
+<p>This question is very similar to <strong>[LeetCode Plus] Lowest Common Ancestor of Binary Tree (II)</strong>.</p>
+
+<h3>Solution</h3>
+
+<p><a href="http://stackoverflow.com/a/2216683/909524">This</a> is a pretty nice answer. The following explanation is quoted from <a href="http://www.geeksforgeeks.org/write-a-function-to-get-the-intersection-point-of-two-linked-lists/">g4g</a>:</p>
+
+<blockquote><ol>
+<li><p>Get count of the nodes in first list, let count be c1.</p></li>
+<li><p>Get count of the nodes in second list, let count be c2.</p></li>
+<li><p>Get the difference of counts d = abs(c1 – c2)</p></li>
+<li><p>Now traverse the bigger list from the first node till d nodes so that from here onwards both the lists have equal no of nodes.</p></li>
+<li><p>Then we can traverse both the lists in parallel till we come across a common node.</p></li>
+</ol>
+</blockquote>
+
+<h3>Code</h3>
+
+<pre><code>/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        return helper(headA, headB, length(headA) - length(headB));
+    }
+
+    public ListNode helper(ListNode n1, ListNode n2, int offset) {
+        if (offset &lt; 0) {
+            return helper(n2, n1, 0 - offset);
+        }
+        // move n1 to the distance of offset
+        while (offset != 0) {
+            n1 = n1.next;
+            offset--;
+        }
+        while (n1 != null &amp;&amp; n1 != n2) {
+            n1 = n1.next;
+            n2 = n2.next;
+        }
+        return n1;
+    }
+
+    int length(ListNode node) {
+        int len = 0;
+        while (node != null) {
+            node = node.next;
+            len++;
+        }
+        return len;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/07/add-adsense-octopress/">[Octopress] Add Google AdSense to Octopress</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-07T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Apply for Google AdSense</h2>
+
+<p>My first request of AdSense is rejected because of &ldquo;<strong>Site does not comply with Google policies</strong>&rdquo;. I do not know the exact reason, but I did the following things to get it through:</p>
+
+<ol>
+<li><p>I registered a top-level .COM domain name to replace the original github page&rsquo;s domain.</p></li>
+<li><p>I added &ldquo;Privacy Policy&rdquo; page, and added the link to the bottom of each blog post.</p></li>
+<li><p>I re-wrote the &ldquo;About Me&rdquo; page, and added in administrator email address.</p></li>
+<li><p>I updated a few more posts, making it more than 580 posts in total.</p></li>
+<li><p>I set up Google Webmaster Tools, and updated sitemap.xml in the configurations.</p></li>
+<li><p>I resubmitted my request of AdSense again.</p></li>
+</ol>
+
+
+<h2>Put AdSense in your blog</h2>
+
+<ol>
+<li><p>Create a new file: source/_includes/asides/advertise.html</p></li>
+<li><p>Copy and paste the code from AdSense, eg.</p>
+
+<pre><code> &lt;script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"&gt;&lt;/script&gt;
+ &lt;!-- ad-name --&gt;
+ &lt;ins class="adsbygoogle"
+      ...............
+ &lt;script&gt;
+ (adsbygoogle = window.adsbygoogle || []).push({});
+ &lt;/script&gt;
+</code></pre></li>
+<li><p>Go to <strong>_config.yml</strong>, and look for &ldquo;default_asides&rdquo;, then add &ldquo;asides/advertise.html, &rdquo; in the beginning of the array</p>
+
+<pre><code> default_asides: [asides/advertise.html, asides/category_list.html, asides/recent_posts.html, asides/github.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html]
+</code></pre></li>
+<li><p>Now you&rsquo;ve added advertisement in your side menu.</p></li>
+<li><p>Go to <strong>source/_layouts/post.html</strong> and look for:</p>
+
+<pre><code> if site.disqus_short_name and page.comments
+</code></pre></li>
+<li><p>Right <strong>below the article</strong>, and <strong>above the comments</strong>, add your AdSense code, again.</p></li>
+<li><p>Now you&rsquo;ve added advertisement above your comment area.</p></li>
+</ol>
+
+
+<p>Thanks for the effort from <a href="https://www.hi29.net/post/2013/11/30/octopresszen-mo-fang-adsense/">this reference</a>.</p>
+
+<h2>Updates</h2>
+
+<p>Apr 9th update: my re-submission of Google AdSense is not approached, because of &ldquo;not enough content&rdquo;. I don&rsquo;t know what else to do, so I switched to another ad platform.</p>
+
+<p>Apr 11th update: For the first time ever, my blog has more than 1,000 visit per day.</p>
+
+<p><img class="middle" src="/assets/images/google-analytics-20150411.png"></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/07/Min-Stack/">[LeetCode 155] Min Stack</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-07T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/min-stack/">link</a></p>
+
+<div class="question-content">
+              <p></p><p>
+Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
+</p><ul>
+<li>
+push(x) -- Push element x onto stack.
+</li>
+<li>
+pop() -- Removes the element on top of the stack.
+</li>
+<li>
+top() -- Get the top element.
+</li>
+<li>
+getMin() -- Retrieve the minimum element in the stack.
+</li>
+</ul>
+<p></p><p></p>
+              
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/stack/">Stack</a>
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/data-structure/">Data Structure</a>
+                  
+               sn’t look possible to go to left half or right half by doing constant number of comparisons at the mSolution </span>
+</div>
+
+
+<h3>Analysis</h3>
+
+<p>I&rsquo;ve already cover this question in another post <strong>[Question] Min Stack</strong>.</p>
+
+<h3>My Code</h3>
+
+<pre><code>class MinStack {
+
+    Stack&lt;Integer&gt; stack = new Stack&lt;Integer&gt;();
+    Stack&lt;Integer&gt; min = new Stack&lt;Integer&gt;();
+
+    public void push(int x) {
+        stack.push(x);
+        if (min.isEmpty() || min.peek() &gt;= x) {
+            min.push(x);
+        }
+    }
+
+    public void pop() {
+        if (stack.isEmpty()) {
+            return;
+        }
+        int topNum = stack.pop();
+        if (topNum == min.peek()) {
+            min.pop();
+        }
+    }
+
+    public int top() {
+        if (stack.isEmpty()) {
+            return 0;
+        }
+        return stack.peek();
+    }
+
+    public int getMin() {
+        if (min.isEmpty()) {
+            return 0;
+        }
+        return min.peek();
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/07/Maximum-Product-Subarray/">[LeetCode 152] Maximum Product Subarray</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-07T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/maximum-product-subarray/">link</a></p>
+
+<div class="question-content">
+              <p></p><p>
+Find the contiguous subarray within an array (containing at least one number) which has the largest product.
+</p>
+
+<p>
+For example, given the array <code>[2,3,-2,4]</code>,<br>
+the contiguous subarray <code>[2,3]</code> has the largest product = <code>6</code>.
+</p><p></p>
+              
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/array/">Array</a>
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/dynamic-programming/">Dynamic Programming</a>
+                  
+                </span>
+              
+            </div>
+
+
+<h3>Analysis</h3>
+
+<p><strong>This is a pretty difficult question</strong>. It&rsquo;s hard to write bug-free solution if you have never practised before.</p>
+
+<p>So the first idea that comes to me is the case of array element = 0. Why this case? cuz the maximum subarray MUST NOT CONTAIN 0 unless the input is like {-1, 0, -1}. So we could divide array from 0s and calculate max sum seperately. This idea is good, though a little difficult in coding. Read it <a href="http://www.geeksforgeeks.org/maximum-product-subarray/">here</a> or <a href="https://shepherdyuan.wordpress.com/2014/07/23/linkedin-maximum-sumproduct-subarray/">here</a>.</p>
+
+<h3>Solution</h3>
+
+<p>After a bit exploration, I found a must easier apporach, thanks to <a href="http://blog.csdn.net/linhuanmars/article/details/39537283">code ganker</a> and <a href="http://yucoding.blogspot.sg/2014/10/leetcode-quesion-maximum-product.html">Yu</a>. The idea is to simply ALWAYS CALCULATE preMax and preMin by using MAX/MIN(Val1, Val2, Val3) method.</p>
+
+<h3>My Code</h3>
+
+<pre><code>public class Solution {
+    public int maxProduct(int[] A) {
+        if (A == null || A.length == 0) {
+            return 0;
+        } else if (A.length == 1) {
+            return A[0];
+        }
+
+        int preMax = A[0];
+        int preMin = A[0];
+        int max = A[0];
+
+        for (int i = 1; i &lt; A.length; i++) {
+            int temp = preMin;
+            preMin = Math.min(Math.min(preMin * A[i], preMax * A[i]), A[i]);
+            preMax = Math.max(Math.max(temp * A[i], preMax * A[i]), A[i]);
+            max = Math.max(max, preMax);
+        }
+
+        return max;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/07/Find-Minimum-in-Rotated-Sorted-Array-II/">[LeetCode 154] Find Minimum in Rotated Sorted Array II</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-07T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii/">link</a></p>
+
+<div class="question-content">
+              <p></p><blockquote>
+<p><i>Follow up</i> for "Find Minimum in Rotated Sorted Array":<br>
+What if <i>duplicates</i> are allowed?</p>
+
+<p>Would this affect the run-time complexity? How and why?</p>
+</blockquote>
+
+<p>Suppose a sorted array is rotated at some pivot unknown to you beforehand.</p>
+
+<p>(i.e., <code>0 1 2 4 5 6 7</code> might become <code>4 5 6 7 0 1 2</code>).</p>
+
+<p>Find the minimum element.</p>
+
+<p>The array may contain duplicates.</p><p></p>
+              
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/array/">Array</a>
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/binary-search/">Binary Search</a>
+      about/            
+                </span>
+              
+            </div>
+
+
+<h3>Solution</h3>
+
+<p>This question is simply a modified version of previous question. The special cases of the input makes it O(n) worst case complexity.</p>
+
+<h3>My Code</h3>
+
+<pre><code>public class Solution {
+    public int findMin(int[] num) {
+        if (num == null || num.length == 0) {
+            return 0;
+        }
+        return helper(num, 0, num.length - 1);
+    }
+
+    private int helper(int[] num, int left, int right) {
+        if (num[left] &lt; num[right] || left == right) {
+            return num[left];
+        } else if (num[left] == num[right]) {
+            return helper(num, left + 1, right);
+        } else if (left + 1 == right) {
+            return num[right];
+        }
+        int mid = left + (right - left) / 2;
+        if (num[mid] &gt;= num[left]) {
+            return helper(num, mid, right);
+        } else {
+            return helper(num, left, mid);
+        }
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/07/Find-Minimum-in-Rotated-Sorted-Array/">[LeetCode 153] Find Minimum in Rotated Sorted Array</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-07T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/">link</a></p>
+
+<div class="question-content">
+              <p></p><p>Suppose a sorted array is rotated at some pivot unknown to you beforehand.</p>
+
+<p>(i.e., <code>0 1 2 4 5 6 7</code> might become <code>4 5 6 7 0 1 2</code>).</p>
+
+<p>Find the minimum element.</p>
+
+<p>You may assume no duplicate exists in the array.</p><p></p>
+              
+                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
+                <span class="hide">
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/array/">Array</a>
+                  
+                  <a class="btn btn-xs btn-primary" href="/tag/binary-search/">Binary Search</a>
+                  
+                </span>
+              
+            </div>
+
+
+<h3>Analysis</h3>
+
+<p>This question is very similar to <strong>[LeetCode 33] Search in Rotated Sorted Array</strong>. Note a few special cases.</p>
+
+<h3>Solution</h3>
+
+<p>Very good code can be found <a href="http://www.programcreek.com/2014/02/leetcode-find-minimum-in-rotated-sorted-array/">here</a> and <a href="http://www.sanfoundry.com/java-program-find-minimum-element-rotated-sorted-array-using-binary-search-approach/">here</a>.</p>
+
+<h3>My Code</h3>
+
+<pre><code>public class Solution {
+    public int findMin(int[] num) {
+        if (num == null || num.length == 0) {
+            return 0;
+        }
+        return helper(num, 0, num.length - 1);
+    }
+
+    private int helper(int[] num, int left, int right) {
+        if (num[left] &lt;= num[right]) {
+            return num[left];
+        } else if (left + 1 == right) {
+            return num[right];
+        }
+        int mid = left + (right - left) / 2;
+        if (num[mid] &gt; num[left]) {
+            return helper(num, mid, right);
+        } else {
+            return helper(num, left, mid);
+        }
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/15/HBase-and-HDFS/">[Design] HBase and HDFS</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-15T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Overview</h3>
+
+<p><a href="http://hortonworks.com/hadoop/hdfs/">Hadoop Distributed File System</a> (HDFS) is a <strong>Java-based file system</strong> that provides scalable and reliable data storage that is designed to span large clusters of commodity servers. <strong>HDFS, MapReduce</strong>, and YARN form the core of Apache™ Hadoop®.</p>
+
+<p><a href="http://hbase.apache.org/">Apache HBase</a> is the Hadoop database, a distributed, scalable, big data store.</p>
+
+<h4>Hadoop</h4>
+
+<p>Hadoop is <a href="http://stackoverflow.com/a/16930049">basically 2 things</a>, a FS (Hadoop Distributed File System) and a computation framework (MapReduce).</p>
+
+<p>HDFS allows you store huge amounts of data in a distributed (provides faster read/write access) and redundant (provides better availability) manner. And MapReduce allows you to process this huge data in a distributed and parallel manner.</p>
+
+<p>But MapReduce is not limited to just HDFS.</p>
+
+<h4>HDFS and HBase</h4>
+
+<p>Being a FS, HDFS lacks the random read/write capability. It is good for sequential data access. And this is where HBase comes into picture. It is a NoSQL database that runs on top your Hadoop cluster and provides you random real-time read/write access to your data.</p>
+
+<h3>Now, the Comparison</h3>
+
+<p><strong>HDFS is a distributed file system</strong>. <a href="http://qr.ae/BqrVU">ref</a></p>
+
+<ol>
+<li>It is optimized for streaming access of large files. You would typically store files that are in the 100s of MB upwards on HDFS and access them through MapReduce to process them in batch mode.</li>
+<li>HDFS files are write once files. You can append to files in some of the recent versions but that is not a feature that is very commonly used. Consider HDFS files as write-once and read-many files. There is no concept of random writes.</li>
+<li>HDFS doesn&rsquo;t do random reads very well.</li>
+</ol>
+
+
+<p><strong>HBase is a database that stores it&rsquo;s data in a distributed filesystem</strong>.</p>
+
+<p>The filesystem of choice typically is HDFS owing to the tight integration between HBase and HDFS. It doesn&rsquo;t mean that HBase can&rsquo;t work on any other filesystem.</p>
+
+<ol>
+<li>Low latency access to small amounts of data from within a large data set. You can access single rows quickly from a billion row table.</li>
+<li>Flexible data model to work with and data is indexed by the row key.</li>
+<li>Fast scans across tables.</li>
+<li>Scale in terms of writes as well as total volume of data.</li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/14/speed-up-web-page-4/">[Design] Speed Up Webpage for Slow Connection (4)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-14T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>What hijacks your load time</h3>
+
+<h4>1. Too Many HTTP Requests</h4>
+
+<p>This is the single biggest contributor to performance problems in most web pages.</p>
+
+<ol>
+<li><p>Concatenate scripts and stylesheets</p></li>
+<li><p>Combine images with sprites (put common images into a single large image file, then use CSS to position and selectively display the appropriate portion of the sprite image)</p></li>
+<li><p>Use fewer images, more CSS.</p></li>
+</ol>
+
+
+<h4>2. Minimal Client-side Processing</h4>
+
+<ol>
+<li><p>Validation on client. (eg. form input)</p></li>
+<li><p>Use web standards and MVC separation, making a maintainable, accessible, future-proof and max-performance website.</p>
+
+<p> Think of the HTML as the model, the CSS as the view, and the JavaScript as the controller. This separation tends to make code more efficient and maintainable, and makes many optimization techniques much more practical to apply.</p></li>
+<li><p>Push presentation code into the client tier (eg. Charts and graphs — push raw data to the client in JSON format, and use JavaScript and CSS to create pretty graphs.)</p></li>
+<li><p>Leverage Ajax techniques (only requiring small parts of the page to change in response to user actions)</p></li>
+</ol>
+
+
+<h4>3. Low Number of Parallel Requests</h4>
+
+<p>Fetch a script, parse and execute it, then fetch another one&hellip; this will use up all the available connections. There are things you can do to your HTML to allow virtually any browser to make many requests at once, which has a huge impact on latency.</p>
+
+<ol>
+<li><p>Use browser-appropriate domain sharding</p></li>
+<li><p>Use intelligent script loading</p></li>
+<li><p>Leverage Keep-Alive (reuse the same TCP connection for multiple HTTP request/response cycles)</p></li>
+</ol>
+
+
+<h4>4. Failure to leverage browser cache / local storage</h4>
+
+<ol>
+<li><p><a href="http://www.mnot.net/cache_docs/">HTTP cache overview</a></p></li>
+<li><p>Leverage local storage</p></li>
+</ol>
+
+
+<h4>5. Third-party widgets</h4>
+
+<ol>
+<li>Avoid third-party widgets!</li>
+<li>Try to use widgets that provide asynchronous implementations, so their inevitably terrible performance impacts their widget without dragging down your entire UX with it.</li>
+</ol>
+
+
+<h4>7. Failure to Use a Global Network</h4>
+
+<p>Amazon S3.</p>
+
+<p>Ref: <a href="http://www.sitepoint.com/seven-mistakes-that-make-websites-slow/">http://www.sitepoint.com/seven-mistakes-that-make-websites-slow/</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/9">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/7">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_3&size=158x21'></script><section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

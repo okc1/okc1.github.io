@@ -1,0 +1,410 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[LeetCode 132] Palindrome Partitioning II - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link Given a string s, partition s such that every substring of the partition is a palindrome. Return the minimum cuts needed for a &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/05/30/Palindrome-Partitioning-II/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[LeetCode 132] Palindrome Partitioning II</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-30T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/palindrome-partitioning-ii/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>
+Given a string <i>s</i>, partition <i>s</i> such that every substring of the partition is a palindrome.
+</p>
+<p>
+Return the minimum cuts needed for a palindrome partitioning of <i>s</i>.
+</p>
+<p>
+For example, given <i>s</i> = <code>"aab"</code>,<br>
+Return <code>1</code> since the palindrome partitioning <code>["aa","b"]</code> could be produced using 1 cut.
+</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">5</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="red">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is DP, but not traditional DP question</strong></p>
+
+<h4>IT IS DOUBLE DP!</h4>
+
+<p>It is very hard for me to even understand the solution, but <strong>I have found a great analysis from <a href="http://blog.sina.com.cn/s/blog_b9285de20101iwqt.html">peking2&rsquo;s blog</a></strong>.</p>
+
+<blockquote><p>这题一般人一看就是DP，DP公式也很容易推出，算是一道简单的DP。</p>
+
+<p>dp(i) = min( 1+dp(j+1), if substring(i,j) is palindrome)</p>
+
+<p>从以上的分析时间复杂度为O(n<sup>3</sup>), 主要是因为检查回文也需要O(n)的时间。因此这题有意思的一点就是如何降低时间复杂度到O(n<sup>2</sup>)？</p>
+
+<p><strong>其实这题是两个DP混杂在了一起</strong>，这也是这道题最有意思的地方。另外一个DP就是跟检查回文有关了，公式如下</p>
+
+<p>dp(i)(j)=true if s(i)==s(j) &amp;&amp; dp(i+1)(j-1)</p>
+
+<p>也就是说，你要检查一个回文只需要知道头尾的字符相等，并且中间的字串已经成为了回文即可。O(1)复杂度。</p></blockquote>
+
+<p><strong>A more detailed analysis is available in <a href="http://fisherlei.blogspot.sg/2013/03/leetcode-palindrome-partitioning-ii.html">this blog</a></strong>.</p>
+
+<blockquote cite="http://fisherlei.blogspot.sg/2013/03/leetcode-palindrome-partitioning-ii.html">
+
+    <b>[Thoughts]</b>
+    <br>凡是求最优解的，一般都是走DP的路线。这一题也不例外。首先求dp函数，
+    <br>
+    <br>定义函数
+    <br>D[i,n] = 区间[i,n]之间最小的cut数，n为字符串长度
+    <br>
+    <br>&nbsp;a &nbsp; b &nbsp; a &nbsp; b &nbsp; b &nbsp; b &nbsp; a &nbsp; b &nbsp; b &nbsp; a &nbsp; b &nbsp; a
+    <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;i &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;n
+    <br>如果现在求[i,n]之间的最优解？应该是多少？简单看一看，至少有下面一个解
+    <br>
+    <br>
+    <br>&nbsp;a &nbsp; b &nbsp; a &nbsp; b &nbsp; b &nbsp; b &nbsp; a &nbsp; b &nbsp; b &nbsp; a &nbsp; b &nbsp; a
+    <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;i &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    <span style="color: red;">j</span>&nbsp;
+    <span style="color: red;">j+1</span>&nbsp; &nbsp; n
+    <br>
+    <br>此时 &nbsp;D[i,n] = min(D[i, j] + D[j+1,n]) &nbsp;i&lt;=j &lt;n。这是个二维的函数，实际写代码时维护比较麻烦。所以要转换成一维DP。如果每次，从i往右扫描，每找到一个回文就算一次DP的话，就可以转换为
+    <br>D[i] = 区间[i,n]之间最小的cut数，n为字符串长度， 则,
+    <br>
+    <br>D[i] = min(1+D[j+1] ) &nbsp; &nbsp;i&lt;=j &lt;n
+    <br>
+    <br>有个转移函数之后，一个问题出现了，就是如何判断[i,j]是否是回文？每次都从i到j比较一遍？太浪费了，这里也是一个DP问题。
+    <br>定义函数
+    <br>P[i][j] = true if [i,j]为回文
+    <br>
+    <br>那么
+    <br>P[i][j] = str[i] == str[j] &amp;&amp; P[i+1][j-1];
+    <br>
+</blockquote>
+
+
+<h3>Solution</h3>
+
+<p>The coding is not easy, especially <strong>when 2 DP are written in 1 for-loop</strong>.</p>
+
+<p>I wrote many times until I finally achieved the nice and concise solution that you see below.</p>
+
+<h3>Code</h3>
+
+<p><strong>Doing everything in 1 loop</strong>, not an intuitive code.</p>
+
+<pre><code>public int minCut(String s) {
+    int len = s.length();
+    if (len &lt;= 1) return 0;
+    boolean[][] pl = new boolean[len][len];
+    int[] dp = new int[len];
+    for (int i = len-1; i &gt;= 0; i --) {
+        dp[i] = Integer.MAX_VALUE;
+        for (int j = i; j &lt; len; j ++) {
+            // first set pl[][], then update dp[i]
+            if (j - i &lt;= 1) pl[i][j] = s.charAt(i) == s.charAt(j);
+            else pl[i][j] = s.charAt(i) == s.charAt(j) &amp; pl[i+1][j-1];
+            if (pl[i][j]) {
+                if (j == len-1) dp[i] = 0;
+                else 
+                    dp[i] = Math.min(dp[i], dp[j+1] + 1);
+            }
+        }
+    }
+    return dp[0];
+}
+</code></pre>
+
+<p><strong>Updated on July 18th, 2014</strong>, written by me.</p>
+
+<pre><code>boolean[][] map = null;
+
+public int minCut(String s) {
+    if (s == null || s.length() == 0) {
+        return 0;
+    }
+    map = getMap(s);
+    int len = s.length();
+    int[] dp = new int[len + 1];
+    dp[0] = -1;
+    for (int i = 0; i &lt; len; i++) {
+        dp[i+1] = Integer.MAX_VALUE;
+        for (int j = 0; j &lt;= i; j++) {
+            if (map[j][i]) {
+                dp[i+1] = Math.min(dp[i+1], dp[j] + 1);
+            }
+        }
+    }
+    return dp[len];
+}
+
+private boolean[][] getMap(String s) {
+    int len = s.length();
+    boolean[][] map = new boolean[len][len];
+    for (int i = len - 1; i &gt;= 0; i--) {
+        for (int j = 0; j &lt; len; j++) {
+            if (i &gt; j) {
+                continue;
+            } else if (i == j) {
+                map[i][j] = true;
+            } else {
+                if (i + 1 == j) {
+                    map[i][j] = s.charAt(i) == s.charAt(j);
+                } else {
+                    map[i][j] = s.charAt(i) == s.charAt(j) &amp;&amp; map[i+1][j-1];
+                }
+            }
+        }
+    }
+    return map;
+}
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-05-30T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/leetcode/'>leetcode</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/05/30/Palindrome-Partitioning-II/" data-via="" data-counturl="http://okc1.github.io/blog/2014/05/30/Palindrome-Partitioning-II/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/05/30/Insertion-Sort-List/" title="Previous Post: [LeetCode 147] Insertion Sort List">&laquo; [LeetCode 147] Insertion Sort List</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/05/30/Word-Ladder-II/" title="Next Post: [LeetCode 126] Word Ladder II (unsolvable)">[LeetCode 126] Word Ladder II (unsolvable) &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+<!--div>
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_0&type=footer&size=728x90'></script>
+</div>
+<div>
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_1&type=footer&size=728x90'></script>
+</div-->
+    
+<script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_2&type=footer&size=728x90'></script>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_3&size=158x21'></script><section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

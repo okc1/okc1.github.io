@@ -1,0 +1,869 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Overview Producer-consumer problem illustrates the need for synchronization in systems where many processes share a resource. In the problem, two &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/34/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/08/Producer-consumer-problem/">[Design] Producer Consumer Problem</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-08T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Overview</h3>
+
+<p>Producer-consumer problem illustrates the need for <strong>synchronization</strong> in systems where <strong>many processes share a resource</strong>.</p>
+
+<p><a href="http://cs.gmu.edu/cne/modules/ipc/aqua/producer.html">In the problem</a>, two processes share a fixed-size buffer. One process produces information and puts it in the buffer, while the other process consumes information from the buffer. These processes do not take turns accessing the buffer, they both work concurrently.</p>
+
+<h3>Inadequate Solution</h3>
+
+<p><img class="middle" src="/assets/images/producer-workflow.gif"></p>
+
+<p><img class="middle" src="/assets/images/consumer-workflow.gif"></p>
+
+<p><strong>The code might look like this</strong>:</p>
+
+<pre><code>BufferSize = 3;
+count = 0;
+
+Producer()
+{
+    int widget;
+    WHILE (true) {                     // loop forever
+       make_new(widget);               // create a new widget to put in the buffer
+       IF(count==BufferSize)
+           Sleep();                    // if the buffer is full, sleep
+       put_item(widget);               // put the item in the buffer
+       count = count + 1;              // increment count of items
+       IF (count==1)
+           Wakeup(Consumer);           // if the buffer was previously empty, wake
+    }                                  //  the consumer
+}
+
+Consumer()
+{
+    int widget;
+    WHILE(true) {                    // loop forever
+      IF(count==0)
+           Sleep();                  // if the buffer is empty, sleep
+      remove_item(widget);           // take an item from the buffer
+      count = count + 1;             // decrement count of items
+      IF(count==N-1)
+            Wakeup(Producer);        // if buffer was previously full, wake
+                                     //  the producer
+      Consume_item(widget);          // consume the item
+    }
+}
+</code></pre>
+
+<p>This <a href="http://en.wikipedia.org/wiki/Producer%E2%80%93consumer_problem#Inadequate_implementation">will cause problems</a>, because <strong>it contains a race condition</strong> that can lead to a deadlock. Or in simply words, it has the potential of <a href="http://cs.gmu.edu/cne/modules/ipc/purple/prodsem.html">losing wakeups</a>.</p>
+
+<p>An alternative analysis is that if the programming language does not define the semantics of <strong>concurrent accesses to shared variables (in this case itemCount)</strong> without use of synchronization, then the solution is unsatisfactory for that reason, without needing to explicitly demonstrate a race condition.</p>
+
+<p>Solutions are: <strong>semaphores or monitors</strong>.</p>
+
+<h3>Semaphore</h3>
+
+<pre><code>semaphore mutex = 1;
+semaphore fillCount = 0;
+semaphore emptyCount = BUFFER_SIZE;
+
+procedure producer() {
+    while (true) {
+        item = produceItem();
+        down(emptyCount);
+            down(mutex);
+                putItemIntoBuffer(item);
+            up(mutex);
+        up(fillCount);
+    }
+}
+
+procedure consumer() {
+    while (true) {
+        down(fillCount);
+            down(mutex);
+                item = removeItemFromBuffer();
+            up(mutex);
+        up(emptyCount);
+        consumeItem(item);
+    }
+}
+</code></pre>
+
+<h3>Monitor</h3>
+
+<pre><code>monitor ProducerConsumer {
+    int itemCount;
+    condition full;
+    condition empty;
+
+    procedure add(item) {
+        while (itemCount == BUFFER_SIZE) {
+            wait(full);
+        }
+
+        putItemIntoBuffer(item);
+        itemCount = itemCount + 1;
+
+        if (itemCount == BUFFER_SIZE -1) {
+            notify(full);
+        }
+    }
+    procedure remove() {
+        while (itemCount == 0) {
+            wait(empty);
+        }
+
+        item = removeItemFromBuffer();
+        itemCount = itemCount - 1;
+
+        if (itemCount == 1) {
+            notify(empty);
+        }
+
+
+        return item;
+    }
+}
+
+procedure producer() {
+    while (true) {
+        item = produceItem();
+        ProducerConsumer.add(item);
+    }
+}
+
+procedure consumer() {
+    while (true) {
+        item = ProducerConsumer.remove();
+        consumeItem(item);
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/08/Max-sum-non-consecutive/">[Question] Max Sum of Non-Consecutive Elements</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-08T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://tech-queries.blogspot.sg/2009/05/max-possible-sum-of-non-consecutive.html">link</a></p>
+
+<blockquote><p>There is an integer array consisting positive numbers only.</p>
+
+<p>Find maximum possible sum of elements such that there are no 2 consecutive elements present in the sum.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>It&rsquo;s a little tricky to write the equation. Always remember the <strong>basic principle of DP</strong> is to assume that solution is found for (i -1), and then we calculate solution for input (i).</p>
+
+<p><strong>Don&rsquo;t miss the (i-1) part</strong>.</p>
+
+<h3>Code</h3>
+
+<p><strong>written by me</strong></p>
+
+<pre><code>public int maxSumNonConsec(int[] input) {
+    int len = input.length;
+    int[] dp = new int[len];
+    dp[0] = input[0];
+    dp[1] = Math.max(input[0], input[1]);
+    for (int i = 2; i &lt; len; i++) {
+        dp[i] = Math.max(dp[i - 1], input[i] + dp[i - 2]);
+    }
+    return dp[len - 1];
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/08/Decimal-to-Hex/">[Question] Decimal to Hexadecimal</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-08T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://stackoverflow.com/questions/13465098/decimal-to-hexadecimal-converter-in-java">link</a></p>
+
+<blockquote><p>Decimal to Hexadecimal conversion.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Convert binary to hex as a group of 4 bits.</p>
+
+<p>Read code.</p>
+
+<h3>Code</h3>
+
+<p><strong>written by me</strong></p>
+
+<pre><code>private final char[] hexDigits = { '0', '1', '2', '3', '4', '5', '6', '7',
+        '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+private final int flag = 0x0F;
+
+public String decToHex(int dec) {
+    char[] hex = new char[8];
+    for (int i = 7; i &gt;= 0; i--) {
+        int oneDigit = flag &amp; dec;
+        dec &gt;&gt;= 4;
+        hex[i] = hexDigits[oneDigit];
+    }
+    return String.valueOf(hex);
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/08/Composition-over-inheritance/">[Design] Composition Over Inheritance</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-08T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Overview</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Composition_over_inheritance">Composition over inheritance</a> in OOP is a technique by which classes achieve <strong>polymorphic behavior and code reuse</strong> by containing other classes <strong>instead of</strong> through inheritance.</p>
+
+<h3>Benefits</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Composition_over_inheritance#Benefits">It gives</a> the design <strong>higher flexibility</strong>, giving business-domain classes and more stable business domain in the long term. In other words, HAS-A can be better than an IS-A relationship.</p>
+
+<p><strong>And inheritance <a href="http://stackoverflow.com/a/891908">breaks encapsulation</a></strong>! This post also points out these (which is hard to understand):</p>
+
+<blockquote><ol>
+<li><p>You can&rsquo;t change the implementation inherited from super classes at runtime (obviously because inheritance is defined at compile time).</p></li>
+<li><p>Inheritance exposes a subclass to details of its parent&rsquo;s class implementation, that&rsquo;s why it&rsquo;s often said that inheritance breaks encapsulation (in a sense that you really need to focus on interfaces only not implementation, so reusing by sub classing is not always preferred).</p></li>
+<li><p>The tight coupling provided by inheritance makes the implementation of a subclass very bound up with the implementation of a super class that any change in the parent implementation will force the sub class to change.</p></li>
+<li><p>Excessive reusing by sub-classing can make the inheritance stack very deep and very confusing too.</p></li>
+</ol>
+</blockquote>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/08/Add-integer-without-plus-sign/">[Question] Add Integers Without +/++</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-08T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://javarevisited.blogspot.sg/2013/06/how-to-add-two-integer-numbers-without-plus-arithmetic-operator-java-example.html">link</a></p>
+
+<blockquote><p>Add two numbers (integers) without using + or plus arithmetic operator.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>Bit operations</strong>.</p>
+
+<p>We could not do this in 1 pass, because multiple rounding issues.</p>
+
+<p>So we do it in while-loop then! 2 solutions available: <strong>iteratively and recursively</strong>.</p>
+
+<h3>Code</h3>
+
+<p><strong>written by me</strong></p>
+
+<pre><code>public int add(int x, int y) {
+    // add y into x (and y results to 0)
+    while (y != 0) {
+        int carry = x &amp; y;
+        int sum = x ^ y;
+        x = sum;
+        y = carry &lt;&lt; 1;
+    }
+    return x;
+}
+</code></pre>
+
+<p><strong>recursive</strong></p>
+
+<pre><code>public int add2(int x, int y) {
+    if (y == 0) {
+        return x;
+    }
+    int carry = (x &amp; y) &lt;&lt; 1;
+    return add2(x ^ y, carry);
+}
+</code></pre>
+
+<p><strong>updated on Sep 10th, 2014</strong>: this question appears on cc150v4 20.1. I wrote the following code:</p>
+
+<pre><code>public static int add_no_arithm(int a, int b) {
+    if (b == 0)
+        return a;
+    int addition = a ^ b;
+    int carry = (a &amp; b) &lt;&lt; 1;
+    return add_no_arithm(addition, carry);
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/07/sort-large-files/">[CC150v4] 9.4 Sort Large Files</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-07T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>If you have a 2 GB file with one string per line, which sorting algorithm would you use to sort the file and why?</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>External Sorting</strong> and N-way merge.</p>
+
+<ol>
+<li>Divide the file into K chunks, where X * K = 2 GB Bring each chunk into memory and sort the lines as usual using any O(n log n) algorithm Save the lines back to the file</li>
+<li>Now bring the next chunk into memory and sort</li>
+<li>Once we’re done, merge them one by one</li>
+</ol>
+
+
+<h3>Details</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/External_sorting#External_merge_sort">Wiki example</a> of sorting 900 megabytes of data using only 100 megabytes of RAM:</p>
+
+<ol>
+<li><strong>Read 100 MB of the data in main memory and sort</strong> by some conventional method, like quicksort.</li>
+<li>Write the sorted data to disk.</li>
+<li>Repeat steps 1 and 2 until all of the data is in sorted 100 MB chunks (there are 900MB / 100MB = 9 chunks), which now need to be merged into one single output file.</li>
+<li><strong>Read the first 10 MB (= 100MB / (9 chunks + 1)) of each sorted chunk</strong> into input buffers in main memory and allocate the remaining 10 MB for an output buffer. (In practice, it might provide better performance to make the output buffer larger and the input buffers slightly smaller.)</li>
+<li><strong>Perform a 9-way merge</strong> and store the result in the output buffer. Whenever the output buffer fills, write it to the final sorted file and empty it. Whenever any of the 9 input buffers empties, fill it with the next 10 MB of its associated 100 MB sorted chunk until no more data from the chunk is available. <strong>This is the key step that makes external merge sort work externally</strong> &ndash; because the merge algorithm only makes one pass sequentially through each of the chunks, each chunk does not have to be loaded completely; rather, sequential parts of the chunk can be loaded as needed.</li>
+</ol>
+
+
+<h3>Similar Question</h3>
+
+<p><a href="http://www.glassdoor.com/Interview/Sort-a-million-32-bit-integers-using-only-2MB-of-RAM-QTN_120936.htm">link</a></p>
+
+<blockquote><p>[Google] Sort a million 32 bit integers using only 2MB of RAM.</p></blockquote>
+
+<p>1 million integers = 4MB which is > 2MB RAM.</p>
+
+<p>Solution: external sort - divide and conquer</p>
+
+<ol>
+<li>read half the list into 2MB ram and sort using quicksort (quicksort uses logn space - however 0.5m integers is less than 2MB (2000kb v 2048kb) so this should be okay).</li>
+<li>write sorted data to disk</li>
+<li>repeat for next chunk</li>
+<li>merging results: we need an output buffer. lets say this is 1MB. then we read 512KB from each of your chunks into input buffers. we then perform a 2-way merge of the data. when an input buffer becomes empty we can pull in the remainder of the chunk.</li>
+<li>when the output buffer is full we write this to disk.</li>
+<li>when the process completes we are left with 2x 1MB files sorted in the correct order.</li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/07/Random-error-debugging-1/">[Testing] Random Error Debugging 1</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-07T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://stackoverflow.com/questions/4531742/debugging-a-program-that-crashes-10-times-in-different-places">link</a></p>
+
+<blockquote><p>You are given the source to an application which is crashing during run time. After running it 10 times in a debugger, you find it never crashes in the same place.</p>
+
+<p>What programming errors could be causing this crash? How would you test each one?</p></blockquote>
+
+<h3>Analysis</h3>
+
+<ol>
+<li><p>code depends on <strong>system time or RNG</strong></p></li>
+<li><p>disk full, i.e. other processes may delete a different file causing more space to be available</p></li>
+<li><p>memory issue, i.e. other processes allocate and/or free memory</p></li>
+<li><p>a pointer points to a random location in memory that is changed by another process causing some values be &ldquo;valid&rdquo; (very rare though)</p></li>
+</ol>
+
+
+<p><a href="http://stackoverflow.com/a/4531769">In general</a> a situation <strong>with other process</strong> is likely.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/07/Million-phone-numbers/">[Google] Million Phone Numbers</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-07T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question 1</h3>
+
+<p><a href="http://www.glassdoor.com/Interview/How-would-you-store-1-million-phone-numbers-QTN_456.htm">link</a></p>
+
+<blockquote><p>How would you store 1 million phone numbers?</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>BitMap.</p>
+
+<blockquote><p>The key here is that 1 million phone numbers will be within some range, likely 10 million or so. 10 million bits = 10<sup>7</sup> bits ~ 0.12 GB. Just have a bit array where the first bit being set implies that the first phone number is set (e.g., 10 000 000) and the last bit indicates the last phone number (10 999 999). If you find a number in the list, just set the appropriate bit. You now have a bit vector of size 1million bits, sorted, and to check for a particular number, you just check whether the corresponding bit is set.</p></blockquote>
+
+<h3>Question 2</h3>
+
+<p><a href="http://www.careercup.com/question?id=7997766">link</a></p>
+
+<blockquote><p>How would you sort 1 million phone numbers?</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>BitMap or radix sort, both are O(n) complexity.</p>
+
+<p>Read more <a href="http://www.vex.net/~trebla/compsci/sorting-phone-numbers.html">here</a>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/07/Distributed-network-bottleneck/">[Design] Distributed Network Bottleneck</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-07T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Question</h2>
+
+<p><a href="http://www.mitbbs.com/article_t/JobHunting/32702821.html">link</a></p>
+
+<blockquote><p>一个distributed的环境，有很多机器，现在你发现性能有问题，可能是网络带宽造成的，你怎么解决？ (你不能更换网络设备的前提下)</p></blockquote>
+
+<h3>Answer</h3>
+
+<ol>
+<li>Identify problem</li>
+</ol>
+
+
+<p>首先得判定是否真的是网络造成的，就算是网络问题，哪些机器之间的网络问题？ 这个得先大概了解high level component dependency relationship，</p>
+
+<p>看看是不是cpu memory disk都没有问题。 可以profile几个机器看看是不是 a lot of time spent waiting for network calls.</p>
+
+<ol>
+<li>Locate the faulty component</li>
+</ol>
+
+
+<p>判定是网络问题之后看是哪些components之间，或是某个component里面有很多网络通讯。</p>
+
+<ol>
+<li>Improvement</li>
+</ol>
+
+
+<p>不能更换设备的话，能不能改network topology来让critical path machine之间的带宽有改善。</p>
+
+<p>要是不能改topology就只能改程序了。还是先identify top offender,然后就只能慢慢改了</p>
+
+<ol>
+<li>What&rsquo;s more</li>
+</ol>
+
+
+<p>要还有时间的话就可以聊聊问啥不能换设备，是资金问题还是用的已经是top of the line了？</p>
+
+<p>或者是在public cloud上？</p>
+
+<p>Answer suggested by user <strong>remus</strong>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/06/Postorder-successor-Binary-Tree/">[Google] Postorder Successor in Binary Tree</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-06T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=5173972006076416">link</a></p>
+
+<blockquote><p>Write an algorithm to find the ‘next’ post-order successor of a given node in a binary tree and binary search tree.</p>
+
+<ol>
+<li>where each node has a link to its parent.</li>
+<li>without parent pointer</li>
+</ol>
+
+
+<p>Implement 2 versions of the algorithm: 1.) binary tree 2.) BST</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>In postorder, any node below current node shall be &lsquo;predecessor&rsquo; of current node. Thus we only care about current node&rsquo;s parent.</p>
+
+<p>Suggested by a user:</p>
+
+<pre><code>1) parent pointer is given. 
+- go to the parent of the current node. 
+- if current node is the right child of its parent =&gt; print parent. 
+- else return leftmost node of the right sub-tree of parent. 
+
+2) parent pointer is not given. 
+- traverse the tree and find the parent of the current node 
+- do the same as method (1). 
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/35">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/33">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_3&size=158x21'></script><section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

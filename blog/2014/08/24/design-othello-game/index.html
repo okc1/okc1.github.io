@@ -1,0 +1,494 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[CC150v5] 8.8 Design Othello Game - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question Othello is played as follows: Each Othello piece is white on one side and black on the other. When a piece is surrounded by its opponents on &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/08/24/design-othello-game/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[CC150v5] 8.8 Design Othello Game</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-24T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Othello is played as follows: Each Othello piece is white on one side and black on the other. When a piece is surrounded by its opponents on both the left and right sides, or both the top and bottom, it is said to be captured and its color is flipped.</p>
+
+<p>The win is assigned to the person with the most pieces. Implement the object-oriented design for Othello.</p></blockquote>
+
+<h3>Class</h3>
+
+<ol>
+<li>Game
+
+<ol>
+<li>Two Player objects</li>
+<li>a board object</li>
+<li>singleton class (unless otherwise specified, this needs to be discussed)</li>
+</ol>
+</li>
+<li>Board
+
+<ol>
+<li>Keep the score (black/white count). Of course we can put score in Game Class as well, it seems logically related to the board a bit more.</li>
+<li>Array of Piece objects</li>
+<li>getScore() method</li>
+</ol>
+</li>
+<li>Piece
+
+<ol>
+<li>stores color info</li>
+<li>flip() function</li>
+</ol>
+</li>
+<li>Player
+
+<ol>
+<li>stores color info</li>
+<li>playPiece() method</li>
+</ol>
+</li>
+<li>Color Enum</li>
+<li>Direction Enum</li>
+</ol>
+
+
+<h3>Functions</h3>
+
+<ol>
+<li>placePiece() by the Player (which triggers the following 2 methods)</li>
+<li>private flipSection(Position fromWhere, Color c, Direction up/down/left/right) by the board</li>
+<li>private updateScore() by the board</li>
+<li>getScore() by the board</li>
+</ol>
+
+
+<h4>Follow up: Do we need separate Board and Game classes?</h4>
+
+<p>Strictly speaking, no. The drawback is adding an extra layers. A function that calls Game class is immediately calling Board class.</p>
+
+<p>But keeping the objects separate allows us to have a logical separation between the board (which contains just logic involving placing pieces) and the game (which involves times, game flow, etc.).</p>
+
+<h3>Conclusion</h3>
+
+<p>This is an easy, and very standard OOD question. Keep the logic clear, design the layers and object hierarchy, and the rest of things will come naturally.</p>
+
+<h3>Code</h3>
+
+<p>Game.java</p>
+
+<pre><code>public class Game {
+    private Player[] players;
+    private static Game instance;
+    private Board board;
+    private final int ROWS = 10;
+    private final int COLUMNS = 10;
+
+    private Game() {
+        board = new Board(ROWS, COLUMNS);
+        players = new Player[2];
+        players[0] = new Player(Color.Black);
+        players[1] = new Player(Color.White);
+        Automator.getInstance().initialize(players); // used for testing
+    }
+
+    public static Game getInstance() {
+        if (instance == null) {
+            instance = new Game();
+        }
+        return instance;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+}
+</code></pre>
+
+<p>Board.java</p>
+
+<pre><code>public class Board {
+    private int blackCount = 0;
+    private int whiteCount = 0;
+    private Piece[][] board;
+
+    public Board(int rows, int columns) {
+        board = new Piece[rows][columns];
+    }
+
+    public void initialize() {
+        /* initial board has a grid like the following in the center:
+         *     WB
+         *     BW
+         */
+        int middleRow = board.length / 2;
+        int middleColumn = board[middleRow].length / 2;
+        board[middleRow][middleColumn] = new Piece(Color.White);
+        board[middleRow + 1][middleColumn] = new Piece(Color.Black);
+        board[middleRow + 1][middleColumn + 1] = new Piece(Color.White);
+        board[middleRow][middleColumn + 1] = new Piece(Color.Black);
+        blackCount = 2;
+        whiteCount = 2;
+    }
+
+    public boolean placeColor(int row, int column, Color color) {
+        if (board[row][column] != null) {
+            return false;
+        }
+
+        /* attempt to flip each of the four directions */
+        int[] results = new int[4];
+        results[0] = flipSection(row - 1, column, color, Direction.up);
+        results[1] = flipSection(row + 1, column, color, Direction.down);
+        results[2] = flipSection(row, column + 1, color, Direction.right);
+        results[3] = flipSection(row, column - 1, color, Direction.left);
+
+        /* compute how many pieces were flipped */
+        int flipped = 0;
+        for (int result : results) {
+            if (result &gt; 0) {
+                flipped += result;
+            }
+        }
+
+        /* if nothing was flipped, then it's an invalid move */
+        if (flipped &lt; 0) {
+            return false;
+        }
+
+        /* flip the piece, and update the score */
+        board[row][column] = new Piece(color);
+        updateScore(color, flipped + 1);
+        return true;
+    }
+
+    private int flipSection(int row, int column, Color color, Direction d) {
+        /* Compute the delta for the row and the column. At all times, only the row or the column
+         * will have a delta, since we're only moving in one direction at a time.
+         */
+        int r = 0;
+        int c = 0;
+        switch (d) {
+        case up:
+            r = -1;
+            break;
+        case down:
+            r = 1;
+            break;
+        case left:
+            c = -1;
+            break;
+        case right:
+            c = 1;
+            break;
+        }
+
+        /* If out of bounds, or nothing to flip, return an error (-1) */
+        if (row &lt; 0 || row &gt;= board.length || column &lt; 0 || column &gt;= board[row].length || board[row][column] == null) {
+            return -1;
+        }
+
+        /* Found same color - return nothing flipped */
+        if (board[row][column].getColor() == color) {
+            return 0;
+        }
+
+        /* Recursively flip the remainder of the row. If -1 is returned, then we know we hit the boundary
+         * of the row (or a null piece) before we found our own color, so there's nothing to flip. Return
+         * the error code.
+         */
+        int flipped = flipSection(row + r, column + c, color, d);
+        if (flipped &lt; 0) {
+            return -1;
+        }
+
+        /* flip our own color */
+        board[row][column].flip();
+        return flipped + 1;
+    }
+
+    public int getScoreForColor(Color c) {
+        if (c == Color.Black) {
+            return blackCount;
+        } else {
+            return whiteCount;
+        }
+    }
+
+    private void updateScore(Color newColor, int newPieces) {
+        /* If we added x pieces of a color, then we actually removed x - 1 pieces of the other
+         * color. The -1 is because one of the new pieces was the just-placed one.
+         */
+        if (newColor == Color.Black) {
+            whiteCount -= newPieces - 1;
+            blackCount += newPieces;
+        } else {
+            blackCount -= newPieces - 1;            
+            whiteCount += newPieces;
+        }
+    }
+
+    public void printBoard() {
+        for (int r = 0; r &lt; board.length; r++) {
+            for (int c = 0; c &lt; board[r].length; c++) {
+                if (board[r][c] == null) {
+                    System.out.print("_");
+                } else if (board[r][c].getColor() == Color.White) {
+                    System.out.print("W");
+                } else {
+                    System.out.print("B");
+                }
+            }
+            System.out.println();
+        }
+    }
+}
+</code></pre>
+
+<p>Player.java</p>
+
+<pre><code>public class Player {
+    private Color color;
+    public Player(Color c) {
+        color = c;
+    }
+
+    public int getScore() {
+        return Game.getInstance().getBoard().getScoreForColor(color);
+    }
+
+    public boolean playPiece(int row, int column) {
+        return Game.getInstance().getBoard().placeColor(row, column, color);
+    }
+
+    public Color getColor() {
+        return color;
+    }
+}
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-08-24T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/cc150v5/'>cc150v5</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/08/24/design-othello-game/" data-via="" data-counturl="http://okc1.github.io/blog/2014/08/24/design-othello-game/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/08/24/design-online-chat-server-2/" title="Previous Post: [CC150v5] 8.7 Design Online Chat Server (2)">&laquo; [CC150v5] 8.7 Design Online Chat Server (2)</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/08/25/Implement-HashMap/" title="Next Post: [CC150v5] 8.10 Implement a Hashmap">[CC150v5] 8.10 Implement a Hashmap &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+<!--div>
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_0&type=footer&size=728x90'></script>
+</div>
+<div>
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_1&type=footer&size=728x90'></script>
+</div-->
+    
+<script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_2&type=footer&size=728x90'></script>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_3&size=158x21'></script><section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

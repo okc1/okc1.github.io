@@ -1,0 +1,880 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link Traveler wants to travel from city “A” to city “D”. There is a path from city “A” to city “D”. Path consists of steps, i.e. travel from &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/36/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/04/Traveller-Path-Problem/">[Google] Traveller Path Problem</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-04T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=5749537700315136">link</a></p>
+
+<blockquote><p>Traveler wants to travel from city “A” to city “D”. There is a path from city “A” to city “D”. Path consists of steps, i.e. travel from city “A” to city “B”. Path is encoded as sequence of steps.</p>
+
+<p>Sequence is in incorrect order. Your task is to restore order of steps in the path.</p>
+
+<p>Input (unordered sequence):</p></blockquote>
+
+<pre><code>C -&gt; D 
+A -&gt; B 
+B -&gt; C 
+</code></pre>
+
+<blockquote><p>Output (Correctly ordered list which represents path):</p></blockquote>
+
+<pre><code>A, B, C, D 
+</code></pre>
+
+<blockquote><p>Implement following API:</p></blockquote>
+
+<pre><code>class Step {
+    String start;
+    String finish;
+};
+
+class Node {
+    String value;
+    Node next;
+}
+
+List&lt;String&gt; findPath(List&lt;Step&gt; steps) {
+}
+</code></pre>
+
+<h3>Solution</h3>
+
+<p>This question is not stated clear enough. I found one tentative algorithm:</p>
+
+<blockquote><p>First, initialize a result - sortedPath, and build 2 maps (String to String) - startsToFinishes and finishesToStarts (O(N))</p>
+
+<p>Then, find the one key on startsToFinishes, that is not a key in finishesToStarts - this is the city from which the path begins. (O(N))</p>
+
+<p>Then, iteratively, city by city, build the path.</p></blockquote>
+
+<p><strong>Follow up on Sep 2nd, 2014</strong>:</p>
+
+<p><a href="http://www.mitbbs.com/article_t/JobHunting/32772275.html">This post</a> talks about this question. The answer would be similar to what&rsquo;s writtne above.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/04/Overview-Big-Data-Tech/">[Design] Overview of Big Data Technology</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-04T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="https://datajobs.com/what-is-hadoop-and-nosql">link</a></p>
+
+<h3>Traditional RDBMS</h3>
+
+<p>Data is organized in a highly-structured manner, following the relational model.</p>
+
+<p>The need for the data to be well-structured actually becomes a substantial burden at extremely large volumes.</p>
+
+<h3>NoSQL</h3>
+
+<p>A completely different framework of databases that allows for high-performance, agile processing of information at massive scale.</p>
+
+<p>NoSQL centers around the concept of distributed databases.</p>
+
+<p>It&rsquo;s horizontally scalable; as data continues to explode, just add more hardware to keep up.</p>
+
+<h3>Hadoop</h3>
+
+<p>Hadoop is not a type of database, but rather a software ecosystem that allows for massively parallel computing.</p>
+
+<p>Hadoop is <a href="http://www.javaworld.com/article/2077907/open-source-tools/mapreduce-programming-with-apache-hadoop.html?page=3">an open source implementation</a> of the MapReduce programming model. Hadoop relies not on Google File System (GFS), but on its own Hadoop Distributed File System (HDFS).</p>
+
+<h3>MapReduce</h3>
+
+<p>An example of the Hadoop ecosystem is MapReduce.</p>
+
+<p>It&rsquo;s a computational model that basically takes intensive data processes and spreads the computation across a potentially endless number of servers.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/04/MVC/">[Design] Model–view–controller (MVC)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-04T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Overview</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">Model–view–controller</a> (MVC) is a software architectural pattern for implementing <strong>user interfaces</strong>.</p>
+
+<p><strong>From MIT handouts 3</strong>: MVC uses separate programming entities to <strong>store the data(model), display the data(view), and modify the data(controller)</strong>.</p>
+
+<h3>Components</h3>
+
+<p><strong>The central component of MVC, the model</strong>, captures the application&rsquo;s behavior in terms of its problem domain, independent of the user interface. The model directly manages the application&rsquo;s data, logic and rules.</p>
+
+<p><strong>A view can be any output representation</strong> of information, such as a chart or a diagram; multiple views of the same information are possible, such as a bar chart for management and a tabular view for accountants.</p>
+
+<p><strong>The third part, the controller</strong>, accepts input and converts it to commands for the model or view.</p>
+
+<p>Early web MVC frameworks took a thin client approach that placed almost the entire MVC on server. As client technologies have matured, MVC components can be executed partly on the client(AJAX).</p>
+
+<h3>Other good explanation</h3>
+
+<p>MVC is a <a href="http://geekswithblogs.net/gregorymalcolm/archive/2009/07/14/user-interface-patterns.aspx">user interface design pattern</a>.</p>
+
+<ol>
+<li><p>Controller – Represents interactions, typically with the mouse or keyboard, or in the case of web applications, in the form of HTTP requests.</p></li>
+<li><p>View – Renders the graphical output of the application</p></li>
+<li><p>Model – Everything else. In particular this includes <strong>the data and business logic</strong>.</p></li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/04/Hadoop-cluster/">[Design] Hadoop Cluster</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-04T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://searchbusinessanalytics.techtarget.com/definition/Hadoop-cluster">link</a></p>
+
+<h3></h3>
+
+<p>A Hadoop cluster is <strong>a special type of computational cluster</strong> designed specifically for storing and analyzing huge amounts of unstructured data in a distributed computing environment.</p>
+
+<p>Such clusters <strong>run Hadoop&rsquo;s open source distributed processing software</strong> on low-cost commodity computers.</p>
+
+<p>Typically one machine in the cluster is designated as the <strong>NameNode</strong> and another machine the as <strong>JobTracker</strong>; these are the masters. The rest of the machines in the cluster act as both <strong>DataNode and TaskTracker</strong>; these are the slaves.</p>
+
+<p>Hadoop clusters are known for boosting the speed of data analysis applications. They also are highly scalable.</p>
+
+<p>As of early 2013, Facebook was recognized as having the largest Hadoop cluster in the world.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/04/Find-occurance-greater-than-index/">[Google] Find Occurance Greater Than Index</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-04T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=5094709806497792">link</a></p>
+
+<blockquote><p>Given an unsorted array of integers, you need to return maximum possible n such that the array consists at least n values greater than or equals to n. Array can contain duplicate values.</p>
+
+<p>Sample input : [1, 2, 3, 4] &ndash; output : 2</p>
+
+<p>Sample input : [900, 2, 901, 3, 1000] &ndash; output: 3</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>The idea of &lsquo;couting sort&rsquo;, solves in O(n) time.</p>
+
+<blockquote><p>Lets say the array has M numbers. So, <strong>we can count the number of existing values between 1 and M</strong>.</p>
+
+<p>Then, process the values backwards (M to 1) to find the answer, adding the counts of the values processed so far.</p></blockquote>
+
+<p>This is not an easy question.</p>
+
+<h3>Code</h3>
+
+<p><strong>not written by me</strong></p>
+
+<pre><code>int Solve(const vector&lt;int&gt;&amp; values) {
+    int n = values.size();
+    vector&lt;int&gt; count(n+1, 0);
+    for (auto val: values)
+        if (val &gt;= n)
+            count[n]++;
+        else if (val &gt; 0) // ignore negative values
+            count[val]++;
+    int am = 0;
+    for (int i = n; i &gt; 0; i--) {
+        am += count[i];  // amount of numbers &gt;= i
+        if (am &gt;= i)
+            return i;
+    }
+    return 0;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/04/Find-Nearest-Point-in-2D-Space/">[Google] Find Nearest Point in a 2D Space</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-04T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=5634947435986944">link</a></p>
+
+<blockquote><p>You are given information about hotels in a country/city. X and Y coordinates of each hotel are known. You need to suggest the list of nearest hotels to a user who is querying from a particular point (X and Y coordinates of the user are given). Distance is calculated as the straight line distance between the user and the hotel coordinates.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>Build a 2-D Tree (by using Binary Tree)</strong>.</p>
+
+<p>First find the root, then divide the rest of nodes by left-side and right-side. Then, divide by up-side and down-side.</p>
+
+<p>There&rsquo;s a very good example video <a href="http://www.youtube.com/watch?v=T9h2KKJ_Pl8">here</a>, which talked about how to construct a 2-D tree.</p>
+
+<p>After this <strong>preprocessing</strong>, the search for nearest hotels in about O(lgn). However, if we were to return a list of nearest nodes, I&rsquo;ve got no idea.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/03/type-url-in-browser/">[CC150v4] 17.1 Type a URL in Browser and Hit Enter</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-03T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p>17.1 Explain what happens, step by step, after you type a URL into a browser Use as much detail as possible.</p>
+
+<h3>Short Answer</h3>
+
+<ol>
+<li>Browser contacts the DNS server to find the IP address of URL</li>
+<li>DNS returns back the IP address of the site</li>
+<li>Browser opens TCP connection to the web server at port 80</li>
+<li>The browser sends a GET request to the server, asking for the file</li>
+<li>Browser fetches the html code</li>
+<li>Browser renders the HTML in the display window</li>
+<li>Browser terminates the connection when window is closed</li>
+</ol>
+
+
+<p><a href="http://superuser.com/q/157408">ref</a></p>
+
+<h3>More Details</h3>
+
+<p>Phase 1:</p>
+
+<ol>
+<li>browser checks cache; if requested object is in cache and is fresh, skip to Phase 3 #4</li>
+<li>browser asks OS for server&rsquo;s IP address</li>
+<li>OS makes a DNS lookup and replies the IP address to the browser</li>
+<li>browser opens a TCP connection to server (this step is much more complex with HTTPS)</li>
+<li>browser sends the HTTP request through TCP connection</li>
+</ol>
+
+
+<p><a href="http://stackoverflow.com/a/2092602">ref</a></p>
+
+<p>Phase 2:</p>
+
+<ol>
+<li>That computer receives the HTTP request from the TCP/IP connection and passes it to the web server program.</li>
+<li>Web server reads the hostname and path and finds or generates the data that you&rsquo;ve asked for.</li>
+<li>Web server generates an HTTP response containing that data.</li>
+<li>Web server sends that HTTP response back down the TCP/IP connection to your machine.</li>
+</ol>
+
+
+<p><a href="http://superuser.com/a/31474">ref</a></p>
+
+<p>Phase 3:</p>
+
+<ol>
+<li>browser receives HTTP response and may close the TCP connection, or reuse it for another request</li>
+<li>browser checks if the response is a redirect (3xx result status codes), authorization request (401), error (4xx and 5xx), etc.; these are handled differently from normal responses (2xx)</li>
+<li>if cacheable, response is stored in cache</li>
+<li>browser decodes response (e.g. if it&rsquo;s gzipped)</li>
+<li>browser determines what to do with response (e.g. is it a HTML page, is it an image, is it a sound clip?)</li>
+<li>browser renders response, or offers a download dialog for unrecognized types</li>
+</ol>
+
+
+<h3>Miscellaneous:</h3>
+
+<p>Each domain name server is divided into zones A single server may only be responsible for knowing the host names and IP addresses for a small subset of a zone, but DNS servers can work together to map all domain names to their IP addresses That means if one domain name server is unable to find the IP addresses of a requested domain then it requests the information from other domain name servers</p>
+
+<p>The firewall will control connections to &amp; from your computer. For the most part it will just be controlling who can connect to your computer and on what ports. For web browsing your firewall generally won&rsquo;t be doing a whole lot.</p>
+
+<p>Your router essentially guides your request through the network, helping the packets get from computer to computer and potentially doing some NAT (Network Address Tranlator) to translate IP addresses along the way (so your internat LAN request can be transitioned onto the wider internet and back).</p>
+
+<h3>Even more</h3>
+
+<p>An even more detailed article can be found <a href="http://www.garshol.priv.no/download/text/http-tut.html">here</a>. And a __great step-by-step example using facebook.com can be found <a href="http://igoro.com/archive/what-really-happens-when-you-navigate-to-a-url/">here</a>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/03/Three-Keys-Data-Structure/">[Google] Three Keys Data Structure</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-03T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=5763793837621248">link</a></p>
+
+<blockquote><p>Give efficient implementation of the following problem.</p>
+
+<p>An item consist of different keys say k1, k2, k3. User can insert any number of items in database, search for item using <strong>any (one) key</strong>, delete it using any key and iterate through all the items in sorted order <strong>using any key</strong>. Give the most efficient way such that it supports insertion, search based on a key, iteration and deletion.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>There&rsquo;re 3 keys, so we need 3 maps to store search map for 3 types of keys. For example, the DS is like this:</p>
+
+<blockquote><p>(date, name, country) -> ItemObject</p></blockquote>
+
+<p>Then we would have:</p>
+
+<blockquote><p>date -> a list of ItemObject</p>
+
+<p>name -> a list of ItemObject</p>
+
+<p>country -> a list of ItemObject</p></blockquote>
+
+<p>Since we need to iterate in order, we choose TreeMap over HashMap.</p>
+
+<p>For scalability purpose, we use another HashMap&lt;KeyType, TreeMap> and put 3 items in.</p>
+
+<h3>Final Data Structure</h3>
+
+<p>3 DS needed. <a href="http://www.careercup.com/question?id=5763793837621248">source</a></p>
+
+<ol>
+<li>ArrayList<ItemObject> list;</li>
+<li>TreeMap&lt;KeyValue, List<ItemObject>> index;</li>
+<li>HashMap&lt;KeyType, TreeMap&lt;KeyValue, List<ItemObject>>> mapOfIndexes;</li>
+</ol>
+
+
+<h4>Method add(item): void</h4>
+
+<ol>
+<li>add item in ArrayList.</li>
+<li>For each key, get TreeMap from HashMap and add into TreeMap.</li>
+</ol>
+
+
+<h4>Method search(key): List<Item></h4>
+
+<ol>
+<li>Get TreeMap from HashMap for provided key.</li>
+<li>Search the TreeMap</li>
+<li>Return List Of Items</li>
+</ol>
+
+
+<h4>Method delete(key): List<Item></h4>
+
+<ol>
+<li>Using search method get List Of item</li>
+<li>Delete items from ArrayList and <strong>also delete its mapping from all (3) TreeMap</strong></li>
+</ol>
+
+
+<h4>Method orderedIterator(keytype): Iterator</h4>
+
+<ol>
+<li>Get TreeMap from HashMap for provided key</li>
+<li>Get EntrySet from TreeMap</li>
+<li>Return EntrySet.iterator();</li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/03/Multilayered-architecture/">[Design] Multilayered Architecture</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-03T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>First Word</h3>
+
+<p>A <a href="http://en.wikipedia.org/wiki/Multilayered_architecture">multilayered software architecture</a> is a software architecture that uses many layers for allocating the different responsibilities of a software product.</p>
+
+<h3>Layers</h3>
+
+<ol>
+<li><strong>Presentation layer</strong>
+
+<ol type="a">
+<li>UI layer, view layer</li>
+<li>presentation tier in multitier architecture</li>
+</ol>
+</li>
+<li><strong>Application layer</strong>
+
+<ol type="a">
+<li>also called service layer/GRASP Controller Layer</li>
+</ol>
+</li>
+<li><strong>Business layer</strong>
+
+<ol type="a">
+<li>also called business logic layer/domain layer</li>
+</ol>
+</li>
+<li>Infrastructure layer
+
+<ol>
+<li>data access layer/<strong>persistence layer</strong></li>
+<li>logging, networking, and other services which are required to support a particular business layer</li>
+</ol>
+</li>
+</ol>
+
+
+<h3>Conventions</h3>
+
+<p><strong>Application layer</strong> (or service layer) is sometimes considered a sublayer of <strong>business layer</strong>.</p>
+
+<p>If there&rsquo;s no explicit distinction between first 3 tiers, then it&rsquo;s a <strong>traditional client-server(two-tier) model</strong>.</p>
+
+<p>The <strong>application/business layers</strong> can, in fact, be further subdivided to emphasize distinct responsibility (eg. MVC).</p>
+
+<p>Sometimes there&rsquo;s <strong>business infrastructure layer(BI)</strong>, located between the business layer and infrastructure layer.</p>
+
+<p>Infrastructure layer can be partitioned into different levels (high-level or low-level). <strong>Developers focus on only the persistence capabilities</strong>, therefore only talk about persistence layer or data access layer.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/03/Design-Solar-System/">[Google] Design Solar System (`)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-03T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=14761735">link</a></p>
+
+<blockquote><p>Design a web application to represent hierarchy of solar system.</p>
+
+<p>Give details of Persistence layer, business layer, presentation layer and Client-server protocol.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>First, OOD part</strong> is very well covered in <a href="http://www.ehow.com/how_5579338_build-own-solar-system-java.html">this site</a>. There&rsquo;re 2 abstract class: <strong>OrbitalSystem</strong>, where &lsquo;Star/Sun&rsquo; is an instance, and <strong>GravityObject</strong>, where &lsquo;Planet/Earch&rsquo; is an instance. Though this does not take satellite into consideration.</p>
+
+<p><strong>Second, the multi-layer structure</strong>. It&rsquo;s cover in another post <strong><a href="/blog/2014/08/03/Multilayered-architecture/">Multilayered architecture</a></strong></p>
+
+<p><strong>Third, the protocol</strong>. We <a href="http://stackoverflow.com/a/4279218">use HTTP protocol</a>, because:</p>
+
+<blockquote><p>HTTP(S) is the best protocol to use. The overhead (i.e. headers) is pretty small, the transfer can be gzipped, the connection can be secured (via SSL). Also, ports 80 (HTTP) and 443 (HTTPS) will be open in 99% of cases. Other ports are not &ndash; for example some carriers block all other ports unless you pay extra.</p></blockquote>
+
+<p>More info on HTTP communication comes later.</p>
+
+<h3>Code</h3>
+
+<p>from <a href="http://www.ehow.com/how_5579338_build-own-solar-system-java.html">here</a></p>
+
+<pre><code>public abstract class GravityObject {
+    double xPosition;
+    double yPosition;
+    double degreeInOrbit;
+    double distanceFromParent;
+
+    GravityObject() {
+    this.distance = 0;
+    }
+
+    GravityObject(double distance) {
+    this.distance = distance;
+    }
+}
+
+import java.util.ArrayList;
+
+public abstract class OrbitalSystem extends GravityObject {
+    private ArrayList children = new ArrayList(); // Objects within the system. They will orbit the parent.
+
+    public void add(GravityObject child) { children.add(child); }
+
+    public void tick() {
+        for (int x = 0; x &lt; children.size(); x++) {
+            GravityObject current = children.get(x);
+            current.degree += 1
+            current.xPosition = this.xPosition + Math.cos(degree/180 * Math.PI)* current.distance;
+            current.yPosition = this.yPosition - Math.sin(degree/180 * Math.PI) * current.distance;
+        }
+    }
+}
+
+public class Star extends OrbitalSystem { 
+
+};
+
+public class Planet extends GravityObject { 
+
+};
+
+public static int main(String[] args) {
+    Star s = new Star(); // Create a new star.
+    s.add(new Planet(20)); // Add a planet to the star's orbital system which orbits at a distance of 20 units.
+    s.add(new Planet(66)); // Add another planet to the star's orbital system which orbits at a distance of 66 units.
+
+    while (true) {
+        s.tick();
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/37">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/35">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_3&size=158x21'></script><section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

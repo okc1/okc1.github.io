@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Fundamental | Woodstock Blog]]></title>
+  <link href="http://okc1.github.io/blog/categories/fundamental/atom.xml" rel="self"/>
+  <link href="http://okc1.github.io/"/>
+  <updated>2017-02-20T20:43:48-08:00</updated>
+  <id>http://okc1.github.io/</id>
+  <author>
+    <name><![CDATA[Kevin Durant]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[[Fundamental] Reflexive, Symmetric and Transitive Rules]]></title>
+    <link href="http://okc1.github.io/blog/2015/10/22/reflexive-symmetric-transitive/"/>
+    <updated>2015-10-22T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2015/10/22/reflexive-symmetric-transitive</id>
+    <content type="html"><![CDATA[# Overview
+
+O(n) time complexity is both __reflexive, symmetric and transitive__.
+
+## Reflexive Property
+
+The Reflexive Property states that for every real number x, x = x.
+
+## Symmetric Property
+
+The Symmetric Property states that for all real numbers x and y,
+
+if x = y, then y = x.
+
+## Transitive Property
+
+The Transitive Property states that for all real numbers x, y, and z,
+
+if x = y and y = z, then x = z.
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Fundamental] Polynomial, Quadratic, Cubic and Exponential]]></title>
+    <link href="http://okc1.github.io/blog/2015/10/22/polynomial-quadratic-cubic-exponential/"/>
+    <updated>2015-10-22T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2015/10/22/polynomial-quadratic-cubic-exponential</id>
+    <content type="html"><![CDATA[# Overview
+
+A comparison of all [different time complexity](http://pages.cpsc.ucalgary.ca/~eharris/past/cpsc319/w12/tut01/):
+
+<img class="middle" src="/assets/images/gnuplot0-1500.png">
+
+Shown above: Constant, __logarithmic__, linear, n-log-n, quadratic, cubic, __exponential__ ( eg. O(2^n) ).
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Fundamental] What Is a Literal?]]></title>
+    <link href="http://okc1.github.io/blog/2015/10/22/literals/"/>
+    <updated>2015-10-22T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2015/10/22/literals</id>
+    <content type="html"><![CDATA[# Overview
+
+[A Literal](https://en.wikipedia.org/wiki/Literal_(computer_programming)) is a notation for __representing a fixed value in source code__. 
+
+Almost all programming languages have notations for atomic values such as integers, floating-point numbers, and strings.
+
+eg. 
+
+    int a = 1;
+    String s = "cat";
+
+## Integer literal 
+
+[an integer literal](https://en.wikipedia.org/wiki/Integer_literal) is an integer whose value is directly represented in source code. 
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Fundamental] UML Class Diagrams]]></title>
+    <link href="http://okc1.github.io/blog/2015/10/14/UML-diagrams/"/>
+    <updated>2015-10-14T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2015/10/14/UML-diagrams</id>
+    <content type="html"><![CDATA[# Overview
+
+A UML class diagram describes the object and information structures used by your application, both internally and in communication with its users. 
+
+## example
+
+Taken from [here](https://msdn.microsoft.com/en-us/library/dd409437.aspx).
+
+<img class="middle" src="/assets/images/IC315445.png">
+
+<tbody><tr><th><p><span class="label">Shape</span></p></th><th><p><span class="label">Element</span></p></th><th><p><span class="label">Description</span></p></th></tr><tr><td><p>1</p></td><td><p><strong>Class</strong></p></td><td><p>A definition of objects that share given structural or behavioral characteristics. For more information, see <a href="https://msdn.microsoft.com/en-us/library/dd323860.aspx">Properties of types on UML class diagrams</a>.</p></td></tr><tr><td><p>1</p></td><td><p>Classifier</p></td><td><p>The general name for a class, interface, or enumeration. Components, use cases, and actors are also classifiers.</p></td></tr><tr><td><p>2</p></td><td><p>Collapse/ Expand control</p></td><td><p>If you cannot see the details of a classifier, click the expander at upper-left of the classifier. You might also have to click the [+] on each segment.</p></td></tr><tr><td><p>3</p></td><td><p><strong>Attribute</strong></p></td><td><p>A typed value attached to each instance of a classifier. </p><p>To add an attribute, click the <strong>Attributes</strong> section and then press <strong>ENTER</strong>. Type the signature of the attribute. For more information, see <a href="https://msdn.microsoft.com/en-us/library/dd323861.aspx">Properties of attributes on UML class diagrams</a>.</p></td></tr><tr><td><p>4</p></td><td><p><strong>Operation</strong></p></td><td><p>A method or function that can be performed by instances of a classifier. To add an operation, click the <strong>Operations</strong> section and then press <strong>ENTER</strong>. Type the signature of the operation. For more information, see <a href="https://msdn.microsoft.com/en-us/library/dd323859.aspx">Properties of operations on UML class diagrams</a>. </p></td></tr><tr><td><p>5</p></td><td><p><strong>Association</strong></p></td><td><p>A relationship between the members of two classifiers. For more information, see <a href="https://msdn.microsoft.com/en-us/library/dd323862.aspx">Properties of associations on UML class diagrams</a>. </p></td></tr><tr><td><p>5a</p></td><td><p><strong>Aggregation</strong></p></td><td><p>An association representing a shared ownership relationship. The <strong>Aggregation</strong> property of the owner role is set to <strong>Shared</strong>.</p></td></tr><tr><td><p>5b</p></td><td><p><strong>Composition</strong></p></td><td><p>An Association representing a whole-part relationship. The <strong>Aggregation</strong> property of the owner role is set to <strong>Composite</strong>.</p></td></tr><tr><td><p>6</p></td><td><p><strong>Association Name</strong></p></td><td><p>The name of an association. The name can be left empty.</p></td></tr><tr><td><p>7</p></td><td><p><strong>Role Name</strong></p></td><td><p>The name of a role, that is, one end of an association. Can be used to refer to the associated object. In the previous illustration, for any Order <span class="code">O</span>, <span class="code">O.ChosenMenu</span> is its associated Menu.</p><p>Each role has its own properties, listed under the properties of the association.</p></td></tr><tr><td><p>8</p></td><td><p><strong>Multiplicity</strong></p></td><td><p>Indicates how many of the objects at this end can be linked to each object at the other. In the example, each Order must be linked to exactly one Menu. </p><p><strong>*</strong> means that there is no upper limit to the number of links that can be made.</p></td></tr><tr><td><p>9</p></td><td><p><strong>Generalization</strong></p></td><td><p>The <em>specific</em> classifier inherits part of its definition from the <em>general</em> classifier. The general classifier is at the arrow end of the connector. Attributes, associations, and operations are inherited by the specific classifier.</p><p>Use the <strong>Inheritance</strong> tool to create a generalization between two classifiers.</p></td></tr></tbody>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Fundamental] Segment Tree]]></title>
+    <link href="http://okc1.github.io/blog/2015/10/08/segment-tree/"/>
+    <updated>2015-10-08T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2015/10/08/segment-tree</id>
+    <content type="html"><![CDATA[# Overview
+
+__[Segment tree](https://en.wikipedia.org/wiki/Segment_tree)__ is a tree data structure for storing intervals, or segments. 
+
+Can be used to search __the max/min or sum values in a range__. 
+
+1. modify = O(log n)
+
+1. query = O(log n)
+
+1. build = O(n)
+
+## question list
+
+1. [LintCode] Segment Tree Build
+
+1. [LintCode] Segment Tree Build II
+
+1. [LintCode] Segment Tree Modify
+
+1. [LintCode] Segment Tree Query
+
+1. [LintCode] Segment Tree Query II
+]]></content>
+  </entry>
+  
+</feed>

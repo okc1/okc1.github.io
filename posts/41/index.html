@@ -1,0 +1,848 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link Quicksort is a divide and conquer algorithm. It first divides a large list into two smaller sub-lists and then recursively sort the two &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/41/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/21/Quick-Sort/">[Question] Quick Sort</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-21T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.programcreek.com/2012/11/quicksort-array-in-java/">link</a></p>
+
+<blockquote><p>Quicksort is a divide and conquer algorithm. It first divides a large list into two smaller sub-lists and then recursively sort the two sub-lists. If we want to sort an array without any extra space, Quicksort is a good option. On average, time complexity is O(n log(n)).</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>This question is not easy. Practise more!</p>
+
+<h3>Code</h3>
+
+<pre><code>public static void quickSortRan(int[] arr, int low, int high) {
+    if (low &gt;= high) {
+        return;
+    }
+    int pivot = arr[low + (high - low) / 2];
+    int left = low;
+    int right = high;
+    while (left &lt; right) {
+        while (arr[left] &lt; pivot) {
+            left++;
+        }
+        while (arr[right] &gt; pivot) {
+            right--;
+        }
+        if (left &lt;= right) {
+            int temp = arr[left];
+            arr[left] = arr[right];
+            arr[right] = temp;
+            left++;
+            right--;
+        }
+    }
+    quickSortRan(arr, low, right);
+    quickSortRan(arr, left, high);
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/21/OOP-principles/">[Java OOP] OOP - 4 Major Principles</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-21T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>4 Principles</h3>
+
+<p><a href="http://codebetter.com/raymondlewallen/2005/07/19/4-major-principles-of-object-oriented-programming/">link</a></p>
+
+<ol>
+<li><p>Encapsulation</p></li>
+<li><p>Abstraction</p></li>
+<li><p>Inheritance</p></li>
+<li><p>Polymorphism</p></li>
+</ol>
+
+
+<h3>Encapsulation</h3>
+
+<p><strong>The hiding of data implementation</strong> by restricting access to accessors and mutators.</p>
+
+<h3>Abstraction</h3>
+
+<p><strong>Representation of data in which the implementation details are hidden</strong>.</p>
+
+<p>For examplem, the development of classes, objects, types in terms of their interfaces and functionality, instead of their implementation details.</p>
+
+<p>Abstraction is used to manage complexity (decompose complex systems into smaller components).</p>
+
+<h3>Inheritance</h3>
+
+<p><strong>The ability to derive new classes from existing classes</strong>.</p>
+
+<h3>Polymorphism</h3>
+
+<p>Polymorphism describes a pattern in object oriented programming in which classes have different functionality while sharing a common interface.</p>
+
+<p>Eg. shape object.</p>
+
+<h3>Read more</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/SOLID_">http://en.wikipedia.org/wiki/SOLID_</a>(object-oriented_design)</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/21/Largest-window-2-Unique-Chars/">[Question] Longest Substring With at Most Two Distinct Characters</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-21T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.programcreek.com/2013/02/longest-substring-which-contains-2-unique-characters/">link</a></p>
+
+<blockquote><p>Given a string, find the longest substring that contains only two unique characters. For example, given &ldquo;abcbbbbcccbdddadacb&rdquo;, the longest substring that contains 2 unique character is &ldquo;bcbbbbcccb&rdquo;.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>First, the most basic and naive solution</strong>, which we use 2 pointers and 1 hashset. Read thru and when seeing the 3rd different char, <strong>rebuild the hashset</strong>. Idea is from original post. This approach is not very efficient.</p>
+
+<p><strong>Second, we can use HashMap instead of HashSet</strong>, so that we keep couting how many of each char we currently got. This should do the trick well.</p>
+
+<blockquote><p>What if the question change from &lsquo;2 unique chars&rsquo; to &lsquo;N unique chars&rsquo;? <strong>Use HashMap instead of HashSet</strong>. The rest of the is very similar.</p></blockquote>
+
+<p><strong>Third solution I found it <a href="http://stackoverflow.com/a/15000204">here</a></strong>. It keeps a &lsquo;lastGroupStart&rsquo; pointer, that points to <strong>the last position where character changes</strong>. Eg. &ldquo;aaaabbbbbcccc&rdquo;, &lsquo;lastGroupStart&rsquo; would pointer to the first occurance of &lsquo;b&rsquo;. When we read until c, we update the window starting point to &lsquo;lastGroupStart&rsquo;, and update &lsquo;lastGroupStart&rsquo; to the first occurance of &lsquo;c&rsquo;.</p>
+
+<p>This is a frequent question. I personally would <strong>recommend 2nd solution: using HashMap</strong>.</p>
+
+<h3>Code</h3>
+
+<p><strong>first solution</strong></p>
+
+<pre><code>private String solution(String input) {
+    HashSet&lt;Character&gt; set = new HashSet&lt;Character&gt;();
+    char[] letters = input.toCharArray();
+    set.add(letters[0]);
+
+    int start = 0;
+    String longest = input.substring(0, 1);
+
+    for (int i = 1; i &lt; input.length(); i++) {
+        if (set.add(letters[i])) {
+            if (set.size() &gt; 2) {
+                // first, update the longest substring that exists before i
+                if (i - start &gt; longest.length()) {
+                    longest = input.substring(start, i);
+                }
+                // clear and rebuild the HashSet
+                set.clear();
+                set.add(letters[i]);
+                set.add(letters[i - 1]);
+                // remove 1 char entirely from current substring
+                int p = i - 1;
+                while (p &gt; 0 &amp;&amp; letters[p] == letters[p - 1]) {
+                    p--;
+                }
+                start = p;
+            }
+        }
+    }
+    if (input.length() - start &gt; longest.length()) {
+        longest = input.substring(start);
+    }
+    return longest;
+}
+</code></pre>
+
+<p><strong>third solution</strong>, pay attention to &lsquo;lastGroupStart&rsquo;.</p>
+
+<pre><code>// Find the first letter that is not equal to the first one, 
+// or return the entire string if it consists of one type of characters
+int start = 0;
+int i = 1;
+while (i &lt; str.length() &amp;&amp; str[i] == str[start])
+    i++;
+if (i == str.length())
+    return str;
+
+// The main algorithm
+char[2] chars = {str[start], str[i]};
+int lastGroupStart = 0;
+while (i &lt; str.length()) {
+    if (str[i] == chars[0] || str[i] == chars[1]) {
+        if (str[i] != str[i - 1])
+            lastGroupStart = i;
+    }
+    else {
+        //TODO: str.substring(start, i) is a locally maximal string; 
+        //      compare it to the longest one so far
+        start = lastGroupStart;
+        lastGroupStart = i;
+        chars[0] = str[start];
+        chars[1] = str[lastGroupStart];
+    }
+    i++;
+}
+//TODO: After the loop, str.substring(start, str.length()) 
+//      is also a potential solution.
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/21/Clone-octopress-blog-from-a-different-computer/">[Octopress] Clone Octopress Blog From a Different Computer</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-21T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><strong>Ruby/gem/bundler setup (on a new machine) has always been a hassle to me</strong>. Not only that, I&rsquo;ve had some confusions about developing Octopress blog on 2 different computers.</p>
+
+<p>Now that I&rsquo;ve had enough failures and success, I would like write a long post to summarize it.</p>
+
+<h3>Install Ruby</h3>
+
+<p>Well first of all, we must install <strong>Ruby</strong> and <strong>Development Kit</strong>. Simply go this <a href="http://rubyinstaller.org/downloads/">this page</a> and download:</p>
+
+<ol>
+<li>Ruby 1.9.3</li>
+<li>DevKit for Ruby 1.9.3</li>
+</ol>
+
+
+<p><strong>Installing Ruby</strong> is straight-forward, only remember to check &ldquo;Add Ruby to your PATH&rdquo;. Otherwise you need to manually set the <strong>Ruby directory</strong> (eg. C:\Ruby193\bin) in <strong>System Variables Settings</strong>.</p>
+
+<p><img class="middle" src="/assets/images/install-ruby-193.png"></p>
+
+<p><strong>Ruby DevKit is a self-extracting archive</strong>. After extracting the files, we should <a href="http://jekyll-windows.juthilo.com/1-ruby-and-devkit/">initialize the DevKit</a> like this:</p>
+
+<pre><code>cd C:/RubyDevKit
+ruby dk.rb init
+ruby dk.rb install
+</code></pre>
+
+<h3>Clone octopress</h3>
+
+<p><strong>clone the source branch to the local octopress folder</strong></p>
+
+<pre><code>using HTTPS
+git clone -b source https://github.com/okckd/okckd.github.io.git octopress
+
+or using SSH
+git clone -b source git@github.com:okckd/okckd.github.io.git octopress
+</code></pre>
+
+<p>I would recommend using SSH over HTTPS, because <strong>using HTTPS, you will need to type your username and password everytime you push</strong>.</p>
+
+<p>To change from &lsquo;HTTPS&rsquo; to &lsquo;SSH&rsquo;, follow <a href="http://stackoverflow.com/a/6565661">this instruction</a>:</p>
+
+<pre><code>git remote set-url origin git@github.com:username/repo.git
+</code></pre>
+
+<p>More info about HTTPS and SSH is <a href="https://help.github.com/articles/which-remote-url-should-i-use/">available</a>.</p>
+
+<h3>Install dependencies</h3>
+
+<p>Follow <a href="http://www.techelex.org/setup-octopress-windows7/">this instruction</a> and install bundler and dependencies.</p>
+
+<pre><code>cd c:/github/octopress
+gem install bundler
+rbenv rehash    # generally optional, unless you are using rbenv
+bundle install
+</code></pre>
+
+<p>If you see endless dependency errors here, please refer to my other post: <strong><a href="/blog/2014/12/23/Endless-error-gem-dependencies/">[Ruby] Endless error with gem dependencies</a></strong>.</p>
+
+<p>If you are confused with some concepts in Ruby, read <strong><a href="/blog/2014/12/22/RubyGems-gem-other/">[Ruby] RubyGems, gem, Gemfile and Bundler</a></strong>.</p>
+
+<h3>Now, start octopress</h3>
+
+<p>You can use either of the commands below to start octopress. I can&rsquo;t remember clearly but you can simply follow <a href="http://octopress.org/docs/setup/">this guide</a>.</p>
+
+<pre><code>rake setup_github_pages
+</code></pre>
+
+<p>when prompted, enter this url: git@github.com:okckd/okckd.github.io.git</p>
+
+<pre><code>rake install
+</code></pre>
+
+<h3>Commit your changes</h3>
+
+<p>You can do &lsquo;rake generate&rsquo;, then &lsquo;rake deploy&rsquo; to deploy to master branch. If you see the &ldquo;<strong>Liquid Exception: Tag xxx was not properly terminated with regexp</strong>&rdquo;: <a href="https://github.com/davidfstr/rdiscount/issues/75">do this</a>:</p>
+
+<blockquote><p>The file that&rsquo;s causing this problem in octopress, is category_feed.xml, inside _includes/custom. You need to replace &ldquo;markdownify&rdquo; for &ldquo;markdownize&rdquo; and it works. Now I can rest.</p></blockquote>
+
+<p>Do &lsquo;git commit", &ldquo;git push origin source&rsquo; to update blog source. <a href="http://blog.zerosharp.com/clone-your-octopress-to-blog-from-two-places/">reference</a></p>
+
+<p>At this step, congratulations you are all set!</p>
+
+<h3>Last word</h3>
+
+<p>Setting &lsquo;rake&rsquo; up is found to be a great hassle for many, for example, <a href="http://hamaluik.com/posts/switching-to-octopress/">someone spent 7 hours on it</a>.</p>
+
+<p>Wish this post can help!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/13/Twos-complement/">[Design] Two's Complement (2's Complement)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-13T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Overview</h1>
+
+<p>Two&rsquo;s complement is a binary signed number representation.</p>
+
+<p>Negative values are taken by <strong>subtracting the number from 2<sup>n</sup></strong>. This is the most common method of representing signed integers on computers.</p>
+
+<h2>Example</h2>
+
+<p><img class="middle" src="/assets/images/twoscomplement.png"></p>
+
+<p>So basically &lsquo;1111 1111&rsquo; means -1, and &lsquo;1000 0000&rsquo; means -128.</p>
+
+<h2>Special case</h2>
+
+<p>In java, minimum integer = -2147483648, which is &ldquo;10000000000000000000000000000000&rdquo;. If we negative this value, we still get -2147483648!</p>
+
+<pre><code>public void solve(int A) {
+    System.out.println(A);
+    System.out.println(Integer.toBinaryString(A));
+    System.out.println(A * -1);
+    System.out.println(Integer.toBinaryString(-1 * A));
+    System.out.println(-A);
+}
+</code></pre>
+
+<p>We get:</p>
+
+<pre><code>-2147483648
+10000000000000000000000000000000
+-2147483648
+10000000000000000000000000000000
+-2147483648
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/07/NineChap-additional/">[NineChap 10] Additional Questions</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-07T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>The following questions does not appear in NineChap, but they all worth reading.</p>
+
+<h3>Question List</h3>
+
+<ol>
+<li><p><strong><a href="/blog/2014/04/27/longest-substring-without-repeating/">Longest Substring Without Repeating Characters </a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/21/Minimum-Window-Substring/">Minimum Window Substring </a></strong> - very difficult</p></li>
+<li><p><strong><a href="/blog/2014/05/23/Scramble-String/">Scramble String </a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/25/Recover-Binary-Search-Tree/">Recover Binary Search Tree </a></strong></p></li>
+<li><p><strong><a href="/blog/2014/04/26/Median-of-Two-Sorted-Arrays/">Median of Two Sorted Arrays </a></strong> - difficult</p></li>
+<li><p><strong><a href="/blog/2014/05/14/Sudoku-Solver/">Sudoku Solver </a></strong> - difficult</p></li>
+<li><p><strong><a href="/blog/2014/05/21/Word-Search/">Word Search </a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/21/Simplify-Path/">Simplify Path</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/04/29/Regular-Expression-Matching/">Regular Expression Matching</a></strong> - very difficult</p></li>
+<li><p><strong><a href="/blog/2014/05/15/Wildcard-Matching/">Wildcard Matching</a></strong> - difficult</p></li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/04/Subarray-with-Sum-Closest/">[Question] Subarray With Sum Closest</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-04T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.geeksforgeeks.org/minimum-length-subarray-sum-greater-given-value/">link</a></p>
+
+<blockquote><p>Given an array of integers and a number x, find the smallest subarray with sum greater than the given value.</p>
+
+<p>Eg. input = (1, 4, 45, 6, 0, 19), 51, output (4, 45, 6)</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>Solution 1 (the better one)</strong> is based on another question <strong>Subarray with 0 Sum</strong>. We calculate the 前缀和 of every number. Takes O(n) time.</p>
+
+<p>If all input are positive, there can be a <strong>Solution 2</strong> which is based on another question <strong>Subarray with Particular Sum</strong>. The sliding window search. It&rsquo;s O(n) time as well.</p>
+
+<h3>Code</h3>
+
+<p><strong>Solution 2</strong> (for positive input)</p>
+
+<pre><code>int smallestSubWithSum(int arr[], int n, int x) {
+    //  Initilize length of smallest subarray as n+1
+     int min_len = n + 1;
+
+     // Pick every element as starting point
+     for (int start=0; start&lt;n; start++)
+     {
+          // Initialize sum starting with current start
+          int curr_sum = arr[start];
+
+          // If first element itself is greater
+          if (curr_sum &gt; x) return 1;
+
+          // Try different ending points for curremt start
+          for (int end=start+1; end&lt;n; end++)
+          {
+              // add last element to current sum
+              curr_sum += arr[end];
+
+              // If sum becomes more than x and length of
+              // this subarray is smaller than current smallest
+              // length, update the smallest length (or result)
+              if (curr_sum &gt; x &amp;&amp; (end - start + 1) &lt; min_len)
+                 min_len = (end - start + 1);
+          }
+     }
+     return min_len;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/04/Subarray-with-Particular-Sum/">[Question] Subarray With Particular Sum</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-04T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.geeksforgeeks.org/find-subarray-with-given-sum/">link</a></p>
+
+<blockquote><p>Given an unsorted array of nonnegative integers, find a continous subarray which adds to a given number.</p>
+
+<p>Eg. input = (1, 4, 20, 3, 10, 5), 33, output (20, 3, 10)</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Like a sliding window. Note that input numbers are all positive (otherwise it won&rsquo;t work).</p>
+
+<blockquote><p>Initialize a variable &lsquo;curr_sum&rsquo; as first element. &lsquo;curr_sum&rsquo; indicates the sum of current subarray. Start from the second element and add all elements one by one to the curr_sum.</p></blockquote>
+
+<ol>
+<li>If curr_sum exceeds the sum, then remove first.</li>
+<li>If curr_sum becomes equal to sum, solution found.</li>
+</ol>
+
+
+<p>O(n) time.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/04/Subarray-with-0-Sum/">[Question] Subarray With 0 Sum</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-04T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.geeksforgeeks.org/find-if-there-is-a-subarray-with-0-sum/">link</a></p>
+
+<blockquote><p>Given an array of positive and negative numbers, find if there is a subarray with 0 sum.</p>
+
+<p>eg. 4, 2, -3, 1, 6 -> return true (2, -3, 1)</p>
+
+<p>eg. 4, 2, 0, 1, 6 -> return true (0)</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>General case</strong>, idea of 前缀和:</p>
+
+<blockquote><p>iterate through the array and for every element arr[i], calculate sum of elements form 0 to i (this can simply be done as sum += arr[i]). If the current sum has been seen before, then there is a zero sum array.</p></blockquote>
+
+<p>O(n) time.</p>
+
+<p><strong>Special Case</strong>, if the input is all positive number, then this question can be solved using the idea from <strong>Subarray with Particular Sum</strong>, O(n) time.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/04/Check-Power-of-2/">[Question] Check Power of 2</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-04T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Requirement: O(1) time</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Do a special handle for input = 0. <a href="http://stackoverflow.com/a/600306">source</a></p>
+
+<pre><code>bool IsPowerOfTwo(ulong x) {
+    return (x &amp; (x - 1)) == 0;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/42">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/40">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_3&size=158x21'></script><section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

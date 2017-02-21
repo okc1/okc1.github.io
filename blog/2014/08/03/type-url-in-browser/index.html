@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[CC150v4] 17.1 Type a URL in Browser and Hit Enter - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question 17.1 Explain what happens, step by step, after you type a URL into a browser Use as much detail as possible. Short Answer Browser contacts &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/08/03/type-url-in-browser/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[CC150v4] 17.1 Type a URL in Browser and Hit Enter</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-03T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<p>17.1 Explain what happens, step by step, after you type a URL into a browser Use as much detail as possible.</p>
+
+<h3>Short Answer</h3>
+
+<ol>
+<li>Browser contacts the DNS server to find the IP address of URL</li>
+<li>DNS returns back the IP address of the site</li>
+<li>Browser opens TCP connection to the web server at port 80</li>
+<li>The browser sends a GET request to the server, asking for the file</li>
+<li>Browser fetches the html code</li>
+<li>Browser renders the HTML in the display window</li>
+<li>Browser terminates the connection when window is closed</li>
+</ol>
+
+
+<p><a href="http://superuser.com/q/157408">ref</a></p>
+
+<h3>More Details</h3>
+
+<p>Phase 1:</p>
+
+<ol>
+<li>browser checks cache; if requested object is in cache and is fresh, skip to Phase 3 #4</li>
+<li>browser asks OS for server&rsquo;s IP address</li>
+<li>OS makes a DNS lookup and replies the IP address to the browser</li>
+<li>browser opens a TCP connection to server (this step is much more complex with HTTPS)</li>
+<li>browser sends the HTTP request through TCP connection</li>
+</ol>
+
+
+<p><a href="http://stackoverflow.com/a/2092602">ref</a></p>
+
+<p>Phase 2:</p>
+
+<ol>
+<li>That computer receives the HTTP request from the TCP/IP connection and passes it to the web server program.</li>
+<li>Web server reads the hostname and path and finds or generates the data that you&rsquo;ve asked for.</li>
+<li>Web server generates an HTTP response containing that data.</li>
+<li>Web server sends that HTTP response back down the TCP/IP connection to your machine.</li>
+</ol>
+
+
+<p><a href="http://superuser.com/a/31474">ref</a></p>
+
+<p>Phase 3:</p>
+
+<ol>
+<li>browser receives HTTP response and may close the TCP connection, or reuse it for another request</li>
+<li>browser checks if the response is a redirect (3xx result status codes), authorization request (401), error (4xx and 5xx), etc.; these are handled differently from normal responses (2xx)</li>
+<li>if cacheable, response is stored in cache</li>
+<li>browser decodes response (e.g. if it&rsquo;s gzipped)</li>
+<li>browser determines what to do with response (e.g. is it a HTML page, is it an image, is it a sound clip?)</li>
+<li>browser renders response, or offers a download dialog for unrecognized types</li>
+</ol>
+
+
+<h3>Miscellaneous:</h3>
+
+<p>Each domain name server is divided into zones A single server may only be responsible for knowing the host names and IP addresses for a small subset of a zone, but DNS servers can work together to map all domain names to their IP addresses That means if one domain name server is unable to find the IP addresses of a requested domain then it requests the information from other domain name servers</p>
+
+<p>The firewall will control connections to &amp; from your computer. For the most part it will just be controlling who can connect to your computer and on what ports. For web browsing your firewall generally won&rsquo;t be doing a whole lot.</p>
+
+<p>Your router essentially guides your request through the network, helping the packets get from computer to computer and potentially doing some NAT (Network Address Tranlator) to translate IP addresses along the way (so your internat LAN request can be transitioned onto the wider internet and back).</p>
+
+<h3>Even more</h3>
+
+<p>An even more detailed article can be found <a href="http://www.garshol.priv.no/download/text/http-tut.html">here</a>. And a __great step-by-step example using facebook.com can be found <a href="http://igoro.com/archive/what-really-happens-when-you-navigate-to-a-url/">here</a>.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-08-03T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/cc150v4/'>cc150v4</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/08/03/type-url-in-browser/" data-via="" data-counturl="http://okc1.github.io/blog/2014/08/03/type-url-in-browser/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/08/03/Three-Keys-Data-Structure/" title="Previous Post: [Google] Three Keys Data Structure">&laquo; [Google] Three Keys Data Structure</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/08/04/Find-Nearest-Point-in-2D-Space/" title="Next Post: [Google] Find Nearest Point in a 2D Space">[Google] Find Nearest Point in a 2D Space &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+<!--div>
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_0&type=footer&size=728x90'></script>
+</div>
+<div>
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_1&type=footer&size=728x90'></script>
+</div-->
+    
+<script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_2&type=footer&size=728x90'></script>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_3&size=158x21'></script><section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

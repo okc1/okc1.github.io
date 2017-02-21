@@ -1,0 +1,1762 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link Given an array S of n integers, are there elements a, b, c, and d in S such that a + b + c + d = target? Find all unique quadruplets in &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/62/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/03/4Sum/">[LeetCode 18] 4Sum</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-03T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/4sum/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Given an array <i>S</i> of <i>n</i> integers, are there elements <i>a</i>, <i>b</i>, <i>c</i>, and <i>d</i> in <i>S</i> such that <i>a</i> + <i>b</i> + <i>c</i> + <i>d</i> = target? Find all unique quadruplets in the array which gives the sum of target.</p>
+
+<p><b>Note:</b><br>
+</p><ul>
+<li>Elements in a quadruplet (<i>a</i>,<i>b</i>,<i>c</i>,<i>d</i>) must be in non-descending order. (ie, <i>a</i> ≤ <i>b</i> ≤ <i>c</i> ≤ <i>d</i>)</li>
+<li>The solution set must not contain duplicate quadruplets.</li>
+</ul>
+<p></p>
+
+<pre>    For example, given array S = {1 0 -1 0 -2 2}, and target = 0.
+
+    A solution set is:
+    (-1,  0, 0, 1)
+    (-2, -1, 1, 2)
+    (-2,  0, 0, 2)
+</pre><p></p>
+</div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Diffficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is exactly the same algorithm as 3Sum</strong>. The idea is for every value pair (a, b), find all (c, d) that makes the sum equals to the target.</p>
+
+<p>Note that the final found result (a, b, c, d) is already in sorted order, no need to re-sort.</p>
+
+<h3>Solution</h3>
+
+<p>The solution works in O(n<sup>3</sup>), which is a very common solution. Read <a href="http://www.cnblogs.com/TenosDoIt/p/3649607.html">this blog</a> for a O(n<sup>2</sup>) solution. Read it ONLY if you are interested.</p>
+
+<h3>My code</h3>
+
+<pre><code>public class Solution {
+    public List&lt;List&lt;Integer&gt;&gt; fourSum(int[] num, int target) {
+        List&lt;List&lt;Integer&gt;&gt; ans = new ArrayList&lt;List&lt;Integer&gt;&gt;();
+        if (num == null || num.length &lt; 4) {
+            return ans;
+        }
+        Arrays.sort(num);
+        int len = num.length;
+        for (int i = 0; i &lt; len - 3; i++) {
+            // make sure the first number is distinct 
+            if (i != 0 &amp;&amp; num[i - 1] == num[i]) {
+                continue;
+            }
+            for (int j = i + 1; j &lt; len - 2; j++) {
+                // make sure the second number is distinct 
+                if (j != i + 1 &amp;&amp; num[j - 1] == num[j]) {
+                    continue;
+                }
+                int balance = target - num[i] - num[j];
+                int left = j + 1;
+                int right = len - 1;
+                while (left &lt; right) {
+                    int sum = num[left] + num[right];
+                    if (sum == balance) {
+                        List&lt;Integer&gt; lis = new ArrayList&lt;Integer&gt;();
+                        lis.add(num[i]);
+                        lis.add(num[j]);
+                        lis.add(num[left]);
+                        lis.add(num[right]);
+                        ans.add(lis);
+                    }
+                    if (sum &gt;= balance) {
+                        // move right pointer left (to a unique value)
+                        right--;
+                        while (right &gt;= 0 &amp;&amp; num[right] == num[right + 1]) {
+                            right--;
+                        }
+                    }
+                    if (sum &lt;= balance) {
+                        // move left pointer right (to a unique value)
+                        left++;
+                        while (left &lt; len &amp;&amp; num[left] == num[left - 1]) {
+                            left++;
+                        }
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+}
+</code></pre>
+
+<p>We can also use HashMap to remove duplication. I personally would not recommend doing this, but it gives an interesting viwepoint. Check out <a href="http://www.programcreek.com/2013/02/leetcode-4sum-java/">this code</a>.</p>
+
+<pre><code>public ArrayList&lt;ArrayList&lt;Integer&gt;&gt; fourSum(int[] num, int target) {
+    Arrays.sort(num);
+    HashSet&lt;ArrayList&lt;Integer&gt;&gt; hashSet = new HashSet&lt;ArrayList&lt;Integer&gt;&gt;();
+    ArrayList&lt;ArrayList&lt;Integer&gt;&gt; result = new ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();
+    for (int i = 0; i &lt; num.length; i++) {
+        for (int j = i + 1; j &lt; num.length; j++) {
+            int k = j + 1;
+            int l = num.length - 1;
+            while (k &lt; l) {
+                int sum = num[i] + num[j] + num[k] + num[l];
+                if (sum &gt; target) l--;
+                else if (sum &lt; target) k++;
+                else if (sum == target) {
+                    ArrayList&lt;Integer&gt; temp = 
+                        new ArrayList&lt;Integer&gt;();
+                    temp.add(num[i]);
+                    temp.add(num[j]);
+                    temp.add(num[k++]);
+                    temp.add(num[l--]);
+                    if (!hashSet.contains(temp)) {
+                        hashSet.add(temp);
+                        result.add(temp);
+                    }
+                }
+            }
+        }
+    }
+    return result;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/02/Remove-Nth-Node-From-End-of-List/">[LeetCode 19] Remove Nth Node From End of List</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-02T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/remove-nth-node-from-end-of-list/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Given a linked list, remove the <i>n</i><sup>th</sup> node from the end of list and return its head.</p>
+
+<p>
+For example,</p>
+
+<pre>   Given linked list: <b>1-&gt;2-&gt;3-&gt;4-&gt;5</b>, and <b><i>n</i> = 2</b>.
+
+   After removing the second node from the end, the linked list becomes <b>1-&gt;2-&gt;3-&gt;5</b>.
+</pre>
+
+<p>
+<b>Note:</b><br>
+Given <i>n</i> will always be valid.<br>
+Try to do this in one pass.
+</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Diffficulty</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="white">1</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p>Note the special case: if the head node needs to be removed!</p>
+
+<h3>Solution</h3>
+
+<p>The code explains itself. Just don&rsquo;t forget the special cases.</p>
+
+<h3>My code</h3>
+
+<pre><code>/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        if (head == null) {
+            return null;
+        }
+        ListNode left = head;
+        ListNode right = head;
+        // important to note that head node can be removed as well!
+        // advance right pointer now
+        for (int i = 0; i &lt; n; i++) {
+            right = right.next;
+            if (right == null) {
+                right = head;
+            }
+        }
+        // advance left and right pointer together
+        while (right.next != null) {
+            left = left.next;
+            right = right.next;
+        }
+        // remove the node after left pointer
+        // again, the below error check is not necessary
+        if (left.next == null) {
+            // need to remove the header in this case
+            return head.next;
+        } else {
+            left.next = left.next.next;
+            return head;
+        }
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/02/Letter-Combinations-of-a-Phone-Number/">[LeetCode 17] Letter Combinations of a Phone Number</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-02T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/letter-combinations-of-a-phone-number/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Given a digit string, return all possible letter combinations that the number could represent.
+</p>
+
+<p>
+A mapping of digit to letters (just like on the telephone buttons) is given below.</p>
+<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Telephone-keypad2.svg/200px-Telephone-keypad2.svg.png"></p>
+
+<pre><b>Input:</b>Digit string "23"
+<b>Output:</b> ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+</pre>
+
+<p>
+<b>Note:</b><br>
+Although the above answer is in lexicographical order, your answer could be in any order you want.
+</p><p></p>
+</div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Diffficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="lime">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p>There are 2 considerations associated with this question:</p>
+
+<ol>
+<li><p>How to convert an number into a String (i.e. 2->&lsquo;abc&rsquo; etc.)</p></li>
+<li><p>How the search works.</p></li>
+</ol>
+
+
+<h4>Convert number to string</h4>
+
+<p>There are 2 way: <strong>math way</strong>, or the <strong>hashmap way</strong>.</p>
+
+<p>My initial idea is to calculate it mathematically:</p>
+
+<pre><code>private String getLetters(int key) {
+    if (key &lt;= 1 || key &gt;= 10) return "";
+    // key must be in the range of [2,9]
+    char first = (char) ('a' + (key - 2) * 3);
+    if (key &gt;= 8) first++;
+    String letters = "";
+    for (int i = 0; i &lt; 4; i++) {
+        if (i == 3 &amp;&amp; !(key == 7 || key == 9)) {
+            break;
+        }
+        letters += first++;
+    }
+    return letters;
+}
+String letters = getLetters('3' - '0');
+</code></pre>
+
+<p>However, most people would use HashMap. It&rsquo;s not the main issue anyway, so using HashMap is fine.</p>
+
+<h3>Solution</h3>
+
+<p>This is very typical &ldquo;Permutation&rdquo; question. Need to memorize clearly.</p>
+
+<p>Refer to <a href="http://www.ninechapter.com//solutions/letter-combinations-of-a-phone-number/">ninechap</a> for the solution and a piece of very standard code.</p>
+
+<h3>My code</h3>
+
+<pre><code>public class Solution {
+    public List&lt;String&gt; letterCombinations(String digits) {
+        List&lt;String&gt; ans = new ArrayList&lt;String&gt;();
+        if (digits == null || digits.length() == 0) {
+            ans.add("");
+            return ans;
+        }
+        int len = digits.length();
+        // this type of DFS question is very standardized
+        helper(ans, "", digits, 0, len);
+        return ans;
+    }
+
+    private void helper(List&lt;String&gt; ans, String path, String digits, int pos, int len) {
+        if (pos == len) {
+            ans.add(path);
+            return;
+        }
+        // check the char at position 'pos', and find all possible letters to insert
+        String possibleLetters = getLetters(digits.charAt(pos));
+        for (char letter: possibleLetters.toCharArray()) {
+            helper(ans, path + letter, digits, pos + 1, len);
+        }
+    }
+
+    private String getLetters(char digit) {
+        // first convert char to integer
+        int index = digit - '0';
+        String[] map = new String[] {
+            " ",
+            "",
+            "abc",
+            "def",
+            "ghi",
+            "jkl",
+            "mno",
+            "pqrs",
+            "tuv",
+            "wxyz"
+        };
+        // second, find corresponding string from map
+        return map[index];
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/02/3Sum-Closest/">[LeetCode 16] 3Sum Closest</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-02T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/3sum-closest/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Given an array <i>S</i> of <i>n</i> integers, find three integers in <i>S</i> such that the sum is closest to a given number, target. Return the sum of the three integers. You may assume that each input would have exactly one solution.</p>
+
+<pre>    For example, given array S = {-1 2 1 -4}, and target = 1.
+
+    The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
+</pre><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="white">1</td>
+    </tr>
+    <tr>
+        <td>Diffficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p>This question is a simplified version of <strong>[LeetCode 15] 3Sum</strong>. The required return is an integer instead of a list.</p>
+
+<p>This makes life easier because <strong>we do not need to consider duplications</strong> (think about it, why?).</p>
+
+<h3>Solution</h3>
+
+<p>The code is 3Sum solution without duplication avoidance.</p>
+
+<h3>My code</h3>
+
+<pre><code>public class Solution {
+    public int threeSumClosest(int[] num, int target) {
+        if (num == null || num.length &lt; 3) {
+            return 0;
+        }
+        Arrays.sort(num);
+        int len = num.length;
+        int ans = num[0] + num[1] + num[2];
+        for (int i = 0; i &lt; len; i++) {
+            // if (i != 0 &amp;&amp; num[i - 1] == num[i]) {
+            //     continue;
+            // }
+            // similar to 3sum question, but without dup avoidance
+            int left = i + 1;
+            int right = len - 1;
+            while (left &lt; right) {
+                int sum = num[i] + num[left] + num[right];
+                // if found triplet that sums to target, return!
+                if (sum == target) {
+                    return target;
+                }
+                // then update ans variable - if it's closer to target
+                if (Math.abs(sum - target) &lt; Math.abs(ans - target)) {
+                    ans = sum;
+                }
+                // now move either left or right pointer
+                if (sum &gt;  target) {
+                    right--;
+                } else {
+                    left++;
+                }
+            }
+        }
+        return ans;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/02/3Sum/">[LeetCode 15] 3Sum</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-02T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/3sum/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Given an array <i>S</i> of <i>n</i> integers, are there elements <i>a</i>, <i>b</i>, <i>c</i> in <i>S</i> such that <i>a</i> + <i>b</i> + <i>c</i> = 0? Find all unique triplets in the array which gives the sum of zero.</p>
+
+<p><b>Note:</b><br>
+</p><ul>
+<li>Elements in a triplet (<i>a</i>,<i>b</i>,<i>c</i>) must be in non-descending order. (ie, <i>a</i> ≤ <i>b</i> ≤ <i>c</i>)</li>
+<li>The solution set must not contain duplicate triplets.</li>
+</ul>
+<p></p>
+
+<pre>    For example, given array S = {-1 0 1 2 -1 -4},
+
+    A solution set is:
+    (-1, 0, 1)
+    (-1, -1, 2)
+</pre><p></p>
+</div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="red">5</td>
+    </tr>
+    <tr>
+        <td>Diffficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">5</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="red">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p>First of all, the array must be sorted first.</p>
+
+<p><strong>This question is solved with O(n<sup>2</sup>) time</strong>. The idea is, for every integer, try to find a 2-integer pair so that the 3 numbers sum to 0. The method to use is <strong>2-pointer scan</strong>.</p>
+
+<h3>Solution</h3>
+
+<p><strong>Very important point of this question</strong>: there might be duplications in the result.</p>
+
+<p>Eg. array = {-5, 2, 2, 3, 3}. When a = -5, we can choose 2, 3 and move pointers both by 1 position. Then we can choose 2, 3 again!</p>
+
+<p>Solution is to increase the pointer to where the value is different. Pay special attention in writing the code. Because there are 3 parts that need duplication avoidance:</p>
+
+<ol>
+<li><p><strong>The pivot number that we select, must be distinct each time</strong>. Why? because this is the smallest of the triplet. It must not be same.</p></li>
+<li><p>The left pointer and right pointer. They should point to a new value each time.</p></li>
+<li><p>Note that when sum is too large, move left pointer, and vice versa. <strong>However when sum is == 0, we move both left and right pointer</strong>.</p></li>
+</ol>
+
+
+<p>Point 3 is the reason why we have 2 conditions in seperate if-block:</p>
+
+<pre><code>if (sum &gt;= 0) {...}
+
+if (sum &lt;= 0) {...}
+</code></pre>
+
+<h3>My code</h3>
+
+<pre><code>public class Solution {
+    public List&lt;List&lt;Integer&gt;&gt; threeSum(int[] num) {
+        List&lt;List&lt;Integer&gt;&gt; ans = new ArrayList&lt;List&lt;Integer&gt;&gt;();
+        if (num == null || num.length &lt; 3) {
+            return ans;
+        }
+        Arrays.sort(num);
+        int len = num.length;
+        int left, right;
+        for (int i = 0; i &lt; len; i++) {
+            // duplication avoidance 1
+            if (i != 0 &amp;&amp; num[i] == num[i - 1]) {
+                continue;
+            }
+            left = i + 1;
+            right = len - 1;
+            while (left &lt; right) {
+                int sum = num[i] + num[left] + num[right];
+                if (sum == 0) {
+                    // now one triplet is found, add it to ans list
+                    List&lt;Integer&gt; triplet = new ArrayList&lt;Integer&gt;();
+                    triplet.add(num[i]);
+                    triplet.add(num[left]);
+                    triplet.add(num[right]);
+                    ans.add(triplet);
+                }
+                // shrink the range between left and right pointer
+                // (until the 2 pointers met)
+                if (sum &gt;= 0) {
+                    // move right pointer to the left
+                    right--;
+                    // duplication avoidance 2
+                    while (right &gt;= 0 &amp;&amp; num[right] == num[right + 1]) {
+                        right--;
+                    }
+                }
+                if (sum &lt;= 0) {
+                    // move left pointer to the right
+                    left++;
+                    // duplication avoidance 3
+                    while (left &lt; len &amp;&amp; num[left] == num[left - 1]) {
+                        left++;
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/01/Longest-Common-Prefix/">[LeetCode 14] Longest Common Prefix</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-01T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/longest-common-prefix/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Write a function to find the longest common prefix string amongst an array of strings.
+</p><p></p>
+</div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="white">1</td>
+    </tr>
+    <tr>
+        <td>Diffficulty</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="white">1</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="white">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>Straight-forward solution.</strong> Will not go into details.</p>
+
+<p>However, there&rsquo;s another more generalized <a href="http://en.wikipedia.org/wiki/LCP_array"><strong>LCP array</strong></a> which is solved by use of <a href="http://en.wikipedia.org/wiki/Trie">Trie</a>.</p>
+
+<h3>Solution</h3>
+
+<p>The code explains itself.</p>
+
+<h3>My code</h3>
+
+<pre><code>public class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        if (strs == null || strs.length == 0) {
+            return "";
+        }
+        int p;
+        for (p = 0; p &lt; strs[0].length(); p++) {
+            char c = strs[0].charAt(p);
+            // check all strings in array strs
+            for (int i = 0; i &lt; strs.length; i++) {
+                if (p == strs[i].length()) {
+                    return strs[i];
+                } else if (c != strs[i].charAt(p)) {
+                    return strs[i].substring(0, p);
+                }
+            }
+            // if all strings have the same prefix
+            // continue checking it
+        }
+        // first string in array strs is the shortest common prefix
+        return strs[0];
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/04/30/Roman-to-Integer/">[LeetCode 13] Roman to Integer</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-04-30T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/roman-to-integer/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Given a roman numeral, convert it to an integer.</p>
+
+<p>Input is guaranteed to be within the range from 1 to 3999.</p><p></p>
+</div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Diffficulty</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="lime">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p>This question is easier than <strong>[LeetCode 12] Integer to Roman</strong>.</p>
+
+<p>The basic idea is to <strong>read 2 char (as pre and cur) and then check</strong>. If pre > cur, then OK, just do the addition. If pre &lt; cur, we need to subtract (2 * pre) from the result.</p>
+
+<p>The code is easy and concise if you have the idea.</p>
+
+<h3>Solution</h3>
+
+<p>The code explains itself.</p>
+
+<h3>My code</h3>
+
+<pre><code>public class Solution {
+    public int romanToInt(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        int ans = 0;
+        int pre = 0;
+        int cur = 0;
+        for (int i = 0; i &lt; s.length(); i++) {
+            cur = getNum(s.charAt(i));
+            if (i == 0 || pre &gt;= cur) {
+                ans += cur;
+            } else {
+                ans += cur - (2 * pre);
+            }
+            pre = cur;
+        }
+        return ans;
+    }
+
+    private int getNum(char a){
+        switch(a){
+            case 'I': return 1;
+            case 'V': return 5;
+            case 'X': return 10;
+            case 'L': return 50;
+            case 'C': return 100;
+            case 'D': return 500;
+            case 'M': return 1000;
+        }
+        return 0;
+    }
+}
+</code></pre>
+
+<p>We can also do only adding. Someone posted the code in <a href="http://yucoding.blogspot.sg/2013/05/leetcode-question-87-roman-to-interger.html">here</a>. Read it ONLY if you are interested.</p>
+
+<pre><code>class Solution {
+public:
+    int romanToInt(string s) {
+        // 4:IV, 9:IX, 40:XL, 90:XC, 400:CD, 900:CM,
+        // 1:I, 10:X, 100:C, 1000:M
+        int res=0;
+        char pre = ' ';
+        for(int i=0;i&lt;s.size();i++){
+            if (s[i]=='M' &amp;&amp; pre!='C') {res+=1000;}
+            if (s[i]=='C' &amp;&amp; pre!='X') {res+=100;}
+            if (s[i]=='X' &amp;&amp; pre!='I') {res+=10;}
+
+            if (s[i]=='M' &amp;&amp; pre=='C') {res+=800;}
+            if (s[i]=='C' &amp;&amp; pre=='X') {res+=80;}
+            if (s[i]=='X' &amp;&amp; pre=='I') {res+=8;}
+
+            if (s[i]=='I' ) {res+=1;}
+
+            if (s[i]=='V' &amp;&amp; pre!='I'){res+=5;}
+            if (s[i]=='L' &amp;&amp; pre!='X'){res+=50;}
+            if (s[i]=='D' &amp;&amp; pre!='C'){res+=500;}
+
+            if (s[i]=='V' &amp;&amp; pre=='I'){res+=3;}
+            if (s[i]=='L' &amp;&amp; pre=='X'){res+=30;}
+            if (s[i]=='D' &amp;&amp; pre=='C'){res+=300;}
+
+            pre = s[i];
+        }
+        return res;
+    }
+};
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/04/30/Integer-to-Roman/">[LeetCode 12] Integer to Roman</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-04-30T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/integer-to-roman/">link</a></p>
+
+<div class="question-content">
+<p></p><p>Given an integer, convert it to a roman numeral.
+</p>
+<p>Input is guaranteed to be within the range from 1 to 3999.</p><p></p>
+</div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Diffficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<table>
+<thead>
+<tr>
+<th>Symbol </th>
+<th style="text-align:center;"> Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>I</td>
+<td style="text-align:center;">1</td>
+</tr>
+<tr>
+<td>V</td>
+<td style="text-align:center;">5</td>
+</tr>
+<tr>
+<td>X</td>
+<td style="text-align:center;">10</td>
+</tr>
+<tr>
+<td>L</td>
+<td style="text-align:center;">50</td>
+</tr>
+<tr>
+<td>C</td>
+<td style="text-align:center;">100</td>
+</tr>
+<tr>
+<td>D</td>
+<td style="text-align:center;">500</td>
+</tr>
+<tr>
+<td>M</td>
+<td style="text-align:center;">1,000</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>Though <a href="http://en.wikipedia.org/wiki/Roman_numerals">Roman numerals</a> looks complex, it&rsquo;s actually converted bit by bit. For example 207=>CCVII. We can then construct <strong>the following relationship table</strong>:</p>
+
+<table>
+<thead>
+<tr>
+<th>Base/number</th>
+<th style="text-align:center;">Number(1)</th>
+<th style="text-align:center;">Number(5)</th>
+<th style="text-align:center;">Number(10)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td style="text-align:center;">I</td>
+<td style="text-align:center;">V</td>
+<td style="text-align:center;">X</td>
+</tr>
+<tr>
+<td>10</td>
+<td style="text-align:center;">X</td>
+<td style="text-align:center;">L</td>
+<td style="text-align:center;">C</td>
+</tr>
+<tr>
+<td>100</td>
+<td style="text-align:center;">C</td>
+<td style="text-align:center;">D</td>
+<td style="text-align:center;">M</td>
+</tr>
+<tr>
+<td>1000</td>
+<td style="text-align:center;">M</td>
+<td style="text-align:center;">n.a.</td>
+<td style="text-align:center;">n.a.</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>So for each number, just do convert according to the above table.</p>
+
+<blockquote><p>9=>IX</p>
+
+<p>400=>CD.</p></blockquote>
+
+<p>The question states that input is less than 3999.</p>
+
+<h3>Analysis</h3>
+
+<p>Before I present my solution, there is a very short code written by stackoverflow user <a href="http://stackoverflow.com/a/19759564">bhlangonijr</a>. This method <strong>makes use of Java <a href="http://goo.gl/e8ryim">TreeMap.floorKey</a></strong>. Read it ONLY if you are interested!</p>
+
+<blockquote><p>TreeMap.floorKey - Returns the greatest key less than or equal to the given key, or null if there is no such key.</p></blockquote>
+
+<pre><code>public String intToRoman3(int num) {
+    TreeMap&lt;Integer, String&gt; map = new TreeMap&lt;Integer, String&gt;();
+    map.put(1000, "M");
+    map.put(900, "CM");
+    map.put(500, "D");
+    map.put(400, "CD");
+    map.put(100, "C");
+    map.put(90, "XC");
+    map.put(50, "L");
+    map.put(40, "XL");
+    map.put(10, "X");
+    map.put(9, "IX");
+    map.put(5, "V");
+    map.put(4, "IV");
+    map.put(1, "I");
+    int l = map.floorKey(num);
+    if (num == l) {
+        return map.get(num);
+    }
+    return map.get(l) + intToRoman3(num - l);
+}
+</code></pre>
+
+<h3>Solution</h3>
+
+<p>I will present 2 solutions below.</p>
+
+<p>First is an iterative solution. It&rsquo;s comparatively shorter, and enjoys beter performance.</p>
+
+<p>Second is my new idea. It has improved readability, but slightly worse performance, because it&rsquo;s recursive.</p>
+
+<h3>My code</h3>
+
+<p>Code 1, iterative.</p>
+
+<pre><code>public class Solution {
+
+    char[][] roman = {
+        { 'I', 'V', 'X' }, 
+        { 'X', 'L', 'C' }, 
+        { 'C', 'D', 'M' },
+        { 'M', '*', '*' } 
+    };
+
+    public String intToRoman(int num) {
+        String ans = "";
+        int base = 1, count = 0, temp = num;
+        while (temp &gt; 1) {
+            base *= 10;
+            count++;
+            temp /= 10;
+        }
+        while (base &gt; 0) {
+            int cur = num / base;
+            // now convert cur into roman string
+            if (cur &gt;= 6 &amp;&amp; cur &lt;= 8) {
+                ans += roman[count][1];
+                cur = cur % 5;
+            }
+            if (cur &gt;= 1 &amp;&amp; cur &lt;= 3)
+                for (int k = 0; k &lt; cur; k++)
+                    ans += roman[count][0];
+            else if (cur == 5)
+                ans += roman[count][1];
+            else if (cur == 4)
+                ans += roman[count][0] + "" + roman[count][1];
+            else if (cur == 9)
+                ans += roman[count][0] + "" + roman[count][2];
+            num = num % base;
+            base /= 10;
+            count--;
+        }
+        return ans;
+    }
+
+}
+</code></pre>
+
+<p>Code 2, recursive.</p>
+
+<pre><code>public class Solution {
+
+    HashMap&lt;Integer, String&gt; map = new HashMap&lt;Integer, String&gt;();
+
+    public String intToRoman(int num) {
+
+        map.put(1000, "M");
+        map.put(500, "D");
+        map.put(100, "C");
+        map.put(50, "L");
+        map.put(10, "X");
+        map.put(5, "V");
+        map.put(1, "I");
+
+        String roman = "";
+        int base = 1000;
+        int digit = 0;
+        while (num != 0) {
+            digit = num / base;
+            num = num % base;
+            roman = roman + convert(digit, base);
+            base /= 10;
+        }
+        return roman;
+    }
+
+    private String convert(int digit, int base) {
+        String ans = "";
+        String one = map.get(base);
+        String five = map.get(base * 5);
+        if (digit == 0) {
+            return "";
+        } else if (digit &lt;= 3) {
+            for (int i = 0; i &lt; digit; i++) {
+                ans += one;
+            }
+        } else if (digit == 4) {
+            ans += one;
+            ans += convert(5, base);
+        } else if (digit == 5) {
+            ans += five;
+        } else if (digit &lt;= 8) {
+            ans += convert(5, base);
+            ans += convert(digit - 5, base);
+        } else if (digit == 9) {
+            ans += one;
+            ans += convert(1, base * 10);
+        }
+        return ans;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/04/29/ZigZag-Conversion/">[LeetCode 6] ZigZag Conversion</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-04-29T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>29</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/zigzag-conversion/">link</a></p>
+
+<div class="question-content">
+<p></p><p>
+The string <code>"PAYPALISHIRING"</code> is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
+</p><pre>
+P   A   H   N
+A P L S I I G
+Y   I   R
+</pre>
+
+And then read line by line: <code>"PAHNAPLSIIGYIR"</code><p></p>
+
+<p>
+Write the code that will take a string and make this conversion given a number of rows:
+
+</p><pre>string convert(string text, int nRows);</pre>
+
+<code>convert("PAYPALISHIRING", 3)</code> should return <code>"PAHNAPLSIIGYIR"</code>.
+<p></p><p></p>
+</div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="white">1</td>
+    </tr>
+    <tr>
+        <td>Diffficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Solution</h3>
+
+<p><strong>Two ways to work out this problem</strong>.</p>
+
+<p>Solution 1. Insert string s vertically into a 2d array, char by char. After this is finished, make the result string by reading the 2d array horizontally. See code 1 below.</p>
+
+<p>Solution 2. Calculate and find out (in sequence) which char from s should be inserted into the result list. Then build the result list directly. See code 2 below.</p>
+
+<h3>My code</h3>
+
+<p>One. Fill in the whole string, then parse the result.</p>
+
+<pre><code>public class Solution {
+    public String convert(String s, int nRows) {
+        if (s == null || s.length() == 0 || nRows &lt; 1) {
+            return "";
+        } else if (nRows == 1) {
+            return s;
+        }
+        int len = s.length();
+        int grpSize = nRows * 2 - 2;
+        int numGrp = (len - 1) / grpSize + 1;
+        String[][] array = new String[nRows][numGrp * 2];
+        // fill in string s into array, one group after another
+        int p = 0;
+        // for each group
+        for (int i = 0; i &lt; numGrp; i++) {
+            // for each vertical index (left col), fill in one letter from s
+            for (int j = 0; j &lt; nRows; j++) {
+                // if s is used up, break
+                if (p == len) {
+                    break;
+                }
+                array[j][i * 2] = "" + s.charAt(p);
+                p++;
+            }
+            // for each vertical index (right col), fill in one letter from s
+            for (int j = nRows - 2; j &gt; 0; j--) {
+                // if s is used up, break
+                if (p == len) {
+                    break;
+                }
+                array[j][i * 2 + 1] = "" + s.charAt(p);
+                p++;
+            }
+        }
+        // now convert array[][] into final string and return answer
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i &lt; array.length; i++) {
+            for (int j = 0; j &lt; array[0].length; j++) {
+                if (array[i][j] == null || array[i][j].length() == 0) {
+                    continue;
+                } else {
+                    sb.append(array[i][j]);
+                }
+            }
+        }
+        return sb.toString();
+    }
+}
+</code></pre>
+
+<p>Two. Pick the correct char and form the result string, and fill it in the result string.</p>
+
+<pre><code>public class Solution {
+    public String convert(String s, int nRows) {
+        if (nRows &lt;= 1)
+            return s;
+        int eachPattern = 2 * nRows - 2;
+        int numPatterns = (s.length() - 1) / eachPattern + 1;
+        StringBuilder ans = new StringBuilder();
+        for (int j = 0; j &lt; nRows; j++) {
+            for (int i = 0; i &lt; numPatterns; i++) {
+                ans.append(find(s, eachPattern, i, j));
+                if (j != 0 &amp;&amp; j != nRows - 1)
+                    ans.append(find(s, eachPattern, i, 2 * (nRows - 1) - j));
+            }
+        }
+        return ans.toString();
+    }
+
+    private String find(String s, int eachPattern, int i, int j) {
+        // find (j)th element from (i)th pattern
+        int temp = eachPattern * i + j;
+        if (temp &lt; s.length())
+            return s.substring(temp, temp + 1);
+        return "";
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/04/29/String-to-Integer-(atoi)/">[LeetCode 8] String to Integer (Atoi)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-04-29T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>29</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/string-to-integer-atoi/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Implement <span style="font-family:monospace">atoi</span> to convert a string to an integer.</p>
+
+<p><b>Hint:</b> Carefully consider all possible input cases. If you want a challenge, please do not see below and ask yourself what are the possible input cases.</p>
+
+<p>
+<b>Notes:</b> 
+It is intended for this problem to be specified vaguely (ie, no given input specs). You are responsible to gather all the input requirements up front. </p>
+
+<div class="spoilers"><b>Requirements for atoi:</b>
+
+<p>The function first discards as many whitespace characters as necessary until the first non-whitespace character is found. Then, starting from this character, takes an optional initial plus or minus sign followed by as many numerical digits as possible, and interprets them as a numerical value.</p>
+
+<p>The string can contain additional characters after those that form the integral number, which are ignored and have no effect on the behavior of this function.</p>
+
+<p>If the first sequence of non-whitespace characters in str is not a valid integral number, or if no such sequence exists because either str is empty or it contains only whitespace characters, no conversion is performed.</p>
+
+<p>If no valid conversion could be performed, a zero value is returned. If the correct value is out of the range of representable values, INT_MAX (2147483647) or INT_MIN (-2147483648) is returned.
+</p>
+</div><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="red">5</td>
+    </tr>
+    <tr>
+        <td>Diffficulty</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p>This question is not difficult, but hard to get it right. Remember to handle all cases listed below:</p>
+
+<ol>
+<li>null or empty string</li>
+<li>white spaces</li>
+<li>+/- sign</li>
+<li>calculate real value</li>
+<li>return int.min or int.max</li>
+</ol>
+
+
+<h3>Solution</h3>
+
+<p><strong>Use one loop to read through, and in the end do some checking</strong>. There is a very good <a href="http://www.programcreek.com/2012/12/leetcode-string-to-integer-atoi/">explanation</a> from online.</p>
+
+<p>This is a standard string question, and try think of some special test cases.</p>
+
+<h3>My code</h3>
+
+<pre><code>public class Solution {
+    public int atoi(String str) {
+        if (str == null || str.length() == 0) {
+            return 0;
+        }
+        int p = 0; 
+        int len = str.length();
+        // omit as many space as possible
+        while (p &lt; len) {
+            if (str.charAt(p) != ' ') {
+                break;
+            }
+            p++;
+        }
+        int sign = 1;
+        // check if there is a +/- sign at position p
+        // if there is, store its value and advance p
+        if (p == len) {
+            return 0;
+        } else if (str.charAt(p) == '+') {
+            p++;
+        } else if (str.charAt(p) == '-') {
+            sign = -1;
+            p++;
+        }
+        // check if position p have valid number
+        if (p == len) {
+            return 0;
+        } else if (str.charAt(p) &lt; '0' || str.charAt(p) &gt; '9') {
+            return 0;
+        }
+        // now position p is the start of numerical part.
+        int q = p;
+        while (q &lt; len &amp;&amp; str.charAt(q) &gt;= '0' &amp;&amp; str.charAt(q) &lt;= '9') {
+            q++;
+        }
+        String numPart = str.substring(p, q);
+        // first, check if numPart is too long
+        if (numPart.length() &gt; 15) {
+            if (sign == -1) {
+                return Integer.MIN_VALUE;
+            } else {
+                return Integer.MAX_VALUE;
+            }
+        }
+        // second, convert to numerical format and check value against Integer.MIN and MAX
+        long num = sign * Long.parseLong(numPart);
+        if (num &gt; Integer.MAX_VALUE) {
+            return Integer.MAX_VALUE;
+        } else if (num &lt; Integer.MIN_VALUE) {
+            return Integer.MIN_VALUE;
+        } else {
+            return (int) num;
+        }
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/63">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/61">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_3&size=158x21'></script><section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,308 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Design] Multithreading Q&A - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="General Q &amp; A source Can a thread acquire more than one lock (Mutex)? Yes, if they need more resource. Can a mutex be locked more than once? &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/07/26/Multithreading-Q-and-A/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Design] Multithreading Q&A</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-26T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>General Q &amp; A</h2>
+
+<p><a href="http://www.geeksforgeeks.org/mutex-vs-semaphore/">source</a></p>
+
+<h4>Can a thread acquire more than one lock (Mutex)?</h4>
+
+<p>Yes, if they need more resource.</p>
+
+<h4>Can a mutex be locked more than once?</h4>
+
+<p>Unless it&rsquo;s a recursive mutex, no.</p>
+
+<p>A mutex is a lock.</p>
+
+<h4>What happens if a non-recursive mutex is locked more than once?</h4>
+
+<p>Deadlock.</p>
+
+<p>Trying to lock the mutex again, it will enter into the waiting queue. But no other thread can unlock that mutex.</p>
+
+<h4>Are binary semaphore and mutex same?</h4>
+
+<p>No. One is <strong>signalling</strong>, another is <strong>locking mechanism</strong>.</p>
+
+<p>A semaphore is <a href="http://stackoverflow.com/a/2350628">more general concept</a> than mutex. A mutex is (almost) a special case of a semaphore.</p>
+
+<h4>Why use mutex and critical section?</h4>
+
+<p>Critical section is group of instructions that need to be executed atomically.</p>
+
+<p>The objective of mutex is atomic access of critical section.</p>
+
+<h4>Can we acquire mutex/semaphore in an Interrupt Service Routine?</h4>
+
+<p>Yes, but very bad practise.</p>
+
+<p>The ISR are meant be short, the call to mutex/semaphore may block the current running thread. However, an ISR can signal a semaphore or unlock a mutex.</p>
+
+<h4>What is thread blocking on mutex/semaphore?</h4>
+
+<p>When the resource is not available, the requesting thread will be moved from the running list of processor to the waiting list of the synchronization primitive.</p>
+
+<p>When the resource is available, the higher priority thread on the waiting list will get resource (more precisely, it depends on the scheduling policies).</p>
+
+<h4>Is it necessary that a thread must block when resource is not available?</h4>
+
+<p>No.</p>
+
+<p>If the design is sure ‘what has to be done when resource is not available‘, the thread can take up that work (a different code branch). To support, application requirements the OS provides non-blocking API.</p>
+
+<h2>Google interview questions</h2>
+
+<p><a href="http://www.chiefdelphi.com/forums/showthread.php?p=983786">source</a></p>
+
+<h4>What is the difference between a mutex and a semaphore? Which one would you use to protect access to an increment operation?</h4>
+
+<p><a href="http://www.jacopretorius.net/2010/12/google-interview-questions-and-answers.html">A mutex</a> is used when only one thread or process is allowed to access a resource and a semaphore is used when only a certain set limit of threads or processes can access the shared resource.</p>
+
+<p>It looks like a mutex is a binary semaphore. <strong>But the expected answer is mutex</strong>.</p>
+
+<p><strong><a href="http://www.chiefdelphi.com/forums/showthread.php?p=983786">A big differences</a> is that mutexes have the concept of &ldquo;ownership&rdquo;</strong>. Only the thread that owns the mutex (i.e. was the thread that originally claimed the mutex) can give it up. If another thread tries to free the mutex, this will cause an error. With semaphores, basically any thread is allowed to manipulate them.</p>
+
+<h4>What is multithreaded programming? What is a deadlock?</h4>
+
+<p><a href="http://www.programsquare.com/2011/05/what-is-multithreaded-programming-what.html">Multithreading</a> as a widespread programming and execution model allows multiple threads to exist within the context of a single process.</p>
+
+<p>These threads share the process' resources but are able to execute independently.</p>
+
+<p><strong>Deadlock refers to a specific condition when two or more processes are each waiting for the other to release a resource</strong>, or more than two processes are waiting for resources in a circular chain</p>
+
+<p>In an operating system, a <a href="http://en.wikipedia.org/wiki/Deadlock">deadlock is a situation</a> which occurs when a process or thread enters a waiting state because a resource requested is being held by another waiting process, which in turn is waiting for another resource.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-07-26T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/design/'>design</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/07/26/Multithreading-Q-and-A/" data-via="" data-counturl="http://okc1.github.io/blog/2014/07/26/Multithreading-Q-and-A/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/07/25/big-data-Top-k-frequency/" title="Previous Post: [Design] Big Data - Top k Frequency">&laquo; [Design] Big Data - Top k Frequency</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/07/26/Random-number-generate-question/" title="Next Post: [Question] Random Number Generate Question">[Question] Random Number Generate Question &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+<!--div>
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_0&type=footer&size=728x90'></script>
+</div>
+<div>
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_1&type=footer&size=728x90'></script>
+</div-->
+    
+<script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_2&type=footer&size=728x90'></script>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_3&size=158x21'></script><section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

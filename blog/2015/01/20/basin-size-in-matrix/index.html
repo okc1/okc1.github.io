@@ -1,0 +1,526 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Palantir] Largest Basin Size in Matrix - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link A group of farmers has some elevation data, and we’re going to help them understand how rainfall flows over their farmland. We’ll &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2015/01/20/basin-size-in-matrix/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Palantir] Largest Basin Size in Matrix</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-20T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=15380670">link</a></p>
+
+<p>A group of farmers has some elevation data, and we’re going to help them understand how rainfall flows over their farmland.</p>
+
+<p>We’ll represent the land as a two-dimensional array of altitudes and use the following model, based on the idea that water flows downhill:</p>
+
+<p>If a cell’s neighboring cells all have higher altitudes, we call this cell a sink; water collects in sinks. Two cells are neighbors if the rows and columns each differ by at most one. Hence an interior cell will have eight neighbors, a cell on the edge will have five neighbors, and a cell in a corner will have three neighbors.</p>
+
+<p>Otherwise, water will flow to the neighboring cell with the lowest altitude. If a cell is not a sink, you may assume it has a unique lowest neighbor and that this neighbor will be lower than the cell.
+Cells that drain into the same sink – directly or indirectly – are said to be part of the same basin.</p>
+
+<p>Your challenge is to partition the map into basins. In particular, given a map of elevations, your code should partition the map into basins and output the sizes of the basins, in descending order.</p>
+
+<p>Assume the elevation maps are square. Input will begin with a line with one integer, S, the height (and width) of the map. The next S lines will each contain a row of the map, each with S integers – the elevations of the S cells in the row.  Some farmers have small land plots such as the examples below, while some have larger plots.  However, in no case will the total size of the farmland exceed 1000x1000.</p>
+
+<p>Note: The input uses unix line endings (\n). If you try to view the sample inputs on a windows machine with a program that does not convert line endings (like Notepad), you will see the input appear all on a single line.</p>
+
+<p>Your code should output a space-separated list of the basin sizes, in descending order. (Trailing spaces are ignored.)</p>
+
+<p>While correctness and performance are the most important parts of this problem, a human will be reading your solution, so please make an effort to submit clean, readable code. In particular, do not write code as if you were solving a problem for a competition.</p>
+
+<p>A few examples are below.</p>
+
+<p>Input:</p>
+
+<pre><code>       3
+       1 5 2
+       2 4 7
+       3 6 9
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>            7 2
+</code></pre>
+
+<p>The basins, labeled with A’s and B’s, are:</p>
+
+<pre><code>       A A B
+       A A B
+       A A A
+</code></pre>
+
+<p>Input:</p>
+
+<pre><code>       1
+       10
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>       1
+</code></pre>
+
+<p>There is only one basin in this case.</p>
+
+<p>Input:</p>
+
+<pre><code>       5
+       1 0 2 5 8
+       2 3 4 7 9
+       3 5 7 9 9
+       1 2 5 5 3
+       3 3 5 1 0
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>       10 8 7
+</code></pre>
+
+<p>The basins, labeled with A’s, B’s, and C’s, are:</p>
+
+<pre><code>       A A A A A
+       A A A A A
+       B B B C C
+       B B C C C
+       B B C C C
+</code></pre>
+
+<p>Input:</p>
+
+<pre><code>       4
+       0 3 2 3
+       3 2 1 4
+       3 4 3 3
+       5 5 2 0
+</code></pre>
+
+<p>Output:</p>
+
+<pre><code>       6 5 5
+</code></pre>
+
+<p>The basins, labeled with A’s, B’s, and C’s, are:</p>
+
+<pre><code>       A A B B
+       A A B B
+       A B C C
+       A C C C
+</code></pre>
+
+<h3>Solution</h3>
+
+<p>I did not find a &lsquo;best&rsquo; solution online, but there&rsquo;s a good enough explanation available <a href="http://stackoverflow.com/questions/24336686/find-the-largest-basin-size-in-a-given-matrix">here</a>:</p>
+
+<ol>
+<li><p>First store index according to their heights.</p></li>
+<li><p>Then iterate from smallest height to largest height.</p></li>
+<li><p>If current index is not visited, make it Basin surface (where water can collect), and make all higher neighbours as Non-Basin surface.</p></li>
+<li><p>Repeat step 3 till all indexes are visited.</p></li>
+<li><p>DFS find each basin</p></li>
+</ol>
+
+
+<h3>Code</h3>
+
+<p>I post my solution written in 2013.</p>
+
+<pre><code>public class MeSolution2013 {
+
+    public static void main(String args[]) {
+
+        String inputFile;
+        int testCaseNumber = 1;
+
+        while (true) {
+            inputFile = "input" + testCaseNumber + ".txt";
+            BufferedReader in;
+            try {
+                URI uri = MeSolution2013.class.getResource(inputFile).toURI();
+                in = new BufferedReader(new FileReader(new File(uri)));
+            } catch (Exception e) {
+                // there is not more test cases
+                break;
+            }
+
+            Scanner sc = new Scanner(in);
+            int length = sc.nextInt();
+            int[][] elevation = new int[length][length];
+            for (int i = 0; i &lt; length; i++) {
+                for (int j = 0; j &lt; length; j++) {
+                    elevation[i][j] = sc.nextInt();
+                }
+            }
+
+            List&lt;Pair&gt; sinkList = new ArrayList&lt;Pair&gt;();
+
+            // first find out all sink nodes
+            for (int i = 0; i &lt; length; i++) {
+                for (int j = 0; j &lt; length; j++) {
+                    if (elevation[i][j] &lt; lowestNeighbor(i, j, elevation)) {
+                        // (i,j) is a sink point
+                        sinkList.add(new Pair(i, j));
+                    }
+                }
+            }
+
+            // then for each sink node, return the count
+            int[] basinSize = new int[sinkList.size()];
+            for (int i = 0; i &lt; sinkList.size(); i++) {
+                basinSize[i] = count(sinkList.get(i).X, sinkList.get(i).Y,
+                        elevation);
+            }
+            Arrays.sort(basinSize);
+
+            for (int i = sinkList.size() - 1; i &gt;= 0; i--) {
+                System.out.print(basinSize[i]);
+                if (i != 0)
+                    System.out.print(" ");
+            }
+            System.out.println();
+            testCaseNumber++;
+        }
+    }
+
+    static int count(int x, int y, int[][] ele) {
+
+        int num = 1;
+
+        // if the neighbour is higher than current, add count to current count
+        // if all neighbours are lower than current, return 1
+
+        // diagonal neighbors
+        if (withinBound(x - 1, y, ele) &amp;&amp; rainFlowFrom(x, y, x - 1, y, ele)) { // upper
+                                                                                // elment
+            num += count(x - 1, y, ele);
+        }
+        if (withinBound(x + 1, y, ele) &amp;&amp; rainFlowFrom(x, y, x + 1, y, ele)) { // lower
+                                                                                // element
+            num += count(x + 1, y, ele);
+        }
+        if (withinBound(x, y - 1, ele) &amp;&amp; rainFlowFrom(x, y, x, y - 1, ele)) { // left
+                                                                                // hand
+                                                                                // side
+            num += count(x, y - 1, ele);
+        }
+        if (withinBound(x, y + 1, ele) &amp;&amp; rainFlowFrom(x, y, x, y + 1, ele)) { // right
+                                                                                // hand
+                                                                                // side
+            num += count(x, y + 1, ele);
+        }
+
+        // diagonal neighbors
+        if (withinBound(x - 1, y - 1, ele)
+                &amp;&amp; rainFlowFrom(x, y, x - 1, y - 1, ele)) { // upper elment
+            num += count(x - 1, y - 1, ele);
+        }
+        if (withinBound(x + 1, y + 1, ele)
+                &amp;&amp; rainFlowFrom(x, y, x + 1, y + 1, ele)) { // lower element
+            num += count(x + 1, y + 1, ele);
+        }
+        if (withinBound(x + 1, y - 1, ele)
+                &amp;&amp; rainFlowFrom(x, y, x + 1, y - 1, ele)) { // left hand side
+            num += count(x + 1, y - 1, ele);
+        }
+        if (withinBound(x - 1, y + 1, ele)
+                &amp;&amp; rainFlowFrom(x, y, x - 1, y + 1, ele)) { // right hand side
+            num += count(x - 1, y + 1, ele);
+        }
+
+        return num;
+    }
+
+    static Boolean withinBound(int x, int y, int[][] ele) {
+        int bound = ele.length;
+        return (x &gt;= 0 &amp;&amp; x &lt; bound &amp;&amp; y &gt;= 0 &amp;&amp; y &lt; bound);
+    }
+
+    static Boolean rainFlowFrom(int a, int b, int c, int d, int[][] ele) {
+        // rain in (c,d) flows into (a,b).
+        if (ele[a][b] &gt;= ele[c][d])
+            // if (a,b) is higher than (c,d), impossible to flow this way
+            return false;
+
+        int lowest = lowestNeighbor(c, d, ele);
+
+        return (ele[a][b] == lowest);
+        // the question states "you may assume it has a unique lowest neighbor"
+        // so if flow to (a,b), then that is the unique lowest height.
+    }
+
+    static int lowestNeighbor(int a, int b, int[][] ele) {
+        int height = 9999999;
+
+        // adjacent neighbor
+        if (withinBound(a - 1, b, ele) &amp;&amp; ele[a - 1][b] &lt; height) {
+            height = ele[a - 1][b];
+        }
+        if (withinBound(a + 1, b, ele) &amp;&amp; ele[a + 1][b] &lt; height) {
+            height = ele[a + 1][b];
+        }
+        if (withinBound(a, b - 1, ele) &amp;&amp; ele[a][b - 1] &lt; height) {
+            height = ele[a][b - 1];
+        }
+        if (withinBound(a, b + 1, ele) &amp;&amp; ele[a][b + 1] &lt; height) {
+            height = ele[a][b + 1];
+        }
+
+        // diagonal neighbor
+        if (withinBound(a - 1, b - 1, ele) &amp;&amp; ele[a - 1][b - 1] &lt; height) {
+            height = ele[a - 1][b - 1];
+        }
+        if (withinBound(a + 1, b - 1, ele) &amp;&amp; ele[a + 1][b - 1] &lt; height) {
+            height = ele[a + 1][b - 1];
+        }
+        if (withinBound(a - 1, b + 1, ele) &amp;&amp; ele[a - 1][b + 1] &lt; height) {
+            height = ele[a - 1][b + 1];
+        }
+        if (withinBound(a + 1, b + 1, ele) &amp;&amp; ele[a + 1][b + 1] &lt; height) {
+            height = ele[a + 1][b + 1];
+        }
+        return height;
+    }
+}
+
+class Pair {
+
+    public int X;
+    public int Y;
+
+    public Pair(int _x, int _y) {
+        X = _x;
+        Y = _y;
+    }
+}
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-01-20T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/question/'>question</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2015/01/20/basin-size-in-matrix/" data-via="" data-counturl="http://okc1.github.io/blog/2015/01/20/basin-size-in-matrix/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/01/19/difference-http-tcp/" title="Previous Post: [Design] Difference between HTTP protocol and TCP protocol ">&laquo; [Design] Difference between HTTP protocol and TCP protocol </a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/01/20/difference-http-https/" title="Next Post: [Design] Difference between HTTP and HTTPS ">[Design] Difference between HTTP and HTTPS  &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+<!--div>
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_0&type=footer&size=728x90'></script>
+</div>
+<div>
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_1&type=footer&size=728x90'></script>
+</div-->
+    
+<script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_2&type=footer&size=728x90'></script>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_3&size=158x21'></script><section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

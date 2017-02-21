@@ -1,0 +1,1291 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link Given a permutation which contains numbers in the range [1, N], return the length of the largest cycle in the permutation. A &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/29/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/27/largest-cycle-in-permutation/">[Twitter] Largest Cycle in Permutation</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-27T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://get-that-job-at-google.blogspot.sg/2013/01/twitter-programming-test.html">link</a></p>
+
+<blockquote><p>Given a permutation which contains numbers in the range [1, N], return the length of the largest cycle in the permutation.</p>
+
+<p>A <a href="http://mathworld.wolfram.com/PermutationCycle.html">permutation cycle</a> is a subset of a permutation whose elements trade places with one another.</p>
+
+<p>Sample Testcases:</p>
+
+<p>a) longestCycle([2 3 1]) returns 3, since only cycle is (1 2 3) whose length is 3</p>
+
+<p>b) longestCycle([5 4 3 2 1]) returns 2, since the permutation can be decomposed into (1 5), (2 4), (3)</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>This is just an idea.</p>
+
+<p>Now first of all, its important to understand <strong>what is a cycle in permutation</strong>.</p>
+
+<p>Keeping that in mind, I take (5,4,3,2,1) as an example. First, we fetch 5, and we swap number 5 with the 5th element of the array (which is 1). After this swap, value 1 is in the 1st position, so this cycle is done, the length is 2.</p>
+
+<p>We continue doing this until <strong>all numbers of value v is in the (v)th position</strong>, we should know the largest length of cycle during this process.</p>
+
+<p>I did not write code, and I found very little relevant resources. If you did, please leave a comment below.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/27/google-api-read-4096/">[Google] Google API Read4096 (read4K)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-27T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=14424684">link</a></p>
+
+<blockquote><p>Given API: int Read4096(char* buf);</p>
+
+<p>It reads data from a file and records the position so that the next time when it is called it read the next 4k chars (or the rest of the file, whichever is smaller) from the file. The return is the number of chars read.</p>
+
+<p>Use above API to Implement API &ldquo;int Read(char* buf, int n)&rdquo; which reads any number of chars from the file.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Since the nature of C++ and Java is different, I changed the api to:</p>
+
+<pre><code>GoogleApi.read4096(){}
+GoogleRead4096.read(int n){}
+</code></pre>
+
+<p>As <a href="http://www.careercup.com/question?id=14424684">suggested</a>, the solution is to keep <strong>one local buffer</strong>, and 1 pointer within the buffer.</p>
+
+<h3>Code</h3>
+
+<pre><code>String buffer = null;
+int p = 0;
+
+public String read(int n) {
+    if (n &lt; 0) {
+        return null;
+    } else if (n == 0) {
+        return "";
+    }
+    StringBuilder sb = new StringBuilder();
+    while (n &gt; 0) {
+        // there is (LENGTH - p) chars left in the local buffer
+        if (buffer == null || p == buffer.length()) {
+            // no char left in buffer, update buffer
+            buffer = GoogleApi.read4096();
+            p = 0;
+            if (buffer.length() == 0) {
+                // finish reading the file (no more input chars)
+                break;
+            }
+        } else {
+            int numChars = buffer.length() - p;
+            if (numChars &gt;= n) {
+                sb.append(buffer.substring(p, p + n));
+                p = p + n;
+                n = 0;
+            } else {
+                sb.append(buffer.substring(p));
+                p = buffer.length();
+                n -= numChars;
+            }
+        }
+    }
+    return sb.toString();
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/27/Duplicate-rows-in-matrix/">[Question] Duplicate Rows in Matrix</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-27T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question 1</h3>
+
+<p><a href="http://www.careercup.com/question?id=6488077455327232">link</a></p>
+
+<blockquote><p>Given a 2D array (n x m) of integers, find all duplicate rows and print their index.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>This is a <a href="http://get-that-job-at-google.blogspot.sg/2012/12/google-interview-experience.html">google question</a>.</p>
+
+<p><strong>Use HashMap</strong> (but make your own). Computer hash value of each row and insert into HashMap as value pair of HashMap(hashValue, rowNumber). When there&rsquo;s a collision, just check the rowNumber stored in HashMap with current row.</p>
+
+<p>This requires O(n*m) time and O(n) space. Note that <strong>we&rsquo;re not store the entire row into HashMap</strong> cuz it&rsquo;ll take up too much space.</p>
+
+<p>We (probably) can also use Trie.</p>
+
+<h3>Question 2</h3>
+
+<p><a href="http://www.careercup.com/question?id=9478119">link</a></p>
+
+<blockquote><p>Given a binary matrix of N X N of integers, you need to return only unique rows of binary arrays.</p></blockquote>
+
+<pre><code>input: 
+0 1 0 0 1 
+1 0 1 1 0 
+0 1 0 0 1 
+1 1 1 0 0 
+
+ans: 
+0 1 0 0 1 
+1 0 1 1 0 
+1 1 1 0 0
+</code></pre>
+
+<h3>Solution</h3>
+
+<p>Different from <strong>Question 1</strong>, this input is only 0 and 1.</p>
+
+<p><strong>The solution is to use Trie</strong>. Each node <a href="http://www.geeksforgeeks.org/print-unique-rows/">only have 2 children</a> (that&rsquo;s why Trie is perfect solution here).</p>
+
+<h3>Code</h3>
+
+<p><strong>Using binary trie node</strong>, refactored by me.</p>
+
+<pre><code>public int[][] getUniqueRows(int[][] matrix) {
+    int m = matrix.length;
+    int n = matrix[0].length;
+
+    TrieNode root = new TrieNode();
+    TrieNode p;
+    int uniqueCount = 0;
+    boolean[] isUnique = new boolean[m];
+    // isUnique is used to mark the lines that would appear in final result
+
+    // start to build the trie
+    for (int i = 0; i &lt; m; i++) {
+        // insert number matrix[i][] into the trie
+        p = root;
+        // root element would be an empty heading for all numbers
+        for (int j = 0; j &lt; n; j++) {
+            int digit = matrix[i][j];
+            if (p.kids == null) {
+                p.kids = new TrieNode[2];
+            }
+            if (p.kids[digit] == null) {
+                // this is a whole new branch, create a new node here
+                p.kids[digit] = new TrieNode();
+                if (j == n - 1) {
+                    uniqueCount++;
+                    isUnique[i] = true;
+                }
+            }
+            p = p.kids[digit];
+        }
+    }
+    System.out.println("uniqueCount is " + uniqueCount);
+    int[][] result = new int[uniqueCount][];
+    int k = 0;
+    for (int w = 0; w &lt; isUnique.length; w++) {
+        if (isUnique[w]) {
+            result[k++] = matrix[w];
+        }
+    }
+    return result;
+}
+
+class TrieNode {
+    TrieNode[] kids = null;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/27/Count-visible-nodes-binary-tree/">[Twitter] Count Visible Nodes in Binary Tree</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-27T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://codesays.com/2014/solution-to-count-visible-nodes-in-binary-tree/">link</a></p>
+
+<blockquote><p> In a binary tree, if in the path from root to the node A, there is no node with greater value than A’s, this node A is visible. We need to count the number of visible nodes in a binary tree. For example, in the following tree:</p></blockquote>
+
+<pre><code>        5
+     /     \
+   3        10
+  / \      /
+20   21   1
+</code></pre>
+
+<blockquote><p>There are four (4) visible nodes: 5, 20, 21, and 10.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>This is an easy question. A solution is available <a href="http://codesays.com/2014/solution-to-count-visible-nodes-in-binary-tree/">here</a>.</p>
+
+<h3>Code</h3>
+
+<p><strong>written by me</strong></p>
+
+<pre><code>public int countVisible(TreeNode root) {
+    return helper(root, Integer.MIN_VALUE);
+}
+
+private int helper(TreeNode node, int ancesterMax) {
+    if (node == null) {
+        return 0;
+    }
+    int newMax = Math.max(ancesterMax, node.val);
+    if (node.val &gt; ancesterMax) {
+        return 1 + helper(node.left, newMax) + helper(node.right, newMax);
+    } else {
+        return helper(node.left, newMax) + helper(node.right, newMax);
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/26/Virtual-memory-page-fault-thrashing/">[Design] Virtual Memory, Page Fault and Thrashing</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-26T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Terminologies</h3>
+
+<h4>Paging</h4>
+
+<p><a href="http://whatis.techtarget.com/definition/paging">Paging</a> is a method of writing data to, and reading it from, <strong>secondary storage</strong> for use in <strong>primary storage</strong>, also known as main memory. Paging plays a role in memory management for a operating system.</p>
+
+<h4>Page table</h4>
+
+<p><a href="http://en.wikipedia.org/wiki/Page_table">A page table</a> is the data structure used by a virtual memory system to store the mapping between <strong>virtual addresses</strong> and <strong>physical addresses</strong>.</p>
+
+<h4>Page fault</h4>
+
+<p>A <a href="http://en.wikipedia.org/wiki/Page_fault">page fault</a> is a trap to the software raised by the hardware when a program <strong>accesses a page that is mapped in the virtual address space</strong>, but <strong>not loaded in physical memory</strong>. In the typical case the operating system tries to handle the page fault by making the required page accessible at a location in physical memory or terminates the program in the case of an illegal access.</p>
+
+<p>An <strong>invalid page fault</strong> or <strong>page fault error</strong> occurs when the operating system cannot find the data in virtual memory. This usually happens when the virtual memory area, or the table that maps virtual addresses to real addresses, becomes corrupt.</p>
+
+<h4>Logical address</h4>
+
+<p><a href="http://en.wikipedia.org/wiki/Logical_address">Logical address</a> is the address at which an item (memory cell, storage element, network host) appears to reside from the perspective of an executing application program.</p>
+
+<h4>Physical address</h4>
+
+<p><a href="http://en.wikipedia.org/wiki/Physical_address">Physical address</a> (also real address, or binary address), is a memory address that is represented in the form of a binary number for accessing main memory.</p>
+
+<p><a href="http://www.geekinterview.com/question_details/3186">In general</a>, Logical address is the address generated <strong>by the CPU</strong>. Where as physical address is the <strong>actual address of the process in the memory</strong>. The CPU generates the logical address that is added with the <strong>offset value</strong> to get the actual address of the process inthe memory.</p>
+
+<h4>Thrashing</h4>
+
+<p><a href="http://www.computerhope.com/jargon/t/thrash.htm">Thrashing</a> or disk thrashing is a term used to describe when the hard drive is <strong>being overworked by moving information</strong> between the system memory and virtual memory excessively.</p>
+
+<h3>Demand Paging</h3>
+
+<p>Virtual memory is implemented (mostly) using demand paging. <strong><a href="http://www.webopedia.com/TERM/D/demand_paging.html">Demand Paging</a></strong> is a type of swapping in which pages of data are not copied from disk to RAM until they are needed. This is an example of a <a href="http://en.wikipedia.org/wiki/Demand_paging">lazy loading technique</a>.</p>
+
+<p>Pros:</p>
+
+<ol>
+<li>less RAM needed</li>
+<li>more users</li>
+<li>less I/O</li>
+</ol>
+
+
+<p>When a pages is needed, if <strong>invalid referernce</strong>, abort the process. else <strong>if valid</strong>, it&rsquo;s called page fault.</p>
+
+<p>Page fault time:</p>
+
+<ol>
+<li>servicing the page fault interrupt</li>
+<li>read in new page (major part)</li>
+<li>restart the process</li>
+</ol>
+
+
+<h3>Page Replacement</h3>
+
+<ol>
+<li>FIFO</li>
+<li>Optimal Algorithm</li>
+<li>LRU</li>
+<li>LRU Approximation
+
+<ol>
+<li>Additional-Reference-Bits algorithm</li>
+<li>Second-Chance (Clock) algorithm</li>
+</ol>
+</li>
+</ol>
+
+
+<p>Refer to another post <strong>&ldquo;Cache and Page Replacement Algorithms&rdquo;</strong>.</p>
+
+<h3>Solution to Thrashing</h3>
+
+<ol>
+<li>More RAM</li>
+<li>Less program running together</li>
+<li>Assign working priorities</li>
+<li>Improve <a href="http://en.wikipedia.org/wiki/Thrashing_(computer_science">spatial locality</a>#Solutions) by replacing loops, i.e.</li>
+</ol>
+
+
+<p>Replace</p>
+
+<pre><code>// recall that in C, arrays use Row-major order
+int m[256][256]; 
+for (k=0; k&lt;256; k++) { 
+    for (i=0; i&lt;256; i++) { 
+        m[i][k] = something(); 
+    }
+}
+</code></pre>
+
+<p>with</p>
+
+<pre><code>int m[256][256]; 
+for (i=0; i&lt;256; i++) { 
+    for (k=0; k&lt;256; k++) {
+        // consecutive values of k reside in adjacent memory locations 
+        m[i][k] = something(); 
+    }
+}
+</code></pre>
+
+<p>So that the use of data elements is within relatively <a href="http://en.wikipedia.org/wiki/Locality_of_reference">close storage locations</a>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/26/Test-hashcode-function/">[Testing] Test hashCode() Function</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-26T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>How to test hashCode() function? Example:</p></blockquote>
+
+<pre><code>public int hashCode(){
+    int result = 17 + hashDouble(re);
+    result = 31 * result + hashDouble(im);
+    return result;
+}
+</code></pre>
+
+<h3>Solution</h3>
+
+<p>We need to test that the hash function is <a href="http://stackoverflow.com/a/4449791">reflexive, symmetric, and transitive</a>.</p>
+
+<h3>Code</h3>
+
+<p>Not including &lsquo;not equal&rsquo; test.</p>
+
+<pre><code>@Test
+public void testEquals_Symmetric() {
+    Person x = new Person("Foo Bar");  // equals and hashCode check name field value
+    Person y = new Person("Foo Bar");
+    Assert.assertTrue(x.equals(y) &amp;&amp; y.equals(x));
+    Assert.assertTrue(x.hashCode() == y.hashCode());
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/26/Design-OOD-elevator/">[Design] OOD Design of Elevator</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-26T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://thought-works.blogspot.sg/2012/11/object-oriented-design-for-elevator-in.html">link</a></p>
+
+<blockquote><p>Object Oriented design for Elevator in a multi-storied apartment</p></blockquote>
+
+<h3>A Single Elevator</h3>
+
+<p>Use Case:</p>
+
+<ol>
+<li>User
+
+<ol>
+<li>press a button to summon the lift</li>
+<li>press a button to get to a specific floor</li>
+</ol>
+</li>
+<li>Button
+
+<ol>
+<li>floor button and level button</li>
+<li>illuminates when pressed</li>
+<li>place an &lsquo;elevator request&rsquo; when pressed</li>
+</ol>
+</li>
+<li>Elevator
+
+<ol>
+<li>moves up/down</li>
+<li>open/close the door</li>
+</ol>
+</li>
+</ol>
+
+
+<p><img class="middle" src="/assets/images/elevator-class-diagram.png"></p>
+
+<p><strong>ElevatorRequests Class</strong></p>
+
+<p>Each button press results in an elevator request which has to be served. Each of these requests is tracked at a global place. ElevatorRequests, the class which stores elevator requests can use different strategies to schedule the elevator requests.</p>
+
+<p><strong>ElevatorController</strong></p>
+
+<p>The elevator is controlled by a controller class which we call ElevatorController. The elevator controller instructs the elevator what to do and also can shutdown/start up the elevator of the building. The elevator controller reads the next elevator request to be processed and serves it.</p>
+
+<p><strong>Button (Abstract) Class</strong></p>
+
+<p>Button is abstract class defining common behavior like illuminate, doNotIlluminate. FloorButton, ElevatorButton extend Button type and define placeRequest() which is invoked when the button is pressed.</p>
+
+<p>In conclusion, <strong>ElevatorController</strong> runs the show by reading the <strong>ElevatorRequests</strong> to process and instructing the <strong>Elevator</strong> what to do. User send request by pressing <strong>Buttons</strong>.</p>
+
+<h3>Extend the answer to multiple elevators</h3>
+
+<ol>
+<li><p>Each elevator have 1 controller.</p></li>
+<li><p>Floor based requests can be served by any elevator, thus these requests are added to a common area accessible by all controllers.</p></li>
+<li><p>Each elevator controller runs as a separate thread and checks if it can process a floor request. Mind synchronization issues.</p></li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/25/design-parking-lot/">[CC150v5] 8.4 Design a Parking Lot</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-25T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Design a Parking Lot.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Class hierarchy:</p>
+
+<ol>
+<li>A parking lot has multiple Levels.</li>
+<li>A Level has multiple Parking Spot.</li>
+<li>A Spot can park motorcycle, car or bus, which all belongs to Vehicle.</li>
+</ol>
+
+
+<p>Implement methods:</p>
+
+<ol>
+<li>Vehicle.parkInSpot(Spot s)</li>
+<li>Vehicle.leaveSpot(Spot s)</li>
+<li>Vehicle.canFitIn(Spot s)</li>
+<li>ParkingLot.parkVehicle(Vehicle v)</li>
+<li>Level.parkVehicle(Vehicle v)</li>
+<li>Level.parkVehicleAtSpot(Vehicle v, Spot s)</li>
+<li>Level.findAvailableSpot(VehicleType vt)</li>
+</ol>
+
+
+<p><strong>ParkingLot Class is just a wrapper class of Levels</strong>. By doing this, we seperated out parking logic from other broader actions (like Spot management).</p>
+
+<p>The code below is from CC150v5. <strong>Its design is a bit strange</strong> (a car can occupy multiple spots), so just use this code as a guide but not a reference.</p>
+
+<h3>Code</h3>
+
+<p>ParkingLot.java</p>
+
+<pre><code>public class ParkingLot {
+    private Level[] levels;
+    private final int NUM_LEVELS = 5;
+
+    public ParkingLot() {
+        levels = new Level[NUM_LEVELS];
+        for (int i = 0; i &lt; NUM_LEVELS; i++) {
+            levels[i] = new Level(i, 30);
+        }
+    }
+
+    /* Park the vehicle in a spot (or multiple spots). Return false if failed. */
+    public boolean parkVehicle(Vehicle vehicle) {
+        for (int i = 0; i &lt; levels.length; i++) {
+            if (levels[i].parkVehicle(vehicle)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void print() {
+        for (int i = 0; i &lt; levels.length; i++) {
+            System.out.print("Level" + i + ": ");
+            levels[i].print();
+            System.out.println("");
+        }
+        System.out.println("");
+    }
+}
+</code></pre>
+
+<p>Level.java</p>
+
+<pre><code>/* Represents a level in a parking garage */
+public class Level {
+    private int floor;
+    private ParkingSpot[] spots;
+    private int availableSpots = 0; // number of free spots
+    private static final int SPOTS_PER_ROW = 10;
+
+    public Level(int flr, int numberSpots) {
+        floor = flr;
+        spots = new ParkingSpot[numberSpots];
+        int largeSpots = numberSpots / 4;
+        int bikeSpots = numberSpots / 4;
+        int compactSpots = numberSpots - largeSpots - bikeSpots;
+        for (int i = 0; i &lt; numberSpots; i++) {
+            VehicleSize sz = VehicleSize.Motorcycle;
+            if (i &lt; largeSpots) {
+                sz = VehicleSize.Large;
+            } else if (i &lt; largeSpots + compactSpots) {
+                sz = VehicleSize.Compact;
+            }
+            int row = i / SPOTS_PER_ROW;
+            spots[i] = new ParkingSpot(this, row, i, sz);
+        }
+        availableSpots = numberSpots;
+    }
+
+    public int availableSpots() {
+        return availableSpots;
+    }
+
+    /* Try to find a place to park this vehicle. Return false if failed. */
+    public boolean parkVehicle(Vehicle vehicle) {
+        if (availableSpots() &lt; vehicle.getSpotsNeeded()) {
+            return false;
+        }
+        int spotNumber = findAvailableSpots(vehicle);
+        if (spotNumber &lt; 0) {
+            return false;
+        }
+        return parkStartingAtSpot(spotNumber, vehicle);
+    }
+
+    /* Park a vehicle starting at the spot spotNumber, and continuing until vehicle.spotsNeeded. */
+    private boolean parkStartingAtSpot(int spotNumber, Vehicle vehicle) {
+        vehicle.clearSpots();
+        boolean success = true;
+        for (int i = spotNumber; i &lt; spotNumber + vehicle.spotsNeeded; i++) {
+             success &amp;= spots[i].park(vehicle);
+        }
+        availableSpots -= vehicle.spotsNeeded;
+        return success;
+    }
+
+    /* find a spot to park this vehicle. Return index of spot, or -1 on failure. */
+    private int findAvailableSpots(Vehicle vehicle) {
+        int spotsNeeded = vehicle.getSpotsNeeded();
+        int lastRow = -1;
+        int spotsFound = 0;
+        for (int i = 0; i &lt; spots.length; i++) {
+            ParkingSpot spot = spots[i];
+            if (lastRow != spot.getRow()) {
+                spotsFound = 0;
+                lastRow = spot.getRow();
+            }
+            if (spot.canFitVehicle(vehicle)) {
+                spotsFound++;
+            } else {
+                spotsFound = 0;
+            }
+            if (spotsFound == spotsNeeded) {
+                return i - (spotsNeeded - 1);
+            }
+        }
+        return -1;
+    }
+
+    public void print() {
+        int lastRow = -1;
+        for (int i = 0; i &lt; spots.length; i++) {
+            ParkingSpot spot = spots[i];
+            if (spot.getRow() != lastRow) {
+                System.out.print("  ");
+                lastRow = spot.getRow();
+            }
+            spot.print();
+        }
+    }
+
+    /* When a car was removed from the spot, increment availableSpots */
+    public void spotFreed() {
+        availableSpots++;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/25/design-in-memory-file-system/">[CC150v5] 8.9 Design a In-memory File System</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-25T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Explain the data structures and algorithms that you would use to design an in-memory file system. Illustrate with an example in code where possible.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>A file system consists of Files and Directories</strong>. Each Directory contains a set of Files and Directories.</p>
+
+<p>Since Files and Directories share so many characteristics, we&rsquo;ve implemented them such that they <strong>inherit from the same class</strong> &ndash; Entry.</p>
+
+<h3>Code</h3>
+
+<p>Entry.java</p>
+
+<pre><code>public abstract class Entry {
+    protected Directory parent;
+    protected long created;
+    protected long lastUpdated;
+    protected long lastAccessed;
+    protected String name;
+
+    public Entry(String n, Directory p) {
+        name = n;
+        parent = p;
+        created = System.currentTimeMillis();
+    }
+
+    public boolean delete() {
+        if (parent == null) {
+            return false;
+        }
+        return parent.deleteEntry(this);
+    }
+
+    public abstract int size();
+
+    public String getFullPath() {
+        if (parent == null) {
+            return name;
+        } else {
+            return parent.getFullPath() + "/" + name;
+        }
+    }
+
+    public long getCreationTime() {
+        return created;
+    }
+
+    public long getLastUpdatedTime() {
+        return lastUpdated;
+    }
+
+    public long getLastAccessedTime() {
+        return lastAccessed;
+    }
+
+    public void changeName(String n) {
+        name = n;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+</code></pre>
+
+<p>Directory.java</p>
+
+<pre><code>public class Directory extends Entry {
+    protected ArrayList&lt;Entry&gt; contents;
+
+    public Directory(String n, Directory p) {
+        super(n, p);
+        contents = new ArrayList&lt;Entry&gt;();
+    }
+
+    protected ArrayList&lt;Entry&gt; getContents() {
+        return contents;
+    }
+
+    public int size() {
+        int size = 0;
+        for (Entry e : contents) {
+            size += e.size();
+        }
+        return size;
+    }
+
+    public int numberOfFiles() {
+        int count = 0;
+        for (Entry e : contents) {
+            if (e instanceof Directory) {
+                count++; // Directory counts as a file
+                Directory d = (Directory) e;
+                count += d.numberOfFiles();
+            } else if (e instanceof File) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public boolean deleteEntry(Entry entry) {
+        return contents.remove(entry);
+    }
+
+    public void addEntry(Entry entry) {
+        contents.add(entry);
+    }
+}
+</code></pre>
+
+<p>File.java</p>
+
+<pre><code>public class File extends Entry {
+    private String content;
+    private int size;
+
+    public File(String n, Directory p, int sz) {
+        super(n, p);
+        size = sz;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public String getContents() {
+        return content;
+    }
+
+    public void setContents(String c) {
+        content = c;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/25/Implement-HashMap/">[CC150v5] 8.10 Implement a Hashmap</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-25T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Design and implement a hash table which uses chaining (linked lists) to handle collisions.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>I wrote this topic before (using Java source code as a reference). This time, I would like to take another (easier) approach.</p>
+
+<p>The main part of this is to use an array of list structure like this:</p>
+
+<pre><code>LinkedList&lt;Cell&lt;K, V&gt;&gt;[] items;
+</code></pre>
+
+<p>And the Cell Class looks like this:</p>
+
+<pre><code>public class Cell&lt;K, V&gt; {
+    private K key;
+    private V value;
+
+    public Cell(K k, V v) {
+        key = k;
+        value = v;
+    }
+
+    public boolean equivalent(Cell&lt;K, V&gt; c) {
+        return equivalent(c.getKey());
+    }
+
+    public boolean equivalent(K k) {
+        return key.equals(k);
+    }
+
+    public K getKey() {
+        return key;
+    }
+
+    public V getValue() {
+        return value;
+    }
+}
+</code></pre>
+
+<h3>Code</h3>
+
+<p><strong>written by me</strong></p>
+
+<pre><code>public class HashMapCC150&lt;K, V&gt; {
+
+    int size;
+    LinkedList&lt;Cell&lt;K, V&gt;&gt;[] items;
+
+    public HashMapCC150(int num) {
+        this.size = num;
+        items = (LinkedList&lt;Cell&lt;K, V&gt;&gt;[]) new LinkedList[10];
+    }
+
+    public V get(K k) {
+        int hashValue = this.calculateHashCode(k);
+        if (items[hashValue] == null) {
+            items[hashValue] = new LinkedList&lt;Cell&lt;K, V&gt;&gt;();
+            return null;
+        }
+        for (Cell&lt;K, V&gt; cell : items[hashValue]) {
+            if (k.equals(cell.getKey())) {
+                return cell.getValue();
+            }
+        }
+        return null;
+    }
+
+    public V put(K k, V v) {
+        int hashValue = this.calculateHashCode(k);
+        if (items[hashValue] == null) {
+            items[hashValue] = new LinkedList&lt;Cell&lt;K, V&gt;&gt;();
+        }
+        for (Cell&lt;K, V&gt; cell : items[hashValue]) {
+            if (k.equals(cell.getKey())) {
+                items[hashValue].remove(cell);
+                break;
+            }
+        }
+        Cell&lt;K, V&gt; newItem = new Cell&lt;K, V&gt;(k, v);
+        items[hashValue].add(newItem);
+        return null;
+    }
+
+    public V remove(K k) {
+        // not written
+        return null;
+    }
+
+    private int calculateHashCode(K k) {
+        return k.toString().length() % size;
+    }
+
+    public static void main(String[] args) {
+        HashMapCC150&lt;String, String&gt; map = new HashMapCC150&lt;String, String&gt;(10);
+        map.put("kevin", "durant");
+        map.put("steven", "curry");
+        map.put("al", "jefferson");
+        System.out.println(map.get("kevin"));
+        System.out.println(map.get("steven"));
+        System.out.println(map.get("al"));
+        map.put("kevin", "martin");
+        map.put("steven", "nash");
+        map.put("kevin", "braynt");
+        System.out.println(map.get("kevin"));
+        System.out.println(map.get("steven"));
+        System.out.println(map.get("al"));
+    }
+}
+
+class Cell&lt;K, V&gt; {
+    private K key;
+    private V value;
+
+    public Cell(K k, V v) {
+        key = k;
+        value = v;
+    }
+
+    public boolean equivalent(Cell&lt;K, V&gt; c) {
+        return equivalent(c.getKey());
+    }
+
+    public boolean equivalent(K k) {
+        return key.equals(k);
+    }
+
+    public K getKey() {
+        return key;
+    }
+
+    public V getValue() {
+        return value;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/30">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/28">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_3&size=158x21'></script><section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

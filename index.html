@@ -1,1 +1,1174 @@
-My Octopress Page is coming soon &hellip;
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Logging Conecting between information and knowledge. Information: it&rsquo;s just bits
+Knowledge: drives product direction Logging is all about Event &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-08-01T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2016</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Logging</h1>
+
+<p>Conecting between <strong>information</strong> and <strong>knowledge</strong>.</p>
+
+<ol>
+<li>Information: it&rsquo;s just bits</li>
+<li><strong>Knowledge</strong>: drives product direction</li>
+</ol>
+
+
+<h2>Logging is all about Event</h2>
+
+<p>Q1. shall we log it live? what should we log? how to do it (on different platforms)?</p>
+
+<p>Not live. Do it post hoc.</p>
+
+<p>The demand and product design drives logging.</p>
+
+<p>Logs represent event, so all your logging should be <strong>based around the events</strong>.</p>
+
+<blockquote><p>eg. who click the button, the user ID, but do not log the age, because you can find it somewhere else!</p></blockquote>
+
+<h2>Think about &ldquo;what&rdquo; to log and &ldquo;why&rdquo;</h2>
+
+<p><strong>&ldquo;How&rdquo; is just coding</strong>. Happy Logging!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-07-31T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>31</span><span class='date-suffix'>st</span>, <span class='date-year'>2016</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>MVC Pattern</h1>
+
+<p>Model-View-Controller.</p>
+
+<p>The model and controller logic are <strong>decoupled from user interface (view)</strong>.</p>
+
+<p><img class="middle" src="/assets/images/mvc-pattern.png"></p>
+
+<ol>
+<li><p>Model</p>
+
+<p> business model + <strong>data access operations</strong> (i.e. data model)</p></li>
+<li><p>View</p>
+
+<p> <strong>only for displaying data</strong> (received from the controller, transforms the model into UI)</p></li>
+<li><p>Controller <strong>(IMPORTANT)</strong></p>
+
+<p> <strong>process incoming requests</strong>. It receives input from users via the View, then process the user&rsquo;s data with the help of Model and passing the results back to the View. Typically, it acts as the coordinator between the View and the Model.</p></li>
+</ol>
+
+
+<h2>example</h2>
+
+<p>Ruby on Rails, Spring Framework, Apple iOS Development and ASP.NET MVC.</p>
+
+<p>Softwares (not web apps).</p>
+
+<h1>MVP pattern</h1>
+
+<p>separate the presentation layer from the logic</p>
+
+<p>The Presenter is responsible for handling all UI events on behalf of the view.</p>
+
+<p><img class="middle" src="/assets/images/mvp-pattern.png"></p>
+
+<p>Unlike view and controller, view and presenter are completely decoupled from each other’s and communicate to each other’s by an interface.</p>
+
+<p>Also, presenter does not manage the incoming request traffic as controller.</p>
+
+<h2>Key Points about MVP</h2>
+
+<ol>
+<li><p>User interacts with the View.</p></li>
+<li><p>There is one-to-one relationship between View and Presenter means one View is mapped to only one Presenter.</p></li>
+<li><p>View has a reference to Presenter but View has not reference to Model.</p></li>
+<li><p>Provides two way communication between View and Presenter.</p></li>
+</ol>
+
+
+<h2>example</h2>
+
+<p>Android, ASP.NET Web Forms applications</p>
+
+<h1>MVVM pattern</h1>
+
+<p>This pattern supports two-way data binding between view and View model.</p>
+
+<p>This enables automatic propagation of changes, within the state of view model to the View.</p>
+
+<p>Typically, <strong>the view model uses the observer pattern</strong> to notify changes in the view model to model.</p>
+
+<p><img class="middle" src="/assets/images/mvvm-pattern.png"></p>
+
+<h2>details</h2>
+
+<p>The View Model is responsible for exposing methods, commands, and other properties that helps to maintain the state of the view, manipulate the model as the result of actions on the view, and trigger events in the view itself.</p>
+
+<h2>Key Points about MVVM</h2>
+
+<ol>
+<li><p>User interacts with the View.</p></li>
+<li><p>There is many-to-one relationship between View and ViewModel means many View can be mapped to one ViewModel.</p></li>
+<li><p>View has a reference to ViewModel but View Model has no information about the View.</p></li>
+<li><p>Supports two-way data binding between View and ViewModel.</p></li>
+</ol>
+
+
+<h2>example</h2>
+
+<p>Ember.js, WPF, Silverlight</p>
+
+<h1>Ref</h1>
+
+<p>Main: <a href="http://www.dotnet-tricks.com/Tutorial/designpatterns/2FMM060314-Understanding-MVC,-MVP-and-MVVM-Design-Patterns.html">http://www.dotnet-tricks.com/Tutorial/designpatterns/2FMM060314-Understanding-MVC,-MVP-and-MVVM-Design-Patterns.html</a></p>
+
+<p>TLDR: <a href="http://www.beyondjava.net/blog/model-view-whatever/">http://www.beyondjava.net/blog/model-view-whatever/</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-07-11T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>System design evaluation form</h1>
+
+<ol>
+<li>work solution</li>
+<li>special cases</li>
+<li>analysis</li>
+<li>trade off</li>
+<li>knowledge base</li>
+</ol>
+
+
+<h1>Design guideline: 4S</h1>
+
+<ol>
+<li><p>Scenario</p>
+
+<p> ask, features, qps, DAU, interfaces</p></li>
+<li><p>Service</p>
+
+<p> split, application, module</p></li>
+<li><p>Storage</p>
+
+<p> schema, data, sql, NoSql, file system</p></li>
+<li><p>Scale</p>
+
+<p> sharding, optimize, special case</p></li>
+</ol>
+
+
+<h1>Scenario</h1>
+
+<h2>DAU?</h2>
+
+<p>Whta&rsquo;s the DAU/MAU rate?</p>
+
+<p>Chatting apps like wechat/whatapp has a rate of around 75%, but facebook/twitter is lower at 60%.</p>
+
+<h2>Enumerate the functions</h2>
+
+<ol>
+<li>registration</li>
+<li>user profile display/edit</li>
+<li>upload image/video</li>
+<li>search</li>
+<li>post a tweet</li>
+<li>share a tweet</li>
+<li>timeline</li>
+<li>newsfeed</li>
+<li>follow/unfollow</li>
+</ol>
+
+
+<h2>QPS</h2>
+
+<ol>
+<li><p>concurrent user</p>
+
+<p> 150M user * 60 query/user / 60<em>60</em>24s = average QPS = 100K</p>
+
+<p> <strong>peak QPS = 3 * average QPS = 300K</strong></p>
+
+<p> fast growing product = 2 * peak QPS = 600K</p></li>
+<li><p>read qps: 300K QPS</p></li>
+<li>write qps: 5K QPS</li>
+</ol>
+
+
+<p>On average, <strong>a web server support around 1000 QPS</strong>, thus in this case, we need 300 servers to support the system.</p>
+
+<h1>Service</h1>
+
+<h2>4 services for Twitter</h2>
+
+<p><img class="middle" src="/assets/images/jiuzhang-four-service.png"></p>
+
+<ol>
+<li>user service
+
+<ol>
+<li>register</li>
+<li>login</li>
+</ol>
+</li>
+<li>tweet service
+
+<ol>
+<li>post tweet</li>
+<li>news feed</li>
+<li>timeline</li>
+</ol>
+</li>
+<li>media service
+
+<ol>
+<li>upload image</li>
+<li>upload video</li>
+</ol>
+</li>
+<li>friendship service
+
+<ol>
+<li>follow</li>
+<li>upfollow</li>
+</ol>
+</li>
+</ol>
+
+
+<h1>Storage</h1>
+
+<ol>
+<li><p>SQL</p>
+
+<p> <strong>Good for</strong> accurate, small amount of data, more read than write.
+ user table</p></li>
+<li><p>NoSQL</p>
+
+<p> <strong>Good for</strong> large amount of read/write, high scalability.
+ tweets
+ social graph (follower)</p></li>
+<li><p>File System</p>
+
+<p> <strong>Good for</strong> media files
+ photo, video</p></li>
+</ol>
+
+
+<h2>Select the right DB</h2>
+
+<p><img class="middle" src="/assets/images/jiuzhang-db-selection.png"></p>
+
+<p><strong>Question: can we use file system for tweets</strong>?</p>
+
+<p>No, it&rsquo;s hard to query. Eg. query all tweets of my friends.</p>
+
+<h2>Design data schema</h2>
+
+<p>(optional) 3 tables needed:</p>
+
+<ol>
+<li>user table</li>
+<li>tweet table</li>
+<li>friendship table: this is not as straight forward, as it shall contain double directions info</li>
+</ol>
+
+
+<p><img class="middle" src="/assets/images/jiuzhang-data-schema.png"></p>
+
+<h1>Important: News Feed</h1>
+
+<h2>pull model</h2>
+
+<p>Read top 50 feeds from top 100 friends, then merge sort by date. (note that user is getting sync-blocked here).</p>
+
+<p>Post tweet is simple 1 DB write.</p>
+
+<p><strong>This design is bad, because file-system/DB read is slow</strong>. If you have N friends, you query O(N) DB queries. <strong>It&rsquo;s too slow (and user is getting sync-blocked, too)</strong>. We should have, ideally, &lt;= 7 DB queries per web page.</p>
+
+<p><img class="middle" src="/assets/images/jiuzhang-pull-diagram.png"></p>
+
+<p><img class="middle" src="/assets/images/jiuzhang-pull-code.png"></p>
+
+<h3>problem</h3>
+
+<ol>
+<li>synchronously block user from getting news feed</li>
+<li>too many DB reads</li>
+</ol>
+
+
+<h2>push model</h2>
+
+<p>Each person have a list storing new feeds. When friend post tweet, <strong>fanout</strong> to my feed list.</p>
+
+<p>When I read, I simply read top 100 from the feed list. <strong>So read is 1 DB read</strong>.</p>
+
+<p>Post tweet is N DB writes, which is slow. <strong>However this is done async, so it does not matter</strong>.</p>
+
+<p><img class="middle" src="/assets/images/jiuzhang-push-diagram.png"></p>
+
+<p><img class="middle" src="/assets/images/jiuzhang-push-code.png"></p>
+
+<p>One example of async implementation: <strong>RabbitMQ</strong></p>
+
+<h1>Scale</h1>
+
+<h2>optimize pull model</h2>
+
+<p>Although it looks like push is faster than pull, <strong>facebook and twitter both use pull model</strong>.</p>
+
+<ol>
+<li>add cache for DB, reduce # of DB read</li>
+<li><p>also cache each user&rsquo;s news feed</p>
+
+<p> your yesterday&rsquo;s feeds are all cached, thus don&rsquo;t need to read everytime.</p></li>
+</ol>
+
+
+<h2>optimize push model</h2>
+
+<ol>
+<li>disk waste a lot, although disk is cheap</li>
+<li><p>inactive user!</p>
+
+<p> rank follower by weight, and don&rsquo;t write to inactive user (eg. last login time)</p></li>
+<li><p>if follower is toooo much, like Lady Gaga, user pull for Lady Gaga.</p>
+
+<p> Tradeoff: Push + Pull model.</p></li>
+</ol>
+
+
+<h2>optimize &lsquo;Like&rsquo; info</h2>
+
+<p>In tweet table, if we need to count(user) who liked, it&rsquo;s gonna take forever.</p>
+
+<p><strong>We must denormalize this data</strong>!</p>
+
+<p><img class="middle" src="/assets/images/jiuzhang-denormalize.png"></p>
+
+<p>Denormalize: it&rsquo;s duplicate info but we store in table, because of performance improvement.</p>
+
+<p><strong>Shortcoming: inconsistency</strong>!</p>
+
+<ol>
+<li>unless using SQL transaction, async failure can result in wrong counting number</li>
+<li>race condition</li>
+</ol>
+
+
+<p>Solution: 1. use atomic operation 2. every day, schedule to update this number.</p>
+
+<h2>optimize thundering herd problem</h2>
+
+<p>When cache fails, all DB query will go to DB. This results in DB crash.</p>
+
+<p>Hot spot (thundering herd)</p>
+
+<p><img class="middle" src="/assets/images/jiuzhang-thundering-herd.png"></p>
+
+<p>Solution: hold all incoming queries (who fails cache), and only send 1 DB query. When result is returned, return to every query.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-06-11T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Aside</h1>
+
+<p>Example of this is the &lsquo;categories&rsquo; list on the right hand side of the blog page. It&rsquo;s always pinned on RHS, regardless of page content.</p>
+
+<h1>Instruction</h1>
+
+<ol>
+<li><p>Add to source/_includes/asides/category_list.html with the following content. (remember to delete [delete-this-tag])</p>
+
+<pre><code> &lt;section class="well"&gt;
+   &lt;h1&gt;Categories&lt;/h1&gt;
+   &lt;ul id="categories" class="nav nav-list"&gt;
+     {[delete-this-tag]% category_list %[delete-this-tag]}
+   &lt;/ul&gt;
+ &lt;/section&gt;
+</code></pre></li>
+<li><p>Go to _config.yml and modify default_asides.</p>
+
+<pre><code> default_asides: [asides/category_list.html, asides/recent_posts.html, asides/github.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html, asides/advertise.html]
+</code></pre></li>
+<li><p>Since the &lsquo;category_list&rsquo; tag is not natively supported. Add plugins/category_list_tag.rb with the <a href="https://kaworu.ch/blog/2013/09/23/categories-page-with-octopress/">followin content</a>.</p>
+
+<pre><code> module Jekyll
+   class CategoryListTag &lt; Liquid::Tag
+     def render(context)
+       html = ""
+       categories = context.registers[:site].categories.keys
+       categories.sort.each do |category|
+         posts_in_category = context.registers[:site].categories[category].size
+         category_dir = context.registers[:site].config['category_dir']
+         category_url = File.join(category_dir, category.gsub(/_|\P{Word}/, '-').gsub(/-{2,}/, '-').downcase)
+         html &lt;&lt; "&lt;li class='category'&gt;&lt;a href='/#{category_url}/'&gt;#{category} (#{posts_in_category})&lt;/a&gt;&lt;/li&gt;\n"
+       end
+       html
+     end
+   end
+ end
+
+ Liquid::Template.register_tag('category_list', Jekyll::CategoryListTag)
+</code></pre></li>
+<li><p>rake generate &amp;&amp; rake preview</p></li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-05-08T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>First word</h1>
+
+<p>Designing a system like twitter, facebook or airbnb, first step is often <strong>User Registry</strong>.</p>
+
+<p>The tables, <strong>we must use RDBMS</strong>, as it&rsquo;s more reliable.</p>
+
+<h2>Table design</h2>
+
+<p><strong>Friendship table</strong> is important:</p>
+
+<p><img class="middle" src="/assets/images/design-user-registry-tables.png"></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/11/22/challenges-writing-crawler/">[Design] Designing a Simple Web Crawler</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-11-22T00:00:00-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>1. Choose a framework</h1>
+
+<p>Assuming we use Python to do this.</p>
+
+<h2>plain python?</h2>
+
+<p>We can write a simple Python crawler with the code below:</p>
+
+<pre><code>import re, urllib
+
+textfile = file('depth_1.txt','wt')
+print "Enter the URL you wish to crawl.."
+print 'Usage  - "http://phocks.org/stumble/creepy/" &lt;-- With the double quotes'
+myurl = input("@&gt; ")
+for i in re.findall('''href=["'](.[^"']+)["']''', urllib.urlopen(myurl).read(), re.I):
+    print i  
+    for ee in re.findall('''href=["'](.[^"']+)["']''', urllib.urlopen(i).read(), re.I):
+        print ee
+        textfile.write(ee+'\n')
+textfile.close()
+</code></pre>
+
+<h2>Scrapy?</h2>
+
+<ol>
+<li>You only define the rules, Scrapy do the rest</li>
+<li>easily plugin extensions</li>
+<li>portable + python runtime.</li>
+</ol>
+
+
+<h3>Why Scrapy</h3>
+
+<blockquote><p><a href="https://www.quora.com/What-are-the-advantages-of-Scrapy-compared-to-Beautiful-Soup">scrapy has the tools to manage every stage of a web crawl</a>, just to name a few:</p>
+
+<ol>
+<li><p>Requests manager - in charge of downloading pages all concurrently behind the scenes! You won&rsquo;t need to invest a lot of time in concurrent architecture.</p></li>
+<li><p>Selectors -  parse the html document (eg. XPath)</p></li>
+<li><p>Pipelines - after you retrieve the data, there&rsquo;s a bunch of functions to modify the data.</p></li>
+</ol>
+</blockquote>
+
+<p>Following the spirit of other don’t repeat yourself frameworks, such as Django:</p>
+
+<blockquote><p><a href="https://en.wikipedia.org/wiki/Scrapy">it makes it easier to build and scale large crawling projects</a> by allowing developers to re-use their code.</p></blockquote>
+
+<p>For more, read <a href="http://doc.scrapy.org/en/latest/topics/architecture.html">Scrapy Architecture </a>.</p>
+
+<p><img class="middle" src="/assets/images/scrapy_architecture.png"></p>
+
+<ol>
+<li><p>Scrapy Engine</p>
+
+<p> control data flow</p></li>
+<li><p>Scheduler</p>
+
+<p> receives requests from the engine and enqueues them for feeding them later</p></li>
+<li><p>Downloader</p></li>
+<li><p>Spiders</p></li>
+<li><p>Item Pipeline</p></li>
+<li><p>Downloader middlewares</p>
+
+<p> specific hooks that sit between the Engine and the Downloader and process requests</p></li>
+<li><p>Spider middlewares</p>
+
+<p> specific hooks that sit between the Engine and the Spiders and are able to process spider input (responses) and output (items and requests).</p></li>
+</ol>
+
+
+<h1>2. Schedule a Scrapy job</h1>
+
+<p>APScheduler? (todo)</p>
+
+<p>add/remove jobs</p>
+
+<h1>3. Choose a DB</h1>
+
+<p>I chose NoSQL/MongoDB. <a href="http://stackoverflow.com/a/11980154">But why</a>?</p>
+
+<ol>
+<li><p>there&rsquo;s only a few tables with few columns</p></li>
+<li><p>no overly complex associations between nodes</p></li>
+<li><p>huge amount of time-based data</p></li>
+<li><p>scaling requirements: MongoDB better horizontal scaling</p></li>
+<li><p>different field names: dynamical storage</p></li>
+</ol>
+
+
+<h1>4. Technical Difficulty?</h1>
+
+<h2>4.1 differrent way to crawl.</h2>
+
+<p>We need to check AJAX response sometime and study each website&rsquo;s API.</p>
+
+<p>Some site would <strong>close certain APIs</strong> if they found out too many queries requests.</p>
+
+<h2>4.2 Difficulty navigating pages</h2>
+
+<p>Study their URL structure.</p>
+
+<p>eg.</p>
+
+<pre><code>www.abc.com/index.html?page=milk&amp;start_index=0
+</code></pre>
+
+<p>Just play with the url params!</p>
+
+<h2>4.3 What is key?</h2>
+
+<p>I defined extra column only to store keys (combine a few key columns, and convert to lower-case).</p>
+
+<p>We can search using <strong>regex</strong> though, but:</p>
+
+<blockquote><p><a href="http://stackoverflow.com/a/7880894">Mongo (current version 2.0.0) doesn&rsquo;t allow</a> case-insensitive searches against indexed fields. For non-indexed fields, the regex search should be fine.</p></blockquote>
+
+<p>How to go about it:</p>
+
+<blockquote><p><a href="http://stackoverflow.com/a/4441412">searching with regex&rsquo;s case insensitive</a> means that mongodb cannot search by index, so queries against <strong>large datasets can take a long time</strong>.</p>
+
+<p>Even with small datasets, it&rsquo;s not very efficient&hellip; which could become an issue if you are trying to achieve scale.</p>
+
+<p>As an alternative, you can store an uppercase copy and search against that&hellip;</p>
+
+<p>If your field is large, such as a message body, duplicating data is probably not a good option. I believe using <strong>an extraneous indexer like Apache Lucene</strong> is the best option in that case.</p></blockquote>
+
+<h2>4.4 A lot bad data</h2>
+
+<ol>
+<li><p>write a sophisticated pipeline()</p></li>
+<li><p>try not let bad data reach pipeline() - <strong>better</strong></p></li>
+</ol>
+
+
+<p>Make your spider better!</p>
+
+<h2>4.5 NLP: brand names</h2>
+
+<p>how? (todo)</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/11/21/swizzle-sort/">[Question] Swizzle Sort</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-11-21T00:00:00-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Question</h1>
+
+<p><a href="http://www.mitbbs.com/article_t/Recommend/31493121.html">link</a></p>
+
+<blockquote><p>输入一个数组，要求输出满足：a[0]&lt;=a[1]>=a[2]&lt;=a[3]>=…</p></blockquote>
+
+<h1>Solution</h1>
+
+<blockquote><p>O(n)，一边扫描即可。发现不符合条件的只要跟前面一个数对调就可以，</p></blockquote>
+
+<h1>Code</h1>
+
+<pre><code>public int[] solve(int[] input) {
+    boolean incr = true;
+    int len = input.length;
+    int p = 1;
+    while (p &lt; len) {
+        if (incr ^ (input[p - 1] &lt; input[p])) {
+            Common.swap(input, p - 1, p);
+        }
+        p++;
+        incr = !incr;
+    }
+    return input;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/11/21/generate-maze/">[Design] How to Generate Maze</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-11-21T00:00:00-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Question</h1>
+
+<p><a href="http://www.glassdoor.com/Interview/Design-a-2D-dungeon-crawling-game-It-must-allow-for-various-items-in-the-maze-walls-objects-and-computer-controlled-c-QTN_57.htm">link</a></p>
+
+<blockquote><p>Design a 2D dungeon crawling game. It must allow for   various items in the maze - walls, objects, and computer-controlled characters.</p></blockquote>
+
+<h1>Part 1: API design</h1>
+
+<p>Serialize:</p>
+
+<blockquote><p><a href="http://qr.ae/RbRhHv">if a certain cell has a wall</a> to the North and West but not to the South or East, it would be represented as 1001, or 9&hellip; (e.g., &ldquo;9,6,11,12\n3,10,10,4\n13,9,12,5\n3,6,1,6&rdquo; in a 4x4 maze)</p></blockquote>
+
+<p>Design API~</p>
+
+<h1>Part 2: Algorithm</h1>
+
+<h2>Depth-first search</h2>
+
+<p>This is most common and <a href="https://en.wikipedia.org/wiki/Maze_generation_algorithm#Depth-first_search">one of the simplest ways to generate a maze using a computer</a>. It&rsquo;s commonly implemented using <strong><a href="https://en.wikipedia.org/wiki/Maze_generation_algorithm#Recursive_backtracker">Recursive backtrack</a></strong>.</p>
+
+<ol>
+<li><p>from a random cell, select a random neighbour that hasn&rsquo;t been visited.</p></li>
+<li><p>removes the &lsquo;wall&rsquo; and adds the new cell to a stack.</p></li>
+<li><p>a cell with no unvisited neighbours is considered <strong>dead-end</strong>.</p></li>
+<li><p>When at a dead-end it backtracks through the path until it reaches a cell with unvisited neighbours, continuing from there.</p></li>
+<li><p>until every cell has been visited, the computer would backtrack all the way to the beginning cell.</p></li>
+<li><p>Entire maze space is guaranted a complete visit.</p></li>
+</ol>
+
+
+<h3>side note</h3>
+
+<blockquote><p>To add difficulty and a fun factor to the DFS, you can <strong>influence the likelihood of which neighbor you should visit</strong>, instead of completely random.</p>
+
+<p>By making it more likely to visit neighbors to your sides, you can have a more horizontal maze generation.</p></blockquote>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-11-18T00:00:00-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Overview</h1>
+
+<p><strong><a href="https://en.wikipedia.org/wiki/Strategy_pattern">Strategy pattern</a></strong> (also known as the policy pattern) is a design pattern that <strong>enables an algorithm&rsquo;s behavior to be selected</strong> at runtime.</p>
+
+<p>For instance, a class that performs <strong>validation on incoming data</strong> may use a strategy pattern to select a validation algorithm <strong>based on the type of data</strong>, the source of the data, user choice&hellip; These factors are not known <strong>until run-time</strong>&hellip;</p>
+
+<h2>A car example</h2>
+
+<p>Since accelerate and brake behaviors change frequently between models, <strong>a common approach is to implement these behaviors in subclasses</strong>. This approach has significant drawbacks: accelerate and brake behaviors <strong>must be declared in each new Car model</strong>.</p>
+
+<p><img class="middle" src="/assets/images/600px-StrategyPattern_IBrakeBehavior.png"></p>
+
+<p>The strategy pattern uses <strong>composition</strong> instead of inheritance. This allows:</p>
+
+<ol>
+<li><p>better <strong>decoupling between the behavior</strong> and the class that uses it. (i.e. behavior can be changed without breaking the classes that use it)</p></li>
+<li><p>classes can switch between behaviors by changing the specific implementation used without requiring any significant code changes.</p></li>
+</ol>
+
+
+<p>Code:</p>
+
+<pre><code>/* Encapsulated family of Algorithms 
+ * Interface and its implementations
+ */
+public interface IBrakeBehavior {
+    public void brake(); 
+}
+
+public class BrakeWithABS implements IBrakeBehavior {
+    public void brake() {
+        System.out.println("Brake with ABS applied");
+    }
+}
+
+public class Brake implements IBrakeBehavior {
+    public void brake() {
+        System.out.println("Simple Brake applied");
+    }
+}
+
+
+/* Client which can use the algorithms above interchangeably */
+public abstract class Car {
+    protected IBrakeBehavior brakeBehavior;
+
+    public void applyBrake() {
+        brakeBehavior.brake();
+    }
+
+    public void setBrakeBehavior(IBrakeBehavior brakeType) {
+        this.brakeBehavior = brakeType;
+    }
+}
+
+/* Client 1 uses one algorithm (Brake) in the constructor */
+public class Sedan extends Car {
+    public Sedan() {
+        this.brakeBehavior = new Brake();
+    }
+}
+
+/* Client 2 uses another algorithm (BrakeWithABS) in the constructor */
+public class SUV extends Car {
+    public SUV() {
+        this.brakeBehavior = new BrakeWithABS();
+    }
+}
+
+
+/* Using the Car Example */
+public class CarExample {
+    public static void main(String[] args) {
+        Car sedanCar = new Sedan();
+        sedanCar.applyBrake();  // This will invoke class "Brake"
+
+        Car suvCar = new SUV(); 
+        suvCar.applyBrake();    // This will invoke class "BrakeWithABS"
+
+        // set brake behavior dynamically
+        suvCar.setBrakeBehavior( new Brake() ); 
+        suvCar.applyBrake();    // This will invoke class "Brake" 
+    }
+}
+</code></pre>
+
+<p>This gives greater flexibility in design and is in harmony with the <strong><a href="https://en.wikipedia.org/wiki/Open/closed_principle">Open/closed principle</a></strong> (OCP) that states that <strong>classes should be open for extension but closed for modification</strong>.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/11/15/partition-problem/">[Question] Partition Problem (Divide Array Into Halves)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-11-15T00:00:00-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Question</h1>
+
+<p><a href="http://www.geeksforgeeks.org/dynamic-programming-set-18-partition-problem/">link</a></p>
+
+<blockquote><p><a href="https://en.wikipedia.org/wiki/Partition_problem">partition problem</a> is the task of deciding whether a given multiset S of positive integers can be partitioned into two subsets S1 and S2 such that the sum of the numbers in S1 equals the sum of the numbers in S2.</p>
+
+<p>Examples</p></blockquote>
+
+<pre><code>arr[] = {1, 5, 11, 5}
+Output: true 
+The array can be partitioned as {1, 5, 5} and {11}
+
+arr[] = {1, 5, 3}
+Output: false 
+The array cannot be partitioned into equal sum sets.
+</code></pre>
+
+<h1>Solution</h1>
+
+<p><strong>DP</strong> (only if sum of the elements is not too big).</p>
+
+<blockquote><p><a href="http://www.geeksforgeeks.org/dynamic-programming-set-18-partition-problem/">We can create a 2D array</a> of size (sum/2)*(n+1). And we can construct the solution in bottom up manner such that every filled entry has following property:</p></blockquote>
+
+<pre><code>part[i][j] = 
+    true if a subset of {arr[0], arr[1], ..arr[j-1]} has sum equal to i
+    false otherwise
+</code></pre>
+
+<p>Note that we always cares about <strong>whether there exist a valid subset from beginning to index i</strong>.</p>
+
+<p>Example DP array for input &ldquo;3,1,1,2,2,1&rdquo;:</p>
+
+<p><img class="middle" src="/assets/images/partition-problem-dp.jpg"></p>
+
+<h1>Code</h1>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/2">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_3&size=158x21'></script><section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

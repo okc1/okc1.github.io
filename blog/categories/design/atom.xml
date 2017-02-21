@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Design | Woodstock Blog]]></title>
+  <link href="http://okc1.github.io/blog/categories/design/atom.xml" rel="self"/>
+  <link href="http://okc1.github.io/"/>
+  <updated>2017-02-20T20:43:48-08:00</updated>
+  <id>http://okc1.github.io/</id>
+  <author>
+    <name><![CDATA[Kevin Durant]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[[Design] How to Design Logging]]></title>
+    <link href="http://okc1.github.io/blog/2016/08/01/how-to-design-logging/"/>
+    <updated>2016-08-01T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2016/08/01/how-to-design-logging</id>
+    <content type="html"><![CDATA[# Logging
+
+Conecting between __information__ and __knowledge__. 
+
+1. Information: it's just bits
+2. __Knowledge__: drives product direction
+
+## Logging is all about Event
+
+Q1. shall we log it live? what should we log? how to do it (on different platforms)?
+
+Not live. Do it post hoc.
+
+The demand and product design drives logging. 
+
+Logs represent event, so all your logging should be __based around the events__.
+
+> eg. who click the button, the user ID, but do not log the age, because you can find it somewhere else!
+
+## Think about "what" to log and "why"
+
+__"How" is just coding__. Happy Logging! ]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Design] MVC, MVP and MVVM]]></title>
+    <link href="http://okc1.github.io/blog/2016/07/31/mvc-mvp-mvvm/"/>
+    <updated>2016-07-31T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2016/07/31/mvc-mvp-mvvm</id>
+    <content type="html"><![CDATA[# MVC Pattern
+
+Model-View-Controller. 
+
+The model and controller logic are __decoupled from user interface (view)__. 
+
+<img class="middle" src="/assets/images/mvc-pattern.png">
+
+1. Model
+
+    business model + __data access operations__ (i.e. data model)
+
+2. View
+
+    __only for displaying data__ (received from the controller, transforms the model into UI)
+
+3. Controller __(IMPORTANT)__
+
+    __process incoming requests__. It receives input from users via the View, then process the user's data with the help of Model and passing the results back to the View. Typically, it acts as the coordinator between the View and the Model.
+
+## example 
+
+Ruby on Rails, Spring Framework, Apple iOS Development and ASP.NET MVC.
+
+Softwares (not web apps). 
+
+# MVP pattern
+
+separate the presentation layer from the logic
+
+The Presenter is responsible for handling all UI events on behalf of the view. 
+
+<img class="middle" src="/assets/images/mvp-pattern.png">
+
+Unlike view and controller, view and presenter are completely decoupled from each other’s and communicate to each other’s by an interface.
+
+Also, presenter does not manage the incoming request traffic as controller.
+
+## Key Points about MVP
+
+1. User interacts with the View.
+
+1. There is one-to-one relationship between View and Presenter means one View is mapped to only one Presenter.
+
+1. View has a reference to Presenter but View has not reference to Model.
+
+1. Provides two way communication between View and Presenter.
+
+## example
+
+Android, ASP.NET Web Forms applications
+
+# MVVM pattern
+
+This pattern supports two-way data binding between view and View model. 
+
+This enables automatic propagation of changes, within the state of view model to the View. 
+
+Typically, __the view model uses the observer pattern__ to notify changes in the view model to model.
+
+<img class="middle" src="/assets/images/mvvm-pattern.png">
+
+## details
+
+The View Model is responsible for exposing methods, commands, and other properties that helps to maintain the state of the view, manipulate the model as the result of actions on the view, and trigger events in the view itself.
+
+## Key Points about MVVM
+
+1. User interacts with the View.
+
+1. There is many-to-one relationship between View and ViewModel means many View can be mapped to one ViewModel.
+
+1. View has a reference to ViewModel but View Model has no information about the View.
+
+1. Supports two-way data binding between View and ViewModel.
+
+## example 
+
+Ember.js, WPF, Silverlight
+
+# Ref
+
+Main: http://www.dotnet-tricks.com/Tutorial/designpatterns/2FMM060314-Understanding-MVC,-MVP-and-MVVM-Design-Patterns.html
+
+TLDR: http://www.beyondjava.net/blog/model-view-whatever/
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Design] Design Twitter]]></title>
+    <link href="http://okc1.github.io/blog/2016/07/11/design-twitter/"/>
+    <updated>2016-07-11T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2016/07/11/design-twitter</id>
+    <content type="html"><![CDATA[# System design evaluation form
+
+1. work solution
+1. special cases
+1. analysis
+1. trade off
+1. knowledge base
+
+# Design guideline: 4S
+
+1. Scenario
+
+    ask, features, qps, DAU, interfaces
+
+1. Service
+
+    split, application, module
+
+1. Storage
+
+    schema, data, sql, NoSql, file system
+
+1. Scale
+
+    sharding, optimize, special case
+
+# Scenario
+
+## DAU? 
+
+Whta's the DAU/MAU rate?
+
+Chatting apps like wechat/whatapp has a rate of around 75%, but facebook/twitter is lower at 60%.
+
+## Enumerate the functions
+
+1. registration
+1. user profile display/edit
+1. upload image/video
+1. search
+1. post a tweet
+1. share a tweet
+1. timeline
+1. newsfeed
+1. follow/unfollow
+
+## QPS
+
+1. concurrent user
+    
+    150M user * 60 query/user / 60*60*24s = average QPS = 100K
+    
+    __peak QPS = 3 * average QPS = 300K__
+    
+    fast growing product = 2 * peak QPS = 600K
+    
+1. read qps: 300K QPS
+1. write qps: 5K QPS
+
+On average, __a web server support around 1000 QPS__, thus in this case, we need 300 servers to support the system. 
+
+# Service
+
+## 4 services for Twitter
+
+<img class="middle" src="/assets/images/jiuzhang-four-service.png">
+
+1. user service
+    1. register
+    2. login
+1. tweet service
+    1. post tweet
+    1. news feed
+    1. timeline
+1. media service
+    1. upload image
+    1. upload video
+1. friendship service
+    1. follow
+    1. upfollow
+    
+# Storage
+
+1. SQL
+    
+    __Good for__ accurate, small amount of data, more read than write. 
+    user table
+    
+2. NoSQL
+
+    __Good for__ large amount of read/write, high scalability. 
+    tweets
+    social graph (follower)
+    
+3. File System
+
+    __Good for__ media files
+    photo, video
+
+## Select the right DB
+
+<img class="middle" src="/assets/images/jiuzhang-db-selection.png">
+
+__Question: can we use file system for tweets__?
+
+No, it's hard to query. Eg. query all tweets of my friends. 
+
+## Design data schema
+
+(optional) 3 tables needed:
+
+1. user table
+2. tweet table
+3. friendship table: this is not as straight forward, as it shall contain double directions info
+
+<img class="middle" src="/assets/images/jiuzhang-data-schema.png">
+
+# Important: News Feed
+
+## pull model
+
+Read top 50 feeds from top 100 friends, then merge sort by date. (note that user is getting sync-blocked here). 
+
+Post tweet is simple 1 DB write.  
+
+__This design is bad, because file-system/DB read is slow__. If you have N friends, you query O(N) DB queries. __It's too slow (and user is getting sync-blocked, too)__. We should have, ideally, <= 7 DB queries per web page.
+
+<img class="middle" src="/assets/images/jiuzhang-pull-diagram.png">
+
+<img class="middle" src="/assets/images/jiuzhang-pull-code.png">
+
+### problem
+
+1. synchronously block user from getting news feed
+1. too many DB reads
+
+## push model
+
+Each person have a list storing new feeds. When friend post tweet, __fanout__ to my feed list. 
+
+When I read, I simply read top 100 from the feed list. __So read is 1 DB read__. 
+
+Post tweet is N DB writes, which is slow. __However this is done async, so it does not matter__.  
+
+<img class="middle" src="/assets/images/jiuzhang-push-diagram.png">
+
+<img class="middle" src="/assets/images/jiuzhang-push-code.png">
+
+One example of async implementation: __RabbitMQ__
+
+# Scale
+
+## optimize pull model
+
+Although it looks like push is faster than pull, __facebook and twitter both use pull model__.
+
+1. add cache for DB, reduce # of DB read
+2. also cache each user's news feed
+
+    your yesterday's feeds are all cached, thus don't need to read everytime.
+
+## optimize push model
+
+1. disk waste a lot, although disk is cheap
+1. inactive user! 
+
+    rank follower by weight, and don't write to inactive user (eg. last login time)
+
+1. if follower is toooo much, like Lady Gaga, user pull for Lady Gaga. 
+
+    Tradeoff: Push + Pull model. 
+    
+## optimize 'Like' info
+
+In tweet table, if we need to count(user) who liked, it's gonna take forever. 
+
+__We must denormalize this data__!
+
+<img class="middle" src="/assets/images/jiuzhang-denormalize.png">
+
+Denormalize: it's duplicate info but we store in table, because of performance improvement. 
+
+__Shortcoming: inconsistency__! 
+
+1. unless using SQL transaction, async failure can result in wrong counting number
+2. race condition
+
+Solution: 1. use atomic operation 2. every day, schedule to update this number.
+
+## optimize thundering herd problem
+
+When cache fails, all DB query will go to DB. This results in DB crash.
+
+Hot spot (thundering herd)
+
+<img class="middle" src="/assets/images/jiuzhang-thundering-herd.png">
+
+Solution: hold all incoming queries (who fails cache), and only send 1 DB query. When result is returned, return to every query. 
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Design] User Registry Table Design]]></title>
+    <link href="http://okc1.github.io/blog/2016/05/08/user-registry-table-design/"/>
+    <updated>2016-05-08T00:00:00-07:00</updated>
+    <id>http://okc1.github.io/blog/2016/05/08/user-registry-table-design</id>
+    <content type="html"><![CDATA[# First word 
+
+Designing a system like twitter, facebook or airbnb, first step is often __User Registry__.
+
+The tables, __we must use RDBMS__, as it's more reliable. 
+
+## Table design
+
+__Friendship table__ is important:
+
+<img class="middle" src="/assets/images/design-user-registry-tables.png">
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[Design] Designing a Simple Web Crawler]]></title>
+    <link href="http://okc1.github.io/blog/2015/11/22/challenges-writing-crawler/"/>
+    <updated>2015-11-22T00:00:00-08:00</updated>
+    <id>http://okc1.github.io/blog/2015/11/22/challenges-writing-crawler</id>
+    <content type="html"><![CDATA[# 1. Choose a framework
+
+Assuming we use Python to do this.
+
+## plain python?
+
+We can write a simple Python crawler with the code below:
+
+    import re, urllib
+
+    textfile = file('depth_1.txt','wt')
+    print "Enter the URL you wish to crawl.."
+    print 'Usage  - "http://phocks.org/stumble/creepy/" <-- With the double quotes'
+    myurl = input("@> ")
+    for i in re.findall('''href=["'](.[^"']+)["']''', urllib.urlopen(myurl).read(), re.I):
+        print i  
+        for ee in re.findall('''href=["'](.[^"']+)["']''', urllib.urlopen(i).read(), re.I):
+            print ee
+            textfile.write(ee+'\n')
+    textfile.close()
+
+## Scrapy?
+
+1. You only define the rules, Scrapy do the rest
+1. easily plugin extensions
+1. portable + python runtime.
+
+### Why Scrapy
+
+> [scrapy has the tools to manage every stage of a web crawl](https://www.quora.com/What-are-the-advantages-of-Scrapy-compared-to-Beautiful-Soup), just to name a few:
+
+> 1. Requests manager - in charge of downloading pages all concurrently behind the scenes! You won't need to invest a lot of time in concurrent architecture.
+>
+> 2. Selectors -  parse the html document (eg. XPath) 
+>
+> 3. Pipelines - after you retrieve the data, there's a bunch of functions to modify the data.
+
+Following the spirit of other don’t repeat yourself frameworks, such as Django:
+
+> [it makes it easier to build and scale large crawling projects](https://en.wikipedia.org/wiki/Scrapy) by allowing developers to re-use their code. 
+
+For more, read [Scrapy Architecture ](http://doc.scrapy.org/en/latest/topics/architecture.html).
+
+<img class="middle" src="/assets/images/scrapy_architecture.png">
+
+1. Scrapy Engine 
+
+    control data flow
+
+1. Scheduler 
+
+    receives requests from the engine and enqueues them for feeding them later
+
+1. Downloader
+
+1. Spiders
+
+1. Item Pipeline
+
+1. Downloader middlewares
+
+    specific hooks that sit between the Engine and the Downloader and process requests
+
+1. Spider middlewares
+
+    specific hooks that sit between the Engine and the Spiders and are able to process spider input (responses) and output (items and requests).
+
+# 2. Schedule a Scrapy job
+
+APScheduler? (todo)
+
+add/remove jobs
+
+# 3. Choose a DB
+
+I chose NoSQL/MongoDB. [But why](http://stackoverflow.com/a/11980154)?
+
+1. there's only a few tables with few columns
+
+1. no overly complex associations between nodes
+
+1. huge amount of time-based data
+
+1. scaling requirements: MongoDB better horizontal scaling
+
+1. different field names: dynamical storage
+
+# 4. Technical Difficulty?
+
+## 4.1 differrent way to crawl. 
+
+We need to check AJAX response sometime and study each website's API. 
+
+Some site would __close certain APIs__ if they found out too many queries requests. 
+
+## 4.2 Difficulty navigating pages
+
+Study their URL structure.
+
+eg. 
+
+    www.abc.com/index.html?page=milk&start_index=0
+    
+Just play with the url params!
+
+## 4.3 What is key?
+
+I defined extra column only to store keys (combine a few key columns, and convert to lower-case). 
+
+We can search using __regex__ though, but:
+
+> [Mongo (current version 2.0.0) doesn't allow](http://stackoverflow.com/a/7880894) case-insensitive searches against indexed fields. For non-indexed fields, the regex search should be fine.
+
+How to go about it: 
+
+> [searching with regex's case insensitive](http://stackoverflow.com/a/4441412) means that mongodb cannot search by index, so queries against __large datasets can take a long time__.
+
+> Even with small datasets, it's not very efficient... which could become an issue if you are trying to achieve scale.
+
+> As an alternative, you can store an uppercase copy and search against that... 
+
+> If your field is large, such as a message body, duplicating data is probably not a good option. I believe using __an extraneous indexer like Apache Lucene__ is the best option in that case.
+
+## 4.4 A lot bad data
+
+1. write a sophisticated pipeline()
+
+1. try not let bad data reach pipeline() - __better__
+
+Make your spider better!
+
+## 4.5 NLP: brand names
+
+how? (todo)
+
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,971 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link Given a string, find if there is any sub-sequence that repeats itself. Do not reuse any char. Eg: 1. abab &lt;------yes, ab is repeated &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/17/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/11/check-if-repeating-subsequence-exist/">[Google] Check if Repeating Subsequence Exists</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-11T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=5931067269709824">link</a></p>
+
+<blockquote><p>Given a string, find if there is any sub-sequence that repeats itself. Do not reuse any char.</p>
+
+<p>Eg:</p></blockquote>
+
+<pre><code>1. abab &lt;------yes, ab is repeated
+2. abba &lt;---- No, a and b follow different order 
+3. acbdaghfb &lt;-------- yes, a followed by b twice 
+4. abcdacb &lt;----- yes, a followed by b twice 
+</code></pre>
+
+<blockquote><p>Note that no char should be reused. I.e. &ldquo;aab&rdquo; is a false.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>This looks like a question without any clue. However, this actually is a modified version of <strong>[LintCode] Longest Common Subsequence</strong>.</p>
+
+<p>Look at that question: there&rsquo;s 2 input string, and they match char-by-char. For this question, we are simply <strong>matching input string with input string itself</strong>. And chars should be match <strong>ONLY</strong> at different positions, that&rsquo;s the key. As pointed out by the <a href="http://www.careercup.com/question?id=5931067269709824">top comment</a>:</p>
+
+<blockquote><p>Now we can modify the longest_common_subsequence(a, a) to find the value of the longest repeated subsequence in a by excluding the cases when i == j</p></blockquote>
+
+<h3>Code</h3>
+
+<pre><code>public boolean checkRepeatSubseq(String input) {
+    int len = input.length();
+    int[][] dp = new int[len + 1][len + 1];
+    // dp[i][j] denotes the length of subseq between 2 strings:
+    // 1. first i chars of input
+    // 2. first j chars of input
+    for (int i = 1; i &lt;= len; i++) {
+        for (int j = i; j &lt;= len; j++) {
+            if (i != j &amp;&amp; input.charAt(i - 1) == input.charAt(j - 1)) {
+                int temp = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                dp[i][j] = Math.max(temp, dp[i - 1][j - 1] + 1);
+            } else {
+                dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+            }
+        }
+    }
+    return dp[len][len] &gt;= 2;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/11/all-repeating-substring-given-length/">[LinkedIn] Find All Repeating Substring With Given Length</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-11T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=6495932900179968">link</a></p>
+
+<blockquote><p>Find all the repeating substring of specified length in a large string sequence.</p>
+
+<p>For e.g.</p></blockquote>
+
+<pre><code>Input String: "ABCACBABC" 
+repeated sub-string length: 3 
+Output: ABC 
+</code></pre>
+
+<blockquote><p>eg.</p></blockquote>
+
+<pre><code>Input String: "ABCABCA" 
+repeated sub-string length: 2 
+Output: AB, BC, CA
+</code></pre>
+
+<h3>Solution</h3>
+
+<p>Similar to <strong>[Amazon] Longest Repeating Substring</strong>, the best solution is to do <strong>Suffix Tree</strong>, or suffix array. We then need to print nodes on a certain level, who has more than 1 descendant.</p>
+
+<p>However, since the length of substring is given, we can also do simply iteration: insert all substring with given length into a HashSet, and check repetition. <a href="https://github.com/techpanja/interviewproblems/blob/master/src/strings/repeatingstringsofspecifiedlength/RepeatingStringOfSpecificLength.java">ref</a></p>
+
+<h3>Code</h3>
+
+<p>Suffix tree solution: not written.</p>
+
+<p>Hashset code:</p>
+
+<pre><code>public List&lt;String&gt; solve(String input, int k) {
+    List&lt;String&gt; ans = new ArrayList&lt;String&gt;();
+    HashSet&lt;String&gt; set = new HashSet&lt;String&gt;();
+    for (int i = 0; i &lt;= input.length() - k; i++) {
+        String sub = input.substring(i, i + k);
+        if (set.contains(sub)) {
+            ans.add(sub);
+        }
+        set.add(sub);
+    }
+    return ans;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/11/all-distinct-subsequences-given-length%20-%20Copy/">[Question] All Distinct Subsequences With Given Length</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-11T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://11011110.livejournal.com/254164.html">link</a></p>
+
+<blockquote><p>Find a polynomial-time algorithm that takes a string of length n, and a number k, output the number of distinct k-character subsequences.</p>
+
+<p>For instance, input &ldquo;food&rdquo; and number k=2, output should be 4. There are four distinct 2-character subsequences of &ldquo;food&rdquo;: &ldquo;fo&rdquo;, &ldquo;fd&rdquo;, &ldquo;oo&rdquo;, and &ldquo;od&rdquo;.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Similar to <strong>[Question] Number of distinct sub-sequence</strong>, we solve this problem with DP. The dp equation is a bit difficult to write.</p>
+
+<p>The idea come from comment from <a href="http://11011110.livejournal.com/254164.html">gareth_rees</a>:</p>
+
+<blockquote><p>Let θ(S, k) be the number of distinct k-character subsequences in the string S of length n.</p>
+
+<p>Clearly θ(S, k) = 1 if n = k or k = 0</p>
+
+<p>and θ(S, k) = 0 if n &lt; k.</p>
+
+<p>Otherwise, <strong>choose 1 unique char from S</strong>, and deduct k by 1, then do the DP calculation with the remaining part of S.</p></blockquote>
+
+<p>Look at this example:</p>
+
+<pre><code>θ("food", 2) = θ("ood", 1) + θ("od", 1) + θ("", 1)
+= (θ("od", 0) + θ("", 0)) + (θ("d", 0) + θ("", 0)) + 0
+= (1 + 1) + (1 + 1)
+= 4
+</code></pre>
+
+<p><strong>&ldquo;food&rdquo; is divided into 3 parts</strong>. First part we choose &ldquo;f&rdquo; to be the first char, thus the value is θ(&ldquo;ood&rdquo;, 1). Second part we choose &ldquo;o&rdquo;, and final part we choose &ldquo;d&rdquo;.</p>
+
+<p><strong>Note that when we choose a char, it must never have been chosen before</strong>. In case of &ldquo;food&rdquo;, we only choose &lsquo;f&rsquo;, &lsquo;o&rsquo;, &rsquo;d' once for each.</p>
+
+<p>This is a very difficult DP question, but the explanation really makes the answer easier. Read my implementation below.</p>
+
+<h3>Code</h3>
+
+<pre><code>public int countSubSeq(String input, int k) {
+    // assuming all input chars are small letter
+    return choose(input, 0, k);
+}
+
+private int choose(String input, int start, int numChar) {
+    int charLeft = input.length() - start;
+    if (charLeft == numChar || numChar == 0) {
+        return 1;
+    } else if (charLeft &lt; numChar || numChar &lt; 0) {
+        return 0;
+    }
+    // now numChar is smaller than charLeft, and larger than 0
+    // start to pick a char (which is at first appearance)
+    int total = 0;
+    HashSet&lt;Character&gt; chosen = new HashSet&lt;Character&gt;();
+    while (start &lt; input.length()) {
+        char currentChar = input.charAt(start);
+        if (!chosen.contains(currentChar)) {
+            // pick the char pointer by 'start'
+            total += choose(input, start + 1, numChar - 1);
+            chosen.add(currentChar);
+        }
+        start++;
+    }
+    return total;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/11/Diameter-of-Binary-Tree/">[Google] Diameter of a Binary Tree</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-11T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.geeksforgeeks.org/diameter-of-a-binary-tree/">link</a></p>
+
+<blockquote><p>The diameter of a tree (sometimes called the width) is the number of nodes on the longest path between two leaves in the tree.</p></blockquote>
+
+<p><img class="middle" src="/assets/images/tree-diameter-1.gif"></p>
+
+<h3>Solution</h3>
+
+<p>This is a similar question to <strong>[LeetCode 124] Binary Tree Maximum Path Sum</strong>. <strong>However there&rsquo;s a significant difference</strong> which might be overlooked while coding.</p>
+
+<p>Look at this example:</p>
+
+<pre><code>     0
+       1
+        1
+       0  1
+           1
+</code></pre>
+
+<p>If we only want to find the max path, that would return result of 5, which is root-to-rightmost-leaf. However, the diameter should be 4, which is the distance between 2 leaf nodes.</p>
+
+<p>A solution is available for reading <a href="http://stackoverflow.com/a/3124575">here</a>.</p>
+
+<p>For <strong>[Google] Crazy Distance Between Strings</strong>, there is another special case: {&ldquo;1&rdquo;, &ldquo;11&rdquo;, &ldquo;10&rdquo;}. The program will not output correct result (1), because this is not really the diameter of a tree, but instead, a max path from a non-leaf to a leaf. I leave this part for you to finish.</p>
+
+<h3>Code</h3>
+
+<p>Refer to <strong>[Google] Crazy Distance Between Strings</strong> for complete code.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/10/reverse-a-stack/">[Google] Reverse a Stack Without DS</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-10T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.geeksforgeeks.org/reverse-a-stack-using-recursion/">link</a></p>
+
+<blockquote><p>Reverse a stack using recursion. You are not allowed to use loops or data structure, and you can only use the following functions:</p></blockquote>
+
+<pre><code>isEmpty(S)
+push(S)
+pop(S)
+</code></pre>
+
+<h3>Solution</h3>
+
+<p>Well since we are not allowed to use additional DS or loop, we have to use system stack to help us!</p>
+
+<p>We add a new method: <strong>insert at stack bottom</strong>. Then we can solve this question recursively. Nice question, and tricky answer!</p>
+
+<h3>Code</h3>
+
+<pre><code>public void reverse(Stack&lt;Integer&gt; stack) {
+    if (stack.isEmpty() || stack.size() == 1) {
+        return;
+    }
+    int top = stack.pop();
+    this.reverse(stack);
+    this.insertAtBottom(stack, top);
+}
+
+private void insertAtBottom(Stack&lt;Integer&gt; stack, int val) {
+    if (stack.isEmpty()) {
+        stack.push(val);
+        return;
+    }
+    int temp = stack.pop();
+    this.insertAtBottom(stack, val);
+    stack.push(temp);
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/10/minimum-range-inclueds-at-least-1/">[Amazon] Mininum Range That Includes at Least One</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-10T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=5103437989543936">link</a></p>
+
+<blockquote><p>There are many sorted arrays. Find a minimum range, so that in each array there&rsquo;s at least one integer within this range.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>Min-heap</strong>. <a href="http://www.careercup.com/question?id=16759664">source</a></p>
+
+<blockquote><p>There are k lists of sorted integers. Make a min heap of size k containing 1 element from each list. Keep track of min and max element and calculate the range.</p>
+
+<p>In min heap, minimum element is at top. Delete the minimum element and another element instead of that from the same list to which minimum element belong. Repeat the process till any one of the k list gets empty.</p></blockquote>
+
+<h3>Code</h3>
+
+<pre><code>public void printMinRange(int[][] input) {
+    Comparator&lt;Pointer&gt; compr = new HeapComparator(input);
+    // Note that we pass in 'input' arrays to the comparator
+    PriorityQueue&lt;Pointer&gt; heap = new PriorityQueue&lt;Pointer&gt;(SIZE, compr);
+
+    int maxVal = Integer.MIN_VALUE;
+    for (int i = 0; i &lt; SIZE; i++) {
+        heap.add(new Pointer(i, 0));
+        // insert the head of each array into the heap
+        maxVal = Math.max(maxVal, input[i][0]);
+        // keep additional value to keep track of the max value in heap
+    }
+
+    int left = 0;
+    int right = Integer.MAX_VALUE;
+    while (heap.size() == SIZE) {
+        Pointer p = heap.remove();
+        // first, update the range
+        if (maxVal - input[p.index][p.position] &lt; right - left) {
+            right = maxVal;
+            left = input[p.index][p.position];
+        }
+        // then, push the next element after 'p' to the heap
+        // meanwhile, update 'maxVal'
+        if (p.position + 1 &lt; input[p.index].length) {
+            Pointer nextP = new Pointer(p.index, p.position + 1);
+            heap.add(nextP);
+            maxVal = Math.max(maxVal, input[nextP.index][nextP.position]);
+        }
+        // when 'p' is the last element in the row, terminate loop
+    }
+    System.out.println("Left boundary: " + left);
+    System.out.println("Right boundary: " + right);
+}
+
+class HeapComparator implements Comparator&lt;Pointer&gt; {
+
+    int[][] arrays = null;
+
+    public HeapComparator(int[][] input) {
+        arrays = input;
+    }
+
+    public int compare(Pointer p1, Pointer p2) {
+        return arrays[p1.index][p1.position]
+                - arrays[p2.index][p2.position];
+    }
+}
+
+class Pointer {
+    int index, position;
+
+    public Pointer(int x, int y) {
+        index = x;
+        position = y;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/10/max-count-array-in-queue/">[Google] Maximum Count Array in a Queue</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-10T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.mitbbs.com/article_t1/JobHunting/32856675_0_1.html#top">link1</a></p>
+
+<blockquote><p>给一个数组a[n]，令s[i]为a[i+1..n-1]中比a[i]大的数的数量。</p>
+
+<p>求最大的s[i]。要求O(nlogn)</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>This is very similar question to <strong>[Google] Form a Queue Given Heights</strong>. The idea is to insert elements into BST and count number of larger elements.</p>
+
+<p>Naitive solution can be reached with a list.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/10/form-queue-given-heights/">[Google] Form a Queue Given Heights</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-10T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.geeksforgeeks.org/reverse-a-stack-using-recursion/">link1</a>, <a href="http://www.weiming.info/zhuti/JobHunting/31903469/">link2</a>, <a href="http://www.mitbbs.com/article_t1/JobHunting/32856675_0_1.html#top">link3</a>.</p>
+
+<blockquote><p>There is an array of integers which represent heights of persons.</p>
+
+<p>Given another array&hellip; Let&rsquo;s call it count-array. It contain how many persons in front of him are greater than him in height.</p>
+
+<p>求原数组。(原数组中元素是从1到n。)</p>
+
+<p>Example:</p></blockquote>
+
+<pre><code>Input(Count array): 0, 0, 2, 0
+Output(原数组): 2, 3, 1, 4
+</code></pre>
+
+<blockquote><p>求nlogn的算法。</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>This is naive solution from floor 29 of <a href="http://www.weiming.info/zhuti/JobHunting/31903469/">this thread</a>:</p>
+
+<blockquote><p>总结一下，用一个List存放1&hellip;n。</p>
+
+<p>从头到尾扫描给定的数组，每得到一个值，从List里删掉。</p>
+
+<p>因为List里数据是有序的，因此remove操作可以使用二分法，复杂度为O(logn).</p>
+
+<p>这样本算法复杂度为O(nlogn).</p></blockquote>
+
+<p>Example:</p>
+
+<pre><code>count array 
+i C[0,0,2,0]   N[4, 3, 2, 1]
+3 C[3] = 0     在N里面删除N[0]=4, N=[3, 2, 1],   Ans=[4]
+2 C[2] = 2     在N里面删除N[2]=1, N=[3, 2],   Ans=[1, 4]
+1 C[1] = 0     在N里面删除N[0]=3, N=[2],   Ans=[3, 1, 4]
+0 C[0] = 0     在N里面删除N[0]=2, N=[], Ans=[2, 3, 1, 4]
+</code></pre>
+
+<p>But there is a problm here, since removing item from list requires O(n), we will achieve O(n<sup>2</sup>) time. How do we optimize this?</p>
+
+<p><strong>The answer is BST</strong> with each node keeping track of how many nodes is on the left branch, and how many on right branch. For details of this type of TreeNode, refer to <strong>[CC150v5] 11.8 Get Rank in Stream of Integers</strong>.</p>
+
+<p>The conclusion:</p>
+
+<blockquote><p>可以化归为这样一道题：</p>
+
+<p>设计一个有序的数据结构，最初里头有自然数1到n这n个元素，</p>
+
+<p>随后这些元素可以被删除，但剩下元素仍然保持有序。</p>
+
+<p>要求实现方法GetKthElement(int k)和RemoveKthElemenet(int k)，</p>
+
+<p>使得它们在任意时刻都不超过O(lgN), N为当前的元素个数</p>
+
+<p>感觉要结合BST之类</p></blockquote>
+
+<h3>Code</h3>
+
+<p>Naive approach, O(n<sup>2</sup>):</p>
+
+<pre><code>public int[] form(int peopleCount, int[] countArray) {
+    int len = peopleCount;
+    int[] heightQueue = new int[len];
+    List&lt;Integer&gt; list = new ArrayList&lt;Integer&gt;();
+    for (int i = peopleCount; i &gt; 0; i--) {
+        list.add(i);
+    }
+    for (int i = len - 1; i &gt;= 0; i--) {
+        heightQueue[i] = list.remove(countArray[i]);
+    }
+    return heightQueue;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/09/terminology-ngram/">[Design] Terminology: N-gram</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-09T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>n-gram</h3>
+
+<p>In the fields of computational linguistics and probability, an <strong><a href="http://en.wikipedia.org/wiki/N-gram">n-gram</a></strong> is a contiguous sequence of n items from a given sequence of text or speech.</p>
+
+<p>The items can be phonemes, syllables, letters, words or base pairs according to the application. The n-grams typically are collected from a text or speech corpus.</p>
+
+<h4>Example</h4>
+
+<table border="1" width="100%" id="table5" cellpadding="3" style="border-collapse: collapse" bordercolor="#89B0D8" cellspacing="0">
+                <tbody><tr>
+                    <td bgcolor="#D9ECFF">
+                    <p align="center">frequency</p></td>
+                    <td bgcolor="#D9ECFF">
+                    <p align="center">word1</p></td>
+                    <td bgcolor="#D9ECFF">
+                    <p align="center">word2</p></td>
+                    <td bgcolor="#D9ECFF">
+                    <p align="center">word3</p></td>
+                </tr>
+                <tr>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">1419</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">much</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">the</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">same</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">461</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">much</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">more</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">likely</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">432</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">much</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">better</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">than</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">266</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">much</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">more</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">difficult</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">235</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">much</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">of</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">the</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">226</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">much</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">more</p>
+                    </td>
+                    <td bgcolor="#F5F9FC">
+                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">than</p>
+                    </td>
+                </tr>
+</tbody></table>
+
+
+<h4>Downloadable n-grams sets for English</h4>
+
+<ol>
+<li><strong><a href="https://catalog.ldc.upenn.edu/LDC2006T13">Google n-grams</a></strong>, based on the web as of 2006.</li>
+<li><strong><a href="http://www.ngrams.info/intro.asp">COCA n-grams</a></strong>, based on Corpus of Contemporary American English [COCA]. 450 million words from 1990 to 2012.</li>
+</ol>
+
+
+<p>With n-grams data (2, 3, 4, 5-word sequences, with their frequency), we can carry out powerful queries offline.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/09/most-frequent-word-from-book/">[Question] Most Frequent Word From a Book</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-09T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=5715664853532672">link</a></p>
+
+<blockquote><p>Let&rsquo;s say I gave you a long String and I wanted you to tell me the most common word in that String. How would you do that?</p>
+
+<p>Follow-up: how about if I gave you the entire works of Alexandre Dumas, one of the most prolific authors in history. How would your solution work? How could you change it to solve this more specific problem?</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>There are 2 solutions. Either <strong>HashMap</strong> or <strong>Trie</strong>. It&rsquo;s easy to think of first, but remember that Trie is designed to do this kind of job.</p>
+
+<blockquote><p>A trie will be more useful in the second situation where you will have millions of words. You can have a counter at every node to see its frequency</p></blockquote>
+
+<p><strong>Now the follow up</strong>. For big data problems, we can always do <strong>divide and conquer</strong> by hash value.</p>
+
+<p>Alternatively, the comment by <a href="http://www.careercup.com/question?id=5715664853532672">Prince</a> mentioned how to solve with <strong>Map Reduce</strong>:</p>
+
+<blockquote><p>Instead of loading it as a string first I would stream data so that I avoid memory spike. Further our map size might increases as new words are added to it. Also, we can use map reduce type job were we create map&lt;word, frequency> of each play in parallel and later join/collapse them this will reduce the time it will take to get result.</p>
+
+<p>Common phrase should be no different then above algorithm. However we need to rebuild our index with &lt;phase, frequency></p></blockquote>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/18">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/16">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_3&size=158x21'></script><section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

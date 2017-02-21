@@ -1,0 +1,802 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link Given a string of numbers, eg. &ldquo;43868643&rdquo;. Put &lsquo;+&rsquo; and &lsquo;-&rsquo; in between, and build an expression. &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/64/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/11/21/insert-plus-and-minus/">[Question] Insert Plus and Minus to Complete Expression</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-11-21T00:00:00-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2013</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Question</h1>
+
+<p><a href="http://www.1point3acres.com/bbs/thread-148692-1-1.html">link</a></p>
+
+<blockquote><p>Given a string of numbers, eg. &ldquo;43868643&rdquo;. Put &lsquo;+&rsquo; and &lsquo;-&rsquo; in between, and build an expression.</p></blockquote>
+
+<h1>Solution</h1>
+
+<p>Iterate thru the input string and do DFS recrusively.</p>
+
+<p>At each position, there&rsquo;s 3 possibilities: plus, minus or do not skip.</p>
+
+<h1>Code</h1>
+
+<pre><code>public List&lt;String&gt; solve(String str) {
+    if (str == null || str.length() == 0) {
+        return null;
+    }
+    List&lt;String&gt; result = new ArrayList&lt;String&gt;();
+    helper(result, "", 0, str);
+    Collections.sort(result);
+    return result;
+}
+
+private void helper(List&lt;String&gt; result, String curExp, int curVal, String remain) {
+    if (curVal == Integer.parseInt(remain)) {
+        result.add(curExp + "=" + remain);
+    } else if (curVal + Integer.parseInt(remain) == 0) {
+        result.add(curExp + "=-" + remain);
+    }
+    for (int i = 1; i &lt; remain.length(); i++) {
+        String nextStr = remain.substring(0, i);
+        int nextNum = Integer.parseInt(nextStr);
+
+        // case 1: add a + between curExp and nextStr
+        String newExp = curExp + "+" + nextStr;
+        int newVal = curVal + nextNum;
+        helper(result, newExp, newVal, remain.substring(i));
+
+        // case 2: '-' sign
+        newExp = curExp + "-" + nextStr;
+        newVal = curVal - nextNum;
+        helper(result, newExp, newVal, remain.substring(i));
+    }
+}
+</code></pre>
+
+<h1>Testing</h1>
+
+<pre><code>Input is 4312
+Print the list: 
++4-3+1=2
+-4+3-1=-2
+
+Input is 43868643
+Print the list: 
++4+3+8+6-8-6-4=3
++4+3+8-6-8+6-4=3
++4+3+86-86-4=3
++4+3-8+6+8-6-4=3
++4+3-8+68-64=3
++4+3-8-6+8+6-4=3
++4+3-86+86-4=3
++4-3+8+6-8-6-4=-3
++4-3+8-6-8+6-4=-3
++4-3+86-86-4=-3
++4-3-8+6+8-6-4=-3
++4-3-8+68-64=-3
++4-3-8-6+8+6-4=-3
++4-3-86+86-4=-3
++43+8+6-8-6=43
++43+8-6-8+6=43
++43+86-86=43
++43-8+6+8-6=43
++43-8-6+8+6=43
++43-86+86=43
+-4+3+8+6-8-6+4=3
+-4+3+8-6-8+6+4=3
+-4+3+8-68+64=3
+-4+3+86-86+4=3
+-4+3-8+6+8-6+4=3
+-4+3-8-6+8+6+4=3
+-4+3-86+86+4=3
+-4-3+8+6-8-6+4=-3
+-4-3+8-6-8+6+4=-3
+-4-3+8-68+64=-3
+-4-3+86-86+4=-3
+-4-3-8+6+8-6+4=-3
+-4-3-8-6+8+6+4=-3
+-4-3-86+86+4=-3
+-43+8+6-8-6=-43
+-43+8-6-8+6=-43
+-43+86-86=-43
+-43-8+6+8-6=-43
+-43-8-6+8+6=-43
+-43-86+86=-43
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/11/21/get-max-number-game/">[Question] Get Max Number Game (Minmax + Dp)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-11-21T00:00:00-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2013</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Question</h1>
+
+<p><a href="http://www.weiming.info/zhuti/JobHunting/31725587/">link</a></p>
+
+<blockquote><p>两个人（A，B）参与一个游戏，规则如下：</p>
+
+<p>1）一个随机的整数数列有偶数个数,a1,a2,&hellip;a2n</p>
+
+<p>2）A 先从数列取数，但只能从两头取,a1 or a2n</p>
+
+<p>3)然后Ｂ取数，也是只能从剩下的两头取，依此类推，两个人轮流，都只能从两头取</p>
+
+<p>Output <strong>the max sum of numbers</strong> that player 1 is going to get.</p></blockquote>
+
+<h1>Solution</h1>
+
+<p>This question can be solved with DP by using the following 3 equations:</p>
+
+<ol>
+<li>sum[i][j] sum of number from i to j</li>
+<li>val[i][j]: the max value that can be obtained if only the range [i,j] is left and you take the move first</li>
+<li>pos[][] is related to val[][], as it denotes whether we take i or j</li>
+</ol>
+
+
+<p>After we got sum[][] array fully filled up, the transition equation of val[][] looks like:</p>
+
+<pre><code>val[x][y] = sum[x][y] - MIN( val[x+1][y], val[x][y-1] )
+</code></pre>
+
+<p>As for pos[][]:</p>
+
+<pre><code>pos[x][y] = x  if val[x+1][y] &lt; val[x][y-1]
+            y  otherwise
+</code></pre>
+
+<h1>Code</h1>
+
+<pre><code>public int getMaxSumPlayerOne(int[] input) {
+    int len = input.length;
+    // sum[i][j] sum of number from i to j
+    int[][] sum = new int[len][len];
+    // val[i][j]: the max value that can be obtained if only
+    // the range [i,j] is left and you take the move first
+    int[][] val = new int[len][len];
+    // pos is related to val, as it denotes whether we take i or j
+    int[][] pos = new int[len][len];
+
+    // 1. fill in sum[][]
+    for (int x = 0; x &lt; len; x++) {
+        for (int y = x; y &lt; len; y++) {
+            if (x == y) {
+                sum[x][y] = input[x];
+            } else if (x == 0) {
+                // fill up the first row in the sum[][] dp array
+                sum[x][y] = sum[x][y - 1] + input[y];
+            } else {
+                // starting from the 2nd row, it's gonna make use of 1st row
+                // x &gt;= 1
+                sum[x][y] = sum[0][y] - sum[0][x - 1];
+            }
+        }
+    }
+
+    // 2. fill in val[][] and pos[][]
+    for (int x = len - 1; x &gt;= 0; x--) {
+        for (int y = x; y &lt; len; y++) {
+            if (x == y) {
+                val[x][y] = input[x];
+                pos[x][y] = x;
+            } else {
+                // when I choose either x or y, I look at what the opponent
+                // is gonna get after my move, then chose the smaller
+                // v[][] for the remaining part
+                val[x][y] = sum[x][y] - Math.min(val[x + 1][y], val[x][y - 1]);
+                pos[x][y] = val[x + 1][y] &lt; val[x][y - 1] ? x : y;
+            }
+        }
+    }
+    this.printSteps(pos, len);
+    return val[0][len - 1];
+}
+</code></pre>
+
+<h1>Testing</h1>
+
+<pre><code>Input {1, 4, 3, 2}
+Player 1 take position 3
+Player 2 take position 2
+Player 1 take position 1
+Player 2 take position 0
+max sum for player 1 is 6
+
+Input {7, 5, 2, 6, 9, 8, 3, 4}
+Player 1 take position 0
+Player 2 take position 1
+Player 1 take position 7
+Player 2 take position 6
+Player 1 take position 5
+Player 2 take position 4
+Player 1 take position 3
+Player 2 take position 2
+max sum for player 1 is 25
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/11/20/infix-to-postfix/">[Amazon] Infix to Postfix Conversion</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-11-20T00:00:00-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Question</h1>
+
+<p><a href="https://cs.nyu.edu/courses/Fall12/CSCI-GA.1133-002/notes/InfixToPostfixExamples.pdf">link</a>, <a href="http://csis.pace.edu/~wolf/CS122/infix-postfix.htm">link</a>.</p>
+
+<blockquote><p>example: A * B + C becomes A B * C +</p>
+
+<p>A * (B + C) becomes A B C + *</p></blockquote>
+
+<h1>Solution</h1>
+
+<p>One of the main purpose of converting infix to postfix is to <strong>remove alll parentheses</strong> from the expression.</p>
+
+<p>This is a very difficult question. The solution is:</p>
+
+<ol>
+<li><p>Print operands as they arrive.</p></li>
+<li><p>If the incoming symbol is &lsquo;+&rsquo; or &lsquo;-&rsquo; or &lsquo;(&rsquo;, push it on the stack.</p></li>
+<li><p>If the incoming symbol is a &lsquo;)&rsquo;, pop the stack and print the operators until you see a &lsquo;(&rsquo;. Discard the pair of parentheses.</p></li>
+<li><p>If the incoming symbol is &lsquo;*&rsquo; or &lsquo;/&rsquo;, pop until we sees &lsquo;+&rsquo; or &lsquo;-&rsquo; or &lsquo;(&rsquo; at top of the stack, then push the symbol onto the stack.</p></li>
+<li><p>At the end of the expression, pop and print all operators on the stack. (No parentheses should remain.)</p></li>
+</ol>
+
+
+<h1>Code</h1>
+
+<pre><code>public String solve(String infix) {
+    StringBuilder sb = new StringBuilder();
+    // get next operand or non-operand
+    // notice that operand is &gt;=1 chars
+    int p = 0;
+    int len = infix.length();
+    Stack&lt;Character&gt; stack = new Stack&lt;Character&gt;();
+
+    while (p != len) {
+        if (isDigit(infix.charAt(p))) {
+            // if char at p is a digit
+            int q = p;
+            while (q != len &amp;&amp; isDigit(infix.charAt(q))) {
+                q++;
+            }
+            // it is a number in the range [p, q-1]
+            sb.append(infix.substring(p, q) + " ");
+            p = q;
+        } else {
+            // if char at p is + - * / or ( )
+            char op = infix.charAt(p++);
+            if (op == ')') {
+                // pop until sees a '('
+                while (stack.peek() != '(') {
+                    sb.append(stack.pop() + " ");
+                }
+                stack.pop();
+            } else if (op == '(' || op == '+' || op == '-') {
+                stack.push(op);
+            } else {
+                // if * or /
+                // pop until sees + or - or '('
+                while (!stack.isEmpty()) {
+                    if (stack.peek() == '+' || stack.peek() == '-' || stack.peek() == '(') {
+                        break;
+                    }
+                    sb.append(stack.pop() + " ");
+                }
+                stack.push(op);
+            }
+        }
+    }
+    // reach Eof, pop everything
+    while (!stack.isEmpty()) {
+        sb.append(stack.pop() + " ");
+    }
+    return sb.toString();
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/11/15/shuffle-max-diff/">[Question] Shuffle and Get Max Difference</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-11-15T00:00:00-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Question</h1>
+
+<p><a href="http://stackoverflow.com/questions/23205277/max-absolute-sum-in-a-array">link</a></p>
+
+<blockquote><p>Given an array with four integers A, B, C, D, shuffle them in some order (there are 24 shuffles).</p>
+
+<p>&hellip; Get the best shuffle such that</p>
+
+<p>F(S) = abs(s[0]-s[1]) + abs(s[1]-s[2])+ abs(s[2]-s[3])
+is maximum</p>
+
+<p>For example</p></blockquote>
+
+<pre><code>A=5, B= 3, C=-1, D =5
+s[0]=5, s[1]=-1, s[2]= 5, s[3] =3
+</code></pre>
+
+<blockquote><p>will give F[s] =14 as max diff</p></blockquote>
+
+<h1>Solution</h1>
+
+<p>Referring to <a href="http://stackoverflow.com/a/23205616">this execellent answer</a>:</p>
+
+<ol>
+<li>sort input and we get 4 number from min to max: A B C D</li>
+<li>swap A and B - B A C D</li>
+<li>swap C and D - B A D C</li>
+<li>swap head and tail - C A D B</li>
+</ol>
+
+
+<p>Finally you got CADB or BDAC.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/11/15/arithmetic-slice/">[Question] Count Arithmetic Slices</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-11-15T00:00:00-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Question</h1>
+
+<blockquote><p>Given an unsorted array of length N, a slice is defined as a pair of numbers (P, Q) so that:</p>
+
+<ol>
+<li>0 &lt;= P &lt; Q &lt;= N</li>
+<li>A[P], A[P+1]&hellip;.A[Q] is arithmetic sequence</li>
+</ol>
+
+
+<p>Example:</p>
+
+<pre><code>input = { -1, 1, 3, 3, 3, 2, 1, 0 }
+</code></pre>
+
+<p>Output 5 because there&rsquo;re slices:</p>
+
+<pre><code>(0, 2) (2, 4) (4, 6) (4, 7) (5, 7)
+</code></pre></blockquote>
+
+<h1>Solution</h1>
+
+<ol>
+<li>count the length of arithmetic (countinuous) sequence</li>
+<li>form some slices</li>
+<li>proceed from the end of that sequence, till the end.</li>
+</ol>
+
+
+<h1>Code</h1>
+
+<pre><code>public int solve(int[] input) {
+    int len = input.length;
+    int p = 0;
+    int totalSlices = 0;
+
+    while (p + 1 &lt; len) {
+        // check if there is a arithmetic sequence starting at p
+        // note that p is NOT the last element.
+        int diff = input[p + 1] - input[p];
+        int q = p + 1;
+
+        // starting from q, check arithmetic difference
+        while (q &lt; len) {
+            if (input[q] - input[q - 1] == diff) {
+                q++;
+            } else {
+                break;
+            }
+        }
+
+        // so, the range [p, q-1] is a arithmetic sequence.
+        int seqLength = q - p;
+        if (seqLength &gt;= 3) {
+            totalSlices += getSlicesCountFromArithmeticSeq(seqLength);
+        }
+
+        // update p (skip the range [p, q-1])
+        p = q - 1;
+    }
+    return totalSlices;
+}
+
+private int getSlicesCountFromArithmeticSeq(int k) {
+    // choose 2 from (k - 1)
+    return (k - 1) * (k - 2) / 2;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/11/05/Number-Of-Bus-Stations/">[Question] Number of Bus Stations (Meeting Rooms)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-11-05T00:00:00-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://tech-queries.blogspot.sg/2009/05/number-of-bus-stations.html">link</a></p>
+
+<blockquote><p>At a bus-station, you have time-table for buses arrival and departure. You need to find the minimum number of platforms so that all the buses can be accommodated as per their schedule.</p>
+
+<p>Example: Time table is like below:</p></blockquote>
+
+<pre><code>Bus         Arrival         Departure 
+BusA        0900 hrs        0930 hrs
+BusB        0915 hrs        1300 hrs
+BusC        1030 hrs        1100 hrs
+BusD        1045 hrs        1145 hrs
+</code></pre>
+
+<blockquote><p>The answer must be 3.</p></blockquote>
+
+<p>This question can also be in other forms:</p>
+
+<blockquote><p>Given a vector of Nodes, each of which contain the start and end time of a meeting, find the maximum number of rooms one would have to book for the day.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>The answer is same as finding the maximum number of bus at the bus-station at the same time.</p>
+
+<p><strong>The suggestted solution</strong> from <a href="http://tech-queries.blogspot.sg/2009/05/number-of-bus-stations.html">here</a>:</p>
+
+<blockquote><p>So first sort all the arrival(A) and departure(D) time in an int array. Please save the corresponding arrival or departure in the array also.</p>
+
+<p>After sorting our array will look like this:</p></blockquote>
+
+<pre><code>0900    0915    1930    1030    1045    1100    1145    1300
+A       A       D       A       A       D       D       D
+</code></pre>
+
+<p>Now use a counter. When sees an A, increment. When sees an D, decreament. In the end, return the largest counter value.</p>
+
+<p>Note: If you have a arriving and a departing at same time, put departure time first.</p>
+
+<h3>code</h3>
+
+<pre><code>public int solve(List&lt;Meeting&gt; input) {
+    List&lt;Event&gt; events = new ArrayList&lt;Event&gt;();
+    for (Meeting i : input) {
+        events.add(new Event(i.start, 1));
+        events.add(new Event(i.end, -1));
+    }
+    Collections.sort(events);
+
+    int currentNeeds = 0;
+    int maxNeeds = 0;
+    for (Event e : events) {
+        currentNeeds += e.diff;
+        maxNeeds = Math.max(maxNeeds, currentNeeds);
+    }
+    return maxNeeds;
+}
+</code></pre>
+
+<p>supporting classes:</p>
+
+<pre><code>class Event implements Comparable&lt;Event&gt; {
+    int time;
+    int diff;
+    // variable diff have value of 1 or -1
+    // when = 1, it means starting a meeting and 1 more room needed
+    // when = -1, it means ending a meeting and 1 less room needed
+
+    public Event(int a, int b) {
+        time = a;
+        diff = b;
+    }
+
+    @Override
+    public int compareTo(Event o) {
+        if (this.time == o.time) {
+            return this.diff - o.diff;
+        }
+        return this.time - o.time;
+    }
+}
+
+class Meeting {
+    int start;
+    int end;
+
+    public Meeting(int a, int b) {
+        start = a;
+        end = b;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/63">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_3&size=158x21'></script><section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

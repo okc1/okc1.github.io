@@ -1,0 +1,1812 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="4 Types of Access Level Private Like you&rsquo;d think, only the class in which it is declared can see it. Package Private (default) Can only be seen &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/posts/46/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/14/Java-modifier-and-access-level/">[Java OOP] Java Modifier and Access Level</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-14T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>4 Types of Access Level</h2>
+
+<h4>Private</h4>
+
+<p>Like you&rsquo;d think, only the class in which it is declared can see it.</p>
+
+<h4>Package Private (default)</h4>
+
+<p>Can only be seen and used by the package in which it was declared.</p>
+
+<p>This is the default in Java (which some see as a mistake).</p>
+
+<h4>Protected</h4>
+
+<p>Package Private, plus can be seen by subclasses.</p>
+
+<h4>Public</h4>
+
+<p>Everyone can see it.</p>
+
+<h2>Differences</h2>
+
+<p><img class="middle" src="/assets/images/java-access-level-table.png"></p>
+
+<p><strong>Note</strong>: Java default access setting is &lsquo;No modifier&rsquo;, which is also called &lsquo;<strong>Package Private</strong>&rsquo;.</p>
+
+<p><strong>Another note</strong>: by saying &lsquo;subclass&rsquo;, it means subclass declared in <strong>another package</strong>.</p>
+
+<h4>Example</h4>
+
+<p>Class structure:</p>
+
+<p><img class="middle" src="/assets/images/java-classes-access-level.gif"></p>
+
+<p>For the methods of &lsquo;Alpha&rsquo; class, the visibility is listed below.</p>
+
+<p>For example, Gamma can only access public methods in Alpha.</p>
+
+<table class="tg">
+  <tr>
+    <th class="tg-031e">Modifier</th>
+    <th class="tg-031e">Alpha</th>
+    <th class="tg-031e">Beta</th>
+    <th class="tg-031e">Alphasub</th>
+    <th class="tg-031e">Gamma</th>
+  </tr>
+  <tr>
+    <td class="tg-031e">public</td>
+    <td class="tg-031e">Y</td>
+    <td class="tg-031e">Y</td>
+    <td class="tg-031e">Y</td>
+    <td class="tg-031e">Y</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">protected</td>
+    <td class="tg-031e">Y</td>
+    <td class="tg-031e">Y</td>
+    <td class="tg-031e">Y</td>
+    <td class="tg-031e">N</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">no modifier</td>
+    <td class="tg-031e">Y</td>
+    <td class="tg-031e">Y</td>
+    <td class="tg-031e">N</td>
+    <td class="tg-031e">N</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">private</td>
+    <td class="tg-031e">Y</td>
+    <td class="tg-031e">N</td>
+    <td class="tg-031e">N</td>
+    <td class="tg-031e">N</td>
+  </tr>
+</table>
+
+
+<p><br /></p>
+
+<h2>Additional question</h2>
+
+<h4>Can we declare a top-level class as private?</h4>
+
+<p>Answer: No, Java does not allow top-level private class. Think about it, a top-level class as private would be useless because nothing could access it.</p>
+
+<p>If you really want, you can use inner or nested classes. If you have a private inner or nested class, then access is restricted to the scope of that outer class.</p>
+
+<p><a href="http://stackoverflow.com/questions/1913863/java-why-can-we-define-a-top-level-class-as-private">link</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/14/Iterator-of-Tree/">[Question] Iterator of Binary Search Tree</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-14T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Implement a iterator for a binary search tree</p></blockquote>
+
+<p><strong>Related question</strong>: <a href="/blog/2014/05/24/Binary-Tree-Inorder-Traversal/">Binary Tree Inorder Traversal</a></p>
+
+<h3>Analysis</h3>
+
+<p>First of all, what is an iterator in Java?</p>
+
+<blockquote><p>Java has a commonly used Iterator interface.</p>
+
+<p>It is usually used like this:</p></blockquote>
+
+<pre><code>Iterator e = container.iterator();  
+while (e.hasNext()) {
+    System.out.println(e.next());
+}
+</code></pre>
+
+<p>The source code of Iterator interface:</p>
+
+<pre><code>public interface Iterator&lt;E&gt; {
+    boolean hasNext();
+    E next();
+    void remove();
+}
+</code></pre>
+
+<p>In this post, we will only implement next(), because Tree node deletion is covered in another post, and it&rsquo;s not easy.</p>
+
+<p>The most standard way is to do an inorder traversal (by storing a pointer to the next node). The only difference is iterator is 1 step at a time. If you cannot write inorder traversal without using recursion, <a href="/blog/2014/05/24/Binary-Tree-Inorder-Traversal/">learn it first</a>. The solution of iterator is available from <a href="http://manbroski.blogspot.sg/2011/11/iterator-for-binary-search-tree.html">this blog</a>, although he made some small syntax errors.</p>
+
+<h3>Code</h3>
+
+<pre><code>public class BinaryTreeIterator {
+
+    private Stack&lt;TreeNode&gt; stack = new Stack&lt;TreeNode&gt;();
+
+    public BinaryTreeIterator(TreeNode root) {
+        if (root == null) {
+            throw new NoSuchElementException("Empty tree");
+        }
+        while (root != null) {
+            stack.push(root);
+            root = root.left;
+        }
+    }
+
+    public boolean hasNext() {
+        return !stack.isEmpty();
+    }
+
+    public TreeNode next() {
+        TreeNode top = stack.pop();
+        TreeNode right = top.right;
+        while (right != null) {
+            stack.push(right);
+            right = right.left;
+        }
+        return top;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/14/Count-negative-in-2D-Sorted-Matrix/">[Question] Count Negative in a 2D Sorted Matrix</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-14T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://leetcode.com/2010/10/searching-2d-sorted-matrix.html">link</a></p>
+
+<blockquote>
+<p class="font-color">Write an efficient algorithm that searches for a value in an <i>n</i> x <i>m</i> table (two-dimensional array). This table is sorted along the rows and columns — that is,</p><p class="font-color">Table[i][j] ≤ Table[i][j + 1], <br>Table[i][j] ≤ Table[i + 1][j]</p>
+</blockquote>
+
+
+<h3>Related questions</h3>
+
+<p><strong><a href="/blog/2014/05/21/Search-a-2D-Matrix/">Search a 2D Matrix</a></strong>.</p>
+
+<p><strong><a href="/blog/2014/06/10/Searching-a-2D-Sorted-Matrix/">Searching a 2D Sorted Matrix</a></strong>.</p>
+
+<p><strong><a href="/blog/2014/06/14/Count-negative-in-2D-Sorted-Matrix/">Count negative in a 2D Sorted Matrix</a></strong>.</p>
+
+<h3>Analysis</h3>
+
+<p>This is a very similar question as prevous one. The solution is O(n) with a linear walk from top-right to bottom-left.</p>
+
+<h3>Code</h3>
+
+<pre><code>int countNegatives(int array[][], int size) {
+    int col = size - 1, row = 0;
+    int count = 0;
+
+    while(row &amp;lt; size &amp;&amp; col &amp;gt;= 0) {
+        if(array[row][col] &amp;lt; 0 ) {
+            count = count + (col + 1);
+            row = row + 1;
+        }
+        else {
+            col = col - 1;
+        }
+    }
+    return count;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/13/Search-range-BST-trim-BST/">[Question] Search Range in BST (Trim a BST)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-13T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.ardendertat.com/2012/01/17/programming-interview-questions-26-trim-binary-search-tree/">link</a></p>
+
+<blockquote><p>Given the root of a binary search tree and 2 numbers min and max, trim the tree such that all the numbers in the new tree are between min and max (inclusive). The resulting tree should still be a valid binary search tree.</p></blockquote>
+
+<p>Input:</p>
+
+<p><img class="middle" src="/assets/images/search-range-input.png"></p>
+
+<p>With min value as 5 and max value as 13, the output is:</p>
+
+<p><img class="middle" src="/assets/images/search-range-output.png"></p>
+
+<h3>Analysis</h3>
+
+<p>There is a good analysis from <a href="http://www.geeksforgeeks.org/print-bst-keys-in-the-given-range/">geeksforgeeks</a>:</p>
+
+<blockquote><ol>
+<li>If value of root’s key is greater than k1, then recursively call in left subtree.</li>
+<li>If value of root’s key is in range, then print the root’s key.</li>
+<li>If value of root’s key is smaller than k2, then recursively call in right subtree.</li>
+</ol>
+</blockquote>
+
+<p>Another great solution is from <a href="http://www.ardendertat.com/2012/01/17/programming-interview-questions-26-trim-binary-search-tree/">Arden Dertat</a>.</p>
+
+<h3>Code</h3>
+
+<p>First code, from geeksforgeeks - print the result instead of return.</p>
+
+<pre><code>void Print(struct node *root, int k1, int k2)
+{
+   if ( NULL == root )
+      return;
+   if ( k1 &lt; root-&gt;data )
+     Print(root-&gt;left, k1, k2);
+   if ( k1 &lt;= root-&gt;data &amp;&amp; k2 &gt;= root-&gt;data )
+     printf("%d ", root-&gt;data );
+   if ( k2 &gt; root-&gt;data )
+     Print(root-&gt;right, k1, k2);
+}
+</code></pre>
+
+<p>Second code from Arden:</p>
+
+<pre><code>def trimBST(tree, minVal, maxVal): 
+    if not tree: 
+        return 
+    tree.left=trimBST(tree.left, minVal, maxVal) 
+    tree.right=trimBST(tree.right, minVal, maxVal) 
+    if minVal&lt;=tree.val&lt;=maxVal: 
+        return tree 
+    if tree.val&lt;minVal: 
+        return tree.right 
+    if tree.val&gt;maxVal: 
+        return tree.left
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/12/NineChap-Permutation/">[NineChap 1.2] Permutation</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-12T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>First Word</h2>
+
+<p>Permutation questions provide you with a list of items, and you build, validate and return a combination of these items. The standard solution is to sort the input first, and add items 1 by 1.</p>
+
+<p><strong>Do not try to solve the problems with anything other than the template given below</strong>, because otherwise the code is impossible to be bug-free.</p>
+
+<p>Though the code is standard, <strong>many question are very difficult</strong>, and most of time <strong>duplication removal can be tough</strong>.</p>
+
+<h2>Template</h2>
+
+<pre><code>public List&lt;List&lt;Integer&gt;&gt; subsets(int[] num) {
+    List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;List&lt;Integer&gt;&gt;();
+    if(num == null || num.length == 0) {
+        return result;
+    }
+    Arrays.sort(num);  
+    subsetsHelper(result, new ArrayList&lt;Integer&gt;(), num, 0);
+    return result;
+}
+
+private void subsetsHelper(List&lt;List&lt;Integer&gt;&gt; result,
+    List&lt;Integer&gt; list, int[] num, int pos) {
+    result.add(new ArrayList&lt;Integer&gt;(list));
+    for (int i = pos; i &lt; num.length; i++) {
+        list.add(num[i]);
+        subsetsHelper(result, list, num, i + 1);
+        list.remove(list.size() - 1);
+    }
+}
+</code></pre>
+
+<p><strong>Note:</strong> 2nd last line &ldquo;subsetsHelper(result, list, num, i + 1);&rdquo;.</p>
+
+<p>It&rsquo;s easy to mistake it as &ldquo;pos+1&rdquo; instead of &ldquo;i+1&rdquo;, which will result in TLE.</p>
+
+<h2>Question list</h2>
+
+<ol>
+<li><p><strong><a href="/blog/2014/05/22/Subsets/">Subsets</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/14/Permutations/">Permutations</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/22/Subsets-II/">Subsets II</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/14/Permutations-II/">Permutations II</a></strong></p></li>
+</ol>
+
+
+<h4>Additional</h4>
+
+<ol>
+<li><p><strong><a href="/blog/2014/05/13/Combination-Sum/">Combination Sum</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/13/Combination-Sum-II/">Combination Sum II</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/29/Palindrome-Partitioning/">Palindrome Partitioning</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/30/Palindrome-Partitioning-II/">Palindrome Partitioning II</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/24/Restore-IP-Addresses/">Restore IP Addresses</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/22/Combinations/">Combinations</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/02/Letter-Combinations-of-a-Phone-Number/">Letter Combinations of a Phone Number</a></strong></p></li>
+</ol>
+
+
+<h2>Code</h2>
+
+<p><strong>Subsets</strong> - good example for practise (by applying the model)</p>
+
+<pre><code>public List&lt;List&lt;Integer&gt;&gt; subsets(int[] num) {
+    List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;List&lt;Integer&gt;&gt;();
+    if(num == null || num.length == 0) {
+        return result;
+    }
+    Arrays.sort(num);
+    helper(result, new LinkedList&lt;Integer&gt;(), num, 0);
+    return result;
+}
+
+private void helper(List&lt;List&lt;Integer&gt;&gt; ans, List&lt;Integer&gt; path, int[] num, int position) {
+    ans.add(new LinkedList&lt;Integer&gt;(path));
+    for (int i = position; i &lt; num.length; i ++) {
+        path.add(num[i]);
+        helper(ans, path, num, i + 1);
+        path.remove(path.size() - 1);
+    }
+}
+</code></pre>
+
+<p><strong>Permutations</strong></p>
+
+<pre><code>public List&lt;List&lt;Integer&gt;&gt; permute(int[] num) {
+    List&lt;List&lt;Integer&gt;&gt; ans = new LinkedList&lt;List&lt;Integer&gt;&gt;();
+    if (num == null || num.length == 0) {
+        return ans;
+    }
+    helper(ans, new LinkedList&lt;Integer&gt;(), num);
+    return ans;
+}
+
+private void helper(List&lt;List&lt;Integer&gt;&gt; ans, List&lt;Integer&gt; path, int[] num){
+    if (path.size() == num.length) {
+        ans.add(new LinkedList&lt;Integer&gt;(path));
+        return;
+    }
+    for (int i = 0; i &lt; num.length; i ++) {
+        if (!path.contains(num[i])) {
+            path.add(num[i]);
+            helper(ans, path, num);
+            path.remove(path.size() - 1);
+        }
+    }
+}
+</code></pre>
+
+<p><strong>Subsets II</strong> - good example for practise</p>
+
+<p>We only care how many times we use the duplicate number, we care not the order. So, only 3 lines of code is added based on previous solution.</p>
+
+<pre><code>public List&lt;List&lt;Integer&gt;&gt; subsetsWithDup(int[] num) {
+    List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;List&lt;Integer&gt;&gt;();
+    if(num == null || num.length == 0) {
+        return result;
+    }
+    Arrays.sort(num);
+    helper(result, new LinkedList&lt;Integer&gt;(), num, 0);
+    return result;
+}
+
+private void helper(List&lt;List&lt;Integer&gt;&gt; ans, List&lt;Integer&gt; path, int[] num, int position) {
+    ans.add(new LinkedList&lt;Integer&gt;(path));
+    for (int i = position; i &lt; num.length; i ++) {
+        if (i &gt; position &amp;&amp; num[i - 1] == num[i]) {
+            // if duplicate, only append num[position]
+            continue;
+        }
+        path.add(num[i]);
+        helper(ans, path, num, i + 1);
+        path.remove(path.size() - 1);
+    }
+}
+</code></pre>
+
+<p><strong>Permutations II</strong></p>
+
+<pre><code>public List&lt;List&lt;Integer&gt;&gt; permuteUnique(int[] num) {
+    List&lt;List&lt;Integer&gt;&gt; ans = new LinkedList&lt;List&lt;Integer&gt;&gt;();
+    if (num == null || num.length == 0) {
+        return ans;
+    }
+    Arrays.sort(num);
+    helper(ans, new LinkedList&lt;Integer&gt;(), new int[num.length], num);
+    return ans;
+}
+
+private void helper(List&lt;List&lt;Integer&gt;&gt; ans, List&lt;Integer&gt; path, int[] visited, int[] num){
+    if (path.size() == num.length) {
+        ans.add(new LinkedList&lt;Integer&gt;(path));
+        return;
+    }
+    for (int i = 0; i &lt; num.length; i ++) {
+        if (visited[i] == 1) {
+            continue;
+        }
+        if (i &gt; 0 &amp;&amp; visited[i-1] == 0 &amp;&amp; num[i - 1] == num[i]) {
+            continue;
+        }
+        visited[i] = 1;
+        path.add(num[i]);
+        helper(ans, path, visited, num);
+        visited[i] = 0;
+        path.remove(path.size() - 1);
+    }
+}
+</code></pre>
+
+<p><strong>Combination Sum</strong></p>
+
+<pre><code>public ArrayList&lt;ArrayList&lt;Integer&gt;&gt; combinationSum(int[] candidates, int target) {
+    ArrayList&lt;ArrayList&lt;Integer&gt;&gt; ans = new ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();
+    Arrays.sort(candidates);
+    helper(ans, new ArrayList&lt;Integer&gt;(), candidates, 0, target);
+    return ans;
+}
+
+private void helper(ArrayList&lt;ArrayList&lt;Integer&gt;&gt; ans, ArrayList&lt;Integer&gt; path, 
+                    int[] nums, int pos, int target) {
+    if (target &lt; 0) {
+        return;
+    } else if (target == 0) {
+        ans.add(new ArrayList&lt;Integer&gt;(path));
+        return;
+    }
+    for (int i = pos; i &lt; nums.length; i ++) {
+        path.add(nums[i]);
+        helper(ans, path, nums, i, target - nums[i]);
+        path.remove(path.size() - 1);
+    }
+}
+</code></pre>
+
+<p><strong>Combination Sum II</strong></p>
+
+<pre><code>public ArrayList&lt;ArrayList&lt;Integer&gt;&gt; combinationSum2(int[] candidates, int target) {
+    ArrayList&lt;ArrayList&lt;Integer&gt;&gt; ans = new ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();
+    Arrays.sort(candidates);
+    helper(ans, new ArrayList&lt;Integer&gt;(), candidates, 0, target);
+    return ans;
+}
+
+private void helper(ArrayList&lt;ArrayList&lt;Integer&gt;&gt; ans, ArrayList&lt;Integer&gt; path, 
+                    int[] nums, int pos, int target) {
+    if (target &lt; 0) {
+        return;
+    } else if (target == 0) {
+        ans.add(new ArrayList&lt;Integer&gt;(path));
+        return;
+    }
+    for (int i = pos; i &lt; nums.length; i ++) {
+        if (i &gt; pos &amp;&amp; nums[i-1] == nums[i]) {
+            continue;
+        }
+        path.add(nums[i]);
+        helper(ans, path, nums, i + 1, target - nums[i]);
+        path.remove(path.size() - 1);
+    }
+}
+</code></pre>
+
+<p><strong>Palindrome Partitioning</strong></p>
+
+<p>Naive approach can AC:</p>
+
+<pre><code>public ArrayList&lt;ArrayList&lt;String&gt;&gt; partition(String s) {
+    ArrayList&lt;ArrayList&lt;String&gt;&gt; ans = new ArrayList&lt;ArrayList&lt;String&gt;&gt;();
+    if (s == null || s.length() == 0) {
+        return ans;
+    }
+    helper(ans, new ArrayList&lt;String&gt;(), s, 0);
+    return ans;
+}
+
+private void helper(ArrayList&lt;ArrayList&lt;String&gt;&gt; ans, ArrayList&lt;String&gt; path, String s, int pos) {
+    if (pos == s.length()) {
+        ans.add(new ArrayList&lt;String&gt;(path));
+        return;
+    }
+    for (int i = pos + 1; i &lt;= s.length(); i++) {
+        String sub = s.substring(pos, i);
+        if (!isPlm(sub)) {
+            continue;
+        }
+        path.add(sub);
+        helper(ans, path, s, i);
+        path.remove(path.size() - 1);
+    }
+}
+
+private boolean isPlm(String str) {
+    int left = 0, right = str.length() - 1;
+    while (left &lt; right) {
+        if (str.charAt(left) != str.charAt(right)) 
+            return false;
+        left++;
+        right--;
+    }
+    return true;
+}
+</code></pre>
+
+<p>Use DP to optimize the process of palindrome validation.</p>
+
+<pre><code>// palindrome validation optimized with DP
+public ArrayList&lt;ArrayList&lt;String&gt;&gt; partition(String s) {
+    ArrayList&lt;ArrayList&lt;String&gt;&gt; ans = new ArrayList&lt;ArrayList&lt;String&gt;&gt;();
+    if (s == null || s.length() == 0) {
+        return ans;
+    }
+    helper(ans, new ArrayList&lt;String&gt;(), s, 0, palindromeMap(s));
+    return ans;
+}
+
+private void helper(ArrayList&lt;ArrayList&lt;String&gt;&gt; ans, 
+ArrayList&lt;String&gt; path, String s, int pos, boolean[][] palinMap) {
+    if (pos == s.length()) {
+        ans.add(new ArrayList&lt;String&gt;(path));
+        return;
+    }
+    for (int i = pos; i &lt; s.length(); i++) {
+        if (!palinMap[i][pos]) {
+            continue;
+        }
+        path.add(s.substring(pos, i + 1));
+        helper(ans, path, s, i + 1, palinMap);
+        path.remove(path.size() - 1);
+    }
+}
+
+private boolean[][] palindromeMap(String s) {
+    int len = s.length();
+    boolean[][] map = new boolean[len][len];
+    char[] ss = s.toCharArray();
+    for (int i = 0; i &lt; len; i++) {
+        for (int j = i; j &gt;= 0; j--) {
+            if (i == j) {
+                map[i][j] = true;
+            } else if (i - j == 1) {
+                map[i][j] = ss[i] == ss[j];
+            } else {
+                map[i][j] = (ss[i] == ss[j]) &amp; map[i - 1][j + 1];
+            }
+        }
+    }
+    return map;
+}
+</code></pre>
+
+<p><strong>Palindrome Partitioning II</strong></p>
+
+<p>Used above template and got TLE. Turns out, this is a pure DP question.</p>
+
+<p>Skip for now.</p>
+
+<p><strong>Restore IP Addresses</strong></p>
+
+<pre><code>public List&lt;String&gt; restoreIpAddresses(String s) {
+    List&lt;String&gt; ans = new LinkedList&lt;String&gt;();
+    if (s == null || s.length() == 0) {
+        return ans;
+    }
+    helper(ans, s, "", 0, 0);
+    return ans;
+}
+
+private void helper(List&lt;String&gt; ans, String s, String path, int pos, int count) {
+    if (count == 4) {
+        if (pos == s.length()) {
+            ans.add(path.substring(1));
+        }
+        return;
+    }
+    for (int i = pos; i &lt; s.length(); i++) {
+        if (i - pos &gt;= 3) {
+            break;
+        }
+        if (!isValidNum(s.substring(pos, i + 1))) {
+            continue;
+        }
+        String newPath = path + "." + s.substring(pos, i + 1);
+        helper(ans, s, newPath, i + 1, count + 1);
+    }
+}
+
+private boolean isValidNum(String str) {
+    if (str.length() &gt; 1 &amp;&amp; str.charAt(0) == '0') {
+        return false;
+    }
+    int num = Integer.parseInt(str);
+    if (num &lt; 0 || 255 &lt; num) {
+        return false;
+    }
+    return true;
+}
+</code></pre>
+
+<p><strong>Combinations</strong></p>
+
+<pre><code>public List&lt;List&lt;Integer&gt;&gt; combine(int n, int k) {
+    List&lt;List&lt;Integer&gt;&gt; ans = new LinkedList&lt;List&lt;Integer&gt;&gt;();
+    if (n == 0 || k == 0 || n &lt; k) {
+        return ans;
+    }
+    helper(ans, new LinkedList&lt;Integer&gt;(), n, k, 1);
+    return ans;
+}
+
+private void helper(List&lt;List&lt;Integer&gt;&gt; ans, List&lt;Integer&gt; path, int n, int k, int pos) {
+    if (path.size() == k) {
+        ans.add(new LinkedList&lt;Integer&gt;(path));
+        return;
+    }
+    for (int i = pos; i &lt;= n; i++) {
+        path.add(i);
+        helper(ans, path, n, k, i + 1);
+        path.remove(path.size() - 1);
+    }
+}
+</code></pre>
+
+<p><strong>Letter Combinations of a Phone Number</strong></p>
+
+<pre><code>public List&lt;String&gt; letterCombinations(String digits) {
+    List&lt;String&gt; ans = new LinkedList&lt;String&gt;();
+    if (digits == null) {
+        return ans;
+    }
+    String[] pad = new String[]{
+        " ","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    helper(ans, "", pad, digits, 0);
+    return ans;
+}
+
+private void helper(List&lt;String&gt; ans, String path, String[] pad, String digits, int pos) {
+    if (path.length() == digits.length()) {
+        ans.add(path);
+        return;
+    }
+    String letters = pad[digits.charAt(pos) - '0'];
+    for (int i = 0; i &lt; letters.length(); i++) {
+        path += letters.charAt(i) + "";
+        helper(ans, path, pad, digits, pos + 1);
+        path = path.substring(0, path.length() - 1);
+    }
+}
+</code></pre>
+
+<h2>Conclusion</h2>
+
+<h4>Remember the model! It applies to most search question.</h4>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/12/Compare-mergesort-quicksort/">[Question] Compare Mergesort and Quicksort</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-12T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Quicksort</h3>
+
+<p><strong>Quicksort is faster</strong> because it&rsquo;s in-place sort (with O(log n) stack space).</p>
+
+<p>Typical in-place sort is not stable.</p>
+
+<h3>Mergesort</h3>
+
+<p>Mergesort uses O(n) space, thus slower.</p>
+
+<p>It is stable sort.</p>
+
+<h3>Stability 稳定排序</h3>
+
+<p>When sorting, if only part of the data is examined, there&rsquo;re possibility of multiple different correctly sorted versions of the original list. Stable sorting algorithms will preserve the original relative order.</p>
+
+<p>One application for stable sorting algorithms is sorting a list using a primary and secondary key.</p>
+
+<p>Example:</p>
+
+<p><img class="middle" src="/assets/images/sort-stability.png"></p>
+
+<p>Stable sort: first sorting by rank/number (using any sort), and then a stable sort by suit.</p>
+
+<p>Quicksort would not be able to do that.</p>
+
+<h3>Conclusion</h3>
+
+<p>Quicksort is faster.</p>
+
+
+
+<table class="tg">
+  <tr>
+    <th class="tg-031e"></th>
+    <th class="tg-031e">Best</th>
+    <th class="tg-031e">Average</th>
+    <th class="tg-031e">Worst</th>
+    <th class="tg-031e">Memory</th>
+    <th class="tg-031e">Stability</th>
+  </tr>
+  <tr>
+    <td class="tg-031e">Quicksort</td>
+    <td class="tg-031e">nlgn</td>
+    <td class="tg-031e">nlgn</td>
+    <td class="tg-031e">n^2</td>
+    <td class="tg-031e">lgn average<br>n worst case</td>
+    <td class="tg-031e">Not</td>
+  </tr>
+  <tr>
+    <td class="tg-031e">Merge sort</td>
+    <td class="tg-031e">nlgn</td>
+    <td class="tg-031e">nlgn</td>
+    <td class="tg-031e">nlgn</td>
+    <td class="tg-031e">n worst case</td>
+    <td class="tg-031e">Yes</td>
+  </tr>
+</table>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/11/NineChap-strStr-coding-style/">[NineChap 1.1] strStr and Coding Style</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-11T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>strStr Question</h2>
+
+<p><strong><a href="/blog/2014/05/10/Implement-strStr/">Implement strStr</a></strong></p>
+
+<p>Before solving the problem, it&rsquo;s very important to ask this questions:</p>
+
+<blockquote><p><strong>Can we use system library (eg. str.substring() or indexOf())</strong></p></blockquote>
+
+<p>The answer is &lsquo;No&rsquo;, but asking this question shows that you think deep into questions. Keep in mind the characteristics for a candidate is judged by 4 things:</p>
+
+<ol>
+<li>Code readability - how long does it take to review your code?</li>
+<li>Coding convention - do you have the habit to write efficient code?</li>
+<li>Testing - it&rsquo;s good habit to write test case before asked to.</li>
+<li>Communication skills</li>
+</ol>
+
+
+<p>Solution of this question is double for-loop. It&rsquo;s not linear time complexity, but it&rsquo;s OK. After getting the code correct, it&rsquo;s best to tell the O(n) time KMP solution. However, it&rsquo;s most probably not required to implement.</p>
+
+<p><strong>my code</strong></p>
+
+<pre><code>public String strStr(String haystack, String needle) {
+    if (haystack == null || needle == null) {
+        return null;
+    }
+    int len1 = haystack.length();
+    int len2 = needle.length();
+    for (int i = 0; i &lt;= len1 - len2; i ++) {
+        // start from i, match chars
+        boolean match = true;
+        for (int j = 0; j &lt; len2; j ++) {
+            if (haystack.charAt(i + j) != needle.charAt(j)) {
+                match = false;
+                break;
+            }
+        }
+        if (match) {
+            return haystack.substring(i);
+        }
+    }
+    return null;
+}
+</code></pre>
+
+<p>alternative code from <a href="http://answer.ninechapter.com/solutions/implement-strstr/">ninechap</a></p>
+
+<pre><code>public String strStr(String haystack, String needle) {
+    if(haystack == null || needle == null) {
+        return null;
+    }
+    int i, j;
+    for(i = 0; i &lt; haystack.length() - needle.length() + 1; i++) {
+        for(j = 0; j &lt; needle.length(); j++) {
+            if(haystack.charAt(i + j) != needle.charAt(j)) {
+                break;
+            }
+        }
+        if(j == needle.length()) {
+            return haystack.substring(i);
+        }
+    }
+    return null;
+}
+</code></pre>
+
+<h2>Google Coding Style</h2>
+
+<h4>if &hellip; else &hellip;</h4>
+
+<pre><code>if (condition) {
+    statements;
+} else if (condition) {
+    statements;
+} else {
+    statements;
+}
+</code></pre>
+
+<h4>自增/自减</h4>
+
+<pre><code>while （d++ = s++） {
+    n++;
+}
+</code></pre>
+
+<p>To be continued.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/11/BST-insert-and-delete/">[Design] BST Node Insertion / Deletion</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-11T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>First Word</h2>
+
+<p>For BST it&rsquo;s very important to do insert and delete (balancing not required).</p>
+
+<p>Insertion is easy, but deletion is very difficult. However, it&rsquo;s a good idea to at least know the principles.</p>
+
+<h3>Insert a node</h3>
+
+<h4>Steps:</h4>
+
+<ol>
+<li><p>check whether new value = current node value. If not, proceed.</p></li>
+<li><p>if new value is less, than:</p>
+
+<ol>
+<li><p>if current node has no left child, set left to new value, and return</p></li>
+<li><p>otherwise, go to left child and start over</p></li>
+</ol>
+</li>
+<li><p>if new value is greater, than:</p>
+
+<ol>
+<li><p>if current node has no right child, set right to new value</p></li>
+<li><p>otherwise, go to right child and start over</p></li>
+</ol>
+</li>
+</ol>
+
+
+<h4>Note:</h4>
+
+<p>The BST may not be balanced after the insertion.</p>
+
+<h4>Code</h4>
+
+<p>Code snippet from <a href="http://www.algolist.net/Data_structures/Binary_search_tree/Insertion">this article</a></p>
+
+<pre><code>public boolean add(TreeNode node, int value) {
+    if (value == node.val)
+        return false;
+    if (value &lt; node.val) {
+        if (node.left == null) {
+            node.left = new TreeNode(value);
+            return true;
+        } else {
+            return add(node.left, value);
+        }
+    } else if (value &gt; node.val) {
+        if (node.right == null) {
+            node.right = new TreeNode(value);
+            return true;
+        } else {
+            return add(node.right, value);
+        }
+    }
+    return false;
+}
+</code></pre>
+
+<h3>Delete a node</h3>
+
+<h4>Steps:</h4>
+
+<ol>
+<li>Find the node</li>
+<li>Find the maximum node in the left subtree</li>
+<li>Replace the node with the maximum node in the left subtree.</li>
+</ol>
+
+
+<h4>Special Cases:</h4>
+
+<ol>
+<li>The node doest have a left child.</li>
+<li>The maximum node in the left subtree has a left child.</li>
+<li>The node is the root of the tree</li>
+</ol>
+
+
+<h4>Code</h4>
+
+<p>The source code given by <a href="http://answer.ninechapter.com/solutions/delete-a-node-in-binary-search-tree/">ninechap</a></p>
+
+<pre><code>private void myDeleteNode(TreeNode parent, TreeNode node) {
+    if (node.left == null) {
+        if (parent.right == node) {
+            parent.right = node.right;
+        } else {
+            parent.left = node.right;
+        }
+    } else {
+        TreeNode maxNodeParent = node;
+        TreeNode maxNode = node.left;
+
+        // find the maximum node in the left sub tree
+        while (maxNode.right != null) {
+            maxNodeParent = maxNode;
+            maxNode = maxNode.right;
+        }
+
+        if (maxNodeParent.left == maxNode) {
+            maxNodeParent.left = maxNode.left;
+        } else {
+            maxNodeParent.right = maxNode.left;
+        }
+
+        // move replacedNode to node
+        maxNode.left = node.left;
+        maxNode.right = node.right;
+        if (parent.left == node) {
+            parent.left = maxNode;
+        } else {
+            parent.right = maxNode;
+        }
+    }
+}
+
+private void findAndDelete(TreeNode parent, TreeNode node, int val) {
+    if (node == null) {
+        return;
+    }
+    if (node.val == val) {
+        myDeleteNode(parent, node);
+    } else if (node.val &lt; val) {
+        findAndDelete(node, node.right, val);
+    } else {
+        findAndDelete(node, node.left, val);
+    }
+}
+
+public TreeNode deleteNode(TreeNode root, int val) {
+    TreeNode dummyNode = new TreeNode(0);
+    dummyNode.left = root;
+    findAndDelete(dummyNode, root, val);
+    return dummyNode.left;
+}
+</code></pre>
+
+<h3>A little bit on balancing</h3>
+
+<p>There are 2 ways to balance a tree. <strong>Most common method is tree rotation</strong>:</p>
+
+<p><img class="middle" src="/assets/images/rotate-tree.png"></p>
+
+<p>An AVL Trees means a self-balancing search trees. If balance gets out of range −1&hellip;+1, the subtree is rotated to bring into balance.</p>
+
+<p><strong>Second way is to convert tree into a linkedlist</strong>, then build the tree again (we have discussed this algorithm before, pick the middle element).</p>
+
+<p>This method is slow if we insert and re-balance on each step, but we can do bulk insert/delete forgetting about the re-balancing for a while. This will make the data structure faster! <a href="http://java.dzone.com/articles/algorithm-week-balancing">more details</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/10/Searching-a-2D-Sorted-Matrix/">[LeetCode Plus] Searching a 2D Sorted Matrix</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-10T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://leetcode.com/2010/10/searching-2d-sorted-matrix.html">link</a></p>
+
+<blockquote>
+<p class="font-color">Write an efficient algorithm that searches for a value in an <i>n</i> x <i>m</i> table (two-dimensional array). This table is sorted along the rows and columns — that is,</p><p class="font-color">Table[i][j] ≤ Table[i][j + 1], <br>Table[i][j] ≤ Table[i + 1][j]</p>
+</blockquote>
+
+
+<h3>Related questions</h3>
+
+<p><strong><a href="/blog/2014/05/21/Search-a-2D-Matrix/">Search a 2D Matrix</a></strong>.</p>
+
+<p><strong><a href="/blog/2014/06/10/Searching-a-2D-Sorted-Matrix/">Searching a 2D Sorted Matrix</a></strong>.</p>
+
+<p><strong><a href="/blog/2014/06/14/Count-negative-in-2D-Sorted-Matrix/">Count negative in a 2D Sorted Matrix</a></strong>.</p>
+
+<h3>Analysis</h3>
+
+<p>This is a extremely high-freq question. Almost every company will ask.</p>
+
+<p>This question is not to be confused with <strong><a href="/blog/2014/05/21/Search-a-2D-Matrix/">Search a 2D Matrix</a></strong>.</p>
+
+<p><strong>Solution One: Step-wise Linear Search</strong>. Standard solution.</p>
+
+<p>Time = O(n). Worse case 2n steps.</p>
+
+<p>Note that <strong>this is the best solution</strong>!</p>
+
+<p><img class="middle" src="/assets/images/search_2D_matrix_1.png"></p>
+
+<blockquote><p>begin with the upper right corner, we traverse one step to the left or bottom. For example, the picture below shows the traversed path (the red line) when we search for 13.
+    Essentially, each step we are able to eliminate either a row or a column.</p></blockquote>
+
+<p><strong>Solution Two: Quad Partition 四分法</strong>.</p>
+
+<p>Time = O(n<sup>1</sup>.58). Analysis can be found in the original question post.</p>
+
+<p><img class="middle" src="/assets/images/search_2D_matrix_2.png"></p>
+
+<p>Basic idea is like binary search - get mid and divide. We can then discard &frac14; of the matrix. For example: search for 6, we can discard the bottom right sub-matrix.</p>
+
+<p><strong>Solution Three: Diagonal-based binary partition</strong>. This is based on previous solution, but better.</p>
+
+<p>Time = O(nlgn).</p>
+
+<p><img class="middle" src="/assets/images/search_2D_matrix_3.png"></p>
+
+<p>This is a good solution, but it would fail in a non-square matrix, so&hellip;</p>
+
+<h3>Code</h3>
+
+<p><strong>step-wise linear search</strong></p>
+
+<pre><code>bool stepWise(int mat[][N_MAX], int N, int target, 
+              int &amp;row, int &amp;col) {
+  if (target &lt; mat[0][0] || target &gt; mat[N-1][N-1]) return false;
+  row = 0;
+  col = N-1;
+  while (row &lt;= N-1 &amp;&amp; col &gt;= 0) {
+    if (mat[row][col] &lt; target) 
+      row++;
+    else if (mat[row][col] &gt; target)
+      col--;
+    else
+      return true;
+  }
+  return false;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/10/NineChap-Binary-Tree-DFS/">[NineChap 3.1] Binary Tree DFS and Divide Conquer</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-10T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>DFS</h2>
+
+<h4>Recursion or While-Loop?</h4>
+
+<p>We can use recursion, because unless it&rsquo;s pre-order traverse, binary tree questions can be difficult.</p>
+
+<p>Solving the problem is more important.</p>
+
+<h4>Divide &amp; Conquer Algorithm</h4>
+
+<ol>
+<li>Merge Sort</li>
+<li>Quick Sort</li>
+<li>Most of Binary tree questions</li>
+</ol>
+
+
+<h4>Solution modal</h4>
+
+<p>Generally, D&amp;C questions would do 2 things at same time:</p>
+
+<ol>
+<li>Divide - For binary tree, it mean solve left child, and solve right child</li>
+<li>Conquer - return result value</li>
+</ol>
+
+
+<p>A very common type would be validating the left/right children and return -1 if the validation failed. Otherwise, a result value is returned. In this way, by checking the positive/negative sign, we know whether this node is valid, and if valid, we know the returned value.</p>
+
+<p>This idea is extensivelly used among all binary tree questions. See &ldquo;Lowest Common Ancestor (LCA)&rdquo; for more details.</p>
+
+<h4>Template</h4>
+
+<p><strong>Divide &amp; Conquer</strong>, <a href="http://answer.ninechapter.com/solutions/dfs-template/">link</a></p>
+
+<pre><code>public class Solution {
+    public ResultType traversal(TreeNode root) {
+        // null or leaf
+        if (root == null) {
+            // do something and return;
+        }
+
+        // Divide
+        ResultType left = traversal(root.left);
+        ResultType right = traversal(root.right);
+
+        // Conquer
+        ResultType result = Merge from left and right.
+        return result;
+    }
+}
+</code></pre>
+
+<h2>Question list</h2>
+
+<p><strong>Traversal</strong></p>
+
+<ol>
+<li><p><strong><a href="/blog/2014/06/02/Binary-Tree-Preorder-Traversal/">Binary Tree Preorder Traversal</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/24/Binary-Tree-Inorder-Traversal/">Binary Tree Inorder Traversal</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/06/03/Binary-Tree-Postorder-Traversal/">Binary Tree Postorder Traversal</a></strong></p></li>
+</ol>
+
+
+<p><strong>Divide &amp; Conquer</strong></p>
+
+<ol>
+<li><p><strong><a href="/blog/2014/05/25/Maximum-Depth-of-Binary-Tree/">Maximum Depth of Binary Tree</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/25/Minimum-Depth-of-Binary-Tree/">Minimum Depth of Binary Tree</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/26/Balanced-Binary-Tree/">Balanced Binary Tree</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/28/Binary-Tree-Maximum-Path-Sum/">Binary Tree Maximum Path Sum</a></strong> - the most important question for this category</p></li>
+</ol>
+
+
+<h4>Additional</h4>
+
+<ol>
+<li><p><strong>Lowest Common Ancestor Problem</strong></p>
+
+<p> <a href="/blog/2014/06/10/Lowest-Common-Ancestor-BST/">problem one</a></p>
+
+<p> <a href="/blog/2014/06/10/Lowest-Common-Ancestor-Tree/">problem two</a></p>
+
+<p> <a href="/blog/2014/06/10/Lowest-Common-Ancestor-Tree-II/">problem three</a></p></li>
+</ol>
+
+
+<h2>Code</h2>
+
+<p><strong>Binary Tree Preorder Traversal</strong></p>
+
+<pre><code>public List&lt;Integer&gt; preorderTraversal(TreeNode root) {
+    List&lt;Integer&gt; ans = new LinkedList&lt;Integer&gt;();
+    if (root == null) return ans;
+    Stack&lt;TreeNode&gt; stack = new Stack&lt;TreeNode&gt;();
+    stack.push(root);
+    while (!stack.isEmpty()) {
+        TreeNode cur = stack.pop();
+        ans.add(cur.val);
+        if (cur.right != null) {
+            stack.push(cur.right);
+        } 
+        if (cur.left != null) {
+            stack.push(cur.left);
+        }
+    }
+    return ans;
+}
+</code></pre>
+
+<p>There is a not-recommended but good-to-know solution of Divide &amp; Conquer (not written by me)</p>
+
+<pre><code>public class Solution {
+    public ArrayList&lt;Integer&gt; preorderTraversal(TreeNode root) {
+        ArrayList&lt;Integer&gt; result = new ArrayList&lt;Integer&gt;();
+        // null or leaf
+        if (root == null) {
+            return result;
+        }
+
+        // Divide
+        ArrayList&lt;Integer&gt; left = preorderTraversal(root.left);
+        ArrayList&lt;Integer&gt; right = preorderTraversal(root.right);
+
+        // Conquer
+        result.add(root.val);
+        result.addAll(left);
+        result.addAll(right);
+        return result;
+    }
+}
+</code></pre>
+
+<p><strong>Binary Tree Inorder Traversal</strong></p>
+
+<p>Keep traversing left until a NULL is found. When it happens, pop one and traverse right once. <strong>Remember this solution</strong>!</p>
+
+<pre><code>public ArrayList&lt;Integer&gt; inorderTraversal(TreeNode root) {
+    ArrayList&lt;Integer&gt; ans = new ArrayList&lt;Integer&gt;();
+    if (root == null) {
+        return ans;
+    }
+    Stack&lt;TreeNode&gt; stack = new Stack&lt;TreeNode&gt;();
+    TreeNode p = root;
+    while (p != null || !stack.isEmpty()) {
+        if (p != null) {
+            stack.push(p);
+            p = p.left;
+        }
+        else {
+            p = stack.pop();
+            ans.add(p.val);
+            p = p.right;
+        }
+    }
+    return ans;
+}
+</code></pre>
+
+<p><strong>Binary Tree Postorder Traversal</strong></p>
+
+<p>I failed to write the code even after reading the solution. I need to memorize this solution by heart.</p>
+
+<pre><code>public List&lt;Integer&gt; postorderTraversal(TreeNode root) {
+    List&lt;Integer&gt; ans = new ArrayList&lt;Integer&gt;();
+    if (root == null) {
+        return ans;
+    }
+    Stack&lt;TreeNode&gt; stack = new Stack&lt;TreeNode&gt;();
+    stack.push(root);
+    TreeNode pre = null;
+    TreeNode cur = null;
+    while (!stack.isEmpty()) {
+        cur = stack.peek();
+        if (pre == null || pre.left == cur || pre.right == cur) {
+            if (cur.left != null) {
+                stack.push(cur.left);
+            } else if (cur.right != null) {
+                stack.push(cur.right);
+            }
+        } else if (cur.left == pre) {
+            if (cur.right != null) {
+                stack.push(cur.right);
+            }
+        } else if (cur.right == pre || cur == pre) {
+            // note that 'pre' and 'cur' are never going to be apart
+            // for more then 1 edge (they can overlap) 
+            ans.add(stack.pop().val);
+        }
+        pre = cur;
+    }
+    return ans;
+}
+</code></pre>
+
+<p><strong>Maximum Depth of Binary Tree</strong></p>
+
+<pre><code>// 1 minute
+public int maxDepth(TreeNode root) {
+    if (root == null) return 0;
+    return 1 + Math.max(maxDepth(root.left), maxDepth(root.right));
+}
+</code></pre>
+
+<p><strong>Minimum Depth of Binary Tree</strong></p>
+
+<pre><code>public int minDepth(TreeNode root) {
+    if (root == null) {
+        return 0;
+    }
+    return checkLeaf(root);
+}
+
+private int checkLeaf(TreeNode node) {
+    if (node.left == null &amp;&amp; node.right == null) {
+        return 1;
+    }
+    int ll = Integer.MAX_VALUE;
+    int rr = Integer.MAX_VALUE;
+    if (node.left != null) ll = checkLeaf(node.left);
+    if (node.right != null) rr = checkLeaf(node.right);
+    return 1 + Math.min(ll, rr);
+}
+</code></pre>
+
+<p>After checking <a href="http://answer.ninechapter.com/solutions/minimum-depth-of-binary-tree/">the answer</a>, the code above can be optimized:</p>
+
+<pre><code>public int minDepth(TreeNode root) {
+    if (root == null) {
+        return 0;
+    }
+    return getMin(root);
+}
+
+public int getMin(TreeNode root){
+    if (root == null) {
+        return Integer.MAX_VALUE; // important
+    }
+
+    if (root.left == null &amp;&amp; root.right == null) {
+        return 1;
+    }
+
+    return Math.min(getMin(root.left), getMin(root.right)) + 1;
+}
+</code></pre>
+
+<p><strong>Balanced Binary Tree</strong></p>
+
+<pre><code>// 4 minutes
+public boolean isBalanced(TreeNode root) {
+    return getDepth(root) != -1;
+}
+
+private int getDepth(TreeNode node) {
+    if (node == null) {
+        return 0;
+    }
+    int ll = getDepth(node.left);
+    int rr = getDepth(node.right);
+    if (ll == -1 || rr == -1 || Math.abs(ll - rr) &gt; 1) {
+        return -1;
+    }
+    return 1 + Math.max(ll, rr);
+}
+</code></pre>
+
+<p><strong>Binary Tree Maximum Path Sum</strong></p>
+
+<p>Although the following code works:</p>
+
+<pre><code>int max = Integer.MIN_VALUE;
+
+public int maxPathSum(TreeNode root) {
+    maxDepth(root);
+    return max;
+}
+
+private int maxDepth(TreeNode node) {
+    if (node == null) {
+        return 0;
+    }
+    int ll = maxDepth(node.left);
+    int rr = maxDepth(node.right);
+    int currentMaxPath = ll + rr + node.val;
+    max = Math.max(max, currentMaxPath);
+    return Math.max(0, node.val + Math.max(ll, rr));
+}
+</code></pre>
+
+<p>Mr. Huang said it&rsquo;s AN EXTREMELY BAD IDEA TO USE GLOBAL VARIABLE in Java. It&rsquo;s just terrible. Don&rsquo;t do it.</p>
+
+<p>According to Mr. Huang&rsquo;s <a href="http://answer.ninechapter.com/solutions/binary-tree-maximum-path-sum/">suggestion</a>, I added another class called &ldquo;ResultType&rdquo;. This can help me return 2 values at 1 single traversal.</p>
+
+<p>Code is below. One &lsquo;catch-ya&rsquo; is when NULL is found, the maxPath should return Integer.MIN_VALUE instead of 0.</p>
+
+<p>This code is much easier for both me and anyone else to understand, so <strong>stick to this solution, and never use global variable in Java</strong>!</p>
+
+<pre><code>private class ResultType {
+    int singlePath, maxPath;
+    ResultType(int singlePath, int maxPath) {
+        this.singlePath = singlePath;
+        this.maxPath = maxPath;
+    }
+}
+
+public int maxPathSum(TreeNode root) {
+    ResultType result = helper(root);
+    return result.maxPath;
+}
+
+private ResultType helper(TreeNode node) {
+    // null case
+    if (node == null) {
+        return new ResultType(0, Integer.MIN_VALUE);
+    }
+    // divide
+    ResultType ll = helper(node.left);
+    ResultType rr = helper(node.right);
+    // conquer
+    int curSinglePath = Math.max(0, node.val + 
+            Math.max(ll.singlePath, rr.singlePath));
+    int childMaxPath = Math.max(ll.maxPath, rr.maxPath);
+    int curMaxPath = Math.max(childMaxPath, node.val + 
+            ll.singlePath + rr.singlePath);
+    // done
+    return new ResultType(curSinglePath, curMaxPath);
+}
+</code></pre>
+
+<p><strong>Lowest Common Ancestor</strong> - I wrote three new posts on this topic:</p>
+
+<p>Problem 1: BST: top-down O(height) solution</p>
+
+<p>Problem 2: Binary Tree: bottom-up O(n) solution</p>
+
+<p>Problem 3: Binary Tree with a link to parent</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/47">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/45">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_3&size=158x21'></script><section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

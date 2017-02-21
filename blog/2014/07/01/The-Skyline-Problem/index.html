@@ -1,0 +1,396 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Question] the Skyline Problem - Woodstock Blog</title>
+  <meta name="author" content="Kevin Durant">
+
+  
+  <meta name="description" content="Question link Given n buildings, each building is an rectangle located on
+x-axis, and indicated by (x1, x2, height). Calculate the
+outline of all &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://okc1.github.io/blog/2014/07/01/The-Skyline-Problem/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Woodstock Blog</a></h1>
+  
+    <h2>a tech blog for general algorithmic interview questions</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="okc1.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Question] the Skyline Problem</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-01T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.algorithmist.com/index.php/UVa_105">link</a></p>
+
+<blockquote><p>Given n buildings, each building is an rectangle located on
+x-axis, and indicated by (x1, x2, height). Calculate the
+outline of all buildings. Output them in order.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>Solution 1 is keeping a heightmap (Brute force)</strong>. Keep an array of a certain size, and update max_height for every single point.</p>
+
+<p><strong>Solution 2 is using Sweeping line algorithm</strong>. Sweep from left to right, always try to find the largest height of the rectangle.</p>
+
+<p>First make sure the rectangles are sorted. While sweeping, if sees an building-start, insert the height to the heap. If a building-end, remove from the heap. Then the current maximum height is the max point in the heap. A visualized explanation can be found <a href="https://briangordon.github.io/2014/08/the-skyline-problem.html">here</a>.</p>
+
+<p>Total cost is O(nlogn), <a href="http://qr.ae/Yt74m">source</a>.</p>
+
+<p><strong>Two solutions compared</strong>:</p>
+
+<ol>
+<li><p>In the brute force approach, doubling the width of the buildings will double the runtime cost. With the sweep line algorithm, it won&rsquo;t.</p></li>
+<li><p>Sweep Line algorithm will work if the input is not discrete, whereas the heightmap approach requires integer coordinates.</p></li>
+</ol>
+
+
+<p><strong>Updated on Feb 1st, 2015</strong>: using floor 26 of <a href="http://www.mitbbs.com/article_t1/JobHunting/32569901_0_2.html">this post</a>, we can do insertion and deletion in max-heap, then peek the largest element in the heap.</p>
+
+<blockquote><p>把所有的turning points 放在一起，根据coordination从小到大sort 。</p>
+
+<p>再用max-heap, 把所有的turning points扫一遍，遇到start turning point, 把
+volume放入max-heap. 遇到end turning point，把对应的volume从max-heap中取出。</p>
+
+<p>max-heap的max 值就是对应区间的最大volume</p></blockquote>
+
+<p>Code presented below.</p>
+
+<h3>Code</h3>
+
+<p>Brate force code from <a href="http://www.cs.ucf.edu/~dmarino/ucf/java/Skyline.java">ucf</a>:</p>
+
+<pre><code>public static void main(String[] args) throws IOException {
+
+    Scanner fin = new Scanner(new File("skyline.in"));
+
+    // Read in general information about the buildings and skyline.
+    int numbuildings = fin.nextInt();
+    int min = fin.nextInt();
+    int max = fin.nextInt();
+    int size = max - min;
+
+    // Initialize the skyline.
+    int[] mysky = new int[size];
+    for (int i = 0; i &lt; size; i++)
+        mysky[i] = 0;
+
+    // For each building, edit the skyline as necessary.
+    for (int i = 0; i &lt; numbuildings; i++) {
+        int left = fin.nextInt();
+        int height = fin.nextInt();
+        int right = fin.nextInt();
+
+        // Note how we have to offset the left and right boundaries
+        // due to how we set up our array. Basically, at each segment
+        // of the skyline that the current building is part of, we see
+        // if this current building is the tallest of the ones there.
+        // If so, we make the necessary update.
+        for (int j = left - min; j &lt; right - min; j++)
+            if (height &gt; mysky[j])
+                mysky[j] = height;
+    }
+
+    // Beginning of the skyline.
+    System.out.print(min + " ");
+    int cnt = 0;
+
+    // Keep on going until you get right before the end of the skyline.
+    while (cnt &lt; size - 1) {
+
+        // Increment cnt as long as the height is the same.
+        while (cnt &lt; size - 1 &amp;&amp; mysky[cnt] == mysky[cnt + 1])
+            cnt++;
+
+        // Print out information for this part of the skyline.
+        System.out.print(mysky[cnt] + " " + (cnt + 1 + min) + " ");
+        cnt++;
+    }
+
+    // This is the case where the last segment is unique.
+    if (cnt == size - 1)
+        System.out.print(mysky[size - 1] + " " + max);
+    System.out.println();
+    fin.close();
+}
+</code></pre>
+
+<p>The heap solution:</p>
+
+<pre><code>public int[] skyline(List&lt;Building&gt; bds, int min, int max) {
+    int[] output = new int[max - min];
+
+    List&lt;Edge&gt;[] edges = new List[max - min];
+    for (int i = 0; i &lt; edges.length; i++) {
+        edges[i] = new ArrayList&lt;Edge&gt;();
+    }
+    for (Building b : bds) {
+        // put all edges into an array of edges
+        edges[b.from].add(new Edge(b, true));
+        edges[b.to].add(new Edge(b, false));
+    }
+
+    Queue&lt;Building&gt; heap = new PriorityQueue&lt;Building&gt;(100,
+            new Comparator&lt;Building&gt;() {
+                public int compare(Building b1, Building b2) {
+                    return b2.height - b1.height;
+                }
+            });
+    for (int i = 0; i &lt; edges.length; i++) {
+        // insert or remove each building at position i into max heap
+        for (Edge e : edges[i]) {
+            if (e.isEnter) {
+                heap.add(e.building);
+            } else {
+                heap.remove(e.building);
+            }
+        }
+        // then culculate the current hight, which is top of the heap
+        if (!heap.isEmpty()) {
+            output[i] = heap.peek().height;
+        }
+    }
+
+    return output;
+}
+
+static class Edge {
+    Building building;
+    boolean isEnter;
+
+    public Edge(Building bld, boolean enter) {
+        building = bld;
+        isEnter = enter;
+    }
+}
+
+static class Building {
+    int from;
+    int to;
+    int height;
+
+    public Building(int a, int b, int c) {
+        from = a;
+        to = b;
+        height = c;
+    }
+}
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-07-01T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/question/'>question</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://okc1.github.io/blog/2014/07/01/The-Skyline-Problem/" data-via="" data-counturl="http://okc1.github.io/blog/2014/07/01/The-Skyline-Problem/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/07/01/Min-Stack/" title="Previous Post: [Question] Min Stack">&laquo; [Question] Min Stack</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/07/02/Trailing-Zero-of-Factorial/" title="Next Post: [LintCode] Trailing Zeros of Factorial">[LintCode] Trailing Zeros of Factorial &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+<!--div>
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_0&type=footer&size=728x90'></script>
+</div>
+<div>
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_1&type=footer&size=728x90'></script>
+</div-->
+    
+<script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_2&type=footer&size=728x90'></script>
+
+
+</div>
+
+<aside class="sidebar">
+  
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_3&size=158x21'></script><section class="well">
+  <h1>Categories</h1>
+  <ul id="categories" class="nav nav-list">
+    <li class='category'><a href='/blog/categories/cc150v4/'>cc150v4 (34)</a></li>
+<li class='category'><a href='/blog/categories/cc150v5/'>cc150v5 (28)</a></li>
+<li class='category'><a href='/blog/categories/design/'>design (83)</a></li>
+<li class='category'><a href='/blog/categories/experience/'>experience (5)</a></li>
+<li class='category'><a href='/blog/categories/fundamental/'>fundamental (18)</a></li>
+<li class='category'><a href='/blog/categories/java-oop/'>java oop (36)</a></li>
+<li class='category'><a href='/blog/categories/leetcode/'>leetcode (177)</a></li>
+<li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
+<li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
+<li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
+<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
+<li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
+<li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
+
+  </ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/31/mvc-mvp-mvvm/">[Design] MVC, MVP and MVVM</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Kevin Durant -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
