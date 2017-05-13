@@ -3,7 +3,7 @@ layout: post
 title: "[Facebook] Query Search (HashMap, suffix array) "
 comments: true
 categories:
-- q-facebook
+- Question
 - z-string-search
 
 ---

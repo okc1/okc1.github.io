@@ -2,7 +2,7 @@
 layout: post
 title: "[Facebook] Print a Binary Tree in Vertical Order "
 comments: true
-category: q-facebook
+category: Question
 tags: [ src ]
 ---
 

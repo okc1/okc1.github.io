@@ -2,7 +2,7 @@
 layout: post
 title: "[Facebook] Write a Json prettifier "
 comments: true
-category: q-facebook
+category: Question
 tags: [ src ]
 ---
 

@@ -2,7 +2,7 @@
 layout: post
 title: "[Facebook] Generate number with Given probability "
 comments: true
-category: q-facebook
+category: Question
 
 ---
 

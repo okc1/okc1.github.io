@@ -2,7 +2,7 @@
 layout: post
 title: "[Facebook] Hamming Distance of Array"
 comments: true
-category: q-facebook
+category: Question
 tags: [ src ]
 ---
 

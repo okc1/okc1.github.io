@@ -2,7 +2,7 @@
 layout: post
 title: "[Facebook] Maximum sum such that no two elements are adjacent "
 comments: true
-category: q-facebook
+category: Question
 tags: [ src ]
 ---
 

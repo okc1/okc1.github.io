@@ -2,7 +2,7 @@
 layout: post
 title: "[Facebook] Scheduling Jobs with Max Cost "
 comments: true
-category: q-facebook
+category: Question
 tags: [ src ]
 ---
 

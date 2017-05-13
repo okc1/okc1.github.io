@@ -2,7 +2,7 @@
 layout: post
 title: "[Facebook] Binary Search Tree 3Sum "
 comments: true
-category: q-facebook
+category: Question
 tags: [ src ]
 ---
 
