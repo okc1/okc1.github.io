@@ -9,8 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Find 10001st Prime Number Analysis Use Sieve of Eratosthenes, or 埃氏筛. Code private static final int INDEX = 10001;
-private static final &hellip;">
+  <meta name="description" content="Question link Find Top k smallest element in an array. Analysis There&rsquo;re 2 solutions. First solution, use a max-heap. O(nlgk) time complexity. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,125 @@ private static final &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/25/Quickselect/">[Fundamental] Quickselect</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-25T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.geeksforgeeks.org/k-largestor-smallest-elements-in-an-array/">link</a></p>
+
+<blockquote><p>Find Top k smallest element in an array.</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>There&rsquo;re 2 solutions.</p>
+
+<p>First solution, <strong>use a max-heap</strong>. O(nlgk) time complexity.</p>
+
+<p>Second solution is called <strong><a href="http://www.geekviewpoint.com/java/search/quickselect">quickselect</a></strong>, a type of <a href="http://en.wikipedia.org/wiki/Selection_algorithm">selection algorithm</a> that&rsquo;s based on quicksort. It&rsquo;s averaging O(n) time, but O(n<sup>2</sup>) if pivot selection is poor. The code is posted below. There&rsquo;s also a similar <a href="http://blog.teamleadnet.com/2012/07/quick-select-algorithm-find-kth-element.html">iterative solution</a>.</p>
+
+<p>To <a href="http://www.isnowfy.com/top-k-number/">further optimize this</a>, we can change the pivot selection method by dividing into k group and find median of each. This is called <a href="http://en.wikipedia.org/wiki/Median_of_medians">Median of medians algorithm</a>. The worst case is O(n) time. And this is the best solution for &ldquo;Top k&rdquo; questions.</p>
+
+<h3>Why quickselect is O(n) time?</h3>
+
+<p>It&rsquo;s a very good question to ask. Why O(n)?</p>
+
+<p>Well think about it. Let&rsquo;s assume you always find the pivot that makes you eliminate half of the input.</p>
+
+<p><strong>The first run, you would read n elements</strong>. Second time you read half of n, and third time, quarter of n. In the end, you read n + n/2 + n/4 + &hellip; = 2n times.</p>
+
+<p>Compared to the Heap method to find top K, quick select has its advantage. <strong>Heap top K take O(n lgK) time</strong>. So <strong>when K is pretty large</strong>, quick select might be an better solution.</p>
+
+<h3>Code</h3>
+
+<p><strong>quickselect</strong></p>
+
+<pre><code>public static void quickSelect1(int[] list, int k) {
+    selectHelper1(list, 0, list.length - 1, k);
+}
+
+public static void selectHelper1(int[] list, int left, int right, int k) {
+    int pivotIndex = partition(list, left, right);
+    if (pivotIndex == k) {
+        return;
+    } else if (k &lt; pivotIndex) {
+        selectHelper1(list, left, pivotIndex - 1, k);
+    } else {
+        selectHelper1(list, pivotIndex + 1, right, k);
+    }
+}
+
+private static int partition(int[] list, int left, int right) {
+    int pivot = left + (right - left) / 2;
+    swap(list, right, pivot);
+    for (int i = left; i &lt; right; i++) {
+        if (list[i] &lt; list[right]) {
+            swap(list, i, left);
+            left++;
+        }
+    }
+    swap(list, left, right);
+    return left;
+}
+</code></pre>
+
+<p><strong>quickselect, iteratively</strong></p>
+
+<pre><code>public static int quickSelect2(int[] arr, int k) {
+    if (arr == null || arr.length &lt;= k)
+        throw new Error();
+    int from = 0, to = arr.length - 1;
+    // if from == to we reached the kth element
+    while (from &lt; to) {
+        int r = from, w = to;
+        int mid = arr[(r + w) / 2];
+        // stop if the reader and writer meets
+        while (r &lt; w) {
+            if (arr[r] &gt;= mid) { // put the large values at the end
+                swap(arr, w, r);
+                w--;
+            } else { // the value is smaller than the pivot, skip
+                r++;
+            }
+        }
+        // if we stepped up (r++) we need to step one down
+        if (arr[r] &gt; mid)
+            r--;
+        // the r pointer is on the end of the first k elements
+        if (k &lt;= r) {
+            to = r;
+        } else {
+            from = r + 1;
+        }
+    }
+    return arr[k];
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -875,68 +993,6 @@ private static String removeDigit(String number, int digitIndex) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/21/max-binary-gap/">[Question] Max Binary Gap</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-07-21T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.programcreek.com/2013/02/twitter-codility-problem-max-binary-gap/">link</a></p>
-
-<blockquote><p>Problem: Get maximum binary Gap.</p>
-
-<p>For example, 9&rsquo;s binary form is 1001, the gap is 2.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>This question is a good practise of binary operations.</p>
-
-<h3>Code</h3>
-
-<p><strong>writen by me</strong></p>
-
-<pre><code>private int solution(int num) {
-    int max = 0;
-    int boundary = -1;
-    for (int i = 0; i &lt; 32; i++) {
-        int t = num &amp; 1;
-        num = num &gt;&gt; 1;
-        if (t == 1) {
-            if (boundary == -1) {
-                boundary = i;
-            } else {
-                max = Math.max(max, i - boundary - 1);
-                boundary = i;
-            }
-        }
-    }
-    return max;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/41">&larr; Older</a>
@@ -962,9 +1018,8 @@ private static String removeDigit(String number, int digitIndex) {
 <li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
-<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
 <li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
@@ -975,6 +1030,10 @@ private static String removeDigit(String number, int digitIndex) {
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
@@ -990,10 +1049,6 @@ private static String removeDigit(String number, int digitIndex) {
     
       <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
       </li>
     
   </ul>

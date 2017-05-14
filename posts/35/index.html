@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Overview Internet protocol suite is a networking model and communications protocols used by the Internet. It is commonly known as TCP/IP. Four &hellip;">
+  <meta name="description" content="Question link Write an algorithm to find the ‘next’ post-order successor of a given node in a binary tree and binary search tree. where each node has &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,63 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/06/Postorder-successor-Binary-Tree/">[Google] Postorder Successor in Binary Tree</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-06T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=5173972006076416">link</a></p>
+
+<blockquote><p>Write an algorithm to find the ‘next’ post-order successor of a given node in a binary tree and binary search tree.</p>
+
+<ol>
+<li>where each node has a link to its parent.</li>
+<li>without parent pointer</li>
+</ol>
+
+
+<p>Implement 2 versions of the algorithm: 1.) binary tree 2.) BST</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>In postorder, any node below current node shall be &lsquo;predecessor&rsquo; of current node. Thus we only care about current node&rsquo;s parent.</p>
+
+<p>Suggested by a user:</p>
+
+<pre><code>1) parent pointer is given. 
+- go to the parent of the current node. 
+- if current node is the right child of its parent =&gt; print parent. 
+- else return leftmost node of the right sub-tree of parent. 
+
+2) parent pointer is not given. 
+- traverse the tree and find the parent of the current node 
+- do the same as method (1). 
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -773,81 +830,6 @@ E -&gt; B C D
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/05/AWS-explained/">[Design] Amazon Web Services</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-08-05T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Overview</h2>
-
-<p><strong><a href="http://en.wikipedia.org/wiki/Amazon_Web_Services">Amazon Web Services</a></strong> (AWS) is a collection of <strong>remote computing services</strong> that together make up a cloud computing platform. AWS provides a large computing capacity much faster and cheaper than building a physical server farm.</p>
-
-<p>The most well-known is Amazon EC2 and Amazon S3.</p>
-
-<p><a href="http://practicalcloudcomputing.com/post/311045887/cloudexplained">Amazon is an example of</a> an <strong>IAAS (Infrastructure as a Service) provider</strong>.</p>
-
-<h3>Terminologies</h3>
-
-<h4>AWS</h4>
-
-<p>Amazon Web Services, a division of Amazon focusing on hosting our applications and data</p>
-
-<h4>SimpleDB</h4>
-
-<p>AWS’s always-available replacement for RDBMSs. Specifically SimpleDB is their hosted, replicated key-value store that is always available and accessible as a web service</p>
-
-<h4>S3</h4>
-
-<p>(a.k.a Simple Storage Service) AWS’s always-available file storage solution accessible as a web service</p>
-
-<h4>SQS</h4>
-
-<p>(a.k.a Simple Queue Service) AWS’s always-available queueing service accessible as a web service</p>
-
-<h4>ELB</h4>
-
-<p>(a.k.a Elastic Load Balancer) AWS’s always-available load balancing service accessible as a web service</p>
-
-<h4>EC2</h4>
-
-<p>(a.k.a Elastic Compute Cloud) AWS’s on-demand server offering accessible as a web service</p>
-
-<h4>CloudFront</h4>
-
-<p>AWS’s CDN (a.k.a Content Delivery Network) offering accessible as a web service</p>
-
-<h3>Benefits</h3>
-
-<p>Basically, by moving these services out of your data center and into the cloud, you:</p>
-
-<ol>
-<li><p><strong>No longer need to run and maintain a data center</strong>. You no longer need the associated staff</p></li>
-<li><p>Get a <strong>more scalable and available infrastructure</strong> without trying to build it yourself</p></li>
-</ol>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/36">&larr; Older</a>
@@ -873,9 +855,8 @@ E -&gt; B C D
 <li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
-<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
 <li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
@@ -886,6 +867,10 @@ E -&gt; B C D
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
@@ -901,10 +886,6 @@ E -&gt; B C D
     
       <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
       </li>
     
   </ul>

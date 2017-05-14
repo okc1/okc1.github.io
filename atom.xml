@@ -4,7 +4,7 @@
   <title><![CDATA[Woodstock Blog]]></title>
   <link href="http://www.shuati123.com/atom.xml" rel="self"/>
   <link href="http://www.shuati123.com/"/>
-  <updated>2017-02-20T20:53:29-08:00</updated>
+  <updated>2017-05-13T10:47:07-07:00</updated>
   <id>http://www.shuati123.com/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -12,6 +12,56 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[[Question] Dutch National Flag Problem]]></title>
+    <link href="http://www.shuati123.com/blog/2017/05/13/dutch-national-flag/"/>
+    <updated>2017-05-13T00:00:00-07:00</updated>
+    <id>http://www.shuati123.com/blog/2017/05/13/dutch-national-flag</id>
+    <content type="html"><![CDATA[<h1>Question</h1>
+
+<blockquote><p>Given an array A[] consisting 0s, 1s and 2s, write a function that sorts A[]. The functions should put all 0s first, then all 1s and all 2s in last.</p></blockquote>
+
+<pre><code>Example
+Input = {0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1};
+Output = {0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2}
+</code></pre>
+
+<h1>Solution</h1>
+
+<p>3-way sort: <a href="http://www.geeksforgeeks.org/3-way-quicksort-dutch-national-flag/">http://www.geeksforgeeks.org/3-way-quicksort-dutch-national-flag/</a></p>
+
+<h1>Code</h1>
+
+<pre><code>public int[] threePointerSort(int[] input) {
+    if (input == null || input.length &lt;= 1) {
+        return input;
+    }
+
+    // left is at the leftmost non-0 position
+    // right is at rightmost non-2
+    // mid is currently being evaluated (before mid, it's sorted)
+    int left = 0, right = input.length - 1;
+    int mid = left;
+
+    while (mid &lt;= right) {
+        if (input[mid] &gt; 1) {
+            Common.swap(input, mid, right);
+            right--;
+        } else if (input[mid] &lt; 1) {
+            Common.swap(input, left, mid);
+            left++;
+            mid++;
+        } else {
+            mid++;
+        }
+    }
+
+    return input;
+}
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[[Design] How to Design Logging]]></title>
@@ -32,9 +82,9 @@
 
 <p>Q1. shall we log it live? what should we log? how to do it (on different platforms)?</p>
 
-<p>Not live. Do it post hoc.</p>
+<p>Not live. Do it asynchronously.</p>
 
-<p>The demand and product design drives logging.</p>
+<p><strong>Demand and product design</strong> drives logging.</p>
 
 <p>Logs represent event, so all your logging should be <strong>based around the events</strong>.</p>
 
@@ -1206,126 +1256,6 @@ String s = "cat";
 <h2>Integer literal</h2>
 
 <p><a href="https://en.wikipedia.org/wiki/Integer_literal">an integer literal</a> is an integer whose value is directly represented in source code.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[[Java OOP] Why Avoid Using Protected?]]></title>
-    <link href="http://www.shuati123.com/blog/2015/10/22/avoid-protected/"/>
-    <updated>2015-10-22T00:00:00-07:00</updated>
-    <id>http://www.shuati123.com/blog/2015/10/22/avoid-protected</id>
-    <content type="html"><![CDATA[<h1>Overview</h1>
-
-<p>Some experienced developers don’t use <strong>protected</strong> since it cannot provide clean data hiding.</p>
-
-<p>Why is that?</p>
-
-<h2>background</h2>
-
-<p>Remembering in the post <strong>[Java OOP] Java modifier and Access Level</strong>, we got this:</p>
-
-<p><img class="middle" src="http://www.shuati123.com/assets/images/java-access-level-table.png"></p>
-
-<p><strong>Note</strong>: Java default access setting is &lsquo;No modifier&rsquo;, which is also called &lsquo;<strong>Package Private</strong>&rsquo;.</p>
-
-<p><strong>Another note</strong>: by saying &lsquo;subclass&rsquo;, it means subclass declared in <strong>another package</strong>.</p>
-
-<p>And in <strong>[Design] Composition Over Inheritance</strong>, we know that basically <strong>inheritance breaks encapsulation</strong>.</p>
-
-<h2>the reason</h2>
-
-<ol>
-<li><p>inheritance is seldom the best tool and is not as flexible</p></li>
-<li><p>the protected members form an interface towards subclasses (which is bad)</p></li>
-<li><p>interfaces are tricky to get right and document properly</p></li>
-</ol>
-
-
-<p>So, <a href="http://stackoverflow.com/questions/4913025/reasons-to-use-private-instead-of-protected-for-fields-and-methods">it&rsquo;s better not to make</a> the class inheritable and instead make sure it&rsquo;s as flexible as possible (and no more) by using other means.</p>
-
-<h2>A excellent answer</h2>
-
-<p>A excellent answer <a href="http://programmers.stackexchange.com/questions/162643/why-is-clean-code-suggesting-avoiding-protected-variables">from Sam Brand</a>:</p>
-
-<ol>
-<li><p>They tend to lead to <strong><a href="https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it">YAGNI</a></strong> issues. Unless you have a descendant class that actually does stuff with the protected member, make it private.</p>
-
-<blockquote><p><strong>&ldquo;You aren&rsquo;t gonna need it&rdquo;</strong> (acronym: YAGNI) is a principle of extreme programming (XP) that states a programmer should not add functionality until deemed necessary.</p></blockquote></li>
-<li><p>They tend to lead to <strong><a href="https://en.wikipedia.org/wiki/Liskov_substitution_principle">LSP</a></strong> issues. Protected variables generally have some intrinsic invariance associated with them (or else they&rsquo;d be public). Inheritors then need to maintain those properties, which people can screw up or willfully violate.</p>
-
-<blockquote><p><strong>Substitutability</strong> is a principle in OOP. It states that if S is a subtype of T, then objects of type T may be replaced with objects of type S without altering any of the desirable properties of that program</p>
-
-<p><strong>Liskov substitution principle (LSP)</strong> is a particular definition of a subtyping relation introduced by Barbara Liskov in 1987</p></blockquote></li>
-<li><p>They tend to violate <strong><a href="https://en.wikipedia.org/wiki/Open/closed_principle">OCP</a></strong>. If the base class makes too many assumptions about the protected member, or the inheritor is too flexible with the behavior of the class, it can lead to the base class' behavior being modified by that extension.</p>
-
-<blockquote><p><strong>open/closed principle</strong> states &ldquo;software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification&rdquo;.</p>
-
-<p>That is, such an entity can allow its behaviour to be extended without modifying its source code.</p>
-
-<p>This is especially valuable in a production environment, where changes to source code may necessitate code reviews, unit tests, and other such procedures to qualify it for use in a product</p></blockquote></li>
-<li><p>They tend to lead to inheritance for extension rather than composition. This tends to lead to tighter coupling, more violations of <strong><a href="https://en.wikipedia.org/wiki/Single_responsibility_principle">SRP</a></strong>, more difficult testing, and a slew of other things that fall within the &lsquo;favor composition over inheritance&rsquo; discussion.</p></li>
-</ol>
-
-
-<blockquote><p><strong>single responsibility principle</strong> states that every class should have responsibility over a single part of the functionality provided by the software, and that responsibility should be entirely encapsulated by the class. All its services should be narrowly aligned with that responsibility</p></blockquote>
-
-<h1>An example</h1>
-
-<p>ClassA in packageA:</p>
-
-<pre><code>package packA;
-
-import packB.ClassB;
-
-public class ClassA {
-
-    protected int val = 10;
-
-    protected String getColor() {
-        return "colored";
-    }
-
-    public static void main(String[] args) {
-        ClassA ins = new ClassA();
-        System.out.println("val is " + ins.val);
-        System.out.println("color is " + ins.getColor());
-        System.out.println();
-
-        ClassB ins2 = new ClassB();
-        System.out.println("val is " + ins2.val);
-        System.out.println("color is " + ins2.getColor());
-    }
-}
-</code></pre>
-
-<p>ClassB in packageB:</p>
-
-<pre><code>package packB;
-
-import packA.ClassA;
-
-public class ClassB extends ClassA {
-
-    public ClassB() {
-        val = 5;
-    }
-
-    public String getColor() {
-        return super.getColor();
-    }
-}
-</code></pre>
-
-<p>Execution result:</p>
-
-<pre><code>val is 10
-color is colored
-
-val is 5
-color is colored
-</code></pre>
-
-<p>The code shows how <strong>ClassB</strong> is able to access 1 <strong>protected variable</strong> and 1 <strong>protected method</strong>.</p>
 ]]></content>
   </entry>
   

@@ -9,7 +9,10 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Follow up for "Unique Paths": Now consider if some obstacles are added to the grids. How many unique paths would there be? An obstacle &hellip;">
+  <meta name="description" content="Question link Given two binary strings, return their sum (also a binary string). For example,
+a = "11"
+b = "1"
+Return "100". Stats Frequency 4 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +68,104 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/21/Add-Binary/">[LeetCode 67] Add Binary</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-21T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/add-binary/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>
+Given two binary strings, return their sum (also a binary string).
+</p>
+
+<p>
+For example,<br>
+a = <code>"11"</code><br>
+b = <code>"1"</code><br>
+Return <code>"100"</code>.
+</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is an easy question</strong>. Pure coding.</p>
+
+<p>There are some boundary issues during my first attempt. And special note to the trim() operation after &ldquo;String.valueOf(ans)&rdquo;, it&rsquo;s easy to omit.</p>
+
+<h3>My code</h3>
+
+<pre><code>public String addBinary(String a, String b) {
+    int m = a.length(), n = b.length();
+    char[] ans = new char[Math.max(m, n) + 1];
+    int p = m - 1, q = n - 1, r = ans.length - 1;
+    int carry = 0;
+    while (r &gt;= 0) {
+        if (p &gt;= 0)
+            ans[r] += a.charAt(p--) - '0';
+        if (q &gt;= 0)
+            ans[r] += b.charAt(q--) - '0';
+        int temp = ans[r] + carry;
+        ans[r] = (char) (temp % 2 + '0');
+        carry = temp / 2;
+        r--;
+    }
+    if (ans[0] == '0')
+        ans[0] = ' ';
+    return String.valueOf(ans).trim();
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1299,231 +1400,6 @@ public class Solution {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/17/Merge-Intervals/">[LeetCode 56] Merge Intervals</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-05-17T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://oj.leetcode.com/problems/merge-intervals/">link</a></p>
-
-<div class="question-content">
-            <p></p><p>Given a collection of intervals, merge all overlapping intervals.</p>
-
-<p>
-For example,<br>
-Given <code>[1,3],[2,6],[8,10],[15,18]</code>,<br>
-return <code>[1,6],[8,10],[15,18]</code>.
-</p><p></p>
-          </div>
-
-
-<h3>Stats</h3>
-
-<table border="2">
-    <tr>
-        <td>Frequency</td>
-        <td bgcolor="red">5</td>
-    </tr>
-    <tr>
-        <td>Difficulty</td>
-        <td bgcolor="red">4</td>
-    </tr>
-    <tr>
-        <td>Adjusted Difficulty</td>
-        <td bgcolor="red">4</td>
-    </tr>
-    <tr>
-        <td>Time to use</td>
-        <td bgcolor="yellow">----------</td>
-    </tr>
-</table>
-
-
-<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
-
-<h3>Solution</h3>
-
-<p><strong>The idea of the solution is not difficult</strong>. First, sort the entire collection list by start time. Secondly, merge it.</p>
-
-<p><strong>The real difficult part is how to sort the collection</strong>.</p>
-
-<p><strong>We can of course do insertion sort</strong>, or <strong>binary insertion sort</strong>. However, from <a href="http://www.brpreiss.com/books/opus5/html/page487.html">this article</a>:</p>
-
-<blockquote><p>The straight insertion algorithm presented in the preceding section does a linear search to find the position in which to do the insertion. However, since the element is inserted into a sequence that is already sorted, we can use a binary search instead of a linear search. Whereas a linear search requires O(n) comparisons in the worst case, a binary search only requires O(logn) comparisons. Therefore, if the cost of a comparison is significant, the binary search may be preferred.</p></blockquote>
-
-<p><img class="middle" src="/assets/images/merge_interval_binary_insertion_sort_algo.png"></p>
-
-<p><strong>And from</strong> <a href="http://en.wikipedia.org/wiki/Insertion_sort#Variants">wikipedia</a>:</p>
-
-<blockquote><p>If the cost of comparisons exceeds the cost of swaps, as is the case for example with string keys stored by reference or with human interaction (such as choosing one of a pair displayed side-by-side), then using binary insertion sort may yield better performance. Binary insertion sort employs a binary search to determine the correct location to insert new elements, and therefore performs ⌈log2(n)⌉ comparisons in the worst case, which is O(n log n). The algorithm as a whole still has a running time of O(n<sup>2</sup>) on average because of the series of swaps required for each insertion.</p></blockquote>
-
-<p>So insertion sort algorithm may not be the best choice for us!</p>
-
-<p><strong>A more popular solution is using Collection.sort function</strong>.</p>
-
-<blockquote><p>java.util.Collections</p>
-
-<p>public static <T> void sort(List<T> list, Comparator&lt;? super T> c)</p>
-
-<p>Parameters: c</p>
-
-<p>The comparator to determine the order of the list. A null value indicates that the elements' natural ordering should be used.</p></blockquote>
-
-<p>A new class that implements the Comparator interface is created, and inside there is compare(Interval, Interval) method. <a href="http://www.cnblogs.com/lautsie/p/3254191.html">Here</a> is one example of such solution.</p>
-
-<p><strong>The third solution is same as the second, but only different</strong> in implementing the comparator object. Note the following code from <a href="http://rleetcode.blogspot.sg/2014/01/merge-intervals-java.html">this blog</a>:</p>
-
-<p>Comparator<Interval> intervalComperator = new Comparator<Interval>(){
-        public int compare(Interval i1, Interval i2){
-                Integer i1St=i1.start;
-                Integer i2St=i2.start;
-                return i1St.compareTo(i2St);
-        }
-};</p>
-
-<p>Read 3 pieces of code below.</p>
-
-<h3>My code</h3>
-
-<p>insertion sort, then merge:</p>
-
-<pre><code>public ArrayList&lt;Interval&gt; merge(ArrayList&lt;Interval&gt; intervals) {
-    ArrayList&lt;Interval&gt; ans = new ArrayList&lt;Interval&gt;();
-    int len = intervals.size();
-    if (len == 0) return ans;
-    ans.add(intervals.get(0));
-    if (len == 1) return ans;
-    // now intervals length is &gt;= then 2
-    if (intervals.get(0).start &lt; intervals.get(1).start)
-        ans.add(intervals.get(1));
-    else ans.add(0, intervals.get(1));
-    for (int i = 2; i &lt; len; i++) {
-        int cur = intervals.get(i).start;
-        // now find number cur from ans&lt;list&gt;
-        int left = 0, right = ans.size() - 1;
-        while (right - left &gt; 1) {
-            int mid = (left + right) / 2;
-            if (ans.get(mid).start &lt; cur) left = mid;
-            else right = mid;
-        }
-        // insert cur between left and right, unless:
-        if (left == 0 &amp;&amp; cur &lt; ans.get(0).start)
-            ans.add(0, intervals.get(i));
-        else if (right == ans.size() - 1
-                &amp;&amp; cur &gt; ans.get(ans.size() - 1).start)
-            ans.add(intervals.get(i));
-        else
-            ans.add(right, intervals.get(i));
-    }
-    // now merge ans
-    int k = 0;
-    while (k &lt; ans.size() - 1) {
-        while (k &lt; ans.size() - 1 &amp;&amp; ans.get(k).end &gt;= ans.get(k + 1).start) {
-            ans.get(k).end = Math.max(ans.get(k).end, ans.get(k + 1).end);
-            ans.remove(k + 1);
-        }
-        k++;
-    }
-    return ans;
-}
-</code></pre>
-
-<p><strong>Recommended solution</strong>. Creating a new Comparator class</p>
-
-<pre><code>/**
- * Definition for an interval.
- * public class Interval {
- *     int start;
- *     int end;
- *     Interval() { start = 0; end = 0; }
- *     Interval(int s, int e) { start = s; end = e; }
- * }
- */
-public class Solution {
-    public List&lt;Interval&gt; merge(List&lt;Interval&gt; intervals) {
-        if (intervals == null || intervals.size() == 0) {
-            return intervals;
-        }
-        Collections.sort(intervals, new IntervalComparator());
-        int p = 0;
-        // if p is the last element of the list, we should stop merging
-        while (p &lt; intervals.size() - 1) {
-            // merge p with the next interval, if possible
-            if (intervals.get(p).end &gt;= intervals.get(p + 1).start) {
-                intervals.get(p).end = Math.max(intervals.get(p).end, intervals.get(p + 1).end);
-                intervals.remove(p + 1);
-            } else {
-                p++;
-            }
-        }
-        return intervals;
-    }
-
-    class IntervalComparator implements Comparator&lt;Interval&gt; {
-        public int compare(Interval a, Interval b) {
-            return a.start - b.start;
-        }
-    }
-}
-</code></pre>
-
-<p><strong>Third solution</strong>, different way of writing Comparator.</p>
-
-<pre><code>public ArrayList&lt;Interval&gt; merge(ArrayList&lt;Interval&gt; intervals) {
-    if (intervals == null || intervals.size() &lt; 2)
-        return intervals;
-    ArrayList&lt;Interval&gt; result = new ArrayList&lt;Interval&gt;();
-
-    Comparator&lt;Interval&gt; intervalComperator = new Comparator&lt;Interval&gt;() {
-        public int compare(Interval i1, Interval i2) {
-            Integer i1St = i1.start;
-            Integer i2St = i2.start;
-            return i1St.compareTo(i2St);
-
-        }
-    };
-    Collections.sort(intervals, intervalComperator);
-
-    Interval current = intervals.get(0);
-    int i = 1;
-    while (i &lt; intervals.size()) {
-        Interval currentToCompare = intervals.get(i);
-        if (current.end &lt; currentToCompare.start) {
-            result.add(current);
-            current = currentToCompare;
-        } else
-            current.end = Math.max(current.end, currentToCompare.end);
-        i++;
-    }
-    result.add(current);
-    return result;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/58">&larr; Older</a>
@@ -1549,9 +1425,8 @@ public class Solution {
 <li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
-<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
 <li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
@@ -1562,6 +1437,10 @@ public class Solution {
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
@@ -1577,10 +1456,6 @@ public class Solution {
     
       <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Say you have an array for which the ith element is the price of a given stock on day i. Design an algorithm to find the maximum profit &hellip;">
+  <meta name="description" content="Question link partition problem is the task of deciding whether a given multiset S of positive integers can be partitioned into two subsets S1 and S2 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,69 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/11/15/partition-problem/">[Question] Partition Problem (Divide Array Into Halves)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-11-15T00:00:00-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Question</h1>
+
+<p><a href="http://www.geeksforgeeks.org/dynamic-programming-set-18-partition-problem/">link</a></p>
+
+<blockquote><p><a href="https://en.wikipedia.org/wiki/Partition_problem">partition problem</a> is the task of deciding whether a given multiset S of positive integers can be partitioned into two subsets S1 and S2 such that the sum of the numbers in S1 equals the sum of the numbers in S2.</p>
+
+<p>Examples</p></blockquote>
+
+<pre><code>arr[] = {1, 5, 11, 5}
+Output: true 
+The array can be partitioned as {1, 5, 5} and {11}
+
+arr[] = {1, 5, 3}
+Output: false 
+The array cannot be partitioned into equal sum sets.
+</code></pre>
+
+<h1>Solution</h1>
+
+<p><strong>DP</strong> (only if sum of the elements is not too big).</p>
+
+<blockquote><p><a href="http://www.geeksforgeeks.org/dynamic-programming-set-18-partition-problem/">We can create a 2D array</a> of size (sum/2)*(n+1). And we can construct the solution in bottom up manner such that every filled entry has following property:</p></blockquote>
+
+<pre><code>part[i][j] = 
+    true if a subset of {arr[0], arr[1], ..arr[j-1]} has sum equal to i
+    false otherwise
+</code></pre>
+
+<p>Note that we always cares about <strong>whether there exist a valid subset from beginning to index i</strong>.</p>
+
+<p>Example DP array for input &ldquo;3,1,1,2,2,1&rdquo;:</p>
+
+<p><img class="middle" src="/assets/images/partition-problem-dp.jpg"></p>
+
+<h1>Code</h1>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -636,146 +699,6 @@ String s = "cat";
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/10/22/avoid-protected/">[Java OOP] Why Avoid Using Protected?</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-10-22T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1>Overview</h1>
-
-<p>Some experienced developers don’t use <strong>protected</strong> since it cannot provide clean data hiding.</p>
-
-<p>Why is that?</p>
-
-<h2>background</h2>
-
-<p>Remembering in the post <strong>[Java OOP] Java modifier and Access Level</strong>, we got this:</p>
-
-<p><img class="middle" src="/assets/images/java-access-level-table.png"></p>
-
-<p><strong>Note</strong>: Java default access setting is &lsquo;No modifier&rsquo;, which is also called &lsquo;<strong>Package Private</strong>&rsquo;.</p>
-
-<p><strong>Another note</strong>: by saying &lsquo;subclass&rsquo;, it means subclass declared in <strong>another package</strong>.</p>
-
-<p>And in <strong>[Design] Composition Over Inheritance</strong>, we know that basically <strong>inheritance breaks encapsulation</strong>.</p>
-
-<h2>the reason</h2>
-
-<ol>
-<li><p>inheritance is seldom the best tool and is not as flexible</p></li>
-<li><p>the protected members form an interface towards subclasses (which is bad)</p></li>
-<li><p>interfaces are tricky to get right and document properly</p></li>
-</ol>
-
-
-<p>So, <a href="http://stackoverflow.com/questions/4913025/reasons-to-use-private-instead-of-protected-for-fields-and-methods">it&rsquo;s better not to make</a> the class inheritable and instead make sure it&rsquo;s as flexible as possible (and no more) by using other means.</p>
-
-<h2>A excellent answer</h2>
-
-<p>A excellent answer <a href="http://programmers.stackexchange.com/questions/162643/why-is-clean-code-suggesting-avoiding-protected-variables">from Sam Brand</a>:</p>
-
-<ol>
-<li><p>They tend to lead to <strong><a href="https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it">YAGNI</a></strong> issues. Unless you have a descendant class that actually does stuff with the protected member, make it private.</p>
-
-<blockquote><p><strong>&ldquo;You aren&rsquo;t gonna need it&rdquo;</strong> (acronym: YAGNI) is a principle of extreme programming (XP) that states a programmer should not add functionality until deemed necessary.</p></blockquote></li>
-<li><p>They tend to lead to <strong><a href="https://en.wikipedia.org/wiki/Liskov_substitution_principle">LSP</a></strong> issues. Protected variables generally have some intrinsic invariance associated with them (or else they&rsquo;d be public). Inheritors then need to maintain those properties, which people can screw up or willfully violate.</p>
-
-<blockquote><p><strong>Substitutability</strong> is a principle in OOP. It states that if S is a subtype of T, then objects of type T may be replaced with objects of type S without altering any of the desirable properties of that program</p>
-
-<p><strong>Liskov substitution principle (LSP)</strong> is a particular definition of a subtyping relation introduced by Barbara Liskov in 1987</p></blockquote></li>
-<li><p>They tend to violate <strong><a href="https://en.wikipedia.org/wiki/Open/closed_principle">OCP</a></strong>. If the base class makes too many assumptions about the protected member, or the inheritor is too flexible with the behavior of the class, it can lead to the base class' behavior being modified by that extension.</p>
-
-<blockquote><p><strong>open/closed principle</strong> states &ldquo;software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification&rdquo;.</p>
-
-<p>That is, such an entity can allow its behaviour to be extended without modifying its source code.</p>
-
-<p>This is especially valuable in a production environment, where changes to source code may necessitate code reviews, unit tests, and other such procedures to qualify it for use in a product</p></blockquote></li>
-<li><p>They tend to lead to inheritance for extension rather than composition. This tends to lead to tighter coupling, more violations of <strong><a href="https://en.wikipedia.org/wiki/Single_responsibility_principle">SRP</a></strong>, more difficult testing, and a slew of other things that fall within the &lsquo;favor composition over inheritance&rsquo; discussion.</p></li>
-</ol>
-
-
-<blockquote><p><strong>single responsibility principle</strong> states that every class should have responsibility over a single part of the functionality provided by the software, and that responsibility should be entirely encapsulated by the class. All its services should be narrowly aligned with that responsibility</p></blockquote>
-
-<h1>An example</h1>
-
-<p>ClassA in packageA:</p>
-
-<pre><code>package packA;
-
-import packB.ClassB;
-
-public class ClassA {
-
-    protected int val = 10;
-
-    protected String getColor() {
-        return "colored";
-    }
-
-    public static void main(String[] args) {
-        ClassA ins = new ClassA();
-        System.out.println("val is " + ins.val);
-        System.out.println("color is " + ins.getColor());
-        System.out.println();
-
-        ClassB ins2 = new ClassB();
-        System.out.println("val is " + ins2.val);
-        System.out.println("color is " + ins2.getColor());
-    }
-}
-</code></pre>
-
-<p>ClassB in packageB:</p>
-
-<pre><code>package packB;
-
-import packA.ClassA;
-
-public class ClassB extends ClassA {
-
-    public ClassB() {
-        val = 5;
-    }
-
-    public String getColor() {
-        return super.getColor();
-    }
-}
-</code></pre>
-
-<p>Execution result:</p>
-
-<pre><code>val is 10
-color is colored
-
-val is 5
-color is colored
-</code></pre>
-
-<p>The code shows how <strong>ClassB</strong> is able to access 1 <strong>protected variable</strong> and 1 <strong>protected method</strong>.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/3">&larr; Older</a>
@@ -801,9 +724,8 @@ color is colored
 <li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
-<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
 <li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
@@ -814,6 +736,10 @@ color is colored
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
@@ -829,10 +755,6 @@ color is colored
     
       <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
       </li>
     
   </ul>

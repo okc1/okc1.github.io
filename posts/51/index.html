@@ -9,7 +9,8 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="First Word This post talks about BFS, DFS and space efficiency. Analysis For BFS it&rsquo;s easy to understand. It is implemented with a queue. Space &hellip;">
+  <meta name="description" content="Question link Given an unsorted array of integers, find the length of the longest consecutive elements sequence. For example,
+Given [100, 4, 200, 1, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +66,138 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/29/Longest-Consecutive-Sequence/">[LeetCode 128] Longest Consecutive Sequence</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-29T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>29</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/longest-consecutive-sequence/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>
+Given an unsorted array of integers, find the length of the longest consecutive elements sequence.
+</p>
+<p>
+For example,<br>
+Given <code>[100, 4, 200, 1, 3, 2]</code>,<br>
+The longest consecutive elements sequence is <code>[1, 2, 3, 4]</code>. Return its length: <code>4</code>.
+</p>
+<p>
+Your algorithm should run in O(<i>n</i>) complexity.
+</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="lime">just coding is easy</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>I did not solve this question</strong>. We are going to make use of <strong>HashSet</strong>.</p>
+
+<p>Information on HashSet from <a href="http://docs.oracle.com/javase/7/docs/api/java/util/HashSet.html">official document</a>:</p>
+
+<blockquote><p><strong>java.util.HashSet</strong></p>
+
+<p>This class <strong>implements the Set interface</strong>, backed by a <strong>hash table</strong> (actually a HashMap instance). It makes no guarantees as to the <strong>iteration order</strong> of the set; in particular, it does not guarantee that the order will remain constant over time. This class permits the <strong>null element</strong>.</p>
+
+<p>This class offers <strong>constant time performance</strong> for the basic operations (add, remove, contains and size), assuming the hash function disperses the elements properly among the buckets. Iterating over this set requires time proportional to the sum of the HashSet instance&rsquo;s size (the number of elements) plus the &ldquo;capacity&rdquo; of the backing HashMap instance (the number of buckets). Thus, it&rsquo;s very important not to set the initial capacity too high (or the load factor too low) if iteration performance is important.</p>
+
+<p>Note that this implementation is <strong>not synchronized</strong>. If multiple threads access a hash set concurrently, and at least one of the threads modifies the set, it must be synchronized externally.</p></blockquote>
+
+<p><strong>To summarize it, HashSet</strong>:</p>
+
+<ol>
+<li><p>implements Set interface</p></li>
+<li><p>implemented by using a hash table</p></li>
+<li><p>un-ordered</p></li>
+<li><p>add, remove and contains methods have constant time O(1)</p></li>
+<li><p>can have null element</p></li>
+<li><p>not sync</p></li>
+</ol>
+
+
+<h3>Solution</h3>
+
+<p><strong>Well explained in <a href="http://stackoverflow.com/a/7453295">this site</a></strong>.</p>
+
+<blockquote><p>Dump everything to a hash set.</p>
+
+<p>Now go through the hashset. For each element, look up the set for all values neighboring the current value. Keep track of the largest sequence you can find, while removing the elements found from the set. Save the count for comparison.</p>
+
+<p>Repeat this until the hashset is empty.</p>
+
+<p>Assuming lookup, insertion and deletion are O(1) time, this algorithm would be O(N) time.</p></blockquote>
+
+<p><strong>Updated on July 4th, 2014</strong>: Look at the 2nd for-loop. Here if I do &lsquo;for (Integer in: set)&rsquo; to iterate all numbers, I will get &ldquo;java.util.ConcurrentModificationException &rdquo;. This is because we are iterating while modifying. <strong>The most tricky part of this solution is iteration thru the array</strong>, instead of the set. Take note of that!</p>
+
+<h3>Code</h3>
+
+<pre><code>public int longestConsecutive(int[] num) {
+    int longest = 1;
+    HashSet&lt;Integer&gt; set = new HashSet&lt;Integer&gt;();
+    for (Integer in: num) set.add(in);
+    for (Integer in: num) {
+        int left = in - 1, right = in + 1;
+        while (set.contains(left)) {
+            set.remove(left);
+            left --;
+        }
+        while (set.contains(right)) {
+            set.remove(right);
+            right ++;
+        }
+        longest = Math.max(longest, right - left - 1);
+    }
+    return longest;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1212,149 +1345,6 @@ After calling your function, the tree should look like:<br>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/27/Populating-Next-Right-Pointers-in-Each-Node/">[LeetCode 116] Populating Next Right Pointers in Each Node</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-05-27T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="https://oj.leetcode.com/problems/populating-next-right-pointers-in-each-node/">link</a></p>
-
-<div class="question-content">
-            <p></p><p>
-Given a binary tree
-</p><pre>    struct TreeLinkNode {
-      TreeLinkNode *left;
-      TreeLinkNode *right;
-      TreeLinkNode *next;
-    }
-</pre>
-<p></p>
-
-<p>Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to <code>NULL</code>.</p>
-
-<p>Initially, all next pointers are set to <code>NULL</code>.</p>
-
-<p>
-<b>Note:</b>
-</p><ul>
-<li>You may only use constant extra space.</li>
-<li>You may assume that it is a perfect binary tree (ie, all leaves are at the same level, and every parent has two children).</li>
-</ul>
-<p></p>
-
-<p>
-For example,<br>
-Given the following perfect binary tree,<br>
-</p><pre>         1
-       /  \
-      2    3
-     / \  / \
-    4  5  6  7
-</pre>
-<p></p>
-<p>
-After calling your function, the tree should look like:<br>
-</p><pre>         1 -&gt; NULL
-       /  \
-      2 -&gt; 3 -&gt; NULL
-     / \  / \
-    4-&gt;5-&gt;6-&gt;7 -&gt; NULL
-</pre>
-<p></p><p></p>
-          </div>
-
-
-<h3>Stats</h3>
-
-<table border="2">
-    <tr>
-        <td>Frequency</td>
-        <td bgcolor="yellow">3</td>
-    </tr>
-    <tr>
-        <td>Difficulty</td>
-        <td bgcolor="yellow">3</td>
-    </tr>
-    <tr>
-        <td>Adjusted Difficulty</td>
-        <td bgcolor="lime">2</td>
-    </tr>
-    <tr>
-        <td>Time to use</td>
-        <td bgcolor="yellow">--------</td>
-    </tr>
-</table>
-
-
-<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
-
-<h3>Analysis</h3>
-
-<p><strong>Although this question is not hard, it needs a bit thinking</strong>.</p>
-
-<p>The important point is, how to effectively make use of the &lsquo;next link&rsquo; generated before, to help us solve this problem.</p>
-
-<h3>Solution</h3>
-
-<p><strong>My solution is actually very good</strong>. It pass current node and next node into a method, and then generate links for current node&rsquo;s children.</p>
-
-<p><strong>There is a even <a href="http://leetcode.com/2010/03/first-on-site-technical-interview.html">better solution</a></strong>, which directly make use of the &lsquo;next link&rsquo; generated already. In fact, it&rsquo;s same as my solution, except it uses one less variable. Great idea it is!</p>
-
-<h3>Code</h3>
-
-<p><strong>First, my solution</strong></p>
-
-<pre><code>public void connect(TreeLinkNode root) {
-    link(root, null);
-}
-
-private void link(TreeLinkNode node, TreeLinkNode rr){
-    if (node == null || node.left == null) return;
-    node.left.next = node.right;
-    if (rr == null) node.right.next = null;
-    else node.right.next = rr.left;
-
-    link(node.left, node.left.next);
-    link(node.right, node.right.next);
-}
-</code></pre>
-
-<p><strong>Second, better solution</strong></p>
-
-<pre><code>public void connect(TreeLinkNode root) {
-    if (root == null || root.left == null || root.right == null) 
-        return;
-    root.left.next = root.right;
-    root.right.next = root.next == null ? null : root.next.left;
-    connect(root.left);
-    connect(root.right);
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/52">&larr; Older</a>
@@ -1380,9 +1370,8 @@ private void link(TreeLinkNode node, TreeLinkNode rr){
 <li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
-<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
 <li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
@@ -1393,6 +1382,10 @@ private void link(TreeLinkNode node, TreeLinkNode rr){
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
@@ -1408,10 +1401,6 @@ private void link(TreeLinkNode node, TreeLinkNode rr){
     
       <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
       </li>
     
   </ul>

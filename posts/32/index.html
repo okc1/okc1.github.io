@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link 给定一个非负整数a（不超过106），是否存在整数b，使得a和b的乘积全为1。如果存在，返回最小的乘积的位数。如果不存在，返回-1。 样例：a=3，存在b=37，使得3*37=111，则函数应返回3（111的位数）。 Solution There&rsquo;s 1 &hellip;">
+  <meta name="description" content="Question link 有n个任务需要完成（编号1到n），任务之间有一些依赖关系，如果任务a依赖于任务b和c，那么只有当任务b和任务c完成之后才能完成任务a。给定所有的依赖关系，判断这些任务是否能够完成。如果能够完成，请给出一个合法的任务完成序列。 样例： n=5 1->2,3 3->4 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,151 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/15/Task-scheduling-question/">[Facebook] Task Scheduling Question</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-15T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.itint5.com/oj/#10">link</a></p>
+
+<blockquote><p>有n个任务需要完成（编号1到n），任务之间有一些依赖关系，如果任务a依赖于任务b和c，那么只有当任务b和任务c完成之后才能完成任务a。给定所有的依赖关系，判断这些任务是否能够完成。如果能够完成，请给出一个合法的任务完成序列。</p>
+
+<p>样例：</p>
+
+<p>n=5</p>
+
+<p>1->2,3</p>
+
+<p>3->4</p>
+
+<p>上述样例中任务1依赖于任务2和任务3，任务3依赖于任务4，那么存在合法的任务完成序列4,3,2,1,5</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>Classic topology sorting</strong>, refer to <a href="http://www.itint5.com/discuss/8/%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6java%E7%A8%8B%E5%BA%8F">this nice answer</a>.</p>
+
+<h3>My Code</h3>
+
+<pre><code>public int[] myJobSchedulerWithoutQueue(Map&lt;Integer, List&lt;Integer&gt;&gt; deps,
+        int n) {
+    int[] ans = new int[n];
+
+    int[] depCount = new int[n];
+    // eg. job 1 depends on job 2 and 3, thus depCount[1-1] = 2
+    Map&lt;Integer, List&lt;Integer&gt;&gt; graph = new HashMap&lt;Integer, List&lt;Integer&gt;&gt;();
+    // graph would be reversed version of deps, used for topology sorting
+    // eg. 2 would point to 1, and 3 would points to 1
+    for (int i : deps.keySet()) {
+        depCount[i - 1] = deps.get(i).size();
+        for (int j : deps.get(i)) {
+            // add (j, i) pair into graph
+            if (!graph.containsKey(j)) {
+                graph.put(j, new ArrayList&lt;Integer&gt;());
+            }
+            graph.get(j).add(i);
+        }
+    }
+    // now we got depCount[] and graph ready, let's rock
+    int sorted = 0;
+    while (sorted != n) {
+        // first find a 'p' so that depCount[p] = 0
+        int p = 0;
+        while (p &lt; n &amp;&amp; depCount[p] != 0) {
+            p++;
+        }
+        if (p == n) {
+            // unable to find a new node to sort, sorting failed
+            break;
+        }
+        // remember p is only the index, the value should be +1
+        int val = p + 1;
+        ans[sorted++] = val;
+        depCount[p] = -1;
+        if (graph.containsKey(val)) {
+            for (int i : graph.get(val)) {
+                depCount[i - 1]--;
+            }
+        }
+    }
+    if (sorted == n)
+        return ans; // sort sucess
+    else
+        return null; // sort failed
+}
+</code></pre>
+
+<p>The following is very similar implementation, but using a Queue to store temporary nodes.</p>
+
+<pre><code>public int[] myJobSchedulerWithQueue(Map&lt;Integer, List&lt;Integer&gt;&gt; deps, int n) {
+    int[] ans = new int[n];
+
+    int[] depCount = new int[n];
+    // eg. job 1 depends on job 2 and 3, thus depCount[1-1] = 2
+    Map&lt;Integer, List&lt;Integer&gt;&gt; graph = new HashMap&lt;Integer, List&lt;Integer&gt;&gt;();
+    // graph would be reversed version of deps, used for topology sorting
+    // eg. 2 would point to 1, and 3 would points to 1
+    for (int i : deps.keySet()) {
+        depCount[i - 1] = deps.get(i).size();
+        for (int j : deps.get(i)) {
+            // add (j, i) pair into graph
+            if (!graph.containsKey(j)) {
+                graph.put(j, new ArrayList&lt;Integer&gt;());
+            }
+            graph.get(j).add(i);
+        }
+    }
+    // now we got depCount[] and graph ready, let's rock
+    int sorted = 0;
+    Queue&lt;Integer&gt; queue = new LinkedList&lt;Integer&gt;();
+    while (sorted != n) {
+        for (int i = 0; i &lt; depCount.length; i++) {
+            if (depCount[i] == 0) {
+                queue.offer(i + 1);
+                depCount[i] = -1;
+            }
+        }
+        if (queue.isEmpty()) {
+            break; // sorting failed
+        }
+        int val = queue.poll();
+        ans[sorted++] = val;
+        if (graph.containsKey(val)) {
+            for (int i : graph.get(val)) {
+                depCount[i - 1]--;
+            }
+        }
+    }
+    if (sorted == n)
+        return ans; // sort sucess
+    else
+        return null; // sort failed
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -730,79 +875,6 @@ class ManComparator implements Comparator&lt;Man&gt; {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/11/Count-complete-binary-tree/">[Google] Count Complete Binary Tree</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-08-11T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.itint5.com/oj/#4">link</a></p>
-
-<blockquote><p>给定一棵<a href="http://baike.baidu.com/view/427107.htm">完全二叉树</a>（complete binary tree）的根结点，统计该树的结点总数。</p>
-
-<p>提示：使用O(n)的递归算法统计二叉树的结点数是一种显而易见的方法，此题中请利用完全二叉树的性质，想出效率更高的算法。</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>Similar to binary search, O(lgn) complexity.</p>
-
-<p>The idea is, sum up 1 branch of nodes at a time. Do it recursively. The following code is refactored and written by me.</p>
-
-<h3>Code</h3>
-
-<p><strong>read it from <a href="http://www.itint5.com/discuss/125/%E5%A4%A7%E7%89%9B%E8%AF%B7%E6%8C%87%E7%82%B9%EF%BC%8C%E6%95%B0%E6%8D%AE37%E8%BF%90%E8%A1%8C%E8%B6%85%E6%97%B6%EF%BC%88%E9%99%84%E4%BB%A3%E7%A0%81%EF%BC%89">here</a></strong></p>
-
-<pre><code>//使用TreeNodeUtil.getLeftChildNode(TreeNode)获得左儿子结点
-//使用TreeNodeUtil.getRightChildNode(TreeNode)获得右儿子结点
-//使用TreeNodeUtil.isNullNode(TreeNode)判断结点是否为空
-public class CountCompleteBinayTreeNodes {
-    public int countNodes(TreeNode root) {
-        if (TreeNodeUtil.isNullNode(root)) {
-            return 0;
-        }
-        int hl = height(TreeNodeUtil.getLeftChildNode(root));
-        int hr = height(TreeNodeUtil.getRightChildNode(root));
-        if (hl == hr) {
-            return (int) Math.pow(2, hl) + countNodes(TreeNodeUtil.getRightChildNode(root));
-        } else {
-            return (int) Math.pow(2, hr) + countNodes(TreeNodeUtil.getLeftChildNode(root));
-        }
-    }
-
-    private int height(TreeNode root) {
-        int count = 0;
-        while (!TreeNodeUtil.isNullNode(root)) {
-            root = TreeNodeUtil.getLeftChildNode(root);
-            count++;
-        }
-        return count;
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/33">&larr; Older</a>
@@ -828,9 +900,8 @@ public class CountCompleteBinayTreeNodes {
 <li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
-<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
 <li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
@@ -841,6 +912,10 @@ public class CountCompleteBinayTreeNodes {
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
@@ -856,10 +931,6 @@ public class CountCompleteBinayTreeNodes {
     
       <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
       </li>
     
   </ul>

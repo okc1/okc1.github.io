@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link 定义一个数字有以下的特征, 它可以被分成几个部分,而前面的部分相加起来的和是后面的部分.举例来说 1235813, 1+2=3; 2+3=5;3+5=8; 5+8=13; 112112224, 112+112=224; 1981100, 19+81=100; &hellip;">
+  <meta name="description" content="Question link You are given 2 eggs. You have access to a 100-storey building. Eggs can be very hard or very fragile means it may break if dropped &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,85 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/18/Two-egg-100-floor-question/">[Brain Teaser] 2 Eggs 100 Floors Puzzle</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-18T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.programmerinterview.com/index.php/puzzles/2-eggs-100-floors-puzzle/">link</a></p>
+
+<blockquote><p>You are given 2 eggs.</p>
+
+<p>You have access to a 100-storey building.</p>
+
+<p>Eggs can be very hard or very fragile means it may break if dropped from the first floor or may not even break if dropped from 100 th floor.Both eggs are identical.</p>
+
+<p>You need to figure out the highest floor of a 100-storey building an egg can be dropped without breaking.</p>
+
+<p>Now the question is how many drops you need to make. You are allowed to break 2 eggs in the process</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>Most obvious solutoin is drop in 10th, 20th, 30th &hellip; floor. But this solution would result in <strong>19 drops in worst case</strong>. We should try to reduce the worst case scenario by making all possible scenarios take the same number of drops!</p>
+
+<p>The best solution is:</p>
+
+<blockquote><p>What if we tried to reduce the number of drops that would be required with the linear search (with the 2nd egg) after we get to one of the higher floors? This way we <strong>counteract the fact that getting to the higher floor took so many drops</strong>, and if we use less drops for the linear search we are <strong>balancing out the worst case</strong>.</p></blockquote>
+
+<p>According to the <a href="http://www.programmerinterview.com/index.php/puzzles/2-eggs-100-floors-puzzle/">solution</a>, we form a series:</p>
+
+<blockquote><p>x + (x-1) + (x-2) + (x-3) + &hellip; + 1 = 100</p>
+
+<p>x(x+1)/2 = 100</p>
+
+<p>x = 14</p></blockquote>
+
+<h3>Final Result</h3>
+
+<p>We would drop in this way:</p>
+
+<table width="50">
+<thead><tr><th>&nbsp;Drop&nbsp;</th><th>&nbsp;Floor&nbsp;</th></tr></thead>
+<tbody><tr align="center"><td>#1</td><td>14</td></tr>
+<tr align="center"><td>#2</td><td>27</td></tr>
+<tr align="center"><td>#3</td><td>39</td></tr>
+<tr align="center"><td>#4</td><td>50</td></tr>
+<tr align="center"><td>#5</td><td>60</td></tr>
+<tr align="center"><td>#6</td><td>69</td></tr>
+<tr align="center"><td>#7</td><td>77</td></tr>
+<tr align="center"><td>#8</td><td>84</td></tr>
+<tr align="center"><td>#9</td><td>90</td></tr>
+<tr align="center"><td>#10</td><td>95</td></tr>
+<tr align="center"><td>#11</td><td>99</td></tr>
+<tr align="center"><td>#12</td><td>100</td></tr>
+</tbody>
+</table>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1501,81 +1580,6 @@ private boolean mirror(TreeNode left, TreeNode right) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/15/BST-find-upper-lower-bound/">[Question] Binary Search Tree Find Upper/lower Bound</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-06-15T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<blockquote><p>Given a BST, find the node that is larger/smaller than particular number</p></blockquote>
-
-<p>Or the question can be:</p>
-
-<blockquote><p>Given a binary search tree and a value k, please find a node in the binary search tree whose value is closest to k. <a href="http://codercareer.blogspot.sg/2013/03/no-45-closest-node-in-binary-search-tree_2.html">link</a></p></blockquote>
-
-<h3>Analysis</h3>
-
-<p><strong>This post is based on the second question above</strong>.</p>
-
-<ol>
-<li>Traverse the tree top-down.</li>
-<li>While traversing, record values that are closer to target than previously-found value.</li>
-<li>If found, the target, break and return. <a href="http://stackoverflow.com/a/6209372">source</a></li>
-</ol>
-
-
-<h3>Code</h3>
-
-<p>From <a href="http://codercareer.blogspot.sg/2013/03/no-45-closest-node-in-binary-search-tree_2.html">this post</a>.</p>
-
-<pre><code>BinaryTreeNode* getClosestNode(BinaryTreeNode* pRoot, int value)
-{
-    BinaryTreeNode* pClosest = NULL;
-    int minDistance = 0x7FFFFFFF;
-    BinaryTreeNode* pNode = pRoot;
-    while(pNode != NULL){
-        int distance = abs(pNode-&gt;m_nValue - value);
-        if(distance &lt; minDistance){
-            minDistance = distance;
-            pClosest = pNode;
-        }
-
-        if(distance == 0)
-            break;
-
-        if(pNode-&gt;m_nValue &gt; value)
-            pNode = pNode-&gt;m_pLeft;
-        else if(pNode-&gt;m_nValue &lt; value)
-            pNode = pNode-&gt;m_pRight;
-    }
-
-    return pClosest;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/46">&larr; Older</a>
@@ -1601,9 +1605,8 @@ private boolean mirror(TreeNode left, TreeNode right) {
 <li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
-<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
 <li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
@@ -1614,6 +1617,10 @@ private boolean mirror(TreeNode left, TreeNode right) {
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
@@ -1629,10 +1636,6 @@ private boolean mirror(TreeNode left, TreeNode right) {
     
       <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
       </li>
     
   </ul>

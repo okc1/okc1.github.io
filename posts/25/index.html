@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question Write a method to find the number of employees in each department. Answer select Dept_Name, Departments.Dept_ID, count(*) as ‘num_employees &hellip;">
+  <meta name="description" content="Question What are the different types of joins? Please explain how they differ and why certain types are better in certain situations. Implicit and &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,70 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/08/sql-types-of-join/">[CC150v4] 15.2 SQL Types of Join</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-08T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>What are the different types of joins? Please explain how they differ and why certain types are better in certain situations.</p></blockquote>
+
+<h3>Implicit and explicit</h3>
+
+<p>The &ldquo;<strong>explicit join notation</strong>&rdquo; uses the JOIN keyword. The &ldquo;<strong>implicit join notation</strong>&rdquo; simply lists the tables for joining, in the FROM clause of the SELECT statement.</p>
+
+<p>Example of an explicit cross join:</p>
+
+<pre><code>SELECT *
+FROM employee CROSS JOIN department;
+</code></pre>
+
+<p>Example of an implicit cross join:</p>
+
+<pre><code>SELECT *
+FROM employee, department;
+</code></pre>
+
+<h3>Different Types</h3>
+
+<ol>
+<li><p>INNER JOIN: Returns all rows when <strong>there is matching values</strong> in BOTH tables.</p></li>
+<li><p>OUTER JOIN: <a href="http://en.wikipedia.org/wiki/Join_(SQL">An outer join</a>) <strong>does not require each record</strong> in the two joined tables to have a matching record.</p>
+
+<ol>
+<li><p>LEFT JOIN: Return all rows from the left table, and the matched rows from the right table</p></li>
+<li><p>RIGHT JOIN: Return all rows from the right table, and the matched rows from the left table</p></li>
+<li><p>FULL JOIN: Return all rows when there is a match in ONE of the tables. If no matching record was found then the corresponding result fields will have a NULL value.</p></li>
+</ol>
+</li>
+</ol>
+
+
+<p><a href="http://www.w3schools.com/sql/sql_join.asp">source</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -713,49 +777,6 @@ public boolean equals(Object o) {}
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/07/sort-persons/">[CC150v4] 9.0 Example - Sort Persons</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-09-07T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<blockquote><p>You have a very large array of ‘Person’ objects. Sort the people in increasing order of age.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>First we look at the nature of this question:</p>
-
-<ol>
-<li>large input array</li>
-<li>sort based on age (<strong>which is between 1 and 100</strong>, this is important)</li>
-</ol>
-
-
-<p><strong>This exactly matches the charasteristics of Bucket Sort</strong>. Time complexity in average case is O(n + k) where k is the number of buckets.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/26">&larr; Older</a>
@@ -781,9 +802,8 @@ public boolean equals(Object o) {}
 <li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
-<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
 <li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
@@ -794,6 +814,10 @@ public boolean equals(Object o) {}
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
@@ -809,10 +833,6 @@ public boolean equals(Object o) {}
     
       <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link 给你A,B两个文件，各存放50亿条URL，每条URL占用64字节，内存限制是4G，让你找出A,B文件共同的URL。如果是三个乃至n个文件呢？ Bloom Filter 自从Burton Bloom在70年代提出Bloom Filter之后，Bloom &hellip;">
+  <meta name="description" content="Question link 给定一棵完全二叉树（complete binary tree）的根结点，统计该树的结点总数。 提示：使用O(n)的递归算法统计二叉树的结点数是一种显而易见的方法，此题中请利用完全二叉树的性质，想出效率更高的算法。 Solution Similar to binary &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,79 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/11/Count-complete-binary-tree/">[Google] Count Complete Binary Tree</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-11T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.itint5.com/oj/#4">link</a></p>
+
+<blockquote><p>给定一棵<a href="http://baike.baidu.com/view/427107.htm">完全二叉树</a>（complete binary tree）的根结点，统计该树的结点总数。</p>
+
+<p>提示：使用O(n)的递归算法统计二叉树的结点数是一种显而易见的方法，此题中请利用完全二叉树的性质，想出效率更高的算法。</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Similar to binary search, O(lgn) complexity.</p>
+
+<p>The idea is, sum up 1 branch of nodes at a time. Do it recursively. The following code is refactored and written by me.</p>
+
+<h3>Code</h3>
+
+<p><strong>read it from <a href="http://www.itint5.com/discuss/125/%E5%A4%A7%E7%89%9B%E8%AF%B7%E6%8C%87%E7%82%B9%EF%BC%8C%E6%95%B0%E6%8D%AE37%E8%BF%90%E8%A1%8C%E8%B6%85%E6%97%B6%EF%BC%88%E9%99%84%E4%BB%A3%E7%A0%81%EF%BC%89">here</a></strong></p>
+
+<pre><code>//使用TreeNodeUtil.getLeftChildNode(TreeNode)获得左儿子结点
+//使用TreeNodeUtil.getRightChildNode(TreeNode)获得右儿子结点
+//使用TreeNodeUtil.isNullNode(TreeNode)判断结点是否为空
+public class CountCompleteBinayTreeNodes {
+    public int countNodes(TreeNode root) {
+        if (TreeNodeUtil.isNullNode(root)) {
+            return 0;
+        }
+        int hl = height(TreeNodeUtil.getLeftChildNode(root));
+        int hr = height(TreeNodeUtil.getRightChildNode(root));
+        if (hl == hr) {
+            return (int) Math.pow(2, hl) + countNodes(TreeNodeUtil.getRightChildNode(root));
+        } else {
+            return (int) Math.pow(2, hr) + countNodes(TreeNodeUtil.getLeftChildNode(root));
+        }
+    }
+
+    private int height(TreeNode root) {
+        int count = 0;
+        while (!TreeNodeUtil.isNullNode(root)) {
+            root = TreeNodeUtil.getLeftChildNode(root);
+            count++;
+        }
+        return count;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -665,208 +738,6 @@ There are a set of defined signals that the kernel can generate or that can be g
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/08/Thread-pool-pattern/">[Java OOP] Thread Pool Pattern</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-08-08T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Overview</h3>
-
-<p><a href="http://programmers.stackexchange.com/a/173580">Thread pool</a> is a collection of managed threads usually organized in a queue, which execute the tasks in the task queue.</p>
-
-<p>Thread pool is a group of pre-instantiated, idle threads which stand ready to be given work.</p>
-
-<p><img class="middle" src="/assets/images/thread-pool.png"></p>
-
-<p><a href="http://en.wikipedia.org/wiki/Thread_pool_pattern">A sample thread pool</a> (green boxes) with waiting tasks (blue) and completed tasks (yellow)</p>
-
-<h3>Why Thread Pool?</h3>
-
-<p><strong>Thread Pools are useful when you need to limit the number of threads</strong> running in your application at the same time.</p>
-
-<p>Thread pools are often used in multi threaded servers. Each connection <strong>arriving at the server via the network is wrapped as a task</strong> and passed on to a thread pool. The threads in the thread pool will process the requests on the connections concurrently.</p>
-
-<blockquote><p><a href="http://www.ibm.com/developerworks/library/j-jtp0730/">Many server applications</a>, such as <strong>Web servers (eg. Tomcat)</strong>, database servers, file servers, or mail servers must process a large number of tasks received from a network protocol. Often, the task is short-lived and the number of requests is large.</p>
-
-<p>Instead of starting a new thread for every task to execute concurrently, the <strong>task can be passed to a thread pool</strong>. As soon as the pool has any idle threads the task is assigned to one of them and executed.</p></blockquote>
-
-<h3>Implementation</h3>
-
-<p>This is a <a href="http://tutorials.jenkov.com/java-concurrency/thread-pools.html">simple thread pool implementation</a>. The pool is implemented using a list of tasks, and a list of threads. Theads will fetch tasks and run it. The list is implemented with a BlockingQueue - however, it&rsquo;s fine to use just a normal queue.</p>
-
-<p>Main Class:</p>
-
-<pre><code>public class Main {
-
-    public static void main(String[] args) {
-
-        // In this example, we create 3 thread to run 10 tasks
-        // set the BlockingQ size to be 5.
-
-        ThreadPool tp = new ThreadPool(3, 5);
-
-        List&lt;MyTask&gt; todoList = new ArrayList&lt;MyTask&gt;();
-        for (int i = 1; i &lt;= 10; i++) {
-            todoList.add(new MyTask("T" + i));
-        }
-
-        for (MyTask todo : todoList) {
-            tp.execute(todo);
-        }
-
-        while (!tp.noMoreTask()) {
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        tp.stop();
-    }
-
-}
-</code></pre>
-
-<p>Pool Class:</p>
-
-<pre><code>public class ThreadPool {
-
-    // a list of tasks (BlockingQueue)
-    // a list of thread
-    private MyBlockingQueue taskQueue = null;
-    private List&lt;MyThread&gt; threads = new ArrayList&lt;MyThread&gt;();
-    private boolean isStopped = false;
-
-    public ThreadPool(int numThreads, int maxNumTasks) {
-        taskQueue = new MyBlockingQueue(maxNumTasks);
-
-        for (int i = 0; i &lt; numThreads; i++) {
-            threads.add(new MyThread(taskQueue));
-        }
-        System.out.println("Thread pool initiated. ");
-        for (MyThread thread : threads) {
-            thread.start();
-        }
-    }
-
-    public synchronized void execute(Runnable task) {
-        if (this.isStopped) {
-            throw new IllegalStateException("ThreadPool is stopped");
-        }
-
-        try {
-            this.taskQueue.enqueue(task);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public boolean noMoreTask() {
-        return this.taskQueue.isEmpty();
-    }
-
-    public synchronized void stop() {
-        this.isStopped = true;
-        for (MyThread thread : threads) {
-//          thread.stop();
-            thread.interrupt();
-        }
-        System.out.println("Thread pool stopped. ");
-    }
-}
-</code></pre>
-
-<p>Thread Class:</p>
-
-<pre><code>public class MyThread extends Thread {
-
-    private MyBlockingQueue taskQueue = null;
-    private boolean isStopped = false;
-
-    public MyThread(MyBlockingQueue queue) {
-        taskQueue = queue;
-    }
-
-    public void run() {
-        while (!isStopped()) {
-            try {
-                Runnable runnable = (Runnable) taskQueue.dequeue();
-                runnable.run();
-            } catch (Exception e) {
-                // log or otherwise report exception,
-                // but keep pool thread alive.
-            }
-        }
-    }
-
-    // public synchronized void stop() {
-    // isStopped = true;
-    // this.interrupt(); // break pool thread out of dequeue() call.
-    // }
-
-    public synchronized boolean isStopped() {
-        return isStopped;
-    }
-}
-</code></pre>
-
-<p>Task Class:</p>
-
-<pre><code>public class MyTask implements Runnable {
-
-    String message;
-
-    public MyTask(String s) {
-        message = s;
-    }
-
-    @Override
-    public void run() {
-        // do some task here...
-        // finish the task ...
-        System.out.println("Task finished: " + message);
-    }
-}
-</code></pre>
-
-<p>Output:</p>
-
-<pre><code>Thread pool initiated. 
-Task finished: T1
-Task finished: T3
-Task finished: T4
-Task finished: T5
-Task finished: T6
-Task finished: T2
-Task finished: T7
-Task finished: T10
-Task finished: T9
-Task finished: T8
-Thread pool stopped. 
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/34">&larr; Older</a>
@@ -892,9 +763,8 @@ Thread pool stopped.
 <li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
-<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
 <li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
@@ -905,6 +775,10 @@ Thread pool stopped.
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
@@ -920,10 +794,6 @@ Thread pool stopped.
     
       <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
       </li>
     
   </ul>

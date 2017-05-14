@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Find Nth fibonacci number in O(logN) time complexity. Solution It&rsquo;s a recursive sequence, where we can get the following equation &hellip;">
+  <meta name="description" content="Question link Write a program to find the anti-clock-wise peripheral (boundary) of a complete tree. For a complete tree peripheral (boundary) is &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,112 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/30/Peripheral-Of-Complete-Tree/">[Question] Peripheral of a Complete Tree</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-30T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://tech-queries.blogspot.sg/2010/09/peripheral-boundary-of-complete-tree.html">link</a></p>
+
+<blockquote><p>Write a program to find the anti-clock-wise peripheral (boundary) of a complete tree.</p>
+
+<p>For a complete tree peripheral (boundary) is defined as</p></blockquote>
+
+<pre><code>1. First the root
+1. Then nodes on left edge
+1. Then leaf nodes
+1. Then nodes on right edge
+</code></pre>
+
+<p><img class="middle" src="/assets/images/peripheral-of-tree.png"></p>
+
+<blockquote><p>For the above tree, peripheral will be: 0 1 3 7 8 9 10 11 12 13 14 6 2</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>It&rsquo;s a very tricky solution</strong>. Very clever I would say.</p>
+
+<ol>
+<li>print root node</li>
+<li>print left nodes and leafs of left subtree in same order</li>
+<li>print leafs and right nodes of right subtree in same order</li>
+</ol>
+
+
+<p>Do practise this question again in the future!</p>
+
+<h3>Code</h3>
+
+<p><strong>written by me</strong></p>
+
+<p>I used an Enum in the code.</p>
+
+<pre><code>public enum PeriType {
+    LEFT, RIGHT, LEAF
+}
+
+private void peripheral(TreeNode root) {
+    printNode(root);
+    helper(root.left, PeriType.LEFT);
+    helper(root.right, PeriType.RIGHT);
+    System.out.println();
+}
+
+private void helper(TreeNode node, PeriType type) {
+    if (node == null) {
+        return;
+    }
+    switch (type) {
+    case LEFT:
+        printNode(node);
+        helper(node.left, PeriType.LEFT);
+        helper(node.right, PeriType.LEAF);
+        break;
+    case RIGHT:
+        helper(node.left, PeriType.LEAF);
+        helper(node.right, PeriType.RIGHT);
+        printNode(node);
+        break;
+    case LEAF:
+        if (node.left == null &amp;&amp; node.right == null) {
+            printNode(node);
+        } else {
+            helper(node.left, PeriType.LEAF);
+            helper(node.right, PeriType.LEAF);
+        }
+        break;
+    }
+}
+
+private void printNode(TreeNode root) {
+    System.out.print(root.val + " ");
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -762,78 +868,6 @@ The array is [1, 3, -1, -3, 5, 3, 6, 7], and w is 3.</p></blockquote>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/27/Reconstruct-Tree-From-PreOrder-Traversal/">[Question] Reconstruct Tree From Pre-Order Traversal</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-07-27T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://tech-queries.blogspot.sg/2011/06/reconstruct-tree-from-pre-order.html">link</a></p>
-
-<blockquote><p>A tree has a special property where leaves are represented with ‘2’ and non-leaf with ‘1’. Each node has either 0 or 2 children. If given preorder traversal of this tree, construct the tree.</p>
-
-<p>Example: Given Pre Order string => 12122, output:</p></blockquote>
-
-<pre><code>       1
-      / \
-     2   1
-        / \
-       2   2
-</code></pre>
-
-<h3>Analysis</h3>
-
-<blockquote><p><a href="http://tech-queries.blogspot.sg/2011/06/reconstruct-tree-from-pre-order.html">In normal scenario</a>, it’s not possible to detect where left subtree ends and right subtree starts using only pre-order traversal. But here, we are given a special property. Since every node has either 2 children or no child, we can surely say that if a node exists then its sibling also exists.</p></blockquote>
-
-<p>Keep a public variable and build the tree recursively until the list finishes.</p>
-
-<h3>Code</h3>
-
-<pre><code>ListNode list = null; // this is the input list public variable
-
-public TreeNode main(ListNode input) {
-    list = input;
-    return constructTree();
-}
-
-private TreeNode constructTree() {
-    if (list == null) {
-        return null;
-    }
-    TreeNode root = new TreeNode(list.val);
-    list = list.next;
-
-    if (root.val == 1) {
-        root.left = constructTree();
-        root.right = constructTree();
-    }
-    return root;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/39">&larr; Older</a>
@@ -859,9 +893,8 @@ private TreeNode constructTree() {
 <li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
-<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
 <li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
@@ -872,6 +905,10 @@ private TreeNode constructTree() {
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
@@ -887,10 +924,6 @@ private TreeNode constructTree() {
     
       <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
       </li>
     
   </ul>

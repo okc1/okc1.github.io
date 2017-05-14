@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Hamming distance between two strings of equal length is the number of positions at which the corresponding symbols are different. Write &hellip;">
+  <meta name="description" content="Question How to prevent deadlock? (question from MIT handouts 1) Analysis Preventing one of the 4 conditions will prevent deadlock: Removing the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,55 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/01/Multithreading-deadlock-prevention/">[Design] Multithreading - Deadlock Prevention</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-01T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>How to prevent deadlock? (question from MIT handouts 1)</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>Preventing one of the 4 conditions will prevent deadlock:</p>
+
+<ol>
+<li><p>Removing the <strong>mutual exclusion condition</strong>, but not very possible.</p></li>
+<li><p>The <strong>hold and wait</strong> conditions may be removed by requiring processes to request all the resources they will need before starting up.</p></li>
+<li><p>The <strong>no preemption condition</strong> may also be difficult or impossible to avoid as a process has to be able to have a resource for a certain amount of time, or the processing outcome may be inconsistent or thrashing may occur.</p></li>
+<li><p>The final condition is the <strong>circular wait condition</strong>. Approaches that avoid circular waits include disabling interrupts during critical sections and using a hierarchy to determine a partial ordering of resources.</p></li>
+</ol>
+
+
+<h3>Answer</h3>
+
+<p><strong>Assign an order to our locks</strong> (require that the locks always acquired in order).</p>
+
+<p>This prevent 2 thread waiting to get the resource in each other&rsquo;s hand.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -931,87 +980,6 @@ A S T U
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/28/Http-cookie/">[Design] HTTP Cookie</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-08-28T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>First Word</h3>
-
-<p>A cookie is <strong>a small text file</strong> that is stored by a browser on the user’s machine. Cookies are plain text; they contain no executable code.</p>
-
-<p>Every time the user loads the website, the <strong>browser sends the cookie back to the server</strong> to notify the website of the user&rsquo;s previous activity.</p>
-
-<ol>
-<li><p>Stateful information</p>
-
-<p> Such as shopping cart</p></li>
-<li><p>browsing activity</p>
-
-<p> Such as log in, which button is clicked, and which page is visited</p></li>
-</ol>
-
-
-<h3>Security</h3>
-
-<p>A secure cookie will only be sent to the server when a request is made using SSL and the HTTPS protocol. However, the entire mechanism is inherently insecure.</p>
-
-<p>The cookie just contains data and <strong>isn’t harmful</strong> in and of itself. However, tracking cookies and especially third-party tracking cookies are commonly used as ways to compile long-term records of individuals' browsing history, which is a potential privacy concern.</p>
-
-<h3>Types of HTTP Cookie</h3>
-
-<p>Common cookie types:</p>
-
-<h4>Session cookie</h4>
-
-<p>It&rsquo;s <strong>while browsing</strong>. (Normally) deleted by browser when the user closes the browser.</p>
-
-<h4>Persistent cookie</h4>
-
-<p>Max-age 1 year. The value set in that cookie would be sent back to the server every time the user visited the server. Also called <strong>tracking cookies</strong></p>
-
-<h4>Secure cookie</h4>
-
-<p>The secure attribute is enabled, and is only used via HTTPS.</p>
-
-<h4>Third-party cookie</h4>
-
-<p><strong>First-party cookies</strong> are cookies that belong to the same domain that is shown in the browser&rsquo;s address bar. <strong>Third-party cookies</strong> are cookies that belong to domains different from the one shown in the address bar.</p>
-
-<p>It opens up the potential for <strong>tracking the user&rsquo;s browsing history</strong>. An example of 3rd-party:</p>
-
-<blockquote><p>As an example, suppose a user visits www.example1.com. This web site contains an advert from ad.foxytracking.com, which, when downloaded, sets a cookie belonging to the advert&rsquo;s domain (ad.foxytracking.com). Then, the user visits another website, www.example2.com, which also contains an advert from ad.foxytracking.com, and which also sets a cookie belonging to that domain (ad.foxytracking.com). Eventually, both of these cookies will be sent to the advertiser when loading their ads or visiting their website. The advertiser can then use these cookies to build up a browsing history of the user across all the websites that have ads from this advertiser.</p></blockquote>
-
-<h4>One more thing</h4>
-
-<p>Nowadays ther'e a new kind of <strong>HttpOnly cookie</strong> (used only when transmitting HTTP (or HTTPS) requests, thus restricting access from other, non-HTTP APIs such as JavaScript).</p>
-
-<p><a href="http://www.nczonline.net/blog/2009/05/05/http-cookies-explained/">source1</a></p>
-
-<p><a href="http://en.wikipedia.org/wiki/HTTP_cookie">source2</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/29">&larr; Older</a>
@@ -1037,9 +1005,8 @@ A S T U
 <li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
-<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
 <li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
@@ -1050,6 +1017,10 @@ A S T U
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
@@ -1065,10 +1036,6 @@ A S T U
     
       <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
       </li>
     
   </ul>

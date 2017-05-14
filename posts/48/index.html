@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="First Word ASCII, UTF-? are encoding schemes. Unicode is character set. Or in other words, UTF-8 is an encoding used to translate binary data into &hellip;">
+  <meta name="description" content="First Word There are generally four levels of tests: unit testing, integration testing, system testing, and acceptance testing. Software testing &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,166 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/05/Software-testing/">[Testing] Software Testing</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-05T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>First Word</h2>
+
+<p>There are generally four levels of tests: unit testing, integration testing, system testing, and acceptance testing.</p>
+
+<p>Software testing methods are traditionally divided into white-box and black-box testing.</p>
+
+<p>One of the testing methodologies is &ldquo;V-model&rdquo;.</p>
+
+<p><img class="middle" src="/assets/images/Testing-V-Model.jpg"></p>
+
+<h2>Testing Types and process</h2>
+
+<h4>Regression testing</h4>
+
+<p>There&rsquo;re a lot of types, one of them is called &ldquo;Regression testing&rdquo;.</p>
+
+<p>Regression testing focuses on finding defects <strong>after a major code change has occurred</strong>. In other words, it encsures that changes does not introduce new faults.</p>
+
+<h4>Testing process</h4>
+
+<p>Traditional: <strong>waterfall</strong>. Testing is done by independent group of testers after development. This practice often results in the testing phase being used as a project buffer to compensate for project delays.</p>
+
+<p>New trend: <strong>Agile or Extreme</strong>, which adhere to <strong>TDD Model</strong>. In this process, unit tests are written first. This methodology increases the testing effort done by development.</p>
+
+<p><strong>Bottom Up Testing</strong>: lowest level components are tested first, then integrated and used to facilitate the testing of higher level components.</p>
+
+<p><strong>Top Down Testing</strong>: top integrated modules are tested and the branch of the module is tested step by step until the end.</p>
+
+<h2>Testing Methods</h2>
+
+<h4>Black-box</h4>
+
+<p><a href="http://en.wikipedia.org/wiki/Black-box_testing">Black-box</a> testing is a method of software testing that examines the functionality of an application without peering into its internal structures or workings. This can be applied to every level of software testing: unit, integration, system and acceptance.</p>
+
+<h4>White-box</h4>
+
+<p><a href="http://en.wikipedia.org/wiki/White-box_testing">White-box</a> testing (also known as structural testing) is a method of testing software that tests internal structures or workings of an application, as opposed to its functionality. In white-box testing, an internal perspective of the system and programming skills are used to design test cases. The tester chooses inputs to exercise paths through the code and determine the appropriate outputs.</p>
+
+<h4>Other-box</h4>
+
+<p>A black-box tester is unaware of the internal structure of the application to be tested, while a white-box tester has access to the internal structure of the application.</p>
+
+<p><a href="http://en.wikipedia.org/wiki/Grey_box_testing">Gray-box</a> testing is a combination of both. Testers require both highlevel and detailed knowledge of the application.</p>
+
+<h2>Whitebox in detail</h2>
+
+<p>Whitebox testing is based on program code. The extent to which source code is executed (covered).</p>
+
+<ol>
+<li>statement coverage</li>
+<li>path coverage</li>
+<li>(multiple-) condition coverage</li>
+<li>decision / branch coverage</li>
+<li>loop coverage</li>
+<li>definition-use coverage</li>
+</ol>
+
+
+<p>Use of &ldquo;flow graphs&rdquo; to test the coverage. <a href="http://people.cs.aau.dk/~bnielsen/TOV07/lektioner/whitebox-07.pdf">source</a></p>
+
+<h2>Blackbox in detail</h2>
+
+<ol>
+<li>Equivalence partitioning</li>
+<li>Boundary value analysis</li>
+<li>Behavioural testing (interaction with w/ an environment)</li>
+<li>Random testing (random walk thru the system/mouse click)</li>
+<li>Stress testing (huge data, DoS attack, power off)</li>
+<li>Error guessing (Ad hoc, not really a technique)</li>
+</ol>
+
+
+<h4>Equivalence partitioning</h4>
+
+<p>This is related to &ldquo;validate&rdquo; input. First identify input equivalence classes, then make the test case by changing each valid cases into invalid.</p>
+
+<p>The <a href="http://en.wikipedia.org/wiki/Equivalence_partitioning">testing theory</a> related to equivalence partitioning says that only one test case of each partition is needed. In other words it is sufficient to select one test case out of each partition to test the program. To use more cases will not find new faults.</p>
+
+<p>The values within one partition are considered to be &ldquo;equivalent&rdquo;. Thus the number of test cases can be reduced considerably.</p>
+
+<blockquote><p>Example:</p>
+
+<p>There are 12 months per year</p>
+
+<p>Valid partition is from january to december</p>
+
+<p>Invalid partition is from &lt;=0 and >=13</p></blockquote>
+
+<p>A longer but better <a href="http://users.csc.calpoly.edu/~jdalbey/205/Resources/grocerystore.html">example</a></p>
+
+<h4>Boundary Value Analysis</h4>
+
+<ol>
+<li>Testing boundary conditions (directly on, above, and beneath the edges)</li>
+<li>Choose input boundary values</li>
+<li>Choose input boundary values that reaches output boundary (given the input value, choose expected output +/- 1)</li>
+</ol>
+
+
+<blockquote><p>Example:</p>
+
+<p>Suppose an integer boundary is 1 to 50, Then test for 0,2 values &amp; 49, 51 vales.</p>
+
+<p>Suppose input = 5, output = 100, then test input = 5, output = 99, 100, 101</p></blockquote>
+
+<p>Don’t start with designing white-box test cases! Start with black-box test cases, then check white-box coverage.</p>
+
+<p><a href="http://people.cs.aau.dk/~bnielsen/TOV07/lektioner/blackbox-07.pdf">source</a></p>
+
+<h4>More examples</h4>
+
+<p><strong>Q: how to test a log-in window</strong>?</p>
+
+<p>A: Eq. class: username empty, exits, don&rsquo;t exist and exceed length limit. Same for password field. Boundary: input length equals, less than or larger than length limit. <a href="http://www.geekinterview.com/question_details/23184">source</a></p>
+
+<p><strong>Q: how to test a vendor machine</strong>?</p>
+
+<ol>
+<li><p>Functional: put in $$ and get a coke</p></li>
+<li><p>Edge condition: put in Chinese RMB?</p></li>
+<li><p>Stress: keep putting $$ and popping goods</p></li>
+<li><p>Security: can you break the machine?</p></li>
+</ol>
+
+
+<h2>Last Word</h2>
+
+<p>Sometime it is not feasible to test everything. Instead, prioritize your testing so that you only focus on areas that present the greatest risk or have the greatest probability of occurring.</p>
+
+<p>For example, you might choose to test the slowest client computer, the busiest server, or the least reliable network link.</p>
+
+<p><a href="http://technet.microsoft.com/en-us/library/cc782852(v=ws.10">source</a>.aspx)</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1432,61 +1592,6 @@ For more generalized way to write DFS code, read another post <strong>Implement 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/03/Big-endian-little-endian/">[Design] Big Endian and Little Endian</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-06-03T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Difference</h3>
-
-<p><strong><a href="http://en.wikipedia.org/wiki/Endianness">Big-endian</a> systems store the most significant byte of a word in the smallest address</strong> and the least significant byte is stored in the largest address.</p>
-
-<p><strong>Little-endian systems, in contrast, store the least significant byte in the smallest address</strong>.</p>
-
-<p>Both forms of endianness are in widespread use in computing and networking.</p>
-
-<h3>Example</h3>
-
-<p><img class="middle" src="/assets/images/big-endian.png"></p>
-
-<p>The data word &ldquo;0A 0B 0C 0D&rdquo; (a set of 4 bytes written out using left-to-right positional, hexadecimal notation) and the four memory locations with addresses a, a+1, a+2 and a+3.</p>
-
-<p>In Big-endian systems, byte 0A is stored in a, 0B in a+1, 0C in a+2 and 0D in a+3. In Little-endian systems, the order is reversed with 0D stored in memory address a, 0C in a+1, 0B in a+2, and 0A in a+3.</p>
-
-<h3>Why ?</h3>
-
-<p>IBMs and Intel x86 are little endian, while Motorolas and Sun are big endian.</p>
-
-<p><strong>Big-endian</strong> is the most common convention in data <strong>networking (including IPv6)</strong>, and <strong>little-endian</strong> is popular among <strong>microprocessors</strong> in part due to Intel.</p>
-
-<p>Why is endianness so important? Suppose you are storing int values to a file, then you send the file to a machine which uses the opposite endianness and read in the value. You&rsquo;ll run into problems because of endianness. You&rsquo;ll read in reversed values that won&rsquo;t make sense.</p>
-
-<p>Endianness is also a big issue when sending numbers over the network. Again, if you send a value from a machine of one endianness to a machine of the opposite endianness, you&rsquo;ll have problems. This is even worse over the network, because you might not be able to determine the endianness of the machine that sent you the data.</p>
-
-<p>The solution is to send 4 byte quantities using <a href="http://www.tutorialspoint.com/unix_sockets/network_byte_orders.htm">network byte order</a> which is arbitrarily picked to be one of the endianness (not sure if it&rsquo;s big or little, but it&rsquo;s one of them). If your machine has the same endianness as network byte order, then great, no change is needed. If not, then you must reverse the bytes.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/49">&larr; Older</a>
@@ -1512,9 +1617,8 @@ For more generalized way to write DFS code, read another post <strong>Implement 
 <li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
-<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
 <li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
@@ -1525,6 +1629,10 @@ For more generalized way to write DFS code, read another post <strong>Implement 
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
@@ -1540,10 +1648,6 @@ For more generalized way to write DFS code, read another post <strong>Implement 
     
       <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
       </li>
     
   </ul>

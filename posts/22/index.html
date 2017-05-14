@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question You have a stack of n boxes, with widths w., heights h, and depths d. The boxes can only be stacked on top of one another if each box is &hellip;">
+  <meta name="description" content="Question Imagine you have a 20 GB file with one string per line. Explain how you would sort the file. Solution Use External Sort. For example, for &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,50 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/24/sort-20GB-file/">[CC150v5] 11.4 Sort 20GB File</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-24T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Imagine you have a 20 GB file with one string per line.</p>
+
+<p>Explain how you would sort the file.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Use <strong>External Sort</strong>. <a href="https://en.wikipedia.org/wiki/External_sorting#External_merge_sort">For example</a>, for sorting 900 megabytes of data using only 100 megabytes of RAM:</p>
+
+<ol>
+<li><p>Divide the file into chunks of 100MB each. Sort using <strong>quicksort</strong>.</p></li>
+<li><p>Read the first 10 MB of each sorted chunk into <strong>input buffers</strong> in RAM and allocate the remaining 10 MB for an output buffer. (In practice, it might provide better performance to make the output buffer larger and the input buffers slightly smaller.)</p></li>
+<li><p>[Important] <strong>Perform a 9-way merge</strong> and store the result in the output buffer. Whenever <strong>the output buffer fills</strong>, write it to the final sorted file and empty it. Whenever any of the 9 <strong>input buffers empties</strong>, fill it with the next 10 MB of its associated 100 MB sorted chunk until no more data from the chunk is available.</p></li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -778,160 +822,6 @@ public static int helper(int[] array, int left, int right) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/15/stack-of-animals/">[CC150v5] 3.7 Stack of Animals</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-09-15T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<blockquote><p>An animal shelter holds only dogs and cats. People must adopt either the &ldquo;oldest&rdquo; animals, or they can select whether they would prefer a dog or a cat (and will receive the oldest animal of that type). They cannot select which specific animal they would like.</p>
-
-<p>Create the data structures to maintain this system and implement operations such as enqueue, dequeueAny, dequeueDog and dequeueCat. You may use the built-in LinkedList data structure.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>There are 2 solutions.</p>
-
-<p><strong>First one is using a single queue</strong>. This makes &lsquo;dequeueAny&rsquo; easy, but &lsquo;dequeueCat&rsquo; and &lsquo;dequeueDog&rsquo; difficult.</p>
-
-<p><strong>Second approach would be using 2 queues for dogs and cats</strong>. We need something like timestamp to be stored (more space usage).</p>
-
-<p>When we return, we peek both queues are choose the older one. <strong>This is recommended solution in the book</strong>.</p>
-
-<h3>Code</h3>
-
-<p><strong>from the book</strong></p>
-
-<p>Animal.java</p>
-
-<pre><code>public abstract class Animal {
-    int order;
-    String name;
-
-    public Animal(String n) {
-        name = n;
-    }
-
-    public abstract String name();
-
-    public boolean isOlderThan(Animal a) {
-        return this.order &lt; a.order;
-    }
-}
-
-class Cat extends Animal {
-    public Cat(String n) {
-        super(n);
-    }
-
-    public String name() {
-        return "Cat: " + name;
-    }
-}
-
-class Dog extends Animal {
-    public Dog(String n) {
-        super(n);
-    }
-
-    public String name() {
-        return "Dog: " + name;
-    }
-}
-</code></pre>
-
-<p>AnimalQueue.java</p>
-
-<pre><code>public class AnimalQueue {
-    LinkedList&lt;Dog&gt; dogs = new LinkedList&lt;Dog&gt;();
-    LinkedList&lt;Cat&gt; cats = new LinkedList&lt;Cat&gt;();
-    private int order = 0;
-
-    public void enqueue(Animal a) {
-        a.order = order;
-        order++;
-        if (a instanceof Dog) {
-            dogs.addLast((Dog) a);
-        } else if (a instanceof Cat) {
-            cats.addLast((Cat) a);
-        }
-    }
-
-    public Animal dequeueAny() {
-        if (dogs.size() == 0) {
-            return dequeueCats();
-        } else if (cats.size() == 0) {
-            return dequeueDogs();
-        }
-        Dog dog = dogs.peek();
-        Cat cat = cats.peek();
-        if (dog.isOlderThan(cat)) {
-            return dogs.poll();
-        } else {
-            return cats.poll();
-        }
-    }
-
-    public Animal peek() {
-        if (dogs.size() == 0) {
-            return cats.peek();
-        } else if (cats.size() == 0) {
-            return dogs.peek();
-        }
-        Dog dog = dogs.peek();
-        Cat cat = cats.peek();
-        if (dog.isOlderThan(cat)) {
-            return dog;
-        } else {
-            return cat;
-        }
-    }
-
-    public int size() {
-        return dogs.size() + cats.size();
-    }
-
-    public Dog dequeueDogs() {
-        return dogs.poll();
-    }
-
-    public Dog peekDogs() {
-        return dogs.peek();
-    }
-
-    public Cat dequeueCats() {
-        return cats.poll();
-    }
-
-    public Cat peekCats() {
-        return cats.peek();
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/23">&larr; Older</a>
@@ -957,9 +847,8 @@ class Dog extends Animal {
 <li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
-<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
 <li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
@@ -970,6 +859,10 @@ class Dog extends Animal {
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
@@ -985,10 +878,6 @@ class Dog extends Animal {
     
       <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
       </li>
     
   </ul>

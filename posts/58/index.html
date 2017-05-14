@@ -9,8 +9,9 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given an integer n, generate a square matrix filled with elements from 1 to n2 in spiral order. For example,
-Given n = 3, You should &hellip;">
+  <meta name="description" content="Question link Given a collection of intervals, merge all overlapping intervals. For example,
+Given [1,3],[2,6],[8,10],[15,18],
+return [1,6],[8,10],[ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +67,231 @@ Given n = 3, You should &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/17/Merge-Intervals/">[LeetCode 56] Merge Intervals</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-17T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/merge-intervals/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Given a collection of intervals, merge all overlapping intervals.</p>
+
+<p>
+For example,<br>
+Given <code>[1,3],[2,6],[8,10],[15,18]</code>,<br>
+return <code>[1,6],[8,10],[15,18]</code>.
+</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="red">5</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Solution</h3>
+
+<p><strong>The idea of the solution is not difficult</strong>. First, sort the entire collection list by start time. Secondly, merge it.</p>
+
+<p><strong>The real difficult part is how to sort the collection</strong>.</p>
+
+<p><strong>We can of course do insertion sort</strong>, or <strong>binary insertion sort</strong>. However, from <a href="http://www.brpreiss.com/books/opus5/html/page487.html">this article</a>:</p>
+
+<blockquote><p>The straight insertion algorithm presented in the preceding section does a linear search to find the position in which to do the insertion. However, since the element is inserted into a sequence that is already sorted, we can use a binary search instead of a linear search. Whereas a linear search requires O(n) comparisons in the worst case, a binary search only requires O(logn) comparisons. Therefore, if the cost of a comparison is significant, the binary search may be preferred.</p></blockquote>
+
+<p><img class="middle" src="/assets/images/merge_interval_binary_insertion_sort_algo.png"></p>
+
+<p><strong>And from</strong> <a href="http://en.wikipedia.org/wiki/Insertion_sort#Variants">wikipedia</a>:</p>
+
+<blockquote><p>If the cost of comparisons exceeds the cost of swaps, as is the case for example with string keys stored by reference or with human interaction (such as choosing one of a pair displayed side-by-side), then using binary insertion sort may yield better performance. Binary insertion sort employs a binary search to determine the correct location to insert new elements, and therefore performs ⌈log2(n)⌉ comparisons in the worst case, which is O(n log n). The algorithm as a whole still has a running time of O(n<sup>2</sup>) on average because of the series of swaps required for each insertion.</p></blockquote>
+
+<p>So insertion sort algorithm may not be the best choice for us!</p>
+
+<p><strong>A more popular solution is using Collection.sort function</strong>.</p>
+
+<blockquote><p>java.util.Collections</p>
+
+<p>public static <T> void sort(List<T> list, Comparator&lt;? super T> c)</p>
+
+<p>Parameters: c</p>
+
+<p>The comparator to determine the order of the list. A null value indicates that the elements' natural ordering should be used.</p></blockquote>
+
+<p>A new class that implements the Comparator interface is created, and inside there is compare(Interval, Interval) method. <a href="http://www.cnblogs.com/lautsie/p/3254191.html">Here</a> is one example of such solution.</p>
+
+<p><strong>The third solution is same as the second, but only different</strong> in implementing the comparator object. Note the following code from <a href="http://rleetcode.blogspot.sg/2014/01/merge-intervals-java.html">this blog</a>:</p>
+
+<p>Comparator<Interval> intervalComperator = new Comparator<Interval>(){
+        public int compare(Interval i1, Interval i2){
+                Integer i1St=i1.start;
+                Integer i2St=i2.start;
+                return i1St.compareTo(i2St);
+        }
+};</p>
+
+<p>Read 3 pieces of code below.</p>
+
+<h3>My code</h3>
+
+<p>insertion sort, then merge:</p>
+
+<pre><code>public ArrayList&lt;Interval&gt; merge(ArrayList&lt;Interval&gt; intervals) {
+    ArrayList&lt;Interval&gt; ans = new ArrayList&lt;Interval&gt;();
+    int len = intervals.size();
+    if (len == 0) return ans;
+    ans.add(intervals.get(0));
+    if (len == 1) return ans;
+    // now intervals length is &gt;= then 2
+    if (intervals.get(0).start &lt; intervals.get(1).start)
+        ans.add(intervals.get(1));
+    else ans.add(0, intervals.get(1));
+    for (int i = 2; i &lt; len; i++) {
+        int cur = intervals.get(i).start;
+        // now find number cur from ans&lt;list&gt;
+        int left = 0, right = ans.size() - 1;
+        while (right - left &gt; 1) {
+            int mid = (left + right) / 2;
+            if (ans.get(mid).start &lt; cur) left = mid;
+            else right = mid;
+        }
+        // insert cur between left and right, unless:
+        if (left == 0 &amp;&amp; cur &lt; ans.get(0).start)
+            ans.add(0, intervals.get(i));
+        else if (right == ans.size() - 1
+                &amp;&amp; cur &gt; ans.get(ans.size() - 1).start)
+            ans.add(intervals.get(i));
+        else
+            ans.add(right, intervals.get(i));
+    }
+    // now merge ans
+    int k = 0;
+    while (k &lt; ans.size() - 1) {
+        while (k &lt; ans.size() - 1 &amp;&amp; ans.get(k).end &gt;= ans.get(k + 1).start) {
+            ans.get(k).end = Math.max(ans.get(k).end, ans.get(k + 1).end);
+            ans.remove(k + 1);
+        }
+        k++;
+    }
+    return ans;
+}
+</code></pre>
+
+<p><strong>Recommended solution</strong>. Creating a new Comparator class</p>
+
+<pre><code>/**
+ * Definition for an interval.
+ * public class Interval {
+ *     int start;
+ *     int end;
+ *     Interval() { start = 0; end = 0; }
+ *     Interval(int s, int e) { start = s; end = e; }
+ * }
+ */
+public class Solution {
+    public List&lt;Interval&gt; merge(List&lt;Interval&gt; intervals) {
+        if (intervals == null || intervals.size() == 0) {
+            return intervals;
+        }
+        Collections.sort(intervals, new IntervalComparator());
+        int p = 0;
+        // if p is the last element of the list, we should stop merging
+        while (p &lt; intervals.size() - 1) {
+            // merge p with the next interval, if possible
+            if (intervals.get(p).end &gt;= intervals.get(p + 1).start) {
+                intervals.get(p).end = Math.max(intervals.get(p).end, intervals.get(p + 1).end);
+                intervals.remove(p + 1);
+            } else {
+                p++;
+            }
+        }
+        return intervals;
+    }
+
+    class IntervalComparator implements Comparator&lt;Interval&gt; {
+        public int compare(Interval a, Interval b) {
+            return a.start - b.start;
+        }
+    }
+}
+</code></pre>
+
+<p><strong>Third solution</strong>, different way of writing Comparator.</p>
+
+<pre><code>public ArrayList&lt;Interval&gt; merge(ArrayList&lt;Interval&gt; intervals) {
+    if (intervals == null || intervals.size() &lt; 2)
+        return intervals;
+    ArrayList&lt;Interval&gt; result = new ArrayList&lt;Interval&gt;();
+
+    Comparator&lt;Interval&gt; intervalComperator = new Comparator&lt;Interval&gt;() {
+        public int compare(Interval i1, Interval i2) {
+            Integer i1St = i1.start;
+            Integer i2St = i2.start;
+            return i1St.compareTo(i2St);
+
+        }
+    };
+    Collections.sort(intervals, intervalComperator);
+
+    Interval current = intervals.get(0);
+    int i = 1;
+    while (i &lt; intervals.size()) {
+        Interval currentToCompare = intervals.get(i);
+        if (current.end &lt; currentToCompare.start) {
+            result.add(current);
+            current = currentToCompare;
+        } else
+            current.end = Math.max(current.end, currentToCompare.end);
+        i++;
+    }
+    result.add(current);
+    return result;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1154,185 +1380,6 @@ private double helper(double x, int n) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/14/Trapping-Rain-Water/">[LeetCode 42] Trapping Rain Water</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-05-14T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://oj.leetcode.com/problems/trapping-rain-water/">link</a></p>
-
-<div class="question-content">
-            <p></p><p>
-Given <i>n</i> non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining. 
-</p>
-
-<p>
-For example, <br>
-Given <code>[0,1,0,2,1,0,1,3,2,1,2,1]</code>, return <code>6</code>.
-</p>
-
-<p>
-<img src="http://www.leetcode.com/wp-content/uploads/2012/08/rainwatertrap.png"><br>
-</p><p style="font-size: 11px">The above elevation map is represented by array [0,1,0,2,1,0,1,3,2,1,2,1]. In this case, 6 units of rain water (blue section) are being trapped. <b>Thanks Marcos</b> for contributing this image!</p><p></p>
-          </div>
-
-
-<h3>Stats</h3>
-
-<table border="2">
-    <tr>
-        <td>Frequency</td>
-        <td bgcolor="lime">2</td>
-    </tr>
-    <tr>
-        <td>Difficulty</td>
-        <td bgcolor="red">4</td>
-    </tr>
-    <tr>
-        <td>Adjusted Difficulty</td>
-        <td bgcolor="yellow">3</td>
-    </tr>
-    <tr>
-        <td>Time to use</td>
-        <td bgcolor="yellow">--------</td>
-    </tr>
-</table>
-
-
-<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
-
-<h3>Solution</h3>
-
-<p><strong>This is an interesting question</strong>.</p>
-
-<p><strong>Most popular solution is DP</strong>. The explanation from <a href="http://rleetcode.blogspot.sg/2014/03/trapping-rain-water-java-python.html">this blog</a> is slightly confusing, so I will explain it here. <strong>Basic idea is to do 2 iteration</strong>. First time get the heighest bound to the left of every point. Second time get the heighest bound to the right.</p>
-
-<blockquote><p>Example: input = [0,1,0,2,1,0,1,3,2,1,2,1].</p>
-
-<p>Assume the 2 DP arrays are called highestLeftSoFar and highestRightSoFar.</p>
-
-<p>highestLeftSoFar  = 0,1,1,2,2,2,2,3,3,3,3,3</p>
-
-<p>highestRightSoFar = 3,3,3,3,3,3,3,3,2,2,2,1</p>
-
-<p>For each point, get the lowest bound (of the 2 bounds), and calculate water.</p></blockquote>
-
-<p><strong>There is another solution</strong> making use of stack from <a href="http://n00tc0d3r.blogspot.sg/2013/06/trapping-rain-water.html">this blog</a>. This idea is IMHO not very good.</p>
-
-<p><img class="middle" src="/assets/images/trapping_rain.png"></p>
-
-<ol>
-<li>Use Stack to store the index of a bar;</li>
-<li>If the current one is smaller then the top of the stack, push it to stack;</li>
-<li>Otherwise, pop up the top until stack is empty or top is greater than the current one, add up the volume, push the current one to stack.</li>
-</ol>
-
-
-<blockquote><p>The tricky part is what is the volume to be added each time when we pop up a value from the stack.</p></blockquote>
-
-<h3>My code</h3>
-
-<pre><code>public class Solution {
-    public int trap(int[] A) {
-        if (A == null || A.length &lt;= 1) {
-            return 0;
-        }
-        int len = A.length;
-        int[] leftBound = new int[len];
-        for (int i = 1; i &lt; len; i++) {
-            leftBound[i] = Math.max(leftBound[i - 1], A[i - 1]);
-        }
-        int rightBound = 0;
-        int water = 0;
-        for (int i = len - 2; i &gt; 0; i--) {
-            rightBound = Math.max(rightBound, A[i + 1]);
-            int contains = Math.min(leftBound[i], rightBound);
-            // important to note, that contains can be 0!
-            water += Math.max(0, contains - A[i]);
-        }
-        return water;
-    }
-}
-</code></pre>
-
-<p>Stack Solution.</p>
-
-<pre><code>public int trap(int[] A) {
-    int cur = 0;
-    while (cur &lt; A.length &amp;&amp; A[cur] == 0) cur ++;
-    int vol = 0;
-    Stack&lt;Integer&gt; stack = new Stack&lt;Integer&gt;();
-    while (cur &lt; A.length) {
-        while (!stack.isEmpty() &amp;&amp; A[cur] &gt;= A[stack.peek()]) {
-            int b = stack.pop();
-            if (stack.isEmpty()) break;
-            vol += ((cur - stack.peek() - 1) * (Math.min(A[cur], A[stack.peek()]) - A[b]));
-        }
-        stack.push(cur ++);
-        cur ++;
-    }
-    return vol;
-}
-</code></pre>
-
-<p><strong>updated on Aug 27th, 2014</strong>, there is a very very good 2 pointer solution which reads the input only <strong>once</strong>!</p>
-
-<p><a href="http://qandwhat.runkite.com/i-failed-a-twitter-interview/">This post</a> wrote about it, and <a href="https://gist.github.com/mkozakov/59af0fd5bddbed1a0399">source code</a> available.</p>
-
-<pre><code>public int trap(int[] A) {
-    if (A == null || A.length == 0) {
-        return 0;
-    }
-
-    int len = A.length;
-    int left = 0;
-    int right = len - 1;
-    int leftHeight = 0;
-    int rightHeight = 0;
-    int water = 0;
-
-    while (left &lt; right) {
-        leftHeight = Math.max(leftHeight, A[left]);
-        rightHeight = Math.max(rightHeight, A[right]);
-        // Two ways to write the following if-condition 
-        // This would also work: if (A[left] &lt; A[right]) {
-        if (leftHeight &lt; rightHeight) {
-            // increase left pointer
-            water += leftHeight - A[left];
-            left++;
-        } else {
-            water += rightHeight - A[right];
-            right--;
-        }
-    }
-    return water;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/59">&larr; Older</a>
@@ -1358,9 +1405,8 @@ Given <code>[0,1,0,2,1,0,1,3,2,1,2,1]</code>, return <code>6</code>.
 <li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
-<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
 <li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
@@ -1371,6 +1417,10 @@ Given <code>[0,1,0,2,1,0,1,3,2,1,2,1]</code>, return <code>6</code>.
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
@@ -1386,10 +1436,6 @@ Given <code>[0,1,0,2,1,0,1,3,2,1,2,1]</code>, return <code>6</code>.
     
       <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
       </li>
     
   </ul>

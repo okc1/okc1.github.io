@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given a value N, if we want to make change for N cents, and we have infinite supply of each of S = { S1, S2, .. , Sm} valued coins, how &hellip;">
+  <meta name="description" content="Question link You are given a function foo() that represents a biased coin. When foo() is called, it returns 0 with 60% probability, and 1 with 40% &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,62 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/30/Fair-coin-from-baised-coin/">[Question] Make a Fair Coin From a Biased Coin</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-30T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.geeksforgeeks.org/print-0-and-1-with-50-probability/">link</a></p>
+
+<blockquote><p>You are given a function foo() that represents a biased coin. When foo() is called, it returns 0 with 60% probability, and 1 with 40% probability. Write a new function that returns 0 and 1 with 50% probability each. Your function should use only foo(), no other library method.</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>(0, 1): The probability to get 0 followed by 1 from two calls of foo() = 0.6 * 0.4 = 0.24</p>
+
+<p>(1, 0): The probability to get 1 followed by 0 from two calls of foo() = 0.4 * 0.6 = 0.24</p>
+
+<h3>Solution</h3>
+
+<p>Toss twice. If get (0, 0) or (1, 1), discard. Otherwise, return 0 or 1 for the 2 different cases.</p>
+
+<h3>Code</h3>
+
+<pre><code>int my_fun() {
+    int val1 = foo();
+    int val2 = foo();
+    if (val1 == 0 &amp;&amp; val2 == 1)
+        return 0;   // Will reach here with 0.24 probability
+    if (val1 == 1 &amp;&amp; val2 == 0)
+        return 1;   // Will reach here with 0.24 probability
+    return my_fun();
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1354,109 +1410,6 @@ Remove:
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/28/Majority-Number-II/">[LintCode] Majority Number II</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-06-28T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.lintcode.com/en/problem/majority-number-ii/">link</a></p>
-
-<blockquote><p>Given an array of integers, the majority number is the number that occurs more than 1/3 of the size of the array. Find it.</p>
-
-<p>Note: There is only one majority number in the array</p>
-
-<p>Example: For [1, 2, 1, 2, 1, 3, 3] return 1</p></blockquote>
-
-<h3>Analysis</h3>
-
-<p>Similar to &lsquo;Majority Number&rsquo;, but a little more difficult.</p>
-
-<p><strong>Instead of keeping 1 value for checking, now keep 2 values</strong>. If the new number is same as any of the 2 values, decrease the count. If the new number is a totally new one, decrease both. The coding is a bit difficult and lengthy.</p>
-
-<p>Note that 2 values are found in the end, do another iteration thru the array, and find the correct result from these 2 values.</p>
-
-<h3>Code</h3>
-
-<pre><code>public int majorityNumber(ArrayList&lt;Integer&gt; nums) {
-    // write your code
-    if (nums == null || nums.size() &lt; 3) {
-        return -1;
-    }
-    int num1 = nums.get(0);
-    int p = 1;
-    int len = nums.size();
-    while (p &lt; len &amp;&amp; nums.get(p) == num1) {
-        p++;
-    }
-    int num2 = nums.get(p);
-    int count1 = p;
-    int count2 = 1;
-    for (int i = p + 1; i &lt; len; i++) {
-        if (nums.get(i) == num1) {
-            count1++;
-        } else if (nums.get(i) == num2) {
-            count2++;
-        } else {
-            // a totally different value
-            if (count1 == 0) {
-                num1 = nums.get(i);
-                count1++;
-            } else if (count2 == 0) {
-                num2 = nums.get(i);
-                count2++;
-            } else {
-                count1--;
-                count2--;
-            }
-        }
-    }
-    if (count1 == 0 &amp;&amp; count2 == 0) {
-        return -1;
-    } else if (count1 == 0) {
-        return num2;
-    } else if (count2 == 0) {
-        return num1;
-    } else {
-        // it's gotta be either num1 or num2
-        int count = 0;
-        for (Integer n: nums) {
-            if (n == num1) {
-                count ++;
-            }
-        }
-        if (count &gt;= len / 3 + 1) {
-            return num1;
-        } else {
-            return num2;
-        }
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/44">&larr; Older</a>
@@ -1482,9 +1435,8 @@ Remove:
 <li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
-<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
 <li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
@@ -1495,6 +1447,10 @@ Remove:
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
@@ -1510,10 +1466,6 @@ Remove:
     
       <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
       </li>
     
   </ul>

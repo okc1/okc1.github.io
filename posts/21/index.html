@@ -9,8 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given a 2D array with only 1s and 0s, where each row is sorted. Find the row with the maximum number of 1s. Input matrix: 0 1 1 1
-0 0 1 &hellip;">
+  <meta name="description" content="Question link Code a hashmap which you would be happy to place into a production environment. Solution We already write 2 post before: [Question] &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,66 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/11/04/Code-a-hashmap/">[Google] Code a HashMap</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-11-04T00:00:00-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.glassdoor.com/Interview/Code-a-hashmap-which-you-would-be-happy-to-place-into-a-production-environment-QTN_725885.htm">link</a></p>
+
+<blockquote><p>Code a hashmap which you would be happy to place into a production environment.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>We already write 2 post before:</p>
+
+<ol>
+<li><p><strong>[Question] Implement a HashMap</strong></p></li>
+<li><p><strong>[CC150v5] 8.10 Implement a Hashmap</strong></p></li>
+</ol>
+
+
+<p>But still, this is not an easy question when asked at an interview. It won&rsquo;t harm to do a little recap:</p>
+
+<ol>
+<li>The basic structure is an array. It can be:
+
+<ol>
+<li>An array of linked nodes (with a next pointer).</li>
+<li>An array of linked list.</li>
+</ol>
+</li>
+<li>There should be a hash function.</li>
+<li>There should be a function to convert the hash value to corresponding array index.</li>
+<li>Remember there&rsquo;s <strong>a concept of Load factor</strong>. It means to what percentage the hashmap is filled.</li>
+<li>h &amp; (length – 1) means h % length, which maps a hashcode to an array index.</li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -964,50 +1023,6 @@ public Iterator&lt;T&gt; iterator() {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/24/sort-20GB-file/">[CC150v5] 11.4 Sort 20GB File</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-09-24T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<blockquote><p>Imagine you have a 20 GB file with one string per line.</p>
-
-<p>Explain how you would sort the file.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>Use <strong>External Sort</strong>. <a href="https://en.wikipedia.org/wiki/External_sorting#External_merge_sort">For example</a>, for sorting 900 megabytes of data using only 100 megabytes of RAM:</p>
-
-<ol>
-<li><p>Divide the file into chunks of 100MB each. Sort using <strong>quicksort</strong>.</p></li>
-<li><p>Read the first 10 MB of each sorted chunk into <strong>input buffers</strong> in RAM and allocate the remaining 10 MB for an output buffer. (In practice, it might provide better performance to make the output buffer larger and the input buffers slightly smaller.)</p></li>
-<li><p>[Important] <strong>Perform a 9-way merge</strong> and store the result in the output buffer. Whenever <strong>the output buffer fills</strong>, write it to the final sorted file and empty it. Whenever any of the 9 <strong>input buffers empties</strong>, fill it with the next 10 MB of its associated 100 MB sorted chunk until no more data from the chunk is available.</p></li>
-</ol>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/22">&larr; Older</a>
@@ -1033,9 +1048,8 @@ public Iterator&lt;T&gt; iterator() {
 <li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
-<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
 <li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
@@ -1046,6 +1060,10 @@ public Iterator&lt;T&gt; iterator() {
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
@@ -1061,10 +1079,6 @@ public Iterator&lt;T&gt; iterator() {
     
       <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
       </li>
     
   </ul>

@@ -9,12 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given set of words that are lexicographically sorted, return lexicographic order. E.g: abc
-acd
-bcc
-bed
-bdc
-dab The order of letters for &hellip;">
+  <meta name="description" content="Question link Given a binary matrix, find out the maximum size square sub-matrix with all 1s. For example, consider the below binary matrix. 0 1 1 0 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -70,6 +65,68 @@ dab The order of letters for &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/18/max-squre-with-all-1/">[Question] Maximum Square Sub-matrix With All 1s</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-18T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.geeksforgeeks.org/maximum-size-sub-matrix-with-all-1s-in-a-binary-matrix/">link</a></p>
+
+<blockquote><p>Given a binary matrix, find out the maximum size square sub-matrix with all 1s. For example, consider the below binary matrix.</p></blockquote>
+
+<pre><code>   0  1  1  0  1 
+   1  1  0  1  0 
+   0  1  1  1  0
+   1  1  1  1  0
+   1  1  1  1  1
+   0  0  0  0  0
+</code></pre>
+
+<blockquote><p>The maximum square sub-matrix with all set bits is size 9. Note we only find <strong>square</strong>, not rectangles! (this makes it much easier)</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Since <strong>square only</strong>, we can use DP. <a href="http://www.geeksforgeeks.org/maximum-size-sub-matrix-with-all-1s-in-a-binary-matrix/">Quoted answer</a> below:</p>
+
+<blockquote><p>Let the given binary matrix be M[R][C]. The idea of the algorithm is to construct an auxiliary size matrix S[][] in which each entry S[i][j] represents size of the square sub-matrix with all 1s including M[i][j] where M[i][j] is the rightmost and bottommost entry in sub-matrix.</p>
+
+<ol>
+<li><p>Construct a sum matrix S[R][C] for the given M[R][C].</p></li>
+<li><p>Copy first row and first columns as it is from M[][] to S[][]</p></li>
+<li><p>For other entries, use following expressions to construct S[][]</p></li>
+</ol>
+</blockquote>
+
+<pre><code>         If M[i][j] is 1 then
+            S[i][j] = min(S[i][j-1], S[i-1][j], S[i-1][j-1]) + 1
+         Else /*If M[i][j] is 0*/
+            S[i][j] = 0
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1093,148 +1150,6 @@ private String longestCommonPrefix(String s1, String s2) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/11/crazy-distance-string/">[Google] Crazy Distance Between Strings</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-11T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://stackoverflow.com/questions/15061908/google-interview-find-crazy-distance-between-strings">link</a></p>
-
-<blockquote><p>X and Y are strings formed by 0 or 1. Distance is define as:</p></blockquote>
-
-<pre><code>D(X,Y) = Remove chars common at the start from both X &amp; Y. 
-Then add the remaining lengths from both the strings.
-</code></pre>
-
-<blockquote><p>For e.g.</p></blockquote>
-
-<pre><code>D(1111, 1000) = Only First alphabet is common. So the remaining string is 111 &amp; 000. Therefore the result length("111") &amp; length("000") = 3 + 3 = 6
-</code></pre>
-
-<blockquote><p>For e.g.</p></blockquote>
-
-<pre><code>D(0101, 01100) = Only First two alphabets are common. So the remaining string is 01 &amp; 100. Therefore the result length("01") &amp; length("100") = 2 + 3 = 5
-</code></pre>
-
-<blockquote><p>Now given n input, say like</p></blockquote>
-
-<pre><code>1111
-1000
-101
-1100
-</code></pre>
-
-<blockquote><p>Find out the maximum crazy distance between 2 strings.</p>
-
-<p><strong>n is</strong> the number of input strings. <strong>m is</strong> the max length of any input string.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>This is the <a href="http://stackoverflow.com/a/15062640">source</a>.</p>
-
-<blockquote><p>Put the strings into a tree, where 0 means go left and 1 means go right. <strong>O(m*n) time</strong>.</p></blockquote>
-
-<p>Example:</p>
-
-<pre><code>            Root
-             1
-          0      1
-         0 1*   0  1
-        0*     0*    1*
-</code></pre>
-
-<blockquote><p>where the * means that an element ends there. Constructing this tree clearly takes O(n m).</p>
-
-<p>Now we have to find <strong>the diameter of the tree</strong> (the longest path between two nodes).</p></blockquote>
-
-<p>How to find out longest path between 2 leaf nodes? Please refer to <strong>[Google] Diameter of a Binary Tree</strong> for explanation.</p>
-
-<p>Total time complexity is <strong>O(m*n) time</strong>.</p>
-
-<h3>Code</h3>
-
-<pre><code>public int crazyDist(String[] input) {
-    TreeNode root = this.buildTree(input);
-    return this.findMaxPath(root).path - 1;
-}
-
-private Result findMaxPath(TreeNode node) {
-    if (node == null) {
-        return new Result(Integer.MIN_VALUE, 0);
-    }
-    Result lr = this.findMaxPath(node.left);
-    Result rr = this.findMaxPath(node.right);
-    int path = Math.max(lr.path, rr.path);
-    if (lr.depth != 0 &amp;&amp; rr.depth != 0) {
-        // this check is important, because if any of the child node is
-        // NULL, this root will not be eligible for computing the path
-        path = Math.max(path, lr.depth + rr.depth + 1);
-        // Why? cuz diameter must go from one leaf, thru root, and reach
-        // another leaf. This is different from "Maximum Path Sum" leetcode
-    }
-    return new Result(path, 1 + Math.max(lr.depth, rr.depth));
-}
-
-private TreeNode buildTree(String[] input) {
-    TreeNode root = new TreeNode(123);
-    // share a common root. this root is deducted from the final calculation
-    for (String str : input) {
-        // insert str under the root
-        TreeNode p = root;
-        for (char c : str.toCharArray()) {
-            if (c == '0') {
-                if (p.left == null) {
-                    p.left = new TreeNode(124);
-                    // if 0, go to left; otherwise go to right
-                    // thus value of TreeNodes does not really matter
-                }
-                p = p.left;
-            } else {
-                if (p.right == null) {
-                    p.right = new TreeNode(125);
-                }
-                p = p.right;
-            }
-        }
-    }
-    return root;
-}
-
-class Result {
-    int path;
-    int depth;
-
-    public Result(int a, int b) {
-        path = a;
-        depth = b;
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/17">&larr; Older</a>
@@ -1260,9 +1175,8 @@ class Result {
 <li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
-<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
 <li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
@@ -1273,6 +1187,10 @@ class Result {
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
@@ -1288,10 +1206,6 @@ class Result {
     
       <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
       </li>
     
   </ul>

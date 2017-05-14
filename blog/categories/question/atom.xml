@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Question | Woodstock Blog]]></title>
   <link href="http://www.shuati123.com/blog/categories/question/atom.xml" rel="self"/>
   <link href="http://www.shuati123.com/"/>
-  <updated>2017-02-20T20:53:29-08:00</updated>
+  <updated>2017-05-13T10:47:07-07:00</updated>
   <id>http://www.shuati123.com/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -12,6 +12,54 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[[Question] Dutch National Flag Problem]]></title>
+    <link href="http://www.shuati123.com/blog/2017/05/13/dutch-national-flag/"/>
+    <updated>2017-05-13T00:00:00-07:00</updated>
+    <id>http://www.shuati123.com/blog/2017/05/13/dutch-national-flag</id>
+    <content type="html"><![CDATA[# Question
+
+> Given an array A[] consisting 0s, 1s and 2s, write a function that sorts A[]. The functions should put all 0s first, then all 1s and all 2s in last.
+
+    Example
+    Input = {0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1};
+    Output = {0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2}
+
+# Solution
+
+3-way sort: http://www.geeksforgeeks.org/3-way-quicksort-dutch-national-flag/
+
+# Code
+
+	public int[] threePointerSort(int[] input) {
+		if (input == null || input.length <= 1) {
+			return input;
+		}
+
+		// left is at the leftmost non-0 position
+		// right is at rightmost non-2
+		// mid is currently being evaluated (before mid, it's sorted)
+		int left = 0, right = input.length - 1;
+		int mid = left;
+		
+		while (mid <= right) {
+			if (input[mid] > 1) {
+				Common.swap(input, mid, right);
+				right--;
+			} else if (input[mid] < 1) {
+				Common.swap(input, left, mid);
+				left++;
+				mid++;
+			} else {
+				mid++;
+			}
+		}
+
+		return input;
+	}
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[[Question] Swizzle Sort]]></title>
@@ -300,57 +348,6 @@ Inspired by the code from [G4G](www.geeksforgeeks.org/find-closest-leaf-binary-t
 			return 0;
 		} else {
 			return 1 + Math.min(lenToLowerLeaf(node.left), lenToLowerLeaf(node.right));
-		}
-	}
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[[Amazon] All Strings by Placing Spaces]]></title>
-    <link href="http://www.shuati123.com/blog/2015/10/07/all-string-placing-space/"/>
-    <updated>2015-10-07T00:00:00-07:00</updated>
-    <id>http://www.shuati123.com/blog/2015/10/07/all-string-placing-space</id>
-    <content type="html"><![CDATA[### Question
-
-[link](www.geeksforgeeks.org/print-possible-strings-can-made-placing-spaces/index.html)
-
-> Given a string, print all possible strings that can be made by placing spaces (zero or one) in between them.
-
-> Input:  str[] = "ABC"
-
->Output:
-
-        ABC
-        AB C
-        A BC
-        A B C
-
-### Solution
-
-recursion.
-
-### Code 
-
-
-	public void printAll(String input) {
-		if (input == null || input.length() <= 1) {
-			// since we insert space in-between chars, so
-			return;
-		}
-		int len = input.length();
-		// len >= 2
-		helper(input, len - 1);
-	}
-
-	private void helper(String s, int p) {
-		if (p == 1) {
-			System.out.println(s);
-			// no insertion
-			System.out.println(s.substring(0, 1) + " " + s.substring(1));
-			// insert at position 1
-		} else {
-			helper(s, p - 1);
-			helper(s.substring(0, p) + " " + s.substring(p), p - 1);
 		}
 	}
 ]]></content>

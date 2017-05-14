@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link How to find the majority elelment in an array in O(n)? Note: The majority element is the element that occurs more than half of the size &hellip;">
+  <meta name="description" content="Question link Given an array of integers, the majority number is the number that occurs more than 1/3 of the size of the array. Find it. Note: There &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,109 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/28/Majority-Number-II/">[LintCode] Majority Number II</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-28T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.lintcode.com/en/problem/majority-number-ii/">link</a></p>
+
+<blockquote><p>Given an array of integers, the majority number is the number that occurs more than 1/3 of the size of the array. Find it.</p>
+
+<p>Note: There is only one majority number in the array</p>
+
+<p>Example: For [1, 2, 1, 2, 1, 3, 3] return 1</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>Similar to &lsquo;Majority Number&rsquo;, but a little more difficult.</p>
+
+<p><strong>Instead of keeping 1 value for checking, now keep 2 values</strong>. If the new number is same as any of the 2 values, decrease the count. If the new number is a totally new one, decrease both. The coding is a bit difficult and lengthy.</p>
+
+<p>Note that 2 values are found in the end, do another iteration thru the array, and find the correct result from these 2 values.</p>
+
+<h3>Code</h3>
+
+<pre><code>public int majorityNumber(ArrayList&lt;Integer&gt; nums) {
+    // write your code
+    if (nums == null || nums.size() &lt; 3) {
+        return -1;
+    }
+    int num1 = nums.get(0);
+    int p = 1;
+    int len = nums.size();
+    while (p &lt; len &amp;&amp; nums.get(p) == num1) {
+        p++;
+    }
+    int num2 = nums.get(p);
+    int count1 = p;
+    int count2 = 1;
+    for (int i = p + 1; i &lt; len; i++) {
+        if (nums.get(i) == num1) {
+            count1++;
+        } else if (nums.get(i) == num2) {
+            count2++;
+        } else {
+            // a totally different value
+            if (count1 == 0) {
+                num1 = nums.get(i);
+                count1++;
+            } else if (count2 == 0) {
+                num2 = nums.get(i);
+                count2++;
+            } else {
+                count1--;
+                count2--;
+            }
+        }
+    }
+    if (count1 == 0 &amp;&amp; count2 == 0) {
+        return -1;
+    } else if (count1 == 0) {
+        return num2;
+    } else if (count2 == 0) {
+        return num1;
+    } else {
+        // it's gotta be either num1 or num2
+        int count = 0;
+        for (Integer n: nums) {
+            if (n == num1) {
+                count ++;
+            }
+        }
+        if (count &gt;= len / 3 + 1) {
+            return num1;
+        } else {
+            return num2;
+        }
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -2267,85 +2370,6 @@ int main() {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/18/Two-egg-100-floor-question/">[Brain Teaser] 2 Eggs 100 Floors Puzzle</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-06-18T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.programmerinterview.com/index.php/puzzles/2-eggs-100-floors-puzzle/">link</a></p>
-
-<blockquote><p>You are given 2 eggs.</p>
-
-<p>You have access to a 100-storey building.</p>
-
-<p>Eggs can be very hard or very fragile means it may break if dropped from the first floor or may not even break if dropped from 100 th floor.Both eggs are identical.</p>
-
-<p>You need to figure out the highest floor of a 100-storey building an egg can be dropped without breaking.</p>
-
-<p>Now the question is how many drops you need to make. You are allowed to break 2 eggs in the process</p></blockquote>
-
-<h3>Analysis</h3>
-
-<p>Most obvious solutoin is drop in 10th, 20th, 30th &hellip; floor. But this solution would result in <strong>19 drops in worst case</strong>. We should try to reduce the worst case scenario by making all possible scenarios take the same number of drops!</p>
-
-<p>The best solution is:</p>
-
-<blockquote><p>What if we tried to reduce the number of drops that would be required with the linear search (with the 2nd egg) after we get to one of the higher floors? This way we <strong>counteract the fact that getting to the higher floor took so many drops</strong>, and if we use less drops for the linear search we are <strong>balancing out the worst case</strong>.</p></blockquote>
-
-<p>According to the <a href="http://www.programmerinterview.com/index.php/puzzles/2-eggs-100-floors-puzzle/">solution</a>, we form a series:</p>
-
-<blockquote><p>x + (x-1) + (x-2) + (x-3) + &hellip; + 1 = 100</p>
-
-<p>x(x+1)/2 = 100</p>
-
-<p>x = 14</p></blockquote>
-
-<h3>Final Result</h3>
-
-<p>We would drop in this way:</p>
-
-<table width="50">
-<thead><tr><th>&nbsp;Drop&nbsp;</th><th>&nbsp;Floor&nbsp;</th></tr></thead>
-<tbody><tr align="center"><td>#1</td><td>14</td></tr>
-<tr align="center"><td>#2</td><td>27</td></tr>
-<tr align="center"><td>#3</td><td>39</td></tr>
-<tr align="center"><td>#4</td><td>50</td></tr>
-<tr align="center"><td>#5</td><td>60</td></tr>
-<tr align="center"><td>#6</td><td>69</td></tr>
-<tr align="center"><td>#7</td><td>77</td></tr>
-<tr align="center"><td>#8</td><td>84</td></tr>
-<tr align="center"><td>#9</td><td>90</td></tr>
-<tr align="center"><td>#10</td><td>95</td></tr>
-<tr align="center"><td>#11</td><td>99</td></tr>
-<tr align="center"><td>#12</td><td>100</td></tr>
-</tbody>
-</table>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/45">&larr; Older</a>
@@ -2371,9 +2395,8 @@ int main() {
 <li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
-<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
 <li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
@@ -2384,6 +2407,10 @@ int main() {
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
@@ -2399,10 +2426,6 @@ int main() {
     
       <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
       </li>
     
   </ul>

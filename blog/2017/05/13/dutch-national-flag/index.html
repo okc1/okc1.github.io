@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Q-facebook - Woodstock Blog</title>
+  <title>[Question] Dutch National Flag Problem - Woodstock Blog</title>
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Category: q-facebook">
+  <meta name="description" content="Question Given an array A[] consisting 0s, 1s and 2s, write a function that sorts A[]. The functions should put all 0s first, then all 1s and all 2s &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.shuati123.com/blog/categories/q-facebook/">
+  <link rel="canonical" href="http://www.shuati123.com/blog/2017/05/13/dutch-national-flag/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Woodstock Blog" type="application/atom+xml">
@@ -64,151 +64,122 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Q-facebook</h1>
+    
+      <h1 class="entry-title">[Question] Dutch National Flag Problem</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2017-05-13T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><h1>Question</h1>
 
-  
-  <h2>2015</h2>
+<blockquote><p>Given an array A[] consisting 0s, 1s and 2s, write a function that sorts A[]. The functions should put all 0s first, then all 1s and all 2s in last.</p></blockquote>
 
-<article>
-  
-<h1><a href="/blog/2015/02/08/generate-number-with-given-probability/">[Facebook] Generate Number With Given Probability</a></h1>
-<time datetime="2015-02-08T00:00:00-08:00" pubdate><span class='month'>Feb</span> <span class='day'>08</span> <span class='year'>2015</span></time>
+<pre><code>Example
+Input = {0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1};
+Output = {0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2}
+</code></pre>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/q-facebook/'>q-facebook</a></span>
-</footer>
+<h1>Solution</h1>
 
+<p>3-way sort: <a href="http://www.geeksforgeeks.org/3-way-quicksort-dutch-national-flag/">http://www.geeksforgeeks.org/3-way-quicksort-dutch-national-flag/</a></p>
 
-</article>
+<h1>Code</h1>
 
+<pre><code>public int[] threePointerSort(int[] input) {
+    if (input == null || input.length &lt;= 1) {
+        return input;
+    }
 
+    // left is at the leftmost non-0 position
+    // right is at rightmost non-2
+    // mid is currently being evaluated (before mid, it's sorted)
+    int left = 0, right = input.length - 1;
+    int mid = left;
 
-<article>
-  
-<h1><a href="/blog/2015/01/07/scheduling-jobs-with-max-cost/">[Facebook] Scheduling Jobs With Max Cost</a></h1>
-<time datetime="2015-01-07T00:00:00-08:00" pubdate><span class='month'>Jan</span> <span class='day'>07</span> <span class='year'>2015</span></time>
+    while (mid &lt;= right) {
+        if (input[mid] &gt; 1) {
+            Common.swap(input, mid, right);
+            right--;
+        } else if (input[mid] &lt; 1) {
+            Common.swap(input, left, mid);
+            left++;
+            mid++;
+        } else {
+            mid++;
+        }
+    }
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/q-facebook/'>q-facebook</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2015/01/06/Json-prettifier/">[Facebook] Write a Json Prettifier</a></h1>
-<time datetime="2015-01-06T00:00:00-08:00" pubdate><span class='month'>Jan</span> <span class='day'>06</span> <span class='year'>2015</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/q-facebook/'>q-facebook</a></span>
-</footer>
-
-
-</article>
-
-
-
-  
-  <h2>2014</h2>
-
-<article>
-  
-<h1><a href="/blog/2014/12/22/Maximum-sum-no-adjacent/">[Facebook] Maximum Sum Such That No Two Elements Are Adjacent</a></h1>
-<time datetime="2014-12-22T00:00:00-08:00" pubdate><span class='month'>Dec</span> <span class='day'>22</span> <span class='year'>2014</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/q-facebook/'>q-facebook</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2014/12/18/Binary-Search-Tree-3Sum/">[Facebook] Binary Search Tree 3Sum</a></h1>
-<time datetime="2014-12-18T00:00:00-08:00" pubdate><span class='month'>Dec</span> <span class='day'>18</span> <span class='year'>2014</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/q-facebook/'>q-facebook</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2014/12/17/Print-Binary-Tree-Vertically/">[Facebook] Print a Binary Tree in Vertical Order</a></h1>
-<time datetime="2014-12-17T00:00:00-08:00" pubdate><span class='month'>Dec</span> <span class='day'>17</span> <span class='year'>2014</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/q-facebook/'>q-facebook</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2014/09/01/Hamming-distance-of-array/">[Facebook] Hamming Distance of Array</a></h1>
-<time datetime="2014-09-01T00:00:00-07:00" pubdate><span class='month'>Sep</span> <span class='day'>01</span> <span class='year'>2014</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/q-facebook/'>q-facebook</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2014/08/15/Task-scheduling-question/">[Facebook] Task Scheduling Question</a></h1>
-<time datetime="2014-08-15T00:00:00-07:00" pubdate><span class='month'>Aug</span> <span class='day'>15</span> <span class='year'>2014</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/q-facebook/'>q-facebook</a></span>
-</footer>
-
-
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2014/08/14/Large-string-find-substring/">[Facebook] Query Search (HashMap, Suffix Array)</a></h1>
-<time datetime="2014-08-14T00:00:00-07:00" pubdate><span class='month'>Aug</span> <span class='day'>14</span> <span class='year'>2014</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/q-facebook/'>q-facebook</a>, <a class='category' href='/blog/categories/z-string-search/'>z-string-search</a></span>
-</footer>
-
-
-</article>
-
+    return input;
+}
+</code></pre>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">Kevin Durant</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2017-05-13T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>12:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/question/'>question</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.shuati123.com/blog/2017/05/13/dutch-national-flag/" data-via="" data-counturl="http://www.shuati123.com/blog/2017/05/13/dutch-national-flag/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2016/08/01/how-to-design-logging/" title="Previous Post: [Design] How to Design Logging">&laquo; [Design] How to Design Logging</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+<!--div>
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_0&type=footer&size=728x90'></script>
+</div>
+<div>
+    <script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_1&type=footer&size=728x90'></script>
+</div-->
+    
+<script data-cfasync='false' type='text/javascript' src='//clksite.com/adServe/banners?tid=29011_299115_2&type=footer&size=728x90'></script>
+
 
 </div>
 
@@ -227,9 +198,8 @@
 <li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
-<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
 <li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
@@ -240,6 +210,10 @@
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
@@ -255,10 +229,6 @@
     
       <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
       </li>
     
   </ul>

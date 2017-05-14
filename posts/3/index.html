@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Overview A UML class diagram describes the object and information structures used by your application, both internally and in communication with its &hellip;">
+  <meta name="description" content="Overview Some experienced developers don’t use protected since it cannot provide clean data hiding. Why is that? background Remembering in the post [ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,146 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/22/avoid-protected/">[Java OOP] Why Avoid Using Protected?</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-10-22T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Overview</h1>
+
+<p>Some experienced developers don’t use <strong>protected</strong> since it cannot provide clean data hiding.</p>
+
+<p>Why is that?</p>
+
+<h2>background</h2>
+
+<p>Remembering in the post <strong>[Java OOP] Java modifier and Access Level</strong>, we got this:</p>
+
+<p><img class="middle" src="/assets/images/java-access-level-table.png"></p>
+
+<p><strong>Note</strong>: Java default access setting is &lsquo;No modifier&rsquo;, which is also called &lsquo;<strong>Package Private</strong>&rsquo;.</p>
+
+<p><strong>Another note</strong>: by saying &lsquo;subclass&rsquo;, it means subclass declared in <strong>another package</strong>.</p>
+
+<p>And in <strong>[Design] Composition Over Inheritance</strong>, we know that basically <strong>inheritance breaks encapsulation</strong>.</p>
+
+<h2>the reason</h2>
+
+<ol>
+<li><p>inheritance is seldom the best tool and is not as flexible</p></li>
+<li><p>the protected members form an interface towards subclasses (which is bad)</p></li>
+<li><p>interfaces are tricky to get right and document properly</p></li>
+</ol>
+
+
+<p>So, <a href="http://stackoverflow.com/questions/4913025/reasons-to-use-private-instead-of-protected-for-fields-and-methods">it&rsquo;s better not to make</a> the class inheritable and instead make sure it&rsquo;s as flexible as possible (and no more) by using other means.</p>
+
+<h2>A excellent answer</h2>
+
+<p>A excellent answer <a href="http://programmers.stackexchange.com/questions/162643/why-is-clean-code-suggesting-avoiding-protected-variables">from Sam Brand</a>:</p>
+
+<ol>
+<li><p>They tend to lead to <strong><a href="https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it">YAGNI</a></strong> issues. Unless you have a descendant class that actually does stuff with the protected member, make it private.</p>
+
+<blockquote><p><strong>&ldquo;You aren&rsquo;t gonna need it&rdquo;</strong> (acronym: YAGNI) is a principle of extreme programming (XP) that states a programmer should not add functionality until deemed necessary.</p></blockquote></li>
+<li><p>They tend to lead to <strong><a href="https://en.wikipedia.org/wiki/Liskov_substitution_principle">LSP</a></strong> issues. Protected variables generally have some intrinsic invariance associated with them (or else they&rsquo;d be public). Inheritors then need to maintain those properties, which people can screw up or willfully violate.</p>
+
+<blockquote><p><strong>Substitutability</strong> is a principle in OOP. It states that if S is a subtype of T, then objects of type T may be replaced with objects of type S without altering any of the desirable properties of that program</p>
+
+<p><strong>Liskov substitution principle (LSP)</strong> is a particular definition of a subtyping relation introduced by Barbara Liskov in 1987</p></blockquote></li>
+<li><p>They tend to violate <strong><a href="https://en.wikipedia.org/wiki/Open/closed_principle">OCP</a></strong>. If the base class makes too many assumptions about the protected member, or the inheritor is too flexible with the behavior of the class, it can lead to the base class' behavior being modified by that extension.</p>
+
+<blockquote><p><strong>open/closed principle</strong> states &ldquo;software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification&rdquo;.</p>
+
+<p>That is, such an entity can allow its behaviour to be extended without modifying its source code.</p>
+
+<p>This is especially valuable in a production environment, where changes to source code may necessitate code reviews, unit tests, and other such procedures to qualify it for use in a product</p></blockquote></li>
+<li><p>They tend to lead to inheritance for extension rather than composition. This tends to lead to tighter coupling, more violations of <strong><a href="https://en.wikipedia.org/wiki/Single_responsibility_principle">SRP</a></strong>, more difficult testing, and a slew of other things that fall within the &lsquo;favor composition over inheritance&rsquo; discussion.</p></li>
+</ol>
+
+
+<blockquote><p><strong>single responsibility principle</strong> states that every class should have responsibility over a single part of the functionality provided by the software, and that responsibility should be entirely encapsulated by the class. All its services should be narrowly aligned with that responsibility</p></blockquote>
+
+<h1>An example</h1>
+
+<p>ClassA in packageA:</p>
+
+<pre><code>package packA;
+
+import packB.ClassB;
+
+public class ClassA {
+
+    protected int val = 10;
+
+    protected String getColor() {
+        return "colored";
+    }
+
+    public static void main(String[] args) {
+        ClassA ins = new ClassA();
+        System.out.println("val is " + ins.val);
+        System.out.println("color is " + ins.getColor());
+        System.out.println();
+
+        ClassB ins2 = new ClassB();
+        System.out.println("val is " + ins2.val);
+        System.out.println("color is " + ins2.getColor());
+    }
+}
+</code></pre>
+
+<p>ClassB in packageB:</p>
+
+<pre><code>package packB;
+
+import packA.ClassA;
+
+public class ClassB extends ClassA {
+
+    public ClassB() {
+        val = 5;
+    }
+
+    public String getColor() {
+        return super.getColor();
+    }
+}
+</code></pre>
+
+<p>Execution result:</p>
+
+<pre><code>val is 10
+color is colored
+
+val is 5
+color is colored
+</code></pre>
+
+<p>The code shows how <strong>ClassB</strong> is able to access 1 <strong>protected variable</strong> and 1 <strong>protected method</strong>.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -833,78 +973,6 @@ private int lenToLowerLeaf(TreeNode node) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/10/07/all-string-placing-space/">[Amazon] All Strings by Placing Spaces</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-10-07T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="www.geeksforgeeks.org/print-possible-strings-can-made-placing-spaces/index.html">link</a></p>
-
-<blockquote><p>Given a string, print all possible strings that can be made by placing spaces (zero or one) in between them.</p>
-
-<p>Input:  str[] = &ldquo;ABC&rdquo;</p>
-
-<p>Output:</p></blockquote>
-
-<pre><code>    ABC
-    AB C
-    A BC
-    A B C
-</code></pre>
-
-<h3>Solution</h3>
-
-<p>recursion.</p>
-
-<h3>Code</h3>
-
-<pre><code>public void printAll(String input) {
-    if (input == null || input.length() &lt;= 1) {
-        // since we insert space in-between chars, so
-        return;
-    }
-    int len = input.length();
-    // len &gt;= 2
-    helper(input, len - 1);
-}
-
-private void helper(String s, int p) {
-    if (p == 1) {
-        System.out.println(s);
-        // no insertion
-        System.out.println(s.substring(0, 1) + " " + s.substring(1));
-        // insert at position 1
-    } else {
-        helper(s, p - 1);
-        helper(s.substring(0, p) + " " + s.substring(p), p - 1);
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/4">&larr; Older</a>
@@ -930,9 +998,8 @@ private void helper(String s, int p) {
 <li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
-<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
 <li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
@@ -943,6 +1010,10 @@ private void helper(String s, int p) {
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
@@ -958,10 +1029,6 @@ private void helper(String s, int p) {
     
       <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
       </li>
     
   </ul>

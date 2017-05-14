@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given a string, convert it into a palindrome with the lease number of insertions possible. Solution This is a DP question. There&rsquo; &hellip;">
+  <meta name="description" content="Question You have two very large binary trees: T1, with millions of nodes, and T2, with hundreds of nodes. Create an algorithm to decide if T2 is a &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,82 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/06/check-subtree/">[CC150v4] 4.7 Check Subtree</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-06T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>You have two very large binary trees: T1, with millions of nodes, and T2, with hundreds of nodes. Create an algorithm to decide if T2 is a subtree of T1.</p></blockquote>
+
+<h3>Solution 1</h3>
+
+<p><strong>The best solution is to print inorder and preorder traversal</strong> of both trees. Find whether the 2 traversal string of T2 <strong>is substring of the traversal of T1</strong>. This is a very good idea of checking subtree of a Binary Tree.</p>
+
+<p><strong>Updated on Jan 26th, 2015</strong>: do we have to use sentinals for this purpose? Well, the answer is NO, cuz a preorder and a inorder can uniquely define a binary tree.</p>
+
+<p>However, this solution is very <strong>memory intensive</strong>.</p>
+
+<h3>Solution 2</h3>
+
+<p><strong>The alternative solution</strong> simply checks the tree similarity for each and every node.</p>
+
+<p>Time complexity:</p>
+
+<p>If k is the number of occurrences of T2’s root in T1, the worst case runtime can be characterized as O(n + k * m).</p>
+
+<p><strong>However, there can be a lot of pruning for this solution</strong>, so it&rsquo;s NOT necessarily slower than Solution 1. There can be a lot of discussions on this (<strong>refer to CC150v5 Q4.8 for more</strong>).</p>
+
+<h3>Code</h3>
+
+<p><strong>written by me</strong></p>
+
+<pre><code>public static boolean containsTree(TreeNode t1, TreeNode t2) {
+    if (t1 == null) {
+        return false;
+    } else if (matchTree(t1, t2)) {
+        return true;
+    } else {
+        return containsTree(t1.left, t2) || containsTree(t1.right, t2);
+    }
+}
+
+private static boolean matchTree(TreeNode t1, TreeNode t2) {
+    if (t2 == null) {
+        return true;
+    } else if (t1 == null) {
+        return false;
+    } else if (t1.data != t2.data) {
+        return false;
+    } else {
+        return matchTree(t1.left, t2.left) &amp;&amp; matchTree(t1.right, t2.right);
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -715,55 +791,6 @@ public void printAnagrams(String word) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/01/Multithreading-deadlock-prevention/">[Design] Multithreading - Deadlock Prevention</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-09-01T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<blockquote><p>How to prevent deadlock? (question from MIT handouts 1)</p></blockquote>
-
-<h3>Analysis</h3>
-
-<p>Preventing one of the 4 conditions will prevent deadlock:</p>
-
-<ol>
-<li><p>Removing the <strong>mutual exclusion condition</strong>, but not very possible.</p></li>
-<li><p>The <strong>hold and wait</strong> conditions may be removed by requiring processes to request all the resources they will need before starting up.</p></li>
-<li><p>The <strong>no preemption condition</strong> may also be difficult or impossible to avoid as a process has to be able to have a resource for a certain amount of time, or the processing outcome may be inconsistent or thrashing may occur.</p></li>
-<li><p>The final condition is the <strong>circular wait condition</strong>. Approaches that avoid circular waits include disabling interrupts during critical sections and using a hierarchy to determine a partial ordering of resources.</p></li>
-</ol>
-
-
-<h3>Answer</h3>
-
-<p><strong>Assign an order to our locks</strong> (require that the locks always acquired in order).</p>
-
-<p>This prevent 2 thread waiting to get the resource in each other&rsquo;s hand.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/28">&larr; Older</a>
@@ -789,9 +816,8 @@ public void printAnagrams(String word) {
 <li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
-<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
 <li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
@@ -802,6 +828,10 @@ public void printAnagrams(String word) {
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
@@ -817,10 +847,6 @@ public void printAnagrams(String word) {
     
       <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
       </li>
     
   </ul>

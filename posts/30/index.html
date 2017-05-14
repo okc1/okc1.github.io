@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question Othello is played as follows: Each Othello piece is white on one side and black on the other. When a piece is surrounded by its opponents on &hellip;">
+  <meta name="description" content="Question Design and implement a hash table which uses chaining (linked lists) to handle collisions. Solution I wrote this topic before (using Java &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,172 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/25/Implement-HashMap/">[CC150v5] 8.10 Implement a Hashmap</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-25T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Design and implement a hash table which uses chaining (linked lists) to handle collisions.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>I wrote this topic before (using Java source code as a reference). This time, I would like to take another (easier) approach.</p>
+
+<p>The main part of this is to use an array of list structure like this:</p>
+
+<pre><code>LinkedList&lt;Cell&lt;K, V&gt;&gt;[] items;
+</code></pre>
+
+<p>And the Cell Class looks like this:</p>
+
+<pre><code>public class Cell&lt;K, V&gt; {
+    private K key;
+    private V value;
+
+    public Cell(K k, V v) {
+        key = k;
+        value = v;
+    }
+
+    public boolean equivalent(Cell&lt;K, V&gt; c) {
+        return equivalent(c.getKey());
+    }
+
+    public boolean equivalent(K k) {
+        return key.equals(k);
+    }
+
+    public K getKey() {
+        return key;
+    }
+
+    public V getValue() {
+        return value;
+    }
+}
+</code></pre>
+
+<h3>Code</h3>
+
+<p><strong>written by me</strong></p>
+
+<pre><code>public class HashMapCC150&lt;K, V&gt; {
+
+    int size;
+    LinkedList&lt;Cell&lt;K, V&gt;&gt;[] items;
+
+    public HashMapCC150(int num) {
+        this.size = num;
+        items = (LinkedList&lt;Cell&lt;K, V&gt;&gt;[]) new LinkedList[10];
+    }
+
+    public V get(K k) {
+        int hashValue = this.calculateHashCode(k);
+        if (items[hashValue] == null) {
+            items[hashValue] = new LinkedList&lt;Cell&lt;K, V&gt;&gt;();
+            return null;
+        }
+        for (Cell&lt;K, V&gt; cell : items[hashValue]) {
+            if (k.equals(cell.getKey())) {
+                return cell.getValue();
+            }
+        }
+        return null;
+    }
+
+    public V put(K k, V v) {
+        int hashValue = this.calculateHashCode(k);
+        if (items[hashValue] == null) {
+            items[hashValue] = new LinkedList&lt;Cell&lt;K, V&gt;&gt;();
+        }
+        for (Cell&lt;K, V&gt; cell : items[hashValue]) {
+            if (k.equals(cell.getKey())) {
+                items[hashValue].remove(cell);
+                break;
+            }
+        }
+        Cell&lt;K, V&gt; newItem = new Cell&lt;K, V&gt;(k, v);
+        items[hashValue].add(newItem);
+        return null;
+    }
+
+    public V remove(K k) {
+        // not written
+        return null;
+    }
+
+    private int calculateHashCode(K k) {
+        return k.toString().length() % size;
+    }
+
+    public static void main(String[] args) {
+        HashMapCC150&lt;String, String&gt; map = new HashMapCC150&lt;String, String&gt;(10);
+        map.put("kevin", "durant");
+        map.put("steven", "curry");
+        map.put("al", "jefferson");
+        System.out.println(map.get("kevin"));
+        System.out.println(map.get("steven"));
+        System.out.println(map.get("al"));
+        map.put("kevin", "martin");
+        map.put("steven", "nash");
+        map.put("kevin", "braynt");
+        System.out.println(map.get("kevin"));
+        System.out.println(map.get("steven"));
+        System.out.println(map.get("al"));
+    }
+}
+
+class Cell&lt;K, V&gt; {
+    private K key;
+    private V value;
+
+    public Cell(K k, V v) {
+        key = k;
+        value = v;
+    }
+
+    public boolean equivalent(Cell&lt;K, V&gt; c) {
+        return equivalent(c.getKey());
+    }
+
+    public boolean equivalent(K k) {
+        return key.equals(k);
+    }
+
+    public K getKey() {
+        return key;
+    }
+
+    public V getValue() {
+        return value;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1112,90 +1278,6 @@ class BlackJackCard extends Card {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/20/Dice-roll-DP-question/">[Question] Ways of Dice Throw</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-08-20T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.geeksforgeeks.org/dice-throw-problem/">link</a></p>
-
-<blockquote><p>Given n dice each with m faces, numbered from 1 to m, find the number of ways to get sum X. X is the summation of values on each face when all the dice are thrown.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p><strong>DP</strong></p>
-
-<blockquote><p>Sum(m, n, X) = Sum(m, n - 1, X - 1) +</p>
-
-<pre><code>           Sum(m, n - 1, X - 2) +
-
-           .................... + 
-
-           Sum(m, n - 1, X - m)
-</code></pre></blockquote>
-
-<p>So we can have dp(n)(X) and for each, iterate m time. Total time is O(m * n * X).</p>
-
-<h3>Code</h3>
-
-<p><strong>not written by me</strong>.</p>
-
-<pre><code>int findWays(int m, int n, int x)
-{
-    // Create a table to store results of subproblems.  One extra 
-    // row and column are used for simpilicity (Number of dice
-    // is directly used as row index and sum is directly used
-    // as column index).  The entries in 0th row and 0th column
-    // are never used.
-    int table[n + 1][x + 1];
-    memset(table, 0, sizeof(table)); // Initialize all entries as 0
-
-    // Table entries for only one dice
-    for (int j = 1; j &lt;= m &amp;&amp; j &lt;= x; j++)
-        table[1][j] = 1;
-
-    // Fill rest of the entries in table using recursive relation
-    // i: number of dice, j: sum
-    for (int i = 2; i &lt;= n; i++)
-        for (int j = 1; j &lt;= x; j++)
-            for (int k = 1; k &lt;= m &amp;&amp; k &lt; j; k++)
-                table[i][j] += table[i-1][j-k];
-
-    /* Uncomment these lines to see content of table
-    for (int i = 0; i &lt;= n; i++)
-    {
-      for (int j = 0; j &lt;= x; j++)
-        cout &lt;&lt; table[i][j] &lt;&lt; " ";
-      cout &lt;&lt; endl;
-    } */
-    return table[n][x];
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/31">&larr; Older</a>
@@ -1221,9 +1303,8 @@ class BlackJackCard extends Card {
 <li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
-<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
 <li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
@@ -1234,6 +1315,10 @@ class BlackJackCard extends Card {
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
@@ -1249,10 +1334,6 @@ class BlackJackCard extends Card {
     
       <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
       </li>
     
   </ul>

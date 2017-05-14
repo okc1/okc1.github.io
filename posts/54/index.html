@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level). For example: &hellip;">
+  <meta name="description" content="Question link Given a binary tree, return the bottom-up level order traversal of its nodes' values. (ie, from left to right, level by level from leaf &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,117 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/25/Binary-Tree-Level-Order-Traversal-II/">[LeetCode 107] Binary Tree Level Order Traversal II</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-25T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/binary-tree-level-order-traversal-ii/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Given a binary tree, return the <i>bottom-up level order</i> traversal of its nodes' values. (ie, from left to right, level by level from leaf to root).</p>
+
+<p>
+For example:<br>
+Given binary tree <code>{3,9,20,#,#,15,7}</code>,<br>
+</p><pre>    3
+   / \
+  9  20
+    /  \
+   15   7
+</pre>
+<p></p>
+<p>
+return its bottom-up level order traversal as:<br>
+</p><pre>[
+  [15,7]
+  [9,20],
+  [3],
+]
+</pre>
+<p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="white">1</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="white">1</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="white">----------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is the same question as previous one</strong>.</p>
+
+<h3>Solution</h3>
+
+<p><strong>There are also 2 solution: BFS and DFS</strong>.</p>
+
+<p>I post BFS code below. Only 2 lines are different: ans.get() and ans.add().</p>
+
+<h3>Code</h3>
+
+<pre><code>public ArrayList&lt;ArrayList&lt;Integer&gt;&gt; levelOrderBottom(TreeNode root) {
+    ArrayList&lt;ArrayList&lt;Integer&gt;&gt; ans = new ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();
+    if (root == null) return ans;
+    Queue&lt;TreeNode&gt; q = new LinkedList&lt;TreeNode&gt;();
+    q.add(root);
+    while (! q.isEmpty()) {
+        ans.add(0, new ArrayList&lt;Integer&gt;());
+        int curSize = q.size();
+        for (int i = 0; i &lt; curSize; i ++) {
+            TreeNode node = q.remove();
+            ans.get(0).add(node.val);
+            if (node.left != null) q.add(node.left);
+            if (node.right != null) q.add(node.right);
+        }
+    }
+    return ans;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1466,190 +1577,6 @@ You may assume that A has enough space (size that is greater or equal to <i>m</i
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/23/Largest-Rectangle-in-Histogram/">[LeetCode 84] Largest Rectangle in Histogram</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-05-23T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="https://oj.leetcode.com/problems/largest-rectangle-in-histogram/">link</a></p>
-
-<div class="question-content">
-            <p></p><p>
-Given <i>n</i> non-negative integers representing the histogram's bar height where the width of each bar is 1, find the area of largest rectangle in the histogram.
-</p>
-
-<p>
-<img src="http://www.leetcode.com/wp-content/uploads/2012/04/histogram.png"><br>
-</p><p style="font-size: 11px">Above is a histogram where width of each bar is 1, given height = <code>[2,1,5,6,2,3]</code>.</p>
-<p></p>
-
-<p>
-<img src="http://www.leetcode.com/wp-content/uploads/2012/04/histogram_area.png"><br>
-</p><p style="font-size: 11px">The largest rectangle is shown in the shaded area, which has area = <code>10</code> unit.</p>
-<p></p>
-
-<p>
-For example,<br>
-Given height = <code>[2,1,5,6,2,3]</code>,<br>
-return <code>10</code>.
-</p><p></p>
-          </div>
-
-
-<h3>Stats</h3>
-
-<table border="2">
-    <tr>
-        <td>Frequency</td>
-        <td bgcolor="lime">2</td>
-    </tr>
-    <tr>
-        <td>Difficulty</td>
-        <td bgcolor="red">5</td>
-    </tr>
-    <tr>
-        <td>Adjusted Difficulty</td>
-        <td bgcolor="red">5</td>
-    </tr>
-    <tr>
-        <td>Time to use</td>
-        <td bgcolor="red">----------</td>
-    </tr>
-</table>
-
-
-<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
-
-<h3>Analysis</h3>
-
-<p><strong>This is an extremely difficult question</strong>.</p>
-
-<p>The idea of the solution (using stack) seems understandable, but can be very tricky when coding.</p>
-
-<p><strong>The basic idea is, always keep increasing elements in the stack</strong>. When I see a decrease in number, pop stack. And I calculate max area only when poping elements. In the end, a &lsquo;0&rsquo; is inserted to the end, so that all stack item will be popped (and at the same time, max area been calculated).</p>
-
-<p>Sorry if I did not explain well enough. <a href="http://www.geeksforgeeks.org/largest-rectangle-under-histogram/">Here</a> is a better one:</p>
-
-<blockquote cite="http://www.geeksforgeeks.org/largest-rectangle-under-histogram/">
-<p>
-We traverse all bars from left to right, maintain a stack of bars.  Every bar is pushed to stack once.  A bar is popped from stack when a bar of smaller height is seen.  When a bar is popped, we calculate the area with the popped bar as smallest bar. How do we get left and right indexes of the popped bar – the current index tells us the ‘right index’ and index of previous item in stack is the ‘left index’.  Following is the complete algorithm.
-</p>
-<p><strong>1) </strong>Create an empty stack.</p>
-<p><strong>2) </strong>Start from first bar, and do following for every bar ‘hist[i]‘ where ‘i’ varies from 0 to n-1.<br>
-……<strong>a)</strong> If stack is empty or hist[i] is higher than the bar at top of stack, then push ‘i’ to stack.<br>
-……<strong>b)</strong> If this bar is smaller than the top of stack, then keep removing the top of stack while top of the stack is greater. Let the removed bar be hist[tp]. Calculate area  of rectangle with hist[tp] as smallest bar. For hist[tp], the ‘left index’ is previous (previous to tp) item in stack and ‘right index’ is ‘i’ (current index).</p>
-<p><strong>3)</strong> If the stack is not empty, then one by one remove all bars from stack and do step 2.b for every removed bar.</p>
-</blockquote>
-
-
-<p>Time complexity of the stack solution is <strong>O(n)</strong>. (Another algo analysis article <a href="http://tech-queries.blogspot.sg/2011/03/maximum-area-rectangle-in-histogram.html">here</a>)</p>
-
-<h3>Solution</h3>
-
-<p><strong>I wrote the code using idea from <a href="http://jane4532.blogspot.sg/2013/07/longest-rectangle-in-histogramleetcode.html">blog</a></strong>. It works, but there are 2 things that I got wrong.</p>
-
-<p><strong>First, if elements are equal</strong>. I shall also push it. I can not simply skip it, I don&rsquo;t know why!</p>
-
-<blockquote><p>if (stack.isEmpty() || cur >= height[stack.peek()])</p></blockquote>
-
-<p><strong>Second, about how to calculate the width of the rectangle</strong>. I used this before:</p>
-
-<blockquote><p>int width = stack.isEmpty() ? p : p - h;</p></blockquote>
-
-<p>It&rsquo;s wrong, I must get the value of next element from stack, and then calculate width. Why? there might be element been popped before, which locate between these 2 elements in stack.</p>
-
-<blockquote><p>int width = stack.isEmpty() ? p : p - stack.peek() - 1;</p></blockquote>
-
-<p><strong>Updated on July 4th, 2014</strong>: the above 2 points are very valid, especially the second. Keep in mind:</p>
-
-<ol>
-<li><p>The values in stack means the last position that a height can be found. For example, height is (2, 10, 5) then the stack would have (2, removed, 5). When calculating the area for height 5, we should note the removed space is in consideration as well.</p></li>
-<li><p>So, when equal height is found, pop it. Because you won&rsquo;t need it any more. The stack only stores last position this height is found.</p></li>
-<li><p>When stack is empty, the width of rectange should be calculated from 0.</p></li>
-</ol>
-
-
-<h3>Code</h3>
-
-<p><strong>My code written on July 4th, 2014</strong></p>
-
-<pre><code>public int largestRectangleArea(int[] height) {
-    if (height == null || height.length == 0) {
-        return 0;
-    }
-    Stack&lt;Integer&gt; stack = new Stack&lt;Integer&gt;();
-    stack.add(0);
-    int len = height.length;
-    int area = 0;
-    for (int i = 1; i &lt;= len; i++) {
-        int h = i == len ? 0 : height[i];
-        // pop a element and calculate its max area
-        // pop until the top element is smaller than h, then push h
-        while (!stack.isEmpty() &amp;&amp; h &lt;= height[stack.peek()]) {
-            int pos = stack.pop();
-            int width = stack.isEmpty() ? i : i - stack.peek() - 1;
-            area = Math.max(area, height[pos] * width);
-        }
-        stack.push(i);
-    }
-    return area;
-}
-</code></pre>
-
-<p><strong>My code written on July 18th, 2014</strong></p>
-
-<pre><code>public int largestRectangleArea(int[] height) {
-    if (height == null || height.length == 0) {
-        return 0;
-    }
-    int maxArea = Integer.MIN_VALUE;
-    Stack&lt;Integer&gt; stack = new Stack&lt;Integer&gt;();
-    int p = 0;
-    while (p &lt; height.length) {
-        if (stack.isEmpty() || height[stack.peek()] &lt;= height[p]) {
-            stack.push(p);
-            p++;
-        } else {
-            int h = stack.pop();
-            int w = stack.isEmpty() ? p : p - stack.peek() - 1;
-            int area = height[h] * w;
-            maxArea = Math.max(maxArea, area);
-        }
-    }
-    while (!stack.isEmpty()) {
-        int h = stack.pop();
-        int w = stack.isEmpty() ? p : p - stack.peek() -1;
-        int area = height[h] * w;
-        maxArea = Math.max(maxArea, area);
-    }
-    return maxArea;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/55">&larr; Older</a>
@@ -1675,9 +1602,8 @@ We traverse all bars from left to right, maintain a stack of bars.  Every bar is
 <li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
-<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
 <li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
@@ -1688,6 +1614,10 @@ We traverse all bars from left to right, maintain a stack of bars.  Every bar is
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
@@ -1703,10 +1633,6 @@ We traverse all bars from left to right, maintain a stack of bars.  Every bar is
     
       <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link 给定n种物品和一背包。物品i的重量是wi，体积是bi，其价值为vi，背包的容量为C，容积为D。问应如何选择装入背包中的物品，使得装入背包中物品的总价值最大？ 在选择装入背包的物品时，对每种物品i只有两种选择，即装入背包或者不装入背包。不能将物品i装入背包多次， &hellip;">
+  <meta name="description" content="Question link Four rectangles are given. Find the smallest enclosing (new) rectangle into which these four may be fitted without overlapping. By &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,107 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/29/Packing-Rectangles/">[Question] Packing Rectangles</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-29T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>29</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://olympiads.win.tue.nl/ioi95/task/pack.html">link</a></p>
+
+<blockquote><p>Four rectangles are given. Find the smallest enclosing (new) rectangle into which these four may be fitted without overlapping. By smallest rectangle we mean the one with the smallest area.</p></blockquote>
+
+<p><img class="middle" src="/assets/images/packing-rect.gif"></p>
+
+<h3>Greedy</h3>
+
+<p><a href="http://stackoverflow.com/a/1213571">Greedy</a> placement from <strong>large (area) to small</strong>.</p>
+
+<ol>
+<li>Put the largest rectangle remaining into your packed area.</li>
+<li>If it can&rsquo;t fit anywhere, place it in a place that extends the pack region as little as possible.</li>
+<li>Repeat until you finish with the smallest rectangle.</li>
+</ol>
+
+
+<h3>Optimal Solution</h3>
+
+<p><a href="http://stackoverflow.com/a/4264497">There is a trade-off</a> between implementation complexity/time and optimality, but there is a wide range of algorithms to choose from.</p>
+
+<p>Below is quoted:</p>
+
+<blockquote>
+    <div class="post-text" itemprop="text">
+<ol>
+<li><p>First-Fit Decreasing Height (FFDH) algorithm<br>
+FFDH packs the next item R (in non-increasing height) on the first level where R fits. If no level can accommodate R, a new level is created.<br>
+Time complexity of FFDH: O(n·log n).<br>
+Approximation ratio: FFDH(I)&lt;=(17/10)·OPT(I)+1; the asymptotic bound of 17/10 is tight.</p></li>
+<li><p>Next-Fit Decreasing Height (NFDH) algorithm<br>
+NFDH packs the next item R (in non-increasing height) on the current level if R fits. Otherwise, the current level is "closed" and a new level is created.<br>
+Time complexity: O(n·log n).<br>
+Approximation ratio: NFDH(I) &lt;= 2·OPT(I)+1; the asymptotic bound of 2 is tight.</p></li>
+<li><p>Best-Fit Decreasing Height (BFDH) algorithm<br>
+BFDH packs the next item R (in non-increasing height) on the level, among those that can accommodate R, for which the residual horizontal space is the minimum. If no level can accommodate R, a new level is created. </p></li>
+<li><p>Bottom-Left (BL) Algorithm<br>
+BL first order items by non-increasing width. BL packs the next item as near to the bottom as it will fit and then as close to the left as it can go without overlapping with any packed item. Note that BL is not a level-oriented packing algorithm.<br>
+Time complexity: O(n^2).<br>
+Approximation ratio: BL(I) &lt;= 3·OPT(I).  </p></li>
+<li><p>Baker's Up-Down (UD) algorithm<br>
+UD uses a combination of BL and a generalization of NFDH. The width of the strip and the items are normalized so that the strip is of unit width. UD orders the items in non-increasing width and then divides the items into five groups, each with width in the range (1/2, 1], (1/3,1/2], (1/4,1/3], (1/5,1/4], (0,1/5]. The strip is also divided into five regions R1, ··· , R5. Basically, some items of width in the range (1/i+1, 1/i], for 1 &lt;= i &lt;= 4, are packed to region Ri by BL. Since BL leaves a space of increasing width from top to bottom at the right side of the strip, UD takes this advantage by first packing the item to Rj for j = 1, ··· , 4 (in order) from top to bottom. If there is no such space, the item is packed to Ri by BL. Finally, items of size at most 1/5 are packed to the spaces in R1, ··· , R4 by the (generalized) NFDH algorithm. Again if there is no space in these regions, the item is packed to R5 using NFDH.<br>
+Approximation ratio: UD(I) &lt;= (5/4) · OPT(I)+(53/8)H, where H is the maximum height of the items; the asymptotic bound of 5/4 is tight.</p></li>
+<li><p>Reverse-fit (RF) algorithm<br>
+RF also normalizes the width of the strip and the items so that the strip is of unit width. RF first stacks all items of width greater than 1/2. Remaining items are sorted in non-increasing height and will be packed above the height H0 reached by those greater than 1/2. Then RF repeats the following process. Roughly speaking, RF packs items from left to right with their bottom along the line of height H0 until there is no more room. Then packs items from right to left and from top to bottom (called reverse-level) until the total width is at least 1/2. Then the reverse-level is dropped down until (at least) one of them touches some item below. The drop down is somehow repeated.<br>
+Approximation ratio: RF(I) &lt;= 2·OPT(I).</p></li>
+<li><p>Steinberg's algorithm<br>
+Steinberg's algorithm, denoted as M in the paper, estimates an upper bound of the height H required to pack all the items such that it is proved that the input items can be packed into a rectangle of width W and height H. They then define seven procedures (with seven conditions), each to divide a problem into two smaller ones and solve them recursively. It has been showed that any tractable problem satisfies one of the seven conditions.<br>
+Approximation ratio: M(I) &lt;= 2·OPT(I).</p></li>
+<li><p>Split-Fit algorithm (SF)
+SF divides items into two groups, L1 with width greater than 1/2 and L2 at most 1/2. All items of L1 are first packed by FFDH. Then they are arranged so that all items with width more than 2/3 are below those with width at most 2/3. This creates a rectangle R of space with width 1/3. Remaining items in L2 are then packed to R and the space above those packed with L1 using FFDH. The levels created in R are considered to be below those created above the packing of L1.<br>
+Approximation ratio: SF(I) &lt;= (3/2) ·OPT(I) + 2; the asymptotic bound of 3/2 is tight.</p></li>
+<li><p>Sleator's algorithm<br>
+Sleater's algorithm consists of four steps:</p>
+
+<ol>
+<li><p>All items of width greater than 1/2 are packed on top of one another in the bottom of the strip. Suppose h0 is the height of the resulting packing All subsequent packing will occur above h0.</p></li>
+<li><p>Remaining items are ordered by non-increasing height. A level of items are packed (in non-increasing height order) from left to right along the line of height h0. </p></li>
+<li><p>A vertical line is then drawn in the middle to cut the strip into two equal halves (note this line may cut an item that is packed partially in the right half). Draw two horizontal line segments of length one half, one across the left half (called the left baseline) and one across the right half (called the right baseline) as low as possible such that the two lines do not cross any item.</p></li>
+<li><p>Choose the left or right baseline which is of a lower height and pack a level of items into the corresponding half of the strip until the next item is too wide.</p></li>
+</ol>
+
+<p>A new baseline is formed and Step (4) is repeated on the lower baseline until all items are packed.<br>
+Time complexity: O(n ·log n).<br>
+The approximation ratio of Sleator's algorithm is 2.5 which is tight.</p></li>
+</ol>
+    </div>
+</blockquote>
+
+
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -787,128 +888,6 @@ Pop X
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/24/distributed-caching-memcached/">[Design] Distributed Caching - Memcached</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-24T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>What is Memcached?</h3>
-
-<p><a href="http://memcached.org/">Memcached</a> is an <strong>in-memory key-value store for small chunks of arbitrary data</strong> (strings, objects) from results of database calls, API calls, or page rendering.</p>
-
-<ol>
-<li>Free &amp; open source</li>
-<li>high-performance, distributed memory object caching system</li>
-<li>generic in nature</li>
-<li>intended for use in speeding up dynamic web applications by alleviating database load</li>
-</ol>
-
-
-<p>Definition from <a href="http://en.wikipedia.org/wiki/Memcached">wiki</a>:</p>
-
-<blockquote><p>Memcached is a <strong>general-purpose distributed memory caching system</strong>. It is often used to speed up dynamic database-driven websites by <strong>caching data and objects in RAM</strong> to reduce the number of times an <strong>external data source</strong> (such as a database or API) must be read.</p></blockquote>
-
-<h3>Who uses Memcached?</h3>
-
-<ol>
-<li>Facebook</li>
-<li>YouTube</li>
-<li>Twitter</li>
-<li>Amazon</li>
-<li>Reddit</li>
-<li>Yahoo</li>
-<li>Zynga</li>
-</ol>
-
-
-<h3>Why Memcached?</h3>
-
-<p>Run memcached on one or more hosts and then use the shared cache to store objects. Because each host’s RAM is storing information, the access speed <a href="http://www.blogs.zeenor.com/category/interview-questions/page/9">will be much faster than</a> having to load the information from disk. This can provide <strong>a significant performance boost in retrieving data</strong> versus loading the data natively from a database.</p>
-
-<p>Also, because the cache is just a repository for information, you can use the cache to store <strong>any data, including complex structures</strong> that would normally require a significant amount of effort to create, but in <strong>a ready-to-use format</strong>, helping to reduce the load on your MySQL servers.</p>
-
-<h3>FAQ</h3>
-
-<p><strong>What is Memcached?</strong></p>
-
-<p><a href="http://www.web-technology-experts-notes.in/2014/09/memcached-interview-questions-and-answers.html">It is component</a> which stored the data temporary for 1 Hour/ 6 Hour/1 Day etc. When we integrate the Memcached with our application, performance of application increased.</p>
-
-<p>Memcached is open source, high-performance distributed memory object used for caching so that execution can be enhanced at nth level.</p>
-
-<p><strong>Where Memcached can be used?</strong></p>
-
-<p>•  Social Networking -> Profile Caching</p>
-
-<p>•  Content Aggregation -> HTML/ Page Caching</p>
-
-<p>•  Ad targeting -> Cookie/profile tracking</p>
-
-<p>•  Relationship -> Session caching</p>
-
-<p>•  E-commerce -> Session and HTML caching</p>
-
-<p>•  Location-based services -> Data-base query scaling</p>
-
-<p>•  Gaming and entertainment -> Session caching</p>
-
-<p><strong>Why use Memcached?</strong></p>
-
-<p>•  Speed up application processes</p>
-
-<p>•  It determines what to store and what not to</p>
-
-<p>•  Reduce the number of retrieval requests to the database</p>
-
-<p>•  Cuts down the I/O ( Input/Output) access (hard disk)</p>
-
-<p><strong>In what condition does retrieving cache fail?</strong></p>
-
-<p>•  Memory allocated for the cache is exhausted</p>
-
-<p>•  Item from cache is deleted</p>
-
-<p>•  Individual item in the cache is expired</p>
-
-<p><strong>What is the drawback of Memcached?</strong></p>
-
-<p>•  It is not a persistent data store</p>
-
-<p>•  Not a database</p>
-
-<p>•  It is not an application specific</p>
-
-<p>•  It cannot cache large object</p>
-
-<p><strong>Give more details about memcached failures</strong></p>
-
-<p><a href="http://programmers.stackexchange.com/a/187101">Memcached servers</a> are indeed independent of each other. Memcached server is just an efficient key-value store implemented as in-memory hash table.</p>
-
-<p><strong>What makes memcached distributed is the client</strong>, which in most implementations can connect to a pool of servers. Typical implementations use consistent hashing, which means that when you add or remove server to/from a pool of N servers, you only have to remap 1/N keys.</p>
-
-<p>Typically keys are <strong>not duplicated</strong> on various hosts, as memcached is <strong>not meant to be persistent store</strong> and gives no guarantees that your value will persist (for example when running out of assigned memory, memcached server drops least recently used (LRU) elements). Thus it&rsquo;s assumed that your application should handle missing keys.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/15">&larr; Older</a>
@@ -934,9 +913,8 @@ Pop X
 <li class='category'><a href='/blog/categories/leetcode-plus/'>leetcode_plus (9)</a></li>
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
-<li class='category'><a href='/blog/categories/q-facebook/'>q-facebook (9)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (133)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
 <li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
@@ -947,6 +925,10 @@ Pop X
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2016/08/01/how-to-design-logging/">[Design] How to Design Logging</a>
@@ -962,10 +944,6 @@ Pop X
     
       <li class="post">
         <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/05/08/user-registry-table-design/">[Design] User Registry Table Design</a>
       </li>
     
   </ul>
