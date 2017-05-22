@@ -8,6 +8,8 @@ tags: [  ]
 
 # Question
 
+[link](https://en.wikipedia.org/wiki/Dutch_national_flag_problem)
+
 > Given an array A[] consisting 0s, 1s and 2s, write a function that sorts A[]. The functions should put all 0s first, then all 1s and all 2s in last.
 
     Example
