@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Design a web application to represent hierarchy of solar system. Give details of Persistence layer, business layer, presentation layer &hellip;">
+  <meta name="description" content="First Word A multilayered software architecture is a software architecture that uses many layers for allocating the different responsibilities of a &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,81 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/03/Multilayered-architecture/">[Design] Multilayered Architecture</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-03T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>First Word</h3>
+
+<p>A <a href="http://en.wikipedia.org/wiki/Multilayered_architecture">multilayered software architecture</a> is a software architecture that uses many layers for allocating the different responsibilities of a software product.</p>
+
+<h3>Layers</h3>
+
+<ol>
+<li><strong>Presentation layer</strong>
+
+<ol type="a">
+<li>UI layer, view layer</li>
+<li>presentation tier in multitier architecture</li>
+</ol>
+</li>
+<li><strong>Application layer</strong>
+
+<ol type="a">
+<li>also called service layer/GRASP Controller Layer</li>
+</ol>
+</li>
+<li><strong>Business layer</strong>
+
+<ol type="a">
+<li>also called business logic layer/domain layer</li>
+</ol>
+</li>
+<li>Infrastructure layer
+
+<ol>
+<li>data access layer/<strong>persistence layer</strong></li>
+<li>logging, networking, and other services which are required to support a particular business layer</li>
+</ol>
+</li>
+</ol>
+
+
+<h3>Conventions</h3>
+
+<p><strong>Application layer</strong> (or service layer) is sometimes considered a sublayer of <strong>business layer</strong>.</p>
+
+<p>If there&rsquo;s no explicit distinction between first 3 tiers, then it&rsquo;s a <strong>traditional client-server(two-tier) model</strong>.</p>
+
+<p>The <strong>application/business layers</strong> can, in fact, be further subdivided to emphasize distinct responsibility (eg. MVC).</p>
+
+<p>Sometimes there&rsquo;s <strong>business infrastructure layer(BI)</strong>, located between the business layer and infrastructure layer.</p>
+
+<p>Infrastructure layer can be partitioned into different levels (high-level or low-level). <strong>Developers focus on only the persistence capabilities</strong>, therefore only talk about persistence layer or data access layer.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -761,104 +836,6 @@ private int getNewPosition(int[] array, int pos, int half) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/31/Inorder-Successor-BST/">[Question] Inorder Successor in Binary Search Tree</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-07-31T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>31</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.geeksforgeeks.org/inorder-successor-in-binary-search-tree/">link</a></p>
-
-<blockquote><p>In Binary Tree, Inorder successor of a node is the next node in Inorder traversal of the Binary Tree. Inorder Successor is NULL for the last node in Inoorder traversal.</p>
-
-<p>Write a program with:</p>
-
-<ol>
-<li>parent pointer provided</li>
-<li>parent pointer not provided</li>
-</ol>
-</blockquote>
-
-<h3>Solution</h3>
-
-<p><strong>If have parent pointer, it&rsquo;s easy</strong>. Read solution <a href="http://tech-queries.blogspot.sg/2010/04/inorder-succesor-in-binary-tree.html">here</a> or <strong>[CC150v4] 4.5 Find Next Node in BST</strong>.</p>
-
-<p><strong>If no parent pointer, then we make use of the property of BST, can get an O(h) solution</strong>. h is the height.</p>
-
-<p>A very good solution from <a href="http://algorithmsandme.blogspot.sg/2013/08/binary-search-tree-inorder-successor.html">this blog</a>.</p>
-
-<ol>
-<li>Start with root.</li>
-<li>If the node is given has less than root, then search on left side <strong>and update successor</strong>.</li>
-<li>If the node is greater than root, then search in right part, <strong>don&rsquo;t update successor</strong>.</li>
-<li>If we find the node
-
-<ol>
-<li>if the node has right sub tree, then the minimum node on the right sub tree of node is the in-order successor.</li>
-<li>otherwise, just return successor</li>
-</ol>
-</li>
-</ol>
-
-
-<p>The most important point is: we only update <strong>successor</strong> during left turn, and don&rsquo;t update during right turn.</p>
-
-<h3>Code</h3>
-
-<p><strong>written by me</strong></p>
-
-<pre><code>public TreeNode inorderSuccessor(TreeNode root, TreeNode target) {
-    if (target.right != null) {
-        return this.findLeftMost(target.right);
-    } else {
-        return this.traverse(root, new TreeNode(-1), target);
-    }
-}
-
-private TreeNode traverse(TreeNode cur, TreeNode pre, TreeNode target) {
-    if (cur.val == target.val) {
-        return pre;
-    } else if (cur.val &lt; target.val) {
-        cur = cur.right;
-        return traverse(cur, pre, target);
-    } else {
-        pre = cur;
-        cur = cur.left;
-        return traverse(cur, pre, target);
-    }
-}
-
-private TreeNode findLeftMost(TreeNode node) {
-    while (node.left != null) {
-        node = node.left;
-    }
-    return node;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/38">&larr; Older</a>
@@ -885,9 +862,9 @@ private TreeNode findLeftMost(TreeNode node) {
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -896,6 +873,10 @@ private TreeNode findLeftMost(TreeNode node) {
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -911,10 +892,6 @@ private TreeNode findLeftMost(TreeNode node) {
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

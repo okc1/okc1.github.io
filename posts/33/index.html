@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link 给定一棵完全二叉树（complete binary tree）的根结点，统计该树的结点总数。 提示：使用O(n)的递归算法统计二叉树的结点数是一种显而易见的方法，此题中请利用完全二叉树的性质，想出效率更高的算法。 Solution Similar to binary &hellip;">
+  <meta name="description" content="Handshaking Handshaking is an automated process of negotiation that dynamically sets parameters of a communications channel established between two &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,77 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/11/Tcp-3way-handshake/">[Design] TCP 3-Way Handshake</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-11T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Handshaking</h3>
+
+<p><strong><a href="http://en.wikipedia.org/wiki/Handshaking">Handshaking</a> is an automated process of negotiation</strong> that dynamically sets parameters of a communications channel established between two entities before normal communication over the channel begins.</p>
+
+<p>It is usually a process that takes place when a computer is about to communicate with a foreign device to establish rules for communication.</p>
+
+<h3>TCP three-way handshake</h3>
+
+<p><strong><a href="http://www.inetdaemon.com/tutorials/internet/tcp/3-way_handshake.shtml">TCP three-way handshake</a></strong> is the method used by TCP set up a TCP/IP connection over an Internet Protocol based network.</p>
+
+<p>It&rsquo;s commonly referred to as &ldquo;<strong>SYN-SYN-ACK</strong>&rdquo;.</p>
+
+<p><img class="middle" src="/assets/images/3way-Tcp-handshake.png"></p>
+
+<h3>Process</h3>
+
+<ol>
+<li>Host A sends a TCP <strong>SYN</strong>chronize packet to Host B</li>
+<li>Host B receives A&rsquo;s SYN</li>
+<li>Host B sends a <strong>SYN</strong>chronize-<strong>ACK</strong>nowledgement</li>
+<li>Host A receives B&rsquo;s SYN-ACK</li>
+<li>Host A sends <strong>ACK</strong>nowledge</li>
+<li>Host B receives ACK.</li>
+<li>TCP socket connection is ESTABLISHED.</li>
+</ol>
+
+
+<p>Alternatively, there&rsquo;s a good illustration on <a href="http://en.wikipedia.org/wiki/Handshaking">wiki</a>:</p>
+
+<blockquote><p>Establishing a normal TCP connection requires three separate steps:</p>
+
+<ol>
+<li><p>The first host (Alice) sends the second host (Bob) a &ldquo;synchronize&rdquo; (SYN) message with its own sequence number x, which Bob receives.</p></li>
+<li><p>Bob replies with a synchronize-acknowledgment (SYN-ACK) message with its own sequence number y and acknowledgement number x + 1, which Alice receives.</p></li>
+<li><p>Alice replies with an acknowledgment message with acknowledgement number y + 1, which Bob receives and to which he doesn&rsquo;t need to reply.</p></li>
+</ol>
+</blockquote>
+
+<h3>Two more thing</h3>
+
+<p>Note that <strong>FTP, Telnet, HTTP, HTTPS, SMTP, POP3, IMAP, SSH</strong> and any other protocol that rides over TCP <strong>also has a three way handshake</strong> performed as connection is opened.</p>
+
+<p>TCP &lsquo;rides&rsquo; on top of Internet Protocol (IP) in the protocol stack. IP handles <strong>IP addressing and routing</strong> and gets the packets from one place to another, but TCP manages the <strong>actual communication sockets</strong> between endpoints.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -695,49 +766,6 @@ There are a set of defined signals that the kernel can generate or that can be g
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/09/Functional-programming/">[Design] Functional Programming</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-08-09T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Overview</h3>
-
-<p><strong><a href="http://stackoverflow.com/a/23290">A functional language</a> allows you to write a mathematical function</strong>, i.e. a function that takes n arguments and returns a value. If the program is executed, this function is evaluated.</p>
-
-<p>A purely functional program <strong>always yields the same value for an input</strong>, and the order of evaluation is not well-defined; which means that uncertain values like user input or random values are hard to model in purely functional languages.</p>
-
-<h3>One Sentence</h3>
-
-<p><strong>Functional programming is like describing your <a href="http://stackoverflow.com/a/23475">problem to a mathematician</a>. Imperative programming is like giving instructions to an idiot</strong>.</p>
-
-<h3>Pros and Cons</h3>
-
-<p>Functional Programming allows coding <a href="http://stackoverflow.com/a/24294">with fewer potentials for bugs</a> because each component is completely isolated. Also, using recursion and first-class functions allows for <strong>simple proofs of correctness</strong> which typically mirror the structure of the code.</p>
-
-<p>Functional programming languages are typically <a href="http://en.wikipedia.org/wiki/Functional_programming#Efficiency_issues">less efficient</a> in their use of CPU and memory than imperative languages such as C and Pascal.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/34">&larr; Older</a>
@@ -764,9 +792,9 @@ There are a set of defined signals that the kernel can generate or that can be g
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -775,6 +803,10 @@ There are a set of defined signals that the kernel can generate or that can be g
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -790,10 +822,6 @@ There are a set of defined signals that the kernel can generate or that can be g
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

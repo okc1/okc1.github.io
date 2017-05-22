@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question Given a BST, find the node that is larger/smaller than particular number Or the question can be: Given a binary search tree and a value k, &hellip;">
+  <meta name="description" content="Global variable? There is no such thing as a &lsquo;global variable&rsquo; in Java. In computer programming, a global variable is a variable that is &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,77 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/15/Java-Global-Variable/">[Java OOP] Java Global Variable</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-15T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Global variable?</h3>
+
+<p>There is no such thing as a &lsquo;global variable&rsquo; in Java.</p>
+
+<blockquote><p>In computer programming, a global variable is a variable that is accessible in every scope (the global environment). Some languages, like Java, don&rsquo;t have global variables. <a href="https://sg.answers.yahoo.com/question/index?qid=20110811104130AA5JrbR">reference</a></p></blockquote>
+
+<p>But static variable can be seen as one, although every static variable must belong to some class (like Math.MIN_VALUE).</p>
+
+<p>Global variables are generally only used for declaring constants. In this case, declare it as &lsquo;final static&rsquo;. <a href="http://stackoverflow.com/questions/4646577/global-variables-in-java">reference</a></p>
+
+<h3>Four types of variable in Java</h3>
+
+<h4>Local variables</h4>
+
+<p>Created when the method, constructor or block is entered and will be destroyed once it exits the method, constructor or block.</p>
+
+<h4>Instance variables</h4>
+
+<p>Outside a method or constructor.</p>
+
+<p>When a space is allocated for an object in the heap, a slot for each instance variable value is created. It is destroyed when the object is destroyed.</p>
+
+<h4>Class/static variables</h4>
+
+<p>Static variable is class variable.</p>
+
+<p>Declared with &lsquo;static&rsquo; keyword in a class.</p>
+
+<h4>Constants</h4>
+
+<p>Most common usage of static variable - constant.</p>
+
+<p>Declared with &lsquo;static final&rsquo; keyword in a class.</p>
+
+<h3>One more thing</h3>
+
+<p>About <a href="http://programmers.stackexchange.com/a/65289">stack and heap in Java</a>:</p>
+
+<blockquote><p>In Java, primitives are created on the stack.</p>
+
+<p>Objects are created on the heap, and only references (which in turn are primitives) are passed around on the stack.</p>
+
+<p>If you create an object, it is put on the heap, with all the variables that belong to it, so that it can persist after the function call returns.</p></blockquote>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1321,104 +1392,6 @@ public TreeNode deleteNode(TreeNode root, int val) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/10/Searching-a-2D-Sorted-Matrix/">[LeetCode Plus] Searching a 2D Sorted Matrix</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-06-10T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://leetcode.com/2010/10/searching-2d-sorted-matrix.html">link</a></p>
-
-<blockquote>
-<p class="font-color">Write an efficient algorithm that searches for a value in an <i>n</i> x <i>m</i> table (two-dimensional array). This table is sorted along the rows and columns — that is,</p><p class="font-color">Table[i][j] ≤ Table[i][j + 1], <br>Table[i][j] ≤ Table[i + 1][j]</p>
-</blockquote>
-
-
-<h3>Related questions</h3>
-
-<p><strong><a href="/blog/2014/05/21/Search-a-2D-Matrix/">Search a 2D Matrix</a></strong>.</p>
-
-<p><strong><a href="/blog/2014/06/10/Searching-a-2D-Sorted-Matrix/">Searching a 2D Sorted Matrix</a></strong>.</p>
-
-<p><strong><a href="/blog/2014/06/14/Count-negative-in-2D-Sorted-Matrix/">Count negative in a 2D Sorted Matrix</a></strong>.</p>
-
-<h3>Analysis</h3>
-
-<p>This is a extremely high-freq question. Almost every company will ask.</p>
-
-<p>This question is not to be confused with <strong><a href="/blog/2014/05/21/Search-a-2D-Matrix/">Search a 2D Matrix</a></strong>.</p>
-
-<p><strong>Solution One: Step-wise Linear Search</strong>. Standard solution.</p>
-
-<p>Time = O(n). Worse case 2n steps.</p>
-
-<p>Note that <strong>this is the best solution</strong>!</p>
-
-<p><img class="middle" src="/assets/images/search_2D_matrix_1.png"></p>
-
-<blockquote><p>begin with the upper right corner, we traverse one step to the left or bottom. For example, the picture below shows the traversed path (the red line) when we search for 13.
-    Essentially, each step we are able to eliminate either a row or a column.</p></blockquote>
-
-<p><strong>Solution Two: Quad Partition 四分法</strong>.</p>
-
-<p>Time = O(n<sup>1</sup>.58). Analysis can be found in the original question post.</p>
-
-<p><img class="middle" src="/assets/images/search_2D_matrix_2.png"></p>
-
-<p>Basic idea is like binary search - get mid and divide. We can then discard &frac14; of the matrix. For example: search for 6, we can discard the bottom right sub-matrix.</p>
-
-<p><strong>Solution Three: Diagonal-based binary partition</strong>. This is based on previous solution, but better.</p>
-
-<p>Time = O(nlgn).</p>
-
-<p><img class="middle" src="/assets/images/search_2D_matrix_3.png"></p>
-
-<p>This is a good solution, but it would fail in a non-square matrix, so&hellip;</p>
-
-<h3>Code</h3>
-
-<p><strong>step-wise linear search</strong></p>
-
-<pre><code>bool stepWise(int mat[][N_MAX], int N, int target, 
-              int &amp;row, int &amp;col) {
-  if (target &lt; mat[0][0] || target &gt; mat[N-1][N-1]) return false;
-  row = 0;
-  col = N-1;
-  while (row &lt;= N-1 &amp;&amp; col &gt;= 0) {
-    if (mat[row][col] &lt; target) 
-      row++;
-    else if (mat[row][col] &gt; target)
-      col--;
-    else
-      return true;
-  }
-  return false;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/47">&larr; Older</a>
@@ -1445,9 +1418,9 @@ public TreeNode deleteNode(TreeNode root, int val) {
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -1456,6 +1429,10 @@ public TreeNode deleteNode(TreeNode root, int val) {
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -1471,10 +1448,6 @@ public TreeNode deleteNode(TreeNode root, int val) {
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

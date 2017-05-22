@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Z-string-search | Woodstock Blog]]></title>
   <link href="http://www.shuati123.com/blog/categories/z-string-search/atom.xml" rel="self"/>
   <link href="http://www.shuati123.com/"/>
-  <updated>2017-05-13T10:47:07-07:00</updated>
+  <updated>2017-05-22T02:03:16-07:00</updated>
   <id>http://www.shuati123.com/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -12,6 +12,76 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[[Question] Trie Wildcard String Matching]]></title>
+    <link href="http://www.shuati123.com/blog/2017/05/22/Trie-Wildcard-String-Matching/"/>
+    <updated>2017-05-22T00:00:00-07:00</updated>
+    <id>http://www.shuati123.com/blog/2017/05/22/Trie-Wildcard-String-Matching</id>
+    <content type="html"><![CDATA[# Question
+
+[link](https://discuss.leetcode.com/topic/54332/wildcard-on-trie/2)
+
+> Given a trie data struture, implement add() and search() method, which support wildcard matching.
+
+eg. If trie contains ["cool", "kid", "kindle", "kind"]
+
+These would match: "co*l", "kind", "***"
+
+These won't: "**", "kid*", "coo"
+
+# Solution
+
+First, know how to build a trie, then know how to search in Trie. This could be tricky. Do Read On!
+
+1. Trie (root) start with an empty node. 
+2. When do searching, __ALWAYS assumes that current TrieNode is matched__. I.e. do not check value of current TrieNode. Instead, check current TrieNode's children, and find a match.
+3. The only case __you return true__, is when matching reaches current TrieNode, and __current TrieNode is an terminating node for a word__. 
+4. Be careful and __do not confuse yourself__ for which node you gonna match, and when you return true. 
+
+Read the code below. If you still have a hard time, read #2 and #3 above, again. 
+
+
+# Code
+
+	public boolean solve(TrieRoot trie, String word) {
+		if (word == null || word.length() == 0) {
+			return false;
+		}
+		return matchFromChildren(trie.getRoot(), word, 0);
+	}
+	
+	private boolean matchFromChildren(TrieNode node, String word, int index) {
+		// [important note] 
+		// regardless of the value of node.letter, match word[index...] from node.children
+		
+		if (index > word.length()) {
+			// impossible to reach here
+			return false;
+		} else if (index == word.length()) {
+			// word is now fully matched, check if isTerminalNode(node)
+			return node.isEndOfWord();
+		}
+		
+		char curLetter = word.charAt(index);
+		if (curLetter == '*') {
+			for (TrieNode child: node.getAllChildren()) {
+				if (matchFromChildren(child, word, index + 1)) {
+					return true;
+				}
+			}
+			return false;
+		} else {
+			TrieNode nextNode = node.getChild(curLetter);
+			if (nextNode == null) {
+				return false;
+			} else {
+				return matchFromChildren(nextNode, word, index + 1);
+			}
+		}
+	}
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[[Fundamental] Implement Trie and Suffix Tree]]></title>
@@ -224,35 +294,6 @@ The leaf nodes are quoted in ''.
 Insert and search costs __O(key_length)__, however the memory requirements of trie is __O(ALPHABET_SIZE * key_length * N)__ where N is number of keys in trie. 
 
 __Compressed trie__, ternary search tree, etc. can be used to minimize memory requirements of trie. 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[[Fundamental] Pattern Searching Algorithms]]></title>
-    <link href="http://www.shuati123.com/blog/2015/01/27/pattern-searching-algorithms/"/>
-    <updated>2015-01-27T00:00:00-08:00</updated>
-    <id>http://www.shuati123.com/blog/2015/01/27/pattern-searching-algorithms</id>
-    <content type="html"><![CDATA[[ref](http://www.geeksforgeeks.org/tag/pattern-searching/page/2/)
-
-### Overview
-
-strStr() is a classic question in CS. There are various ways to solve (which we have discussed before), this is a summarization: 
-
-1. naive - O(m * n) 
-
-1. [KMP](http://www.geeksforgeeks.org/searching-for-patterns-set-2-kmp-algorithm/) - O(n) in worst case
-
-1. [Rabin-Karp](http://www.geeksforgeeks.org/searching-for-patterns-set-3-rabin-karp-algorithm/), rolling hash - between O(m * n) and O(m + n)
-
-    Matches the hash value of the pattern with the hash value of pattern. If the hash values match, then only it starts matching individual characters. 
-
-1. [Modified naive algo](http://www.geeksforgeeks.org/pattern-searching-set-4-a-naive-string-matching-algo-question/), only work if pattern contains no duplicate characters. 
-
-    Only match the first char. This case is quite boring, can skip. 
-
-1. Suffix tree
-
-    Will discuss in details. 
 ]]></content>
   </entry>
   

@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link A peak element is an element that is greater than its neighbors. Given an input array where num[i] ? num[i+1], find a peak element and &hellip;">
+  <meta name="description" content="Question link Given an array of values, design and code an algorithm that returns whether there are two duplicates within k indices of each other? &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,64 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/12/duplicate-within-k-distance/">[Palantir] Find Duplicate Within K Distance</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-12T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=18517665">link</a></p>
+
+<blockquote><p>Given an array of values, design and code an algorithm that returns whether there are two duplicates within k indices of each other?</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>We can keep a HashMap for storing the previous occuring position of a number.</p>
+
+<h3>Code</h3>
+
+<pre><code>public boolean dupWithinK(int k, int[] arr) {
+    Set&lt;Integer&gt; set = new HashSet&lt;Integer&gt;();
+    for (int i = 0; i &lt; arr.length; i++) {
+        if (set.contains(arr[i])) {
+            return true;
+        }
+        if (i &lt; k) {
+            // the first k numbers
+            set.add(arr[i]);
+        } else {
+            // the (k+1) th number and onwards
+            set.add(arr[i]);
+            set.remove(arr[i - k]);
+        }
+    }
+    return false;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1072,74 +1130,6 @@ What if <i>duplicates</i> are allowed?</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/02/15/HBase-and-HDFS/">[Design] HBase and HDFS</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-02-15T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Overview</h3>
-
-<p><a href="http://hortonworks.com/hadoop/hdfs/">Hadoop Distributed File System</a> (HDFS) is a <strong>Java-based file system</strong> that provides scalable and reliable data storage that is designed to span large clusters of commodity servers. <strong>HDFS, MapReduce</strong>, and YARN form the core of Apache™ Hadoop®.</p>
-
-<p><a href="http://hbase.apache.org/">Apache HBase</a> is the Hadoop database, a distributed, scalable, big data store.</p>
-
-<h4>Hadoop</h4>
-
-<p>Hadoop is <a href="http://stackoverflow.com/a/16930049">basically 2 things</a>, a FS (Hadoop Distributed File System) and a computation framework (MapReduce).</p>
-
-<p>HDFS allows you store huge amounts of data in a distributed (provides faster read/write access) and redundant (provides better availability) manner. And MapReduce allows you to process this huge data in a distributed and parallel manner.</p>
-
-<p>But MapReduce is not limited to just HDFS.</p>
-
-<h4>HDFS and HBase</h4>
-
-<p>Being a FS, HDFS lacks the random read/write capability. It is good for sequential data access. And this is where HBase comes into picture. It is a NoSQL database that runs on top your Hadoop cluster and provides you random real-time read/write access to your data.</p>
-
-<h3>Now, the Comparison</h3>
-
-<p><strong>HDFS is a distributed file system</strong>. <a href="http://qr.ae/BqrVU">ref</a></p>
-
-<ol>
-<li>It is optimized for streaming access of large files. You would typically store files that are in the 100s of MB upwards on HDFS and access them through MapReduce to process them in batch mode.</li>
-<li>HDFS files are write once files. You can append to files in some of the recent versions but that is not a feature that is very commonly used. Consider HDFS files as write-once and read-many files. There is no concept of random writes.</li>
-<li>HDFS doesn&rsquo;t do random reads very well.</li>
-</ol>
-
-
-<p><strong>HBase is a database that stores it&rsquo;s data in a distributed filesystem</strong>.</p>
-
-<p>The filesystem of choice typically is HDFS owing to the tight integration between HBase and HDFS. It doesn&rsquo;t mean that HBase can&rsquo;t work on any other filesystem.</p>
-
-<ol>
-<li>Low latency access to small amounts of data from within a large data set. You can access single rows quickly from a billion row table.</li>
-<li>Flexible data model to work with and data is indexed by the row key.</li>
-<li>Fast scans across tables.</li>
-<li>Scale in terms of writes as well as total volume of data.</li>
-</ol>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/9">&larr; Older</a>
@@ -1166,9 +1156,9 @@ What if <i>duplicates</i> are allowed?</p>
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -1177,6 +1167,10 @@ What if <i>duplicates</i> are allowed?</p>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -1192,10 +1186,6 @@ What if <i>duplicates</i> are allowed?</p>
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question Imagine you have a 20 GB file with one string per line. Explain how you would sort the file. Solution Use External Sort. For example, for &hellip;">
+  <meta name="description" content="Question You'reworking on the Google Chrome team when you receivea bug report: Chrome crashes on launch. What would you do? Step 1: Understand the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,68 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/24/troubleshoot-google-chrome/">[CC150v5] 12.0 Example - Troubleshoot Google Chrome</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-24T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>You'reworking on the Google Chrome team when you receivea bug report: Chrome crashes on launch. What would you do?</p></blockquote>
+
+<h3>Step 1: Understand the Scenario</h3>
+
+<ol>
+<li>How long has user seen this issue?</li>
+<li>version of browser and OS?</li>
+<li>Does this happen consistently? How often, and when?</li>
+</ol>
+
+
+<h3>Step 2: Break Down the Problem</h3>
+
+<p>Flow of situation:</p>
+
+<ol>
+<li>start menu</li>
+<li>click chrome</li>
+<li>browser starts</li>
+<li>browser load settings</li>
+<li>browser issues HTTP response</li>
+<li>browser get HTTP response</li>
+<li>browser parses webpage</li>
+<li>browser displays content</li>
+</ol>
+
+
+<p><strong>At some points in this process, something fails</strong>. A good tester would iterate thru the elements of this scenario and diagnose the problem.</p>
+
+<h3>Step 3: Create Specific, Manageable Tests</h3>
+
+<p>Come up with realistic instructions.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -755,73 +817,6 @@ public static int helper(int[] array, int left, int right) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/16/binary-merge-two-numbers/">[CC150v5] 5.1 Binary Merge 2 Numbers</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-09-16T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>16</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<blockquote><p>You are given two 32-bit numbers, N andM, and two bit positions, i and j. Write a method to insert M into Nsuch that M starts at bit j and ends at bit i. You can assume that the bits j through i have enough space to fit all ofM. That is, ifM= 10011, you can assume that there are at least 5 bits between j and i. You would not, for example, have j-3 and i=2, because M could not fully fit between bit 3 and bit 2.</p>
-
-<p>EXAMPLE:</p>
-
-<p>Input: N = 16000000000, M = 10011, i = 2, j = 6</p>
-
-<p>Output: N = 10001001100</p></blockquote>
-
-<h3>Solution</h3>
-
-<p><strong>This is a basic bit manipulation question</strong>. The key is to use binary maks. Two things to note:</p>
-
-<ol>
-<li><p>The &lsquo;~&rsquo; means negate. So (~0) is a sequence of 1 (the value equals to -1).</p></li>
-<li><p>When shifting bits, <strong>DO NOT USE &lsquo;>>&rsquo; because it&rsquo;s signed shift</strong>. Instead, <strong>use &lsquo;>>>&rsquo; (unsigned right shift operator)</strong>.</p></li>
-</ol>
-
-
-<h3>Code</h3>
-
-<p><strong>written by me</strong></p>
-
-<pre><code>public static int myAnswer(int n, int m, int i, int j) {
-    int rr = (~0 &gt;&gt;&gt; (31 - j));
-    int ll = (~0 &lt;&lt; i);
-    // printBinary(rr);
-    // printBinary(ll);
-
-    int middleMask = ll &amp; rr;
-    int twoEndMask = ll ^ rr;
-
-    n = n &amp; twoEndMask;
-    m = (m &lt;&lt; i) &amp; middleMask;
-
-    return n | m;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/23">&larr; Older</a>
@@ -848,9 +843,9 @@ public static int helper(int[] array, int left, int right) {
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -859,6 +854,10 @@ public static int helper(int[] array, int left, int right) {
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -874,10 +873,6 @@ public static int helper(int[] array, int left, int right) {
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

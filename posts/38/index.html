@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Write a program to find the anti-clock-wise peripheral (boundary) of a complete tree. For a complete tree peripheral (boundary) is &hellip;">
+  <meta name="description" content="Question link In Binary Tree, Inorder successor of a node is the next node in Inorder traversal of the Binary Tree. Inorder Successor is NULL for the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,104 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/31/Inorder-Successor-BST/">[Question] Inorder Successor in Binary Search Tree</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-31T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>31</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.geeksforgeeks.org/inorder-successor-in-binary-search-tree/">link</a></p>
+
+<blockquote><p>In Binary Tree, Inorder successor of a node is the next node in Inorder traversal of the Binary Tree. Inorder Successor is NULL for the last node in Inoorder traversal.</p>
+
+<p>Write a program with:</p>
+
+<ol>
+<li>parent pointer provided</li>
+<li>parent pointer not provided</li>
+</ol>
+</blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>If have parent pointer, it&rsquo;s easy</strong>. Read solution <a href="http://tech-queries.blogspot.sg/2010/04/inorder-succesor-in-binary-tree.html">here</a> or <strong>[CC150v4] 4.5 Find Next Node in BST</strong>.</p>
+
+<p><strong>If no parent pointer, then we make use of the property of BST, can get an O(h) solution</strong>. h is the height.</p>
+
+<p>A very good solution from <a href="http://algorithmsandme.blogspot.sg/2013/08/binary-search-tree-inorder-successor.html">this blog</a>.</p>
+
+<ol>
+<li>Start with root.</li>
+<li>If the node is given has less than root, then search on left side <strong>and update successor</strong>.</li>
+<li>If the node is greater than root, then search in right part, <strong>don&rsquo;t update successor</strong>.</li>
+<li>If we find the node
+
+<ol>
+<li>if the node has right sub tree, then the minimum node on the right sub tree of node is the in-order successor.</li>
+<li>otherwise, just return successor</li>
+</ol>
+</li>
+</ol>
+
+
+<p>The most important point is: we only update <strong>successor</strong> during left turn, and don&rsquo;t update during right turn.</p>
+
+<h3>Code</h3>
+
+<p><strong>written by me</strong></p>
+
+<pre><code>public TreeNode inorderSuccessor(TreeNode root, TreeNode target) {
+    if (target.right != null) {
+        return this.findLeftMost(target.right);
+    } else {
+        return this.traverse(root, new TreeNode(-1), target);
+    }
+}
+
+private TreeNode traverse(TreeNode cur, TreeNode pre, TreeNode target) {
+    if (cur.val == target.val) {
+        return pre;
+    } else if (cur.val &lt; target.val) {
+        cur = cur.right;
+        return traverse(cur, pre, target);
+    } else {
+        pre = cur;
+        cur = cur.left;
+        return traverse(cur, pre, target);
+    }
+}
+
+private TreeNode findLeftMost(TreeNode node) {
+    while (node.left != null) {
+        node = node.left;
+    }
+    return node;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -771,103 +869,6 @@ After 4th pass: 1 3 7 13 19
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/27/Sliding-Window-Maximum/">[LeetCode Plus] Sliding Window Maximum</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-07-27T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://leetcode.com/2011/01/sliding-window-maximum.html">link</a></p>
-
-<blockquote><p>A long array A[] is given to you. There is a sliding window of size w which is moving from the very left of the array to the very right. You can only see the w numbers in the window. Each time the sliding window moves rightwards by one position. Following is an example:
-The array is [1, 3, -1, -3, 5, 3, 6, 7], and w is 3.</p></blockquote>
-
-<pre><code>Window position                Max
----------------               -----
-[1  3  -1] -3  5  3  6  7       3
- 1 [3  -1  -3] 5  3  6  7       3
- 1  3 [-1  -3  5] 3  6  7       5
- 1  3  -1 [-3  5  3] 6  7       5
- 1  3  -1  -3 [5  3  6] 7       6
- 1  3  -1  -3  5 [3  6  7]      7
-</code></pre>
-
-<blockquote><p>Input: A long array A[], and a window width w</p>
-
-<p>Output: An array B[], B[i] is the maximum value of from A[i] to A[i+w-1]</p></blockquote>
-
-<h3>Analysis</h3>
-
-<p><strong>The  naive approach is using a Heap</strong>. This time complexity is O(n*logn). However, there is a better way using a (double-ended) queue.</p>
-
-<p><strong>We do not need to <a href="http://n00tc0d3r.blogspot.sg/2013/04/sliding-window-maximum.html">keep all numbers</a></strong>. For example, suppose numbers in a window of size 4 are (1, 3, -1, 2). Obviously, no matter what next numbers are, 1 and -1 are never going to be a maximal as the window moving. The queue should look like (3, 2) in this case.</p>
-
-<h3>Solution</h3>
-
-<ol>
-<li>When moves to a new number, iterate through back of the queue, removes all numbers that are not greater than the new one, and then insert the new one to the back.</li>
-<li>FindMax only need to take the first one of the queue.</li>
-<li>To remove a number outside the window, only compare whether the current index is greater than the front of queue. If so, remove it.</li>
-</ol>
-
-
-<p><a href="http://leetcode.com/2011/01/sliding-window-maximum.html">A natural way</a> most people would think is to try to maintain the queue size the same as the window’s size. Try to break away from this thought and think out of the box.</p>
-
-<h3>Code</h3>
-
-<p>written by me</p>
-
-<pre><code>public int[] slidingWindowMax(int[] array, int w) {
-    int[] ans = new int[array.length - w + 1];
-    List&lt;Integer&gt; q = new LinkedList&lt;Integer&gt;();
-    // Queue stores indices of array, and values are in decreasing order.
-    // In this way, the top element in queue is the max in window
-    for (int i = 0; i &lt; array.length; i++) {
-        // 1. remove element from head until first number within window
-        if (!q.isEmpty() &amp;&amp; q.get(0) + w &lt;= i) {
-            // it's OK to change 'while' to 'if' in the line above
-            // cuz we actually remove 1 element at most
-            q.remove(0);
-        }
-        // 2. before inserting i into queue, remove from the tail of the
-        // queue indices with smaller value they array[i]
-        while (!q.isEmpty() &amp;&amp; array[q.get(q.size() - 1)] &lt;= array[i]) {
-            q.remove(q.size() - 1);
-        }
-        q.add(i);
-        // 3. set the max value in the window (always the top number in
-        // queue)
-        if (i + 1 &gt;= w) {
-            ans[i + 1 - w] = array[q.get(0)];
-        }
-    }
-    return ans;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/39">&larr; Older</a>
@@ -894,9 +895,9 @@ The array is [1, 3, -1, -3, 5, 3, 6, 7], and w is 3.</p></blockquote>
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -905,6 +906,10 @@ The array is [1, 3, -1, -3, 5, 3, 6, 7], and w is 3.</p></blockquote>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -920,10 +925,6 @@ The array is [1, 3, -1, -3, 5, 3, 6, 7], and w is 3.</p></blockquote>
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

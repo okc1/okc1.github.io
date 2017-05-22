@@ -9,8 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="ref Cluster VS. Grid Cluster differs from Cloud and Grid in that a cluster is a group of computers connected by a local area network (LAN)
-cloud and &hellip;">
+  <meta name="description" content="ref Distributed hash table A distributed hash table (DHT) is a class of a decentralized distributed system that provides a lookup service similar to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,139 @@ cloud and &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/06/distributed-hash-table/">[Design] Distributed Hash Table</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-06T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://blog.csdn.net/yfkiss/article/details/6977509">ref</a></p>
+
+<h3>Distributed hash table</h3>
+
+<p><strong>A <a href="http://en.wikipedia.org/wiki/Distributed_hash_table">distributed hash table</a> (DHT) is a class of a decentralized distributed system</strong> that provides a lookup service similar to a hash table. (key,value) pairs are stored in a DHT, and any participating node can efficiently retrieve the value associated with a given key.</p>
+
+<p>对于一个key/value对，DHT在分布式集群中，提供像HashTable一样的服务，例如简单快捷的存取、查询。</p>
+
+<p><img class="middle" src="/assets/images/DHT.png"></p>
+
+<p>DHTs form an infrastructure that can be used to build more complex services, such as anycast, cooperative Web caching, distributed file systems, domain name services, instant messaging, multicast, and also <strong>peer-to-peer file sharing</strong> and content distribution systems.</p>
+
+<h4>Properties</h4>
+
+<p>Unlike unstructured P2P, <strong>DHT is tightly coupled between nodes and file locations</strong>. (when request a content, directly go to the content instead of <strong>searching by flooding</strong>)</p>
+
+<p>DHT has the following properties:</p>
+
+<ol>
+<li><p><strong>Autonomy and Decentralization</strong>: the nodes collectively form the system without any central coordination.</p></li>
+<li><p><strong>Fault tolerance</strong>: the system should be reliable (in some sense) even with nodes continuously joining, leaving, and failing.</p></li>
+<li><p><strong>Scalability</strong>: the system should function efficiently even with thousands or millions of nodes.</p></li>
+</ol>
+
+
+<h4>Building a DHT</h4>
+
+<ol>
+<li>Hash function that maps a file to a unique ID. Eg. hash(&ldquo;Harry Potter&rdquo;) -> 3912.</li>
+<li>Distribute <strong>range space</strong> for all nodes in the network.</li>
+<li>The desinated node stores the location of the file. (this is indirect approach)</li>
+</ol>
+
+
+<p><img class="middle" src="/assets/images/range-space.PNG"></p>
+
+<h4>Search in DHT</h4>
+
+<ol>
+<li>Search query <strong>routed to the node whose range covers the file</strong>.</li>
+<li>Each node would retains a <strong>routing information</strong> that is implemented in a fully distributed manner (i.e. no central point, no single point of failure).</li>
+</ol>
+
+
+<p>There is different hashing and routing techniques associated with DHT. The most important is <strong>Consistent Hashing</strong> and <strong>Chord Routing</strong>.</p>
+
+<h3>Consistent Hashing</h3>
+
+<p><strong><a href="http://en.wikipedia.org/wiki/Consistent_hashing">Consistent hashing</a></strong> is a special kind of hashing such that when a hash table is resized and consistent hashing is used, <strong>only K/n keys need to be remapped</strong> on average, where K is the number of keys, and n is the number of slots.</p>
+
+<h4>Motivation</h4>
+
+<p>In most traditional hash tables, a change in the number of array slots causes <strong>nearly all keys</strong> to be remapped. Specifically, <a href="http://blog.csdn.net/sparkliang/article/details/5279393">the 3 cases below</a> can end up in a technology crisis:</p>
+
+<ol>
+<li><p>leaves/failures - 一个 cache 服务器 m down 掉了（在实际应用中必须要考虑这种情况），这样所有映射到 cache m 的对象都会失效，怎么办，需要把 cache m 从 cache 中移除，这时候 cache 是 N-1 台，映射公式变成了 hash(object)%(N-1)；</p></li>
+<li><p>join - 由于访问加重，需要添加 cache ，这时候 cache 是 N+1 台，映射公式变成了 hash(object)%(N+1)</p></li>
+<li><p>scalability - 由于硬件能力越来越强，你可能想让后面添加的节点多做点活，显然上面的 hash 算法也做不到。</p></li>
+</ol>
+
+
+<h4>Technique</h4>
+
+<p>Consistent hashing is based on mapping each object to a point on the edge of a circle. The system maps each available machine to pseudo-randomly distributed points on the edge of the same circle.</p>
+
+<ol>
+<li>假定哈希key均匀的分布在一个环上</li>
+<li>所有的节点也都分布在同一环上</li>
+<li>每个节点只负责一部分Key，当节点加入、退出时只影响加入退出的节点和其邻居节点或者其他节点只有少量的Key受影响</li>
+</ol>
+
+
+<p>For a very detailed steps of consistent hashing, read <a href="http://blog.csdn.net/sparkliang/article/details/5279393">this Chinese blog</a>.</p>
+
+<p><img class="middle" src="/assets/images/consistent-hashing.PNG"></p>
+
+<p>In this way, 一致性Hash在node加入/离开时，不会导致映射关系的重大变化。</p>
+
+<h3>Routing (searching)</h3>
+
+<p><strong>Simple Routing</strong> would search successor node, and runtime is linear. These node would keep O(1) <strong>routing information</strong>, and spend O(n) time in <strong>query routing</strong>.</p>
+
+<p>Otherwise, we make every node store ID and IP of all nodes, thus query routing takes O(1) but routing information is O(n).</p>
+
+<p>We&rsquo;ll now discuss <strong>Chord Routing</strong>.</p>
+
+<h4>Chord Routing</h4>
+
+<p>Each node stores more info <strong>closely following it</strong> on the identifier circle than nodes further away. That is, the subsequent nodes at position 1, 2, 4, 8, 16, 32&hellip; (each entry is called a <strong>finger</strong>)</p>
+
+<p><img class="middle" src="/assets/images/chord-routing.PNG"></p>
+
+<p>为网络中每个Node分配一个唯一id（可以通过机器的mac地址做Hash），假设整个网络有N 个节点，我们可以认为这些整数首尾相连形成一个环，称之为Chord环。两个节点间的距离定义为节点间下标差，每个节点会存储一张路由表(Finger表)，表内顺时针按照离本节点2、4、8、16、32.……2i的距离选定log2N个其他节点的ip信息来记录。</p>
+
+<p><strong>Routing information</strong> maintained at each node: O(logN).</p>
+
+<p><strong>Query routing</strong> take O(logN) time.</p>
+
+<h3>Join and leave in Chord</h3>
+
+<p>It&rsquo;s very much like insertion and removal in Doubly Linked List. Read it yourself.</p>
+
+<p><img class="middle" src="/assets/images/join-in-chord.PNG"></p>
+
+<p>Special thanks to the online resources written by some CSDN bloggers.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -954,79 +1086,6 @@ public final void wait(long timeout, int nanos)
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/12/22/can-interface-extend-interface/">[Java OOP] Interface Extend Another Interface</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-12-22T00:00:00-08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Can an interface extend another interface in Java?</h3>
-
-<p>Yes. Just remember that you should implement the methods in <a href="http://www.programmerinterview.com/index.php/java-questions/java-can-an-interface-extend-another-interface/">both interfaces</a>.</p>
-
-<p>Example in Java source code <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html">link1</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Collection.html">link2</a>:</p>
-
-<pre><code>public interface List&lt;E&gt; extends Collection&lt;E&gt; {
-
-}
-
-public interface Collection&lt;E&gt; extends Iterable&lt;E&gt; {
-
-}
-</code></pre>
-
-<p>In conclusion, <a href="http://stackoverflow.com/questions/19546357/can-an-interface-extend-multiple-interfaces-in-java">ref</a></p>
-
-<p>An interface can extend multiple interfaces.</p>
-
-<p>A class can implement multiple interfaces.</p>
-
-<p>However, a class can only extend a single class.</p>
-
-<h4>a special case</h4>
-
-<pre><code>interface A
-{
-    void test();
-}
-
-interface B 
-{
-    void test();
-}
-
-class C implements A, B
-{
-    @Override
-    public void test() {
-
-    }
-}
-</code></pre>
-
-<p>Well, a single implementation works for the both methods. This implementation works no problem.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/20">&larr; Older</a>
@@ -1053,9 +1112,9 @@ class C implements A, B
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -1064,6 +1123,10 @@ class C implements A, B
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -1079,10 +1142,6 @@ class C implements A, B
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

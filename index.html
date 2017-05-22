@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question Given an array A[] consisting 0s, 1s and 2s, write a function that sorts A[]. The functions should put all 0s first, then all 1s and all 2s &hellip;">
+  <meta name="description" content="Question link Given a trie data struture, implement add() and search() method, which support wildcard matching. eg. If trie contains [&ldquo;cool& &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -71,6 +71,99 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2017-05-22T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2017</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Question</h1>
+
+<p><a href="https://discuss.leetcode.com/topic/54332/wildcard-on-trie/2">link</a></p>
+
+<blockquote><p>Given a trie data struture, implement add() and search() method, which support wildcard matching.</p></blockquote>
+
+<p>eg. If trie contains [&ldquo;cool&rdquo;, &ldquo;kid&rdquo;, &ldquo;kindle&rdquo;, &ldquo;kind&rdquo;]</p>
+
+<p>These would match: &ldquo;co<em>l&rdquo;, &ldquo;kind&rdquo;, &ldquo;</em>**&rdquo;</p>
+
+<p>These won&rsquo;t: &ldquo;<em>*&rdquo;, &ldquo;kid</em>&rdquo;, &ldquo;coo&rdquo;</p>
+
+<h1>Solution</h1>
+
+<p>First, know how to build a trie, then know how to search in Trie. This could be tricky. Do Read On!</p>
+
+<ol>
+<li>Trie (root) start with an empty node.</li>
+<li>When do searching, <strong>ALWAYS assumes that current TrieNode is matched</strong>. I.e. do not check value of current TrieNode. Instead, check current TrieNode&rsquo;s children, and find a match.</li>
+<li>The only case <strong>you return true</strong>, is when matching reaches current TrieNode, and <strong>current TrieNode is an terminating node for a word</strong>.</li>
+<li>Be careful and <strong>do not confuse yourself</strong> for which node you gonna match, and when you return true.</li>
+</ol>
+
+
+<p>Read the code below. If you still have a hard time, read #2 and #3 above, again.</p>
+
+<h1>Code</h1>
+
+<pre><code>public boolean solve(TrieRoot trie, String word) {
+    if (word == null || word.length() == 0) {
+        return false;
+    }
+    return matchFromChildren(trie.getRoot(), word, 0);
+}
+
+private boolean matchFromChildren(TrieNode node, String word, int index) {
+    // [important note] 
+    // regardless of the value of node.letter, match word[index...] from node.children
+
+    if (index &gt; word.length()) {
+        // impossible to reach here
+        return false;
+    } else if (index == word.length()) {
+        // word is now fully matched, check if isTerminalNode(node)
+        return node.isEndOfWord();
+    }
+
+    char curLetter = word.charAt(index);
+    if (curLetter == '*') {
+        for (TrieNode child: node.getAllChildren()) {
+            if (matchFromChildren(child, word, index + 1)) {
+                return true;
+            }
+        }
+        return false;
+    } else {
+        TrieNode nextNode = node.getChild(curLetter);
+        if (nextNode == null) {
+            return false;
+        } else {
+            return matchFromChildren(nextNode, word, index + 1);
+        }
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a></h1>
     
     
@@ -88,6 +181,8 @@
 
 
   <div class="entry-content"><h1>Question</h1>
+
+<p><a href="https://en.wikipedia.org/wiki/Dutch_national_flag_problem">link</a></p>
 
 <blockquote><p>Given an array A[] consisting 0s, 1s and 2s, write a function that sorts A[]. The functions should put all 0s first, then all 1s and all 2s in last.</p></blockquote>
 
@@ -964,121 +1059,6 @@ textfile.close()
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-11-18T00:00:00-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1>Overview</h1>
-
-<p><strong><a href="https://en.wikipedia.org/wiki/Strategy_pattern">Strategy pattern</a></strong> (also known as the policy pattern) is a design pattern that <strong>enables an algorithm&rsquo;s behavior to be selected</strong> at runtime.</p>
-
-<p>For instance, a class that performs <strong>validation on incoming data</strong> may use a strategy pattern to select a validation algorithm <strong>based on the type of data</strong>, the source of the data, user choice&hellip; These factors are not known <strong>until run-time</strong>&hellip;</p>
-
-<h2>A car example</h2>
-
-<p>Since accelerate and brake behaviors change frequently between models, <strong>a common approach is to implement these behaviors in subclasses</strong>. This approach has significant drawbacks: accelerate and brake behaviors <strong>must be declared in each new Car model</strong>.</p>
-
-<p><img class="middle" src="/assets/images/600px-StrategyPattern_IBrakeBehavior.png"></p>
-
-<p>The strategy pattern uses <strong>composition</strong> instead of inheritance. This allows:</p>
-
-<ol>
-<li><p>better <strong>decoupling between the behavior</strong> and the class that uses it. (i.e. behavior can be changed without breaking the classes that use it)</p></li>
-<li><p>classes can switch between behaviors by changing the specific implementation used without requiring any significant code changes.</p></li>
-</ol>
-
-
-<p>Code:</p>
-
-<pre><code>/* Encapsulated family of Algorithms 
- * Interface and its implementations
- */
-public interface IBrakeBehavior {
-    public void brake(); 
-}
-
-public class BrakeWithABS implements IBrakeBehavior {
-    public void brake() {
-        System.out.println("Brake with ABS applied");
-    }
-}
-
-public class Brake implements IBrakeBehavior {
-    public void brake() {
-        System.out.println("Simple Brake applied");
-    }
-}
-
-
-/* Client which can use the algorithms above interchangeably */
-public abstract class Car {
-    protected IBrakeBehavior brakeBehavior;
-
-    public void applyBrake() {
-        brakeBehavior.brake();
-    }
-
-    public void setBrakeBehavior(IBrakeBehavior brakeType) {
-        this.brakeBehavior = brakeType;
-    }
-}
-
-/* Client 1 uses one algorithm (Brake) in the constructor */
-public class Sedan extends Car {
-    public Sedan() {
-        this.brakeBehavior = new Brake();
-    }
-}
-
-/* Client 2 uses another algorithm (BrakeWithABS) in the constructor */
-public class SUV extends Car {
-    public SUV() {
-        this.brakeBehavior = new BrakeWithABS();
-    }
-}
-
-
-/* Using the Car Example */
-public class CarExample {
-    public static void main(String[] args) {
-        Car sedanCar = new Sedan();
-        sedanCar.applyBrake();  // This will invoke class "Brake"
-
-        Car suvCar = new SUV(); 
-        suvCar.applyBrake();    // This will invoke class "BrakeWithABS"
-
-        // set brake behavior dynamically
-        suvCar.setBrakeBehavior( new Brake() ); 
-        suvCar.applyBrake();    // This will invoke class "Brake" 
-    }
-}
-</code></pre>
-
-<p>This gives greater flexibility in design and is in harmony with the <strong><a href="https://en.wikipedia.org/wiki/Open/closed_principle">Open/closed principle</a></strong> (OCP) that states that <strong>classes should be open for extension but closed for modification</strong>.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/2">&larr; Older</a>
@@ -1103,9 +1083,9 @@ public class CarExample {
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -1114,6 +1094,10 @@ public class CarExample {
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -1129,10 +1113,6 @@ public class CarExample {
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap &hellip;">
+  <meta name="description" content="Question link Given an array of strings, return all groups of strings that are anagrams. Note: All inputs will be in lower-case. Stats Frequency 4 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,105 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/15/Anagrams/">[LeetCode 49] Anagrams</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-15T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/anagrams/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Given an array of strings, return all groups of strings that are anagrams.
+</p>
+
+<p>Note: All inputs will be in lower-case.</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is not an extremely difficult question, but I always get TLE error</strong> (Time limit exceeded), before I realize that I have to use HashMap.</p>
+
+<h3>Solution</h3>
+
+<p><strong>The solution is making use of HashMap</strong> and sorting to check anagrams. For more, read <a href="http://blog.csdn.net/xudli/article/details/8550425">this blog</a>.</p>
+
+<h3>My code</h3>
+
+<pre><code>public class Solution {
+    public List&lt;String&gt; anagrams(String[] strs) {
+        List&lt;String&gt; ans = new ArrayList&lt;String&gt;();
+        if (strs == null || strs.length == 0) {
+            return ans;
+        }
+        HashMap&lt;String, List&lt;String&gt;&gt; map = new HashMap&lt;String, List&lt;String&gt;&gt;();
+        for (String str: strs) {
+            char[] chars = str.toCharArray();
+            Arrays.sort(chars);
+            String sorted = String.valueOf(chars);
+            if (!map.containsKey(sorted)) {
+                map.put(sorted, new ArrayList&lt;String&gt;());
+            }
+            map.get(sorted).add(str);
+        }
+        for (List&lt;String&gt; list: map.values()) {
+            if (list.size() &gt; 1) {
+                ans.addAll(list);
+            }
+        }
+        return ans;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1388,149 +1487,6 @@ Note: The sequence of integers will be represented as a string.
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/13/Combination-Sum-II/">[LeetCode 40] Combination Sum II</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-05-13T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://oj.leetcode.com/problems/combination-sum-ii/">link</a></p>
-
-<div class="question-content">
-            <p></p><p>
-Given a collection of candidate numbers (<b><i>C</i></b>) and a target number (<b><i>T</i></b>), find all unique combinations in <b><i>C</i></b> where the candidate numbers sums to <b><i>T</i></b>.
-</p>
-
-<p>Each number in <b><i>C</i></b> may only be used <b>once</b> in the combination.
-</p>
-<p><b>Note:</b><br>
-</p><ul>
-<li>All numbers (including target) will be positive integers.</li>
-<li>Elements in a combination (<i>a</i><sub>1</sub>, <i>a</i><sub>2</sub>, … , <i>a</i><sub>k</sub>) must be in non-descending order. (ie, <i>a</i><sub>1</sub> ≤ <i>a</i><sub>2</sub> ≤ … ≤ <i>a</i><sub>k</sub>).</li>
-<li>The solution set must not contain duplicate combinations.</li>
-</ul>
-<p></p>
-
-<p>
-For example, given candidate set <code>10,1,2,7,6,1,5</code> and target <code>8</code>, <br>
-A solution set is: <br>
-<code>[1, 7]</code> <br>
-<code>[1, 2, 5]</code> <br>
-<code>[2, 6]</code> <br>
-<code>[1, 1, 6]</code> <br>
-</p><p></p>
-          </div>
-
-
-<h3>Stats</h3>
-
-<table border="2">
-    <tr>
-        <td>Frequency</td>
-        <td bgcolor="lime">2</td>
-    </tr>
-    <tr>
-        <td>Difficulty</td>
-        <td bgcolor="red">4</td>
-    </tr>
-    <tr>
-        <td>Adjusted Difficulty</td>
-        <td bgcolor="yellow">3</td>
-    </tr>
-    <tr>
-        <td>Time to use</td>
-        <td bgcolor="yellow">--------</td>
-    </tr>
-</table>
-
-
-<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
-
-<h3>Analysis</h3>
-
-<p><strong>This problem is derived from the &ldquo;Combination Sum&rdquo; problem</strong>.</p>
-
-<p>The solution is the &ldquo;Combination Sum&rdquo; solution plus some duplication avoidance technique.</p>
-
-<h3>Solution</h3>
-
-<p><strong>Main part of this solution is same as &ldquo;Combination Sum&rdquo;</strong>. There is only 2 lines of code that needs to be added/modified.</p>
-
-<p><strong>First change</strong>, When go into the next recursive call, instead of:</p>
-
-<pre><code>helper(ans, cand, path, i, len, target - cand[i]);
-</code></pre>
-
-<p>Change it to</p>
-
-<pre><code>helper(ans, cand, path, i + 1, len, target - cand[i]);
-</code></pre>
-
-<p><strong>Second change</strong>, inside the for-loop, instead of getting next element right away, we get the element with different value. The additional code is:</p>
-
-<pre><code>if (i &gt; pos &amp;&amp; candidates[i] == candidates[i - 1]) {
-    continue;
-}
-</code></pre>
-
-<h3>My code</h3>
-
-<pre><code>public class Solution {
-    public List&lt;List&lt;Integer&gt;&gt; combinationSum2(int[] candidates, int target) {
-        List&lt;List&lt;Integer&gt;&gt; ans = new ArrayList&lt;List&lt;Integer&gt;&gt;();
-        if (candidates == null || candidates.length == 0) {
-            return ans;
-        }
-        Arrays.sort(candidates);
-        int len = candidates.length;
-        helper(ans, candidates, new ArrayList&lt;Integer&gt;(), 0, len, target);
-        return ans;
-    }
-
-    private void helper(List&lt;List&lt;Integer&gt;&gt; ans, int[] cand, List&lt;Integer&gt; path, int pos, int len, int target) {
-        if (target == 0) {
-            ans.add(new ArrayList&lt;Integer&gt;(path));
-            return;
-        } else if (target &lt; 0) {
-            return;
-        }
-        for (int i = pos; i &lt; len; i++) {
-            // if 'i' points to a repeated number, skip.
-            if (i &gt; pos &amp;&amp; cand[i] == cand[i - 1]) {
-                continue;
-            }
-            // insert cand[i] into path list, and continue search dfs
-            path.add(cand[i]);
-            helper(ans, cand, path, i + 1, len, target - cand[i]);
-            path.remove(path.size() - 1);
-        }
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/60">&larr; Older</a>
@@ -1557,9 +1513,9 @@ A solution set is: <br>
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -1568,6 +1524,10 @@ A solution set is: <br>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -1583,10 +1543,6 @@ A solution set is: <br>
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

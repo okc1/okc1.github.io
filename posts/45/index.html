@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link You are given 2 eggs. You have access to a 100-storey building. Eggs can be very hard or very fragile means it may break if dropped &hellip;">
+  <meta name="description" content="Cache Algorithms This post is originally written for Cache Algo only, before I found out this 2 topics are very similar, so I changed the title to & &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,129 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/23/Cache-algorithms/">[Design] Cache and Page Replacement Algorithms</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-23T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Cache Algorithms</h3>
+
+<p>This post is originally written for <strong>Cache Algo</strong> only, before I found out this 2 topics are very similar, so I changed the title to &ldquo;Cache and Page Replacement Algorithms&rdquo;.</p>
+
+<h4>Equation</h4>
+
+<p>of memory reference time is:</p>
+
+<p>T = m * T(m) + T(h) + E</p>
+
+<blockquote><p>m: miss ratio = 1 - hit ratio</p>
+
+<p>T(m): time for main memory access</p>
+
+<p>T(h): latency (when there&rsquo;s a hit)</p>
+
+<p>E: secondary effects liek queuing effects etc.</p></blockquote>
+
+<h4>hit ratio</h4>
+
+<p>how often a searched-for item is actually found in the cache</p>
+
+<h4>latency</h4>
+
+<p>how long after requesting a desired item the cache can return that item (when there is a hit).</p>
+
+<h3>Replacement policy</h3>
+
+<h4>Bélády&rsquo;s Algorithm (Optimal Algorithm)</h4>
+
+<p>The optimal algorithm, not implementable in practise.</p>
+
+<h4>LFU</h4>
+
+<p>Least Frequently Used, slow and not very adaptive.</p>
+
+<h4>LRU</h4>
+
+<p>Fast and adaptive, but hard to implement.</p>
+
+<p>It can be implemented with either a counter or a stack/doubleLinkedList.</p>
+
+<p>Web browser use this.</p>
+
+<h4>LRU2 and 2Qs</h4>
+
+<p><strong>LRU2</strong> - Only add entries to the cache the second time they are accessed.</p>
+
+<p><strong>Two Queues</strong> - Add entries to an normal LRU cache. If accessed again, move it to second, larger, LRU cache.</p>
+
+<h4>MRU (most recent used)</h4>
+
+<p>Some claim that MRU cache algorithms have more hits than LRU due to their tendency to retain older data.</p>
+
+<h4>FIFO</h4>
+
+<p>Low-overhead, fast but not adaptive.</p>
+
+<h4>Second-chance</h4>
+
+<p>Modified version of FIFO. Relatively better than FIFO at little cost.</p>
+
+<p>Initially, a reference bit is set. Instead of removing old entries, it clears reference bit first, and insert that entry at the back of the queue. An entry is only cleared if the reference bit is not set. This is like a circular queue.</p>
+
+<p>If all the pages have been referenced, second chance degenerates into pure FIFO. Why? Let&rsquo;s say all entries reference are set, the pointer will go around the entire list and clear all references, and in the end come back to the starting point. Then, it&rsquo;s like a FIFO. For more, see the <a href="http://javalandscape.blogspot.sg/2009/01/cachingcaching-algorithms-and-caching.html">link</a>.</p>
+
+<h4>Clock</h4>
+
+<p>Modified version of second-hand. Better than second hand. Instead of pushing to the back, it keep a &ldquo;hand&rdquo; pointer in the circular list. <a href="http://javalandscape.blogspot.sg/2009/01/cachingcaching-algorithms-and-caching.html">link</a></p>
+
+<p>When cache miss occurs and no empty place exists, then I consult the R (referenced) bit at the hand&rsquo;s location to know what I should do. If R is 0, then I will place the new entry at the &ldquo;hand&rdquo; position, otherwise I will clear the R bit. Then, I will increment the hand (iterator) and repeat the process until an entry is replaced.</p>
+
+<h4>Simple time-based</h4>
+
+<p>Fast, but not adaptive. Entries remain in cache for a specific amount of time.</p>
+
+<h4>Extended time-based expiration</h4>
+
+<p>Only clear cache at certain points in time (say every 5 minutes).</p>
+
+<h3>Conclusion</h3>
+
+<p>Each replacement strategy is a <strong>compromise between hit rate and latency</strong>.</p>
+
+<h4>One more thing</h4>
+
+<p>What is Distributed cache?</p>
+
+<p><a href="http://en.wikipedia.org/wiki/Distributed_cache">Distributed cache</a> is an extension of the traditional concept of cache used in a single locale.</p>
+
+<p>A distributed cache may <strong>span multiple servers</strong> so that it can grow in size and in transactional capacity. It is mainly used to store <strong>application data residing in database and web session data</strong>.</p>
+
+<p>The idea of distributed caching has become feasible now because main memory has become very cheap and network cards have become very fast (speed of 1 Gbit is now standard, and 10 Gbit is gaining traction).</p>
+
+<p>Also, a distributed cache works well on <strong>lower cost machines usually employed for web servers</strong> as opposed to <strong>database servers</strong> which require expensive hardware.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1509,77 +1632,6 @@ private boolean mirror(TreeNode left, TreeNode right) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/15/Java-Global-Variable/">[Java OOP] Java Global Variable</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-06-15T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Global variable?</h3>
-
-<p>There is no such thing as a &lsquo;global variable&rsquo; in Java.</p>
-
-<blockquote><p>In computer programming, a global variable is a variable that is accessible in every scope (the global environment). Some languages, like Java, don&rsquo;t have global variables. <a href="https://sg.answers.yahoo.com/question/index?qid=20110811104130AA5JrbR">reference</a></p></blockquote>
-
-<p>But static variable can be seen as one, although every static variable must belong to some class (like Math.MIN_VALUE).</p>
-
-<p>Global variables are generally only used for declaring constants. In this case, declare it as &lsquo;final static&rsquo;. <a href="http://stackoverflow.com/questions/4646577/global-variables-in-java">reference</a></p>
-
-<h3>Four types of variable in Java</h3>
-
-<h4>Local variables</h4>
-
-<p>Created when the method, constructor or block is entered and will be destroyed once it exits the method, constructor or block.</p>
-
-<h4>Instance variables</h4>
-
-<p>Outside a method or constructor.</p>
-
-<p>When a space is allocated for an object in the heap, a slot for each instance variable value is created. It is destroyed when the object is destroyed.</p>
-
-<h4>Class/static variables</h4>
-
-<p>Static variable is class variable.</p>
-
-<p>Declared with &lsquo;static&rsquo; keyword in a class.</p>
-
-<h4>Constants</h4>
-
-<p>Most common usage of static variable - constant.</p>
-
-<p>Declared with &lsquo;static final&rsquo; keyword in a class.</p>
-
-<h3>One more thing</h3>
-
-<p>About <a href="http://programmers.stackexchange.com/a/65289">stack and heap in Java</a>:</p>
-
-<blockquote><p>In Java, primitives are created on the stack.</p>
-
-<p>Objects are created on the heap, and only references (which in turn are primitives) are passed around on the stack.</p>
-
-<p>If you create an object, it is put on the heap, with all the variables that belong to it, so that it can persist after the function call returns.</p></blockquote>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/46">&larr; Older</a>
@@ -1606,9 +1658,9 @@ private boolean mirror(TreeNode left, TreeNode right) {
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -1617,6 +1669,10 @@ private boolean mirror(TreeNode left, TreeNode right) {
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -1632,10 +1688,6 @@ private boolean mirror(TreeNode left, TreeNode right) {
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

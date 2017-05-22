@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link You are given a function foo() that represents a biased coin. When foo() is called, it returns 0 with 60% probability, and 1 with 40% &hellip;">
+  <meta name="description" content="Question link Given weights and values of n items, put these items in a knapsack of capacity W to get the maximum total value. In other words, given &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,109 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/30/Knapsack-problem/">[Question] 0-1 Knapsack Problem</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-30T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.geeksforgeeks.org/dynamic-programming-set-10-0-1-knapsack-problem/">link</a></p>
+
+<blockquote><p>Given weights and values of n items, put these items in a knapsack of capacity W to get the maximum total value.</p>
+
+<p>In other words, given two integer arrays val[0..n-1] and wt[0..n-1] which represent values and weights. Also given an integer W which represents knapsack capacity, find out the maximum possible value.</p>
+
+<p>You cannot break an item, either pick it or don’t pick it (0-1 property).</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>This is a very similar question to <strong>[Question] Coin Change Problem</strong>, because directly using recursion to solve will result in a lot of re-calculations. It&rsquo;s a DP question.</p>
+
+<h3>Solution</h3>
+
+<p>First of all, define a 2D array, Knapsack(n,W) denotes getting &lsquo;n'th item, with weight 'W&rsquo;. When n == 0 or W = 0, dp value is 0.</p>
+
+<blockquote><p>int[][] Knapsack = new int[n + 1][W + 1];</p></blockquote>
+
+<p>Using &lsquo;n&rsquo; to denote the items to put into Knapsack. &lsquo;v&rsquo; is the value and &lsquo;w&rsquo; is the total weight.</p>
+
+<p>Now if item &lsquo;n&rsquo; is able to fit in:</p>
+
+<blockquote><p>Knapsack(n,W) = max(vn + Knapsack(n-1, W-wn), Knapsack(n-1, W))</p></blockquote>
+
+<p>If not able to fit in:</p>
+
+<blockquote><p>Knapsack(n,W) = Knapsack(n-1, W)</p></blockquote>
+
+<p>Refer to page 11 to 12 of <a href="http://www.cs.rit.edu/~zjb/courses/800/lec7.pdf">this pdf</a>.</p>
+
+<h3>Follow up</h3>
+
+<p>Look at the code, we checked dp[i-1][j]. Now the question is:</p>
+
+<blockquote><p>Do we need to check dp[i][j-1] ? (In case that total weight is not fully used up)</p></blockquote>
+
+<p>The answer is NO. We don&rsquo;t. Look at example: weights = {1, 2} and values = {3, 5}, and knapsack weight = 4. DP array would be:</p>
+
+<pre><code>[
+ [0, 0, 0, 0, 0],
+ [0, 3, 3, 3, 3],
+ [0, 3, 5, 8, 8]
+]
+</code></pre>
+
+<p>See that? The way that we keep DP array size int[items + 1][totalWeight + 1], the DP value is always 0 at 1st column and row.</p>
+
+<p>So, in the example when i == 1, total value is ALWAYS 3.</p>
+
+<h3>Code</h3>
+
+<pre><code>public int maxValNoDup(int totalWeight, int[] value, int[] weight) {
+    int items = value.length;
+    Arrays.sort(value);
+    Arrays.sort(weight);
+
+    int[][] dp = new int[items + 1][totalWeight + 1];
+    for (int i = 1; i &lt;= items; i++) {
+        for (int j = 1; j &lt;= totalWeight; j++) {
+            // we'll try to take i'th item, to fit in weight j
+            if (j &lt; weight[i - 1]) {
+                // not able to put in
+                dp[i][j] = dp[i - 1][j];
+            } else {
+                // we are able to take i'th item into knapsack
+                dp[i][j] = Math.max(dp[i - 1][j], value[i - 1]
+                        + dp[i - 1][j - weight[i - 1]]);
+            }
+        }
+    }
+    return dp[items][totalWeight];
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1359,57 +1462,6 @@ Remove:
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/28/Majority-Number-III/">[LintCode] Majority Number III</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-06-28T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.lintcode.com/en/problem/majority-number-iii/">link</a></p>
-
-<blockquote><p>Given an array of integers and a number k, the majority number is the number that occurs more than 1/k of the size of the array. Find it.</p>
-
-<p>Note: There is only one majority number in the array</p>
-
-<p>Example: For [3,1,2,3,2,3,3,4,4,4] and k = 3, return 3</p></blockquote>
-
-<h3>Analysis</h3>
-
-<p>Similar to &lsquo;Majority Number II&rsquo;, but a little more difficult.</p>
-
-<p><strong>Instead of keeping 2 value for checking, now keep k values</strong>. Since values are constantly checked for existance, using a HashMap looks like a great idea.</p>
-
-<p><strong>Another idea suggest by <a href="http://www.geeksforgeeks.org/given-an-array-of-of-size-n-finds-all-the-elements-that-appear-more-than-nk-times/">G4G</a> is a mechanism similar to the famous Tetris Game</strong>. The size of the buffer is k. The buffer is full, we remove all items by counter of 1. When counter reach 0, remove that item. In this way, the elements left in the buffer are the majority numbers.</p>
-
-<p>This method is also used in counting highly-frequent string keywrods. For example, another post <strong>[Design] Big Data - Real Time Top K</strong> discusses about it.</p>
-
-<h3>Code</h3>
-
-<p>I did not write code for this question. Shouldn&rsquo;t be difficult.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/44">&larr; Older</a>
@@ -1436,9 +1488,9 @@ Remove:
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -1447,6 +1499,10 @@ Remove:
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -1462,10 +1518,6 @@ Remove:
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

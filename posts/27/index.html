@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question You have two very large binary trees: T1, with millions of nodes, and T2, with hundreds of nodes. Create an algorithm to decide if T2 is a &hellip;">
+  <meta name="description" content="Question Write an algorithm to find the ‘next’ node (i.e., in-order successor) of a given node in a binary search tree where each node has a link to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,76 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/06/find-next-node-bst/">[CC150v4] 4.5 Find Next Node in BST</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-06T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Write an algorithm to find the ‘next’ node (i.e., in-order successor) of a given node in a binary search tree where each node has a link to its parent.</p></blockquote>
+
+<h3>Solution</h3>
+
+<ol>
+<li><p><strong>If current node have a right child</strong>, return the leftmost leaf of right child.</p></li>
+<li><p><strong>If current node have no right child</strong>:</p>
+
+<ol>
+<li><p>If current is parent&rsquo;s left child, then return parent node.</p></li>
+<li><p>If current is parent&rsquo;s right child, look all the way up until find a right-turning parent.</p></li>
+<li><p>If all parent is not right-turning. Return null.</p></li>
+</ol>
+</li>
+</ol>
+
+
+<h3>Code</h3>
+
+<p><strong>written by me</strong></p>
+
+<pre><code>public static TreeNode inorderSucc(TreeNode e) {
+    if (e == null)
+        return null;
+    if (e.right != null) {
+        TreeNode p = e.right;
+        while (p.left != null) {
+            p = p.left;
+        }
+        return p;
+    } else {
+        TreeNode p = e.parent;
+        while (p != null &amp;&amp; p.right == e) {
+            e = p;
+            p = e.parent;
+        }
+        return p;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -701,96 +771,6 @@ public void printAnagrams(String word) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/02/Array-distance-A(i)+A(j)+(j-i)/">[Google] Array Distance A(i)+A(j)+(j-i)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-09-02T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.mitbbs.com/article/JobHunting/32772225_3.html">link</a></p>
-
-<blockquote><p>Given an int array A[], define:</p>
-
-<p>distance = A[i] + A[j] + (j-i), j >= i.</p>
-
-<p>Find max distance in A[]</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>Solution suggested on floor 8 of <a href="http://www.mitbbs.com/mitbbs_article_t.php?board=JobHunting&amp;gid=32772225&amp;ftype=0">this post</a>.</p>
-
-<ol>
-<li><p>distance = (A[i] - i) + (A[j] + j), so we do 2 iteration in the array and calculate (A[i] - i) and (A[j] + j) respectively.</p></li>
-<li><p>save the max value of (A[i] - i) from left to right</p></li>
-<li><p>save the max value of (A[j] + j) from right to left</p></li>
-<li><p>last iteration, calculate result.</p></li>
-</ol>
-
-
-<p>Eg. input = {3, 3, 3, 5, 6, 4}</p>
-
-<blockquote><p>max value of (A[i] - i) from left to right: {3, 3, 3, 3, 3, 3}</p>
-
-<p>max value of (A[j] + j) from right to left: {10, 10, 10, 10, 10, 9}</p>
-
-<p>final result: 13</p></blockquote>
-
-<h3>Code</h3>
-
-<p><strong>written by me</strong></p>
-
-<pre><code>public int distance(int[] A) {
-    int len = A.length;
-    int[] arrayI = new int[len];
-    int[] arrayJ = new int[len];
-
-    arrayI[0] = A[0] - 0;
-    // arrayI stores max value of (A[i]-i) from left to right
-    arrayJ[len - 1] = A[len - 1] + (len - 1);
-    // arrayJ stores max value of (A[i]+i) from right to left
-
-    for (int i = 1; i &lt; len; i++) {
-        arrayI[i] = Math.max(arrayI[i - 1], A[i] - i);
-    }
-
-    for (int i = len - 2; i &gt;= 0; i--) {
-        arrayJ[i] = Math.max(arrayJ[i + 1], A[i] + i);
-    }
-
-    Common.printArray(arrayI);
-    Common.printArray(arrayJ);
-
-    int max = Integer.MIN_VALUE;
-    for (int i = 0; i &lt; len; i++) {
-        max = Math.max(max, arrayI[i] + arrayJ[i]);
-    }
-    return max;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/28">&larr; Older</a>
@@ -817,9 +797,9 @@ public void printAnagrams(String word) {
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -828,6 +808,10 @@ public void printAnagrams(String word) {
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -843,10 +827,6 @@ public void printAnagrams(String word) {
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

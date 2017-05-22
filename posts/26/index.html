@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question You have a very large array of ‘Person’ objects. Sort the people in increasing order of age. Solution First we look at the nature of this &hellip;">
+  <meta name="description" content="Question Given a two dimensional graph with points on it, find a line which passes the most number of points. Solution For this question, we used to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,129 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/08/find-coliner-in-2d-plane/">[CC150v4] 10.6 Find Collinear in 2D Plane</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-08T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Given a two dimensional graph with points on it, find a line which passes the most number of points.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>For this question, we used to use HashMap(Double, Integer) to do. However, the answer suggested in the book define its own Line Class, and uses HashMap(Line, Intger).</p>
+
+<p>This is a much better solution, however, I failed to write it, don&rsquo;t know why.</p>
+
+<p><strong>The key is to override the 2 methods</strong>:</p>
+
+<pre><code>@override
+public int hashCode() {}
+
+@override
+public boolean equals(Object o) {}
+</code></pre>
+
+<h3>Code</h3>
+
+<p><strong>not written by me</strong></p>
+
+<p>Line.java</p>
+
+<pre><code>public class Line {
+
+    private static double epsilon = .0001;
+
+    public double slope;
+    public double intercept;
+    private boolean infinite_slope = false;
+
+    public Line(GraphPoint p, GraphPoint q) {
+        if (Math.abs(p.x - q.x) &gt; epsilon) { // if x痴 are different
+            slope = (p.y - q.y) / (p.x - q.x); // compute slope
+            intercept = p.y - slope * p.x; // y intercept from y=mx+b
+        } else {
+            infinite_slope = true;
+            intercept = p.x; // x-intercept, since slope is infinite
+        }
+    }
+
+    public boolean isEqual(double a, double b) {
+        return (Math.abs(a - b) &lt; epsilon);
+    }
+
+    public void Print() {
+        System.out.println("slope = " + slope + "\nintercept = " + intercept);
+    }
+
+    @Override
+    public int hashCode() {
+        int sl = (int) (slope * 1000);
+        int in = (int) (intercept * 1000);
+        return sl | in;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        Line l = (Line) o;
+        if (isEqual(l.slope, slope) &amp;&amp; isEqual(l.intercept, intercept)
+                &amp;&amp; (infinite_slope == l.infinite_slope)) {
+            return true;
+        }
+        return false;
+    }
+}
+</code></pre>
+
+<p>Main method:</p>
+
+<pre><code>public static Line findBestLine(GraphPoint[] points) {
+
+    Line bestLine = null;
+    HashMap&lt;Line, Integer&gt; line_count = new HashMap&lt;Line, Integer&gt;();
+
+    for (int i = 0; i &lt; points.length; i++) {
+        for (int j = i + 1; j &lt; points.length; j++) {
+            Line line = new Line(points[i], points[j]);
+            if (!line_count.containsKey(line)) {
+                line_count.put(line, 0);
+            }
+            line_count.put(line, line_count.get(line) + 1);
+            if (bestLine == null
+                    || line_count.get(line) &gt; line_count.get(bestLine)) {
+                bestLine = line;
+                System.out.println("bestLine upodated! count = "
+                        + line_count.get(line));
+            }
+        }
+    }
+    return bestLine;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -712,76 +835,6 @@ private static void printPath(List&lt;Integer&gt; buffer, int start) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/06/find-next-node-bst/">[CC150v4] 4.5 Find Next Node in BST</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-09-06T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<blockquote><p>Write an algorithm to find the ‘next’ node (i.e., in-order successor) of a given node in a binary search tree where each node has a link to its parent.</p></blockquote>
-
-<h3>Solution</h3>
-
-<ol>
-<li><p><strong>If current node have a right child</strong>, return the leftmost leaf of right child.</p></li>
-<li><p><strong>If current node have no right child</strong>:</p>
-
-<ol>
-<li><p>If current is parent&rsquo;s left child, then return parent node.</p></li>
-<li><p>If current is parent&rsquo;s right child, look all the way up until find a right-turning parent.</p></li>
-<li><p>If all parent is not right-turning. Return null.</p></li>
-</ol>
-</li>
-</ol>
-
-
-<h3>Code</h3>
-
-<p><strong>written by me</strong></p>
-
-<pre><code>public static TreeNode inorderSucc(TreeNode e) {
-    if (e == null)
-        return null;
-    if (e.right != null) {
-        TreeNode p = e.right;
-        while (p.left != null) {
-            p = p.left;
-        }
-        return p;
-    } else {
-        TreeNode p = e.parent;
-        while (p != null &amp;&amp; p.right == e) {
-            e = p;
-            p = e.parent;
-        }
-        return p;
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/27">&larr; Older</a>
@@ -808,9 +861,9 @@ private static void printPath(List&lt;Integer&gt; buffer, int start) {
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -819,6 +872,10 @@ private static void printPath(List&lt;Integer&gt; buffer, int start) {
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -834,10 +891,6 @@ private static void printPath(List&lt;Integer&gt; buffer, int start) {
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

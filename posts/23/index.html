@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question An animal shelter holds only dogs and cats. People must adopt either the &ldquo;oldest&rdquo; animals, or they can select whether they would &hellip;">
+  <meta name="description" content="Question You are given two 32-bit numbers, N andM, and two bit positions, i and j. Write a method to insert M into Nsuch that M starts at bit j and &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,73 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/16/binary-merge-two-numbers/">[CC150v5] 5.1 Binary Merge 2 Numbers</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-09-16T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>16</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>You are given two 32-bit numbers, N andM, and two bit positions, i and j. Write a method to insert M into Nsuch that M starts at bit j and ends at bit i. You can assume that the bits j through i have enough space to fit all ofM. That is, ifM= 10011, you can assume that there are at least 5 bits between j and i. You would not, for example, have j-3 and i=2, because M could not fully fit between bit 3 and bit 2.</p>
+
+<p>EXAMPLE:</p>
+
+<p>Input: N = 16000000000, M = 10011, i = 2, j = 6</p>
+
+<p>Output: N = 10001001100</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>This is a basic bit manipulation question</strong>. The key is to use binary maks. Two things to note:</p>
+
+<ol>
+<li><p>The &lsquo;~&rsquo; means negate. So (~0) is a sequence of 1 (the value equals to -1).</p></li>
+<li><p>When shifting bits, <strong>DO NOT USE &lsquo;>>&rsquo; because it&rsquo;s signed shift</strong>. Instead, <strong>use &lsquo;>>>&rsquo; (unsigned right shift operator)</strong>.</p></li>
+</ol>
+
+
+<h3>Code</h3>
+
+<p><strong>written by me</strong></p>
+
+<pre><code>public static int myAnswer(int n, int m, int i, int j) {
+    int rr = (~0 &gt;&gt;&gt; (31 - j));
+    int ll = (~0 &lt;&lt; i);
+    // printBinary(rr);
+    // printBinary(ll);
+
+    int middleMask = ll &amp; rr;
+    int twoEndMask = ll ^ rr;
+
+    n = n &amp; twoEndMask;
+    m = (m &lt;&lt; i) &amp; middleMask;
+
+    return n | m;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -738,109 +805,6 @@ public static boolean recursiveHelper(int from, int to) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/11/arithmetic-progression-longest/">[Google] Length of Longest Arithmetic Progression (LLAP)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-09-11T00:00:00-07:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.careercup.com/question?id=8211177">link</a></p>
-
-<blockquote><p>Given an array of integers A, give an algorithm to find the longest Arithmetic progression in it, i.e find a sequence i1 &lt; i2 &lt; … &lt; ik, such that</p>
-
-<p>A[i1], A[i2], …, A[ik] forms an arithmetic progression, and k is the largest possible.</p>
-
-<p>The sequence S1, S2, …, Sk is called an arithmetic progression if S(j+1) – S(j) is a constant.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p><strong>This is a rather difficult Arithmetic Progression question</strong>.</p>
-
-<p>The solution is 2-D DP.</p>
-
-<blockquote><p><a href="http://www.geeksforgeeks.org/length-of-the-longest-arithmatic-progression-in-a-sorted-array/">The idea is</a> to create a 2D table dp[n][n]. An entry dp[i][j] in this table stores LLAP with input[i] and input[j] as first two elements of AP(j > i).</p>
-
-<p>The last column of the table is always 2. Rest of the table is filled <strong>from bottom right to top left</strong>.</p>
-
-<p>To fill rest of the table, j (second element in AP) is first fixed. i and k are searched for a fixed j. If i and k are found such that i, j, k form an AP, then <strong>the value of dp[i][j] is set as dp[j][k] + 1</strong>.</p>
-
-<p><strong>Note that the value of dp[j][k] must have been filled</strong> before as the loop traverses from right to left columns.</p></blockquote>
-
-<p>The 2 difficult points of this question:</p>
-
-<ol>
-<li>how to come up with the transation formula. (i.e. <strong>dp[i][j] = dp[j][k] + 1</strong>, when (i, j, k) forms a AP).</li>
-<li>how to fill up all dp[i][j] in each loop of j. (Once inside the if-else, once outside the main while-loop)</li>
-</ol>
-
-
-<h3>Code</h3>
-
-<p><strong>written by me</strong></p>
-
-<pre><code>public int longest(int[] A) {
-    int len = A.length;
-    int[][] dp = new int[len][len];
-    for (int i = 0; i &lt; len; i++) {
-        // the pair ending at last position is always a progression
-        dp[i][len - 1] = 2;
-    }
-    int longest = 1;
-    for (int j = len - 2; j &gt;= 0; j--) {
-        // for each j, find i and k that makes 1 progression
-        int i = j - 1;
-        int k = j + 1;
-        while (i &gt;= 0 &amp;&amp; k &lt; len) {
-            int total = A[i] + A[k];
-            if (total &gt; 2 * A[j]) {
-                // this is important!
-                dp[i][j] = 2;
-                i--;
-            } else if (total &lt; 2 * A[j]) {
-                k++;
-            } else {
-                // found a valid progression triplet A(i, j, k)
-                dp[i][j] = dp[j][k] + 1;
-                longest = Math.max(longest, dp[i][j]);
-                i--;
-                k++;
-            }
-        }
-        // this is important!
-        while (i &gt;= 0) {
-            dp[i][j] = 2;
-            i--;
-            // If the loop was stopped due to k becoming more than
-            // n-1, set the remaining dp[i][j] as 2
-        }
-    }
-    return longest;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/24">&larr; Older</a>
@@ -867,9 +831,9 @@ public static boolean recursiveHelper(int from, int to) {
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -878,6 +842,10 @@ public static boolean recursiveHelper(int from, int to) {
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -893,10 +861,6 @@ public static boolean recursiveHelper(int from, int to) {
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

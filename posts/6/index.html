@@ -9,8 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Rotate an array of n elements to the right by k steps.
-For example, with n = 7 and k = 3, the array [1,2,3,4,5,6,7] is rotated to [5,6, &hellip;">
+  <meta name="description" content="Question link Sort the letters in one word by the order they occur in another in linear time. Solution This text is used to stop you from looking at &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,71 @@ For example, with n = 7 and k = 3, the array [1,2,3,4,5,6,7] is rotated to [5,6,
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/05/21/sort-letters-given-lexicographic-order/">[Palantir] Sort Letters Given Lexicographic Order</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-05-21T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://quant365.com/viewtopic.php?t=11">link</a></p>
+
+<blockquote><p>Sort the letters in one word by the order they occur in another in linear time.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>This</p>
+
+<p>text</p>
+
+<p>is</p>
+
+<p>used</p>
+
+<p>to</p>
+
+<p>stop</p>
+
+<p>you</p>
+
+<p>from</p>
+
+<p>looking</p>
+
+<p>at</p>
+
+<p>the</p>
+
+<p>answer</p>
+
+<p>immediately</p>
+
+<p>The answer is <strong>counting sort</strong>.</p>
+
+<h3>Code</h3>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1002,141 +1066,6 @@ Ref: <a href="http://www.cnblogs.com/hzhesi/p/4285793.html">BUPT-哲人善思</a
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/04/15/Dungeon-Game/">[LeetCode 174] Dungeon Game</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-04-15T00:00:00-07:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="https://leetcode.com/problems/dungeon-game/">link</a></p>
-
-<div class="question-content">
-              <p><style>
-table.dungeon, .dungeon th, .dungeon td {
-  border:3px solid black;
-}
-
- .dungeon th, .dungeon td {
-    text-align: center;
-    height: 70px;
-    width: 70px;
-}
-</style>
-
-</p><p>The demons had captured the princess (<b>P</b>) and imprisoned her in the bottom-right corner of a dungeon. The dungeon consists of M x N rooms laid out in a 2D grid. Our valiant knight (<b>K</b>) was initially positioned in the top-left room and must fight his way through the dungeon to rescue the princess. </p>
-<p>The knight has an initial health point represented by a positive integer. If at any point his health point drops to 0 or below, he dies immediately. </p>
-<p>Some of the rooms are guarded by demons, so the knight loses health (<i>negative</i> integers) upon entering these rooms;
-other rooms are either empty (<i>0's</i>) or contain magic orbs that increase the knight's health (<i>positive</i> integers).</p>
-<p>In order to reach the princess as quickly as possible, the knight decides to move only rightward or downward in each step. </p>
-
-<br>
-<p><b>Write a function to determine the knight's minimum initial health so that he is able to rescue the princess.</b></p>
-<p>For example, given the dungeon below, the initial health of the knight must be at least <b>7</b> if he follows the optimal path <code>RIGHT-&gt; RIGHT -&gt; DOWN -&gt; DOWN</code>.</p>
-
-<table class="dungeon">
-<tbody><tr>
-<td>-2 (K)</td>
-<td>-3</td>
-<td>3</td>
-</tr>
-<tr>
-<td>-5</td>
-<td>-10</td>
-<td>1</td>
-</tr>
-<tr>
-<td>10</td>
-<td>30</td>
-<td>-5 (P)</td>
-</tr>
-</tbody></table>
-<!---2K   -3  3
--5   -10   1
-10 30   5P-->
-
-<br>
-<p><b>Notes:</b>
-</p><ul>
-<li>The knight's health has no upper bound.</li>
-<li>Any room can contain threats or power-ups, even the first room the knight enters and the bottom-right room where the princess is imprisoned.  </li>
-</ul>
-<p></p>
-
-<p><b>Credits:</b><br>Special thanks to <a href="https://oj.leetcode.com/discuss/user/stellari">@stellari</a> for adding this problem and creating all test cases.</p><p></p>
-
-                <div id="tags" class="btn btn-xs btn-warning">Show Tags</div>
-                <span class="hide">
-
-                  <a class="btn btn-xs btn-primary" href="/tag/dynamic-programming/">Dynamic Programming</a>
-
-                  <a class="btn btn-xs btn-primary" href="/tag/binary-search/">Binary Search</a>
-
-                </span>
-
-            </div>
-
-
-<h3>Analysis</h3>
-
-<p>The key of solving this problem is to <strong>do DP from bottom right to top left</strong>.</p>
-
-<h3>Solution</h3>
-
-<p>dp[i][j] means the minimum initial value of each position. As suggested by<a href="http://www.cnblogs.com/grandyang/p/4233035.html"></a>, the DP equation is:</p>
-
-<blockquote><p>dp[i][j] = max(1, min(dp[i+1][j], dp[i][j+1]) - dungeon[i][j]).</p></blockquote>
-
-<h3>Code</h3>
-
-<pre><code>public class Solution {
-    public int calculateMinimumHP(int[][] dungeon) {
-        if (dungeon == null) return 1;
-        int m = dungeon.length;
-        int n = dungeon[0].length;
-
-        int[][] dp = new int[m][n];
-        for (int i = m - 1; i &gt;= 0; i--) {
-            for (int j = n - 1; j &gt;= 0; j--) {
-                if (i == m - 1 &amp;&amp; j == n - 1) {
-                    dp[i][j] = Math.max(1, 1 - dungeon[i][j]);
-                } else if (i == m - 1) {
-                    dp[i][j] = Math.max(1, dp[i][j + 1] - dungeon[i][j]);
-                } else if (j == n - 1) {
-                    dp[i][j] = Math.max(1, dp[i + 1][j] - dungeon[i][j]);
-                } else {
-                    dp[i][j] = Math.max(1,
-                        Math.min(dp[i + 1][j], dp[i][j + 1]) - dungeon[i][j]);
-                }
-            }
-        }
-        return dp[0][0];
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/7">&larr; Older</a>
@@ -1163,9 +1092,9 @@ other rooms are either empty (<i>0's</i>) or contain magic orbs that increase th
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -1174,6 +1103,10 @@ other rooms are either empty (<i>0's</i>) or contain magic orbs that increase th
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -1189,10 +1122,6 @@ other rooms are either empty (<i>0's</i>) or contain magic orbs that increase th
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

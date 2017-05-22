@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Overview A Web server exclusively handles HTTP requests, whereas an application server serves business logic to application programs through any &hellip;">
+  <meta name="description" content="Question link Given two (dictionary) words as Strings, determine if they are isomorphic. Two words are called isomorphic if the letters in one word &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,100 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/11/isomorphic-strings/">[LinkedIn] Isomorphic Strings</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-11T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=5389627422670848">link</a></p>
+
+<blockquote><p>Given two (dictionary) words as Strings, determine if they are isomorphic.</p>
+
+<p>Two words are called isomorphic if the letters in one word can be remapped to get the second word. Remapping a letter means replacing all occurrences of it with another letter while the ordering of the letters remains unchanged. No two letters may map to the same letter, but a letter may map to itself.</p>
+
+<p>Example:</p></blockquote>
+
+<pre><code>given "foo", "app"; returns true 
+we can map 'f' -&gt; 'a' and 'o' -&gt; 'p' 
+
+given "bar", "foo"; returns false 
+we can't map both 'a' and 'r' to 'o' 
+
+given "turtle", "tletur"; returns true 
+we can map 't' -&gt; 't', 'u' -&gt; 'l', 'r' -&gt; 'e', 'l' -&gt; 'u', 'e' -'r' 
+
+given "ab", "ca"; returns true 
+we can map 'a' -&gt; 'c', 'b'
+</code></pre>
+
+<h3>Solution</h3>
+
+<p>My first thought was: map char to char, then check in the hashmap. However, <strong>this will not work</strong>!</p>
+
+<pre><code>input: abc, pzz
+check a -&gt; p
+check b -&gt; z
+check c -&gt; z
+</code></pre>
+
+<p>Using a hashmap <strong> does not show us </strong>whether 2 chars match to the same char__. In above example, b and c both match to z.</p>
+
+<p><strong>Best Solution</strong>, suggested by <a href="http://www.careercup.com/question?id=5389627422670848">urik</a>:</p>
+
+<blockquote><p>HashMap (char, firstSeenIndice) for each string. The encoding of firstSeenIndices shud match.</p>
+
+<p>E.g. Foo and app both encode to 011</p>
+
+<p>Abcd and hole both encode to 0123</p></blockquote>
+
+<h3>Code</h3>
+
+<pre><code>public boolean isomorphic(String s, String t) {
+    if (s.length() != t.length()) {
+        return false;
+    }
+    return (sequence(s).equals(sequence(t)));
+}
+
+private String sequence(String s) {
+    HashMap&lt;Character, Integer&gt; map = new HashMap&lt;Character, Integer&gt;();
+    StringBuilder sb = new StringBuilder();
+
+    for (int i = 0; i &lt; s.length(); i++) {
+        if (map.containsKey(s.charAt(i))) {
+            sb.append(map.get(s.charAt(i)));
+        } else {
+            map.put(s.charAt(i), i);
+        }
+    }
+    return sb.toString();
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -652,49 +746,6 @@ Derived Constructor Called
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/02/08/unbalanced-tree-into-balanced-tree/">[Google] Transform a Unbalanced Tree Into Balanced Tree</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-02-08T00:00:00-08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.mitbbs.com/article_t/JobHunting/32043661.html">link</a></p>
-
-<blockquote><p>How to transform a unbalanced tree into balanced tree?</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>Solution 1, do AVL tree balancing. Refer to <strong>[Design] BST Node Insertion / Deletion</strong>. This is of course, pretty difficult to code.</p>
-
-<p>Best solution is to <strong>convert to DLL and then build a new tree</strong>!</p>
-
-<h3>Code</h3>
-
-<p>not written</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/11">&larr; Older</a>
@@ -721,9 +772,9 @@ Derived Constructor Called
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -732,6 +783,10 @@ Derived Constructor Called
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -747,10 +802,6 @@ Derived Constructor Called
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

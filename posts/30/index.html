@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question Design and implement a hash table which uses chaining (linked lists) to handle collisions. Solution I wrote this topic before (using Java &hellip;">
+  <meta name="description" content="Question Explain the data structures and algorithms that you would use to design an in-memory file system. Illustrate with an example in code where &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,170 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/25/design-in-memory-file-system/">[CC150v5] 8.9 Design a In-memory File System</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-25T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<blockquote><p>Explain the data structures and algorithms that you would use to design an in-memory file system. Illustrate with an example in code where possible.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>A file system consists of Files and Directories</strong>. Each Directory contains a set of Files and Directories.</p>
+
+<p>Since Files and Directories share so many characteristics, we&rsquo;ve implemented them such that they <strong>inherit from the same class</strong> &ndash; Entry.</p>
+
+<h3>Code</h3>
+
+<p>Entry.java</p>
+
+<pre><code>public abstract class Entry {
+    protected Directory parent;
+    protected long created;
+    protected long lastUpdated;
+    protected long lastAccessed;
+    protected String name;
+
+    public Entry(String n, Directory p) {
+        name = n;
+        parent = p;
+        created = System.currentTimeMillis();
+    }
+
+    public boolean delete() {
+        if (parent == null) {
+            return false;
+        }
+        return parent.deleteEntry(this);
+    }
+
+    public abstract int size();
+
+    public String getFullPath() {
+        if (parent == null) {
+            return name;
+        } else {
+            return parent.getFullPath() + "/" + name;
+        }
+    }
+
+    public long getCreationTime() {
+        return created;
+    }
+
+    public long getLastUpdatedTime() {
+        return lastUpdated;
+    }
+
+    public long getLastAccessedTime() {
+        return lastAccessed;
+    }
+
+    public void changeName(String n) {
+        name = n;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+</code></pre>
+
+<p>Directory.java</p>
+
+<pre><code>public class Directory extends Entry {
+    protected ArrayList&lt;Entry&gt; contents;
+
+    public Directory(String n, Directory p) {
+        super(n, p);
+        contents = new ArrayList&lt;Entry&gt;();
+    }
+
+    protected ArrayList&lt;Entry&gt; getContents() {
+        return contents;
+    }
+
+    public int size() {
+        int size = 0;
+        for (Entry e : contents) {
+            size += e.size();
+        }
+        return size;
+    }
+
+    public int numberOfFiles() {
+        int count = 0;
+        for (Entry e : contents) {
+            if (e instanceof Directory) {
+                count++; // Directory counts as a file
+                Directory d = (Directory) e;
+                count += d.numberOfFiles();
+            } else if (e instanceof File) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public boolean deleteEntry(Entry entry) {
+        return contents.remove(entry);
+    }
+
+    public void addEntry(Entry entry) {
+        contents.add(entry);
+    }
+}
+</code></pre>
+
+<p>File.java</p>
+
+<pre><code>public class File extends Entry {
+    private String content;
+    private int size;
+
+    public File(String n, Directory p, int sz) {
+        super(n, p);
+        size = sz;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public String getContents() {
+        return content;
+    }
+
+    public void setContents(String c) {
+        content = c;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1224,60 +1388,6 @@ class BlackJackCard extends Card {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/20/Square-count-in-matchstick-graph/">[Question] Square Count of Matchstick Graph</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-08-20T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<blockquote><p>给出下面这个图 设计数据结构和算法求出图中<strong>所有的正方形数量</strong> (count the number of squares).</p></blockquote>
-
-<p><img class="middle" src="/assets/images/matchstick-square-count.jpg"></p>
-
-<h3>Solution</h3>
-
-<ol>
-<li><p><strong>Pre-processing</strong>: 从每一个点开始存储上下左右四个方向最多延伸到的位置</p></li>
-<li><p><strong>Main algorithm</strong>: 枚举右下角位置 然后枚举正方形边长</p></li>
-<li><p>根据预处理的延伸情况判断是否能够有一个正方形被构造出来</p></li>
-</ol>
-
-
-<p>Total time complexity is O(n<sup>3</sup>).</p>
-
-<blockquote><p>预处理可以O(n<sup>2</sup>) 预处理是有递推关系的</p>
-
-<p>但是后面枚举的部分，只能O(n<sup>3</sup>)</p>
-
-<p><strong>不能动态规划的原因是</strong>：他给定了一个可以变化的图，这个图上规模为n的图和规模为n-1的图中正方形个数之间不存在递推关系。</p></blockquote>
-
-<p>And 一般来说处理矩阵的问题，大部分都是O(n<sup>3</sup>)</p>
-
-<h3>Code</h3>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/31">&larr; Older</a>
@@ -1304,9 +1414,9 @@ class BlackJackCard extends Card {
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -1315,6 +1425,10 @@ class BlackJackCard extends Card {
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -1330,10 +1444,6 @@ class BlackJackCard extends Card {
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

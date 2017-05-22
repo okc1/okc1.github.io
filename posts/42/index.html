@@ -9,8 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question Requirement: O(1) time Solution Do a special handle for input = 0. source bool IsPowerOfTwo(ulong x) { return (x &amp; (x - 1)) == 0;
-} ">
+  <meta name="description" content="Question link Given an array of positive and negative numbers, find if there is a subarray with 0 sum. eg. 4, 2, -3, 1, 6 -> return true (2, -3, 1) &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,53 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/04/Subarray-with-0-Sum/">[Question] Subarray With 0 Sum</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-07-04T00:00:00-07:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.geeksforgeeks.org/find-if-there-is-a-subarray-with-0-sum/">link</a></p>
+
+<blockquote><p>Given an array of positive and negative numbers, find if there is a subarray with 0 sum.</p>
+
+<p>eg. 4, 2, -3, 1, 6 -> return true (2, -3, 1)</p>
+
+<p>eg. 4, 2, 0, 1, 6 -> return true (0)</p></blockquote>
+
+<h3>Solution</h3>
+
+<p><strong>General case</strong>, idea of 前缀和:</p>
+
+<blockquote><p>iterate through the array and for every element arr[i], calculate sum of elements form 0 to i (this can simply be done as sum += arr[i]). If the current sum has been seen before, then there is a zero sum array.</p></blockquote>
+
+<p>O(n) time.</p>
+
+<p><strong>Special Case</strong>, if the input is all positive number, then this question can be solved using the idea from <strong>Subarray with Particular Sum</strong>, O(n) time.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -904,109 +950,6 @@ individual machine</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/30/Knapsack-problem/">[Question] 0-1 Knapsack Problem</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-06-30T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.geeksforgeeks.org/dynamic-programming-set-10-0-1-knapsack-problem/">link</a></p>
-
-<blockquote><p>Given weights and values of n items, put these items in a knapsack of capacity W to get the maximum total value.</p>
-
-<p>In other words, given two integer arrays val[0..n-1] and wt[0..n-1] which represent values and weights. Also given an integer W which represents knapsack capacity, find out the maximum possible value.</p>
-
-<p>You cannot break an item, either pick it or don’t pick it (0-1 property).</p></blockquote>
-
-<h3>Analysis</h3>
-
-<p>This is a very similar question to <strong>[Question] Coin Change Problem</strong>, because directly using recursion to solve will result in a lot of re-calculations. It&rsquo;s a DP question.</p>
-
-<h3>Solution</h3>
-
-<p>First of all, define a 2D array, Knapsack(n,W) denotes getting &lsquo;n'th item, with weight 'W&rsquo;. When n == 0 or W = 0, dp value is 0.</p>
-
-<blockquote><p>int[][] Knapsack = new int[n + 1][W + 1];</p></blockquote>
-
-<p>Using &lsquo;n&rsquo; to denote the items to put into Knapsack. &lsquo;v&rsquo; is the value and &lsquo;w&rsquo; is the total weight.</p>
-
-<p>Now if item &lsquo;n&rsquo; is able to fit in:</p>
-
-<blockquote><p>Knapsack(n,W) = max(vn + Knapsack(n-1, W-wn), Knapsack(n-1, W))</p></blockquote>
-
-<p>If not able to fit in:</p>
-
-<blockquote><p>Knapsack(n,W) = Knapsack(n-1, W)</p></blockquote>
-
-<p>Refer to page 11 to 12 of <a href="http://www.cs.rit.edu/~zjb/courses/800/lec7.pdf">this pdf</a>.</p>
-
-<h3>Follow up</h3>
-
-<p>Look at the code, we checked dp[i-1][j]. Now the question is:</p>
-
-<blockquote><p>Do we need to check dp[i][j-1] ? (In case that total weight is not fully used up)</p></blockquote>
-
-<p>The answer is NO. We don&rsquo;t. Look at example: weights = {1, 2} and values = {3, 5}, and knapsack weight = 4. DP array would be:</p>
-
-<pre><code>[
- [0, 0, 0, 0, 0],
- [0, 3, 3, 3, 3],
- [0, 3, 5, 8, 8]
-]
-</code></pre>
-
-<p>See that? The way that we keep DP array size int[items + 1][totalWeight + 1], the DP value is always 0 at 1st column and row.</p>
-
-<p>So, in the example when i == 1, total value is ALWAYS 3.</p>
-
-<h3>Code</h3>
-
-<pre><code>public int maxValNoDup(int totalWeight, int[] value, int[] weight) {
-    int items = value.length;
-    Arrays.sort(value);
-    Arrays.sort(weight);
-
-    int[][] dp = new int[items + 1][totalWeight + 1];
-    for (int i = 1; i &lt;= items; i++) {
-        for (int j = 1; j &lt;= totalWeight; j++) {
-            // we'll try to take i'th item, to fit in weight j
-            if (j &lt; weight[i - 1]) {
-                // not able to put in
-                dp[i][j] = dp[i - 1][j];
-            } else {
-                // we are able to take i'th item into knapsack
-                dp[i][j] = Math.max(dp[i - 1][j], value[i - 1]
-                        + dp[i - 1][j - weight[i - 1]]);
-            }
-        }
-    }
-    return dp[items][totalWeight];
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/43">&larr; Older</a>
@@ -1033,9 +976,9 @@ individual machine</p>
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -1044,6 +987,10 @@ individual machine</p>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -1059,10 +1006,6 @@ individual machine</p>
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

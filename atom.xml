@@ -4,7 +4,7 @@
   <title><![CDATA[Woodstock Blog]]></title>
   <link href="http://www.shuati123.com/atom.xml" rel="self"/>
   <link href="http://www.shuati123.com/"/>
-  <updated>2017-05-13T10:47:07-07:00</updated>
+  <updated>2017-05-22T02:03:16-07:00</updated>
   <id>http://www.shuati123.com/</id>
   <author>
     <name><![CDATA[Kevin Durant]]></name>
@@ -14,11 +14,86 @@
 
   
   <entry>
+    <title type="html"><![CDATA[[Question] Trie Wildcard String Matching]]></title>
+    <link href="http://www.shuati123.com/blog/2017/05/22/Trie-Wildcard-String-Matching/"/>
+    <updated>2017-05-22T00:00:00-07:00</updated>
+    <id>http://www.shuati123.com/blog/2017/05/22/Trie-Wildcard-String-Matching</id>
+    <content type="html"><![CDATA[<h1>Question</h1>
+
+<p><a href="https://discuss.leetcode.com/topic/54332/wildcard-on-trie/2">link</a></p>
+
+<blockquote><p>Given a trie data struture, implement add() and search() method, which support wildcard matching.</p></blockquote>
+
+<p>eg. If trie contains [&ldquo;cool&rdquo;, &ldquo;kid&rdquo;, &ldquo;kindle&rdquo;, &ldquo;kind&rdquo;]</p>
+
+<p>These would match: &ldquo;co<em>l&rdquo;, &ldquo;kind&rdquo;, &ldquo;</em>**&rdquo;</p>
+
+<p>These won&rsquo;t: &ldquo;<em>*&rdquo;, &ldquo;kid</em>&rdquo;, &ldquo;coo&rdquo;</p>
+
+<h1>Solution</h1>
+
+<p>First, know how to build a trie, then know how to search in Trie. This could be tricky. Do Read On!</p>
+
+<ol>
+<li>Trie (root) start with an empty node.</li>
+<li>When do searching, <strong>ALWAYS assumes that current TrieNode is matched</strong>. I.e. do not check value of current TrieNode. Instead, check current TrieNode&rsquo;s children, and find a match.</li>
+<li>The only case <strong>you return true</strong>, is when matching reaches current TrieNode, and <strong>current TrieNode is an terminating node for a word</strong>.</li>
+<li>Be careful and <strong>do not confuse yourself</strong> for which node you gonna match, and when you return true.</li>
+</ol>
+
+
+<p>Read the code below. If you still have a hard time, read #2 and #3 above, again.</p>
+
+<h1>Code</h1>
+
+<pre><code>public boolean solve(TrieRoot trie, String word) {
+    if (word == null || word.length() == 0) {
+        return false;
+    }
+    return matchFromChildren(trie.getRoot(), word, 0);
+}
+
+private boolean matchFromChildren(TrieNode node, String word, int index) {
+    // [important note] 
+    // regardless of the value of node.letter, match word[index...] from node.children
+
+    if (index &gt; word.length()) {
+        // impossible to reach here
+        return false;
+    } else if (index == word.length()) {
+        // word is now fully matched, check if isTerminalNode(node)
+        return node.isEndOfWord();
+    }
+
+    char curLetter = word.charAt(index);
+    if (curLetter == '*') {
+        for (TrieNode child: node.getAllChildren()) {
+            if (matchFromChildren(child, word, index + 1)) {
+                return true;
+            }
+        }
+        return false;
+    } else {
+        TrieNode nextNode = node.getChild(curLetter);
+        if (nextNode == null) {
+            return false;
+        } else {
+            return matchFromChildren(nextNode, word, index + 1);
+        }
+    }
+}
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[[Question] Dutch National Flag Problem]]></title>
     <link href="http://www.shuati123.com/blog/2017/05/13/dutch-national-flag/"/>
     <updated>2017-05-13T00:00:00-07:00</updated>
     <id>http://www.shuati123.com/blog/2017/05/13/dutch-national-flag</id>
     <content type="html"><![CDATA[<h1>Question</h1>
+
+<p><a href="https://en.wikipedia.org/wiki/Dutch_national_flag_problem">link</a></p>
 
 <blockquote><p>Given an array A[] consisting 0s, 1s and 2s, write a function that sorts A[]. The functions should put all 0s first, then all 1s and all 2s in last.</p></blockquote>
 
@@ -1233,29 +1308,6 @@ class Chess extends Game {
 <p><img class="middle" src="http://www.shuati123.com/assets/images/gnuplot0-1500.png"></p>
 
 <p>Shown above: Constant, <strong>logarithmic</strong>, linear, n-log-n, quadratic, cubic, <strong>exponential</strong> ( eg. O(2<sup>n</sup>) ).</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[[Fundamental] What Is a Literal?]]></title>
-    <link href="http://www.shuati123.com/blog/2015/10/22/literals/"/>
-    <updated>2015-10-22T00:00:00-07:00</updated>
-    <id>http://www.shuati123.com/blog/2015/10/22/literals</id>
-    <content type="html"><![CDATA[<h1>Overview</h1>
-
-<p><a href="https://en.wikipedia.org/wiki/Literal_(computer_programming">A Literal</a>) is a notation for <strong>representing a fixed value in source code</strong>.</p>
-
-<p>Almost all programming languages have notations for atomic values such as integers, floating-point numbers, and strings.</p>
-
-<p>eg.</p>
-
-<pre><code>int a = 1;
-String s = "cat";
-</code></pre>
-
-<h2>Integer literal</h2>
-
-<p><a href="https://en.wikipedia.org/wiki/Integer_literal">an integer literal</a> is an integer whose value is directly represented in source code.</p>
 ]]></content>
   </entry>
   

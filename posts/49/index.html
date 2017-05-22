@@ -9,7 +9,8 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Difference Big-endian systems store the most significant byte of a word in the smallest address and the least significant byte is stored in the &hellip;">
+  <meta name="description" content="Question link Given a binary tree, return the postorder traversal of its nodes' values. For example:
+Given binary tree {1,#,2,3}, 1 \ 2 / 3 return [3 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +66,198 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/03/Binary-Tree-Postorder-Traversal/">[LeetCode 145] Binary Tree Postorder Traversal</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-03T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/binary-tree-postorder-traversal/">link</a></p>
+
+<div class="question-content bg-color bg-img font-color">
+            <p class="font-color"></p><p class="font-color">Given a binary tree, return the <i>postorder</i> traversal of its nodes' values.</p>
+
+<p class="font-color">
+For example:<br>
+Given binary tree <code>{1,#,2,3}</code>,<br>
+</p><pre>   1
+    \
+     2
+    /
+   3
+</pre>
+<p class="font-color"></p>
+<p class="font-color">
+return <code>[3,2,1]</code>.
+</p>
+
+<p class="font-color"><b>Note:</b> Recursive solution is trivial, could you do it iteratively?</p><p class="font-color"></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p>Unlike pre-order traversal, <strong>this is a very difficult question</strong>.</p>
+
+<h3>Solution</h3>
+
+<p><strong>First, I wrote the solution using a HashSet, and it works</strong>. However, this solution is not good because it uses some space.
+For more generalized way to write DFS code, read another post <strong>Implement DFS using a Stack</strong>.</p>
+
+<p><strong>The best and most popular solution is proposed by <a href="http://leetcode.com/2010/10/binary-tree-post-order-traversal.html">1337c0d3r</a></strong>. It basically uses 1 more pointer to track the current status (whether I&rsquo;m traversing down, or up, and in which direction etc.). The extra pointer is called &lsquo;prev&rsquo;.</p>
+
+<blockquote><p>We use a prev variable to keep track of the previously-traversed node. Let’s assume curr is the current node that’s on top of the stack. When prev is curr‘s parent, we are traversing down the tree. In this case, we try to traverse to curr‘s left child if available (ie, push left child to the stack). If it is not available, we look at curr‘s right child. If both left and right child do not exist (ie, curr is a leaf node), we print curr‘s value and pop it off the stack.</p>
+
+<p>If prev is curr‘s left child, we are traversing up the tree from the left. We look at curr‘s right child. If it is available, then traverse down the right child (ie, push right child to the stack), otherwise print curr‘s value and pop it off the stack.</p>
+
+<p>If prev is curr‘s right child, we are traversing up the tree from the right. In this case, we print curr‘s value and pop it off the stack.</p></blockquote>
+
+<p>Referring to his code, I wrote the 2nd piece of code below and it works.</p>
+
+<p><strong>Amazingly, that code can be simplified, which becomes the 3rd code</strong> (I thought it won&rsquo;t pass at first). The way that code got simplified is by keeping current pointer steady, so that the 2 pointers can meet. Altough program logic is exactly same, this interesting code is worth reading.</p>
+
+<h3>Code</h3>
+
+<p><strong>First, my solution using HashSet</strong></p>
+
+<pre><code>public List&lt;Integer&gt; postorderTraversal(TreeNode root) {
+    List&lt;Integer&gt; ans = new LinkedList&lt;Integer&gt;();
+    Stack&lt;TreeNode&gt; stack = new Stack&lt;TreeNode&gt;();
+    if (root != null) stack.push(root);
+    HashSet&lt;TreeNode&gt; visited = new HashSet&lt;TreeNode&gt;();
+    while (!stack.isEmpty()) {
+        TreeNode cur = stack.pop();
+        if (visited.contains(cur))
+            ans.add(cur.val);
+        else {
+            stack.push(cur);
+            visited.add(cur);
+            if (cur.right != null) stack.push(cur.right);
+            if (cur.left != null) stack.push(cur.left);
+        }
+    }
+    return ans;
+}
+</code></pre>
+
+<p><strong>Second, using 2 pointers</strong></p>
+
+<pre><code>public List&lt;Integer&gt; postorderTraversal(TreeNode root) {
+    List&lt;Integer&gt; ans = new LinkedList&lt;Integer&gt;();
+    if (root == null) {
+        return ans;
+    }
+    Stack&lt;TreeNode&gt; stack = new Stack&lt;TreeNode&gt;();
+    stack.push(root);
+    TreeNode pre = null, cur = null;
+    while (!stack.isEmpty()) {
+        cur = stack.peek();
+        if (pre == null || pre.left == cur || pre.right == cur) {
+            if (cur.left == null &amp;&amp; cur.right == null) {
+                ans.add(stack.pop().val);
+            }
+            else if (cur.left != null) {
+                stack.push(cur.left);
+            }
+            else if (cur.right != null) {
+                stack.push(cur.right);
+            }
+        }
+        else if (cur.left == pre) {
+            if (cur.right != null) {
+                stack.push(cur.right);
+            }
+            else {
+                ans.add(stack.pop().val);
+            }
+        }
+        else if (cur.right == pre) {
+            ans.add(stack.pop().val);
+        }
+        pre = cur;
+    }
+    return ans;
+}
+</code></pre>
+
+<p><strong>Third, simplified version of 2nd code</strong></p>
+
+<p><strong>Commented on June 10th</strong>: Note that &lsquo;pre&rsquo; and &lsquo;cur&rsquo; are never going to be apart for more then 1 edge (they can overlap)</p>
+
+<pre><code>public List&lt;Integer&gt; postorderTraversal(TreeNode root) {
+    List&lt;Integer&gt; result = new ArrayList&lt;Integer&gt;();
+    Stack&lt;TreeNode&gt; stack = new Stack&lt;TreeNode&gt;();
+    TreeNode prev = null; // previously traversed node
+    TreeNode curr = root;
+    if (root == null) {
+        return result;
+    }
+    stack.push(root);
+    while (!stack.empty()) {
+        curr = stack.peek();
+        if (prev == null || prev.left == curr || prev.right == curr) {
+        // traverse down the tree
+            if (curr.left != null) {
+                stack.push(curr.left);
+            } else if (curr.right != null) {
+                stack.push(curr.right);
+            }
+        } else if (curr.left == prev) {
+        // traverse up the tree from the left
+            if (curr.right != null) {
+                stack.push(curr.right);
+            }
+        } else if (curr.right == prev || curr == prev){
+        // traverse up the tree from the right
+        // or at a leaf point
+            result.add(curr.val);
+            stack.pop();
+        }
+        prev = curr;
+    }
+    return result;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1036,115 +1229,6 @@ Your algorithm should have a linear runtime complexity. Could you implement it w
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/01/Single-Number/">[LeetCode 136] Single Number</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-06-01T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="https://oj.leetcode.com/problems/single-number/">link</a></p>
-
-<div class="question-content bg-color bg-img font-color">
-            <p class="font-color"></p><p class="font-color">Given an array of integers, every element appears <i>twice</i> except for one. Find that single one.</p>
-
-<p class="font-color">
-<b>Note:</b><br>
-Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
-</p><p class="font-color"></p>
-          </div>
-
-
-<h3>Stats</h3>
-
-<table border="2">
-    <tr>
-        <td>Adjusted Difficulty</td>
-        <td bgcolor="red">4</td>
-    </tr>
-    <tr>
-        <td>Time to use</td>
-        <td bgcolor="lime">--------</td>
-    </tr>
-</table>
-
-
-<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
-
-<h3>Analysis</h3>
-
-<p><strong>First solutions is bit manipulation</strong>.</p>
-
-<blockquote><p>If two numbers are the same, then XOR result is 0.</p></blockquote>
-
-<p>And for negative integers:</p>
-
-<blockquote><p>A negative number is a <a href="http://en.wikipedia.org/wiki/Bit_field">bit field</a> just like a positive number. XOR doesn&rsquo;t care</p></blockquote>
-
-<p>Follow-up question, what if the input is not an array in interger, but a bunch of Strings? <a href="http://stackoverflow.com/a/35271">This guy</a> have the answer.</p>
-
-<blockquote><p>There are ways of XORing strings by XORing the individual chars - you would just have to have a temporary variable as large as the largest string.</p>
-
-<p>What wouldn&rsquo;t work is trying to XOR a linked list or some other complicated data structure.</p></blockquote>
-
-<p>Which is to say, a string is just like an array of chars (integers). For every char (integer), just apply the same method and we shall have the answer.</p>
-
-<p><strong>Second solution is HashSet</strong>, but must use more space. Code is posted below as well.</p>
-
-<p>Someone also sort then find, but this takes more time.</p>
-
-<h3>Code</h3>
-
-<p><strong>First, XOR solution</strong></p>
-
-<pre><code>public int singleNumber(int[] A) {
-    int num = A[0];
-    for (int i = 1; i &lt; A.length; i ++)
-        num = num ^ A[i];
-    return num;
-}
-</code></pre>
-
-<p><strong>Second, HashSet solution</strong></p>
-
-<p>The last line &ldquo;return -1&rdquo; is only for compiling purposes, and will not be executed.</p>
-
-<pre><code>public int singleNumber(int[] A) {
-    HashSet&lt;Integer&gt; set = new HashSet&lt;Integer&gt;();
-    for (int i = 0; i &lt; A.length; i ++) {
-        if (set.contains(A[i]))
-            set.remove(A[i]);
-        else
-            set.add(A[i]);
-    }
-    for (Integer a: set)
-        return a;
-    return -1;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/50">&larr; Older</a>
@@ -1171,9 +1255,9 @@ Your algorithm should have a linear runtime complexity. Could you implement it w
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -1182,6 +1266,10 @@ Your algorithm should have a linear runtime complexity. Could you implement it w
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -1197,10 +1285,6 @@ Your algorithm should have a linear runtime complexity. Could you implement it w
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

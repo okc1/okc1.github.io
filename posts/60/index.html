@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given a set of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T. &hellip;">
+  <meta name="description" content="Question link Given a collection of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,149 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/13/Combination-Sum-II/">[LeetCode 40] Combination Sum II</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-13T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/combination-sum-ii/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>
+Given a collection of candidate numbers (<b><i>C</i></b>) and a target number (<b><i>T</i></b>), find all unique combinations in <b><i>C</i></b> where the candidate numbers sums to <b><i>T</i></b>.
+</p>
+
+<p>Each number in <b><i>C</i></b> may only be used <b>once</b> in the combination.
+</p>
+<p><b>Note:</b><br>
+</p><ul>
+<li>All numbers (including target) will be positive integers.</li>
+<li>Elements in a combination (<i>a</i><sub>1</sub>, <i>a</i><sub>2</sub>, … , <i>a</i><sub>k</sub>) must be in non-descending order. (ie, <i>a</i><sub>1</sub> ≤ <i>a</i><sub>2</sub> ≤ … ≤ <i>a</i><sub>k</sub>).</li>
+<li>The solution set must not contain duplicate combinations.</li>
+</ul>
+<p></p>
+
+<p>
+For example, given candidate set <code>10,1,2,7,6,1,5</code> and target <code>8</code>, <br>
+A solution set is: <br>
+<code>[1, 7]</code> <br>
+<code>[1, 2, 5]</code> <br>
+<code>[2, 6]</code> <br>
+<code>[1, 1, 6]</code> <br>
+</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="yellow">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This problem is derived from the &ldquo;Combination Sum&rdquo; problem</strong>.</p>
+
+<p>The solution is the &ldquo;Combination Sum&rdquo; solution plus some duplication avoidance technique.</p>
+
+<h3>Solution</h3>
+
+<p><strong>Main part of this solution is same as &ldquo;Combination Sum&rdquo;</strong>. There is only 2 lines of code that needs to be added/modified.</p>
+
+<p><strong>First change</strong>, When go into the next recursive call, instead of:</p>
+
+<pre><code>helper(ans, cand, path, i, len, target - cand[i]);
+</code></pre>
+
+<p>Change it to</p>
+
+<pre><code>helper(ans, cand, path, i + 1, len, target - cand[i]);
+</code></pre>
+
+<p><strong>Second change</strong>, inside the for-loop, instead of getting next element right away, we get the element with different value. The additional code is:</p>
+
+<pre><code>if (i &gt; pos &amp;&amp; candidates[i] == candidates[i - 1]) {
+    continue;
+}
+</code></pre>
+
+<h3>My code</h3>
+
+<pre><code>public class Solution {
+    public List&lt;List&lt;Integer&gt;&gt; combinationSum2(int[] candidates, int target) {
+        List&lt;List&lt;Integer&gt;&gt; ans = new ArrayList&lt;List&lt;Integer&gt;&gt;();
+        if (candidates == null || candidates.length == 0) {
+            return ans;
+        }
+        Arrays.sort(candidates);
+        int len = candidates.length;
+        helper(ans, candidates, new ArrayList&lt;Integer&gt;(), 0, len, target);
+        return ans;
+    }
+
+    private void helper(List&lt;List&lt;Integer&gt;&gt; ans, int[] cand, List&lt;Integer&gt; path, int pos, int len, int target) {
+        if (target == 0) {
+            ans.add(new ArrayList&lt;Integer&gt;(path));
+            return;
+        } else if (target &lt; 0) {
+            return;
+        }
+        for (int i = pos; i &lt; len; i++) {
+            // if 'i' points to a repeated number, skip.
+            if (i &gt; pos &amp;&amp; cand[i] == cand[i - 1]) {
+                continue;
+            }
+            // insert cand[i] into path list, and continue search dfs
+            path.add(cand[i]);
+            helper(ans, cand, path, i + 1, len, target - cand[i]);
+            path.remove(path.size() - 1);
+        }
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1230,199 +1373,6 @@ public class Solution {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/11/Merge-k-Sorted-Lists/">[LeetCode 23] Merge K Sorted Lists</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-05-11T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://oj.leetcode.com/problems/merge-k-sorted-lists/">link</a></p>
-
-<div class="question-content">
-            <p></p><p>
-Merge <i>k</i> sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
-</p><p></p>
-</div>
-
-
-<h3>Stats</h3>
-
-<table border="2">
-    <tr>
-        <td>Frequency</td>
-        <td bgcolor="red">4</td>
-    </tr>
-    <tr>
-        <td>Difficulty</td>
-        <td bgcolor="yellow">3</td>
-    </tr>
-    <tr>
-        <td>Adjusted Difficulty</td>
-        <td bgcolor="red">5</td>
-    </tr>
-    <tr>
-        <td>Time to use</td>
-        <td bgcolor="yellow">----------</td>
-    </tr>
-</table>
-
-
-<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
-
-<h3>Analysis</h3>
-
-<p>There are two ways to solve this problem.</p>
-
-<ul>
-<li>k - number of lists</li>
-<li>n - length of each list</li>
-</ul>
-
-
-<p><strong>First approach is merge sort</strong>. Using divide and conquer approach, divide the entire input into halves, and then merge 2 list each time. Instead of merging 1 by 1 which the time complexity is O(nk x (k-1)), the 2 lists to be merged is always similar length, thus time complexity is reduced to O(nk x logk).</p>
-
-<p><strong>You may wonder how I calculate time complexity</strong>. See, each round of sort, nk nodes are read and sorted. This happened O(logk) times, where k is the number of lists. Thus totoal time take is O(nk x logk).</p>
-
-<p><strong>Second approach is heap sort</strong>. The idea of this is to always keep a sorted list of the head of each list. When we retrieve items from the heap, it only take O(logk) time to find the next smallest element.</p>
-
-<p>Not sure what is a heap? Read <strong>[Fundamental] Heap (data structure)</strong> before you proceed.</p>
-
-<p>Both method are well explained in <a href="http://blog.csdn.net/linhuanmars/article/details/19899259">this csdn blog</a>. Time complexity analysis is given by <a href="http://n00tc0d3r.blogspot.sg/2013/04/merge-k-sorted-lists.html">nootcoder blog</a>.</p>
-
-<h3>Solution</h3>
-
-<p>Divide and conquer code is lengthy but medium difficulty.</p>
-
-<p>Second solution, however, is not as easy. <strong>Especially when we have to write Comparator on our own</strong>.  A priority queue (heap) is implemented and head of each list is inserted into the heap. Then poll elements out from the heap until heap is empty.</p>
-
-<h3>My code</h3>
-
-<p><strong>Merge sort code, written by me</strong></p>
-
-<pre><code>/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) {
- *         val = x;
- *         next = null;
- *     }
- * }
- */
-public class Solution {
-    public ListNode mergeKLists(List&lt;ListNode&gt; lists) {
-        if (lists == null || lists.size() == 0) {
-            return null;
-        }
-        return mergeHelper(lists, 0, lists.size() - 1);
-    }
-
-    private ListNode mergeHelper(List&lt;ListNode&gt; lists, int start, int end) {
-        if (start == end) {
-            return lists.get(start);
-        } 
-        int mid = start + (end - start) / 2;
-        ListNode firstHalf = mergeHelper(lists, start, mid);
-        ListNode secondHalf = mergeHelper(lists, mid + 1, end);
-        return mergeTwo(firstHalf, secondHalf);
-    }
-
-    private ListNode mergeTwo(ListNode head1, ListNode head2) {
-        ListNode dummy = new ListNode(0);
-        ListNode p = dummy;
-        while (head1 != null &amp;&amp; head2 != null) {
-            if (head1.val &lt; head2.val) {
-                p.next = head1;
-                head1 = head1.next;
-                p = p.next;
-            } else {
-                p.next = head2;
-                head2 = head2.next;
-                p = p.next;
-            }
-        }
-        if (head1 == null) {
-            p.next = head2;
-        } else {
-            p.next = head1;
-        }
-        return dummy.next;
-    }
-}
-</code></pre>
-
-<p><strong>Heap sort code, written by me</strong>. <a href="http://answer.ninechapter.com/solutions/merge-k-sorted-lists/">source</a></p>
-
-<pre><code>/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) {
- *         val = x;
- *         next = null;
- *     }
- * }
- */
-public class Solution {
-    public ListNode mergeKLists(List&lt;ListNode&gt; lists) {
-        if (lists == null || lists.size() == 0) {
-            return null;
-        }
-        int size = lists.size();
-        // create a heap with Java priority queue, set the initial size
-        Queue&lt;ListNode&gt; heap = new PriorityQueue(size, new NodeComparator());
-        // add all ListNode into the heap
-        for (ListNode node: lists) {
-            if (node != null) {
-                heap.add(node);
-            }
-        }
-        // start to link nodes from smallest to largest
-        ListNode dummy = new ListNode(0);
-        ListNode p = dummy;
-        while (!heap.isEmpty()) {
-            p.next = heap.remove();
-            p = p.next;
-            if (p.next != null) {
-                heap.add(p.next);
-            }
-        }
-        return dummy.next;
-    }
-
-    class NodeComparator implements Comparator&lt;ListNode&gt; {
-        public int compare(ListNode n1, ListNode n2) {
-            return n1.val - n2.val;
-        }
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/61">&larr; Older</a>
@@ -1449,9 +1399,9 @@ public class Solution {
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -1460,6 +1410,10 @@ public class Solution {
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -1475,10 +1429,6 @@ public class Solution {
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

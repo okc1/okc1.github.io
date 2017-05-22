@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given a binary matrix, find out the maximum size square sub-matrix with all 1s. For example, consider the below binary matrix. 0 1 1 0 &hellip;">
+  <meta name="description" content="Question link Given two line segments (p1, q1) and (p2, q2), check if 2 line segments intersect. Orientation Considering 3 pointer, orientation can &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,154 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/19/check-if-line-segment-intersect/">[Question] Check if Two Line Segments Intersect</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-19T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/">link</a></p>
+
+<blockquote><p>Given two line segments (p1, q1) and (p2, q2), check if 2 line segments intersect.</p></blockquote>
+
+<h3>Orientation</h3>
+
+<p>Considering 3 pointer, orientation can be:</p>
+
+<ol>
+<li>counterclockwise</li>
+<li>clockwise</li>
+<li>colinear (not considering direction)</li>
+</ol>
+
+
+<p><img class="middle" src="/assets/images/line-orientation.png"></p>
+
+<p>Note that orientation only tells the order and sequence relationship of 3 points. <strong>It tells nothing about intersection</strong>.</p>
+
+<h3>Intersection</h3>
+
+<p>Considering 2 line segments: (p1,q1) and (p2,q2).</p>
+
+<h4>Case 1: general</h4>
+
+<p>Two line segment intersect if <strong>BOTH</strong> the 2 conditions hold:</p>
+
+<ol>
+<li>(p1, q1, p2) and (p1, q1, q2) have different orientations and</li>
+<li>(p2, q2, p1) and (p2, q2, q1) have different orientations</li>
+</ol>
+
+
+<p><img class="middle" src="/assets/images/GeneralCaseExamples1.png"></p>
+
+<p><img class="middle" src="/assets/images/examplesGeneralCase211.png"></p>
+
+<h4>Case 2: special</h4>
+
+<p>The speical case is: <strong>what if all 4 pointers (p1, q1, p2, q2) are all on the same line</strong>!!! Well, this definitely can happen.</p>
+
+<p>If so, check if the values of x-axis and y-axis intersect. I.e. the below 2 cases:</p>
+
+<p><img class="middle" src="/assets/images/examplesSpecialCase1.png"></p>
+
+<h3>Code</h3>
+
+<p>Translated from G4G:</p>
+
+<pre><code>public boolean intersect(Pair p1, Pair q1, Pair p2, Pair q2) {
+
+    int o1 = orientation(p1, q1, p2);
+    int o2 = orientation(p1, q1, q2);
+    int o3 = orientation(p2, q2, p1);
+    int o4 = orientation(p2, q2, q1);
+
+    // General case
+    if (o1 != o2 &amp;&amp; o3 != o4) {
+        // 2 lines intersect
+        return true;
+    }
+
+    // Special Cases
+    Segment seg1 = new Segment(p1, q1);
+    Segment seg2 = new Segment(p2, q2);
+
+    // p1, q1 and p2 are colinear and p2 lies on segment p1q1
+    if (o1 == 0 &amp;&amp; onSegment(seg1, p2))
+        return true;
+
+    // p1, q1 and p2 are colinear and q2 lies on segment p1q1
+    if (o2 == 0 &amp;&amp; onSegment(seg1, q2))
+        return true;
+
+    // p2, q2 and p1 are colinear and p1 lies on segment p2q2
+    if (o3 == 0 &amp;&amp; onSegment(seg2, p1))
+        return true;
+
+    // p2, q2 and q1 are colinear and q1 lies on segment p2q2
+    if (o4 == 0 &amp;&amp; onSegment(seg2, q1))
+        return true;
+
+    return false; // Doesn't fall in any of the above cases
+}
+
+private boolean onSegment(Segment seg, Pair q) {
+    // check if q lies on line segment seg(p1, p2)
+    if (q.x &lt;= Math.max(seg.p1.x, seg.p2.x)
+            &amp;&amp; q.x &gt;= Math.min(seg.p1.x, seg.p2.x)
+            &amp;&amp; q.y &lt;= Math.max(seg.p1.y, seg.p2.y)
+            &amp;&amp; q.y &gt;= Math.min(seg.p1.y, seg.p2.y))
+        return true;
+
+    return false;
+}
+
+private int orientation(Pair first, Pair second, Pair third) {
+    int val = (second.y - first.y) * (third.x - second.x)
+            - (second.x - first.x) * (third.y - second.y);
+    if (val == 0) {
+        // colinear
+        return 0;
+    } else {
+        // clock or counterclock wise (1 or -1)
+        return val / Math.abs(val);
+    }
+}
+
+class Segment {
+    Pair p1;
+    Pair p2;
+
+    public Segment(Pair p1, Pair p2) {
+        this.p1 = p1;
+        this.p2 = p2;
+    }
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1041,115 +1189,6 @@ Total = 6
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/11/longest-repeating-substring/">[Amazon] Longest Repeating Substring</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-11T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.careercup.com/question?id=9182781">link</a></p>
-
-<blockquote><p>Finding the longest repeated substring.</p>
-
-<p>Example: &ldquo;banana&rdquo; ==> &ldquo;ana&rdquo;</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>There are 2 solutions: Suffix array, and Suffix tree.</p>
-
-<p><strong>1. Suffix array</strong>. Simple code, explained <a href="http://www.careercup.com/question?id=9182781">here</a>.</p>
-
-<blockquote><p>Bentley&rsquo;s programming pearl book has the simplest implementation (less than 15 lines code) which sort all suffix, and then check common prefix length among adjacent suffix. The time complexity is O(n<sup>2logn</sup>) for sorting the suffix (which has avg length of O(n)).</p></blockquote>
-
-<p>A detailed step-by-step <a href="http://nriverwang.blogspot.com/2013/04/longest-repeated-substring.html">explanation</a>:</p>
-
-<pre><code>str = banana, its suffixes are:
-banana
-anana
-nana
-ana
-na
-a
-</code></pre>
-
-<p>after sort, the suffix array looks like:</p>
-
-<pre><code>a
-ana
-anana
-banana
-na
-nana
-</code></pre>
-
-<p>Then for each two adjacent suffixes, check the length of the common prefix.</p>
-
-<p>The answer is &ldquo;ana&rdquo; (if overlapping is allowed, otherwise, should be &ldquo;an&rdquo;).</p>
-
-<p><strong>2. Suffix tree</strong>. Suggest by <a href="http://qr.ae/6W9yJ">this post</a>, Or <a href="http://www.careercup.com/question?id=9182781">this</a>:</p>
-
-<blockquote><p>a good solution is to create a suffix tree for the given word and then find the deepest internal node in that tree (node with at least 2 descendants under it)&hellip;</p></blockquote>
-
-<p>For a nice PPT presentation about suffix tree, look <a href="https://www.cs.cmu.edu/~ckingsf/bioinfo-lectures/suffixtrees.pdf">here</a>.</p>
-
-<h3>Code</h3>
-
-<p>Suffix array approach.</p>
-
-<pre><code>public String longestRepeat(String input) {
-    int len = input.length();
-    String[] suffixArray = new String[len];
-    for (int i = 0; i &lt; len; i++) {
-        suffixArray[i] = input.substring(i);
-    }
-    // now sort the suffix array
-    Arrays.sort(suffixArray);
-    String longest = "";
-    // start to compare neighborhood suffixes, and check LCP
-    for (int i = 0; i &lt; suffixArray.length - 1; i++) {
-        String lcp = longestCommonPrefix(suffixArray[i], suffixArray[i + 1]);
-        if (lcp.length() &gt; longest.length()) {
-            longest = lcp;
-        }
-    }
-    return longest;
-}
-
-private String longestCommonPrefix(String s1, String s2) {
-    int p = 0;
-    while (p &lt; s1.length() &amp;&amp; p &lt; s2.length()) {
-        if (s1.charAt(p) != s2.charAt(p)) {
-            break;
-        }
-        p++;
-    }
-    return s1.substring(0, p);
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/17">&larr; Older</a>
@@ -1176,9 +1215,9 @@ private String longestCommonPrefix(String s1, String s2) {
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -1187,6 +1226,10 @@ private String longestCommonPrefix(String s1, String s2) {
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -1202,10 +1245,6 @@ private String longestCommonPrefix(String s1, String s2) {
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

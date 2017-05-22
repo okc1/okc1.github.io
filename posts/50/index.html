@@ -9,7 +9,8 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link There are N gas stations along a circular route, where the amount of gas at station i is gas[i]. You have a car with an unlimited gas &hellip;">
+  <meta name="description" content="Question link Given an array of integers, every element appears twice except for one. Find that single one. Note:
+Your algorithm should have a linear &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +66,115 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/01/Single-Number/">[LeetCode 136] Single Number</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-01T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/single-number/">link</a></p>
+
+<div class="question-content bg-color bg-img font-color">
+            <p class="font-color"></p><p class="font-color">Given an array of integers, every element appears <i>twice</i> except for one. Find that single one.</p>
+
+<p class="font-color">
+<b>Note:</b><br>
+Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
+</p><p class="font-color"></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="lime">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>First solutions is bit manipulation</strong>.</p>
+
+<blockquote><p>If two numbers are the same, then XOR result is 0.</p></blockquote>
+
+<p>And for negative integers:</p>
+
+<blockquote><p>A negative number is a <a href="http://en.wikipedia.org/wiki/Bit_field">bit field</a> just like a positive number. XOR doesn&rsquo;t care</p></blockquote>
+
+<p>Follow-up question, what if the input is not an array in interger, but a bunch of Strings? <a href="http://stackoverflow.com/a/35271">This guy</a> have the answer.</p>
+
+<blockquote><p>There are ways of XORing strings by XORing the individual chars - you would just have to have a temporary variable as large as the largest string.</p>
+
+<p>What wouldn&rsquo;t work is trying to XOR a linked list or some other complicated data structure.</p></blockquote>
+
+<p>Which is to say, a string is just like an array of chars (integers). For every char (integer), just apply the same method and we shall have the answer.</p>
+
+<p><strong>Second solution is HashSet</strong>, but must use more space. Code is posted below as well.</p>
+
+<p>Someone also sort then find, but this takes more time.</p>
+
+<h3>Code</h3>
+
+<p><strong>First, XOR solution</strong></p>
+
+<pre><code>public int singleNumber(int[] A) {
+    int num = A[0];
+    for (int i = 1; i &lt; A.length; i ++)
+        num = num ^ A[i];
+    return num;
+}
+</code></pre>
+
+<p><strong>Second, HashSet solution</strong></p>
+
+<p>The last line &ldquo;return -1&rdquo; is only for compiling purposes, and will not be executed.</p>
+
+<pre><code>public int singleNumber(int[] A) {
+    HashSet&lt;Integer&gt; set = new HashSet&lt;Integer&gt;();
+    for (int i = 0; i &lt; A.length; i ++) {
+        if (set.contains(A[i]))
+            set.remove(A[i]);
+        else
+            set.add(A[i]);
+    }
+    for (Integer a: set)
+        return a;
+    return -1;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1472,146 +1582,6 @@ int dfs(TreeNode root, int sum){
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/29/Palindrome-Partitioning/">[LeetCode 131] Palindrome Partitioning</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-05-29T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>29</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="https://oj.leetcode.com/problems/palindrome-partitioning/">link</a></p>
-
-<div class="question-content">
-            <p></p><p>
-Given a string <i>s</i>, partition <i>s</i> such that every substring of the partition is a palindrome.
-</p>
-<p>
-Return all possible palindrome partitioning of <i>s</i>.
-</p>
-<p>
-For example, given <i>s</i> = <code>"aab"</code>,<br>
-
-Return
-</p><pre>  [
-    ["aa","b"],
-    ["a","a","b"]
-  ]
-</pre>
-<p></p><p></p>
-          </div>
-
-
-<h3>Stats</h3>
-
-<table border="2">
-    <tr>
-        <td>Frequency</td>
-        <td bgcolor="red">4</td>
-    </tr>
-    <tr>
-        <td>Difficulty</td>
-        <td bgcolor="yellow">3</td>
-    </tr>
-    <tr>
-        <td>Adjusted Difficulty</td>
-        <td bgcolor="red">4</td>
-    </tr>
-    <tr>
-        <td>Time to use</td>
-        <td bgcolor="yellow">--------</td>
-    </tr>
-</table>
-
-
-<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
-
-<h3>Analysis</h3>
-
-<p><strong>This is an extremely classic question</strong>.</p>
-
-<p>It&rsquo;s not very hard to solve, although it looked impossible at first.</p>
-
-<h3>Solution</h3>
-
-<p><strong>The solution is DFS</strong>.</p>
-
-<p>It&rsquo;s very standard DFS code, I will not go into coding details. This type of &ldquo;return all possible path&rdquo; question is always related to DFS, keep this in mind!</p>
-
-<p>The code is borrowing ideas from <a href="http://blog.sina.com.cn/s/blog_b9285de20101jbtl.html">peking2&rsquo;s blog</a>. He also had an <strong>analysis on this series of questions</strong>:</p>
-
-<blockquote><p>我觉得一般有三种变形，解法各有不同。</p>
-
-<ol>
-<li>最后结果是一个整数，比如Palindrome Partitioning II。这个用DP来解</li>
-<li>最后求一个结果，比如最小切法。这个用DP＋backtrack来解</li>
-<li>求所有的结果。这个一般用DFS来解。</li>
-</ol>
-</blockquote>
-
-<p>This question is the 3rd case. <a href="http://fisherlei.blogspot.sg/2013/03/leetcode-palindrome-partitioning.html">Fish Lei</a> also said the same.</p>
-
-<blockquote><p>这种需要输出所有结果的基本上都是DFS的解法</p></blockquote>
-
-<h3>Code</h3>
-
-<pre><code>public ArrayList&lt;ArrayList&lt;String&gt;&gt; partition(String s) {
-    // int len = s.length();
-    ArrayList&lt;ArrayList&lt;String&gt;&gt; ans = new ArrayList&lt;ArrayList&lt;String&gt;&gt;();
-    helper(ans, new ArrayList&lt;String&gt;(), s, 0);
-    return ans;
-}
-
-private void helper(ArrayList&lt;ArrayList&lt;String&gt;&gt; ans, ArrayList&lt;String&gt; cur, 
-        String s, int start) {
-    int len = s.length();
-    if (start == len) {
-        ans.add(new ArrayList&lt;String&gt;(cur));
-        return;
-    }
-    for (int i = start + 1; i &lt;= len; i ++) {
-        String sub = s.substring(start, i);
-        if (isPal(sub)) {
-            cur.add(sub);
-            helper(ans, cur, s, i);
-            cur.remove(cur.size() - 1);
-        }
-    }
-}
-
-private boolean isPal(String str) {
-    int left = 0, right = str.length() - 1;
-    while (left &lt; right) {
-        if (str.charAt(left) != str.charAt(right)) 
-            return false;
-        left++;
-        right--;
-    }
-    return true;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/51">&larr; Older</a>
@@ -1638,9 +1608,9 @@ private boolean isPal(String str) {
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -1649,6 +1619,10 @@ private boolean isPal(String str) {
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -1664,10 +1638,6 @@ private boolean isPal(String str) {
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

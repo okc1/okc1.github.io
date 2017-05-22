@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link X and Y are strings formed by 0 or 1. Distance is define as: D(X,Y) = Remove chars common at the start from both X &amp; Y. Then add &hellip;">
+  <meta name="description" content="Question link Finding the longest repeated substring. Example: &ldquo;banana&rdquo; ==> &ldquo;ana&rdquo; Solution There are 2 solutions: Suffix &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,115 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/11/longest-repeating-substring/">[Amazon] Longest Repeating Substring</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-11T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.careercup.com/question?id=9182781">link</a></p>
+
+<blockquote><p>Finding the longest repeated substring.</p>
+
+<p>Example: &ldquo;banana&rdquo; ==> &ldquo;ana&rdquo;</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>There are 2 solutions: Suffix array, and Suffix tree.</p>
+
+<p><strong>1. Suffix array</strong>. Simple code, explained <a href="http://www.careercup.com/question?id=9182781">here</a>.</p>
+
+<blockquote><p>Bentley&rsquo;s programming pearl book has the simplest implementation (less than 15 lines code) which sort all suffix, and then check common prefix length among adjacent suffix. The time complexity is O(n<sup>2logn</sup>) for sorting the suffix (which has avg length of O(n)).</p></blockquote>
+
+<p>A detailed step-by-step <a href="http://nriverwang.blogspot.com/2013/04/longest-repeated-substring.html">explanation</a>:</p>
+
+<pre><code>str = banana, its suffixes are:
+banana
+anana
+nana
+ana
+na
+a
+</code></pre>
+
+<p>after sort, the suffix array looks like:</p>
+
+<pre><code>a
+ana
+anana
+banana
+na
+nana
+</code></pre>
+
+<p>Then for each two adjacent suffixes, check the length of the common prefix.</p>
+
+<p>The answer is &ldquo;ana&rdquo; (if overlapping is allowed, otherwise, should be &ldquo;an&rdquo;).</p>
+
+<p><strong>2. Suffix tree</strong>. Suggest by <a href="http://qr.ae/6W9yJ">this post</a>, Or <a href="http://www.careercup.com/question?id=9182781">this</a>:</p>
+
+<blockquote><p>a good solution is to create a suffix tree for the given word and then find the deepest internal node in that tree (node with at least 2 descendants under it)&hellip;</p></blockquote>
+
+<p>For a nice PPT presentation about suffix tree, look <a href="https://www.cs.cmu.edu/~ckingsf/bioinfo-lectures/suffixtrees.pdf">here</a>.</p>
+
+<h3>Code</h3>
+
+<p>Suffix array approach.</p>
+
+<pre><code>public String longestRepeat(String input) {
+    int len = input.length();
+    String[] suffixArray = new String[len];
+    for (int i = 0; i &lt; len; i++) {
+        suffixArray[i] = input.substring(i);
+    }
+    // now sort the suffix array
+    Arrays.sort(suffixArray);
+    String longest = "";
+    // start to compare neighborhood suffixes, and check LCP
+    for (int i = 0; i &lt; suffixArray.length - 1; i++) {
+        String lcp = longestCommonPrefix(suffixArray[i], suffixArray[i + 1]);
+        if (lcp.length() &gt; longest.length()) {
+            longest = lcp;
+        }
+    }
+    return longest;
+}
+
+private String longestCommonPrefix(String s1, String s2) {
+    int p = 0;
+    while (p &lt; s1.length() &amp;&amp; p &lt; s2.length()) {
+        if (s1.charAt(p) != s2.charAt(p)) {
+            break;
+        }
+        p++;
+    }
+    return s1.substring(0, p);
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -818,149 +927,6 @@ i C[0,0,2,0]   N[4, 3, 2, 1]
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/09/terminology-ngram/">[Design] Terminology: N-gram</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-09T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>n-gram</h3>
-
-<p>In the fields of computational linguistics and probability, an <strong><a href="http://en.wikipedia.org/wiki/N-gram">n-gram</a></strong> is a contiguous sequence of n items from a given sequence of text or speech.</p>
-
-<p>The items can be phonemes, syllables, letters, words or base pairs according to the application. The n-grams typically are collected from a text or speech corpus.</p>
-
-<h4>Example</h4>
-
-<table border="1" width="100%" id="table5" cellpadding="3" style="border-collapse: collapse" bordercolor="#89B0D8" cellspacing="0">
-                <tbody><tr>
-                    <td bgcolor="#D9ECFF">
-                    <p align="center">frequency</p></td>
-                    <td bgcolor="#D9ECFF">
-                    <p align="center">word1</p></td>
-                    <td bgcolor="#D9ECFF">
-                    <p align="center">word2</p></td>
-                    <td bgcolor="#D9ECFF">
-                    <p align="center">word3</p></td>
-                </tr>
-                <tr>
-                    <td bgcolor="#F5F9FC">
-                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">1419</p>
-                    </td>
-                    <td bgcolor="#F5F9FC">
-                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">much</p>
-                    </td>
-                    <td bgcolor="#F5F9FC">
-                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">the</p>
-                    </td>
-                    <td bgcolor="#F5F9FC">
-                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">same</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td bgcolor="#F5F9FC">
-                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">461</p>
-                    </td>
-                    <td bgcolor="#F5F9FC">
-                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">much</p>
-                    </td>
-                    <td bgcolor="#F5F9FC">
-                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">more</p>
-                    </td>
-                    <td bgcolor="#F5F9FC">
-                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">likely</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td bgcolor="#F5F9FC">
-                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">432</p>
-                    </td>
-                    <td bgcolor="#F5F9FC">
-                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">much</p>
-                    </td>
-                    <td bgcolor="#F5F9FC">
-                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">better</p>
-                    </td>
-                    <td bgcolor="#F5F9FC">
-                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">than</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td bgcolor="#F5F9FC">
-                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">266</p>
-                    </td>
-                    <td bgcolor="#F5F9FC">
-                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">much</p>
-                    </td>
-                    <td bgcolor="#F5F9FC">
-                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">more</p>
-                    </td>
-                    <td bgcolor="#F5F9FC">
-                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">difficult</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td bgcolor="#F5F9FC">
-                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">235</p>
-                    </td>
-                    <td bgcolor="#F5F9FC">
-                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">much</p>
-                    </td>
-                    <td bgcolor="#F5F9FC">
-                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">of</p>
-                    </td>
-                    <td bgcolor="#F5F9FC">
-                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">the</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td bgcolor="#F5F9FC">
-                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">226</p>
-                    </td>
-                    <td bgcolor="#F5F9FC">
-                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">much</p>
-                    </td>
-                    <td bgcolor="#F5F9FC">
-                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">more</p>
-                    </td>
-                    <td bgcolor="#F5F9FC">
-                    <p style="line-height: 150%; margin-top:0; margin-bottom:0" align="center">than</p>
-                    </td>
-                </tr>
-</tbody></table>
-
-
-<h4>Downloadable n-grams sets for English</h4>
-
-<ol>
-<li><strong><a href="https://catalog.ldc.upenn.edu/LDC2006T13">Google n-grams</a></strong>, based on the web as of 2006.</li>
-<li><strong><a href="http://www.ngrams.info/intro.asp">COCA n-grams</a></strong>, based on Corpus of Contemporary American English [COCA]. 450 million words from 1990 to 2012.</li>
-</ol>
-
-
-<p>With n-grams data (2, 3, 4, 5-word sequences, with their frequency), we can carry out powerful queries offline.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/18">&larr; Older</a>
@@ -987,9 +953,9 @@ i C[0,0,2,0]   N[4, 3, 2, 1]
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -998,6 +964,10 @@ i C[0,0,2,0]   N[4, 3, 2, 1]
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -1013,10 +983,6 @@ i C[0,0,2,0]   N[4, 3, 2, 1]
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

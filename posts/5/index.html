@@ -9,9 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Overview This class covers database design: design data with class and inheritance
-design a user system (Netflix 2015)
-design a payment system (Yelp &hellip;">
+  <meta name="description" content="Question 5 Continue from last post, now let&rsquo;s support VIP services. User could buy VIP services using his acccount balance. class ProService { &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +65,189 @@ design a payment system (Yelp &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/08/26/design-class2-2/">[NineChap System Design] Class 2.2: Database</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-08-26T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Question 5</h1>
+
+<p>Continue from last post, now let&rsquo;s <strong>support VIP services</strong>.</p>
+
+<p>User could buy VIP services using his acccount balance.</p>
+
+<pre><code>class ProService {
+    int userId;
+    double money;
+    long endTime;
+
+    public addMoney(){}
+    public buyPro(){}
+}
+</code></pre>
+
+<h2>Q5.1: System crash when purchasing VIP</h2>
+
+<p>Solution: <strong>transaction with log</strong></p>
+
+<pre><code>WriteLOG
+Transaction_1123: BEGIN
+money=20; endTime=16_07_2016
+</code></pre>
+
+<p>If system crash happens here, system will read the log, recover and roll back all original data. Try not to complete the transaction - just fail it.</p>
+
+<pre><code>WriteLOG
+Transaction_1123: BEGIN
+money=20; endTime=16_07_2016
+WriteLOG
+Transaction_1123: END
+money=10; endTime=16_08_2016
+</code></pre>
+
+<blockquote><p>What happens if system crash during writing the log? or during the rollback?</p></blockquote>
+
+<h2>Q5.2: dataset contains bad data</h2>
+
+<ol>
+<li>one user id have 2 corresponding pro-services information.</li>
+<li>Shallow user: a pro-services info does not have corresponding user.</li>
+</ol>
+
+
+<p>Solution: have a checker class.</p>
+
+<h2>Q5.3: simutaneous purchase by 2 users</h2>
+
+<p>Solution: lock.</p>
+
+<ol>
+<li>first process lock money &amp; endTime.</li>
+<li>Read money = 20</li>
+<li>another process try to lock, but end up waiting (sleeping).</li>
+<li>first process do the job, and release the lock.</li>
+<li>another process wakes up.</li>
+</ol>
+
+
+<blockquote><p>lock have time-out settings. It can be applied in distributed system as well.</p></blockquote>
+
+<p>Question: does lock make your execution slow?</p>
+
+<ol>
+<li><p>If another process is sleeping, CPU will be fully consumed by other process. So it won&rsquo;t impact.</p></li>
+<li><p>You can do some async processing, too.</p></li>
+<li><p>When you lock, try to lock only a small piece of code, not the entire method. In DB, lock only a row, not a table.</p></li>
+<li><p>Java <a href="https://en.wikipedia.org/wiki/Compare-and-swap">CAS</a> (Compare and swap )</p></li>
+</ol>
+
+
+<h2>Q5.4: Server crash</h2>
+
+<p>Solution: duplication.</p>
+
+<ol>
+<li><p>How many copies?</p>
+
+<p> Google did 3. Normally 2 in same data center, and 1 in another location.</p>
+
+<p> Backup data normally is on another machine. But there&rsquo;s also <a href="https://en.wikipedia.org/wiki/RAID">RAID</a> (redundant array of independent disks) which:</p>
+
+<blockquote><p>combines multiple physical disk drive components into a single logical unit for the purposes of <strong>data redundancy, performance improvement</strong>, or both.</p></blockquote></li>
+<li><p>When does the copy happen?</p>
+
+<p> Option 1 is <strong>doing everyday nightly</strong>. This is called a &lsquo;check point&rsquo;.</p>
+
+<p> Option 2 is use another server to support <strong>Shadow Redundancy</strong>. All data from Machine 0 will be copied to Machine 1 WHILE it happens. The result is, Machine 1 is identical to Machine 0. If Machine 0 crashes, Machine 1 may be behind less than 1 second.</p>
+
+<p> The way to duplicate is either re-play all the actions, or to read Machine 0&rsquo;s log and apply the new data.</p></li>
+<li><p>How to copy?</p>
+
+<p> User send data to 1 server, and from that server, pipeline. This ensures good usage of server bandwith, and serial transfer of data ensures low latency (several ms).</p>
+
+<p> It&rsquo;s also possible to do tree-like transfer, but the above method is preferred cuz all machine consume same bandwidth.</p></li>
+<li><p>What is log?</p>
+
+<p> It is actually &lsquo;checkpoint&rsquo; + log. It allows you to rollback.</p></li>
+</ol>
+
+
+<p>Data redundancy - Summary:</p>
+
+<p><img class="middle" src="/assets/images/design-class2-data-redundancy-1.png"></p>
+
+<h2>Final note: Data inconsistency</h2>
+
+<p>Main sources of inconsistency comes from:</p>
+
+<ol>
+<li>network fault</li>
+<li>disk error</li>
+</ol>
+
+
+<p>The disk eror is solved by <strong>checksum</strong> (compare during disk writing).</p>
+
+<h1>Summary</h1>
+
+<p><strong><a href="https://en.wikipedia.org/wiki/ACID">ACID</a> (Atomicity, Consistency, Isolation, Durability)</strong>  is a set of properties that guarantee that database transactions are processed reliably.</p>
+
+<ol>
+<li><p><strong>Atomicity: all or nothing</strong></p>
+
+<p> Q5.1: System crash when purchasing VIP</p></li>
+<li><p><strong>Consistency</strong>: validate according to defined rules</p>
+
+<p> Q5.2: dataset contains bad data</p></li>
+<li><p><strong>Isolation</strong>: independency between transactions <strong>(lock)</strong></p>
+
+<p> Q5.3: simutaneous purchase by 2 users</p></li>
+<li><p><strong>Durability</strong>: stored permanently</p>
+
+<p> Q5.4: Server crash</p></li>
+</ol>
+
+
+<p><img class="middle" src="/assets/images/design-class2-summary.png"></p>
+
+<p>Additional Questions:</p>
+
+<ol>
+<li>design a user system (Netflix 2015)</li>
+</ol>
+
+
+<p>Hint: table design, register, login/out, password check, find password.</p>
+
+<ol>
+<li>Design payment system (Yelp, BigCommerce 2015)</li>
+</ol>
+
+
+<p>Hint: the question does not ask about table/ds design itself, but rather the problems associated with payment. Read about ACID principle.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1346,71 +1527,6 @@ public class SOAPMessage : IMessage
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/05/21/sort-letters-given-lexicographic-order/">[Palantir] Sort Letters Given Lexicographic Order</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-05-21T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://quant365.com/viewtopic.php?t=11">link</a></p>
-
-<blockquote><p>Sort the letters in one word by the order they occur in another in linear time.</p></blockquote>
-
-<h3>Solution</h3>
-
-<p>This</p>
-
-<p>text</p>
-
-<p>is</p>
-
-<p>used</p>
-
-<p>to</p>
-
-<p>stop</p>
-
-<p>you</p>
-
-<p>from</p>
-
-<p>looking</p>
-
-<p>at</p>
-
-<p>the</p>
-
-<p>answer</p>
-
-<p>immediately</p>
-
-<p>The answer is <strong>counting sort</strong>.</p>
-
-<h3>Code</h3>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/6">&larr; Older</a>
@@ -1437,9 +1553,9 @@ public class SOAPMessage : IMessage
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -1448,6 +1564,10 @@ public class SOAPMessage : IMessage
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -1463,10 +1583,6 @@ public class SOAPMessage : IMessage
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

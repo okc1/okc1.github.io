@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Overview Amazon Web Services (AWS) is a collection of remote computing services that together make up a cloud computing platform. AWS provides a &hellip;">
+  <meta name="description" content="Question link Facebook&rsquo;s &ldquo;You and Joe have 230 friends in common&rdquo; feature. Sure you could use a decent caching strategy, but for &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,132 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/05/MapReduce-Common-Friends/">[Design] MapReduce Common Friends Example</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-05T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://stackoverflow.com/a/12375878">link</a></p>
+
+<blockquote><p>Facebook&rsquo;s &ldquo;You and Joe have 230 friends in common&rdquo; feature. Sure you could use a decent caching strategy, but for now, use MapReduce.</p></blockquote>
+
+<h3>Analysis</h3>
+
+<p>This list doesn&rsquo;t change frequently so it&rsquo;d be wasteful to recalculate it every time. We&rsquo;re going to use mapreduce to calculate everyone&rsquo;s common friends once a day and store those results.</p>
+
+<p>Note that friends are <strong>bi-directional</strong>. If I&rsquo;m your friend, you&rsquo;re mine. (follow-up: how to do it for follower system?)</p>
+
+<h4>Input</h4>
+
+<p>Assume the friends are stored as Person->[List of Friends], our friends list is then:</p>
+
+<pre><code>A -&gt; B C D
+B -&gt; A C D E
+C -&gt; A B D E
+D -&gt; A B C E
+E -&gt; B C D
+</code></pre>
+
+<h4>Map</h4>
+
+<p>The mapper will output a key-value pair. The key will be a friend along with the person. The value will be the list of friends. The key will be sorted so that the friends are in order, causing all pairs of friends to go to the same reducer.</p>
+
+<p>For map(A -> B C D) :</p>
+
+<pre><code>(A B) -&gt; B C D
+(A C) -&gt; B C D
+(A D) -&gt; B C D
+</code></pre>
+
+<p>For map(B -> A C D E) : (Note that A comes before B in the key)</p>
+
+<pre><code>(A B) -&gt; A C D E
+(B C) -&gt; A C D E
+(B D) -&gt; A C D E
+(B E) -&gt; A C D E
+</code></pre>
+
+<p>For map(C -> A B D E) :</p>
+
+<pre><code>(A C) -&gt; A B D E
+(B C) -&gt; A B D E
+(C D) -&gt; A B D E
+(C E) -&gt; A B D E
+</code></pre>
+
+<p>For map(D -> A B C E) :</p>
+
+<pre><code>(A D) -&gt; A B C E
+(B D) -&gt; A B C E
+(C D) -&gt; A B C E
+(D E) -&gt; A B C E
+</code></pre>
+
+<p>And finally for map(E -> B C D):</p>
+
+<pre><code>(B E) -&gt; B C D
+(C E) -&gt; B C D
+(D E) -&gt; B C D
+</code></pre>
+
+<p>Before we send these key-value pairs to the reducers, we group them by their keys and get:</p>
+
+<pre><code>(A B) -&gt; (A C D E) (B C D)
+(A C) -&gt; (A B D E) (B C D)
+(A D) -&gt; (A B C E) (B C D)
+(B C) -&gt; (A B D E) (A C D E)
+(B D) -&gt; (A B C E) (A C D E)
+(B E) -&gt; (A C D E) (B C D)
+(C D) -&gt; (A B C E) (A B D E)
+(C E) -&gt; (A B D E) (B C D)
+(D E) -&gt; (A B C E) (B C D)
+</code></pre>
+
+<p>Each line will be passed as an argument to a reducer.</p>
+
+<h4>Reduce</h4>
+
+<p>The reduce function will simply intersect the lists of values and output the same key with the result of the intersection. After reduction:</p>
+
+<pre><code>(A B) -&gt; (C D)
+(A C) -&gt; (B D)
+(A D) -&gt; (B C)
+(B C) -&gt; (A D E)
+(B D) -&gt; (A C E)
+(B E) -&gt; (C D)
+(C D) -&gt; (A B E)
+(C E) -&gt; (B D)
+(D E) -&gt; (B C)
+</code></pre>
+
+<h4>Result</h4>
+
+<p>Now when D visits B&rsquo;s profile, we can quickly look up (B D) and see that they have three friends in common, (A C E).</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -675,81 +801,6 @@ List&lt;String&gt; findPath(List&lt;Step&gt; steps) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/03/Multilayered-architecture/">[Design] Multilayered Architecture</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-08-03T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>First Word</h3>
-
-<p>A <a href="http://en.wikipedia.org/wiki/Multilayered_architecture">multilayered software architecture</a> is a software architecture that uses many layers for allocating the different responsibilities of a software product.</p>
-
-<h3>Layers</h3>
-
-<ol>
-<li><strong>Presentation layer</strong>
-
-<ol type="a">
-<li>UI layer, view layer</li>
-<li>presentation tier in multitier architecture</li>
-</ol>
-</li>
-<li><strong>Application layer</strong>
-
-<ol type="a">
-<li>also called service layer/GRASP Controller Layer</li>
-</ol>
-</li>
-<li><strong>Business layer</strong>
-
-<ol type="a">
-<li>also called business logic layer/domain layer</li>
-</ol>
-</li>
-<li>Infrastructure layer
-
-<ol>
-<li>data access layer/<strong>persistence layer</strong></li>
-<li>logging, networking, and other services which are required to support a particular business layer</li>
-</ol>
-</li>
-</ol>
-
-
-<h3>Conventions</h3>
-
-<p><strong>Application layer</strong> (or service layer) is sometimes considered a sublayer of <strong>business layer</strong>.</p>
-
-<p>If there&rsquo;s no explicit distinction between first 3 tiers, then it&rsquo;s a <strong>traditional client-server(two-tier) model</strong>.</p>
-
-<p>The <strong>application/business layers</strong> can, in fact, be further subdivided to emphasize distinct responsibility (eg. MVC).</p>
-
-<p>Sometimes there&rsquo;s <strong>business infrastructure layer(BI)</strong>, located between the business layer and infrastructure layer.</p>
-
-<p>Infrastructure layer can be partitioned into different levels (high-level or low-level). <strong>Developers focus on only the persistence capabilities</strong>, therefore only talk about persistence layer or data access layer.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/37">&larr; Older</a>
@@ -776,9 +827,9 @@ List&lt;String&gt; findPath(List&lt;Step&gt; steps) {
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -787,6 +838,10 @@ List&lt;String&gt; findPath(List&lt;Step&gt; steps) {
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -802,10 +857,6 @@ List&lt;String&gt; findPath(List&lt;Step&gt; steps) {
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

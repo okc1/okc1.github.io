@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given a binary tree, return the bottom-up level order traversal of its nodes' values. (ie, from left to right, level by level from leaf &hellip;">
+  <meta name="description" content="Question link Given a binary tree, return the zigzag level order traversal of its nodes' values. (ie, from left to right, then right to left for the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,161 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/25/Binary-Tree-Zigzag-Level-Order-Traversal/">[LeetCode 103] Binary Tree Zigzag Level Order Traversal</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-25T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="https://oj.leetcode.com/problems/binary-tree-zigzag-level-order-traversal/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>Given a binary tree, return the <i>zigzag level order</i> traversal of its nodes' values. (ie, from left to right, then right to left for the next level and alternate between).</p>
+
+<p>
+For example:<br>
+Given binary tree <code>{3,9,20,#,#,15,7}</code>,<br>
+</p><pre>    3
+   / \
+  9  20
+    /  \
+   15   7
+</pre>
+<p></p>
+<p>
+return its zigzag level order traversal as:<br>
+</p><pre>[
+  [3],
+  [20,9],
+  [15,7]
+]
+</pre>
+<p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="yellow">3</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="red">4</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="white">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This question is based on &ldquo;Binary Tree Level Order Traversal&rdquo;</strong>.</p>
+
+<p>Altough this is difficulty level 4, the real difficult part is solving &ldquo;Binary Tree Level Order Traversal&rdquo;. If that question is solved, only slight modification is needed for this question.</p>
+
+<h3>Solution</h3>
+
+<p><strong>Instead of using queue</strong> like in &ldquo;Binary Tree Level Order Traversal&rdquo;, <strong>this question is solved by using Stack</strong>. And it&rsquo;s not hard to see why. The only additional things to note:</p>
+
+<ol>
+<li><p>There is no &lsquo;single stack solution&rsquo;, we must use <strong>2 stacks</strong>. (because when push, it&rsquo;s pushed to top).</p></li>
+<li><p>Keep a boolean variable to remember rightToLeft or leftToRight.</p></li>
+</ol>
+
+
+<h3>Code</h3>
+
+<p><strong>First, standard BFS solution</strong> using 2 stacks.</p>
+
+<pre><code>public ArrayList&lt;ArrayList&lt;Integer&gt;&gt; zigzagLevelOrder(TreeNode root) {
+    ArrayList&lt;ArrayList&lt;Integer&gt;&gt; ans = new ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();
+    if (root == null) return ans;
+    Stack&lt;TreeNode&gt; q = new Stack&lt;TreeNode&gt;();
+    q.push(root);
+    boolean reverse = true;
+    while (! q.isEmpty()) {
+        ans.add(new ArrayList&lt;Integer&gt;());
+        Stack&lt;TreeNode&gt; qq = new Stack&lt;TreeNode&gt;();
+        int curSize = q.size();
+        for (int i = 0; i &lt; curSize; i ++) {
+            TreeNode node = q.pop();
+            ans.get(ans.size() - 1).add(node.val);
+            if (reverse) {
+                if (node.left != null) qq.push(node.left);
+                if (node.right != null) qq.push(node.right);
+            }
+            else {
+                if (node.right != null) qq.push(node.right);
+                if (node.left != null) qq.push(node.left);
+            }
+        }
+        q = qq;
+        reverse = ! reverse;
+    }
+    return ans;
+}
+</code></pre>
+
+<p><strong>Second, DFS solution written by me</strong>, and yes, I love DFS more.</p>
+
+<pre><code>public ArrayList&lt;ArrayList&lt;Integer&gt;&gt; zigzagLevelOrder(TreeNode root) {
+    ArrayList&lt;ArrayList&lt;Integer&gt;&gt; ans = new ArrayList&lt;ArrayList&lt;Integer&gt;&gt;();
+    helper(ans, root, 1);
+    return ans;
+}
+
+private void helper(ArrayList&lt;ArrayList&lt;Integer&gt;&gt; ans, TreeNode node, int level) {
+    if (node == null) return;
+    if (ans.size() &lt; level) {
+        ArrayList&lt;Integer&gt; lv = new ArrayList&lt;Integer&gt;();
+        lv.add(node.val);
+        ans.add(lv);
+    }
+    else {
+        if (level % 2 == 0) 
+            ans.get(level - 1).add(0, node.val);
+        else
+            ans.get(level - 1).add(node.val);
+    }
+    helper(ans, node.left, level + 1);
+    helper(ans, node.right, level + 1);
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1489,94 +1644,6 @@ return <code>1-&gt;2-&gt;2-&gt;4-&gt;3-&gt;5</code>.
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/23/Merge-Sorted-Array/">[LeetCode 88] Merge Sorted Array</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-05-23T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="https://oj.leetcode.com/problems/merge-sorted-array/">link</a></p>
-
-<div class="question-content">
-            <p></p><p>Given two sorted integer arrays A and B, merge B into A as one sorted array.</p>
-
-<p>
-<b>Note:</b><br>
-You may assume that A has enough space (size that is greater or equal to <i>m</i> + <i>n</i>) to hold additional elements from B. The number of elements initialized in A and B are <i>m</i> and <i>n</i> respectively.</p><p></p>
-          </div>
-
-
-<h3>Stats</h3>
-
-<table border="2">
-    <tr>
-        <td>Frequency</td>
-        <td bgcolor="red">5</td>
-    </tr>
-    <tr>
-        <td>Difficulty</td>
-        <td bgcolor="lime">2</td>
-    </tr>
-    <tr>
-        <td>Adjusted Difficulty</td>
-        <td bgcolor="white">1</td>
-    </tr>
-    <tr>
-        <td>Time to use</td>
-        <td bgcolor="lime">--------</td>
-    </tr>
-</table>
-
-
-<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
-
-<h3>Analysis</h3>
-
-<p><strong>This is an easy question.</strong></p>
-
-<h3>Solution</h3>
-
-<p>Just insert from the end to the head.</p>
-
-<h3>Code</h3>
-
-<pre><code>public void merge(int A[], int m, int B[], int n) {
-    int p1 = m - 1, p2 = n - 1;
-    for (int i = m + n - 1; i &gt;= 0; i --){
-        if (p2 == -1) return;
-        if (p1 == -1) {
-            for (int j = 0; j &lt;= p2; j++) A[j] = B[j];
-            return;
-        }
-        if (A[p1] &gt; B[p2]) A[i] = A[p1--];
-        else A[i] = B[p2--];
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/55">&larr; Older</a>
@@ -1603,9 +1670,9 @@ You may assume that A has enough space (size that is greater or equal to <i>m</i
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -1614,6 +1681,10 @@ You may assume that A has enough space (size that is greater or equal to <i>m</i
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -1629,10 +1700,6 @@ You may assume that A has enough space (size that is greater or equal to <i>m</i
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

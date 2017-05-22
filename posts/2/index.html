@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link partition problem is the task of deciding whether a given multiset S of positive integers can be partitioned into two subsets S1 and S2 &hellip;">
+  <meta name="description" content="Overview Strategy pattern (also known as the policy pattern) is a design pattern that enables an algorithm&rsquo;s behavior to be selected at runtime &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,121 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/11/18/strategy-pattern/">[Design] Strategy Design Pattern</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-11-18T00:00:00-08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Overview</h1>
+
+<p><strong><a href="https://en.wikipedia.org/wiki/Strategy_pattern">Strategy pattern</a></strong> (also known as the policy pattern) is a design pattern that <strong>enables an algorithm&rsquo;s behavior to be selected</strong> at runtime.</p>
+
+<p>For instance, a class that performs <strong>validation on incoming data</strong> may use a strategy pattern to select a validation algorithm <strong>based on the type of data</strong>, the source of the data, user choice&hellip; These factors are not known <strong>until run-time</strong>&hellip;</p>
+
+<h2>A car example</h2>
+
+<p>Since accelerate and brake behaviors change frequently between models, <strong>a common approach is to implement these behaviors in subclasses</strong>. This approach has significant drawbacks: accelerate and brake behaviors <strong>must be declared in each new Car model</strong>.</p>
+
+<p><img class="middle" src="/assets/images/600px-StrategyPattern_IBrakeBehavior.png"></p>
+
+<p>The strategy pattern uses <strong>composition</strong> instead of inheritance. This allows:</p>
+
+<ol>
+<li><p>better <strong>decoupling between the behavior</strong> and the class that uses it. (i.e. behavior can be changed without breaking the classes that use it)</p></li>
+<li><p>classes can switch between behaviors by changing the specific implementation used without requiring any significant code changes.</p></li>
+</ol>
+
+
+<p>Code:</p>
+
+<pre><code>/* Encapsulated family of Algorithms 
+ * Interface and its implementations
+ */
+public interface IBrakeBehavior {
+    public void brake(); 
+}
+
+public class BrakeWithABS implements IBrakeBehavior {
+    public void brake() {
+        System.out.println("Brake with ABS applied");
+    }
+}
+
+public class Brake implements IBrakeBehavior {
+    public void brake() {
+        System.out.println("Simple Brake applied");
+    }
+}
+
+
+/* Client which can use the algorithms above interchangeably */
+public abstract class Car {
+    protected IBrakeBehavior brakeBehavior;
+
+    public void applyBrake() {
+        brakeBehavior.brake();
+    }
+
+    public void setBrakeBehavior(IBrakeBehavior brakeType) {
+        this.brakeBehavior = brakeType;
+    }
+}
+
+/* Client 1 uses one algorithm (Brake) in the constructor */
+public class Sedan extends Car {
+    public Sedan() {
+        this.brakeBehavior = new Brake();
+    }
+}
+
+/* Client 2 uses another algorithm (BrakeWithABS) in the constructor */
+public class SUV extends Car {
+    public SUV() {
+        this.brakeBehavior = new BrakeWithABS();
+    }
+}
+
+
+/* Using the Car Example */
+public class CarExample {
+    public static void main(String[] args) {
+        Car sedanCar = new Sedan();
+        sedanCar.applyBrake();  // This will invoke class "Brake"
+
+        Car suvCar = new SUV(); 
+        suvCar.applyBrake();    // This will invoke class "BrakeWithABS"
+
+        // set brake behavior dynamically
+        suvCar.setBrakeBehavior( new Brake() ); 
+        suvCar.applyBrake();    // This will invoke class "Brake" 
+    }
+}
+</code></pre>
+
+<p>This gives greater flexibility in design and is in harmony with the <strong><a href="https://en.wikipedia.org/wiki/Open/closed_principle">Open/closed principle</a></strong> (OCP) that states that <strong>classes should be open for extension but closed for modification</strong>.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -656,49 +771,6 @@ class Chess extends Game {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/10/22/literals/">[Fundamental] What Is a Literal?</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-10-22T00:00:00-07:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1>Overview</h1>
-
-<p><a href="https://en.wikipedia.org/wiki/Literal_(computer_programming">A Literal</a>) is a notation for <strong>representing a fixed value in source code</strong>.</p>
-
-<p>Almost all programming languages have notations for atomic values such as integers, floating-point numbers, and strings.</p>
-
-<p>eg.</p>
-
-<pre><code>int a = 1;
-String s = "cat";
-</code></pre>
-
-<h2>Integer literal</h2>
-
-<p><a href="https://en.wikipedia.org/wiki/Integer_literal">an integer literal</a> is an integer whose value is directly represented in source code.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/3">&larr; Older</a>
@@ -725,9 +797,9 @@ String s = "cat";
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -736,6 +808,10 @@ String s = "cat";
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -751,10 +827,6 @@ String s = "cat";
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

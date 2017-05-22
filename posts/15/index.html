@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="What is Memcached? Memcached is an in-memory key-value store for small chunks of arbitrary data (strings, objects) from results of database calls, &hellip;">
+  <meta name="description" content="Question link Given two integer sequences, one of which is the push sequence of a stack, please check whether the other sequence is a corresponding &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,90 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/26/Push-and-Pop-Sequences-Stacks/">[Question] Push and Pop Sequences of Stacks</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-26T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://codercareer.blogspot.sg/2011/11/no-21-push-and-pop-sequences-of-stacks.html">link</a></p>
+
+<blockquote><p>Given two integer sequences, one of which is the push sequence of a stack, please check whether the other sequence is a corresponding pop sequence or not.</p>
+
+<p>For example, if 1, 2, 3, 4, 5 is a push sequence, 4, 5, 3, 2, 1 is a corresponding pop sequence, but the sequence 4, 3, 5, 1, 2 is not.</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Refer to <a href="http://stackoverflow.com/a/17828345">this answer</a>:</p>
+
+<blockquote><p>Construct the stack:</p>
+
+<p>For each number X in the pop order:</p></blockquote>
+
+<pre><code>If this number is not the same as the top of the stack (or the stack is empty), 
+push numbers from the push order until you pushed X. 
+
+If you pushed all numbers and didn't find X, there's no way to get the pop order.
+
+Pop X
+</code></pre>
+
+<h3>Code</h3>
+
+<pre><code>public boolean validSequence(int[] input, int[] sequenc) {
+    // keep a pointer p in the input[] array
+    int len = input.length;
+    int p = 0;
+    Stack&lt;Integer&gt; stack = new Stack&lt;Integer&gt;();
+
+    int i = 0;
+    while (i &lt; len) {
+        if (stack.isEmpty()) {
+            // just push an element to stack
+            stack.push(input[p++]);
+        } else {
+            // stack got elements, then check top one
+            if (stack.peek() == sequenc[i]) {
+                // seq found, proceed to next number in seq
+                stack.pop();
+                i++;
+            } else {
+                // did not find seq, keep pushing to stack until done
+                if (p == len) {
+                    return false;
+                } else {
+                    stack.push(input[p++]);
+                }
+            }
+        }
+    }
+    return i == len; // or just return true;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -970,154 +1054,6 @@ class Pair {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/19/check-if-line-segment-intersect/">[Question] Check if Two Line Segments Intersect</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-19T00:00:00-08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/">link</a></p>
-
-<blockquote><p>Given two line segments (p1, q1) and (p2, q2), check if 2 line segments intersect.</p></blockquote>
-
-<h3>Orientation</h3>
-
-<p>Considering 3 pointer, orientation can be:</p>
-
-<ol>
-<li>counterclockwise</li>
-<li>clockwise</li>
-<li>colinear (not considering direction)</li>
-</ol>
-
-
-<p><img class="middle" src="/assets/images/line-orientation.png"></p>
-
-<p>Note that orientation only tells the order and sequence relationship of 3 points. <strong>It tells nothing about intersection</strong>.</p>
-
-<h3>Intersection</h3>
-
-<p>Considering 2 line segments: (p1,q1) and (p2,q2).</p>
-
-<h4>Case 1: general</h4>
-
-<p>Two line segment intersect if <strong>BOTH</strong> the 2 conditions hold:</p>
-
-<ol>
-<li>(p1, q1, p2) and (p1, q1, q2) have different orientations and</li>
-<li>(p2, q2, p1) and (p2, q2, q1) have different orientations</li>
-</ol>
-
-
-<p><img class="middle" src="/assets/images/GeneralCaseExamples1.png"></p>
-
-<p><img class="middle" src="/assets/images/examplesGeneralCase211.png"></p>
-
-<h4>Case 2: special</h4>
-
-<p>The speical case is: <strong>what if all 4 pointers (p1, q1, p2, q2) are all on the same line</strong>!!! Well, this definitely can happen.</p>
-
-<p>If so, check if the values of x-axis and y-axis intersect. I.e. the below 2 cases:</p>
-
-<p><img class="middle" src="/assets/images/examplesSpecialCase1.png"></p>
-
-<h3>Code</h3>
-
-<p>Translated from G4G:</p>
-
-<pre><code>public boolean intersect(Pair p1, Pair q1, Pair p2, Pair q2) {
-
-    int o1 = orientation(p1, q1, p2);
-    int o2 = orientation(p1, q1, q2);
-    int o3 = orientation(p2, q2, p1);
-    int o4 = orientation(p2, q2, q1);
-
-    // General case
-    if (o1 != o2 &amp;&amp; o3 != o4) {
-        // 2 lines intersect
-        return true;
-    }
-
-    // Special Cases
-    Segment seg1 = new Segment(p1, q1);
-    Segment seg2 = new Segment(p2, q2);
-
-    // p1, q1 and p2 are colinear and p2 lies on segment p1q1
-    if (o1 == 0 &amp;&amp; onSegment(seg1, p2))
-        return true;
-
-    // p1, q1 and p2 are colinear and q2 lies on segment p1q1
-    if (o2 == 0 &amp;&amp; onSegment(seg1, q2))
-        return true;
-
-    // p2, q2 and p1 are colinear and p1 lies on segment p2q2
-    if (o3 == 0 &amp;&amp; onSegment(seg2, p1))
-        return true;
-
-    // p2, q2 and q1 are colinear and q1 lies on segment p2q2
-    if (o4 == 0 &amp;&amp; onSegment(seg2, q1))
-        return true;
-
-    return false; // Doesn't fall in any of the above cases
-}
-
-private boolean onSegment(Segment seg, Pair q) {
-    // check if q lies on line segment seg(p1, p2)
-    if (q.x &lt;= Math.max(seg.p1.x, seg.p2.x)
-            &amp;&amp; q.x &gt;= Math.min(seg.p1.x, seg.p2.x)
-            &amp;&amp; q.y &lt;= Math.max(seg.p1.y, seg.p2.y)
-            &amp;&amp; q.y &gt;= Math.min(seg.p1.y, seg.p2.y))
-        return true;
-
-    return false;
-}
-
-private int orientation(Pair first, Pair second, Pair third) {
-    int val = (second.y - first.y) * (third.x - second.x)
-            - (second.x - first.x) * (third.y - second.y);
-    if (val == 0) {
-        // colinear
-        return 0;
-    } else {
-        // clock or counterclock wise (1 or -1)
-        return val / Math.abs(val);
-    }
-}
-
-class Segment {
-    Pair p1;
-    Pair p2;
-
-    public Segment(Pair p1, Pair p2) {
-        this.p1 = p1;
-        this.p2 = p2;
-    }
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/16">&larr; Older</a>
@@ -1144,9 +1080,9 @@ class Segment {
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -1155,6 +1091,10 @@ class Segment {
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -1170,10 +1110,6 @@ class Segment {
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="First Word There are generally four levels of tests: unit testing, integration testing, system testing, and acceptance testing. Software testing &hellip;">
+  <meta name="description" content="Binary Search Recursion or While-Loop? In general, it&rsquo;s never a good idea to do binary search with recursion, because that&rsquo;ll make the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,358 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/08/NineChap-Binary-Search/">[NineChap 2.1] Binary Search</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-06-08T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Binary Search</h2>
+
+<h4>Recursion or While-Loop?</h4>
+
+<p>In general, it&rsquo;s never a good idea to do binary search with recursion, because that&rsquo;ll make the interview too boring.</p>
+
+<h4>Template</h4>
+
+<p><a href="http://answer.ninechapter.com/solutions/binary-search/">link</a></p>
+
+<p>This template is able to locate the first (or last) occurance of an element <strong>when array contains duplications</strong>.</p>
+
+<p>If item too small/large, left/right boundary is returned.</p>
+
+<p>Read Question &ldquo;Search for a Range&rdquo; for more details.</p>
+
+<pre><code>int binarySearch(vector&lt;int&gt; &amp;A, int target) {
+    if (A.size() == 0) {
+        return -1;
+    }
+
+    int start = 0;
+    int end = A.size() - 1;
+    int mid;
+
+    while (start + 1 &lt; end) {
+        mid = start + (end - start) / 2;
+        if (A[mid] &lt; target) {
+            start = mid;
+        } else {
+            end = mid;
+        }
+    }
+
+    if (A[start] == target) {
+        return start;
+    }
+    if (A[end] == target) {
+        return end;
+    }
+
+    return -1;
+}
+</code></pre>
+
+<h4>Keypoints</h4>
+
+<ol>
+<li>start + 1 &lt; end</li>
+<li>start + (end-start)/2</li>
+<li>A[mid] ==, &lt;, ></li>
+<li>A[start/end] == target</li>
+</ol>
+
+
+<h2>Question list</h2>
+
+<p><strong>Binary search</strong></p>
+
+<ol>
+<li><p><strong><a href="/blog/2014/05/12/Search-Insert-Position/">Search Insert Position</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/12/Search-for-a-Range/">Search for a Range</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/12/Search-in-Rotated-Sorted-Array/">Search in Rotated Sorted Array</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/22/Search-in-Rotated-Sorted-Array-II/">Search in Rotated Sorted Array II</a></strong></p></li>
+<li><p><strong><a href="/blog/2014/05/21/Search-a-2D-Matrix/">Search a 2D Matrix</a></strong></p></li>
+</ol>
+
+
+<p><strong>Additional</strong></p>
+
+<ol>
+<li><p><strong><a href="/blog/2014/06/10/Searching-a-2D-Sorted-Matrix/">Search a 2D Matrix II</a></strong> - A tricky question</p></li>
+<li><p><strong>Find the First Bad Version</strong></p>
+
+<p> The code base version is an integer and start from 0 to n. One day, someone commit a bad version in the code case, so it caused itself and the following versions are all failed in the unittests. You can determine whether a version is bad by the following interface:</p>
+
+<blockquote><p>boolean isBadVersion(int version);</p></blockquote>
+
+<p> Find the first bad version.</p></li>
+<li><p><strong>Find a peek</strong></p>
+
+<p> There is an array which we can assume the numbers in adjcent positions are different. and A[0] &lt; A[1] &amp;&amp; A[A.length - 2] > A[A.length - 1]. We consider a position P is a peek if A[P] > A[P-1] &amp;&amp; A[P] > A[P+1]. Find a peek in this array.</p></li>
+</ol>
+
+
+<h2>Code</h2>
+
+<p>All following code are written with the template provided above.</p>
+
+<p><strong>Search Insert Position</strong></p>
+
+<pre><code>public int searchInsert(int[] A, int target) {
+    // 6 minutes
+    if (A == null || A.length == 0) {
+        return 0;
+    }
+    int left = 0, right = A.length - 1;
+    int mid;
+    while (left + 1 &lt; right) {
+        mid = left + (right - left) / 2;
+        if (A[mid] &lt; target) {
+            left = mid;
+        }
+        else {
+            right = mid;
+        }
+    }
+    if (target &lt;= A[left]) {
+        // equal or less than first element
+        return left;
+    }
+    else if (A[left] &lt; target &amp;&amp; target &lt;= A[right]) {
+        return right;
+    }
+    else {
+        // bigger than largest element
+        return right + 1;
+    }
+}
+</code></pre>
+
+<p><strong>Search for a Range</strong></p>
+
+<pre><code>public int[] searchRange(int[] A, int target) {
+    // 6 minutes
+    int[] result = new int[2];
+    result[0] = -1;
+    result[1] = -1;
+    if (A == null || A.length == 0) {
+        return result;
+    }
+    // find the start point of target
+    int left = 0, right = A.length - 1, mid;
+    while (left + 1 &lt; right) {
+        mid = left + (right - left) / 2;
+        if (A[mid] &lt; target) {
+            left = mid;
+        }
+        else {
+            right = mid;
+        }
+    }
+    if (A[left] == target) {
+        result[0] = left;
+    }
+    else if (A[right] == target) {
+        result[0] = right;
+    }
+    else {
+        return result;
+    }
+    // find the end point of target
+    left = 0;
+    right = A.length - 1;
+    while (left + 1 &lt; right) {
+        mid = left + (right - left) / 2;
+        if (A[mid] &lt;= target) {
+            left = mid;
+        }
+        else {
+            right = mid;
+        }
+    }
+    if (A[right] == target) {
+        result[1] = right;
+    }
+    else if (A[left] == target) {
+        result[1] = left;
+    }
+    return result;
+}
+</code></pre>
+
+<p><strong>Search in Rotated Sorted Array</strong></p>
+
+<p>Note: this is an high-freq qeustion. Every company will ask this question.</p>
+
+<p>The solution is using 4 if-conditions. It takes long time first, because I compare A[mid] with target. It become complex.</p>
+
+<p>We should compared A[left] and A[mid] first, then it&rsquo;ll be much easier for coding.</p>
+
+<pre><code>public int search(int[] A, int target) {
+    // this is the 4th time that I do this question
+    // 7 minutes
+    if (A == null || A.length == 0) {
+        return -1;
+    }
+    int left = 0;
+    int right = A.length - 1;
+    int mid;
+    while (left + 1 &lt; right) {
+        mid = left + (right - left) / 2;
+        if (A[mid] == target) {
+            return mid;
+        } else if (A[left] &lt; A[mid]) {
+            if (A[left] &lt;= target &amp;&amp; target &lt; A[mid]) {
+                right = mid;
+            } else {
+                left = mid;
+            }
+        } else {
+            if (A[mid] &lt; target &amp;&amp; target &lt;= A[right]) {
+                left = mid;
+            } else {
+                right = mid;
+            }
+        }
+    }
+    if (A[left] == target) {
+        return left;
+    } else if (A[right] == target) {
+        return right;
+    } 
+    return -1;
+}
+</code></pre>
+
+<p><strong>Search in Rotated Sorted Array II</strong></p>
+
+<p>There are multiple ways to remove duplications. My previous solution is removing duplicate before entering the while-loop, which is a very good idea.</p>
+
+<p>Binary can&rsquo;t be used, because there might be: value of start = mid = end. In this case, the entire list needs to be search. Impossible!</p>
+
+<p>The worse case will anyway take O(n) time. To indicate the time complexity is regardless of binary search, Mr. Huang suggests the following code:</p>
+
+<pre><code>public boolean search(int[] A, int target) {
+    for (int i = 0; i &lt; A.length; i ++) {
+        if (A[i] == target) {
+            return true;
+        }
+    }
+    return false;
+}
+</code></pre>
+
+<p><strong>Search a 2D Matrix</strong></p>
+
+<p>my code (2D search):</p>
+
+<pre><code>public boolean searchMatrix(int[][] matrix, int target) {
+    // 13 miniutes
+    if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+        return false;
+    }
+    int m = matrix.length;
+    int n = matrix[0].length;
+    // find target vertically from matrix[0] to matrix[m-1]
+    int top = 0, bottom = m - 1;
+    int mid;
+    while (top + 1 &lt; bottom) {
+        mid = top + (bottom - top) / 2;
+        if (matrix[mid][0] &lt; target) {
+            top = mid;
+        }
+        else {
+            bottom = mid;
+        }
+    }
+    // locate the row number
+    int row = -1;
+    if (matrix[top][0] &lt;= target &amp;&amp; target &lt;= matrix[top][n-1]) {
+        row = top;
+    }
+    else if (matrix[bottom][0]&lt;=target &amp;&amp; target &lt;= matrix[bottom][n-1]) {
+        row = bottom;
+    }
+    else {
+        return false;
+    }
+    // now find target from matrix[row]
+    int left = 0, right = n - 1;
+    while (left + 1 &lt; right) {
+        mid = left + (right - left) / 2;
+        if (matrix[row][mid] &lt; target) {
+            left = mid;
+        }
+        else {
+            right = mid;
+        }
+    }
+    return (matrix[row][left] == target || matrix[row][right] == target);
+}
+</code></pre>
+
+<p>better code (1D search):</p>
+
+<pre><code>public boolean searchMatrix(int[][] matrix, int target) {
+    int rows = matrix.length;
+    int cols = matrix[0].length;
+    int start = 0;
+    int end = rows * cols - 1;
+    while (start &lt;= end) {
+        int mid = (start + end) / 2;
+        // Tricks to treat it as a 1-D array
+        int digit = matrix[mid / cols][mid % cols];
+        if (target == digit) {
+            return true;
+        } else if (target &gt; digit) {
+            start = mid + 1;
+        } else {
+            end = mid - 1;
+        }
+    }
+    return false;
+}
+</code></pre>
+
+<p><strong>Search a 2D Matrix II</strong></p>
+
+<p>Read my new post for details.</p>
+
+<p><strong>Find the First Bad Version</strong></p>
+
+<p>A simple binary search.</p>
+
+<p><strong>Find a peek</strong></p>
+
+<p>A binary search, and for each &lsquo;mid&rsquo; point, judge weather it&rsquo;s a peek, or it&rsquo;s upward sloping, or downward sloping.</p>
+
+<p>Code skipped.</p>
+
+<h2>Conclusion</h2>
+
+<h4>Always try to exclude a half.</h4>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1400,198 +1752,6 @@ Some examples:<br>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/03/Binary-Tree-Postorder-Traversal/">[LeetCode 145] Binary Tree Postorder Traversal</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-06-03T00:00:00-07:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="https://oj.leetcode.com/problems/binary-tree-postorder-traversal/">link</a></p>
-
-<div class="question-content bg-color bg-img font-color">
-            <p class="font-color"></p><p class="font-color">Given a binary tree, return the <i>postorder</i> traversal of its nodes' values.</p>
-
-<p class="font-color">
-For example:<br>
-Given binary tree <code>{1,#,2,3}</code>,<br>
-</p><pre>   1
-    \
-     2
-    /
-   3
-</pre>
-<p class="font-color"></p>
-<p class="font-color">
-return <code>[3,2,1]</code>.
-</p>
-
-<p class="font-color"><b>Note:</b> Recursive solution is trivial, could you do it iteratively?</p><p class="font-color"></p>
-          </div>
-
-
-<h3>Stats</h3>
-
-<table border="2">
-    <tr>
-        <td>Adjusted Difficulty</td>
-        <td bgcolor="red">4</td>
-    </tr>
-    <tr>
-        <td>Time to use</td>
-        <td bgcolor="yellow">--------</td>
-    </tr>
-</table>
-
-
-<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
-
-<h3>Analysis</h3>
-
-<p>Unlike pre-order traversal, <strong>this is a very difficult question</strong>.</p>
-
-<h3>Solution</h3>
-
-<p><strong>First, I wrote the solution using a HashSet, and it works</strong>. However, this solution is not good because it uses some space.
-For more generalized way to write DFS code, read another post <strong>Implement DFS using a Stack</strong>.</p>
-
-<p><strong>The best and most popular solution is proposed by <a href="http://leetcode.com/2010/10/binary-tree-post-order-traversal.html">1337c0d3r</a></strong>. It basically uses 1 more pointer to track the current status (whether I&rsquo;m traversing down, or up, and in which direction etc.). The extra pointer is called &lsquo;prev&rsquo;.</p>
-
-<blockquote><p>We use a prev variable to keep track of the previously-traversed node. Let’s assume curr is the current node that’s on top of the stack. When prev is curr‘s parent, we are traversing down the tree. In this case, we try to traverse to curr‘s left child if available (ie, push left child to the stack). If it is not available, we look at curr‘s right child. If both left and right child do not exist (ie, curr is a leaf node), we print curr‘s value and pop it off the stack.</p>
-
-<p>If prev is curr‘s left child, we are traversing up the tree from the left. We look at curr‘s right child. If it is available, then traverse down the right child (ie, push right child to the stack), otherwise print curr‘s value and pop it off the stack.</p>
-
-<p>If prev is curr‘s right child, we are traversing up the tree from the right. In this case, we print curr‘s value and pop it off the stack.</p></blockquote>
-
-<p>Referring to his code, I wrote the 2nd piece of code below and it works.</p>
-
-<p><strong>Amazingly, that code can be simplified, which becomes the 3rd code</strong> (I thought it won&rsquo;t pass at first). The way that code got simplified is by keeping current pointer steady, so that the 2 pointers can meet. Altough program logic is exactly same, this interesting code is worth reading.</p>
-
-<h3>Code</h3>
-
-<p><strong>First, my solution using HashSet</strong></p>
-
-<pre><code>public List&lt;Integer&gt; postorderTraversal(TreeNode root) {
-    List&lt;Integer&gt; ans = new LinkedList&lt;Integer&gt;();
-    Stack&lt;TreeNode&gt; stack = new Stack&lt;TreeNode&gt;();
-    if (root != null) stack.push(root);
-    HashSet&lt;TreeNode&gt; visited = new HashSet&lt;TreeNode&gt;();
-    while (!stack.isEmpty()) {
-        TreeNode cur = stack.pop();
-        if (visited.contains(cur))
-            ans.add(cur.val);
-        else {
-            stack.push(cur);
-            visited.add(cur);
-            if (cur.right != null) stack.push(cur.right);
-            if (cur.left != null) stack.push(cur.left);
-        }
-    }
-    return ans;
-}
-</code></pre>
-
-<p><strong>Second, using 2 pointers</strong></p>
-
-<pre><code>public List&lt;Integer&gt; postorderTraversal(TreeNode root) {
-    List&lt;Integer&gt; ans = new LinkedList&lt;Integer&gt;();
-    if (root == null) {
-        return ans;
-    }
-    Stack&lt;TreeNode&gt; stack = new Stack&lt;TreeNode&gt;();
-    stack.push(root);
-    TreeNode pre = null, cur = null;
-    while (!stack.isEmpty()) {
-        cur = stack.peek();
-        if (pre == null || pre.left == cur || pre.right == cur) {
-            if (cur.left == null &amp;&amp; cur.right == null) {
-                ans.add(stack.pop().val);
-            }
-            else if (cur.left != null) {
-                stack.push(cur.left);
-            }
-            else if (cur.right != null) {
-                stack.push(cur.right);
-            }
-        }
-        else if (cur.left == pre) {
-            if (cur.right != null) {
-                stack.push(cur.right);
-            }
-            else {
-                ans.add(stack.pop().val);
-            }
-        }
-        else if (cur.right == pre) {
-            ans.add(stack.pop().val);
-        }
-        pre = cur;
-    }
-    return ans;
-}
-</code></pre>
-
-<p><strong>Third, simplified version of 2nd code</strong></p>
-
-<p><strong>Commented on June 10th</strong>: Note that &lsquo;pre&rsquo; and &lsquo;cur&rsquo; are never going to be apart for more then 1 edge (they can overlap)</p>
-
-<pre><code>public List&lt;Integer&gt; postorderTraversal(TreeNode root) {
-    List&lt;Integer&gt; result = new ArrayList&lt;Integer&gt;();
-    Stack&lt;TreeNode&gt; stack = new Stack&lt;TreeNode&gt;();
-    TreeNode prev = null; // previously traversed node
-    TreeNode curr = root;
-    if (root == null) {
-        return result;
-    }
-    stack.push(root);
-    while (!stack.empty()) {
-        curr = stack.peek();
-        if (prev == null || prev.left == curr || prev.right == curr) {
-        // traverse down the tree
-            if (curr.left != null) {
-                stack.push(curr.left);
-            } else if (curr.right != null) {
-                stack.push(curr.right);
-            }
-        } else if (curr.left == prev) {
-        // traverse up the tree from the left
-            if (curr.right != null) {
-                stack.push(curr.right);
-            }
-        } else if (curr.right == prev || curr == prev){
-        // traverse up the tree from the right
-        // or at a leaf point
-            result.add(curr.val);
-            stack.pop();
-        }
-        prev = curr;
-    }
-    return result;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/49">&larr; Older</a>
@@ -1618,9 +1778,9 @@ For more generalized way to write DFS code, read another post <strong>Implement 
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -1629,6 +1789,10 @@ For more generalized way to write DFS code, read another post <strong>Implement 
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -1644,10 +1808,6 @@ For more generalized way to write DFS code, read another post <strong>Implement 
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

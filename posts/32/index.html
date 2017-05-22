@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link 有n个任务需要完成（编号1到n），任务之间有一些依赖关系，如果任务a依赖于任务b和c，那么只有当任务b和任务c完成之后才能完成任务a。给定所有的依赖关系，判断这些任务是否能够完成。如果能够完成，请给出一个合法的任务完成序列。 样例： n=5 1->2,3 3->4 &hellip;">
+  <meta name="description" content="Question link Excel中的行列数用A~Z 26个字母表示，A, B, C, D, …, Z, AA, AB, …, AZ, BA, BB, … 分别表示10进制数1, 2, 3, 4, …, 26, 27, 28, …, 52, 53, 54…。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,109 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/16/Excel-decimal-conversion/">[ItInt5] Excel Decimal Conversion</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-16T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>16</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://www.itint5.com/oj/#23">link</a></p>
+
+<blockquote><p>Excel中的行列数用A~Z 26个字母表示，A, B, C, D, …, Z, AA, AB, …, AZ, BA, BB, … 分别表示10进制数1, 2, 3, 4, …, 26, 27, 28, …, 52, 53, 54…。</p>
+
+<p>请实现2个函数decToExcel和excelToDec，将10进制数转换为Excel数，以及将Excel数转换为10进制数。</p></blockquote>
+
+<h3>Solution</h3>
+
+<p>Note the indexing starts from 1, not from 0. This caused some trouble for me.</p>
+
+<h3>Code</h3>
+
+<p><strong>written by me</strong></p>
+
+<pre><code>public String decToExcel(int decNum) {
+    decNum--;
+    int digits = 1;
+    int exponen = 26;
+    while (decNum &gt;= exponen) {
+        decNum -= exponen;
+        exponen *= 26;
+        digits++;
+    }
+    // now we know the total number of digits
+    int num = decNum;
+    int total = exponen / 26;
+    String ans = "";
+    for (int i = 0; i &lt; digits; i++) {
+        ans += (char) (num / total + 'A');
+        num %= total;
+        total /= 26;
+    }
+    return ans;
+}
+
+public int excelToDec(String excelNum) {
+    int digits = excelNum.length();
+    int total = 1;
+    int sum = 1;
+    for (int i = 1; i &lt; digits; i++) {
+        total *= 26;
+        sum += total;
+    }
+    for (int i = 0; i &lt; digits; i++) {
+        sum += (excelNum.charAt(i) - 'A') * total;
+        total /= 26;
+    }
+    return sum;
+}
+</code></pre>
+
+<p><strong>updated code</strong>: we can actually do it recursively. The code is much more concise.</p>
+
+<pre><code>//将十进制数转换为excel数
+public String decToExcel(int decNum) {
+    if (decNum == 0) {
+        return "";
+    }
+    decNum--;
+    char last = (char) ('A' + decNum % 26);
+    return decToExcel(decNum / 26) + last;
+}
+
+//将excel数转换为十进制数
+public int excelToDec(String excelNum) {
+    if (excelNum.equals("")) {
+        return 0;
+    }
+    int len = excelNum.length();
+    int last = 1 + excelNum.charAt(len - 1) - 'A';
+    return excelToDec(excelNum.substring(0, len - 1)) * 26 + last;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -804,77 +907,6 @@ class ManComparator implements Comparator&lt;Man&gt; {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/11/Tcp-3way-handshake/">[Design] TCP 3-Way Handshake</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-08-11T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Handshaking</h3>
-
-<p><strong><a href="http://en.wikipedia.org/wiki/Handshaking">Handshaking</a> is an automated process of negotiation</strong> that dynamically sets parameters of a communications channel established between two entities before normal communication over the channel begins.</p>
-
-<p>It is usually a process that takes place when a computer is about to communicate with a foreign device to establish rules for communication.</p>
-
-<h3>TCP three-way handshake</h3>
-
-<p><strong><a href="http://www.inetdaemon.com/tutorials/internet/tcp/3-way_handshake.shtml">TCP three-way handshake</a></strong> is the method used by TCP set up a TCP/IP connection over an Internet Protocol based network.</p>
-
-<p>It&rsquo;s commonly referred to as &ldquo;<strong>SYN-SYN-ACK</strong>&rdquo;.</p>
-
-<p><img class="middle" src="/assets/images/3way-Tcp-handshake.png"></p>
-
-<h3>Process</h3>
-
-<ol>
-<li>Host A sends a TCP <strong>SYN</strong>chronize packet to Host B</li>
-<li>Host B receives A&rsquo;s SYN</li>
-<li>Host B sends a <strong>SYN</strong>chronize-<strong>ACK</strong>nowledgement</li>
-<li>Host A receives B&rsquo;s SYN-ACK</li>
-<li>Host A sends <strong>ACK</strong>nowledge</li>
-<li>Host B receives ACK.</li>
-<li>TCP socket connection is ESTABLISHED.</li>
-</ol>
-
-
-<p>Alternatively, there&rsquo;s a good illustration on <a href="http://en.wikipedia.org/wiki/Handshaking">wiki</a>:</p>
-
-<blockquote><p>Establishing a normal TCP connection requires three separate steps:</p>
-
-<ol>
-<li><p>The first host (Alice) sends the second host (Bob) a &ldquo;synchronize&rdquo; (SYN) message with its own sequence number x, which Bob receives.</p></li>
-<li><p>Bob replies with a synchronize-acknowledgment (SYN-ACK) message with its own sequence number y and acknowledgement number x + 1, which Alice receives.</p></li>
-<li><p>Alice replies with an acknowledgment message with acknowledgement number y + 1, which Bob receives and to which he doesn&rsquo;t need to reply.</p></li>
-</ol>
-</blockquote>
-
-<h3>Two more thing</h3>
-
-<p>Note that <strong>FTP, Telnet, HTTP, HTTPS, SMTP, POP3, IMAP, SSH</strong> and any other protocol that rides over TCP <strong>also has a three way handshake</strong> performed as connection is opened.</p>
-
-<p>TCP &lsquo;rides&rsquo; on top of Internet Protocol (IP) in the protocol stack. IP handles <strong>IP addressing and routing</strong> and gets the packets from one place to another, but TCP manages the <strong>actual communication sockets</strong> between endpoints.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/33">&larr; Older</a>
@@ -901,9 +933,9 @@ class ManComparator implements Comparator&lt;Man&gt; {
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -912,6 +944,10 @@ class ManComparator implements Comparator&lt;Man&gt; {
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -927,10 +963,6 @@ class ManComparator implements Comparator&lt;Man&gt; {
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

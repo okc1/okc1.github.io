@@ -9,7 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Write an algorithm to find the ‘next’ post-order successor of a given node in a binary tree and binary search tree. where each node has &hellip;">
+  <meta name="description" content="Question link 一个distributed的环境，有很多机器，现在你发现性能有问题，可能是网络带宽造成的，你怎么解决？ (你不能更换网络设备的前提下) Answer Identify problem 首先得判定是否真的是网络造成的，就算是网络问题，哪些机器之间的网络问题？ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,77 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/07/Distributed-network-bottleneck/">[Design] Distributed Network Bottleneck</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-07T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Question</h2>
+
+<p><a href="http://www.mitbbs.com/article_t/JobHunting/32702821.html">link</a></p>
+
+<blockquote><p>一个distributed的环境，有很多机器，现在你发现性能有问题，可能是网络带宽造成的，你怎么解决？ (你不能更换网络设备的前提下)</p></blockquote>
+
+<h3>Answer</h3>
+
+<ol>
+<li>Identify problem</li>
+</ol>
+
+
+<p>首先得判定是否真的是网络造成的，就算是网络问题，哪些机器之间的网络问题？ 这个得先大概了解high level component dependency relationship，</p>
+
+<p>看看是不是cpu memory disk都没有问题。 可以profile几个机器看看是不是 a lot of time spent waiting for network calls.</p>
+
+<ol>
+<li>Locate the faulty component</li>
+</ol>
+
+
+<p>判定是网络问题之后看是哪些components之间，或是某个component里面有很多网络通讯。</p>
+
+<ol>
+<li>Improvement</li>
+</ol>
+
+
+<p>不能更换设备的话，能不能改network topology来让critical path machine之间的带宽有改善。</p>
+
+<p>要是不能改topology就只能改程序了。还是先identify top offender,然后就只能慢慢改了</p>
+
+<ol>
+<li>What&rsquo;s more</li>
+</ol>
+
+
+<p>要还有时间的话就可以聊聊问啥不能换设备，是资金问题还是用的已经是top of the line了？</p>
+
+<p>或者是在public cloud上？</p>
+
+<p>Answer suggested by user <strong>remus</strong>.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -704,132 +775,6 @@ private void helper(List&lt;String&gt; result, char[] letters, int pos) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/08/05/MapReduce-Common-Friends/">[Design] MapReduce Common Friends Example</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-08-05T00:00:00-07:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://stackoverflow.com/a/12375878">link</a></p>
-
-<blockquote><p>Facebook&rsquo;s &ldquo;You and Joe have 230 friends in common&rdquo; feature. Sure you could use a decent caching strategy, but for now, use MapReduce.</p></blockquote>
-
-<h3>Analysis</h3>
-
-<p>This list doesn&rsquo;t change frequently so it&rsquo;d be wasteful to recalculate it every time. We&rsquo;re going to use mapreduce to calculate everyone&rsquo;s common friends once a day and store those results.</p>
-
-<p>Note that friends are <strong>bi-directional</strong>. If I&rsquo;m your friend, you&rsquo;re mine. (follow-up: how to do it for follower system?)</p>
-
-<h4>Input</h4>
-
-<p>Assume the friends are stored as Person->[List of Friends], our friends list is then:</p>
-
-<pre><code>A -&gt; B C D
-B -&gt; A C D E
-C -&gt; A B D E
-D -&gt; A B C E
-E -&gt; B C D
-</code></pre>
-
-<h4>Map</h4>
-
-<p>The mapper will output a key-value pair. The key will be a friend along with the person. The value will be the list of friends. The key will be sorted so that the friends are in order, causing all pairs of friends to go to the same reducer.</p>
-
-<p>For map(A -> B C D) :</p>
-
-<pre><code>(A B) -&gt; B C D
-(A C) -&gt; B C D
-(A D) -&gt; B C D
-</code></pre>
-
-<p>For map(B -> A C D E) : (Note that A comes before B in the key)</p>
-
-<pre><code>(A B) -&gt; A C D E
-(B C) -&gt; A C D E
-(B D) -&gt; A C D E
-(B E) -&gt; A C D E
-</code></pre>
-
-<p>For map(C -> A B D E) :</p>
-
-<pre><code>(A C) -&gt; A B D E
-(B C) -&gt; A B D E
-(C D) -&gt; A B D E
-(C E) -&gt; A B D E
-</code></pre>
-
-<p>For map(D -> A B C E) :</p>
-
-<pre><code>(A D) -&gt; A B C E
-(B D) -&gt; A B C E
-(C D) -&gt; A B C E
-(D E) -&gt; A B C E
-</code></pre>
-
-<p>And finally for map(E -> B C D):</p>
-
-<pre><code>(B E) -&gt; B C D
-(C E) -&gt; B C D
-(D E) -&gt; B C D
-</code></pre>
-
-<p>Before we send these key-value pairs to the reducers, we group them by their keys and get:</p>
-
-<pre><code>(A B) -&gt; (A C D E) (B C D)
-(A C) -&gt; (A B D E) (B C D)
-(A D) -&gt; (A B C E) (B C D)
-(B C) -&gt; (A B D E) (A C D E)
-(B D) -&gt; (A B C E) (A C D E)
-(B E) -&gt; (A C D E) (B C D)
-(C D) -&gt; (A B C E) (A B D E)
-(C E) -&gt; (A B D E) (B C D)
-(D E) -&gt; (A B C E) (B C D)
-</code></pre>
-
-<p>Each line will be passed as an argument to a reducer.</p>
-
-<h4>Reduce</h4>
-
-<p>The reduce function will simply intersect the lists of values and output the same key with the result of the intersection. After reduction:</p>
-
-<pre><code>(A B) -&gt; (C D)
-(A C) -&gt; (B D)
-(A D) -&gt; (B C)
-(B C) -&gt; (A D E)
-(B D) -&gt; (A C E)
-(B E) -&gt; (C D)
-(C D) -&gt; (A B E)
-(C E) -&gt; (B D)
-(D E) -&gt; (B C)
-</code></pre>
-
-<h4>Result</h4>
-
-<p>Now when D visits B&rsquo;s profile, we can quickly look up (B D) and see that they have three friends in common, (A C E).</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/36">&larr; Older</a>
@@ -856,9 +801,9 @@ E -&gt; B C D
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -867,6 +812,10 @@ E -&gt; B C D
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -882,10 +831,6 @@ E -&gt; B C D
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>

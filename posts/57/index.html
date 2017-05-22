@@ -9,10 +9,7 @@
   <meta name="author" content="Kevin Durant">
 
   
-  <meta name="description" content="Question link Given two binary strings, return their sum (also a binary string). For example,
-a = "11"
-b = "1"
-Return "100". Stats Frequency 4 &hellip;">
+  <meta name="description" content="Question link You are climbing a stair case. It takes n steps to reach to the top. Each time you can either climb 1 or 2 steps. In how many distinct &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -68,6 +65,112 @@ Return "100". Stats Frequency 4 &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/21/Climbing-Stairs/">[LeetCode 70] Climbing Stairs</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-05-21T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Question</h3>
+
+<p><a href="http://oj.leetcode.com/problems/climbing-stairs/">link</a></p>
+
+<div class="question-content">
+            <p></p><p>You are climbing a stair case. It takes <i>n</i> steps to reach to the top.</p>
+
+<p>Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+</p><p></p>
+          </div>
+
+
+<h3>Stats</h3>
+
+<table border="2">
+    <tr>
+        <td>Frequency</td>
+        <td bgcolor="red">5</td>
+    </tr>
+    <tr>
+        <td>Difficulty</td>
+        <td bgcolor="lime">2</td>
+    </tr>
+    <tr>
+        <td>Adjusted Difficulty</td>
+        <td bgcolor="white">1</td>
+    </tr>
+    <tr>
+        <td>Time to use</td>
+        <td bgcolor="lime">--------</td>
+    </tr>
+</table>
+
+
+<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
+
+<h3>Analysis</h3>
+
+<p><strong>This is an easy DP question</strong>.</p>
+
+<h3>Solution</h3>
+
+<p>My code is simple and concise, better than any other.</p>
+
+<p>So I posted it below.</p>
+
+<h3>My code</h3>
+
+<p><strong>Original code</strong></p>
+
+<pre><code>public int climbStairs(int n) {
+    if (n == 1) return 1;
+    if (n == 2) return 2;
+    int a = 1;
+    int b = 2;
+    int sum = 0;
+    for (int i=3 ; i&lt;=n ; i++){
+        sum = a + b;
+        a = b;
+        b = sum;
+    }
+    return sum;
+}
+</code></pre>
+
+<p><strong>Optimized code</strong></p>
+
+<pre><code>public int climbStairs(int n) {
+    if (n == 1) return 1;
+    int a = 1;
+    int sum = 1;
+    for (int i=2 ; i&lt;=n ; i++){
+        sum += a;
+        a = sum - a;
+    }
+    return sum;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1225,181 +1328,6 @@ private void appendSpace(StringBuffer sb, int count) {
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/18/Insert-Interval/">[LeetCode 57] Insert Interval</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-05-18T00:00:00-07:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:00 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Question</h3>
-
-<p><a href="http://oj.leetcode.com/problems/insert-interval/">link</a></p>
-
-<div class="question-content">
-            <p></p><p>Given a set of <i>non-overlapping</i> intervals, insert a new interval into the intervals (merge if necessary).</p>
-
-<p>You may assume that the intervals were initially sorted according to their start times.</p>
-
-<p>
-<b>Example 1:</b><br>
-Given intervals <code>[1,3],[6,9]</code>, insert and merge <code>[2,5]</code> in as <code>[1,5],[6,9]</code>.
-</p>
-
-<p>
-<b>Example 2:</b><br>
-Given <code>[1,2],[3,5],[6,7],[8,10],[12,16]</code>, insert and merge <code>[4,9]</code> in as <code>[1,2],[3,10],[12,16]</code>.
-</p>
-
-<p>
-This is because the new interval <code>[4,9]</code> overlaps with <code>[3,5],[6,7],[8,10]</code>.
-</p><p></p>
-          </div>
-
-
-<h3>Stats</h3>
-
-<table border="2">
-    <tr>
-        <td>Frequency</td>
-        <td bgcolor="red">5</td>
-    </tr>
-    <tr>
-        <td>Difficulty</td>
-        <td bgcolor="red">4</td>
-    </tr>
-    <tr>
-        <td>Adjusted Difficulty</td>
-        <td bgcolor="red">4</td>
-    </tr>
-    <tr>
-        <td>Time to use</td>
-        <td bgcolor="yellow">--------</td>
-    </tr>
-</table>
-
-
-<p>Ratings/Color = 1(white) 2(lime) 3(yellow) 4/5(red)</p>
-
-<h3>Solution</h3>
-
-<p><strong>This is not an easy question, though it&rsquo;s similar to the question &ldquo;Merge Intervals&rdquo;</strong>.</p>
-
-<p>First code is my solution.</p>
-
-<p><strong>Second code is from <a href="https://github.com/yuanx/leetcode/blob/master/InsertInterval.java">this repo</a></strong>. This is only 1 iteration, but in 3 stages. First, add all intervals ahead of newInterval into ans. Second, merge anything that can be merged with newInterval, and add to ans. Third, add the rest of intervals into ans.</p>
-
-<p><strong>Third code is from <a href="http://www.programcreek.com/2012/12/leetcode-insert-interval/">this blog</a></strong>. It&rsquo;s a very tricky solution.</p>
-
-<h3>My code</h3>
-
-<p><strong>My code</strong></p>
-
-<pre><code>/**
- * Definition for an interval.
- * public class Interval {
- *     int start;
- *     int end;
- *     Interval() { start = 0; end = 0; }
- *     Interval(int s, int e) { start = s; end = e; }
- * }
- */
-public class Solution {
-    public List&lt;Interval&gt; insert(List&lt;Interval&gt; intervals, Interval newInterval) {
-        if (intervals == null) {
-            return null;
-        }
-        int p = 0;
-        while (p &lt; intervals.size() &amp;&amp; intervals.get(p).start &lt; newInterval.start) {
-            p++;
-        }
-        intervals.add(p, newInterval);
-        if (p &gt; 0) {
-            p--;
-        }
-        // start merging from (p)th element
-        while (p &lt; intervals.size() - 1) {
-            if (intervals.get(p).end &gt;= intervals.get(p + 1).start) {
-                intervals.get(p).end = Math.max(intervals.get(p).end, intervals.get(p + 1).end);
-                intervals.remove(p + 1);
-            } else {
-                p++;
-            }
-        }
-        return intervals;
-    }
-}
-</code></pre>
-
-<p><strong>Second code</strong>.</p>
-
-<pre><code>public ArrayList&lt;Interval&gt; insert(ArrayList&lt;Interval&gt; intervals, Interval newInterval) {
-    ArrayList&lt;Interval&gt; re = new ArrayList&lt;Interval&gt;();
-    int len = intervals.size();
-    int i = 0;
-    while (i &lt; len) {
-        Interval temp = intervals.get(i);
-        if (temp.end &lt; newInterval.start)
-            re.add(temp);
-        else if (temp.start &gt; newInterval.end)
-            break;
-        else {
-            newInterval.start = Math.min(temp.start, newInterval.start);
-            newInterval.end = Math.max(temp.end, newInterval.end);
-        }
-        i++;
-    }
-    re.add(newInterval);
-    while (i &lt; len) {
-        re.add(intervals.get(i));
-        i++;
-    }
-    return re;
-}
-</code></pre>
-
-<p><strong>Third code, a popular solution</strong>. Very tricky and concise.</p>
-
-<pre><code>public ArrayList&lt;Interval&gt; insert(ArrayList&lt;Interval&gt; intervals, Interval newInterval) {
-    ArrayList&lt;Interval&gt; result = new ArrayList&lt;Interval&gt;();
-    for(Interval interval: intervals){
-        if(interval.end &lt; newInterval.start){
-            result.add(interval);
-        }else if(interval.start &gt; newInterval.end){
-            result.add(newInterval);
-            newInterval = interval;        
-        }else if(interval.end &gt;= newInterval.start 
-                || interval.start &lt;= newInterval.end){
-            newInterval = new Interval(
-                Math.min(interval.start, newInterval.start), 
-                Math.max(newInterval.end, interval.end));
-        }
-    }
-    result.add(newInterval); 
-    return result;
-}
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/58">&larr; Older</a>
@@ -1426,9 +1354,9 @@ public class Solution {
 <li class='category'><a href='/blog/categories/lintcode/'>lintcode (16)</a></li>
 <li class='category'><a href='/blog/categories/ninechap/'>ninechap (25)</a></li>
 <li class='category'><a href='/blog/categories/q-google/'>q-google (63)</a></li>
-<li class='category'><a href='/blog/categories/question/'>question (143)</a></li>
+<li class='category'><a href='/blog/categories/question/'>question (144)</a></li>
 <li class='category'><a href='/blog/categories/testing/'>testing (5)</a></li>
-<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (17)</a></li>
+<li class='category'><a href='/blog/categories/z-string-search/'>z-string-search (18)</a></li>
 <li class='category'><a href='/blog/categories/z-testing/'>z-testing (2)</a></li>
 <li class='category'><a href='/blog/categories/z-top-k/'>z-top-k (6)</a></li>
 
@@ -1437,6 +1365,10 @@ public class Solution {
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/05/22/Trie-Wildcard-String-Matching/">[Question] Trie Wildcard String Matching</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2017/05/13/dutch-national-flag/">[Question] Dutch National Flag Problem</a>
@@ -1452,10 +1384,6 @@ public class Solution {
     
       <li class="post">
         <a href="/blog/2016/07/11/design-twitter/">[Design] Design Twitter</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2016/06/11/add-aside-content-octopress/">[Octopress] Add Aside Content to Octopress</a>
       </li>
     
   </ul>
